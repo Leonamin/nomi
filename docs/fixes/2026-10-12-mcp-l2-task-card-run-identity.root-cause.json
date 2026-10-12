@@ -3,7 +3,7 @@
   "id": "2026-10-12-mcp-l2-task-card-run-identity",
   "problem_type": "Production task cards must be addressable by run identity, not by visible text",
   "symptom": "The MCP L2 semantic journey's final UI step is red: after clicking the task-center card's primary action the rough-cut confirm dialog never appears, so `real-user-journeys` fails (8 passed / 1 failed) and the E2E Walkthroughs job blocks.",
-  "direct_cause": "The journey picked the card with `hasText: /导出|成片|export/i`; the budget-approval card also matches because its body lists stage names including 导出, so the journey clicked that card's fallback action and then waited 20s for a rough-cut confirm dialog that belongs to another run's card.",
+  "direct_cause": "The journey picked the card with `hasText: /导出|成片|export/i`; the budget-approval card also matches because its body renders the stage list including 导出, so the journey clicked that card's normal primary action (a budget/contract gate, `primaryAction: 'open-gate'`), which cannot raise the rough-cut confirm dialog, and then waited 20s for it.",
   "class_root": "A production task card exposed no run identity, so a reader could only guess which run a card represented from visible text — while one project may hold several active runs and the panel mounts a single full card for whichever run is most recently updated.",
   "affected_population": [
     "Any reader of the task-center production card: walkthrough scripts, evals, and future tooling that drives a production run's gates",
@@ -85,7 +85,7 @@
     "same_class_scan": [
       "door-map buildProductionRunView: single write door src/workbench/production/useProductionStatus.ts",
       "door-map ProductionRunTaskCard: single read door src/workbench/taskCenter/TaskCenterPanel.tsx",
-      "grep `data-production-task-card|data-production-primary-action` under tests/: mcp-l2-journeys (fixed), production-mcp-journey (single run), agent-spend-video-landing, task-center-states — the other consumers do not match a card by scope/stage text"
+      "grep `data-production-task-card|data-production-primary-action` under tests/: only mcp-l2-journeys matched a card by scope/stage text (fixed). production-mcp-journey, agent-spend-video-landing, task-center-states and ~a dozen full-walk consumers read the card but never filter it by stage/scope text, and each drives a single run per project"
     ]
   },
   "prevention": {
