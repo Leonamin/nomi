@@ -1,0 +1,121 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-web-browser-capability",
+  "problem_type": "Native action capability advertisement",
+  "symptom": "Web app bar displays an unavailable native browser action",
+  "direct_cause": "Native-chrome app bar used platform alone while sibling entries checked actual bridge capability",
+  "class_root": "Every native action entry must advertise only a supported runtime capability",
+  "affected_population": [
+    "Web users in studio app bar",
+    "Native Windows window bar and project library"
+  ],
+  "scope_paths": [
+    "src/ui/app-shell/NomiAppBar.tsx"
+  ],
+  "entry_points": [
+    "App bar browser button",
+    "Windows window bar browser button",
+    "Library browser button"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "Bridge capabilities are an internal Nomi runtime contract; external documentation cannot decide action visibility",
+  "invariants": [
+    "Every browser action is gated by the actual browser bridge"
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "src/ui/app-shell/NomiAppBar.tsx",
+      "symbol": "openBrowser"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/library/ProjectLibraryPage.tsx",
+      "symbol": "openBrowser"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/WorkbenchShell.tsx",
+      "symbol": "openBrowser"
+    }
+  ],
+  "door_reduction": {
+    "before": 3,
+    "after": 3,
+    "why_not": "Studio native chrome, Windows window bar and project library are separate established surfaces; each checks the same bridge capability"
+  },
+  "generality_proof": "All three entry surfaces use bridge presence, so web omission consistently removes the unsupported action regardless of host platform",
+  "shared_boundaries": [
+    {
+      "path": "src/ui/app-shell/NomiAppBar.tsx",
+      "symbol": "NomiAppBar",
+      "responsibility": "Gate native-chrome browser action at its rendering boundary"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "src/ui/app-shell/NomiAppBar.tsx",
+      "entry_point": "NomiAppBar",
+      "disposition": "enforced",
+      "evidence": "Actual bridge capability gates this action"
+    },
+    {
+      "path": "src/workbench/library/ProjectLibraryPage.tsx",
+      "entry_point": "ProjectLibraryPage",
+      "disposition": "enforced",
+      "evidence": "Actual bridge capability gates this action"
+    },
+    {
+      "path": "src/workbench/WorkbenchShell.tsx",
+      "entry_point": "WorkbenchShell",
+      "disposition": "enforced",
+      "evidence": "Actual bridge capability gates this action"
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every web studio opening exposes this unsupported native action",
+    "same_class_scan": [
+      "door-map openBrowser: three read entries",
+      "rg nomi-open-browser and nomiDesktop.browser: checked library and Windows window bar"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "src/ui/app-shell/NomiAppBar.tsx",
+    "invariant": "Unavailable browser bridge cannot render a browser action",
+    "failure_mode": "Action omitted from the web runtime",
+    "exception_policy": "none",
+    "strategy": "Use actual bridge presence at the existing action rendering boundary",
+    "artifacts": [
+      "src/ui/app-shell/NomiAppBar.tsx"
+    ]
+  },
+  "regression_tests": [
+    "src/ui/app-shell/browserCapability.test.ts"
+  ],
+  "class_regression_tests": [
+    "src/ui/app-shell/browserCapability.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "not-applicable",
+    "rationale": "New web transport keeps the existing runtime contract; there is no alternate legacy collector",
+    "removed_paths": []
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "The application owns source windows and generation completion policy",
+    "exit_criteria": []
+  },
+  "migration": "No persisted data change; desktop bridge remains present",
+  "residual_risks": ["Browser visibility still needs verification on the deployed web build; desktop bridge presence is covered structurally"],
+  "recurrence_check_on": "2026-11-11",
+  "detected_by": "review",
+  "invariant_owner_layer": {
+    "layer": "src/ui/app-shell/NomiAppBar.tsx",
+    "tests": [
+      "src/ui/app-shell/browserCapability.test.ts"
+    ],
+    "why": "The action rendering owner advertises its actual capability"
+  }
+}

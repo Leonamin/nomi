@@ -277,7 +277,7 @@ export default function NomiAppBar({
         >
           <span className="inline-flex items-center gap-1">
             {!isWindows ? <OnboardingChecklist /> : null}
-            {!isWindows ? (
+            {!isWindows && window.nomiDesktop?.browser ? (
               <AppBarActionTooltip label={t('appBar.browser')}>
                 <WorkbenchButton
                   className={cn(

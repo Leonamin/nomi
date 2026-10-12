@@ -4,6 +4,16 @@ import type { GenerationCanvasNode } from '../src/workbench/generationCanvas/mod
 const node: GenerationCanvasNode = { id: 'shot', kind: 'video', title: 'Shot', position: { x: 0, y: 0 }, result: { id: 'old', type: 'video', createdAt: 1, url: 'old.mp4' } }
 const run = { id: 'run', startedAt: 1, updatedAt: 2 }
 describe('server-owned generation fields survive stale browser saves', () => {
+  it('accepts the first browser-created run when no server run exists', () => {
+    const current: GenerationCanvasNode = { ...node, status: 'idle', runs: undefined }
+    const incoming: GenerationCanvasNode = { ...node, status: 'queued', runs: [{ ...run, status: 'queued' }] }
+    expect(mergeServerResults(current, incoming)).toMatchObject({ status: 'queued', runs: incoming.runs })
+  })
+  it('accepts a newer deliberate run after a terminal server run', () => {
+    const current: GenerationCanvasNode = { ...node, status: 'error', runs: [{ ...run, status: 'error' }] }
+    const incoming: GenerationCanvasNode = { ...node, status: 'queued', runs: [{ ...run, id: 'next', startedAt: 3, status: 'queued' }] }
+    expect(mergeServerResults(current, incoming)).toMatchObject({ status: 'queued', runs: incoming.runs })
+  })
   it('preserves server failure and submission-unknown status for the same run', () => {
     const current: GenerationCanvasNode = { ...node, status: 'error', error: 'Submission unknown', runs: [{ ...run, status: 'error' }] }
     const incoming: GenerationCanvasNode = { ...node, status: 'running', runs: [{ ...run, status: 'running' }] }

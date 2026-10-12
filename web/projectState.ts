@@ -36,7 +36,7 @@ export function mergeServerResults(current: GenerationCanvasNode, incoming: Gene
   const currentRun = current.runs?.[0]
   const incomingRun = incoming.runs?.[0]
   const isServerPending = current.meta?.isWebGenerationOwned === true && (current.status === 'running' || current.status === 'queued')
-  const isSameOrOlderRun = !incomingRun || !currentRun || incomingRun.id === currentRun.id || incomingRun.startedAt <= currentRun.startedAt
+  const isSameOrOlderRun = !incomingRun || Boolean(currentRun && (incomingRun.id === currentRun.id || incomingRun.startedAt <= currentRun.startedAt))
   const hasStaleTerminalStatus = (current.status === 'error' || current.status === 'idle' || current.status === 'success') && (incoming.status === 'running' || incoming.status === 'queued' || incoming.status === 'recoverable') && isSameOrOlderRun
   const hasNewCompletedResult = current.status === 'success' && !hasSeenCurrentResult
   return {

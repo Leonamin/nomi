@@ -2,8 +2,8 @@
   "schema_version": 3,
   "id": "2026-10-12-web-generation-ownership",
   "problem_type": "Server-owned manual generation transport contract",
-  "symptom": "A stale or reconnecting browser clears a server job failure or active status, and an unacknowledged cancel hides active GPU work",
-  "direct_cause": "Desktop snapshot convergence and optimistic cancellation assume browser-owned polling; terminal merge only protected unseen success",
+  "symptom": "A stale or reconnecting browser clears a server job failure or active status; a first deliberate run is erased when no server run exists; an unacknowledged cancel hides active GPU work",
+  "direct_cause": "Desktop snapshot convergence and optimistic cancellation assume browser-owned polling; missing server run was incorrectly compared as same-or-older, while terminal merge only protected unseen success",
   "class_root": "Server jobs own execution fields for every outcome, while browsers own candidate choice and authored edits",
   "affected_population": [
     "Manual single regeneration",
@@ -24,7 +24,7 @@
   "external_sources": [],
   "internal_only_reason": "This is the Nomi internal split between candidate ownership and authored timeline state; provider documentation cannot decide it",
   "invariants": [
-    "A stale browser cannot overwrite server pending or terminal run fields",
+    "A stale browser cannot overwrite server pending or terminal run fields; first or strictly newer deliberate runs are accepted",
     "Reconnecting views read current server job snapshots",
     "Cancellation changes state only after an owned, targeted provider acknowledgement"
   ],
@@ -82,7 +82,8 @@
     "reason": "All web tabs and every stale persistence cycle can repeat the ownership error",
     "same_class_scan": [
       "door-map fetchTaskResult --roots=web",
-      "Read actual runtime TaskResult envelope and renderer taskApi"
+      "Read actual runtime TaskResult envelope and renderer taskApi",
+      "door-map mergeServerResults --roots=web; tested initial no-run and subsequent terminal-run populations"
     ]
   },
   "prevention": {
