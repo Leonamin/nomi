@@ -70,7 +70,8 @@ export function createWebProductionProjectPort(binding: ProjectBinding, options:
     await save(projectId, { ...current, expectedBinding: binding, payload: next })
     options.onChange?.(projectId)
   }
-  let expectedDocumentState = options.documentPreconditions ?? documentSessionState(document(record()))
+  const admittedDocument = projectCanvas(record()).workbenchDocuments?.find(value => value.id === admittedDocumentId)
+  let expectedDocumentState = options.documentPreconditions ?? (admittedDocument ? documentSessionState(admittedDocument) : undefined)
   const documentPort: DocumentLanePort = {
     read: async (scope, context) => {
       context.signal.throwIfAborted()

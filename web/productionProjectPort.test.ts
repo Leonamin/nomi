@@ -107,3 +107,10 @@ describe('project pinned durable creation writes', () => {
     expect(projectCanvas(test.current()).generationCanvas.nodes[0].prompt).toBe('new intent')
   })
 })
+
+it('materializes canvas-only projects without requiring a mounted or persisted creation document', async () => {
+  let current: ProjectRecord = { id: binding.projectId, name: 'canvas only', version: 1, createdAt: 1, updatedAt: 1, payload: { generationCanvas: createDefaultGenerationCanvasSnapshot(), timeline: { tracks: [], clips: [] } } }
+  const port = createWebProductionProjectPort(binding, { readProject: () => current, saveProject: async (_id, next) => { current = next as ProjectRecord; return current }, assertBinding: () => {} })
+  await expect(port.requestRenderer('production.materialize-shots', { projectId: binding.projectId, materializationOperationId: 'canvas-only', shots: [{ shotId: 'shot', title: '샷', prompt: '밤 거리' }] })).resolves.toMatchObject({ createdNodeIds: [expect.any(String)] })
+  expect(projectCanvas(current).generationCanvas.nodes).toHaveLength(1)
+})
