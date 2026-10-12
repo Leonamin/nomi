@@ -1,0 +1,203 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-web-production-project-ports",
+  "problem_type": "Creation ports require host independent canonical project ownership",
+  "symptom": "Web AI production cannot read/write canonical creation documents or materialize production candidates without an Electron renderer",
+  "direct_cause": "Original project creation and production landing owners close over global renderer stores",
+  "class_root": "Canonical creation algorithms and project persistence are not separated from the UI session adapter",
+  "affected_population": [
+    "Browser disconnected or unopened creation editor, desktop renderer, external agent creation"
+  ],
+  "scope_paths": [
+    "src/workbench/project/documentSessionPort.ts",
+    "src/workbench/project/documentSessionCore.ts",
+    "src/workbench/common/useNomiRichTextEditor.ts",
+    "src/workbench/creation/documentTextExtensions.ts",
+    "src/workbench/capability/multiShotCanvasLanding.ts",
+    "src/workbench/capability/multiShotCanvasLandingCore.ts",
+    "web/productionProjectPort.ts",
+    "src/workbench/creation/storyboard/agentStoryboardDesign.ts",
+    "src/workbench/creation/storyboard/agentStoryboardDesignCore.ts",
+    "src/workbench/generationCanvas/model/canvasGroup.ts",
+    "src/workbench/generationCanvas/store/canvasGraphActions.ts"
+  ],
+  "entry_points": [
+    "Native agent script writing and storyboard authoring",
+    "Production canvas landing and reconnect projection"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "Canonical Nomi project persistence and renderer ownership are internal contracts.",
+  "invariants": [
+    "Both hosts use the identical canonical text schema and document write algorithm.",
+    "Materialization preserves candidate revision, detached nodes, existing selections and user-owned running generation.",
+    "Every server write is serialized and expectedBinding pinned."
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "src/workbench/project/documentSessionCore.ts",
+      "symbol": "workbenchDocumentPlainText"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "workbenchDocumentPlainText"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "workbenchDocumentPlainText"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/creation/WorkbenchEditor.tsx",
+      "symbol": "documentSessionState"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "documentSessionState"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "documentSessionState"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "applyWholeDocumentWrite"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "applyWholeDocumentWrite"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/creation/WorkbenchEditor.tsx",
+      "symbol": "RICH_TEXT_FEATURE_EXTENSIONS"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionCore.ts",
+      "symbol": "RICH_TEXT_FEATURE_EXTENSIONS"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/capability/multiShotCanvasLanding.ts",
+      "symbol": "createMultiShotCanvasLanding"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "createMultiShotCanvasLanding"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/creation/storyboard/agentStoryboardDesign.ts",
+      "symbol": "createAgentStoryboardDesign"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "createAgentStoryboardDesign"
+    }
+  ],
+  "door_reduction": {
+    "before": 14,
+    "after": 14,
+    "why_not": "Document reading/writing, rich text schema, storyboard authoring and production landing adapters are separate domain entry points; desktop and web adapters delegate to the same canonical owner rather than removing required entry points."
+  },
+  "generality_proof": "Canonical algorithms execute through injected project/canvas state, avoiding global focused project or DOM dependencies for every host.",
+  "shared_boundaries": [
+    {
+      "path": "src/workbench/project/documentSessionCore.ts",
+      "symbol": "applyWholeDocumentWrite",
+      "responsibility": "Shared markdown, canonical schema text and whole-document write."
+    },
+    {
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "createMultiShotCanvasLanding",
+      "responsibility": "Shared idempotent candidate landing and generation outcome semantics."
+    },
+    {
+      "path": "web/productionProjectPort.ts",
+      "symbol": "createWebProductionProjectPort",
+      "responsibility": "Serialized, project-binding-pinned creation project mutations."
+    },
+    {
+      "path": "src/workbench/generationCanvas/model/canvasGroup.ts",
+      "symbol": "createCanvasGroupSnapshot",
+      "responsibility": "Canonical group membership and geometry without renderer undo/event side effects."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "entry_point": "applyWholeDocumentWrite",
+      "disposition": "enforced",
+      "evidence": "Baseline renderer document port reexports and calls canonical extracted core."
+    },
+    {
+      "path": "src/workbench/capability/multiShotCanvasLanding.ts",
+      "entry_point": "materializeShots",
+      "disposition": "enforced",
+      "evidence": "Desktop landing becomes the injected adapter of the same shared landing core."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every automatic script and multi-shot turn can hit missing renderer ownership.",
+    "same_class_scan": [
+      "door-map workbenchDocumentPlainText --roots=src,electron,web",
+      "door-map materializeShots --roots=src,electron,web",
+      "read documentSessionPort, agentStoryboardDesign and multiShotCanvasLanding owners"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "web/productionProjectPort.ts",
+    "invariant": "Project-pinned ports use one canonical mutation owner on both hosts.",
+    "failure_mode": "Invalid project/document/preconditions throw before persistence.",
+    "exception_policy": "none",
+    "strategy": "Extract canonical algorithms and inject host-specific state/persistence boundaries.",
+    "artifacts": [
+      "src/workbench/project/documentSessionCore.ts",
+      "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "web/productionProjectPort.ts",
+      "src/workbench/generationCanvas/model/canvasGroup.ts"
+    ]
+  },
+  "regression_tests": [
+    "web/productionProjectPort.test.ts"
+  ],
+  "class_regression_tests": [
+    "web/productionProjectPort.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "src/workbench/project/documentSessionPort.ts",
+      "src/workbench/capability/multiShotCanvasLanding.ts"
+    ],
+    "rationale": "Algorithm copies removed from adapters and moved to shared owners in the same change."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "Existing Tiptap schema and Nomi domain owners retained; this is host adapter extraction.",
+    "exit_criteria": []
+  },
+  "migration": "Existing persisted documents and candidate metadata remain identical; no data migration.",
+  "residual_risks": [
+    "Browser and GPU evidence must be provided by coordinator before merge."
+  ],
+  "invariant_owner_layer": {
+    "layer": "web/productionProjectPort.ts",
+    "tests": [
+      "web/productionProjectPort.test.ts"
+    ]
+  },
+  "detected_by": "user",
+  "recurrence_check_on": "2026-11-11"
+}
