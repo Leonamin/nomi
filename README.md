@@ -1,3 +1,5 @@
+> This fork adds a personal, real-browser host based on verified Nomi v0.23.1. See [personal web setup and behavior](docs/personal-web.md). The original Nomi copyright and AGPL-3.0 license remain in effect.
+
 <p align="center">
   <a href="https://nomiaqm.com/en/">
     <picture>

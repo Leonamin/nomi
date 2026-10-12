@@ -137,7 +137,7 @@ describe('生成队列外化', () => {
     expect(useGenerationQueueStore.getState().batches[batchId]?.paused).toBe(false)
   })
 
-  it('批量成功后回填时间轴：引用该节点的 clip 换成新产物 URL（对齐单发路径）', async () => {
+  it('batch completion preserves authored cuts until explicit replacement', async () => {
     const [id] = addImageNodes(1)
     const staleClip = {
       id: 'c-batch-1', type: 'image', sourceNodeId: id, label: id, url: 'https://example.com/old.png',
@@ -158,8 +158,8 @@ describe('生成队列外化', () => {
 
     expect(result.successes).toHaveLength(1)
     const clip = useWorkbenchStore.getState().timeline.tracks.flatMap((track) => track.clips).find((entry) => entry.id === 'c-batch-1')
-    // 修复前：批量路径不回填，时间轴 clip 仍指旧 URL。
-    expect(clip?.url).toBe(`https://example.com/${id}.png`)
+    // Candidate delivery cannot silently replace an authored cut.
+    expect(clip).toEqual(staleClip)
   })
 
   it('不变量③：不传 batchId 时行为不变（退化路径 = 回滚保险）', async () => {

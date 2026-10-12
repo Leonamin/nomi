@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { productionRunRecordId } from '../../../../electron/shared/productionShotPhase'
 import { normalizeStoreSnapshot } from './canvasSnapshotNormalizer'
 
@@ -8,6 +8,15 @@ describe('normalizeStoreSnapshot — 重启收敛卡住的 mid-flight 节点', (
   function nodeWith(extra: Record<string, unknown>) {
     return { id: 'n1', kind: 'video', title: '镜头1', position: { x: 0, y: 0 }, ...extra }
   }
+
+  it('keeps a server-owned generation running when a web tab reconnects', () => {
+    vi.stubGlobal('window', { nomiDesktop: { platform: 'web' } })
+    try {
+      const snap = normalizeStoreSnapshot({ nodes: [nodeWith({ status: 'running', meta: { isWebGenerationOwned: true }, progress: { phase: 'queued', taskId: 'accepted', updatedAt: 1 }, runs: [{ id: 'run', status: 'running', taskId: 'accepted', startedAt: 1, updatedAt: 2 }] })] })
+      expect(snap.nodes[0].status).toBe('running')
+      expect(snap.nodes[0].runs?.[0].taskId).toBe('accepted')
+    } finally { vi.unstubAllGlobals() }
+  })
 
   it('running + runs[0].taskId → recoverable，progress 清空，run 记录同步 recoverable', () => {
     const snap = normalizeStoreSnapshot({

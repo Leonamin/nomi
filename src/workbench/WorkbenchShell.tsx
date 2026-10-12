@@ -168,10 +168,9 @@ export default function WorkbenchShell({
         (state) => state.setWorkspaceMode,
     );
     const categories = useWorkbenchStore((state) => state.categories);
-    const agentDockCollapsed = useWorkbenchStore((state) => state.projectAgentDockCollapsed);
-    // 常驻 Agent 无条件渲染（2026-09-05 开闸）：发布闸 agentHostPreference 已随开闸删除——
-    // 它曾让「用户日常用的产品」和「测试跑的产品」变成两条路（并行版，P1）。
-    // 未完成的能力用 header 上的 Beta 徽标明说（D4 诚实交付），不再靠藏整套 UI 遮掩。
+    const canUseAgent = Boolean(window.nomiDesktop?.agentLane);
+    const agentDockCollapsed = useWorkbenchStore((state) => state.projectAgentDockCollapsed) || !canUseAgent;
+    // Hosts expose the capabilities they support; the personal web host owns manual generation.
     const [agentDockTargets, setAgentDockTargets] = React.useState<Record<'creation' | 'storyboard' | 'generation' | 'preview', HTMLDivElement | null>>({ creation: null, storyboard: null, generation: null, preview: null });
     const setAgentDockTarget = React.useCallback((surface: 'creation' | 'storyboard' | 'generation' | 'preview') => (node: HTMLDivElement | null) => {
         setAgentDockTargets((current) => current[surface] === node ? current : { ...current, [surface]: node });
@@ -335,6 +334,7 @@ export default function WorkbenchShell({
                         role="toolbar"
                         aria-label={t("appBar.projectQuickActions")}
                     >
+                        {window.nomiDesktop?.browser ? (
                         <button
                             type="button"
                             className={cn(
@@ -349,6 +349,7 @@ export default function WorkbenchShell({
                             <IconBrowser size={14} stroke={1.8} aria-hidden="true" />
                             <span>{t("appBar.browser")}</span>
                         </button>
+                        ) : null}
                     </div>
                     <WindowControls className="relative z-[2]" />
                 </div>
@@ -419,7 +420,7 @@ export default function WorkbenchShell({
                         </WorkspaceSlot>
                     ) : null}
                 </div>
-                {agentDock ? createPortal(<ProjectAgentResidentShell surface={agentSurface} />, agentDock) : null}
+                {canUseAgent && agentDock ? createPortal(<ProjectAgentResidentShell surface={agentSurface} />, agentDock) : null}
             </main>
         </div>
         </WorkspacePanelFrameContext.Provider>

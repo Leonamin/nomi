@@ -1,0 +1,133 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-web-generation-ownership",
+  "problem_type": "Server-owned manual generation transport contract",
+  "symptom": "A stale or reconnecting browser clears a server job failure or active status, and an unacknowledged cancel hides active GPU work",
+  "direct_cause": "Desktop snapshot convergence and optimistic cancellation assume browser-owned polling; terminal merge only protected unseen success",
+  "class_root": "Server jobs own execution fields for every outcome, while browsers own candidate choice and authored edits",
+  "affected_population": [
+    "Manual single regeneration",
+    "Batch generation of an already placed shot",
+    "Previously trimmed clips and multiple uses of a shot"
+  ],
+  "scope_paths": [
+    "web/projectState.ts",
+    "src/workbench/generationCanvas/runner/useWebGenerationSync.ts",
+    "src/workbench/generationCanvas/runner/localTaskControl.ts",
+    "src/workbench/generationCanvas/store/canvasSnapshotNormalizer.ts"
+  ],
+  "entry_points": [
+    "Stale browser save",
+    "Reconnect during GPU work",
+    "Explicit cancellation"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "This is the Nomi internal split between candidate ownership and authored timeline state; provider documentation cannot decide it",
+  "invariants": [
+    "A stale browser cannot overwrite server pending or terminal run fields",
+    "Reconnecting views read current server job snapshots",
+    "Cancellation changes state only after an owned, targeted provider acknowledgement"
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "web/projectState.ts",
+      "symbol": "mergeServerResults"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/runner/useWebGenerationSync.ts",
+      "symbol": "useWebGenerationSync"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/runner/localTaskControl.ts",
+      "symbol": "requestTaskCancel"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/store/canvasSnapshotNormalizer.ts",
+      "symbol": "convergeStuckMidFlightNode"
+    }
+  ],
+  "door_reduction": {
+    "before": 4,
+    "after": 4,
+    "why_not": "Server writer, hydration and acknowledged cancellation are distinct host entry points for one ownership rule"
+  },
+  "generality_proof": "The server merges execution fields at one serialized project writer; browser reconnect projection uses job identity and does not touch the timeline",
+  "shared_boundaries": [
+    {
+      "path": "web/projectState.ts",
+      "symbol": "mergeServerResults",
+      "responsibility": "Protect server run state while preserving editorial changes"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "web/projectState.ts",
+      "entry_point": "saveWebProject",
+      "disposition": "enforced",
+      "evidence": "All web saves pass through the serialized merger"
+    },
+    {
+      "path": "src/workbench/generationCanvas/runner/useWebGenerationSync.ts",
+      "entry_point": "useWebGenerationSync",
+      "disposition": "enforced",
+      "evidence": "Every active web view reads server job snapshots"
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "All web tabs and every stale persistence cycle can repeat the ownership error",
+    "same_class_scan": [
+      "door-map fetchTaskResult --roots=web",
+      "Read actual runtime TaskResult envelope and renderer taskApi"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "web/projectState.ts",
+    "invariant": "Server job outcomes survive stale views",
+    "failure_mode": "State regression tests fail",
+    "exception_policy": "none",
+    "strategy": "Central server merge and explicit reconnect projection",
+    "artifacts": [
+      "web/projectState.ts",
+      "src/workbench/generationCanvas/runner/useWebGenerationSync.ts"
+    ]
+  },
+  "regression_tests": [
+    "web/projectState.test.ts",
+    "src/workbench/generationCanvas/runner/localTaskControl.test.ts",
+    "src/workbench/generationCanvas/store/canvasSnapshotNormalizer.test.ts"
+  ],
+  "class_regression_tests": [
+    "web/projectState.test.ts",
+    "src/workbench/generationCanvas/runner/localTaskControl.test.ts",
+    "src/workbench/generationCanvas/store/canvasSnapshotNormalizer.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "not-applicable",
+    "rationale": "New web transport keeps the existing runtime contract; there is no alternate legacy collector",
+    "removed_paths": []
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "The application owns source windows and generation completion policy",
+    "exit_criteria": []
+  },
+  "migration": "Existing desktop convergence and cancellation are retained; new web nodes carry the server ownership marker",
+  "residual_risks": [
+    "GPU pending reconnect and cancellation require live browser verification"
+  ],
+  "recurrence_check_on": "2026-11-11",
+  "detected_by": "review",
+  "invariant_owner_layer": {
+    "layer": "web/projectState.ts",
+    "tests": [
+      "web/projectState.test.ts"
+    ],
+    "why": "Server-owned execution fields are protected at the shared save boundary"
+  }
+}

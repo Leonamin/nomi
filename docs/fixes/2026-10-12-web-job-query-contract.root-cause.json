@@ -1,0 +1,109 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-web-job-query-contract",
+  "problem_type": "Server-owned manual generation transport contract",
+  "symptom": "Accepted GPU work never reaches durable candidates",
+  "direct_cause": "A query envelope was confused with its nested TaskResult",
+  "class_root": "Transport adaptation must preserve the existing Nomi task contract at both server collection and renderer read boundaries",
+  "affected_population": [
+    "Manual single regeneration",
+    "Batch generation of an already placed shot",
+    "Previously trimmed clips and multiple uses of a shot"
+  ],
+  "scope_paths": [
+    "web/generationJobs.ts"
+  ],
+  "entry_points": [
+    "Server collection",
+    "Renderer polling",
+    "Restored prompt receipt"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "This is the Nomi internal split between candidate ownership and authored timeline state; provider documentation cannot decide it",
+  "invariants": [
+    "Each accepted prompt is collected without re-submission",
+    "Both server query and renderer response preserve the vendor/result envelope"
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "web/generationJobs.ts",
+      "symbol": "fetchTaskResult"
+    }
+  ],
+  "door_reduction": {
+    "before": 1,
+    "after": 1,
+    "why_not": "One transport boundary"
+  },
+  "generality_proof": "Server-owned receipt recovery and renderer polling consume one existing runtime contract",
+  "shared_boundaries": [
+    {
+      "path": "web/generationJobs.ts",
+      "symbol": "WebGenerationJobs",
+      "responsibility": "Persist receipts, collect outputs and serve the existing task envelope"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "web/generationJobs.ts",
+      "entry_point": "restore",
+      "disposition": "enforced",
+      "evidence": "Restored receipts enter the same collector"
+    },
+    {
+      "path": "web/generationJobs.ts",
+      "entry_point": "result",
+      "disposition": "enforced",
+      "evidence": "Renderer polls the same vendor/result envelope"
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "All async manual jobs and restored receipts query the same contract",
+    "same_class_scan": [
+      "door-map fetchTaskResult --roots=web",
+      "Read actual runtime TaskResult envelope and renderer taskApi"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "web/generationJobs.ts",
+    "invariant": "Task envelope is preserved across both transport boundaries",
+    "failure_mode": "Collection tests fail if result nesting is dropped",
+    "exception_policy": "none",
+    "strategy": "Typed reuse of the existing task contract",
+    "artifacts": [
+      "web/generationJobs.ts"
+    ]
+  },
+  "regression_tests": [
+    "web/generationJobs.test.ts"
+  ],
+  "class_regression_tests": [
+    "web/generationJobs.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "not-applicable",
+    "rationale": "New web transport keeps the existing runtime contract; there is no alternate legacy collector",
+    "removed_paths": []
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "The application owns source windows and generation completion policy",
+    "exit_criteria": []
+  },
+  "migration": "New web job records only; existing desktop data is untouched",
+  "residual_risks": [
+    "Real GPU acceptance remains required"
+  ],
+  "recurrence_check_on": "2026-11-11",
+  "detected_by": "review",
+  "invariant_owner_layer": {
+    "layer": "web/generationJobs.ts",
+    "tests": [
+      "web/generationJobs.test.ts"
+    ],
+    "why": "All local-only manual jobs share one persistent receipt collector"
+  }
+}

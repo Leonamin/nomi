@@ -5,7 +5,6 @@ import { getGenerationNodeExecutionKind } from '../model/generationNodeKinds'
 import type { GenerationRunOutcome } from './generationRunOutcome'
 import { persistActiveWorkbenchProjectNow } from '../../project/workbenchProjectSession'
 import { useGenerationCanvasStore } from '../store/generationCanvasStore'
-import { useWorkbenchStore } from '../../workbenchStore'
 import { useProductionCanvasLandingStore } from '../../production/productionCanvasLandingStore'
 import { isNodeGenerationOwnedByProduction } from '../../production/productionShotOwnership'
 import { reportCanvasFeedback } from '../components/canvasFeedback'
@@ -492,7 +491,6 @@ export async function runGenerationNodesBatch(
         })
         successes.push({ nodeId, result })
         // 批量重生成也要走回填闸（与单发路径同款）：位置不变、clip 换新产物 URL；无引用时 no-op。
-        whenRunTargetLoaded(options.target, () => useWorkbenchStore.getState().reconcileTimelineForUpdatedNodes(nodeId, result))
         options.onNodeResult?.({ ok: true, nodeId, result })
       } catch (error: unknown) {
         const normalizedError = error instanceof Error ? error : new Error(String(error))
@@ -602,8 +600,7 @@ export async function confirmAndRunNodeVariants(
     if (!isProjectExecutionContextCurrent(project)) return
     for (let index = 0; index < total; index += 1) {
       try {
-        const result = await runGenerationNode(id, { ...options, assertAuthorCurrent: options.assertAuthorCurrent, assertApprovedInputs, grantId, assetUploadConsent: 'allow', target: project.binding })
-        whenRunTargetLoaded(project.binding, () => useWorkbenchStore.getState().reconcileTimelineForUpdatedNodes(id, result))
+        await runGenerationNode(id, { ...options, assertAuthorCurrent: options.assertAuthorCurrent, assertApprovedInputs, grantId, assetUploadConsent: 'allow', target: project.binding })
       } catch {
         return // 原任务队列保留失败；停发剩余变体。
       }
@@ -656,8 +653,7 @@ export async function regenerateNodeInPlace(
   await opts.assertCurrent?.()
   if (!isProjectExecutionContextCurrent(project)) return 'unavailable'
   try {
-    const result = await runGenerationNode(id, { assertAuthorCurrent: opts.assertAuthorCurrent, assertApprovedInputs, grantId, assetUploadConsent: 'allow', target: project.binding })
-    whenRunTargetLoaded(project.binding, () => useWorkbenchStore.getState().reconcileTimelineForUpdatedNodes(id, result))
+    await runGenerationNode(id, { assertAuthorCurrent: opts.assertAuthorCurrent, assertApprovedInputs, grantId, assetUploadConsent: 'allow', target: project.binding })
   } catch {
     // 原任务队列保留失败原因；身份被替换时不向新项目写错误。
   }

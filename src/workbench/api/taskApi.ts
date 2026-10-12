@@ -128,6 +128,10 @@ function requireDesktopRuntime(feature: string): DesktopBridge {
 /** 付费守卫：真人确认后铸一次性令牌（绑 nodeIds），返回 grantId。仅由确认事件链调用。 */
 export async function mintSpendGrant(nodeIds: string[], maxAttemptsPerNode?: number, quoteId?: string): Promise<string> {
   const desktop = requireDesktopRuntime('spend authorization')
+  if (desktop.platform === 'web') {
+    const { persistActiveWorkbenchProjectNow } = await import('../project/workbenchProjectSession')
+    await persistActiveWorkbenchProjectNow()
+  }
   const { grantId } = await desktop.tasks.grantSpend({
     nodeIds,
     ...(quoteId ? { quoteId } : {}),
@@ -196,6 +200,10 @@ export async function runWorkbenchTaskByVendor(
   const normalizedVendor = String(vendor || '').trim()
   if (!normalizedVendor) throw new Error('vendor is required')
   const desktop = requireDesktopRuntime('task execution')
+  if (desktop.platform === 'web' && projectId) {
+    const { persistActiveWorkbenchProjectNow } = await import('../project/workbenchProjectSession')
+    await persistActiveWorkbenchProjectNow()
+  }
   const startedAt = typeof performance !== 'undefined' ? performance.now() : Date.now()
   const capability = telemetryCapability(request.kind)
   // 这一笔在主进程回话之前都算「在途」——切项目重装画布时，装载收敛据此不把它当幽灵转圈收成空闲。

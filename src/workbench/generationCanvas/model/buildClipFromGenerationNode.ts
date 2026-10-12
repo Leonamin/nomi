@@ -121,14 +121,8 @@ export function buildClipFromGenerationNode(node: GenerationCanvasNode, options?
   }
 }
 
-/**
- * 把「重生成后的新产物」回填进一条已存在的 clip（C0 回填闸的纯函数核）。
- * 铁律（评审挖出的三个坑）：
- *  - 位置不变：startFrame 保持（"位置不变 = 起点不变"，时长真变了 endFrame 才变）。
- *  - URL 口径：本地 url > providerUrl > thumbnailUrl（pickClipUrl，不过 vendor 白名单，保 file://）。
- *  - trim 越界夹取：新产物时长可能变短/变长，offset 夹进新 frameCount，保可见 ≥1 帧。
- * image clip 的时长是用户设的、与产物无关 → 只换 URL；video/audio 才按新 durationSeconds 重算。
- * 无可用产物（url 空）→ 原样返回（防御，不破坏既有 clip）。
+/** Explicit source replacement preserves the authored in-point and visible duration.
+ * Images retain authored duration; insufficient video/audio sources reject before publication.
  */
 export function applyRegeneratedResultToClip(
   clip: TimelineClip,
@@ -145,9 +139,10 @@ export function applyRegeneratedResultToClip(
 
   const safeFps = readPositiveNumber(fps) || 30
   const nextFrameCount = resolveFrameCount(clip.type, result, safeFps)
-  const offsetStartFrame = Math.min(Math.max(0, clip.offsetStartFrame), Math.max(0, nextFrameCount - 1))
-  const offsetEndFrame = Math.min(Math.max(0, clip.offsetEndFrame), Math.max(0, nextFrameCount - offsetStartFrame - 1))
-  const visible = Math.max(1, nextFrameCount - offsetStartFrame - offsetEndFrame)
+  const offsetStartFrame = clip.offsetStartFrame
+  const visible = clip.endFrame - clip.startFrame
+  if (nextFrameCount < offsetStartFrame + visible) throw new Error('timeline_candidate_too_short')
+  const offsetEndFrame = nextFrameCount - offsetStartFrame - visible
   return {
     ...clip,
     url,
@@ -155,6 +150,6 @@ export function applyRegeneratedResultToClip(
     frameCount: nextFrameCount,
     offsetStartFrame,
     offsetEndFrame,
-    endFrame: clip.startFrame + visible,
+    endFrame: clip.endFrame,
   }
 }

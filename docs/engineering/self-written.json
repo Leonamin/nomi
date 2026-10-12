@@ -691,6 +691,33 @@
       ],
       "whyNotIntegrated": "Domain constraint: Electron exposes lifecycle events and termination APIs, but it does not know Nomi capability-core, Agent lane IPC, or background export owners, nor can it coordinate the required order of cancellable window confirmation, irreversible will-quit cleanup, and timeout-bounded exit. This module composes those existing platform mechanisms without reimplementing IPC, window confirmation, or a timer library; the Nomi-specific invariants are live capabilities after a cancelled close and guaranteed termination after cleanup timeout.",
       "revisitWhen": "When Electron provides a unified async teardown coordinator that can express these Nomi owners and timeout semantics, remove this boundary and use that mechanism."
+    },
+    {
+      "id": "personal-web-host",
+      "capability": "Personal web transport for existing Nomi project, candidate, manual local GPU and export domain owners",
+      "status": "justified",
+      "paths": [
+        "web/",
+        "scripts/build-web.mjs",
+        "scripts/web/",
+        "src/workbench/generationCanvas/runner/useWebGenerationSync.ts"
+      ],
+      "alternativesChecked": [
+        {
+          "name": "Hono Node adapter, body limit, SSE and static middleware",
+          "source": "https://hono.dev/docs/getting-started/nodejs"
+        },
+        {
+          "name": "Existing Nomi task runtime and stateless query envelope",
+          "source": "electron/tasks/taskResultQuery.ts:344"
+        },
+        {
+          "name": "Existing Nomi export lifecycle and renderer-independent FFmpeg",
+          "source": "electron/export/exportJobs.ts:1"
+        }
+      ],
+      "whyNotIntegrated": "HTTP, SSE, multipart parsing and serving are provided by Hono and Node. The adapter is only the Nomi-specific composition of its existing preload API, project binding, canonical media URL, candidate delivery, local-only generation receipt and export lifecycle. Electron IPC cannot run in a normal browser; duplicating these domain owners would split preview/export and persistence semantics.",
+      "revisitWhen": "An upstream headless host offers the same server-owned manual workflow and browser surface; replace this transport without migrating the canonical project format."
     }
   ]
 }

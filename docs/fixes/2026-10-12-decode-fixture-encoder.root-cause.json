@@ -1,0 +1,106 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-decode-fixture-encoder",
+  "problem_type": "Real decoder fixture requires an unrelated optional encoder",
+  "symptom": "The entire real image decode suite fails before running on Mac FFmpeg distributions without libwebp",
+  "direct_cause": "WebP test creation incorrectly assumes the packaged decoder also contains a WebP encoder",
+  "class_root": "A real decode test must use a real encoder without coupling that encoder to optional codecs in the tested decoder distribution",
+  "affected_population": [
+    "Every real image decoder test on a build without the optional WebP encoder"
+  ],
+  "scope_paths": [
+    "electron/assets/generatedMediaDecode.test.ts"
+  ],
+  "entry_points": [
+    "Mac bundled FFmpeg",
+    "Mac system FFmpeg"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "This is the Nomi internal split between candidate ownership and authored timeline state; provider documentation cannot decide it",
+  "invariants": [
+    "Real WebP bytes are generated with an existing standard Chromium encoder",
+    "The actual bundled FFmpeg decoder and every positive/negative decode assertion still execute"
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "electron/assets/generatedMediaDecode.test.ts",
+      "symbol": "encode"
+    }
+  ],
+  "door_reduction": {
+    "before": 1,
+    "after": 1,
+    "why_not": "The existing fixture owner remains the only encoder composition"
+  },
+  "generality_proof": "Fixtures use a real encoder independently of the decoder build; no test is skipped and production decoding is unchanged",
+  "shared_boundaries": [
+    {
+      "path": "electron/assets/generatedMediaDecode.test.ts",
+      "symbol": "encode",
+      "responsibility": "Generate real JPEG and PNG bytes and keep WebP generation independent of optional FFmpeg encoders"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "electron/assets/generatedMediaDecode.test.ts",
+      "entry_point": "beforeAll",
+      "disposition": "enforced",
+      "evidence": "Real Chromium encodes the existing real PNG into WebP"
+    },
+    {
+      "path": "electron/assets/generatedMediaDecode.test.ts",
+      "entry_point": "a real %s decodes with real dimensions",
+      "disposition": "enforced",
+      "evidence": "The existing real WebP dimensions and negative fixtures continue through the actual decoder"
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every full run fails on a decoder build without the encoder",
+    "same_class_scan": [
+      "Original clean v0.23.1 repeats the missing WebP encoder failure",
+      "Both bundled and system FFmpeg expose PNG/JPEG but no WebP encoder"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "electron/assets/generatedMediaDecode.test.ts",
+    "invariant": "Actual decode tests do not require optional FFmpeg WebP encoding",
+    "failure_mode": "Encoding or decoding rejects the fixture and fails the suite",
+    "exception_policy": "none",
+    "strategy": "Compose existing Chromium encoding with existing FFmpeg decoding",
+    "artifacts": [
+      "electron/assets/generatedMediaDecode.test.ts"
+    ]
+  },
+  "regression_tests": [
+    "electron/assets/generatedMediaDecode.test.ts"
+  ],
+  "class_regression_tests": [
+    "electron/assets/generatedMediaDecode.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "not-applicable",
+    "rationale": "New web transport keeps the existing runtime contract; there is no alternate legacy collector",
+    "removed_paths": []
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "The application owns source windows and generation completion policy",
+    "exit_criteria": []
+  },
+  "migration": "No source data or production media runtime change",
+  "residual_risks": [
+    "No production decoding behavior changes"
+  ],
+  "recurrence_check_on": "2026-11-11",
+  "detected_by": "review",
+  "invariant_owner_layer": {
+    "layer": "electron/assets/generatedMediaDecode.test.ts",
+    "tests": [
+      "electron/assets/generatedMediaDecode.test.ts"
+    ],
+    "why": "The fixture owner has the actual class regression tests"
+  }
+}

@@ -246,7 +246,10 @@
     "handoff:report": "node ./scripts/check-handoff.mjs",
     "test:eng-system": "node --test ./scripts/merge-preflight.node-test.mjs ./scripts/eng-metrics.node-test.mjs ./scripts/archetype-autosync-workflow.node-test.mjs",
     "eng:metrics": "node ./scripts/eng-metrics.mjs",
-    "merge:preflight": "node ./scripts/merge-preflight.mjs"
+    "merge:preflight": "node ./scripts/merge-preflight.mjs",
+    "build:web": "node scripts/build-web.mjs",
+    "start:web": "node dist/web/server.cjs",
+    "test:web": "vitest run web --config vitest.web.config.ts"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^1.2.12",
@@ -283,6 +286,7 @@
     "@eslint/js": "^10.0.1",
     "@fontsource-variable/fraunces": "^5.2.9",
     "@fontsource-variable/inter": "^5.2.8",
+    "@hono/node-server": "2.1.4",
     "@imgly/background-removal": "^1.7.0",
     "@leafer-in/editor": "^2.1.0",
     "@leafer-in/export": "^2.1.0",
@@ -326,6 +330,7 @@
     "dependency-cruiser": "18.2.0",
     "electron": "43.4.1",
     "electron-builder": "26.15.3",
+    "esbuild": "0.28.2",
     "eslint": "^10.4.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.1.1",
@@ -333,6 +338,7 @@
     "fast-check": "^4.8.0",
     "framer-motion": "^12.39.0",
     "globals": "^17.6.0",
+    "hono": "4.13.0",
     "i18next": "26.3.6",
     "img-fx": "0.5.1",
     "immer": "^11.1.8",

@@ -2,15 +2,15 @@ import { notifications, notificationsStore } from '@mantine/notifications'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { clearTaskCancel, isTaskCancelRequested, requestTaskCancel } from './localTaskControl'
 
-const mocks = vi.hoisted(() => ({ cancel: vi.fn(), interrupt: vi.fn(), unwatch: vi.fn(), status: vi.fn(), preview: vi.fn(), nodes: [] as Array<{ id: string; status: string; progress: { taskId: string } }> }))
-vi.mock('../../../desktop/bridge', () => ({ getDesktopBridge: () => ({ tasks: { cancel: mocks.cancel, comfyuiInterrupt: mocks.interrupt, comfyuiUnwatch: mocks.unwatch } }) }))
+const mocks = vi.hoisted(() => ({ cancel: vi.fn(), interrupt: vi.fn(), unwatch: vi.fn(), status: vi.fn(), preview: vi.fn(), platform: 'darwin', nodes: [] as Array<{ id: string; status: string; progress: { taskId: string } }> }))
+vi.mock('../../../desktop/bridge', () => ({ getDesktopBridge: () => ({ platform: mocks.platform, tasks: { cancel: mocks.cancel, comfyuiInterrupt: mocks.interrupt, comfyuiUnwatch: mocks.unwatch } }) }))
 vi.mock('../store/generationCanvasStore', () => ({ useGenerationCanvasStore: { getState: () => ({ nodes: mocks.nodes, setNodeStatus: mocks.status }) } }))
 vi.mock('../store/nodeLivePreviewStore', () => ({ useNodeLivePreviewStore: { getState: () => ({ clearPreview: mocks.preview }) } }))
 
 async function settled() { for (let step = 0; step < 5; step++) await Promise.resolve() }
 
 describe('cancel feedback stays with its requesting host', () => {
-  beforeEach(() => { vi.clearAllMocks(); notifications.clean(); clearTaskCancel('node'); mocks.nodes = []; mocks.unwatch.mockResolvedValue(undefined) })
+  beforeEach(() => { vi.clearAllMocks(); mocks.platform = 'darwin'; notifications.clean(); clearTaskCancel('node'); mocks.nodes = []; mocks.unwatch.mockResolvedValue(undefined) })
   it('shows local cancellation failure inline without changing the task', async () => {
     mocks.cancel.mockResolvedValue({ ok: false })
     const present = vi.fn()
@@ -41,4 +41,23 @@ describe('cancel feedback stays with its requesting host', () => {
     expect(mocks.unwatch).toHaveBeenCalledWith('queued')
     expect(notificationsStore.getState().notifications).toHaveLength(0)
   })
+  it('web cancellation remains running when the server cannot acknowledge a targeted cancel', async () => {
+    mocks.platform = 'web'
+    mocks.interrupt.mockResolvedValue({ ok: false, mode: 'failed' })
+    mocks.nodes = [{ id: 'node', status: 'running', progress: { taskId: 'owned-prompt' } }]
+    requestTaskCancel({ id: 'node', progress: { taskId: 'owned-prompt' } }, vi.fn())
+    await settled()
+    expect(isTaskCancelRequested('node')).toBe(false)
+    expect(mocks.status).not.toHaveBeenCalled()
+  })
+  it('web cancellation changes state only after acknowledgement for the same prompt', async () => {
+    mocks.platform = 'web'
+    mocks.interrupt.mockResolvedValue({ ok: true, mode: 'targeted' })
+    mocks.nodes = [{ id: 'node', status: 'running', progress: { taskId: 'owned-prompt' } }]
+    requestTaskCancel({ id: 'node', progress: { taskId: 'owned-prompt' } }, vi.fn())
+    await settled()
+    expect(isTaskCancelRequested('node')).toBe(true)
+    expect(mocks.status).toHaveBeenCalledWith('node', 'idle')
+  })
+
 })

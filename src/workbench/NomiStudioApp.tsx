@@ -65,6 +65,7 @@ import { runAssetSurfaceMigrations } from './assets/assetSurfaceMigration'
 import { ProductionCanvasLandingHost } from './production/ProductionCanvasLandingHost'
 import { ProjectHydrationSupersededError, createProjectCanvasReadSurfaceCoordinator, registerProjectCanvasReadSurface } from './project/projectCanvasReadSurface'
 import { openCreatedProject, shareInFlight, type ProjectCreationOutcome } from './project/projectCreationFlight'
+import { useWebGenerationSync } from './generationCanvas/runner/useWebGenerationSync'
 import { hydrateWorkbenchProjectWithRecovery } from './project/projectHydrationRecovery'
 import { runProjectAssetHealthCheck } from './generationCanvas/runner/projectAssetHealthCheck'
 import { abandonPendingCanvasWrite } from './generationCanvas/events/canvasWriteBoundary'
@@ -160,6 +161,7 @@ export default function NomiStudioApp(): JSX.Element {
   const projectPersistenceUnbindRef = React.useRef<(() => Promise<void>) | null>(null)
   const browserOpenedRef = React.useRef(false)
   const routeProjectId = React.useMemo(() => readProjectIdFromSearch(location.search), [location.search])
+  useWebGenerationSync(activeProject?.id)
   const activeProjectPersistenceKey = activeProject ? `${activeProject.id}\u0000${activeProject.name}` : ''
   const [projectSurface] = React.useState(() =>
     createProjectCanvasReadSurfaceCoordinator({
@@ -331,7 +333,7 @@ export default function NomiStudioApp(): JSX.Element {
         surfaceEpoch.assertCurrent()
         const committedBinding = await surfaceEpoch.commitCanvasRead(hydrated.id)
         surfaceEpoch.assertCurrent()
-        if (committedBinding) {
+        if (committedBinding && getDesktopBridge()?.agentLane) {
           await openProjectAgentLane(committedBinding.binding, {
             open: (binding) => laneClient.open(binding),
             recoverReceipts: async (workspaceId) => {
@@ -689,8 +691,8 @@ export default function NomiStudioApp(): JSX.Element {
           onDeleteProject={deleteProject}
           onRenameProject={renameLibraryProject}
           onNewProject={() => void newProject()}
-          onOpenFolder={() => void openWorkspaceFolder()}
-          onRevealProjectFolder={revealProjectFolder}
+          onOpenFolder={getDesktopBridge()?.platform === 'web' ? undefined : () => void openWorkspaceFolder()}
+          onRevealProjectFolder={getDesktopBridge()?.platform === 'web' ? undefined : revealProjectFolder}
           onOpenModelCatalog={settingsDialogController.openModelSettings}
           onOpenSettings={settingsDialogController.openDefaultSettings}
           onPlayJourneyTour={playJourneyTour}
