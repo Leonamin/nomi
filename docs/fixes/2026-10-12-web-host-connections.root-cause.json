@@ -32,7 +32,7 @@
     "src/workbench/project/projectRecordSchema.ts",
     "src/workbench/project/workbenchProjectSession.ts",
     "src/workbench/project/projectNormalize.ts",
-    "scripts/web/deploy-hamsbox.mjs",
+    "scripts/web/deploy-web-host.mjs",
     "scripts/web/install-browser.mjs",
     "web/runtimeHost.ts",
     "package.json",

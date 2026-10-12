@@ -74,7 +74,8 @@ app.on(['GET', 'HEAD'], ['/api/media/*', '/api/download/*'], async context => {
   if (isDownload) response.headers.set('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(path.basename(relativePath))}`)
   return response
 })
-app.get('/source', context => context.redirect(`https://github.com/Leonamin/nomi-web/tree/${process.env.NOMI_BUILD_SHA || 'main'}`))
+const sourceRepo = (process.env.NOMI_WEB_SOURCE_REPO || 'https://github.com/aqm857886159/Nomi').replace(/\.git$/, '').replace(/\/$/, '')
+app.get('/source', context => context.redirect(`${sourceRepo}/tree/${process.env.NOMI_BUILD_SHA || 'main'}`))
 app.get('/LICENSE', context => context.text(fs.readFileSync(path.join(process.cwd(), 'LICENSE'), 'utf8')))
 app.get('*', serveStatic({ root: './dist/web/client' }))
 app.onError((error, context) => {

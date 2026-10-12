@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { translateMediaValues } from './mediaUrls'
 import { resultUrl } from '../src/workbench/generationCanvas/runner/referenceUrl'
 import { resolveTimelineClipPlaybackUrl } from '../src/workbench/timeline/timelinePlaybackUrl'
-const origin = 'https://hamsbox.badger-viper.ts.net:8445'
+const origin = 'https://web.example.test'
 const canonical = 'nomi-local://asset/project/assets/clip.mp4'
 const browserUrl = `${origin}/api/media/project/assets/clip.mp4`
 describe('canonical media transport', () => {

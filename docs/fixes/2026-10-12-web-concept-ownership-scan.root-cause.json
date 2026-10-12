@@ -1296,7 +1296,7 @@
     },
     {
       "kind": "write",
-      "path": "scripts/web/deploy-hamsbox.mjs",
+      "path": "scripts/web/deploy-web-host.mjs",
       "symbol": "run"
     },
     {

@@ -1,17 +1,19 @@
 // One-shot renderer for the video-deconstruction v1 mockup.
 // Runs from the main repo's playwright (this worktree has no node_modules).
-// Usage: node scripts/render-deconstruction-shots.mjs [absolute-html-path] [absolute-out-dir]
+// Usage: node scripts/render-deconstruction-shots.mjs <absolute-html-path> [absolute-out-dir]
+// The mockup HTML lives outside this repo; pass its absolute path.
 import { chromium } from 'playwright'
 import { pathToFileURL } from 'node:url'
 import { mkdirSync } from 'node:fs'
-import { join } from 'node:path'
+import { basename, dirname, join } from 'node:path'
 
-const htmlPath =
-  process.argv[2] ||
-  '/Users/aoqimin/Desktop/nomi-w3-design/docs/design/mockups/2026-09-01-video-deconstruction-v1.html'
-const outDir =
-  process.argv[3] ||
-  '/Users/aoqimin/Desktop/nomi-w3-design/docs/design/mockups/2026-09-01-video-deconstruction-v1'
+const htmlPath = process.argv[2]
+if (!htmlPath) {
+  console.error('Usage: node scripts/render-deconstruction-shots.mjs <absolute-html-path> [absolute-out-dir]')
+  process.exit(1)
+}
+// Default output beside the mockup HTML, named after it without the extension.
+const outDir = process.argv[3] || join(dirname(htmlPath), basename(htmlPath).replace(/\.[^.]+$/, ''))
 
 mkdirSync(outDir, { recursive: true })
 
