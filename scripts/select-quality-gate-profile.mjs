@@ -9,10 +9,43 @@ function changedEntries({ cwd = process.cwd(), base, head } = {}) {
   return gitNameStatus(['diff', '--name-status', base, head], { cwd })
 }
 
+/**
+ * 手动单面复跑的白名单（2026-10-12）。每个只开自己那一格，其余面照旧 skipped：
+ * 这不是放宽判据，而是把人工恢复的代价从「整张矩阵」降到「一格」。
+ * PR / push / merge_group 永远走 classifyValidationPolicy，进不到这里。
+ */
+const MANUAL_SURFACE_PROFILES = Object.freeze({
+  contracts: { unit: 'none', coreSmoke: false, desktop: false, journeys: false, canvas: 'none', performance: false, package: false },
+  unit: { unit: 'full', coreSmoke: false, desktop: false, journeys: false, canvas: 'none', performance: false, package: false },
+  'core-smoke': { unit: 'none', coreSmoke: true, desktop: false, journeys: false, canvas: 'none', performance: false, package: false },
+  e2e: { unit: 'none', coreSmoke: false, desktop: true, journeys: true, canvas: 'none', performance: false, package: false },
+  'canvas-acceptance': { unit: 'none', coreSmoke: false, desktop: false, journeys: false, canvas: 'full', performance: false, package: false },
+  'canvas-performance': { unit: 'none', coreSmoke: false, desktop: false, journeys: false, canvas: 'none', performance: true, package: false },
+  'mac-package': { unit: 'none', coreSmoke: false, desktop: false, journeys: false, canvas: 'none', performance: false, package: true },
+})
+
+export const MANUAL_SURFACES = Object.freeze(Object.keys(MANUAL_SURFACE_PROFILES))
+
+function manualSurfaceProfile(name, files) {
+  const profile = MANUAL_SURFACE_PROFILES[name]
+  if (!profile) return null
+  const reason = `manual_surface:${name}`
+  return { ...profile, release: false, failClosed: false, reason, reasons: [reason], files }
+}
+
 export function resolveProfileFromEnvironment(env = process.env, cwd = process.cwd()) {
   const eventName = env.GITHUB_EVENT_NAME || 'pull_request'
   const requestedMode = env.NOMI_VALIDATION_MODE || ''
   const entries = changedEntries({ cwd, base: env.NOMI_BASE_SHA, head: env.NOMI_HEAD_SHA || 'HEAD' })
+  // 手动单面复跑（2026-10-12，workflow_dispatch 的 surfaces 输入）：把「整张矩阵」换成「恰好那一格」。
+  // 只认在白名单里的名字；给了不认识的 surface 就 fail-closed 到全量，绝不静默跑半套还报绿。
+  const onlySurface = String(env.NOMI_ONLY_SURFACE || '').trim()
+  if (onlySurface && onlySurface !== 'all') {
+    const manual = manualSurfaceProfile(onlySurface, entries)
+    if (manual) return { ...manual, onlySurface }
+    const full = classifyValidationPolicy(entries, { requestedMode: 'full' })
+    return { ...full, reason: `unknown_manual_surface:${onlySurface}`, onlySurface: '' }
+  }
   return classifyValidationPolicy(entries, { eventName, requestedMode })
 }
 
@@ -24,7 +57,7 @@ export function writeGithubOutput(result, outputPath = process.env.GITHUB_OUTPUT
   })
   fs.appendFileSync(
     outputPath,
-    `${[...values, `reason=${result.reason}`, `changed_count=${result.files.length}`].join('\n')}\n`,
+    `${[...values, `reason=${result.reason}`, `changed_count=${result.files.length}`, `only_surface=${result.onlySurface ?? ''}`].join('\n')}\n`,
   )
 }
 
