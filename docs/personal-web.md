@@ -38,6 +38,16 @@ NOMI_WEB_DATA_DIR=/absolute/dedicated/data NOMI_WEB_PORT=9031 corepack pnpm run 
 | `NOMI_WEB_NODE_BIN` | unit의 node 실행 파일 | 실행 중인 node |
 | `NOMI_WEB_SSH_BIN` | unit의 ssh 실행 파일 | `/usr/bin/ssh` |
 | `NOMI_WEB_SYSTEMD_USER_DIR` | user unit 디렉터리 | `$HOME/.config/systemd/user` |
+| `NOMI_WEB_KEEP_RELEASES` | 활성화 후 남길 release 수(미지정 = 전부 보존) | (없음) |
+
+`scripts/web/deploy.sh` 는 위 절차(호스트 저장소 fetch → 정확한 커밋 release worktree → 배포 스크립트 호출)를 한 줄로 묶는다. 호스트 설정 파일을 `--env` 로 넘기면 경로·포트·호스트를 그 파일에서 읽는다. **데이터 루트는 건드리지 않는다.**
+
+```sh
+scripts/web/deploy.sh --env /opt/nomi/deploy.env            # 호스트 저장소 origin/main 최신
+scripts/web/deploy.sh --env /opt/nomi/deploy.env <40자리 commit>
+```
+
+`NOMI_WEB_KEEP_RELEASES=1` 로 배포하면 새 버전으로 재시작한 뒤 **이전 버전의 release 산출물을 지운다**(데이터·프로젝트·내보내기는 보존). 미지정이면 지금까지처럼 모든 release를 보존해 롤백 여지를 남긴다.
 
 commit → push → 웹 호스트의 전용 Git 저장소 fetch → exact commit release worktree 순서로만 소스를 전달한다. `node scripts/web/deploy-web-host.mjs <sha>`는 current/release의 tracked 및 untracked dirty 상태와 포트를 검사하고, clean release에서 install/build한 뒤 이 fork가 관리하는 unit과 current만 전환한다. 기존 unit과 Tailscale 경로는 변경하지 않는다. dirty checkout을 reset/clean/덮어쓰지 않는다.
 

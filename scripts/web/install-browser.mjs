@@ -18,14 +18,19 @@ export function installWebBrowser({ release, browserRoot }) {
   execFileSync('corepack', ['pnpm', 'exec', 'playwright', 'install', 'chromium'], { cwd: release, env, stdio: 'inherit' })
   const restriction = '/proc/sys/kernel/apparmor_restrict_unprivileged_userns'
   if (fs.existsSync(restriction) && fs.readFileSync(restriction, 'utf8').trim() === '1') {
-    if (fs.existsSync(profilePath) && !fs.readFileSync(profilePath, 'utf8').startsWith(marker)) throw new Error('Existing unrelated AppArmor profile preserved')
     const profile = `${marker}\nprofile nomi-web-chromium ${browserRoot}/chromium-*/chrome-linux64/chrome flags=(unconfined) {\n  userns,\n}\nprofile nomi-web-headless ${browserRoot}/chromium_headless_shell-*/chrome-headless-shell-linux64/chrome-headless-shell flags=(unconfined) {\n  userns,\n}\n`
-    const temporary = path.join(browserRoot, 'nomi-web-chromium.profile')
-    fs.writeFileSync(temporary, profile, { mode: 0o600 })
-    try {
-      execFileSync('sudo', ['-n', 'install', '-m', '0644', temporary, profilePath], { stdio: 'inherit' })
-      execFileSync('sudo', ['-n', 'apparmor_parser', '-r', profilePath], { stdio: 'inherit' })
-    } finally { fs.unlinkSync(temporary) }
+    const installed = fs.existsSync(profilePath) ? fs.readFileSync(profilePath, 'utf8') : ''
+    if (installed && !installed.startsWith(marker)) throw new Error('Existing unrelated AppArmor profile preserved')
+    // 2026-10-12：内容一字不差就**不碰**它。此前每次部署都 `sudo -n` 重写一遍同一份 profile——
+    // 于是没有免密 sudo 的机器根本部署不了，而这台机器上那份 profile 本来就是它。幂等比"每次都重申"更安全。
+    if (installed !== profile) {
+      const temporary = path.join(browserRoot, 'nomi-web-chromium.profile')
+      fs.writeFileSync(temporary, profile, { mode: 0o600 })
+      try {
+        execFileSync('sudo', ['-n', 'install', '-m', '0644', temporary, profilePath], { stdio: 'inherit' })
+        execFileSync('sudo', ['-n', 'apparmor_parser', '-r', profilePath], { stdio: 'inherit' })
+      } finally { fs.unlinkSync(temporary) }
+    }
   }
   // Match the service's NoNewPrivileges setting before activating the release.
   execFileSync('setpriv', ['--no-new-privs', process.execPath, '--input-type=module', '--eval',
