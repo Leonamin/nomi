@@ -28,6 +28,7 @@ import { mutateWebProject, projectCanvas } from './projectState'
 
 export type WebProductionProjectPortOptions = {
   documentId?: string
+  beforeStoryboardWrite?: (current: ProjectRecord, input: Record<string, unknown>) => void
   readProject?: typeof readProject
   saveProject?: typeof saveProject
   mutateProject?: typeof mutateWebProject
@@ -118,6 +119,7 @@ export function createWebProductionProjectPort(binding: ProjectBinding, options:
       const current = record()
       const payload = projectCanvas(current)
       if (op === 'storyboard.upsert-design' || op === 'storyboard.patch-design') {
+        options.beforeStoryboardWrite?.(current, data)
         const store = createStore<WorkbenchDocumentSlice & { persistRevision: number }>()(immer((set, get, api) => ({
           ...createWorkbenchDocumentSlice(set as Parameters<typeof createWorkbenchDocumentSlice>[0], get as Parameters<typeof createWorkbenchDocumentSlice>[1], api as Parameters<typeof createWorkbenchDocumentSlice>[2], () => {}),
           persistRevision: 0,
@@ -213,6 +215,7 @@ export function createWebProductionProjectPort(binding: ProjectBinding, options:
   return {
     documentPort,
     requestRenderer,
+    readAdmittedDocumentState: () => expectedDocumentState ? structuredClone(expectedDocumentState) : undefined,
     readDocumentState: (documentId?: string) => documentSessionState(admittedDocumentFor(record(), documentId)),
     readDocument: (documentId?: string) => admittedDocumentFor(record(), documentId),
   }

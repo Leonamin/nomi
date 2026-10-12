@@ -139,3 +139,33 @@ it('rejects another document selector within the same admitted project', async (
   const nextTurn = createWebProductionProjectPort(binding, { documentId: otherDocument.id, readProject: () => test.current(), saveProject: async () => test.current(), assertBinding: () => {} })
   expect(await nextTurn.documentPort.read('full', context())).toEqual({ text: '다른 원고' })
 })
+
+it('checks storyboard freshness inside the same project mutation lock before authoring', async () => {
+  const test = fixture()
+  let hasMutationLock = false
+  let saves = 0
+  const input = { projectId: binding.projectId, documentId: test.document.id, designId: 'design-lock', initiator: 'agent', plan: createEmptyStoryboardPlan() }
+  const port = createWebProductionProjectPort(binding, {
+    readProject: () => test.current(), saveProject: async () => { saves += 1; return test.current() }, assertBinding: () => {},
+    mutateProject: async (_id, task) => { hasMutationLock = true; try { return await task() } finally { hasMutationLock = false } },
+    beforeStoryboardWrite: (current, selectedInput) => { expect(hasMutationLock).toBe(true); expect(current).toBe(test.current()); expect(selectedInput).toBe(input); throw new Error('source changed') },
+  })
+  await expect(port.requestRenderer('storyboard.upsert-design', input)).rejects.toThrow('source changed')
+  expect(saves).toBe(0)
+  expect(projectCanvas(test.current()).storyboardDesignsByDocumentId).toEqual({})
+})
+
+it('exposes an isolated admitted document pin without refreshing unread human edits', async () => {
+  const test = fixture()
+  const admitted = test.port.readAdmittedDocumentState()!
+  const payload = projectCanvas(test.current())
+  payload.workbenchDocuments![0] = { ...applyWholeDocumentWrite(test.document, 'replace', '사람의 새 원고'), updatedAt: admitted.revision! + 1 }
+  expect(test.port.readAdmittedDocumentState()).toEqual(admitted)
+  const isolated = test.port.readAdmittedDocumentState()!
+  isolated.revision = 0
+  expect(test.port.readAdmittedDocumentState()).toEqual(admitted)
+  await test.port.documentPort.read('full', context())
+  expect(test.port.readAdmittedDocumentState()).toMatchObject({ revision: admitted.revision! + 1 })
+  await test.port.documentPort.write({ operation: 'append', content: 'agent append' }, context())
+  expect(test.port.readAdmittedDocumentState()).toEqual(test.port.readDocumentState())
+})

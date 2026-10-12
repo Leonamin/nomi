@@ -31,7 +31,8 @@
     "Both hosts use the identical canonical text schema and document write algorithm.",
     "Materialization preserves candidate revision, detached nodes, existing selections and user-owned running generation.",
     "Every server write is serialized and expectedBinding pinned.",
-    "A turn captures one document admission snapshot; missing documents and explicit selectors for another document fail stale even when the project binding is unchanged. A fresh turn may explicitly admit that document."
+    "A turn captures one document admission snapshot; missing documents and explicit selectors for another document fail stale even when the project binding is unchanged. A fresh turn may explicitly admit that document.",
+    "Storyboard source freshness executes inside the same mutateProject critical section before authoring, using that exact current record. The admitted document pin observer returns a copy without refreshing unread human edits."
   ],
   "doors": [
     {
