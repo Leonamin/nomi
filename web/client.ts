@@ -39,10 +39,15 @@ export const ipcRenderer = {
   },
   removeListener(channel: string, listener: Listener) { listeners.get(channel)?.delete(listener) },
 }
-const events = new EventSource('/api/events')
+let surfaceId: string | undefined
+const events = new EventSource(`/api/events?clientId=${encodeURIComponent(clientId)}`)
 events.onmessage = event => {
   const { channel, payload } = JSON.parse(event.data)
-  if (channel === 'nomi:web:session') { if (payload.token !== token) location.reload(); return }
+  if (channel === 'nomi:web:session') {
+    if (payload.token !== token || (surfaceId && surfaceId !== payload.surfaceId)) location.reload()
+    surfaceId = payload.surfaceId
+    return
+  }
   for (const callback of listeners.get(channel) ?? []) callback(null, translateMediaValues(payload, 'browser'))
 }
 export const webUtils = { getPathForFile: () => '' }

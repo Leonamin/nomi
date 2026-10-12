@@ -19,7 +19,7 @@ import { appendEvents, readEvents } from '../electron/events/eventLogRepository'
 import { deriveGenerationEtaStats } from '../electron/events/generationEtaStats'
 import { listUserPrompts, addUserPrompt, updateUserPrompt, deleteUserPrompt } from '../electron/promptLibrary/userPromptStore'
 import { getProjectLocationState } from '../electron/runtimePaths'
-import { createWebSurface } from './surface'
+import { createWebSurface, WebSurfaceSessions } from './surface'
 import { WebGenerationJobs } from './generationJobs'
 import { saveWebProject } from './projectState'
 import { mintSpendGrant } from '../electron/spendGrant'
@@ -30,18 +30,13 @@ import { setProbedVideoCodecs } from '../electron/assets/videoPlaybackSupport'
 import { hostEvents } from './runtimeHost'
 
 type Surface = ReturnType<typeof createWebSurface>
-const surfaces = new Map<string, Surface>()
+const surfaces = new WebSurfaceSessions()
 const exportExecutions = new Map<string, Promise<unknown>>()
 export const generationJobs = new WebGenerationJobs(path.join(process.env.NOMI_WEB_DATA_DIR!, 'jobs'))
 export function getWebSurface(clientId: string, origin: string) {
-  if (!/^[a-f0-9-]{36}$/.test(clientId)) throw new Error('Invalid browser session')
-  let surface = surfaces.get(clientId)
-  if (!surface) {
-    if (surfaces.size > 256) throw new Error('Too many browser sessions; restart the web service to release unused sessions')
-    surface = createWebSurface(origin); surfaces.set(clientId, surface)
-  }
-  return surface
+  return surfaces.get(clientId, origin)
 }
+export function acquireWebSurface(clientId: string, origin: string) { return surfaces.acquire(clientId, origin) }
 function selection(surface: Surface) {
   const selected = surface.registry.getCommittedProjectSelection()
   if (!selected) throw new Error('Open a project before starting this operation')

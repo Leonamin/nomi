@@ -1,0 +1,132 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-web-surface-lifecycle",
+  "problem_type": "Browser surface authority lifecycle",
+  "symptom": "Closing or refreshing pages permanently consumes server surface capacity until every RPC requires a service restart",
+  "direct_cause": "Page UUID surfaces were held in a permanent Map without an SSE lease or expiry",
+  "class_root": "Browser authorization surfaces must be leased and reclaimed separately from durable background jobs",
+  "affected_population": [
+    "Repeated page reloads",
+    "Closed tabs",
+    "Transient SSE reconnects"
+  ],
+  "scope_paths": [
+    "web/surface.ts",
+    "web/rpc.ts",
+    "web/server.ts",
+    "web/client.ts"
+  ],
+  "entry_points": [
+    "RPC surface lookup",
+    "Upload surface lookup",
+    "SSE attach and abort",
+    "Browser SSE reconnect"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "The Nomi surface authority is a domain authorization object; jobs have separate persistent ownership",
+  "invariants": [
+    "Live surfaces remain stable",
+    "Disconnected surfaces expire and can be reclaimed without restarting background jobs",
+    "Expired reconnects reload and recommit project authorization"
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "web/server.ts",
+      "symbol": "getWebSurface"
+    },
+    {
+      "kind": "write",
+      "path": "web/rpc.ts",
+      "symbol": "getWebSurface"
+    },
+    {
+      "kind": "write",
+      "path": "web/surface.ts",
+      "symbol": "createWebSurface"
+    },
+    {
+      "kind": "read",
+      "path": "web/client.ts",
+      "symbol": "EventSource"
+    }
+  ],
+  "door_reduction": {
+    "before": 4,
+    "after": 4,
+    "why_not": "RPC/upload, domain authorization, SSE connection and browser reconnect are distinct transport boundaries for the same lease"
+  },
+  "generality_proof": "A single surface lease pool preserves connected clients and expires disconnected clients; capacity can reclaim only unleased entries, and browser detects a replaced authority",
+  "shared_boundaries": [
+    {
+      "path": "web/surface.ts",
+      "symbol": "WebSurfaceSessions",
+      "responsibility": "Lease existing domain surfaces independently from durable jobs"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "web/server.ts",
+      "entry_point": "getWebSurface",
+      "disposition": "enforced",
+      "evidence": "RPC and upload resolve through one leased pool"
+    },
+    {
+      "path": "web/client.ts",
+      "entry_point": "EventSource",
+      "disposition": "enforced",
+      "evidence": "SSE retains an authority and detects replacement during reconnect"
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every new page UUID repeats the leak",
+    "same_class_scan": [
+      "door-map getWebSurface --roots=web: RPC and upload in server.ts",
+      "door-map createWebSurface --roots=web: rpc creation; inspected EventSource reconnect path"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "web/surface.ts",
+    "invariant": "Unleased surfaces are reclaimed without interrupting server jobs",
+    "failure_mode": "Capacity rejects only when all remaining surfaces are live; replaced authority triggers browser reload",
+    "exception_policy": "none",
+    "strategy": "SSE lease with 30-second reconnect grace and bounded unleased eviction",
+    "artifacts": [
+      "web/surface.ts",
+      "web/rpc.ts",
+      "web/server.ts",
+      "web/client.ts"
+    ]
+  },
+  "regression_tests": [
+    "web/surfaceSessions.test.ts"
+  ],
+  "class_regression_tests": [
+    "web/surfaceSessions.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "not-applicable",
+    "rationale": "New web transport keeps the existing runtime contract; there is no alternate legacy collector",
+    "removed_paths": []
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "The application owns source windows and generation completion policy",
+    "exit_criteria": []
+  },
+  "migration": "Existing browser UUIDs are leased on reconnect; no durable project or job changes",
+  "residual_risks": [
+    "Live deployment disconnect and reconnect need verification"
+  ],
+  "recurrence_check_on": "2026-11-11",
+  "detected_by": "review",
+  "invariant_owner_layer": {
+    "layer": "web/surface.ts",
+    "tests": [
+      "web/surfaceSessions.test.ts"
+    ],
+    "why": "The lease pool owns volatile browser authorities"
+  }
+}

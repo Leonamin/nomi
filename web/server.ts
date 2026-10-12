@@ -9,7 +9,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { randomBytes } from 'node:crypto'
 import { hostEvents } from './runtimeHost'
-import { dispatchWebRpc, getWebSurface, uploadWebAsset, initWebDomain } from './rpc'
+import { dispatchWebRpc, getWebSurface, acquireWebSurface, uploadWebAsset, initWebDomain } from './rpc'
 import { translateMediaValues } from './mediaUrls'
 import { handleNomiLocalRequest } from '../electron/protocol/localProtocol'
 
@@ -50,10 +50,14 @@ app.post('/api/upload', bodyLimit({ maxSize: 256 * 1024 * 1024 }), async context
   return context.json({ ok: true, value: translateMediaValues(value, 'browser') })
 })
 app.get('/api/events', context => streamSSE(context, async stream => {
-  await stream.writeSSE({ data: JSON.stringify({ channel: 'nomi:web:session', payload: { token } }) })
+  const lease = acquireWebSurface(context.req.query('clientId') || '', origin)
   const forward = (message: unknown) => { void stream.writeSSE({ data: JSON.stringify(translateMediaValues(message, 'browser')) }).catch(() => undefined) }
-  hostEvents.on('message', forward)
-  await new Promise<void>(resolve => stream.onAbort(() => { hostEvents.off('message', forward); resolve() }))
+  try {
+    await stream.writeSSE({ data: JSON.stringify({ channel: 'nomi:web:session', payload: { token, surfaceId: lease.surfaceId } }) })
+    hostEvents.on('message', forward)
+    await new Promise<void>(resolve => stream.onAbort(resolve))
+  }
+  finally { hostEvents.off('message', forward); lease.release() }
 }))
 app.on(['GET', 'HEAD'], ['/api/media/*', '/api/download/*'], async context => {
   const requestPath = new URL(context.req.url).pathname
