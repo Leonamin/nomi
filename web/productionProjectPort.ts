@@ -56,11 +56,14 @@ export function createWebProductionProjectPort(binding: ProjectBinding, options:
     }
     return current
   }
-  const admittedDocumentId = options.documentId ?? projectCanvas(record()).activeDocumentId
-  function document(current: ProjectRecord, documentId = admittedDocumentId) {
-    const payload = projectCanvas(current)
-    const id = documentId ?? payload.activeDocumentId
-    const selected = payload.workbenchDocuments?.find(value => value.id === id)
+  const admittedCanvas = projectCanvas(record())
+  const admittedDocumentId = options.documentId ?? admittedCanvas.activeDocumentId
+  const admittedDocument = admittedCanvas.workbenchDocuments?.find(value => value.id === admittedDocumentId)
+  function admittedDocumentFor(current: ProjectRecord, requestedDocumentId = admittedDocumentId) {
+    // One turn owns one admitted document. A later active editor or explicit selector
+    // cannot grant this turn authority over a newly selected or newly created document.
+    if (!admittedDocument || !admittedDocumentId || requestedDocumentId !== admittedDocumentId) throw new SurfacePortWireError('surface_port_stale')
+    const selected = projectCanvas(current).workbenchDocuments?.find(value => value.id === admittedDocumentId)
     if (!selected) throw new SurfacePortWireError('surface_port_stale')
     return selected
   }
@@ -70,20 +73,19 @@ export function createWebProductionProjectPort(binding: ProjectBinding, options:
     await save(projectId, { ...current, expectedBinding: binding, payload: next })
     options.onChange?.(projectId)
   }
-  const admittedDocument = projectCanvas(record()).workbenchDocuments?.find(value => value.id === admittedDocumentId)
   let expectedDocumentState = options.documentPreconditions ?? (admittedDocument ? documentSessionState(admittedDocument) : undefined)
   const documentPort: DocumentLanePort = {
     read: async (scope, context) => {
       context.signal.throwIfAborted()
       if (scope !== 'full') throw new SurfacePortWireError('capability_unsupported')
-      const selected = document(record())
+      const selected = admittedDocumentFor(record())
       expectedDocumentState = documentSessionState(selected)
       return { text: workbenchDocumentPlainText(selected) }
     },
     write: async (input, context) => mutate(projectId, async () => {
       context.signal.throwIfAborted()
       const current = record()
-      const selected = document(current)
+      const selected = admittedDocumentFor(current)
       assertDocumentWritePreconditions(expectedDocumentState, documentSessionState(selected))
       const next = applyWholeDocumentWrite(selected, input.operation, input.content)
       const payload = projectCanvas(current)
@@ -95,7 +97,7 @@ export function createWebProductionProjectPort(binding: ProjectBinding, options:
   async function writeDocument(input: DocumentSessionWriteInput) {
     return mutate(projectId, async () => {
       const current = record()
-      const selected = document(current, input.target.kind === 'document' ? input.target.documentId : undefined)
+      const selected = admittedDocumentFor(current, input.target.kind === 'document' ? input.target.documentId : undefined)
       if (input.target.kind !== 'document' || input.target.anchor.kind !== 'whole-document') throw new SurfacePortWireError('capability_unsupported')
       assertDocumentWritePreconditions(input.preconditions.document, documentSessionState(selected))
       const next = applyWholeDocumentWrite(selected, input.operation, input.content)
@@ -109,7 +111,7 @@ export function createWebProductionProjectPort(binding: ProjectBinding, options:
     if (data.projectId !== undefined && data.projectId !== projectId) throw new SurfacePortWireError('surface_port_stale')
     if (op === 'document.read') {
       if (data.scope === 'selection') throw new SurfacePortWireError('capability_unsupported')
-      return { text: workbenchDocumentPlainText(document(record(), typeof data.documentId === 'string' ? data.documentId : undefined)) }
+      return { text: workbenchDocumentPlainText(admittedDocumentFor(record(), typeof data.documentId === 'string' ? data.documentId : undefined)) }
     }
     if (op === 'document.write') return writeDocument(data as unknown as DocumentSessionWriteInput)
     return mutate(projectId, async () => {
@@ -211,7 +213,7 @@ export function createWebProductionProjectPort(binding: ProjectBinding, options:
   return {
     documentPort,
     requestRenderer,
-    readDocumentState: (documentId?: string) => documentSessionState(document(record(), documentId)),
-    readDocument: (documentId?: string) => document(record(), documentId),
+    readDocumentState: (documentId?: string) => documentSessionState(admittedDocumentFor(record(), documentId)),
+    readDocument: (documentId?: string) => admittedDocumentFor(record(), documentId),
   }
 }

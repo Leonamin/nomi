@@ -114,3 +114,28 @@ it('materializes canvas-only projects without requiring a mounted or persisted c
   await expect(port.requestRenderer('production.materialize-shots', { projectId: binding.projectId, materializationOperationId: 'canvas-only', shots: [{ shotId: 'shot', title: '샷', prompt: '밤 거리' }] })).resolves.toMatchObject({ createdNodeIds: [expect.any(String)] })
   expect(projectCanvas(current).generationCanvas.nodes).toHaveLength(1)
 })
+
+it('never retargets a document created after a canvas-only turn was admitted', async () => {
+  let current: ProjectRecord = { id: binding.projectId, name: 'canvas only', version: 1, createdAt: 1, updatedAt: 1, payload: { generationCanvas: createDefaultGenerationCanvasSnapshot(), timeline: { tracks: [], clips: [] } } }
+  let saves = 0
+  const port = createWebProductionProjectPort(binding, { readProject: () => current, saveProject: async (_id, next) => { current = next as ProjectRecord; saves += 1; return current }, assertBinding: () => {} })
+  const humanDocument = applyWholeDocumentWrite(createDefaultWorkbenchDocument(), 'replace', '사람이 새로 작성한 원고')
+  current = { ...current, payload: { ...projectCanvas(current), workbenchDocuments: [humanDocument], activeDocumentId: humanDocument.id } }
+  await expect(port.documentPort.read('full', context())).rejects.toThrow('surface_port_stale')
+  await expect(port.documentPort.write({ operation: 'replace', content: '이전 턴의 생성' }, context())).rejects.toThrow('surface_port_stale')
+  expect(saves).toBe(0)
+  expect(workbenchDocumentPlainText(projectCanvas(current).workbenchDocuments![0])).toBe('사람이 새로 작성한 원고')
+})
+
+it('rejects another document selector within the same admitted project', async () => {
+  const test = fixture()
+  const otherDocument = applyWholeDocumentWrite(createDefaultWorkbenchDocument(), 'replace', '다른 원고')
+  const payload = projectCanvas(test.current())
+  payload.workbenchDocuments!.push(otherDocument)
+  expect(() => test.port.readDocument(otherDocument.id)).toThrow('surface_port_stale')
+  await expect(test.port.requestRenderer('document.read', { projectId: binding.projectId, documentId: otherDocument.id })).rejects.toThrow('surface_port_stale')
+  await expect(test.port.requestRenderer('document.write', { projectId: binding.projectId, target: { kind: 'document', documentId: otherDocument.id, anchor: { kind: 'whole-document' } }, preconditions: {}, operation: 'replace', content: '잘못된 타깃' })).rejects.toThrow('surface_port_stale')
+  expect(test.saves()).toBe(0)
+  const nextTurn = createWebProductionProjectPort(binding, { documentId: otherDocument.id, readProject: () => test.current(), saveProject: async () => test.current(), assertBinding: () => {} })
+  expect(await nextTurn.documentPort.read('full', context())).toEqual({ text: '다른 원고' })
+})

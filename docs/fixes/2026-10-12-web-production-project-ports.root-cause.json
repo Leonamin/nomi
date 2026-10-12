@@ -30,7 +30,8 @@
   "invariants": [
     "Both hosts use the identical canonical text schema and document write algorithm.",
     "Materialization preserves candidate revision, detached nodes, existing selections and user-owned running generation.",
-    "Every server write is serialized and expectedBinding pinned."
+    "Every server write is serialized and expectedBinding pinned.",
+    "A turn captures one document admission snapshot; missing documents and explicit selectors for another document fail stale even when the project binding is unchanged. A fresh turn may explicitly admit that document."
   ],
   "doors": [
     {
@@ -634,7 +635,8 @@
       "door-map materializeShots --roots=src,electron,web",
       "read documentSessionPort, agentStoryboardDesign and multiShotCanvasLanding owners",
       "door-map complete changed production files --roots=src,electron,web (actual exported symbols, including types and read adapters)",
-      "door-map actual shared owner dependency references markInputRule markPasteRule HighlightWithZh AnyExtension createGroupId frameBoundsFromMembers resolveNodeVisualSize --roots=src,electron,web"
+      "door-map actual shared owner dependency references markInputRule markPasteRule HighlightWithZh AnyExtension createGroupId frameBoundsFromMembers resolveNodeVisualSize --roots=src,electron,web",
+      "P1 RW: document resolver admission is one owner; characteristic red tests cover later document creation and another explicit selector before refactoring."
     ]
   },
   "prevention": {
