@@ -20,23 +20,44 @@ NOMI_WEB_DATA_DIR=/absolute/dedicated/data NOMI_WEB_PORT=9031 corepack pnpm run 
 
 `NOMI_WEB_DATA_DIR`는 기존 desktop 데이터와 분리된 실제 디렉터리여야 한다. symlink 데이터 루트/설정/프로젝트 루트를 거절한다. 프로젝트·assets·exports는 이 루트 아래에만 만들어진다. 정적 파일은 `dist/web/client`에 한정하고 미디어는 기존 owned-file/range 경계를 사용한다. 공개 소스 `/source`는 실행한 `NOMI_BUILD_SHA`를 가리키며 설정의 About에도 소스와 AGPL 링크가 있다.
 
-## hamsbox 운영
+## 웹 호스트 운영
 
-- 코드: `/home/leonamin/apps/nomi-web/releases/<40자리 commit>`, `current` symlink
-- 데이터: `/home/leonamin/nomi-web-data`
-- 서비스: `nomi-web.service`, `nomi-web-comfyui.service` (user systemd)
-- 웹: `127.0.0.1:9031`, Tailscale 내부 HTTPS 8445
-- 별도 GPU 터널: `127.0.0.1:19188` → SSH leo → `127.0.0.1:8188`
+`scripts/web/deploy-web-host.mjs`는 경로·포트·호스트를 전부 환경변수에서 읽는다. 기본값은 `$HOME` 기준이라 특정 장비에 묶이지 않는다.
 
-commit → push → hamsbox의 전용 Git 저장소 fetch → exact commit release worktree 순서로만 소스를 전달한다. `node scripts/web/deploy-hamsbox.mjs <sha>`는 current/release의 tracked 및 untracked dirty 상태와 포트를 검사하고, clean release에서 install/build한 뒤 이 fork가 관리하는 unit과 current만 전환한다. 기존 Nomi/Japonica unit과 Tailscale 경로는 변경하지 않는다. dirty checkout을 reset/clean/덮어쓰지 않는다.
+| 환경변수 | 의미 | 기본값 |
+| --- | --- | --- |
+| `NOMI_WEB_RELEASE_DIR` | release/current 루트 | `$HOME/apps/nomi-web` |
+| `NOMI_WEB_DATA_DIR` | 전용 웹 데이터 루트 | `$HOME/nomi-web-data` |
+| `NOMI_WEB_LEGACY_DATA_DIR` | 분리해야 하는 기존 데이터 루트 | `$HOME/nomi-data` |
+| `NOMI_WEB_ORIGIN` | 정확한 Host/Origin 경계 | `http://127.0.0.1:$NOMI_WEB_PORT` |
+| `NOMI_WEB_PORT` | 로컬 웹 포트 | `9031` |
+| `NOMI_WEB_COMFYUI_SSH` | GPU 터널 ssh 대상(`user@host`), 비우면 터널 unit을 만들지 않음 | (없음) |
+| `NOMI_WEB_COMFYUI_PORT` | 로컬 터널 포트 | `19188` |
+| `NOMI_WEB_COMFYUI_TARGET_PORT` | 원격 ComfyUI 포트 | `8188` |
+| `NOMI_WEB_SOURCE_REPO` | `/source`가 가리킬 공개 소스 base | upstream `aqm857886159/Nomi` |
+| `NOMI_WEB_NODE_BIN` | unit의 node 실행 파일 | 실행 중인 node |
+| `NOMI_WEB_SSH_BIN` | unit의 ssh 실행 파일 | `/usr/bin/ssh` |
+| `NOMI_WEB_SYSTEMD_USER_DIR` | user unit 디렉터리 | `$HOME/.config/systemd/user` |
+
+commit → push → 웹 호스트의 전용 Git 저장소 fetch → exact commit release worktree 순서로만 소스를 전달한다. `node scripts/web/deploy-web-host.mjs <sha>`는 current/release의 tracked 및 untracked dirty 상태와 포트를 검사하고, clean release에서 install/build한 뒤 이 fork가 관리하는 unit과 current만 전환한다. 기존 unit과 Tailscale 경로는 변경하지 않는다. dirty checkout을 reset/clean/덮어쓰지 않는다.
+
+개인 배포 예시(`user@host`, tailnet HTTPS):
+
+```sh
+NOMI_WEB_RELEASE_DIR=/home/you/apps/nomi-web \
+NOMI_WEB_DATA_DIR=/home/you/nomi-web-data \
+NOMI_WEB_ORIGIN=https://host.tailnet.example:8445 \
+NOMI_WEB_COMFYUI_SSH=user@host \
+node scripts/web/deploy-web-host.mjs <40자리 commit>
+```
 
 최초 모델 등록은 `scripts/web/seed-local-comfyui.mjs`가 검증된 auth-none ComfyUI 선언만 읽어 새 profile로 복사한다. API 키는 복사하지 않으며 원본 catalog를 쓰지 않는다. 이미 존재하는 웹 catalog도 덮어쓰지 않는다.
 
 ```sh
-node scripts/web/seed-local-comfyui.mjs /read-only/model-catalog.json /home/leonamin/nomi-web-data VERIFIED_MODEL_KEY http://127.0.0.1:19188
+node scripts/web/seed-local-comfyui.mjs /read-only/model-catalog.json "$NOMI_WEB_DATA_DIR" VERIFIED_MODEL_KEY http://127.0.0.1:19188
 ```
 
-별도 HTTPS 경로는 충돌 여부를 확인한 후 `tailscale serve --bg --https=8445 http://127.0.0.1:9031`으로 추가한다. 전체 Serve reset이나 Funnel은 사용하지 않는다. `NOMI_WEB_ORIGIN=https://hamsbox.badger-viper.ts.net:8445`가 정확한 Host/Origin 경계다. 개인 tailnet의 접근 제어를 사용하며 공개 인터넷 서비스를 위한 계정 시스템은 없다.
+별도 HTTPS 경로는 충돌 여부를 확인한 후 `tailscale serve --bg --https=<port> http://127.0.0.1:<web port>`으로 추가한다. 전체 Serve reset이나 Funnel은 사용하지 않는다. `NOMI_WEB_ORIGIN`이 정확한 Host/Origin 경계다. 개인 tailnet의 접근 제어를 사용하며 공개 인터넷 서비스를 위한 계정 시스템은 없다.
 
 롤백은 새 웹 unit을 정지하거나, 보존된 clean 이전 release로 current를 전환하고 `runtime.env`의 build SHA를 맞춘 뒤 새 웹 서비스만 재시작한다. 데이터와 이전 releases는 삭제하지 않는다.
 
