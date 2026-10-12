@@ -34,44 +34,134 @@
   ],
   "doors": [
     {
-      "kind": "write",
-      "path": "src/workbench/project/documentSessionCore.ts",
-      "symbol": "workbenchDocumentPlainText"
+      "kind": "read",
+      "path": "src/workbench/ai/v4/useAgentPanelV4Actions.ts",
+      "symbol": "getDocumentSessionPort"
     },
     {
-      "kind": "write",
-      "path": "src/workbench/project/documentSessionPort.ts",
-      "symbol": "workbenchDocumentPlainText"
+      "kind": "read",
+      "path": "src/workbench/capability/capabilityApplyHandler.ts",
+      "symbol": "getDocumentSessionPort"
     },
     {
-      "kind": "write",
-      "path": "web/productionProjectPort.ts",
-      "symbol": "workbenchDocumentPlainText"
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLanding.ts",
+      "symbol": "materializeShots"
     },
     {
-      "kind": "write",
-      "path": "src/workbench/creation/WorkbenchEditor.tsx",
-      "symbol": "documentSessionState"
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLanding.ts",
+      "symbol": "attachShotResult"
     },
     {
-      "kind": "write",
-      "path": "src/workbench/project/documentSessionPort.ts",
-      "symbol": "documentSessionState"
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLanding.ts",
+      "symbol": "handleMultiShotCanvasLandingOp"
     },
     {
-      "kind": "write",
-      "path": "web/productionProjectPort.ts",
-      "symbol": "documentSessionState"
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "LandingCanvasState"
     },
     {
-      "kind": "write",
-      "path": "src/workbench/project/documentSessionPort.ts",
-      "symbol": "applyWholeDocumentWrite"
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "LandingProject"
     },
     {
-      "kind": "write",
-      "path": "web/productionProjectPort.ts",
-      "symbol": "applyWholeDocumentWrite"
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "LandingContext"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "MaterializeShotCandidate"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "MaterializeShotGeneration"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "MaterializeShotInput"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "MultiShotLandingPorts"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "MaterializeShotsPayload"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "MaterializeShotsResult"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "AttachShotResultOutcome"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "AttachShotResultPayload"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "attachShotResult"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "handleMultiShotCanvasLandingOp"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "materializeShots"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/common/useNomiRichTextEditor.ts",
+      "symbol": "NomiRichTextTools"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/common/useNomiRichTextEditor.ts",
+      "symbol": "readSelectedText"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/common/useNomiRichTextEditor.ts",
+      "symbol": "RichTextApplyMode"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/creation/storyboard/agentStoryboardDesign.ts",
+      "symbol": "upsertAgentStoryboardDesign"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/creation/storyboard/agentStoryboardDesign.ts",
+      "symbol": "patchAgentStoryboardDesign"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/creation/storyboard/agentStoryboardDesignCore.ts",
+      "symbol": "patchAgentStoryboardDesign"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/creation/storyboard/agentStoryboardDesignCore.ts",
+      "symbol": "upsertAgentStoryboardDesign"
     },
     {
       "kind": "read",
@@ -80,8 +170,98 @@
     },
     {
       "kind": "read",
+      "path": "src/workbench/creation/WorkbenchEditor.tsx",
+      "symbol": "DocumentSessionPort"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/NomiStudioApp.tsx",
+      "symbol": "readDocumentThroughSessionPort"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/NomiStudioApp.tsx",
+      "symbol": "writeDocumentThroughSessionPort"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionCore.ts",
+      "symbol": "DocumentWriteOperation"
+    },
+    {
+      "kind": "read",
       "path": "src/workbench/project/documentSessionCore.ts",
       "symbol": "RICH_TEXT_FEATURE_EXTENSIONS"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionCore.ts",
+      "symbol": "DocumentSessionState"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionCore.ts",
+      "symbol": "WHOLE_DOCUMENT_ANCHOR"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "DocumentSessionState"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "DocumentSessionWriteInput"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "DocumentSessionWriteResult"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "DocumentSessionPort"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "getDocumentSessionPort"
+    },
+    {
+      "kind": "read",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "WebProductionProjectPortOptions"
+    },
+    {
+      "kind": "read",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "DocumentSessionWriteInput"
+    },
+    {
+      "kind": "read",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "LandingCanvasState"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/assets/PromptEditor.tsx",
+      "symbol": "useNomiTiptapEditor"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/capability/capabilityApplyHandler.ts",
+      "symbol": "handleMultiShotCanvasLandingOp"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/capability/capabilityApplyHandler.ts",
+      "symbol": "upsertAgentStoryboardDesign"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/capability/capabilityApplyHandler.ts",
+      "symbol": "patchAgentStoryboardDesign"
     },
     {
       "kind": "write",
@@ -90,8 +270,28 @@
     },
     {
       "kind": "write",
-      "path": "web/productionProjectPort.ts",
-      "symbol": "createMultiShotCanvasLanding"
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "attachShotResult"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "materializeShots"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/common/richTextActions.tsx",
+      "symbol": "isEditorReady"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/common/useNomiRichTextEditor.ts",
+      "symbol": "useNomiTiptapEditor"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/common/useNomiRichTextEditor.ts",
+      "symbol": "isEditorReady"
     },
     {
       "kind": "write",
@@ -100,13 +300,293 @@
     },
     {
       "kind": "write",
+      "path": "src/workbench/creation/WorkbenchEditor.tsx",
+      "symbol": "useNomiRichTextEditor"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/creation/WorkbenchEditor.tsx",
+      "symbol": "documentSessionState"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/creation/WorkbenchEditor.tsx",
+      "symbol": "overrideDocumentSessionPort"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/render/TextDocumentNode.tsx",
+      "symbol": "useNomiRichTextEditor"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/store/canvasGraphActions.ts",
+      "symbol": "createCanvasGroupSnapshot"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/store/generationCanvasStore.ts",
+      "symbol": "createCanvasGraphActions"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/NomiStudioApp.tsx",
+      "symbol": "writeDocumentThroughSessionPort"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/documentSessionCore.ts",
+      "symbol": "workbenchDocumentPlainText"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "workbenchDocumentPlainText"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "documentSessionState"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "applyWholeDocumentWrite"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "documentSessionState"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "workbenchDocumentPlainText"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "applyWholeDocumentWrite"
+    },
+    {
+      "kind": "write",
       "path": "web/productionProjectPort.ts",
       "symbol": "createAgentStoryboardDesign"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "patchAgentStoryboardDesign"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "upsertAgentStoryboardDesign"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "createCanvasGroupSnapshot"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "createMultiShotCanvasLanding"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "materializeShots"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/common/useNomiRichTextEditor.ts",
+      "symbol": "AnyExtension"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/creation/documentTextExtensions.ts",
+      "symbol": "AnyExtension"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/creation/documentTextExtensions.ts",
+      "symbol": "HighlightWithZh"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/agent/applyCanvasToolCall.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/agent/sendFrameToTimeline.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/components/canvasArrivalModel.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/components/canvasResultDrag.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/components/generationCanvasGeometry.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/model/canvasGroup.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/artifact/artifactNodeSlots.tsx",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/BaseGenerationNode.tsx",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/ClipNode.tsx",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/director/DirectorNode.tsx",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/extractShotCutsToNodes.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/extractVideoFrameToNode.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/nodeSizing.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/shotTable/factBridge.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/useNodeImageEditing.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/reactFlow/generationCanvasReactFlowAdapter.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/reactFlow/GenerationCanvasReactFlowNodes.tsx",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/reactFlow/useGenerationCanvasReactFlowEffects.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/store/canvasGraphActions.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/store/canvasNodeActions.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/store/canvasSnapshotNormalizer.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/store/generationCanvasStore.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/store/nodeRunOutcome.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/videoDepth/startVideoDepthDerivation.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/creation/documentTextExtensions.ts",
+      "symbol": "markInputRule"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/creation/documentTextExtensions.ts",
+      "symbol": "markPasteRule"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/components/generationCanvasGeometry.ts",
+      "symbol": "frameBoundsFromMembers"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/model/canvasFrameBounds.ts",
+      "symbol": "frameBoundsFromMembers"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/model/canvasGroup.ts",
+      "symbol": "frameBoundsFromMembers"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/model/canvasGroup.ts",
+      "symbol": "createGroupId"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/plugins/canvasWorkflowTemplates.ts",
+      "symbol": "createGroupId"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/store/canvasGraphActions.ts",
+      "symbol": "frameBoundsFromMembers"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/store/canvasGraphActions.ts",
+      "symbol": "createGroupId"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/store/canvasGroupMoveActions.ts",
+      "symbol": "createGroupId"
     }
   ],
   "door_reduction": {
-    "before": 14,
-    "after": 14,
+    "before": 110,
+    "after": 110,
     "why_not": "Document reading/writing, rich text schema, storyboard authoring and production landing adapters are separate domain entry points; desktop and web adapters delegate to the same canonical owner rather than removing required entry points."
   },
   "generality_proof": "Canonical algorithms execute through injected project/canvas state, avoiding global focused project or DOM dependencies for every host.",
@@ -152,7 +632,9 @@
     "same_class_scan": [
       "door-map workbenchDocumentPlainText --roots=src,electron,web",
       "door-map materializeShots --roots=src,electron,web",
-      "read documentSessionPort, agentStoryboardDesign and multiShotCanvasLanding owners"
+      "read documentSessionPort, agentStoryboardDesign and multiShotCanvasLanding owners",
+      "door-map complete changed production files --roots=src,electron,web (actual exported symbols, including types and read adapters)",
+      "door-map actual shared owner dependency references markInputRule markPasteRule HighlightWithZh AnyExtension createGroupId frameBoundsFromMembers resolveNodeVisualSize --roots=src,electron,web"
     ]
   },
   "prevention": {
