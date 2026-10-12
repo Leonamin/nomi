@@ -1,5 +1,7 @@
 # 画布手感三改：浮框钉住定宽 · 单个生成不弹窗 · 画布不自己动（2026-09-25）
 
+> 📎 从 upstream v0.23.1（66d6eaf）继承的参考记录；原文的审批/交付状态不代表本 fork 的在办任务。
+
 > 起因：用户 2026-09-25 三条反馈（方向已拍板）· 做法：一个分支、每项一笔提交、一个 PR · 范围：画布生成浮框、付费确认判据、画布视口移动与新内容落点
 > 样张（已拍板，5 题全按默认）：[docs/design/mockups/2026-09-25-canvas-ux-batch/](../design/mockups/2026-09-25-canvas-ux-batch/README.md) · 在线 https://claude.ai/artifact/8PAKadacB2uZ8WbxJWScMC
 

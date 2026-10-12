@@ -1,5 +1,7 @@
 # 参考图标记误判修复计划（2026-09-27）
 
+> 📎 从 upstream v0.23.1（66d6eaf）继承的参考记录；原文的审批/交付状态不代表本 fork 的在办任务。
+
 ## 范围
 
 - 在 `electron/assets/mediaTypes.ts` 统一 `isMarkupMasquerade` 与扫描窗口，判定只看去 BOM、前导空白后的文件开头。

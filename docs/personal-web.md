@@ -45,3 +45,9 @@ node scripts/web/seed-local-comfyui.mjs /read-only/model-catalog.json /home/leon
 `pnpm run test:web`, `pnpm exec tsc -p tsconfig.web.json`, `pnpm run build:web`가 웹 계약 검사다. 기존 gates와 CI도 수행한다. GPU가 없는 CI의 통과는 실제 생성 검증을 대신하지 않는다. 생성 중 탭 종료/재접속, 후보 선택과 별도 컷 교체, 전체 preview 및 MP4의 프레임·오디오·순서, export 중 탭 종료와 서비스 재시작을 실제 자원으로 검증해야 한다.
 
 초기 구현에서 사용자가 승인한 기존 로컬 시각 gate 예외와 설계/검증 조건은 [설계 카드](plan/2026-10-12-personal-web.md)에 기록한다. 이 예외는 다른 기능/타입/CI/실제 GPU 검사에 적용하지 않는다.
+
+## fork의 CI 설정
+
+이 fork의 기본 `GITHUB_TOKEN` 권한은 `read`다. 기존 docs/archetype/site 자동 동기화는 workflow에 선언한 `pull-requests: write`와 저장소의 PR 생성·승인 허용 설정을 사용한다. 새 fork에서 이 설정이 꺼져 있으면 문서 검사는 성공해도 자동 PR 생성이 실패한다. `Leonamin/nomi-web`은 `can_approve_pull_request_reviews=true`로 설정하고 실패한 문서 workflow의 재실행 성공을 확인했다. 자동 합입은 별도 설정하지 않았다. [GitHub repository workflow permission API](https://docs.github.com/en/rest/actions/permissions#set-default-workflow-permissions-for-a-repository).
+
+상속된 upstream 계획은 이 개인용 fork의 진행 중 작업을 뜻하지 않는다. 자동 문서 색인에 등록할 때 참고 기록으로 표시하고, 개인용 웹의 승인·구현·실제 검증 기록은 해당 설계 카드와 QA 보고서에서 확인한다.

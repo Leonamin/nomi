@@ -1,5 +1,7 @@
 # 设计卡：退出拆除与项目打开失败隔离
 
+> 📎 从 upstream v0.23.1（66d6eaf）继承的参考记录；原文的审批/交付状态不代表本 fork 的在办任务。
+
 改动名：退出生命周期与 Agent lane 隔离  线/负责人：fix/quit-teardown-not-before-quit  类别：[可打断][长跑][新界面]
 
 | 格 | 结论 | 证据 |

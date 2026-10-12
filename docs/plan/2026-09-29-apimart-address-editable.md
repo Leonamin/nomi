@@ -1,5 +1,7 @@
 # APIMart 接入地址归用户改（0.22.5 热修）
 
+> 📎 从 upstream v0.23.1（66d6eaf）继承的参考记录；原文的审批/交付状态不代表本 fork 的在办任务。
+
 ## 背景
 
 用户反馈：新电脑上把 APIMart 改成国内地址，保存报英文「Certification-owned connection changes require a new integration session」，老电脑能改。主域在部分网络连不上，不会翻墙的用户完全用不了。

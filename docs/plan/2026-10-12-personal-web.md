@@ -1,5 +1,7 @@
 # Nomi 개인용 웹 버전 — 설계와 실제 검증 계획
 
+> 📎 승인·구현·실제 GPU 검증 기록 · Git 수령은 PR #1 및 exact merge SHA receipt로 확인.
+
 작성일: 2026-10-12. 구현선: `nomi-web-implementation`. 실제 GPU·브라우저 검증 결과: [검증 보고서](../qa/2026-10-12-personal-web.md). Git 합입과 exact SHA CI 수령 여부는 PR #1 및 delivery receipt로 별도 확인한다.
 
 ## 개발 기준
