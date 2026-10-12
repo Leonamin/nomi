@@ -1,0 +1,48 @@
+# 한국어 지원 검증
+
+상태: 已推送待合入 · 한국어 구현 및 변경 범위 검증 완료, 전체 gates의 기존 시각 기준 불일치 확인 중.
+
+- 날짜: 2026-10-12
+- 작업선: `feat/korean-guidance`, sibling worktree `nomi-web-korean-guidance`
+- 기준: `origin/main` `3f5ba5e728b4123a4d18d470129ff31db0eae985`
+- 작성 기준: 사용자 승인 샘플, Sepia write, 일반 학생의 첫 사용 관점.
+
+## 구현 범위
+
+기존 i18next 구조에 한국어를 추가했다. UI 6,048개 키, 서버/데스크톱 192개 문구, 모델 설명 343개, 한국어 도움말과 예제 프로젝트를 작성했다. 언어 선택·저장·운영체제 탐지·설정 가져오기/내보내기·오류와 진행 안내도 한국어를 허용한다. 웹에서는 연결된 ComfyUI와 직접 만드는 흐름을 안내한다.
+
+최초 원본의 영어·중국어 UI 객체와 현재 값을 깊은 비교했다. 새 한국어 선택 이름을 제외하면 기존 값은 동일하다. 원본 서버/모델/도움말의 영어·중국어 내용도 변경하지 않았다. 사용자 콘텐츠·외부 자료·오류 코드·모델 식별자는 원문을 유지한다.
+
+## 확인한 결과
+
+| 검증 | 결과 |
+|---|---|
+| `check:i18n` | ko/en/zh 6,048개 키 일치, 한국어 보간 변수 일치, 하드코딩·참조 검사 통과 |
+| 전체 `typecheck` | app, electron, electron-pi, 테스트 타입 4개 검사 통과 |
+| `lint:ci` | 오류 0, 기존 경고 79 |
+| 변경 소유자 테스트 | 초기 8파일 74개 통과; 최종 한국어/호스트/launcher 4파일 28개 통과 |
+| `test:web` | 7파일 17개 통과 |
+| 웹 타입·`build:web` | 통과; 기존 chunk/import.meta 경고 유지 |
+| `pnpm run build` | 렌더러와 Electron 빌드 통과 |
+| `check:boundaries` | 새 경계 위반 0; 지원 언어 정규화는 중립 공유 계약 소유 |
+| 근본 원인 계약 | 고위험 언어 소비자와 타입 회귀를 포함한 검사 통과 |
+| 승인 샘플 형태 계약 | 별도 sample walk에서 프로젝트·설정·안내의 16관계 확인 |
+| 실제 앱 | 별도 임시 서버 데이터로 빈 프로젝트 생성·이미지 카드 추가·재접속 후 카드 유지 확인 |
+| 언어 선택 | 한국어→English→简体中文→한국어, 새로고침 후 `document.lang=ko`, 저장값 `ko` 확인 |
+
+실제 앱을 1280×900에서 캡처하고 구현자가 직접 이미지를 읽었다. 아래는 mockup이 아닌 빌드된 개인 웹 앱이다.
+
+- [프로젝트 목록](2026-10-12-korean-evidence/library-ko.png)
+- 설정: [한국어](2026-10-12-korean-evidence/settings-ko.png), [영어](2026-10-12-korean-evidence/settings-en.png), [중국어](2026-10-12-korean-evidence/settings-zh.png)
+- [학생용 전체 안내](2026-10-12-korean-evidence/handbook-ko.png)
+- [이미지 카드와 장면 설명](2026-10-12-korean-evidence/generation-ko.png)
+
+샘플은 말투·용어 승인을 위한 것으로 제품 레이아웃 변경의 기준은 아니다. sample walk와 실제 앱 검증을 구분한다. [독립 검수 B](2026-10-12-korean-independent-b.md), [독립 검수 C](2026-10-12-korean-independent-c.md)에서 다른 구현선의 의미·연결을 검토했고 발견한 오류를 수정했다.
+
+## 전체 검증의 한계
+
+첫 `pnpm run gates`에서 design-lab 시각 기준 152개가 실패하고 36개가 통과했다. 타입·경계·샘플 계약에서 이 변경으로 생긴 실패는 수정하여 각각 재검증했다. 시각 기준은 바꾸지 않았다. 같은 SHA의 변경 없는 detached worktree에서 188개 전체 시각 검사를 재실행했다. 양쪽 모두 같은 152개가 실패하고 36개가 통과했다. [비교 기록](2026-10-12-korean-visual-baseline.json)에 실패 집합과 실제 PNG 비교 결과를 저장했다. 재실행은 다른 작업의 공용 검증 잠금에 대기하여 종료했다. 수정한 실패 항목은 개별 재검증을 통과했다. 전체 gates가 통과했다고 보고하지 않는다.
+
+실제 ComfyUI 이미지/영상 생성, GPU 실행, 생성된 MP4 결과, Electron 네이티브 대화상자는 자원이 연결되지 않아 **unverified**. 생성 및 비용 동작은 이 변경에서 수정하지 않았다. 운영 서버 배포와 병합 검증도 수행하지 않았다.
+
+검토용 Draft PR: https://github.com/Leonamin/nomi-web/pull/3

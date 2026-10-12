@@ -1,3 +1,4 @@
+import { koreanTemplateText } from '../../i18n/locales/ko/exampleContent'
 import { cloneBuiltinCategories, type ProjectCategory } from '../project/projectCategories'
 import { getAppLocale } from '../../i18n'
 
@@ -69,6 +70,10 @@ const EN_PROJECT_TEMPLATES: Record<ProjectTemplateId, ProjectTemplate> = {
 }
 
 export function getProjectTemplate(id: string | null | undefined): ProjectTemplate {
+  if (getAppLocale() === 'ko') {
+    const templateId = id && id in PROJECT_TEMPLATES ? id as ProjectTemplateId : 'free-form'
+    return { ...PROJECT_TEMPLATES[templateId], ...koreanTemplateText[templateId] }
+  }
   const templates = getAppLocale() === 'en' ? EN_PROJECT_TEMPLATES : PROJECT_TEMPLATES
   if (id && (id in templates)) return templates[id as ProjectTemplateId]
   return templates['free-form']

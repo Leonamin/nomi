@@ -43,6 +43,6 @@ export function registerTelemetryIpc(): void {
     const raw = payload as { eventName?: unknown; props?: unknown; locale?: unknown }
     const eventName = raw.eventName as TelemetryEventName
     if (!isTelemetryProps(raw.props, eventName)) return { queued: false }
-    return { queued: recordTelemetryEvent({ eventName, props: raw.props } as TelemetryProps, app.getVersion(), raw.locale === 'en' ? 'en' : 'zh-CN') }
+    return { queued: recordTelemetryEvent({ eventName, props: raw.props } as TelemetryProps, app.getVersion(), raw.locale === 'ko' ? 'ko' : raw.locale === 'en' ? 'en' : 'zh-CN') }
   })
 }

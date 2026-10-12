@@ -1,0 +1,237 @@
+{
+  "design": {
+    "cancel": "취소",
+    "gotIt": "확인",
+    "confirm": "확인"
+  },
+  "modelCatalog": {
+    "desktopUnavailable": "로컬 모델 목록을 사용할 수 없어요. 모델 설정을 열고 데스크톱 앱의 실행 상태를 확인해 주세요.",
+    "loadFailed": "모델 목록을 불러오지 못했어요",
+    "loading": "모델 목록을 읽고 있어요…",
+    "loadFailedWithMessage": "모델 목록을 불러오지 못했어요: {{message}}",
+    "healthFailed": "모델 목록 상태를 확인하지 못했어요: {{message}}",
+    "empty": "모델 목록이 비어 있어요",
+    "incomplete": "모델 목록 설정이 완성되지 않았어요",
+    "ready": "모델 목록을 사용할 수 있어요",
+    "noKind": "사용 가능한 {{kind}} 모델이 없어요",
+    "kind": {
+      "image": "이미지",
+      "video": "영상",
+      "audio": "소리",
+      "text": "텍스트",
+      "model3d": "3D"
+    },
+    "noImageModel": "사용 가능한 이미지 모델이 없어요. 시스템 모델 설정에서 이미지 모델을 켜 주세요.",
+    "imageModelUnselected": "이미지 모델을 선택하지 않았어요. 카드 설정에서 사용 가능한 이미지 모델을 골라 주세요.",
+    "imageModelUnavailable": "이미지 모델 {{model}}을(를) 사용할 수 없어요. 시스템 모델 설정에서 켜거나 카드 설정에서 다른 모델을 골라 주세요.",
+    "control": {
+      "aspectRatio": "화면 비율",
+      "frame": "프레임",
+      "resolution": "해상도",
+      "size": "크기",
+      "duration": "길이",
+      "orientation": "방향",
+      "portrait": "세로",
+      "landscape": "가로"
+    }
+  },
+  "nodeRegistry": {
+    "fallbackPlaceholder": "이 카드를 설명해 주세요…",
+    "text": {
+      "menu": "텍스트",
+      "title": "텍스트",
+      "placeholder": "글을 입력해 주세요…"
+    },
+    "character": {
+      "menu": "인물",
+      "title": "인물",
+      "placeholder": "외모·옷·성격·눈에 띄는 특징을 설명해 주세요…"
+    },
+    "scene": {
+      "menu": "배경",
+      "title": "배경",
+      "placeholder": "주변 환경·빛·구도·분위기를 설명해 주세요…"
+    },
+    "image": {
+      "menu": "이미지",
+      "title": "이미지",
+      "placeholder": "이 화면을 설명해 주세요…"
+    },
+    "keyframe": {
+      "menu": "핵심 프레임",
+      "title": "핵심 프레임",
+      "placeholder": "중요한 순간의 모습·동작·카메라 상태를 설명해 주세요…"
+    },
+    "video": {
+      "menu": "영상",
+      "title": "영상",
+      "placeholder": "카메라·동작·진행 속도를 설명해 주세요…"
+    },
+    "audio": {
+      "menu": "소리",
+      "title": "소리",
+      "placeholder": "대사나 내레이션을 입력해 주세요…"
+    },
+    "shot": {
+      "menu": "장면",
+      "title": "장면",
+      "placeholder": "장면 구상·인물 배치·대사·촬영 메모를 적어 주세요…"
+    },
+    "output": {
+      "menu": "최종 결과",
+      "title": "최종 결과",
+      "placeholder": "최종 결과물이나 전달할 내용을 적어 주세요…"
+    },
+    "panorama": {
+      "menu": "파노라마",
+      "title": "파노라마",
+      "placeholder": "참고할 파노라마를 올리거나 촬영해 주세요…"
+    },
+    "director": {
+      "menu": "3D 연출",
+      "title": "3D 연출",
+      "placeholder": "3D 연출에서 인물을 배치하고 카메라를 움직여 화면을 만들어요…"
+    },
+    "whiteboard": {
+      "menu": "스케치",
+      "title": "스케치",
+      "placeholder": "참고 그림을 그리고 만들 이미지를 설명해 주세요…"
+    },
+    "model3d": {
+      "menu": "3D 모델",
+      "title": "3D 모델",
+      "placeholder": "3D 모델의 모양·재질·스타일을 설명해 주세요…"
+    },
+    "video_depth_process": {
+      "menu": "깊이 영상",
+      "title": "깊이 영상",
+      "placeholder": "캔버스의 영상을 골라 내 컴퓨터에서 깊이 정보를 담은 영상으로 바꿔요…"
+    },
+    "asset": {
+      "menu": "소재",
+      "title": "소재",
+      "placeholder": "소재를 설명해 주세요…"
+    },
+    "clip": {
+      "menu": "영상 조각",
+      "title": "영상 조각",
+      "placeholder": "이미지나 영상을 추가해 편집을 시작하세요…"
+    },
+    "shot_table": {
+      "menu": "장면 표",
+      "title": "장면 표",
+      "placeholder": ""
+    },
+    "agent-artifact": {
+      "menu": "AI 결과물",
+      "title": "AI 결과물",
+      "placeholder": "AI 도우미가 만든 결과물(SVG / HTML / 표 / Markdown / 3D)",
+      "emptyState": "결과물 내용이 없어요",
+      "untitled": "제목 없는 결과물",
+      "fileType": {
+        "svg": "SVG",
+        "html": "HTML",
+        "markdown": "Markdown",
+        "table": "표",
+        "text": "텍스트",
+        "glb": "3D"
+      },
+      "htmlInteractionNote": "움직이는 모습은 볼 수 있지만 아직 클릭은 지원하지 않아요",
+      "missingContent": "“{{name}}”에 내용이 없어 캔버스에 놓을 수 없어요(형식: {{fileType}})",
+      "deliverFailed": "“{{name}}” 결과물을 저장하지 못했어요: {{reason}}",
+      "indexedTitle": "결과물 {{index}}",
+      "actions": "결과물 작업",
+      "downloadName": "agent-artifact",
+      "copy": "복사",
+      "copied": "복사했어요",
+      "copyFailed": "복사하지 못했어요",
+      "referenceAction": "참고 이미지 저장",
+      "referenceName": "참고 이미지",
+      "referenceCreated": "참고 이미지를 만들었어요. 소재 카드로 연결해 사용할 수 있어요.",
+      "referenceFailed": "참고 이미지로 변환하지 못했어요"
+    }
+  },
+  "project": {
+    "untitled": "제목 없는 프로젝트",
+    "untitledWithTime": "제목 없는 프로젝트 {{time}}",
+    "untitledWithTimeOrdinal": "제목 없는 프로젝트 {{time}} ({{ordinal}})",
+    "recordMissing": "내 컴퓨터의 프로젝트 기록이 없어요: {{id}}",
+    "corruptPayload": "필수 내용이 빠져 있어 프로젝트 기록을 읽을 수 없어요",
+    "corruptRecord": "내 컴퓨터의 프로젝트 기록이 손상됐어요: {{id}}",
+    "newGroup": "새 그룹"
+  },
+  "promptLibrary": {
+    "empty": "장면 설명을 받지 못했어요. 조금 뒤 다시 시도해 주세요.",
+    "loadFailed": "불러오지 못했어요",
+    "untitled": "제목 없음",
+    "saveFailed": "저장하지 못했어요",
+    "updateFailed": "수정하지 못했어요"
+  },
+  "attachments": {
+    "uploadNoUrl": "파일을 올렸지만 주소를 받지 못했어요",
+    "uploadFailed": "첨부 파일을 올리지 못했어요",
+    "uploadFailedWithName": "“{{name}}”을(를) 올리지 못했어요: {{message}}",
+    "tooLarge": "“{{name}}”의 크기가 첨부 한도 {{limit}}을(를) 넘어요."
+  },
+  "capability": {
+    "intent": {
+      "image": "이미지",
+      "video": "영상",
+      "audio": "소리",
+      "text": "텍스트 소재",
+      "fallback": "소재"
+    },
+    "newNode": "새 카드",
+    "deconstructTitle": "이 영상 분석",
+    "deconstructMessage": "각 장면과 대사를 읽어요. 모델 크레딧을 사용해요.",
+    "confirmDeconstruct": "분석 시작",
+    "callCount": "요청 횟수",
+    "spendTitle": "AI 도우미가 {{intent}}을(를) 만들려고 해요",
+    "referenceTitle": "AI 도우미가 참고 이미지를 만들려고 해요",
+    "spendMessage": "확인하면 모델 크레딧을 사용해 생성을 시작해요.",
+    "spendMessageWithPrompt": "장면 설명: “{{prompt}}”. 확인하면 모델 크레딧을 사용해 생성을 시작해요.",
+    "confirmGenerate": "생성 시작",
+    "credentialProbeTitle": "{{vendor}} 키를 확인하려면 유료 요청을 한 번 보내야 해요",
+    "credentialProbeMessage": "이 서비스는 무료 확인 기능이 없어요. 확인하면 방금 입력한 키로 가장 작은 실제 요청을 보내 작동하는지 확인해요. 모델 크레딧이 사용돼요. 확인하지 않아도 키는 저장할 수 있어요. 이 경우 미확인으로 표시하고 첫 실제 요청에서 작동 여부를 확인해요.",
+    "confirmCredentialProbe": "확인 요청 보내기",
+    "generationGateTitle": "Nomi가 이 장면을 만들어도 될까요?",
+    "generationGateBatchTitle": "Nomi가 이 장면들을 한꺼번에 만들어도 될까요?",
+    "generationGateMessage": "현재 프로젝트에서 {{model}}을(를) 사용하고 최대 {{cost}}을(를) 써서 {{shot}} 작업을 해도 될까요?",
+    "generationGateMessageUnknownCost": "현재 프로젝트에서 {{model}}을(를) 사용해 {{shot}} 작업을 해도 될까요? 지금 가격을 확인할 수 없어 진행하면 사용 후에만 비용을 알 수 있어요.",
+    "generationGateCostUnknown": "지금은 가격을 확인할 수 없어요",
+    "generationGateShotFallback": "이 장면 생성",
+    "generationGateProject": "프로젝트",
+    "generationGateModel": "모델",
+    "generationGateReferences": "참고 자료",
+    "generationGateCost": "최대 비용",
+    "generationGateExpires": "유효 기간",
+    "planTitle": "AI 도우미가 캔버스에 계획을 배치하려고 해요",
+    "planMessage": "AI 도우미가 카드 {{count}}개를 만들려고 해요. 확인하면 캔버스에 추가해요. 되돌릴 수 있어요.",
+    "planConfirm": "캔버스에 추가",
+    "planNodeCount": "카드",
+    "planNodeCountValue": "{{count}}",
+    "planIncludes": "포함 내용",
+    "project": "프로젝트",
+    "node": "카드",
+    "model": "모델",
+    "output": "결과",
+    "defaultModel": "기본 모델",
+    "projectBindingMismatch": "Nomi에서 현재 연 프로젝트만 변경할 수 있어요. MCP 연결은 {{leaseProject}} 프로젝트에 연결돼 있지만 Nomi에는 {{openProject}} 프로젝트가 열려 있어요. Nomi에서 {{leaseProject}}을(를) 열고 다시 시도해 주세요.",
+    "noProjectOpen": "(열린 프로젝트 없음)",
+    "unknownOperation": "알 수 없는 작업이에요: {{operation}}",
+    "storyboardPlanMissing": "장면 계획 도우미가 확인할 수 있는 계획을 보내지 않았어요."
+  },
+  "export": {
+    "jobRequiresDesktop": "내보내기 작업에는 Electron 데스크톱 앱이 필요해요",
+    "mp4RequiresDesktop": "MP4 내보내기에는 Electron 데스크톱 앱이 필요해요",
+    "missingProjectId": "프로젝트 ID가 없어 내보내지 못했어요",
+    "mp4Failed": "MP4로 내보내지 못했어요",
+    "webmFallbackDownloaded": "{{message}} 대신 WebM 파일을 내려받았어요: {{file}}",
+    "unsupportedFormat": "이 브라우저에서 지원하지 않는 형식이에요: {{format}}",
+    "browserOnly": "브라우저 환경에서만 내보낼 수 있어요",
+    "mediaRecorderUnsupported": "이 브라우저는 MediaRecorder를 지원하지 않아 WebM으로 내보낼 수 없어요",
+    "emptyTimeline": "타임라인이 비어 있어 내보낼 수 없어요",
+    "canvasUnavailable": "내보내기에 필요한 캔버스를 만들지 못했어요",
+    "emptyResult": "내보낸 결과가 비어 있어요"
+  }
+}

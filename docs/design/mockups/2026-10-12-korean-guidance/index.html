@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko" data-mantine-color-scheme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nomi 한국어 안내 샘플</title>
+  <link rel="stylesheet" href="../../../../.tmp/korean-preview.css">
+</head>
+<body class="!bg-nomi-bg !bg-none text-nomi-ink text-body overflow-auto">
+  <div class="border-b border-nomi-line bg-nomi-paper px-6 py-3 flex flex-wrap items-center gap-4 text-caption">
+    <span class="text-nomi-ink-60">한국어 문구 검토용 샘플 · 실제 작업은 실행되지 않습니다</span>
+    <button type="button" class="text-nomi-accent" onclick="openPanel('settings')">언어 설정 보기</button>
+    <button type="button" class="text-nomi-accent" onclick="openPanel('guide')">처음 쓰는 학생용 안내 보기</button>
+  </div>
+  <main class="p-8 md:p-14">
+    <header class="flex items-center justify-between gap-6 mb-5">
+      <h1 class="text-h1 font-medium">Nomi 프로젝트</h1>
+      <div class="flex gap-5 text-caption text-nomi-ink-60">
+        <button type="button" onclick="openPanel('models')">AI 연결</button>
+        <button type="button" onclick="openPanel('settings')">설정</button>
+      </div>
+    </header>
+    <section aria-label="프로젝트 시작" class="flex flex-wrap gap-3">
+      <button type="button" onclick="openPanel('start')" class="w-72 flex gap-4 items-center rounded-nomi-lg bg-nomi-ink text-nomi-paper p-5 text-left">
+        <span aria-hidden="true" class="text-h1">＋</span>
+        <span><span class="block font-medium">새 프로젝트 만들기</span><span class="block text-caption mt-1">만들고 싶은 영상부터 시작해요</span></span>
+      </button>
+      <button type="button" onclick="openPanel('guide')" class="w-72 flex gap-4 items-center rounded-nomi-lg border border-nomi-line bg-nomi-paper p-5 text-left">
+        <span aria-hidden="true" class="text-h1">▷</span>
+        <span><span class="block font-medium">영상 만드는 순서 보기</span><span class="block text-caption text-nomi-ink-60 mt-1">장면 만들기부터 MP4 저장까지</span></span>
+      </button>
+    </section>
+    <div class="mt-5 flex flex-wrap items-center gap-4 text-caption">
+      <h2 class="text-nomi-ink-60">최근 프로젝트</h2>
+      <div class="flex gap-4 rounded-full border border-nomi-line bg-nomi-paper px-4 py-2 text-nomi-ink-40"><span>전체 0</span><span>서버에 저장됨 0</span><span>폴더 0</span></div>
+      <input aria-label="프로젝트 검색" placeholder="프로젝트 검색" class="rounded-full border border-nomi-line bg-nomi-paper px-4 py-2" oninput="document.getElementById('empty').textContent=this.value ? '이 이름의 프로젝트가 없어요.' : '아직 프로젝트가 없어요. 위에서 새 프로젝트를 만들어 보세요.'">
+    </div>
+    <p id="empty" class="text-center mt-20">아직 프로젝트가 없어요. 위에서 새 프로젝트를 만들어 보세요.</p>
+  </main>
+  <dialog id="panel" class="w-full max-w-2xl rounded-nomi-lg bg-nomi-paper text-nomi-ink p-6 border border-nomi-line">
+    <div class="flex justify-between gap-4 mb-5"><h2 id="panel-title" class="text-h1 font-medium"></h2><button type="button" class="text-caption text-nomi-ink-60" onclick="document.getElementById('panel').close()">닫기</button></div>
+    <div id="panel-body" class="text-body-sm"></div>
+  </dialog>
+  <template id="settings">
+    <nav aria-label="설정 메뉴" class="flex flex-wrap gap-4 border-b border-nomi-line pb-4 mb-5 text-caption text-nomi-ink-60"><span>파일과 저장</span><span>모델</span><span>AI 설정</span><span>자동화와 권한</span><span class="text-nomi-accent">일반</span><span>Nomi 정보</span></nav>
+    <p class="font-medium mb-3">언어</p>
+    <div class="flex flex-wrap gap-2" role="group" aria-label="언어 선택">
+      <button type="button" aria-pressed="false" class="rounded-nomi-sm border border-nomi-line px-3 py-2" onclick="chooseLanguage(this)">简体中文</button>
+      <button type="button" aria-pressed="false" class="rounded-nomi-sm border border-nomi-line px-3 py-2" onclick="chooseLanguage(this)">English</button>
+      <button type="button" aria-pressed="true" class="rounded-nomi-sm border border-nomi-accent bg-nomi-accent-soft text-nomi-accent px-3 py-2" onclick="chooseLanguage(this)">한국어</button>
+    </div>
+    <p id="language-note" class="text-caption text-nomi-ink-60 mt-4">한국어 문구 샘플입니다. 앱의 언어 변경 기능은 적용 전입니다.</p>
+  </template>
+  <template id="guide">
+    <p class="mb-5">처음에는 짧은 장면 하나만 만들어 보세요. 마음에 드는 결과를 얻고 나면 다음 장면을 이어 붙이면 됩니다.</p>
+    <ol class="list-decimal pl-5 space-y-4">
+      <li><p class="font-medium">새 프로젝트 만들기</p><p class="text-nomi-ink-60 mt-1">장면 설명과 이미지, 편집 내용을 모아 둘 곳이에요. “학교 소개 영상”처럼 찾기 쉬운 이름을 붙여 주세요.</p></li>
+      <li><p class="font-medium">만들고 싶은 장면 적기</p><p class="text-nomi-ink-60 mt-1">생성 화면에서 이미지 카드를 추가하고 장면을 적어 주세요. 예: “아침 햇빛이 들어오는 학교 도서관. 책상에는 책과 공책이 놓여 있다.”</p></li>
+      <li><p class="font-medium">이미지나 영상 만들기</p><p class="text-nomi-ink-60 mt-1">연결된 모델을 고르고 생성을 시작하세요. 모델은 이미지나 영상을 만드는 AI예요. 사용할 모델이 없다면 운영자에게 연결을 확인해 달라고 요청하세요.</p></li>
+      <li><p class="font-medium">순서 정하고 영상 파일로 저장하기</p><p class="text-nomi-ink-60 mt-1">결과를 타임라인에 배치하고 재생해 보세요. 타임라인은 장면 순서와 길이를 정하는 곳이에요. 마음에 들면 MP4로 내보내세요.</p></li>
+    </ol>
+    <p class="mt-6 border-t border-nomi-line pt-4 text-caption text-nomi-ink-60">현재 개인 웹은 ComfyUI를 연결해 직접 생성하는 방식입니다. 프로젝트와 파일은 서버에 저장됩니다.</p>
+  </template>
+  <template id="models"><p>모델은 이미지나 영상을 만드는 AI예요. 이 웹 버전에서는 운영자가 연결한 ComfyUI 모델을 사용합니다.</p><p class="mt-4 text-nomi-ink-60">선택할 모델이 없다면 운영자에게 ComfyUI 연결과 모델 등록을 확인해 달라고 요청하세요.</p></template>
+  <template id="start"><p>프로젝트는 장면 설명과 이미지, 영상, 편집 내용을 모아 두는 작업 공간이에요.</p><label class="block mt-5">프로젝트 이름<input class="block w-full rounded-nomi-sm border border-nomi-line bg-nomi-paper px-3 py-2 mt-2" placeholder="예: 학교 소개 영상"></label><p class="mt-4 text-caption text-nomi-ink-60">이 샘플에서는 프로젝트를 저장하지 않습니다.</p></template>
+  <script>
+    const titles = { settings: '설정', guide: '첫 영상 만들기', models: 'AI 연결', start: '새 프로젝트 만들기' };
+    function openPanel(name) {
+      document.getElementById('panel-title').textContent = titles[name];
+      document.getElementById('panel-body').replaceChildren(document.getElementById(name).content.cloneNode(true));
+      document.getElementById('panel').showModal();
+    }
+    function chooseLanguage(button) {
+      button.parentElement.querySelectorAll('button').forEach(item => {
+        const isSelected = item === button;
+        item.setAttribute('aria-pressed', String(isSelected));
+        item.className = isSelected ? 'rounded-nomi-sm border border-nomi-accent bg-nomi-accent-soft text-nomi-accent px-3 py-2' : 'rounded-nomi-sm border border-nomi-line px-3 py-2';
+      });
+      document.getElementById('language-note').textContent = button.textContent + ' 선택 예시입니다. 실제 앱에는 아직 적용되지 않았습니다.';
+    }
+  </script>
+</body>
+</html>

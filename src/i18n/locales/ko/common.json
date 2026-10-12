@@ -1,0 +1,22 @@
+{
+  "language": "언어",
+  "chinese": "简体中文",
+  "english": "English",
+  "retry": "다시 시도",
+  "reload": "새로고침",
+  "cancel": "취소",
+  "confirm": "확인",
+  "close": "닫기",
+  "delete": "삭제",
+  "initialize": "시작하기",
+  "later": "나중에",
+  "loading": "불러오는 중",
+  "rendering": "영상 만드는 중…",
+  "back": "뒤로",
+  "select": "선택",
+  "searchOptions": "옵션 검색",
+  "noMatchingOptions": "일치하는 옵션이 없어요",
+  "plusMore": "+{{count}}",
+  "undo": "실행 취소",
+  "korean": "한국어"
+}

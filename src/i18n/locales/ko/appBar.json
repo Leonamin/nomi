@@ -1,0 +1,17 @@
+{
+  "workspace": "Nomi 작업 공간",
+  "locationNavigation": "현재 위치 이동",
+  "projectLibrary": "프로젝트",
+  "backToLibrary": "프로젝트 목록으로",
+  "projectName": "프로젝트 이름",
+  "untitledProject": "제목 없는 Nomi 프로젝트",
+  "globalActions": "앱 공통 기능",
+  "browser": "브라우저",
+  "openBrowser": "브라우저 열기",
+  "modelAccess": "모델",
+  "goToProduce": "내보내기",
+  "openModelAccess": "모델 설정 열기",
+  "windowTitleBar": "창 제목 표시줄",
+  "projectQuickActions": "프로젝트 빠른 기능",
+  "agentChip": "Nomi"
+}

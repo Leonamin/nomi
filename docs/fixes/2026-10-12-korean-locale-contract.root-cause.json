@@ -1,0 +1,1194 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-korean-locale-contract",
+  "problem_type": "Supported locale extension leaves narrower type, renderer import and user-facing projection contracts",
+  "symptom": "Typecheck rejects ko in MCP metadata and launcher callback types; renderer architecture checks reject importing the Electron host module; Korean consumers may otherwise receive Chinese projections. PR #3 CI also fails three independent test imports because locale data eagerly calls the host bridge.",
+  "direct_cause": "The supported locale union was owned in a host module while renderer, MCP metadata, telemetry and notification consumers kept independent two-language types or projections.",
+  "class_root": "The supported language list and normalization belong to a renderer-safe shared contract. Host state remains host-owned, and every display or persisted consumer must accept the canonical locale and explicitly project Korean. Resource dictionaries must remain host-independent data; host-specific projection is explicit only at i18n composition.",
+  "affected_population": [
+    "Korean app and MCP users",
+    "Future added supported locales"
+  ],
+  "scope_paths": [
+    "electron/desktopLocale.ts",
+    "electron/capabilityCore/mcpProtocol.ts",
+    "electron/capabilityCore/mcpLocaleText.ts",
+    "electron/shared/contracts/locale.ts",
+    "src/i18n/index.ts",
+    "electron/productionRun/productionNotifications.ts",
+    "electron/settings/telemetryIpc.ts",
+    "electron/telemetry/telemetryEvents.ts",
+    "electron/telemetry/telemetryOutbox.ts",
+    "electron/capabilityCore/generationRecoveryProjection.ts",
+    "electron/settings/portableConfig.ts",
+    "electron/harness/context/agentContext.ts",
+    "electron/capabilityCore/mcpToolResults.ts",
+    "electron/capabilityCore/mcpToolErrorResults.ts",
+    "electron/capabilityCore/mcpCredentialElicitation.ts",
+    "electron/capabilityCore/mcpTrustDowngrade.ts",
+    "electron/capabilityCore/mcpTimelineConfirmation.ts",
+    "electron/capabilityCore/mcpDocumentConfirmation.ts",
+    "src/i18n/resources.ts",
+    "src/i18n/locales/ko/index.ts"
+  ],
+  "entry_points": [
+    "App settings choose ko",
+    "MCP launcher reads persisted ko preference",
+    "tools/list projects titleByLocale metadata",
+    "Background production notifications project the selected locale",
+    "Telemetry IPC parses renderer-supplied locale metadata"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "The supported locale and tool metadata contracts belong to this repository; external documentation does not define Nomi supported languages.",
+  "invariants": [
+    "DesktopLocale is derived from SUPPORTED_LOCALES in electron/shared/contracts/locale.ts; renderer imports only that shared pure module, while desktopLocale owns host state.",
+    "Localized MCP title lookup accepts the shared locale type, and missing optional external titles retain the provided English title instead of selecting Chinese for Korean.",
+    "Launcher test injection accepts the same DesktopLocale as production.",
+    "Korean recovery and production notifications change copy without changing retry, spending, deduplication or navigation policy.",
+    "Telemetry accepts canonical ko without relabeling it zh-CN; event names and privacy consent behavior remain unchanged."
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "electron/agentLane/laneDesktopRuntime.ts",
+      "symbol": "resolveRequestedSkill"
+    },
+    {
+      "kind": "read",
+      "path": "electron/agentLane/laneDesktopRuntime.ts",
+      "symbol": "NOMI_AGENT_IDENTITY"
+    },
+    {
+      "kind": "read",
+      "path": "electron/agentLane/laneDesktopRuntime.ts",
+      "symbol": "getDesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/agentLane/laneLegacyMigration.mts",
+      "symbol": "DesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/generationRecoveryProjection.ts",
+      "symbol": "GenerationRecoveryState"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/generationRecoveryProjection.ts",
+      "symbol": "GenerationRecoveryLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/generationRecoveryProjection.ts",
+      "symbol": "GenerationRecoveryProjection"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpAppWidget.ts",
+      "symbol": "GenerationRecoveryProjection"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpCanonicalToolResult.ts",
+      "symbol": "CanonicalMcpToolResult"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpCapabilityProjection.ts",
+      "symbol": "CanonicalMcpToolResult"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpCredentialElicitation.ts",
+      "symbol": "ResultLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpCredentialElicitation.ts",
+      "symbol": "CredentialElicitationOutcome"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpDocumentConfirmation.ts",
+      "symbol": "ResultLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpGateConfirmation.ts",
+      "symbol": "GenerationGateConfirmation"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpGateConfirmation.ts",
+      "symbol": "GenerationGateChallengeProjection"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpGateConfirmation.ts",
+      "symbol": "GenerationGateVerificationResult"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpLocaleText.ts",
+      "symbol": "DesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpNodeLauncher.ts",
+      "symbol": "DesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpNodeLauncher.ts",
+      "symbol": "McpInvokeOptions"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpNodeLauncher.ts",
+      "symbol": "MCP_REQUEST_SIGNAL"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "MCP_REQUEST_SIGNAL"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "McpInvokeOptions"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "GenerationGateChallengeProjection"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "GenerationGateVerificationResult"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "ResultLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "McpTransport"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "SUPPORTED_PROTOCOL_VERSIONS"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpResultPayload.ts",
+      "symbol": "ResultLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpSemanticGenerationFlow.ts",
+      "symbol": "GenerationGateChallengeProjection"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpSemanticGenerationFlow.ts",
+      "symbol": "GenerationGateConfirmation"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpStdioServer.ts",
+      "symbol": "McpInvokeOptions"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpStdioServer.ts",
+      "symbol": "MCP_REQUEST_SIGNAL"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpStdioServer.ts",
+      "symbol": "getDesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpTimelineConfirmation.ts",
+      "symbol": "ResultLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpToolErrorResults.ts",
+      "symbol": "ResultLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpToolResults.ts",
+      "symbol": "ResultLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpToolResults.ts",
+      "symbol": "ToolOutcome"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpTrustDowngrade.ts",
+      "symbol": "GenerationGateChallengeProjection"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpTrustDowngrade.ts",
+      "symbol": "GenerationGateConfirmation"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpTrustDowngrade.ts",
+      "symbol": "ResultLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpTrustDowngrade.ts",
+      "symbol": "TrustDowngradeDependencies"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/rpcServer.ts",
+      "symbol": "getDesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/shotVerifyDeps.ts",
+      "symbol": "getDesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/shotVerifyOrchestrate.ts",
+      "symbol": "DesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/connectors/tikhubRoute.ts",
+      "symbol": "getDesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/desktopLocale.ts",
+      "symbol": "DesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/desktopStrings.ts",
+      "symbol": "DesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/desktopStrings.ts",
+      "symbol": "getDesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/feedback/feedbackIpc.ts",
+      "symbol": "getDesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/harness/context/agentContext.ts",
+      "symbol": "getDesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/harness/context/agentContext.ts",
+      "symbol": "readRequestedSkill"
+    },
+    {
+      "kind": "read",
+      "path": "electron/i18n.ts",
+      "symbol": "getDesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionNotifications.ts",
+      "symbol": "GenerationRecoveryProjection"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionNotifications.ts",
+      "symbol": "ProductionNotice"
+    },
+    {
+      "kind": "read",
+      "path": "electron/settings/localePreference.ts",
+      "symbol": "DesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/settings/portableConfig.ts",
+      "symbol": "PortableConfigBundleV1"
+    },
+    {
+      "kind": "read",
+      "path": "electron/settings/telemetryIpc.ts",
+      "symbol": "TelemetrySettingsView"
+    },
+    {
+      "kind": "read",
+      "path": "electron/settings/telemetryIpc.ts",
+      "symbol": "readTelemetrySummary"
+    },
+    {
+      "kind": "read",
+      "path": "electron/settings/telemetryIpc.ts",
+      "symbol": "TelemetryEventName"
+    },
+    {
+      "kind": "read",
+      "path": "electron/settings/telemetryIpc.ts",
+      "symbol": "TelemetryProps"
+    },
+    {
+      "kind": "read",
+      "path": "electron/shared/agentLane/laneLegacyMigrationContract.ts",
+      "symbol": "DesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/shared/contracts/locale.ts",
+      "symbol": "SUPPORTED_LOCALES"
+    },
+    {
+      "kind": "read",
+      "path": "electron/shared/contracts/locale.ts",
+      "symbol": "DesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "TELEMETRY_EVENT_NAMES"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "FeatureId"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "AttemptCountBucket"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "CapabilitySlot"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "DurationBucket"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "ExportFormat"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "UpdateAction"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "ModelClass"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "ToolCallBucket"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "TELEMETRY_SCHEMA_VERSION"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "TelemetryEventName"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "TelemetryProps"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "osFamily"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "attemptCountBucket"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "durationBucket"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "toolCallBucket"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "TelemetryEnvelope"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryLifecycle.ts",
+      "symbol": "getDesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryLifecycle.ts",
+      "symbol": "osFamily"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryOutbox.ts",
+      "symbol": "TelemetryEnvelope"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryOutbox.ts",
+      "symbol": "isTelemetryEnvelope"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryOutbox.ts",
+      "symbol": "TelemetrySummary"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/telemetryOutbox.ts",
+      "symbol": "TelemetryProps"
+    },
+    {
+      "kind": "read",
+      "path": "electron/video/deconstructVideo.ts",
+      "symbol": "getDesktopLocale"
+    },
+    {
+      "kind": "read",
+      "path": "src/desktop/settingsBridge.ts",
+      "symbol": "TelemetrySettingsView"
+    },
+    {
+      "kind": "read",
+      "path": "src/desktop/settingsBridge.ts",
+      "symbol": "TelemetrySummary"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/index.ts",
+      "symbol": "SUPPORTED_LOCALES"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/index.ts",
+      "symbol": "AppLocale"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/index.ts",
+      "symbol": "LOCALE_STORAGE_KEY"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/index.ts",
+      "symbol": "DEFAULT_LOCALE"
+    },
+    {
+      "kind": "read",
+      "path": "src/ui/community/feedbackDiagnostics.ts",
+      "symbol": "getAppLocale"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/api/taskApi.ts",
+      "symbol": "CapabilitySlot"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/api/taskApi.ts",
+      "symbol": "DurationBucket"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/agent/shotVerifyRunner.ts",
+      "symbol": "getAppLocale"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/whiteboard/whiteboardCanvasNodeOps.ts",
+      "symbol": "L"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/library/ProjectLibraryPage.tsx",
+      "symbol": "getAppLocale"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/library/projectTemplates.ts",
+      "symbol": "getAppLocale"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/onboarding/demoProject.ts",
+      "symbol": "getAppLocale"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/projectRepository.ts",
+      "symbol": "getAppLocale"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/settings/SettingsDialog.tsx",
+      "symbol": "AppLocale"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/settings/SettingsDialog.tsx",
+      "symbol": "getAppLocale"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/settings/SettingsDialog.tsx",
+      "symbol": "SUPPORTED_LOCALES"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/settings/TelemetrySection.tsx",
+      "symbol": "TelemetrySettingsView"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/settings/TelemetrySection.tsx",
+      "symbol": "TelemetrySummary"
+    },
+    {
+      "kind": "write",
+      "path": "electron/agentLane/laneDesktopRuntime.ts",
+      "symbol": "buildLanguageRule"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpAppWidget.ts",
+      "symbol": "projectGenerationRecovery"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpCapabilityProjection.ts",
+      "symbol": "buildCanonicalMcpToolResult"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpCredentialElicitation.ts",
+      "symbol": "mcpLocaleText"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpCredentialElicitation.ts",
+      "symbol": "L"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpDocumentConfirmation.ts",
+      "symbol": "mcpLocaleText"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpNodeLauncher.ts",
+      "symbol": "normalizeDesktopLocale"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpNodeLauncher.ts",
+      "symbol": "createMcpProtocol"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "buildCanonicalMcpToolResult"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "mcpLocaleText"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "buildToolErrorOutcome"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "buildProgressStartMessage"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "handleTrustDowngrade"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "handleTimelineEditConfirmation"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "handleDocumentEditConfirmation"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "runIntegrationCredentialElicitation"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "sanitizeArtifactResource"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpResultPayload.ts",
+      "symbol": "buildToolOutcome"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpRpcError.ts",
+      "symbol": "buildToolErrorOutcome"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpSemanticGenerationFlow.ts",
+      "symbol": "mcpLocaleText"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpStdioServer.ts",
+      "symbol": "setDesktopLocale"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpStdioServer.ts",
+      "symbol": "createMcpProtocol"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpTimelineConfirmation.ts",
+      "symbol": "mcpLocaleText"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpToolErrorResults.ts",
+      "symbol": "mcpLocaleText"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpToolErrorResults.ts",
+      "symbol": "L"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpToolResults.ts",
+      "symbol": "mcpLocaleText"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpToolResults.ts",
+      "symbol": "L"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpToolResults.ts",
+      "symbol": "projectGenerationRecovery"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpTrustDowngrade.ts",
+      "symbol": "mcpLocaleText"
+    },
+    {
+      "kind": "write",
+      "path": "electron/desktopLocale.ts",
+      "symbol": "normalizeDesktopLocale"
+    },
+    {
+      "kind": "write",
+      "path": "electron/harness/context/agentContext.ts",
+      "symbol": "buildLanguageRule"
+    },
+    {
+      "kind": "write",
+      "path": "electron/i18n.ts",
+      "symbol": "setDesktopLocale"
+    },
+    {
+      "kind": "write",
+      "path": "electron/main.ts",
+      "symbol": "setDesktopLocale"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionNotifications.ts",
+      "symbol": "projectGenerationRecovery"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionNotificationsDesktop.ts",
+      "symbol": "createNoticeDedupe"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionNotificationsDesktop.ts",
+      "symbol": "decideProductionNotice"
+    },
+    {
+      "kind": "write",
+      "path": "electron/settings/localePreference.ts",
+      "symbol": "normalizeDesktopLocale"
+    },
+    {
+      "kind": "write",
+      "path": "electron/settings/registerSettingsIpc.ts",
+      "symbol": "registerTelemetryIpc"
+    },
+    {
+      "kind": "write",
+      "path": "electron/settings/telemetryIpc.ts",
+      "symbol": "deleteTelemetryData"
+    },
+    {
+      "kind": "write",
+      "path": "electron/settings/telemetryIpc.ts",
+      "symbol": "flushTelemetry"
+    },
+    {
+      "kind": "write",
+      "path": "electron/settings/telemetryIpc.ts",
+      "symbol": "isTelemetryProps"
+    },
+    {
+      "kind": "write",
+      "path": "electron/settings/telemetryIpc.ts",
+      "symbol": "recordTelemetryEvent"
+    },
+    {
+      "kind": "write",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "isAutomatedLaunch"
+    },
+    {
+      "kind": "write",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "osFamily"
+    },
+    {
+      "kind": "write",
+      "path": "electron/telemetry/telemetryEvents.ts",
+      "symbol": "isTelemetryProps"
+    },
+    {
+      "kind": "write",
+      "path": "electron/telemetry/telemetryLifecycle.ts",
+      "symbol": "recordTelemetryEvent"
+    },
+    {
+      "kind": "write",
+      "path": "electron/telemetry/telemetryOutbox.ts",
+      "symbol": "isTelemetryEnvelope"
+    },
+    {
+      "kind": "write",
+      "path": "electron/telemetry/telemetryOutbox.ts",
+      "symbol": "flushTelemetry"
+    },
+    {
+      "kind": "write",
+      "path": "electron/telemetry/telemetryOutbox.ts",
+      "symbol": "buildTelemetryEnvelope"
+    },
+    {
+      "kind": "write",
+      "path": "electron/telemetry/telemetryOutbox.ts",
+      "symbol": "enqueueTelemetryEvent"
+    },
+    {
+      "kind": "write",
+      "path": "electron/update/autoUpdater.ts",
+      "symbol": "recordTelemetryEvent"
+    },
+    {
+      "kind": "write",
+      "path": "src/i18n/index.ts",
+      "symbol": "isAppLocale"
+    },
+    {
+      "kind": "write",
+      "path": "src/i18n/index.ts",
+      "symbol": "normalizeDesktopLocale"
+    },
+    {
+      "kind": "write",
+      "path": "src/i18n/index.ts",
+      "symbol": "normalizeSystemLocale"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/settings/SettingsDialog.tsx",
+      "symbol": "setAppLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpCredentialElicitation.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpLocaleText.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpToolCatalog.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpToolErrorResults.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpToolResults.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionNotifications.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "electron/promptLibrary/curatedPrompts.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "src/design/previewHost.tsx",
+      "symbol": "resources"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/i18next.d.ts",
+      "symbol": "zhCN"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/index.ts",
+      "symbol": "resources"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/agentLaneError.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/agentResident.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/agentToolFailure.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/assetLibrary.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/browserAssets.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/comfyuiWorkflowPage.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/creationAi.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/generationCommon.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/ko/index.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/ko/index.ts",
+      "symbol": "zhCN"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/libraries.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/modelSetup.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/onboardingProviders.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/previewSource.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/runtime.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/storyboardEditor.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/timelineEditor.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/timelinePreview.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/resources.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/resources.ts",
+      "symbol": "zhCN"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/resources.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/api/promptLibraryApi.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/library/libraryGroups.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/promptLibrary/promptDisplay.ts",
+      "symbol": "en"
+    }
+  ],
+  "door_reduction": {
+    "before": 197,
+    "after": 197,
+    "why_not": "Distinct GUI, IPC, launcher, telemetry and production-notification boundaries must remain callable. Canonical locale values converge on the shared contract; mutable locale converges on setDesktopLocale. Notification delivery and dedupe stay separate from pure projection, and telemetry settings reads remain distinct from event collection. No new locale normalization implementation is retained."
+  },
+  "generality_proof": "The locale union is derived from a single supported list; Partial<Record<DesktopLocale,string>> accepts future languages for optional external metadata, while the launcher harness reuses DesktopLocale instead of a second union. All resources are now host-independent data. resourcesForHost receives an explicit boolean at i18n composition and never calls the host; canvas, timeline and generation consumers can import the same dictionaries before a bridge is available.",
+  "shared_boundaries": [
+    {
+      "path": "electron/shared/contracts/locale.ts",
+      "symbol": "normalizeDesktopLocale",
+      "responsibility": "Own supported locale type and pure normalization across renderer, host and bare-Node launcher without importing host-only runtime."
+    },
+    {
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "createMcpProtocol",
+      "responsibility": "Project optional localized metadata through the supported locale and explicit Korean display policy."
+    },
+    {
+      "path": "electron/desktopLocale.ts",
+      "symbol": "setDesktopLocale",
+      "responsibility": "Own mutable host locale using the shared normalizer."
+    },
+    {
+      "path": "electron/productionRun/productionNotifications.ts",
+      "symbol": "decideProductionNotice",
+      "responsibility": "Project Korean notification copy while preserving existing lifecycle and duplicate suppression decisions."
+    },
+    {
+      "path": "electron/settings/telemetryIpc.ts",
+      "symbol": "registerTelemetryIpc",
+      "responsibility": "Accept Korean telemetry locale metadata at the existing IPC event boundary without changing consent or event-name admission."
+    },
+    {
+      "path": "src/i18n/resources.ts",
+      "symbol": "resourcesForHost",
+      "responsibility": "Pure explicit host projection; importing locale dictionaries never reads the host bridge."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "src/i18n/index.ts",
+      "entry_point": "normalizeSystemLocale",
+      "disposition": "enforced",
+      "evidence": "Delegates to normalizeDesktopLocale; Korean OS and persisted preference tests exercise renderer/host equivalence."
+    },
+    {
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "entry_point": "createMcpProtocol tools/list",
+      "disposition": "enforced",
+      "evidence": "Full typecheck exposed unsafe indexing; metadata uses the shared locale union and a supplied English label for missing Korean metadata."
+    },
+    {
+      "path": "electron/capabilityCore/mcpLauncherLocale.test.ts",
+      "entry_point": "harness",
+      "disposition": "enforced",
+      "evidence": "Typecheck exposed callbacks narrower than resolveLauncherLocale; the harness now accepts DesktopLocale."
+    },
+    {
+      "path": "electron/productionRun/productionNotifications.ts",
+      "entry_point": "decideProductionNotice",
+      "disposition": "enforced",
+      "evidence": "NoticeLocale accepts ko; notice selects Korean title/body and recovery projection receives the locale. Existing event priority, sound and navigation fields are unchanged."
+    },
+    {
+      "path": "electron/settings/telemetryIpc.ts",
+      "entry_point": "nomi:telemetry:track",
+      "disposition": "enforced",
+      "evidence": "The record-event handler projects raw.locale=ko to ko; telemetry event and outbox locale contracts accept ko. Existing validation and consent boundaries remain intact."
+    },
+    {
+      "path": "src/i18n/resources.ts",
+      "entry_point": "resources",
+      "disposition": "enforced",
+      "evidence": "CI timeline and canvas test imports failed at the same eager bridge call. The resource export now consists of pure locale data; the original three suites pass without changing their mocks."
+    },
+    {
+      "path": "src/i18n/index.ts",
+      "entry_point": "i18n initialization",
+      "disposition": "enforced",
+      "evidence": "Explicit resourcesForHost selection uses the installed web host and preserves desktop data. The new index test checks actual initialized web copy and unchanged exported desktop resources."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Another supported language can trigger the same narrow union or metadata lookup; Korean reaches it from renderer, persisted preferences and MCP launcher.",
+    "same_class_scan": [
+      "rg -n 'zh-CN.*en|titleByLocale|DesktopLocale' src electron --glob '*.ts'",
+      "node scripts/door-map.mjs electron/desktopLocale.ts",
+      "Independent cross-check of SettingsDialog locale labels, portable settings, and MCP titles.",
+      "node scripts/door-map.mjs electron/productionRun/productionNotifications.ts",
+      "node scripts/door-map.mjs electron/settings/telemetryIpc.ts",
+      "node scripts/door-map.mjs electron/shared/contracts/locale.ts",
+      "Machine-generated union: doorsForTargets(scope_paths + L) from scripts/door-map.mjs; L captures existing projection wrappers one hop beyond canonical mcpLocaleText.",
+      "node scripts/door-map.mjs src/i18n/resources.ts: 35 read doors across renderer and host; timeline asset drop, canvas drop and generation deadline all independently import resource consumers."
+    ]
+  },
+  "prevention": {
+    "kind": "type-system",
+    "enforcement_path": "electron/shared/contracts/locale.ts",
+    "invariant": "Supported locale values and normalization have one renderer-safe owner; metadata typing and Korean display projections use that canonical contract. Locale dictionary imports must not query or initialize any host runtime; only explicit resource assembly selects host copy.",
+    "failure_mode": "Unsupported narrow metadata indexing fails typecheck; optional metadata has an explicit display policy without changing tool state or execution.",
+    "exception_policy": "none",
+    "strategy": "Move the pure list/type/normalizer to the shared contract, keep host mutable state separate, use DesktopLocale for MCP metadata and injected callbacks, and explicitly accept ko at existing notification and telemetry boundaries.",
+    "artifacts": [
+      "electron/desktopLocale.ts",
+      "electron/capabilityCore/mcpProtocol.ts",
+      "electron/capabilityCore/mcpLocaleText.ts",
+      "electron/shared/contracts/locale.ts",
+      "src/i18n/index.ts",
+      "electron/productionRun/productionNotifications.ts",
+      "electron/settings/telemetryIpc.ts",
+      "electron/telemetry/telemetryEvents.ts",
+      "electron/telemetry/telemetryOutbox.ts",
+      "src/i18n/resources.ts",
+      "src/i18n/locales/ko/index.ts"
+    ]
+  },
+  "regression_tests": [
+    "src/i18n/index.test.ts",
+    "src/i18n/localeNormalize.equivalence.test.ts",
+    "src/i18n/koreanHost.test.ts",
+    "electron/capabilityCore/mcpLauncherLocale.test.ts"
+  ],
+  "class_regression_tests": [
+    "src/i18n/localeNormalize.equivalence.test.ts",
+    "electron/capabilityCore/mcpLauncherLocale.test.ts",
+    "src/i18n/koreanHost.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "src/i18n/index.ts"
+    ],
+    "rationale": "The renderer-specific normalization implementation is replaced by delegation to the existing electron-free owner. Existing zh-CN/en strings and operations remain intact."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "This is a repository-owned type and projection invariant; i18next version does not control supported locale declarations.",
+    "exit_criteria": []
+  },
+  "migration": "Existing zh-CN/en preferences remain valid. ko is additive, persisted as the canonical locale. No project or credential migration.",
+  "residual_risks": [
+    "Dynamic external MCP detail and user-authored content retain source text.",
+    "Unrelated visual snapshot mismatches reproduce on unchanged origin/main; full gates is not declared green.",
+    "Production notification and telemetry Korean branches were independently inspected; live notification delivery and telemetry upload are not executed by this review."
+  ],
+  "invariant_owner_layer": {
+    "layer": "electron/shared/contracts/locale.ts",
+    "tests": [
+      "src/i18n/index.test.ts",
+      "src/i18n/localeNormalize.equivalence.test.ts",
+      "src/i18n/koreanHost.test.ts",
+      "electron/capabilityCore/mcpLauncherLocale.test.ts"
+    ]
+  },
+  "detected_by": "review",
+  "recurrence_check_on": "2026-11-11"
+}

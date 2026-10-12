@@ -1,0 +1,18 @@
+{
+  "title": "이 문제 알리기",
+  "summaryFallback": "이 단계를 완료하지 못했어요",
+  "attaches": "기록, 모델 목록, 도구 사용 기록 첨부",
+  "view": "보기",
+  "manifestUnavailable": "지금 기록을 읽을 수 없어 첨부 목록을 만들지 못했어요. 그래도 보낼 수 있어요.",
+  "rawHint": "전체 원본 파일: 설정 → 일반 → 진단 파일 내보내기.",
+  "includeContent": "장면 설명과 원고도 첨부",
+  "notePlaceholder": "한 줄 덧붙이기 · 선택",
+  "send": "보내기",
+  "sending": "보내는 중…",
+  "sent": "보냄",
+  "sentWithId": "보냄 {{id}}",
+  "queued": "전송 대기 중 · 인터넷에 연결되면 보내요",
+  "unconfigured": "이 버전에는 의견을 받을 주소가 없어 보낼 수 없어요.",
+  "failed": "보내지 못했어요. 조금 뒤 다시 시도하세요.",
+  "bridgeMissing": "데스크톱 연결 기능이 없는 브라우저 시험 화면이나 미설치 버전에서는 보낼 수 없어요"
+}

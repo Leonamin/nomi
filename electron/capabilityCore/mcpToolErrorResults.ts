@@ -1,9 +1,10 @@
+import { mcpLocaleText } from './mcpLocaleText'
 import type { ResultLocale } from './mcpToolResults'
 import { CAPABILITY_TRANSPORT_PUBLIC_ERROR_CODES } from '../shared/surfacePortBinding'
 import { INTEGRATION_ERROR_CODES } from '../shared/integrationContract'
 
 type Ctx = { locale: ResultLocale }
-const L = (ctx: Ctx, zh: string, en: string): string => (ctx.locale === 'en' ? en : zh)
+const L = (ctx: Ctx, zh: string, en: string): string => (mcpLocaleText(ctx.locale, zh, en))
 
 /** A6 已知错误码 → 人话原因 + 恢复动作（只登记确证的码，不编造；未知码原样透传）。 */
 const ERROR_HINT: Record<string, { zh: string; en: string; recover: Array<{ zh: string; en: string }> }> = {

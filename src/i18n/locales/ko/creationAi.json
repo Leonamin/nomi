@@ -1,0 +1,113 @@
+{
+  "workspace": {
+    "aria": "창작 작업 공간"
+  },
+  "documentList": {
+    "deleteStoryboard": "계획 삭제",
+    "storyboardDeleted": "“{{title}}”을(를) 삭제했어요",
+    "title": "창작 내용",
+    "aria": "창작 내용 목록",
+    "count": "초안 · {{count}}개",
+    "newDocumentAria": "새 초안 만들기",
+    "renameAria": "초안 제목",
+    "delete": "초안 삭제",
+    "deleteTitle": "이 초안을 삭제할까요?",
+    "deleteMessage": "“{{title}}”과 그 내용을 삭제해요. 되돌릴 수 없어요.",
+    "deleteConfirm": "삭제",
+    "empty": "아직 초안이 없어요",
+    "expand": "초안 펼치기",
+    "collapse": "초안 접기",
+    "collapseColumn": "내용 목록 숨기기(편집 공간을 넓혀요)",
+    "expandColumn": "내용 목록 보기",
+    "newStoryboard": "새 장면 계획",
+    "moreActions": "더 보기",
+    "rename": "이름 바꾸기",
+    "duplicateStoryboard": "장면 계획 복제",
+    "keepOneDocument": "프로젝트에는 초안이 하나 이상 있어야 해요."
+  },
+  "editor": {
+    "placeholder": "이야기나 대본, 문구를 적어 보세요… 글을 선택하면 이미지나 영상 카드를 만들 수 있어요.",
+    "toolbarAria": "글 편집 도구",
+    "documentAria": "창작 문서 편집기"
+  },
+  "selection": {
+    "bold": "굵게",
+    "italic": "기울임",
+    "strike": "취소선",
+    "code": "인라인 코드",
+    "highlight": "강조",
+    "heading1": "제목 1",
+    "heading2": "제목 2",
+    "heading3": "제목 3",
+    "horizontalRule": "구분선",
+    "taskList": "할 일 목록",
+    "insertTable": "표 넣기",
+    "link": "링크",
+    "toolbar": "선택한 글 편집 도구",
+    "formatting": "기본 글 서식",
+    "generate": "생성",
+    "image": "이미지 만들기",
+    "video": "영상 만들기",
+    "storyboard": "장면으로 나누기",
+    "bulletList": "글머리 목록",
+    "orderedList": "번호 목록",
+    "blockquote": "인용",
+    "undo": "되돌리기",
+    "redo": "다시 실행"
+  },
+  "attachmentsUploading": "첨부 파일을 올리고 있어요. 다 올라간 뒤 보내 주세요.",
+  "noTextModel": {
+    "readyTitle": "텍스트 모델을 사용할 수 있어요",
+    "readyDescription": "모델 설정에서 텍스트 모델이 켜졌어요. 장면 나누기·대화·글쓰기를 할 수 있어요. 요청을 다시 보내 주세요.",
+    "title": "창작 도우미에는 텍스트 모델이 필요해요",
+    "descriptionBefore": "이미지·영상 모델은 화면을 만들어요. 장면을 나누거나 대화하고 글을 쓰려면 도우미가 생각할 수 있는 ",
+    "textModel": "텍스트 대화 모델",
+    "descriptionAfter": "이 필요해요.",
+    "enable": "{{model}} 켜기",
+    "settings": "모델 설정"
+  },
+  "mode": {
+    "general": {
+      "label": "일반 질문",
+      "short": "일반",
+      "title": "질문 도우미",
+      "description": "문서를 바꾸거나 창작 양식을 강요하지 않고 질문에 바로 답해요."
+    },
+    "story": {
+      "label": "이야기 쓰기",
+      "short": "이야기",
+      "title": "이야기 구상",
+      "description": "주제나 짧은 글, 선택한 내용을 촬영할 수 있는 이야기로 펼쳐요."
+    },
+    "script": {
+      "label": "대본 쓰기",
+      "short": "대본",
+      "title": "대본 작성",
+      "description": "장면·대사·화면 밖 목소리(OS/VO)·자막 형식을 담은 대본을 만들어요."
+    },
+    "assets": {
+      "label": "소재 계획",
+      "short": "소재",
+      "title": "인물 / 배경 / 소품",
+      "description": "필요한 인물·배경·소품을 찾고 이미지를 만들 설명을 써요."
+    },
+    "storyboard": {
+      "label": "장면 계획 쓰기",
+      "short": "장면 계획",
+      "title": "글로 쓰는 장면 계획",
+      "description": "문서에 글로 된 장면 계획을 써요. 생성할 장면을 캔버스 카드로 나누려면 “장면으로 나눠 줘”라고 요청하거나 추천 카드를 눌러 주세요."
+    },
+    "seedance": {
+      "label": "장면 설명",
+      "short": "장면 설명",
+      "title": "Seedance 장면 설명",
+      "description": "Seedance 2.0에 바로 복사해서 쓸 수 있는 장면 설명을 만들어요."
+    },
+    "review": {
+      "label": "검토하고 다듬기",
+      "short": "검토",
+      "title": "장면 연결 검토",
+      "description": "소재 참조·타임라인·감정 흐름·민감한 내용을 확인해요."
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "creation": "구상",
+  "generation": "만들기",
+  "preview": "미리보기",
+  "storyboard": "스토리보드",
+  "creationTab": "구상",
+  "generationTab": "만들기",
+  "previewTab": "미리보기",
+  "switchLabel": "작업 공간 바꾸기",
+  "loading": "{{label}} 불러오는 중"
+}

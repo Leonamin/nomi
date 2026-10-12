@@ -1,3 +1,4 @@
+import { koProductionNotice } from '../locales/recoveryKo'
 // A5 系统通知 · 纯决策层（plan 2026-08-11-mcp-conversation-native-p0）。
 // 「Nomi 在后台时，等审批 / 失败 / 提交结果不明 / 完成 能被看见」——四类才打扰，其余一律不吵（样张陆幕）。
 // 本文件零 electron 依赖（可裸 node 单测）；发通知与聚焦在 productionNotificationsDesktop.ts。
@@ -15,7 +16,7 @@ export type ProductionNotice = {
   recovery?: GenerationRecoveryProjection
 }
 
-type NoticeLocale = 'zh-CN' | 'en'
+type NoticeLocale = 'zh-CN' | 'en' | 'ko'
 
 const COPY: Record<string, { zh: [string, string]; en: [string, string] }> = {
   attention: {
@@ -36,8 +37,8 @@ const COPY: Record<string, { zh: [string, string]; en: [string, string] }> = {
   },
 }
 
-function notice(kind: keyof typeof COPY, run: ProductionRun, locale: NoticeLocale, detail?: string, recovery?: GenerationRecoveryProjection): ProductionNotice {
-  const [title, fallbackBody] = locale === 'en' ? COPY[kind].en : COPY[kind].zh
+function notice(kind: keyof typeof koProductionNotice, run: ProductionRun, locale: NoticeLocale, detail?: string, recovery?: GenerationRecoveryProjection): ProductionNotice {
+  const [title, fallbackBody] = locale === 'ko' ? koProductionNotice[kind] : locale === 'en' ? COPY[kind].en : COPY[kind].zh
   return {
     key: `${kind}:${run.runId}`,
     soundEvent: kind === 'completed' ? 'completed' : 'decision',

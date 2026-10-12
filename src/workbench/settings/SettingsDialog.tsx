@@ -39,7 +39,7 @@ const OnboardingDrawer = lazyWithChunkBoundary('模型', () =>
 import type { ModelPageRequest } from '../../ui/onboarding/useModelPageRequest'
 
 // 语言用「母语名」直读，不随界面语言翻译——换语言时两个名字都稳定可认（沿用 PR#50 的判断）。
-const LOCALE_LABEL_KEY: Record<AppLocale, string> = { 'zh-CN': 'common.chinese', en: 'common.english' }
+const LOCALE_LABEL_KEY: Record<AppLocale, string> = { 'zh-CN': 'common.chinese', en: 'common.english', ko: 'common.korean' }
 
 // 集中设置页（2026-08-01 用户拍板样张）：左 tab 右内容。首批「文件与保存」做实——项目目录与跨设备继续编辑；
 // 其余 tab 占位。外壳交互为 Portal + Esc + 点遮罩关，布局是居中大 modal。

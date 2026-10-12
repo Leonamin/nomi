@@ -19,7 +19,7 @@ ipcRenderer.on("nomi:production-deep-link", (_event, payload: ProductionDeepLink
 contextBridge.exposeInMainWorld("nomiDesktop", {
   platform: process.platform,
   i18n: {
-    setLocale: (locale: "zh-CN" | "en") => ipcRenderer.send("nomi:i18n:set-locale", locale),
+    setLocale: (locale: "zh-CN" | "en" | "ko") => ipcRenderer.send("nomi:i18n:set-locale", locale),
     // 首启探测系统语言用；拿不到就返回 ""（渲染层据此回落默认语言，绝不抛断首帧）。
     // 测试铁律：E2E/走查默认关探测（否则跟随 CI 机器系统语言 → 全批中文选择器测试崩），
     // 回落默认中文；仅「首启语言探测」专项走查显式 NOMI_TEST_SYSTEM_LOCALE=1 才真探测。

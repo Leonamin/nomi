@@ -91,7 +91,7 @@ export type ShotVerifyContext = {
    * 走 ctx 而不是在函数里读全局 locale：本核两份实现（src / electron capabilityCore）由等价性单测钉死
    * 逐字节相同，必须保持「同入参恒同结果」的纯函数；locale 由各自的编排层注入（本核保持 electron-free）。
    */
-  reasonLanguage?: 'zh-CN' | 'en'
+  reasonLanguage?: 'zh-CN' | 'en' | 'ko'
 }
 
 function hasPreviousShot(ctx: ShotVerifyContext): boolean {
@@ -188,7 +188,9 @@ export function buildShotVerifyPrompt(ctx: ShotVerifyContext): string {
     // 那等于顺手改了判官在中文下的输入。展开成空数组 → 中文侧逐字节不变。
     ...(ctx.reasonLanguage === 'en'
       ? ['reason 必须用**英文**写(用户界面是英文,这句会原样显示给用户看);scores 与 JSON 键名保持不变。']
-      : []),
+      : ctx.reasonLanguage === 'ko'
+        ? ['reason은 한국어로 짧고 쉽게 작성하세요. scores와 JSON 키는 그대로 유지하세요.']
+        : []),
     '打分铁律：① 主体对不上/机位错就低分，不要因为图清晰就给高分；② 拿不准（看得见但吃不准像不像）给保守的偏低分；',
     `③ **但如果这个镜别根本看不到可比对的依据**（如眼部或手部微距、极远景主体只有几十像素、纯背影），该轴请给 ${SHOT_VERIFY_NOT_ASSESSABLE} 表示「无法判定」——${SHOT_VERIFY_NOT_ASSESSABLE} 不是低分，我们会跳过该轴；把「看不到」打成低分会触发一轮永远救不回来的重做。`,
     ctx.framePair

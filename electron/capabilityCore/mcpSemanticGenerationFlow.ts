@@ -1,3 +1,4 @@
+import { mcpLocaleText } from './mcpLocaleText'
 import type { GenerationGateChallengeProjection, GenerationGateConfirmation } from "./mcpProtocol";
 
 export type SemanticGenerationFlowDependencies = {
@@ -5,7 +6,7 @@ export type SemanticGenerationFlowDependencies = {
   requestConfirmation: (challenge: GenerationGateChallengeProjection, signal?: AbortSignal) => Promise<GenerationGateConfirmation>;
   buildResult: (toolName: string, args: Record<string, unknown>, result: unknown) => Record<string, unknown>;
   reply: (id: unknown, result: unknown) => void;
-  locale: () => "zh-CN" | "en";
+  locale: () => "zh-CN" | "en" | "ko";
 };
 
 /** Resolve the one server-owned challenge, approve the same Run, then start it. */
@@ -21,9 +22,7 @@ export async function handleSemanticGenerationGate(
   const confirmation = await deps.requestConfirmation(challenge, signal);
   if (!confirmation.confirmed || (!confirmation.receiptId && !confirmation.receiptToken)) {
     deps.reply(id, {
-      content: [{ type: "text", text: deps.locale() === "en"
-        ? "Not started: confirm this generation in the current client or in the single Nomi fallback card."
-        : "未开始：请在当前客户端确认这次生成，或在唯一的 Nomi 兜底卡中确认。" }],
+      content: [{ type: "text", text: mcpLocaleText(deps.locale(), "未开始：请在当前客户端确认这次生成，或在唯一的 Nomi 兜底卡中确认。", "Not started: confirm this generation in the current client or in the single Nomi fallback card.") }],
       isError: true,
       structuredContent: { nomiOutcome: { errorCode: "human_approval_required", nextAction: "confirm", capability: "gate_decide" } },
     });

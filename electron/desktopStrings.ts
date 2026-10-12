@@ -11,7 +11,10 @@
 
 import { getDesktopLocale, type DesktopLocale } from "./desktopLocale";
 
+import ko from "./locales/ko.json";
+
 const translations = {
+  ko,
   "zh-CN": {
     "agent.legacySummary": "旧版摘要：",
     "agent.legacyUnverifiedTool": "旧版工具结果未验证。",

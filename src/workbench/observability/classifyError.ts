@@ -127,7 +127,9 @@ const IPC_WRAPPER_PREFIX = /^Error invoking remote method '[^']*':\s*(?:Error:\s
  */
 function isInUiLanguage(text: string): boolean {
   const hasHan = /[㐀-鿿]/.test(text)
-  return String(i18n.language || '').toLowerCase().startsWith('zh') ? hasHan : !hasHan
+  const language = String(i18n.language || '').toLowerCase()
+  if (language.startsWith('ko')) return /[가-힣]/.test(text)
+  return language.startsWith('zh') ? hasHan : !hasHan
 }
 
 /**

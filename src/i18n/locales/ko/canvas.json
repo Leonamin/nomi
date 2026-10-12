@@ -1,0 +1,40 @@
+{
+  "addNodeMenu": "카드 추가 메뉴",
+  "nodeMenu": "카드 작업 메뉴",
+  "nodeMenuCopy": "복사",
+  "nodeMenuCut": "잘라내기",
+  "nodeMenuPaste": "붙여넣기",
+  "nodeMenuPasteEmpty": "아직 복사한 카드가 없어요",
+  "nodeMenuGroup": "묶기",
+  "nodeMenuGroupNeedsTwo": "묶으려면 카드를 두 개 이상 선택하세요",
+  "nodeMenuDelete": "삭제",
+  "toolbar": "만들기 캔버스 도구 모음",
+  "addNode": "{{type}} 카드 추가",
+  "nodeName": "{{type}} 카드",
+  "moreMenu": "더 보기",
+  "importFile": "파일…",
+  "importFileAction": "파일 가져오기",
+  "menuPreference": {
+    "hide": "숨기기",
+    "moveUp": "위로 이동",
+    "reset": "기본값으로 되돌리기",
+    "saveFailed": "메뉴 설정을 저장하지 못했어요. 다시 시도하세요."
+  },
+  "addSections": {
+    "generate": "만들기",
+    "more": "더 보기",
+    "import": "가져오기",
+    "space": "공간 · 스케치"
+  },
+  "nodeKinds": {
+    "text": "텍스트",
+    "image": "이미지",
+    "video": "영상",
+    "audio": "오디오",
+    "clip": "클립",
+    "model3d": "3D 모델",
+    "whiteboard": "화이트보드",
+    "panorama": "파노라마",
+    "director": "연출"
+  }
+}

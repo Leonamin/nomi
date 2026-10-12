@@ -1,0 +1,91 @@
+{
+  "title": "작업",
+  "close": "작업 창 닫기",
+  "untitledShot": "제목 없는 장면",
+  "freeToCancel": "언제든 취소 가능",
+  "cancelQueued": "대기 중인 {{count}}개 취소",
+  "retryFailed": "실패한 {{count}}개 다시 시도",
+  "actionFailed": "요청을 처리하지 못했어요. 다시 시도하세요.",
+  "groups": {
+    "running": "진행 중",
+    "attention": "확인 필요",
+    "queued": "대기 중",
+    "done": "완료"
+  },
+  "summary": {
+    "running": "{{count}}개 진행 중",
+    "attention": "{{count}}개 확인 필요",
+    "queued": "{{count}}개 대기 중",
+    "failed": "{{count}}개 실패"
+  },
+  "row": {
+    "elapsed": "{{time}} 동안 진행 중",
+    "cancelled": "취소됨 · 아직 요청하지 않았어요",
+    "recoverable": "시간 초과 · AI 서비스에서는 아직 진행 중일 수 있어요",
+    "recoverHint": "새로 만들지 않고 기존 결과만 가져와요",
+    "failed": "만들지 못했어요",
+    "submittedNoStop": "이 작업은 멈출 수 없어요",
+    "cancel": "취소",
+    "interrupt": "중단",
+    "retry": "다시 시도"
+  },
+  "productionRun": {
+    "title": "Nomi 영상 제작",
+    "draftShots": "장면 {{count}}개",
+    "statuses": {
+      "draft": "시작 대기 중",
+      "awaitingDirection": "제작 방향을 확인하세요",
+      "awaitingScriptReview": "대본을 확인하세요",
+      "awaitingStoryboardReview": "스토리보드를 확인하세요",
+      "awaitingContract": "제작 내용과 비용을 확인하세요",
+      "ready": "만들 준비 완료",
+      "running": "만드는 중",
+      "pausing": "잠시 멈추는 중",
+      "paused": "잠시 멈춤",
+      "needsAttention": "확인 필요",
+      "awaitingRoughCutReview": "임시 편집본을 확인하세요",
+      "awaitingExport": "내보내기를 확인하세요",
+      "exporting": "내보내는 중",
+      "completed": "제작 완료",
+      "cancelled": "취소됨"
+    }
+  },
+  "exportJob": {
+    "title": "내보내기",
+    "failed": "실패한 이유를 확인할 수 없어요. 내보내기로 돌아가 다시 시도하세요.",
+    "missingFile": "원본 파일이 없어요. 파일을 다시 가져온 뒤 내보내세요.",
+    "diskFull": "저장 공간이 부족해요. 공간을 비운 뒤 다시 내보내세요.",
+    "permissionDenied": "필요한 파일을 열 수 없어요. 파일 접근 권한을 확인하세요.",
+    "mediaUnreadable": "원본 파일을 읽을 수 없어요. 재생되는지 확인한 뒤 다시 내보내세요.",
+    "revealOutput": "결과 보기",
+    "returnToExport": "내보내기로 이동",
+    "statuses": {
+      "queued": "대기 중",
+      "preparing": "소재 준비 중",
+      "planning": "내보내기 준비 중",
+      "rendering": "영상 만드는 중",
+      "encoding": "영상 파일로 변환 중",
+      "muxing": "소리와 영상 합치는 중",
+      "finalizing": "마무리 중",
+      "succeeded": "내보내기 완료",
+      "failed": "내보내지 못했어요",
+      "cancelled": "취소됨"
+    }
+  },
+  "empty": {
+    "title": "진행 중인 작업이 없어요",
+    "hint": "장면을 선택하고 만들기를 누르면 여기에 나타나요"
+  },
+  "brake": {
+    "title": "3번 연속 실패해서 대기를 멈췄어요",
+    "toast": "3번 연속 실패해서 대기를 멈췄어요. 나머지는 아직 요청하지 않았어요. 작업 창에서 계속하거나 취소하세요.",
+    "hint": "나머지는 아직 요청하지 않았어요. AI 서비스가 멈췄거나 계정 사용량 제한일 수 있어요. 먼저 모델을 바꿔보세요.",
+    "resume": "계속",
+    "cancelRest": "모두 취소"
+  },
+  "notification": {
+    "title": "Nomi가 만들기를 마쳤어요",
+    "body": "장면 {{count}}개 완료",
+    "bodyWithFailures": "{{successes}}개 완료 · {{failures}}개 실패"
+  }
+}
