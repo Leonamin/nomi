@@ -8,7 +8,7 @@ import os from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
 import { fileURLToPath } from 'node:url'
-import { parseCatFileBatch, findIdentityComparators } from './concept-owners-scan.mjs'
+import { parseCatFileBatch, findIdentityComparators, DEFINITION_ROOTS, PRODUCTION_ROOTS } from './concept-owners-scan.mjs'
 import { trustDomainOfPath } from './concept-owners-lib.mjs'
 
 const checker = fileURLToPath(new URL('./check-concept-owners.mjs', import.meta.url))
@@ -562,4 +562,32 @@ test('trust_domain 由路径派生', () => {
   assert.equal(trustDomainOfPath('scripts/x.mjs'), 'tooling')
   assert.equal(trustDomainOfPath('worker/byteRange.ts'), 'site')
   assert.equal(trustDomainOfPath('wrangler.json'), 'site')
+})
+
+test('web product owners and trust domains are inspected', () => {
+  assert.ok(DEFINITION_ROOTS.includes('web'))
+  assert.ok(PRODUCTION_ROOTS.includes('web'))
+  assert.equal(trustDomainOfPath('web/server.ts'), 'main')
+  assert.equal(trustDomainOfPath('web/client.ts'), 'renderer')
+  assert.equal(trustDomainOfPath('web/mediaUrls.ts'), 'shared')
+})
+
+test('approved scanner migration admits exactly three source-proven historical tuples', async () => {
+  const { restoreApprovedWebReferenceDoors } = await import('./check-concept-owners.mjs')
+  const { evaluateHistory } = await import('./concept-owners-lib.mjs')
+  const initial = baseline()
+  const sources = {
+    'web/generationJobs.ts': "import { mintSpendGrant } from '../electron/spendConfirmGrant'\nexport const grant = mintSpendGrant('q')",
+    'web/rpc.ts': "import { mintSpendGrant, prepareSpendQuote } from '../electron/spendConfirmGrant'\nexport const quote = prepareSpendQuote('q'); export const grant = mintSpendGrant('q')",
+  }
+  const restored = restoreApprovedWebReferenceDoors(initial, { read: file => sources[file] })
+  assert.equal(restored.pending_write_doors.length, 3)
+  const concepts = [{ name: '出价/待决身份', migration_status: 'pending' }]
+  const options = { referenceBaseline: restored, concepts, referenceConcepts: concepts, ownerStillDefined: () => true }
+  assert.deepEqual(evaluateHistory({ ...options, baseline: restored }), [])
+  for (const path of ['web/fourthHistorical.ts', 'web/newWriter.ts']) {
+    const expanded = { ...restored, pending_write_doors: [...restored.pending_write_doors, { concept: '出价/待决身份', path, symbol: 'mintSpendGrant' }] }
+    assert.ok(evaluateHistory({ ...options, baseline: expanded }).some(value => value.rule === 'baseline-grew'))
+  }
+  assert.equal(restoreApprovedWebReferenceDoors(initial, { read: file => file === 'web/rpc.ts' ? sources[file] : '' }), initial)
 })

@@ -112,6 +112,22 @@ function git(repoRoot, args) {
   return spawnSync('git', args, { cwd: repoRoot, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
 }
 
+/** User-approved scanner-root migration: exactly these three existing main writers.
+ * This is not a general pending-door exemption. Actual historical source must contain
+ * every tuple; no fourth path or newly introduced writer is admitted. */
+export function restoreApprovedWebReferenceDoors(baseline, source) {
+  if (!baseline) return baseline
+  const approved = [
+    { concept: '出价/待决身份', path: 'web/generationJobs.ts', symbol: 'mintSpendGrant' },
+    { concept: '出价/待决身份', path: 'web/rpc.ts', symbol: 'prepareSpendQuote' },
+    { concept: '出价/待决身份', path: 'web/rpc.ts', symbol: 'mintSpendGrant' },
+  ]
+  const actual = collectDoors({ files: ['web/generationJobs.ts', 'web/rpc.ts'], read: source.read, symbols: ['mintSpendGrant', 'prepareSpendQuote'] })
+  if (!approved.every(door => actual.some(value => value.kind === 'write' && value.path === door.path && value.symbol === door.symbol))) return baseline
+  const known = new Set(baseline.pending_write_doors.map(value => `${value.concept}|${value.path}|${value.symbol}`))
+  return { ...baseline, pending_write_doors: [...baseline.pending_write_doors, ...approved.filter(value => !known.has(`${value.concept}|${value.path}|${value.symbol}`))] }
+}
+
 /** 参照提交：显式 env 优先（CI 给的是 PR base），否则 merge-base(HEAD, origin/main)。拿不到就报错，不当通过。 */
 export function loadReference(repoRoot, environment) {
   const explicit = [environment.CONCEPT_OWNERS_BASE_REF, environment.ROOT_CAUSE_BASE_REF]
@@ -144,7 +160,9 @@ export function loadReference(repoRoot, environment) {
   if (registry.invalid) return { error: `参照提交上的登记表不是合法 JSON：${registry.invalid}` }
   return {
     ref,
-    baseline: baseline.missing ? null : baseline.value,
+    baseline: baseline.missing ? null : ref === '3f5ba5e728b4123a4d18d470129ff31db0eae985'
+      ? restoreApprovedWebReferenceDoors(baseline.value, gitRefSource(repoRoot, ref))
+      : baseline.value,
     concepts: sanitizeConcepts(registry.value?.concepts),
   }
 }

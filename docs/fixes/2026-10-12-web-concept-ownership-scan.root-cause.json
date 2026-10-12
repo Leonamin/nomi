@@ -1,0 +1,1536 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-web-concept-ownership-scan",
+  "problem_type": "Product ownership evidence must scan all product hosts",
+  "symptom": "Existing WebGenerationJobs and WebAgentLanes report owner-unresolved despite actual declarations after registry enrollment",
+  "direct_cause": "Definition and production scan roots omit web; path trust classifier treats all web code as tooling",
+  "class_root": "Product host roots are absent from the shared ownership inspection and trust attribution boundaries",
+  "affected_population": [
+    "Browser disconnected or unopened creation editor, desktop renderer, external agent creation"
+  ],
+  "scope_paths": [
+    "scripts/concept-owners-scan.mjs",
+    "scripts/concept-owners-lib.mjs",
+    "scripts/check-concept-owners.mjs"
+  ],
+  "entry_points": [
+    "Working-tree and historical ownership inspection"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "Canonical Nomi project persistence and renderer ownership are internal contracts.",
+  "invariants": [
+    "Every product host is inspected for owner declarations and duplicate ownership.",
+    "Web browser adapter, shared media projection and backend have their actual trust domains.",
+    "Migration restores only three explicitly approved, source-proven main writers; a fourth historical or new writer remains baseline-grew."
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "electron/agentLane/laneDesktopTasks.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/agentLane/laneTrace.mts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/ai/antigravityIpc.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/ai/onboarding/vendorHealth.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/assets/generatedMediaDecode.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/backgroundLaunch.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/browser/media/browserViewMedia.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/agentPanelSpendConfirmTestUtils.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/appIntegration.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/appIntegrationProductionActions.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/appIntegrationRunObservation.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/appIntegrationSpendConfirm.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpSemanticBatchStart.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpStdioServer.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/productionTrustGrantChallenge.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/residentGenerationAdapterFactory.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/runOwnedGenerationGateAuthority.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/spendCardActionQueue.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/catalog/comfyuiCandidateLifecycle.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/catalog/customCallIpc.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/catalog/customCallTestRuns.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/integrationCertification/integrationSession.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/integrationCertification/integrationSessionRunView.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/integrationCertification/providerAdapterCoordinator.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/integrationCertification/service.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/anchorCheckpoint.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/artifactProjection.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/batchScheduleDerivation.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/canvasLandingHost.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/generationSubmission.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/multiShotBatchScheduler.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/multiShotCanvasLanding.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/prepareProductionGenerationAuthorization.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionDeepLink.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionDispatchConsentEdits.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionGenerationAuthorizationState.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionGenerationAuthorizationTestUtils.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionGenerationHistory.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionGenerationOperationStore.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionGenerationPlanEdits.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionGenerationPresentationEdits.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionGenerationSeal.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionGenerationSubmission.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionNotifications.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionNotificationsDesktop.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionPendingSpend.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionQaVerdict.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunArtifactHelpers.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunArtifactOperations.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunControl.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunDraftSummary.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunDriverOps.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunE2eFixture.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunEventTap.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunGateIdentity.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunIpc.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunLifecycle.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunProjections.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunReducer.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunRepository.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunRuntime.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunService.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunStoryboardHashRecovery.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunTestHelpers.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunTrustGrant.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionShotDispatchGuard.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/singleShotObservationLifecycle.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/singleShotRunLifecycle.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/stalePresentationSweep.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/submissionOutbox.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/providerAdapter/existingConnection.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/providerAdapter/ipc.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/providerAdapter/liveHarness.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/providerAdapter/service.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/providerAdapter/serviceCatalog.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/providerAdapter/serviceRunLifecycle.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/providerAdapter/store.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/providerAdapter/terminalGuarantee.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/shared/decideShotClaim.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/shared/productionDispatchConsent.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/shared/productionGenerationPresentation.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/shared/productionRunStop.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/shared/productionShotJobs.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/shared/productionShotPhase.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/shared/productionSpendAuthority.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/submissionLedger.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/tasks/localTaskJobs.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "electron/telemetry/intakeQueue.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/agent-trajectory-report.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/census-silent-branches.mjs",
+      "symbol": "SOURCE_EXTENSION"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "collectDoors"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "BASELINE_PATH"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "REGISTRY_PATH"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "loadReference"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "isScannableSource"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "collectDefinitions"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "findIdentityComparators"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "CONCEPT_OWNERS_SINCE"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/check-model-identity.mjs",
+      "symbol": "BASELINE_PATH"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/check-no-secrets.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/check-pr-body-gates.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/check-vocabularies-scan.mjs",
+      "symbol": "SOURCE_EXTENSION"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/comfyui-workflow-page-real-server-walkthrough.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "REGISTRY_SCHEMA_VERSION"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "AUTHORITY_KINDS"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "FACT_KINDS"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "LIFECYCLES"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "MIGRATION_STATUSES"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "TRUST_DOMAINS"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "normalizePath"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "PRODUCTION_ROOTS"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "IDENTITY_DIMENSIONS"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "CONCEPT_OWNERS_SINCE"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "BASELINE_VERSION"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-scan.mjs",
+      "symbol": "SOURCE_EXTENSION"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-scan.mjs",
+      "symbol": "DEFINITION_ROOTS"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-scan.mjs",
+      "symbol": "normalizePath"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-scan.mjs",
+      "symbol": "isScannableSource"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-scan.mjs",
+      "symbol": "PRODUCTION_ROOTS"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-scan.mjs",
+      "symbol": "COMPARATOR_NAME"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/concept-owners-scan.mjs",
+      "symbol": "IDENTITY_DIMENSIONS"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/daily-radar-session.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/door-map.mjs",
+      "symbol": "SOURCE_EXTENSION"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/eng-metrics.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/run-ci-e2e-chain.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/settings-existing-connection-add-walkthrough.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "scripts/settings-model-access-save-first-walkthrough.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/ui/onboarding/adapterTaskVisibility.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/ui/onboarding/AdapterTaskWorkspace.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/ui/onboarding/AdapterVerificationScreen.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/ui/onboarding/adapterVerificationViewModel.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/ui/onboarding/IntegrationSelfCheckPanel.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/ui/onboarding/ModelAdapterStatusSection.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/ui/onboarding/OnboardingDrawer.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/ui/onboarding/OnboardingWizard.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/ui/onboarding/useProviderAdapterTasks.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/ai/lane/laneTaskCandidateActions.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/ai/v4/agentPanelV4Collapse.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/ai/v4/useAgentPanelSpendConfirm.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/assets/promptEditorSkeleton.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/deferredNodeMediaQueue.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/director/useAiSceneBuilder.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/NodeGenerationComposer.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/nodeRecoveryNotice.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/ProductionShotPlaceholder.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/render/TextDocumentNode.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/shotTable/deconstructionLifecycle.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/runner/generationRunController.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/runner/recoverTaskActions.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/runner/runProjectDelivery.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/spend/anchorCheckpointView.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/spend/productionContractView.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/store/canvasRunActions.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/store/nodeRunOutcome.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/store/runRecordHelpers.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/videoDepth/videoDepth.worker.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/observability/generationFeedback.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/observability/generationTiming.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/production/ProductionCanvasLandingHost.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/production/productionRunStore.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/production/productionRunView.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/production/productionShotOwnership.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/production/releaseUnknownSubmission.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/production/reportDetachedShotNodes.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/production/useProductionStatus.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/projectCanvasReadSurface.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/taskCenter/productionRunTaskCenter.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/taskCenter/TaskCenterButton.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/taskCenter/TaskCenterPanel.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/WorkbenchShell.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "read",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "electron/agentLane/laneLegacyFiles.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "electron/ai/antigravityConnection.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "electron/ai/antigravityVerification.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "electron/ai/onboarding/vendorHealth.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/appIntegrationRunObservation.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/host.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpGateConfirmation.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/customCallRunner.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/customCallSandbox.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionActionIpc.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "electron/shared/surfacePortBinding.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "electron/submissionLedger.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "electron/surfacePortPreloadBridge.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "electron/tasks/localTaskJobs.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "electron/tasks/nodeSubmitInFlight.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/audio-ref-diag-probe.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/audio-ref-paid-smoke.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/audit-package.mjs",
+      "symbol": "parseArgs"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/census-silent-branches.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "gitRefSource"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "restoreApprovedWebReferenceDoors"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "sanitizeConcepts"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "workingTreeSource"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "validateRegistry"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "definitionSymbols"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "isIdentifierSymbol"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "evaluateOwnership"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "doorWatch"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "underRoots"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "evaluateDoorPolicy"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "evaluateIdentity"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "governedContracts"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "evaluateContracts"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "validateBaseline"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "evaluateBaseline"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "normalizePath"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "isScannableSource"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "evaluateHistory"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "parseArgs"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-framework-boundary.mjs",
+      "symbol": "validateRegistry"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-handoff.mjs",
+      "symbol": "parseArgs"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-hook-behavior.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-mcp-payload.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-mjs-parse.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-packaged-deps.mjs",
+      "symbol": "parseArgs"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-vocabularies.mjs",
+      "symbol": "validateBaseline"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-vocabularies.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "normalizePath"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "trustDomainOfPath"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "isIdentifierSymbol"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "ownerKey"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "writeApiIndex"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "isScannableSource"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "rootOf"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "contractDate"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "governedContracts"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "matchReferenceConcept"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-scan.mjs",
+      "symbol": "normalizePath"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-scan.mjs",
+      "symbol": "rootOf"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-scan.mjs",
+      "symbol": "parseCatFileBatch"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-scan.mjs",
+      "symbol": "isScannableSource"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-scan.mjs",
+      "symbol": "parseSource"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/concept-owners-scan.mjs",
+      "symbol": "isIdentityScanFile"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/daily-radar-session.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/door-map.mjs",
+      "symbol": "parseArgs"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/feedback-radar.mjs",
+      "symbol": "parseArgs"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/intake-radar.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/lab-add-text-model.ts",
+      "symbol": "parseArgs"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/lab-install-from-trial.ts",
+      "symbol": "parseArgs"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/lab-onboard.ts",
+      "symbol": "parseArgs"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/lib/intake-radar/cloudflare.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/nomi.mjs",
+      "symbol": "parseArgs"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/relay-i2v-walkthrough.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/relay-native-wire-walkthrough.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/repair-doc-gates.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/research/tikhub-search.mjs",
+      "symbol": "parseArgs"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/self-written-lib.mjs",
+      "symbol": "validateRegistry"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/sweep.mjs",
+      "symbol": "parseArgs"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/test-focused.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/typecheck.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/validation-policy.mjs",
+      "symbol": "normalizePath"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/web/deploy-hamsbox.mjs",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/design/menu.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/ui/onboarding/antigravityConnection.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/ui/onboarding/IntegrationSelfCheckPanel.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/ai/v4/useAgentPanelSpendConfirm.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/ai/v4/useAgentPanelV4Actions.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/api/taskApi.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/assets/AssetMentionNode.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/assets/AssetMentionSuggestion.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/common/richTextActions.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/common/useNomiRichTextEditor.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/creation/SelectionGeneratePopover.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/creation/storyboard/shotRow/StoryboardShotRow.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/director/agent/DirectorHeadlessCapture.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/director/panels/ai/AiSceneBar.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/director/panels/inspector/ActionClipInspector.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/director/panels/inspector/CloseupClipInspector.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/director/panels/inspector/LookAtClipInspector.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/director/panels/inspector/TrajectoryClipInspector.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/director/scene/E2EBridge.tsx",
+      "symbol": "rootOf"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/director/timeline/DirectorTimeline.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/NodePromptOptimizer.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/runner/assetLocalizationFeedback.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/store/generationCanvasStore.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/videoDepth/videoDepth.worker.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/onboarding/journeyTourStore.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/projectCanvasReadSurface.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/settings/ProjectLocationSection.tsx",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "web/agentLanes.ts",
+      "symbol": "run"
+    },
+    {
+      "kind": "write",
+      "path": "web/agentTools.ts",
+      "symbol": "run"
+    }
+  ],
+  "door_reduction": {
+    "before": 284,
+    "after": 284,
+    "why_not": "The checker and shared ownership library require distinct scanner and classifier calls; all use these canonical boundaries."
+  },
+  "generality_proof": "Working-tree and historical source inspectors share one root scope; web owners and future duplicate definitions are visible to the same ownership rules as desktop sources. Path trust classification explicitly separates the web browser adapter and cross-host media projection from the Node backend.",
+  "shared_boundaries": [
+    {
+      "path": "scripts/concept-owners-scan.mjs",
+      "symbol": "workingTreeSource",
+      "responsibility": "Inspect actual host source roots rather than assuming desktop-only production."
+    },
+    {
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "trustDomainOfPath",
+      "responsibility": "Attribute browser, backend and shared trust consistently."
+    },
+    {
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "restoreApprovedWebReferenceDoors",
+      "responsibility": "Exact approved three-tuple historical source evidence, never generic pending or new-root allowances."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "scripts/concept-owners-scan.mjs",
+      "entry_point": "workingTreeSource",
+      "disposition": "enforced",
+      "evidence": "Shared roots include web for actual working tree sources."
+    },
+    {
+      "path": "scripts/concept-owners-scan.mjs",
+      "entry_point": "gitRefSource",
+      "disposition": "enforced",
+      "evidence": "Historical source scan uses the same declared root scope."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every existing and future web owner was omitted from source inspection, so registry enrollment alone cannot prevent recurrence.",
+    "same_class_scan": [
+      "rg DEFINITION_ROOTS PRODUCTION_ROOTS scripts/concept-owners-scan.mjs",
+      "Inspect workingTreeSource and gitRefSource shared source root scope",
+      "Inspect trustDomainOfPath and owner registry validation for backend, browser adapter and cross-host projection"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "scripts/concept-owners-scan.mjs",
+    "invariant": "Owner inspection includes web for every source backend.",
+    "failure_mode": "Undeclared, missing and duplicate web owners fail the existing gates.",
+    "exception_policy": "none",
+    "strategy": "Extend canonical scanner root scope and path trust classification, retaining every original enforcement rule.",
+    "artifacts": [
+      "scripts/concept-owners-scan.mjs",
+      "scripts/concept-owners-lib.mjs"
+    ]
+  },
+  "regression_tests": [
+    "scripts/check-concept-owners.node-test.mjs"
+  ],
+  "class_regression_tests": [
+    "scripts/check-concept-owners.node-test.mjs"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "scripts/concept-owners-scan.mjs"
+    ],
+    "rationale": "Desktop-only root scope is replaced by all product hosts; no fallback or bypass added."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "Existing Tiptap schema and Nomi domain owners retained; this is host adapter extraction.",
+    "exit_criteria": []
+  },
+  "migration": "User explicitly approved only main 3f5ba5e728b4123a4d18d470129ff31db0eae985 existing tuples web/generationJobs.ts#mintSpendGrant, web/rpc.ts#prepareSpendQuote and web/rpc.ts#mintSpendGrant. The historical reference restores exactly those three only after source proof; other historical and new writers remain rejected. No production Run/spend guard changes.",
+  "residual_risks": [
+    "Registry boundary enrollment was rejected by automatic approval review as broader than the exact three-writer migration. Coordinator must resolve approval before concept-owner gate can pass."
+  ],
+  "invariant_owner_layer": {
+    "layer": "scripts/concept-owners-scan.mjs",
+    "tests": [
+      "scripts/check-concept-owners.node-test.mjs"
+    ]
+  },
+  "detected_by": "user",
+  "recurrence_check_on": "2026-11-11"
+}

@@ -35,6 +35,9 @@
     { "concept": "画布缩放", "path": "src/devlab/designLab/processFeedback/processFeedbackLabKit.tsx", "symbol": "rememberCategoryViewport" },
     { "concept": "画布缩放", "path": "src/workbench/generationCanvas/reactFlow/GenerationCanvasReactFlow.tsx", "symbol": "rememberCategoryViewport" },
     { "concept": "画布缩放", "path": "src/workbench/generationCanvas/reactFlow/GenerationCanvasReactFlowViewport.tsx", "symbol": "rememberCategoryViewport" },
-    { "concept": "画布缩放", "path": "src/workbench/generationCanvas/reactFlow/useGenerationCanvasReactFlowPointer.ts", "symbol": "rememberCategoryViewport" }
+    { "concept": "画布缩放", "path": "src/workbench/generationCanvas/reactFlow/useGenerationCanvasReactFlowPointer.ts", "symbol": "rememberCategoryViewport" },
+    { "concept": "出价/待决身份", "path": "web/generationJobs.ts", "symbol": "mintSpendGrant" },
+    { "concept": "出价/待决身份", "path": "web/rpc.ts", "symbol": "prepareSpendQuote" },
+    { "concept": "出价/待决身份", "path": "web/rpc.ts", "symbol": "mintSpendGrant" }
   ]
 }

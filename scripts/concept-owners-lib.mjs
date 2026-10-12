@@ -102,6 +102,9 @@ export function isIdentifierSymbol(symbol) {
 
 export function trustDomainOfPath(file) {
   const rel = normalizePath(file)
+  if (rel === 'web/client.ts') return 'renderer'
+  if (rel === 'web/mediaUrls.ts') return 'shared'
+  if (rel.startsWith('web/')) return 'main'
   if (rel.startsWith('electron/shared/')) return 'shared'
   if (/^electron\/preload(?:[./]|$)/.test(rel)) return 'preload'
   if (rel.startsWith('electron/')) return 'main'
