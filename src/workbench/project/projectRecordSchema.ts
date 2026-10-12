@@ -63,6 +63,8 @@ export const workbenchProjectPayloadSchema = z.object({
   categories: z.array(projectCategorySchema).optional(),
   /** S5-b-1:快照覆盖到事件日志的哪个 seq——hydrate 时重放其后的尾巴(崩溃恢复)。可选,老项目无。 */
   generationCanvasLastSeq: z.number().optional(),
+  /** Browser-applied server additions, captured with this exact save snapshot. */
+  webAgentSeenNodeIds: z.array(z.string()).max(10000).optional(),
   /** 每篇原稿的分镜设计（唯一持久化 owner）。 */
   storyboardDesignsByDocumentId: z.record(
     z.array(z.object({
@@ -138,6 +140,7 @@ export type WorkbenchProjectPayload = {
   categories?: ProjectCategory[]
   /** S5-b-1:快照覆盖到日志的 seq(尾部重放游标);老项目无此字段则跳过重放。 */
   generationCanvasLastSeq?: number
+  webAgentSeenNodeIds?: string[]
   storyboardDesignsByDocumentId?: Record<string, StoryboardDesign[]>
   /** Preview editing surface dimensions and visibility are project-local UI state. */
   editingPanelLayout?: EditingPanelLayout

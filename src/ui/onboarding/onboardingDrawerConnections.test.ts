@@ -16,6 +16,16 @@ function project(enabled: boolean, ids = ['auto']) {
 }
 
 describe('model settings connection projection', () => {
+  it.each(['comfyui-local-second', 'comfyui-local--candidate-abc'])('keeps every ComfyUI instance on the dedicated workflow surface: %s', key => {
+    const result = projectOnboardingConnections({
+      models: [{ vendorKey: key, modelKey: 'workflow', labelZh: 'Workflow', kind: 'video', enabled: true }],
+      vendorMeta: new Map([[key, { name: 'GPU', hasApiKey: false, baseUrl: 'http://127.0.0.1:19188', enabled: true, authType: 'none', customCallOnly: false }]]),
+      dreaminaStatus: null, openPage: vi.fn(), localNames: { dreamina: 'Dreamina', codex: 'Codex', antigravity: 'Antigravity' },
+    })
+    expect(result.comfyuiInstances).toHaveLength(1)
+    expect(result.otherVendorGroups).toEqual([])
+    expect(result.homeConnections.filter(connection => connection.vendorKey === key)).toHaveLength(1)
+  })
   it.each([false, true])('routes the local CLI entry to its dedicated card when enabled=%s', (enabled) => {
     const result = project(enabled)
     expect(result.otherVendorGroups).toEqual([])

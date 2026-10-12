@@ -24,7 +24,17 @@ const CONVERTER_PARTITION = "persist:comfyui-graph-convert";
 /** 窗口闲置多久后关掉（连续导入多张时复用，省掉每次几秒的前端加载）。 */
 const IDLE_CLOSE_MS = 60_000;
 
-type Holder = { win: BrowserWindow; ready: Promise<boolean>; timer: NodeJS.Timeout | null };
+export type ComfyGraphWindow = Pick<BrowserWindow, 'isDestroyed' | 'destroy'> & {
+  webContents: { executeJavaScript: (source: string) => Promise<unknown> };
+};
+type Holder = { win: ComfyGraphWindow; ready: Promise<boolean>; timer: NodeJS.Timeout | null };
+type GraphWindowFactory = (base: string) => Pick<Holder, 'win' | 'ready'>;
+let hostFactory: GraphWindowFactory | undefined;
+/** Host assembly chooses the browser runtime; parsing and graphToPrompt stay shared. */
+export function installComfyGraphWindowFactory(factory: GraphWindowFactory): void {
+  closeAllConverterWindows();
+  hostFactory = factory;
+}
 const windowsByBase = new Map<string, Holder>();
 
 function normalizeBase(baseUrl: string): string {
@@ -56,6 +66,12 @@ export function closeAllConverterWindows(): void {
 function ensureWindow(base: string): Holder {
   const existing = windowsByBase.get(base);
   if (existing && !existing.win.isDestroyed()) return existing;
+
+  if (hostFactory) {
+    const holder = { ...hostFactory(base), timer: null };
+    windowsByBase.set(base, holder);
+    return holder;
+  }
 
   const win = new BrowserWindow({
     show: false,

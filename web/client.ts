@@ -10,6 +10,11 @@ tokenRequest.send()
 if (tokenRequest.status !== 200) throw new Error('Nomi Web server is unavailable')
 const { token } = JSON.parse(tokenRequest.responseText) as { token: string }
 const headers = { 'content-type': 'application/json', 'x-nomi-token': token, 'x-nomi-client': clientId }
+const appliedAgentNodes = new Map<string, Set<string>>()
+function rememberAgentNodes(projectId: string, ids: string[]) {
+  const applied = appliedAgentNodes.get(projectId) || new Set<string>()
+  ids.forEach(id => applied.add(id)); appliedAgentNodes.set(projectId, applied)
+}
 
 function requestBody(channel: string, args: unknown[]) {
   return JSON.stringify({ channel, args: translateMediaValues(args, 'server', location.origin) })
@@ -19,8 +24,14 @@ function readResponse(raw: { ok: boolean; value?: unknown; error?: string }) {
   return translateMediaValues(raw.value, 'browser', location.origin)
 }
 async function invoke(channel: string, ...args: unknown[]) {
+  if (channel === 'nomi:projects:save-async') args.push([...(args[1] as { payload?: { webAgentSeenNodeIds?: string[] } }).payload?.webAgentSeenNodeIds || []])
   const response = await fetch('/api/rpc', { method: 'POST', headers, body: requestBody(channel, args) })
-  return readResponse(await response.json())
+  const value = readResponse(await response.json())
+  if (channel === 'nomi:projects:read-async' || channel === 'nomi:projects:read') {
+    const record = value as { id?: string; payload?: { generationCanvas?: { nodes?: { id: string; meta?: { isWebAgentCreated?: boolean } }[] } } } | null
+    if (record?.id) rememberAgentNodes(record.id, (record.payload?.generationCanvas?.nodes || []).filter(node => node.meta?.isWebAgentCreated).map(node => node.id))
+  }
+  return value
 }
 export const ipcRenderer = {
   invoke,
@@ -54,8 +65,12 @@ export const webUtils = { getPathForFile: () => '' }
 export const contextBridge = {
   exposeInMainWorld(name: string, bridge: DesktopBridge) {
     bridge.platform = 'web'
-    bridge.web = { generationSnapshot: projectId => invoke('nomi:web:generation-snapshot', projectId) as ReturnType<NonNullable<DesktopBridge['web']>['generationSnapshot']> }
-    delete bridge.agentLane
+    bridge.web = {
+      generationSnapshot: projectId => invoke('nomi:web:generation-snapshot', projectId) as ReturnType<NonNullable<DesktopBridge['web']>['generationSnapshot']>,
+      acknowledgeAgentNodes: async (projectId, ids) => { rememberAgentNodes(projectId, ids) },
+      appliedAgentNodeIds: projectId => [...(appliedAgentNodes.get(projectId) || [])],
+      agentSettings: engine => invoke('nomi:web:agent-settings', engine) as ReturnType<NonNullable<DesktopBridge['web']>['agentSettings']>,
+    }
     delete bridge.browser
     delete bridge.capability
     if (bridge.onboarding) delete bridge.onboarding.integrationHandoffSubscribe

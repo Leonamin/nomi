@@ -46,13 +46,19 @@ export function mergeServerResults(current: GenerationCanvasNode, incoming: Gene
     ...(hasNewCompletedResult || hasStaleTerminalStatus || isServerPending ? { result: current.result, status: current.status, error: current.error, progress: current.progress, runs: current.runs } : {}),
   }
 }
-export async function saveWebProject(projectId: string, incoming: ProjectRecord) {
+export function preserveUnseenAgentNodes(current: GenerationCanvasNode[], incoming: GenerationCanvasNode[], knownIds: ReadonlySet<string>): GenerationCanvasNode[] {
+  const incomingIds = new Set(incoming.map(node => node.id))
+  return [...incoming, ...current.filter(node => node.meta?.isWebAgentCreated === true && !incomingIds.has(node.id) && !knownIds.has(node.id))]
+}
+export async function saveWebProject(projectId: string, incoming: ProjectRecord, knownAgentIds: ReadonlySet<string> = new Set()) {
+  const admittedAgentIds = new Set(knownAgentIds)
   return mutateWebProject(projectId, async () => {
     const current = readProject(projectId)
     if (!current) throw new Error('Project not found')
     const payload = projectCanvas(incoming)
     const currentNodes = new Map(projectCanvas(current).generationCanvas.nodes.map(node => [node.id, node]))
-    const nodes = payload.generationCanvas.nodes.map(node => currentNodes.has(node.id) ? mergeServerResults(currentNodes.get(node.id)!, node) : node)
+    const merged = payload.generationCanvas.nodes.map(node => currentNodes.has(node.id) ? mergeServerResults(currentNodes.get(node.id)!, node) : node)
+    const nodes = preserveUnseenAgentNodes([...currentNodes.values()], merged, admittedAgentIds)
     return saveProject(projectId, { ...incoming, payload: { ...payload, generationCanvas: { ...payload.generationCanvas, nodes } } })
   })
 }

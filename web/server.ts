@@ -12,12 +12,14 @@ import { hostEvents } from './runtimeHost'
 import { dispatchWebRpc, getWebSurface, acquireWebSurface, uploadWebAsset, initWebDomain } from './rpc'
 import { translateMediaValues } from './mediaUrls'
 import { handleNomiLocalRequest } from '../electron/protocol/localProtocol'
+import { handleAgentMcp } from './agentMcp'
 
 const port = Number(process.env.NOMI_WEB_PORT || 9031)
 const origin = process.env.NOMI_WEB_ORIGIN || `http://127.0.0.1:${port}`
 const token = randomBytes(32).toString('hex')
 const app = new Hono()
 const rpcSchema = z.object({ channel: z.string().max(100), args: z.array(z.unknown()).max(4) }).strict()
+app.all('/agent/mcp/:turnId', bodyLimit({ maxSize: 1024 * 1024 }), context => handleAgentMcp(context.req.raw))
 app.use('*', async (context, next) => {
   const host = context.req.header('host')
   const incomingOrigin = context.req.header('origin')
@@ -51,7 +53,10 @@ app.post('/api/upload', bodyLimit({ maxSize: 256 * 1024 * 1024 }), async context
 })
 app.get('/api/events', context => streamSSE(context, async stream => {
   const lease = acquireWebSurface(context.req.query('clientId') || '', origin)
-  const forward = (message: unknown) => { void stream.writeSSE({ data: JSON.stringify(translateMediaValues(message, 'browser', origin)) }).catch(() => undefined) }
+  const forward = (message: { targetSurfaceId?: number; channel: string; payload: unknown }) => {
+    if (message.targetSurfaceId !== undefined && message.targetSurfaceId !== lease.surface.id) return
+    void stream.writeSSE({ data: JSON.stringify(translateMediaValues({ channel: message.channel, payload: message.payload }, 'browser', origin)) }).catch(() => undefined)
+  }
   try {
     await stream.writeSSE({ data: JSON.stringify({ channel: 'nomi:web:session', payload: { token, surfaceId: lease.surfaceId } }) })
     hostEvents.on('message', forward)

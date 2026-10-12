@@ -113,11 +113,15 @@ export default function NomiAppBar({
       >
         {!isWindows ? (
           <>
-            {/* 品牌回归纯品牌（§1.5 归位）：过去这颗钮一钮四用（品牌 + 上手手册 + 明暗 + 检查更新），
-                四件事已各自归位到设置「关于」/「通用」，这里只剩标识、不再是功能入口。 */}
-            <span className={cn('nomi-appbar__brand', 'inline-flex items-center')}>
+            <WorkbenchButton
+              className={cn('nomi-appbar__brand', 'app-no-drag inline-flex items-center select-none border-0 bg-transparent p-0')}
+              aria-label={t('appBar.backToLibrary')}
+              title={t('appBar.backToLibrary')}
+              disabled={!onBackToLibrary}
+              onClick={onBackToLibrary}
+            >
               <NomiBrand />
-            </span>
+            </WorkbenchButton>
             <span
               className={cn('nomi-appbar__divider', 'w-px h-[18px] bg-workbench-border', 'max-[700px]:hidden')}
               aria-hidden="true"

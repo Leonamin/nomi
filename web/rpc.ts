@@ -1,4 +1,5 @@
 import path from 'node:path'
+import { z } from 'zod'
 import * as projects from '../electron/projects/repository'
 import * as catalog from '../electron/catalog/catalogStore'
 import * as exportJobs from '../electron/export/exportJobs'
@@ -21,18 +22,24 @@ import { listUserPrompts, addUserPrompt, updateUserPrompt, deleteUserPrompt } fr
 import { getProjectLocationState } from '../electron/runtimePaths'
 import { createWebSurface, WebSurfaceSessions } from './surface'
 import { WebGenerationJobs } from './generationJobs'
-import { saveWebProject } from './projectState'
+import { saveWebProject, projectCanvas } from './projectState'
 import { mintSpendGrant } from '../electron/spendGrant'
 import { prepareSpendQuote } from '../electron/spendQuote'
 import { getPromptLibrary } from '../electron/promptLibrary/promptLibraryStore'
 import { inspectWorkspaceSync } from '../electron/workspace/workspaceSync'
 import { setProbedVideoCodecs } from '../electron/assets/videoPlaybackSupport'
 import { hostEvents } from './runtimeHost'
+import { createWebComfyuiCommands, initWebConnections } from './comfyuiConnections'
+import { installWebGraphHost } from './comfyuiGraphHost'
+import { WebAgentLanes } from './agentLanes'
+import type { LaneDesktopCommand } from '../electron/shared/agentLane/laneDesktopContracts'
+import type { WebAgentEngine } from '../electron/shared/webAgentContracts'
 
 type Surface = ReturnType<typeof createWebSurface>
-const surfaces = new WebSurfaceSessions()
+const surfaces = new WebSurfaceSessions(createWebSurface, surface => agentLanes.detachSurface(surface.id))
 const exportExecutions = new Map<string, Promise<unknown>>()
 export const generationJobs = new WebGenerationJobs(path.join(process.env.NOMI_WEB_DATA_DIR!, 'jobs'))
+const agentLanes = new WebAgentLanes(path.join(process.env.NOMI_WEB_DATA_DIR!, 'agents'), generationJobs)
 export function getWebSurface(clientId: string, origin: string) {
   return surfaces.get(clientId, origin)
 }
@@ -52,6 +59,7 @@ function createProject(input: unknown) {
 }
 export async function dispatchWebRpc(channel: string, args: unknown[], surface: Surface): Promise<unknown> {
   const commands = {
+    ...createWebComfyuiCommands(key => generationJobs.hasPendingConnection(key)),
     'nomi:i18n:get-system-locale': () => 'en',
     'nomi:i18n:set-locale': setDesktopLocale,
     'nomi:app:version': () => ({ version: '0.23.1-web', platform: 'web', arch: process.arch, canAutoInstall: false, canCheckUpdates: false }),
@@ -64,7 +72,7 @@ export async function dispatchWebRpc(channel: string, args: unknown[], surface: 
     'nomi:projects:diagnose': projects.diagnoseProject,
     'nomi:projects:recover': projects.recoverProject,
     'nomi:projects:delete': projects.deleteProject,
-    'nomi:projects:save-async': saveWebProject,
+    'nomi:projects:save-async': (projectId: string, incoming: Parameters<typeof saveWebProject>[1], knownAgentIds: string[] = []) => saveWebProject(projectId, incoming, new Set(z.array(z.string()).max(10000).parse(knownAgentIds))),
     'nomi:surface:suspend': surface.suspend,
     'nomi:surface:commitCanvasRead': surface.commit,
     'nomi:surface:release': surface.release,
@@ -102,7 +110,15 @@ export async function dispatchWebRpc(channel: string, args: unknown[], surface: 
     'nomi:assets:report-video-codecs': (payload: { codecs?: string[] }) => setProbedVideoCodecs(payload.codecs ?? []),
     'nomi:video:extract-frame': extractVideoFrameToAsset,
     'nomi:video:extract-filmstrip': extractVideoFilmstripToAsset,
-    'nomi:web:generation-snapshot': (projectId: string) => { authorizeWebProject(surface, projectId); return generationJobs.snapshot(projectId) },
+    'nomi:web:generation-snapshot': (projectId: string) => {
+      authorizeWebProject(surface, projectId)
+      const snapshot = generationJobs.snapshot(projectId)
+      const current = projects.readProject(projectId)
+      const nodes = current ? projectCanvas(current).generationCanvas.nodes : []
+      return [...snapshot, ...nodes.filter(node => node.meta?.isWebAgentCreated === true && !snapshot.some(entry => entry.node?.id === node.id)).map(node => ({ key: `agent:${node.id}`, node, isPending: false }))]
+    },
+    'nomi:agent-lane:command': (command: LaneDesktopCommand) => agentLanes.send(surface, command),
+    'nomi:web:agent-settings': (engine?: WebAgentEngine) => agentLanes.settings(surface, engine),
     'nomi:tasks:comfyui:interrupt': (taskId: string) => generationJobs.cancel(taskId, selection(surface).projectId),
     'nomi:tasks:quote-spend': (inputs: Parameters<typeof prepareSpendQuote>[0]) => { if (!Array.isArray(inputs) || inputs.some(input => !isComfyuiVendor({ key: input.vendorKey }))) throw new Error('Only local ComfyUI is available'); return prepareSpendQuote(inputs) },
     'nomi:tasks:grant-spend': (input: { nodeIds: string[] }) => { const record = projects.readProject(selection(surface).projectId); const nodes = (record?.payload as { generationCanvas?: { nodes?: { id: string }[] } })?.generationCanvas?.nodes ?? []; if (!Array.isArray(input.nodeIds) || input.nodeIds.some(id => !nodes.some(node => node.id === id))) throw new Error('Save the generation targets first'); return { grantId: mintSpendGrant({ nodeIds: input.nodeIds, maxAttemptsPerNode: 1 }) } },
@@ -116,7 +132,6 @@ export async function dispatchWebRpc(channel: string, args: unknown[], surface: 
     'nomi:prompt-library:list': async () => ({ ok: true, prompts: await getPromptLibrary({ shouldIncludeSkillPrompts: false }) }),
     'nomi:prompt-library:text-brain': () => ({ ok: false, brain: null, status: 'missing' }),
     'nomi:production-runs:list': () => [],
-    'nomi:integration-handoff:list': () => [],
     'nomi:prompt-library:user-list': () => ({ ok: true, prompts: listUserPrompts() }),
     'nomi:prompt-library:user-add': (input: Parameters<typeof addUserPrompt>[0]) => { addUserPrompt(input); return { ok: true, prompts: listUserPrompts() } },
     'nomi:prompt-library:user-update': (payload: { id: string; patch: Parameters<typeof updateUserPrompt>[1] }) => ({ ok: true, prompts: updateUserPrompt(payload.id, payload.patch) }),
@@ -154,7 +169,9 @@ export function uploadWebAsset(surface: Surface, payload: { projectId: string },
   return file.arrayBuffer().then(bytes => ({ ok: true, asset: writeAsset(payload.projectId, Buffer.from(bytes), file.name, file.type, { source: 'upload' }) }))
 }
 export function initWebDomain() {
+  installWebGraphHost()
   catalog.ensureBuiltinModelSeeds()
+  initWebConnections()
   exportJobs.subscribeExportJobEvents(event => hostEvents.emit('message', { channel: 'nomi:exports:event', payload: event }))
   generationJobs.restore()
 }

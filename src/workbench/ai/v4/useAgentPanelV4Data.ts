@@ -1,6 +1,9 @@
 import { formatV4Tokens } from './agentPanelV4UsageFormat'
 // The lane owns conversation state; workbenchStore owns unsent input.
 import React from 'react'
+import { getDesktopBridge } from '../../../desktop/bridge'
+import type { WebAgentSettings, WebAgentEngine } from '../../../../electron/shared/webAgentContracts'
+import type { LaneDesktopResult } from '../../../../electron/shared/agentLane/laneDesktopContracts'
 import { useTranslation } from 'react-i18next'
 import { formatMoney } from './formatMoney'
 import type { LanePendingApproval, LaneWorkspaceProjection } from '../../../../electron/shared/agentLane/laneContracts'
@@ -115,6 +118,7 @@ export type AgentPanelV4Data = Readonly<{
   vendors: Readonly<Record<string, string>>
   selectedModel: ModelCatalogModelDto | undefined
   modelLabel: string
+  webAgent?: { settings: WebAgentSettings; selectEngine: (engine: WebAgentEngine) => void }
   skills: readonly SkillListItemDto[]
   /** 技能 key → 界面上的名字（`skillLabelForKey`）。气泡、composer、恢复草稿行都读它，谁都不另存名字。 */
   skillLabel: (key: string) => string
@@ -143,6 +147,15 @@ export function useAgentPanelV4Data(surface: ResidentSurface): AgentPanelV4Data 
     return pref ? `${pref.vendorKey}:${pref.modelKey}` : ''
   })
   const [skills, setSkills] = React.useState<readonly SkillListItemDto[]>([])
+  const [webAgentSettings, setWebAgentSettings] = React.useState<WebAgentSettings>()
+  const [webAgentFailure, setWebAgentFailure] = React.useState<LaneDesktopResult | null>(null)
+  React.useEffect(() => {
+    const api = getDesktopBridge()?.web
+    if (!api || !snapshot.workspaceId) return
+    let isCurrent = true
+    void api.agentSettings().then(settings => { if (isCurrent) setWebAgentSettings(settings) }).catch(() => undefined)
+    return () => { isCurrent = false }
+  }, [snapshot.workspaceId, activeThreadId])
   const skillLabel = React.useCallback((key: string) => skillLabelForKey(skills, key, i18n.language), [skills, i18n.language])
   const [generationModels, setGenerationModels] = React.useState<readonly ModelCatalogModelDto[]>([])
   const orderedVendorKeys = useVendorPreferenceOrder()
@@ -218,7 +231,9 @@ export function useAgentPanelV4Data(surface: ResidentSurface): AgentPanelV4Data 
   const selectedModel = models.find((model) => encodeModelIdentity(model) === selectedModelId)
     ?? models.find((model) => model.vendorKey === snapshot.active.model?.provider
       && (model.modelKey === snapshot.active.model.modelId || model.modelAlias === snapshot.active.model.modelId))
-  const modelLabel = selectedModel
+  const modelLabel = webAgentSettings
+    ? (webAgentSettings.engine === 'opencode' ? 'OpenCode' : 'Codex')
+    : selectedModel
     ? labelForModel(selectedModel, [...models], vendors)
     // 没选模型时说实话。写一个型号名当占位是最糟的一种「默认」：用户以为已经在用它了。
     : t('agentPanelV4.modelUnset')
@@ -328,7 +343,7 @@ export function useAgentPanelV4Data(surface: ResidentSurface): AgentPanelV4Data 
   }, [activeSkill, selectedLibraryPrompt, skills, skillLabel, attachments, t, timelineSelection])
 
   return {
-    connectionFailure,
+    connectionFailure: webAgentFailure || connectionFailure,
     snapshot,
     activeThreadId,
     flow,
@@ -356,6 +371,11 @@ export function useAgentPanelV4Data(surface: ResidentSurface): AgentPanelV4Data 
     vendors,
     selectedModel,
     modelLabel,
+    webAgent: webAgentSettings ? { settings: webAgentSettings, selectEngine: engine => {
+      void getDesktopBridge()?.web?.agentSettings(engine).then(settings => { setWebAgentSettings(settings); setWebAgentFailure(null) }).catch(error => {
+        setWebAgentFailure({ ok: false, code: snapshot.active.running ? 'agent_lane_busy_running' : 'agent_lane_execute_failed', diagnostic: String(error) })
+      })
+    } } : undefined,
     skills,
     skillLabel,
     liveChips,

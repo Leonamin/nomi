@@ -5,6 +5,8 @@ const deps = vi.hoisted(() => ({
   generationListener: null as (() => void) | null,
   saves: [] as unknown[],
   revision: 0,
+  hasWebBridge: false,
+  webAgentIds: [] as string[],
   workbenchState: {
     workbenchDocuments: [], activeDocumentId: null as string | null, timeline: null, categories: [],
     storyboardDesignsByDocumentId: {}, persistRevision: 0,
@@ -26,7 +28,7 @@ vi.mock('../workbenchStore', () => ({
     subscribe: (_selector: unknown, listener: () => void) => { deps.workbenchListener = listener; return vi.fn() },
   },
 }))
-vi.mock('../../desktop/bridge', () => ({ getDesktopBridge: () => null }))
+vi.mock('../../desktop/bridge', () => ({ getDesktopBridge: () => deps.hasWebBridge ? { web: { appliedAgentNodeIds: () => deps.webAgentIds } } : null }))
 vi.mock('../generationCanvas/events/canvasEventEmitter', () => ({
   emitCanvasGesture: vi.fn(), getCanvasEventLastSeq: vi.fn(() => 0), seedCanvasEventLastSeq: vi.fn(),
 }))
@@ -47,10 +49,23 @@ describe('canonical persistence barrier suppresses stale debounce writes', () =>
     deps.generationListener = null
     deps.saves.length = 0
     deps.revision = 0
+    deps.hasWebBridge = false
+    deps.webAgentIds = []
     Object.assign(globalThis, { window: { addEventListener: vi.fn(), removeEventListener: vi.fn() } })
   })
 
   afterEach(() => vi.useRealTimers())
+
+  it('captures agent knowledge with the payload before a queued save waits for another receipt', () => {
+    deps.hasWebBridge = true
+    const beforeAck = readCurrentWorkbenchProjectPayload('project-a')
+    deps.webAgentIds.push('agent-new')
+    const afterAck = readCurrentWorkbenchProjectPayload('project-a')
+    expect(beforeAck.webAgentSeenNodeIds).toEqual([])
+    expect(afterAck.webAgentSeenNodeIds).toEqual(['agent-new'])
+    deps.webAgentIds.push('another-later-node')
+    expect(afterAck.webAgentSeenNodeIds).toEqual(['agent-new'])
+  })
 
   it('cancels the queued save for the same mutation before an immediate canonical save', async () => {
     const saveProject = vi.fn(async (_projectId: string, _payload: unknown, _name: string) => {

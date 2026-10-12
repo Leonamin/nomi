@@ -2,6 +2,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { execFileSync } from 'node:child_process'
+import { installWebBrowser } from './install-browser.mjs'
 const sha = process.argv[2]
 const base = '/home/leonamin/apps/nomi-web'
 const data = '/home/leonamin/nomi-web-data'
@@ -31,6 +32,7 @@ fs.mkdirSync(data, { recursive: true, mode: 0o700 })
 if (fs.realpathSync(data) !== data || fs.realpathSync(data) === fs.realpathSync('/home/leonamin/nomi-data')) throw new Error('Web data root is not independent')
 run('corepack', ['pnpm', 'install', '--frozen-lockfile'], release)
 run('corepack', ['pnpm', 'run', 'build:web'], release)
+const browserRoot = installWebBrowser(release)
 assertClean(release)
 const unitRoot = '/home/leonamin/.config/systemd/user'
 fs.mkdirSync(unitRoot, { recursive: true })
@@ -43,7 +45,10 @@ for (const [name, body] of Object.entries(units)) {
   if (fs.existsSync(target) && !fs.readFileSync(target, 'utf8').includes('# Managed by nomi-web')) throw new Error(`Existing unrelated unit preserved: ${name}`)
   fs.writeFileSync(target, body, { mode: 0o600 })
 }
-fs.writeFileSync(path.join(data, 'runtime.env'), `NOMI_WEB_DATA_DIR=${data}\nNOMI_WEB_PORT=9031\nNOMI_WEB_ORIGIN=${origin}\nNOMI_BUILD_SHA=${sha}\n`, { mode: 0o600 })
+const envPath = path.join(data, 'runtime.env')
+const ownedKeys = new Set(['NOMI_WEB_DATA_DIR', 'NOMI_WEB_PORT', 'NOMI_WEB_ORIGIN', 'NOMI_BUILD_SHA', 'PLAYWRIGHT_BROWSERS_PATH'])
+const preservedEnv = fs.existsSync(envPath) ? fs.readFileSync(envPath, 'utf8').split('\n').filter(line => line.trim() && !ownedKeys.has(line.split('=')[0])).join('\n') : ''
+fs.writeFileSync(envPath, `${preservedEnv}${preservedEnv ? '\n' : ''}NOMI_WEB_DATA_DIR=${data}\nNOMI_WEB_PORT=9031\nNOMI_WEB_ORIGIN=${origin}\nNOMI_BUILD_SHA=${sha}\nPLAYWRIGHT_BROWSERS_PATH=${browserRoot}\n`, { mode: 0o600 })
 const next = path.join(base, 'current.next')
 if (fs.existsSync(next)) throw new Error('Pending release symlink exists; refusing overwrite')
 fs.symlinkSync(release, next)

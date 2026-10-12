@@ -64,7 +64,7 @@ export function chatModelChoices(
 }
 
 /** Shared catalog-to-row projection used by the resident shell and visual fixtures. */
-export function buildV4ModelRows(data: Pick<AgentPanelV4Data, 'models' | 'vendors' | 'orderedVendorKeys' | 'selectedModel' | 'modelLabel' | 'selectModel' | 'generationModels' | 'generationDefaults' | 'setGenerationDefault'>, t: (key: string, options?: Record<string, unknown>) => string): readonly V4ModelRow[] {
+export function buildV4ModelRows(data: Pick<AgentPanelV4Data, 'models' | 'vendors' | 'orderedVendorKeys' | 'selectedModel' | 'modelLabel' | 'selectModel' | 'generationModels' | 'generationDefaults' | 'setGenerationDefault' | 'webAgent'>, t: (key: string, options?: Record<string, unknown>) => string): readonly V4ModelRow[] {
   const generationOptions = buildDefaultModelOptions(data.generationModels, key => data.vendors[key] ?? key, t('agentPanelV4.modelAuto'))
   const rows: V4ModelRow[] = []
   const chatChoices = chatModelChoices(
@@ -75,7 +75,14 @@ export function buildV4ModelRows(data: Pick<AgentPanelV4Data, 'models' | 'vendor
     (cost) => t('agentPanelV4.modelCredits', { cost }),
   )
   const selectedChat = data.selectedModel ? encodeModelIdentity(data.selectedModel) : ''
-  rows.push({
+  if (data.webAgent) rows.push({
+    slot: t('agentPanelV4.modelChat'),
+    name: data.modelLabel,
+    options: data.webAgent.settings.engines.map(engine => ({ value: engine, label: engine === 'opencode' ? 'OpenCode' : 'Codex' })),
+    selectedValue: data.webAgent.settings.engine,
+    onChange: value => data.webAgent?.selectEngine(value as 'opencode' | 'codex'),
+  })
+  else rows.push({
     slot: t('agentPanelV4.modelChat'),
     name: data.modelLabel,
     cost: chatChoices.find(choice => choice.value === selectedChat)?.trailing,

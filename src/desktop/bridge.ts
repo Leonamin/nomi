@@ -180,7 +180,12 @@ export type DesktopUpdateEvent =
 export type DesktopBridge = DesktopMediaBridge &
   DesktopVideoDepthBridge & DesktopConnectorBridge & {
   platform: string
-  web?: { generationSnapshot: (projectId: string) => Promise<Array<{ key: string; isPending: boolean; node?: import('../workbench/generationCanvas/model/generationCanvasTypes').GenerationCanvasNode }>> }
+  web?: {
+    generationSnapshot: (projectId: string) => Promise<Array<{ key: string; isPending: boolean; node?: import('../workbench/generationCanvas/model/generationCanvasTypes').GenerationCanvasNode }>>
+    acknowledgeAgentNodes: (projectId: string, ids: string[]) => Promise<void>
+    appliedAgentNodeIds: (projectId: string) => readonly string[]
+    agentSettings: (engine?: import('../../electron/shared/webAgentContracts').WebAgentEngine) => Promise<import('../../electron/shared/webAgentContracts').WebAgentSettings>
+  }
   i18n?: {
     setLocale: (locale: 'zh-CN' | 'en') => void
     /** OS 原生 locale（如 'en-US' / 'zh-CN'）；仅真 Electron 有，jsdom/测试无 → 首启回落默认语言。老 preload 可能无此口。 */
