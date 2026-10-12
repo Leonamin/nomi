@@ -10,7 +10,8 @@ export function installWebBrowser(release) {
   if (process.platform !== 'linux') throw new Error('This deployment targets hamsbox Linux')
   fs.mkdirSync(root, { recursive: true, mode: 0o700 })
   if (fs.realpathSync(root) !== root) throw new Error('Web browser directory must be independent; existing symlink preserved')
-  execFileSync('corepack', ['pnpm', 'exec', 'playwright', 'install', 'chromium'], { cwd: release, env: { ...process.env, PLAYWRIGHT_BROWSERS_PATH: root }, stdio: 'inherit' })
+  const env = { ...process.env, PLAYWRIGHT_BROWSERS_PATH: root, PLAYWRIGHT_SKIP_BROWSER_GC: '1' }
+  execFileSync('corepack', ['pnpm', 'exec', 'playwright', 'install', 'chromium'], { cwd: release, env, stdio: 'inherit' })
   const restriction = '/proc/sys/kernel/apparmor_restrict_unprivileged_userns'
   if (fs.existsSync(restriction) && fs.readFileSync(restriction, 'utf8').trim() === '1') {
     if (fs.existsSync(profilePath) && !fs.readFileSync(profilePath, 'utf8').startsWith(marker)) throw new Error('Existing unrelated AppArmor profile preserved')
@@ -22,5 +23,8 @@ export function installWebBrowser(release) {
       execFileSync('sudo', ['-n', 'apparmor_parser', '-r', profilePath], { stdio: 'inherit' })
     } finally { fs.unlinkSync(temporary) }
   }
+  // Match the service's NoNewPrivileges setting before activating the release.
+  execFileSync('setpriv', ['--no-new-privs', process.execPath, '--input-type=module', '--eval',
+    "import { chromium } from 'playwright'; const browser = await chromium.launch({ headless: true, chromiumSandbox: true }); console.log('Nomi Web sandboxed Chromium:', browser.version()); await browser.close();"], { cwd: release, env, stdio: 'inherit' })
   return root
 }

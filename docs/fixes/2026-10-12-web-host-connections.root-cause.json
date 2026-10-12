@@ -34,7 +34,9 @@
     "src/workbench/project/projectNormalize.ts",
     "scripts/web/deploy-hamsbox.mjs",
     "scripts/web/install-browser.mjs",
-    "web/runtimeHost.ts"
+    "web/runtimeHost.ts",
+    "package.json",
+    "pnpm-lock.yaml"
   ],
   "entry_points": [
     "ComfyUI card probe/address/save/import/test",
@@ -70,6 +72,12 @@
       "url": "https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md",
       "checked_at": "2026-10-12",
       "purpose": "Keep Chromium sandbox enabled using a dedicated AppArmor profile for the web-owned browser path; no global sysctl changes."
+    },
+    {
+      "kind": "source-code",
+      "url": "https://github.com/microsoft/playwright/blob/v1.64.0/packages/playwright-core/src/server/registry/index.ts",
+      "checked_at": "2026-10-12",
+      "purpose": "Supported Ubuntu 26.04 browser artifacts are declared by the installed browser registry, without a platform override in production."
     }
   ],
   "invariants": [
@@ -200,7 +208,8 @@
     "src/ui/onboarding/onboardingDrawerConnections.test.ts",
     "web/agentMcp.test.ts",
     "src/workbench/project/workbenchProjectSession.persistence.test.ts",
-    "web/runtimeIsolation.test.ts"
+    "web/runtimeIsolation.test.ts",
+    "scripts/web/browserRuntime.test.mjs"
   ],
   "class_regression_tests": [
     "web/comfyuiConnections.test.ts",
@@ -209,7 +218,8 @@
     "src/ui/onboarding/onboardingDrawerConnections.test.ts",
     "web/agentMcp.test.ts",
     "src/workbench/project/workbenchProjectSession.persistence.test.ts",
-    "web/runtimeIsolation.test.ts"
+    "web/runtimeIsolation.test.ts",
+    "scripts/web/browserRuntime.test.mjs"
   ],
   "legacy_paths": {
     "status": "removed",
@@ -220,12 +230,13 @@
     "rationale": "Remove unconditional agent bridge deletion and unavailable connection placeholders as the real host contracts are assembled; desktop code stays the owner of existing domains."
   },
   "dependency_lifecycle": {
-    "decision": "retain-with-exit",
-    "rationale": "Reuse MCP SDK 1.29.0 already in the lockfile, Playwright 1.60 and installed OpenCode 2.0.23/Codex 0.161.0 without modifying existing services/auth/config.",
-    "current": "MCP SDK 1.29.0, Playwright 1.60, OpenCode 2.0.23, Codex 0.161.0",
-    "target": "Installed native JSON/MCP protocol versions confirmed by official docs and CLI help",
+    "decision": "upgrade-now",
+    "rationale": "The first Linux deployment failed before service activation because Playwright 1.60 has no Ubuntu 26.04 Chromium artifact. Upgrade the standalone browser runtime to the supported 1.64.0 release; keep existing desktop test-runner dependency and all original services untouched. Native CLIs/MCP keep their verified protocols.",
+    "current": "Playwright 1.60.0",
+    "target": "Standalone Playwright 1.64.0 with official Ubuntu 26.04 Chromium artifacts",
     "exit_criteria": [
-      "Upgrade adapters when installed CLI event schemas change; changed parser tests and actual engine handshake must pass before deployment."
+      "Actual Ubuntu 26.04 sandboxed launch, ComfyUI Save conversion and GPU import must pass.",
+      "Chromium platform dry-run tests cover Ubuntu 26.04 x64 and macOS arm64; existing contract/unit/build gates pass."
     ]
   },
   "migration": "Existing web catalog/projects are preserved; connection drafts and conversations are stored under the dedicated web data root. Default engine applies to new conversations; explicit user selection is persisted.",

@@ -29,6 +29,17 @@ async function fixture() {
   return { lanes, surface, binding, root, run, finish: () => finish(), projection: () => projection!, dispose: () => hostEvents.off('message', listener) }
 }
 describe('native web lanes keep execution separate from browser subscriptions', () => {
+  it.each(['openai', 'custom-relay'])('uses the saved OpenCode favorite for %s without forcing a provider', async providerID => {
+    const f = await fixture()
+    const home = path.join(f.root, 'native-home')
+    const directory = path.join(home, '.local/state/opencode')
+    fs.mkdirSync(directory, { recursive: true })
+    fs.writeFileSync(path.join(directory, 'model.json'), JSON.stringify({ favorite: [{ providerID, modelID: 'my-model' }], recent: [{ providerID: 'opencode-go', modelID: 'other-model' }] }))
+    const spy = vi.spyOn(os, 'homedir').mockReturnValue(home)
+    delete process.env.NOMI_WEB_OPENCODE_MODEL
+    try { expect(f.lanes.settings(f.surface)).toMatchObject({ engine: 'opencode', model: `${providerID}/my-model` }) }
+    finally { spy.mockRestore(); f.dispose() }
+  })
   it('retains a running turn when a view closes and restores its actual transcript after reconnect', async () => {
     const f = await fixture(); const binding = f.binding
     try {

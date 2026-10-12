@@ -91,7 +91,7 @@ export class WebAgentLanes {
       if (!model) {
         const file = path.join(os.homedir(), '.local/state/opencode/model.json')
         const saved = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : {}
-        const choice = [...(saved.favorite || []), ...(saved.recent || [])].find(row => row.providerID === 'opencode-go')
+        const choice = [...(saved.favorite || []), ...(saved.recent || [])].find(row => typeof row.providerID === 'string' && row.providerID.trim() && typeof row.modelID === 'string' && row.modelID.trim())
         if (choice) model = `${choice.providerID}/${choice.modelID}`
       }
     } else model = process.env.NOMI_WEB_CODEX_MODEL || ''
