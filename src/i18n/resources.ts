@@ -23,7 +23,7 @@ import { enAgentPanelV4, zhAgentPanelV4 } from './locales/agentPanelV4'
 import { enAgentLaneError, zhAgentLaneError } from './locales/agentLaneError'
 import { enAgentToolFailure, zhAgentToolFailure } from './locales/agentToolFailure'
 
-import { ko } from './locales/ko'
+import { ko, koWeb } from './locales/ko'
 
 export const zhCN = {
   shotTable: zhShotTable,
@@ -882,3 +882,8 @@ export const resources = {
   'zh-CN': { translation: zhCN },
   en: { translation: en }, ko: { translation: ko },
 } as const
+
+/** Host selection belongs to composition, while resource imports remain pure data. */
+export function resourcesForHost(isWeb: boolean) {
+  return isWeb ? { ...resources, ko: { translation: koWeb } } : resources
+}

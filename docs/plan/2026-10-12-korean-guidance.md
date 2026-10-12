@@ -61,3 +61,9 @@ Sepia `write` 사용. 일반 학생을 독자로 삼고, 기능의 실제 동작
 - 실제 이미지/영상 생성과 MP4 결과 검증은 연결된 생성 자원이 없어 unverified. 전체 gates의 기존 화면 기준 불일치는 원본 브랜치와 비교해 기록하며 기준을 자동 갱신하지 않는다.
 
 검토용 Draft PR: https://github.com/Leonamin/nomi-web/pull/3
+
+## 先查别人
+
+- [기존 i18next 조합](../../src/i18n/index.ts): 렌더러는 이 엔진을 그대로 사용한다. 한국어 리소스의 import에서 호스트를 조회하지 않고 조합 단계에 웹 여부를 전달한다.
+- [기존 호스트 언어 상태](../../electron/desktopLocale.ts): bare Node launcher와 호스트가 공유하는 타입·정규화는 의존성 없는 계약으로 유지한다.
+- [기존 복구 투영](../../electron/capabilityCore/generationRecoveryProjection.ts): 재제출 정책을 보존하고 문구만 한국어로 투영한다. 이 세 계약은 Nomi의 기존 언어·복구 의미를 연결하며 별도 번역 엔진을 만들지 않는다.

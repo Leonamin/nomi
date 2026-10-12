@@ -1,4 +1,3 @@
-import { getDesktopBridge } from '../../../desktop/bridge'
 import type { TranslationShape, zhCN } from '../../resources'
 import shotTable from './shotTable.json'
 import common from './common.json'
@@ -90,7 +89,9 @@ const base = {
 
 // The personal web host offers manual ComfyUI generation and stores files on the server.
 // Keep desktop copy intact while explaining the web host's actual capabilities.
-export const ko = getDesktopBridge()?.platform === 'web' ? {
+export const ko = base
+
+export const koWeb = {
   ...base,
   library: {
     ...base.library,
@@ -108,4 +109,4 @@ export const ko = getDesktopBridge()?.platform === 'web' ? {
       generated: { label: '이미지 만들기', hint: '카드에서 연결된 ComfyUI 모델을 고르고 생성하세요.' },
     },
   },
-} satisfies TranslationShape<typeof zhCN> : base
+} satisfies TranslationShape<typeof zhCN>

@@ -1,6 +1,6 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import { resources } from './resources'
+import { resourcesForHost } from './resources'
 import { getDesktopBridge } from '../desktop/bridge'
 
 import { normalizeDesktopLocale, SUPPORTED_LOCALES } from '../../electron/shared/contracts/locale'
@@ -59,7 +59,7 @@ function syncDesktopLocale(locale: AppLocale): void {
 const initialLocale = resolveInitialLocale()
 
 void i18n.use(initReactI18next).init({
-  resources,
+  resources: resourcesForHost(typeof window !== 'undefined' && window.nomiDesktop?.platform === 'web'),
   lng: initialLocale,
   fallbackLng: DEFAULT_LOCALE,
   supportedLngs: [...SUPPORTED_LOCALES],

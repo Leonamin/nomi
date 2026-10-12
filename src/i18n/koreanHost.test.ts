@@ -10,6 +10,7 @@ import i18n, { setAppLocale } from './index'
 import { translateModelDisplayText } from './modelDisplayText'
 import { mcpLocaleText } from '../../electron/capabilityCore/mcpLocaleText'
 import { handbookContentForLocale } from '../workbench/onboarding/handbookContent'
+import { resources, resourcesForHost } from './resources'
 import { projectGenerationRecovery } from '../../electron/capabilityCore/generationRecoveryProjection'
 
 afterEach(() => { setDesktopLocale('zh-CN'); setAppLocale('zh-CN') })
@@ -59,5 +60,19 @@ describe('한국어 호스트와 도움말', () => {
     expect(ko.allowAutomaticRetry).toBe(false)
     expect(ko.allowNewAttempt).toBe(en.allowNewAttempt)
     expect(ko.nextAction).toBe(en.nextAction)
+  })
+})
+
+// Locale data is also imported by canvas/timeline modules before a host is installed.
+describe('locale resource assembly', () => {
+  it('imports resource data without touching an unavailable host', async () => {
+    const source = fs.readFileSync(path.join(process.cwd(), 'src/i18n/locales/ko/index.ts'), 'utf8')
+    expect(source).not.toContain('getDesktopBridge')
+    expect(resources.ko.translation.library.textModelMissing).not.toContain('이 웹에서는')
+  })
+  it('selects web copy explicitly without changing desktop resources', () => {
+    expect(resourcesForHost(true).ko.translation.library.local).toBe('서버에 저장됨')
+    expect(resourcesForHost(false)).toBe(resources)
+    expect(resources.ko.translation.library.local).not.toBe('서버에 저장됨')
   })
 })

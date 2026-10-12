@@ -2,9 +2,9 @@
   "schema_version": 3,
   "id": "2026-10-12-korean-locale-contract",
   "problem_type": "Supported locale extension leaves narrower type, renderer import and user-facing projection contracts",
-  "symptom": "Typecheck rejects ko in MCP metadata and launcher callback types; renderer architecture checks reject importing the Electron host module; Korean consumers may otherwise receive Chinese projections.",
+  "symptom": "Typecheck rejects ko in MCP metadata and launcher callback types; renderer architecture checks reject importing the Electron host module; Korean consumers may otherwise receive Chinese projections. PR #3 CI also fails three independent test imports because locale data eagerly calls the host bridge.",
   "direct_cause": "The supported locale union was owned in a host module while renderer, MCP metadata, telemetry and notification consumers kept independent two-language types or projections.",
-  "class_root": "The supported language list and normalization belong to a renderer-safe shared contract. Host state remains host-owned, and every display or persisted consumer must accept the canonical locale and explicitly project Korean.",
+  "class_root": "The supported language list and normalization belong to a renderer-safe shared contract. Host state remains host-owned, and every display or persisted consumer must accept the canonical locale and explicitly project Korean. Resource dictionaries must remain host-independent data; host-specific projection is explicit only at i18n composition.",
   "affected_population": [
     "Korean app and MCP users",
     "Future added supported locales"
@@ -27,7 +27,9 @@
     "electron/capabilityCore/mcpCredentialElicitation.ts",
     "electron/capabilityCore/mcpTrustDowngrade.ts",
     "electron/capabilityCore/mcpTimelineConfirmation.ts",
-    "electron/capabilityCore/mcpDocumentConfirmation.ts"
+    "electron/capabilityCore/mcpDocumentConfirmation.ts",
+    "src/i18n/resources.ts",
+    "src/i18n/locales/ko/index.ts"
   ],
   "entry_points": [
     "App settings choose ko",
@@ -855,14 +857,189 @@
       "kind": "write",
       "path": "src/workbench/settings/SettingsDialog.tsx",
       "symbol": "setAppLocale"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpCredentialElicitation.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpLocaleText.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpProtocol.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpToolCatalog.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpToolErrorResults.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/mcpToolResults.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionNotifications.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "electron/promptLibrary/curatedPrompts.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "src/design/previewHost.tsx",
+      "symbol": "resources"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/i18next.d.ts",
+      "symbol": "zhCN"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/index.ts",
+      "symbol": "resources"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/agentLaneError.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/agentResident.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/agentToolFailure.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/assetLibrary.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/browserAssets.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/comfyuiWorkflowPage.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/creationAi.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/generationCommon.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/ko/index.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/ko/index.ts",
+      "symbol": "zhCN"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/libraries.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/modelSetup.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/onboardingProviders.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/previewSource.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/runtime.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/storyboardEditor.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/timelineEditor.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/locales/timelinePreview.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/resources.ts",
+      "symbol": "TranslationShape"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/resources.ts",
+      "symbol": "zhCN"
+    },
+    {
+      "kind": "read",
+      "path": "src/i18n/resources.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/api/promptLibraryApi.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/library/libraryGroups.ts",
+      "symbol": "en"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/promptLibrary/promptDisplay.ts",
+      "symbol": "en"
     }
   ],
   "door_reduction": {
-    "before": 162,
-    "after": 162,
+    "before": 197,
+    "after": 197,
     "why_not": "Distinct GUI, IPC, launcher, telemetry and production-notification boundaries must remain callable. Canonical locale values converge on the shared contract; mutable locale converges on setDesktopLocale. Notification delivery and dedupe stay separate from pure projection, and telemetry settings reads remain distinct from event collection. No new locale normalization implementation is retained."
   },
-  "generality_proof": "The locale union is derived from a single supported list; Partial<Record<DesktopLocale,string>> accepts future languages for optional external metadata, while the launcher harness reuses DesktopLocale instead of a second union.",
+  "generality_proof": "The locale union is derived from a single supported list; Partial<Record<DesktopLocale,string>> accepts future languages for optional external metadata, while the launcher harness reuses DesktopLocale instead of a second union. All resources are now host-independent data. resourcesForHost receives an explicit boolean at i18n composition and never calls the host; canvas, timeline and generation consumers can import the same dictionaries before a bridge is available.",
   "shared_boundaries": [
     {
       "path": "electron/shared/contracts/locale.ts",
@@ -888,6 +1065,11 @@
       "path": "electron/settings/telemetryIpc.ts",
       "symbol": "registerTelemetryIpc",
       "responsibility": "Accept Korean telemetry locale metadata at the existing IPC event boundary without changing consent or event-name admission."
+    },
+    {
+      "path": "src/i18n/resources.ts",
+      "symbol": "resourcesForHost",
+      "responsibility": "Pure explicit host projection; importing locale dictionaries never reads the host bridge."
     }
   ],
   "same_class_entry_points": [
@@ -920,6 +1102,18 @@
       "entry_point": "nomi:telemetry:track",
       "disposition": "enforced",
       "evidence": "The record-event handler projects raw.locale=ko to ko; telemetry event and outbox locale contracts accept ko. Existing validation and consent boundaries remain intact."
+    },
+    {
+      "path": "src/i18n/resources.ts",
+      "entry_point": "resources",
+      "disposition": "enforced",
+      "evidence": "CI timeline and canvas test imports failed at the same eager bridge call. The resource export now consists of pure locale data; the original three suites pass without changing their mocks."
+    },
+    {
+      "path": "src/i18n/index.ts",
+      "entry_point": "i18n initialization",
+      "disposition": "enforced",
+      "evidence": "Explicit resourcesForHost selection uses the installed web host and preserves desktop data. The new index test checks actual initialized web copy and unchanged exported desktop resources."
     }
   ],
   "recurrence": {
@@ -932,13 +1126,14 @@
       "node scripts/door-map.mjs electron/productionRun/productionNotifications.ts",
       "node scripts/door-map.mjs electron/settings/telemetryIpc.ts",
       "node scripts/door-map.mjs electron/shared/contracts/locale.ts",
-      "Machine-generated union: doorsForTargets(scope_paths + L) from scripts/door-map.mjs; L captures existing projection wrappers one hop beyond canonical mcpLocaleText."
+      "Machine-generated union: doorsForTargets(scope_paths + L) from scripts/door-map.mjs; L captures existing projection wrappers one hop beyond canonical mcpLocaleText.",
+      "node scripts/door-map.mjs src/i18n/resources.ts: 35 read doors across renderer and host; timeline asset drop, canvas drop and generation deadline all independently import resource consumers."
     ]
   },
   "prevention": {
     "kind": "type-system",
     "enforcement_path": "electron/shared/contracts/locale.ts",
-    "invariant": "Supported locale values and normalization have one renderer-safe owner; metadata typing and Korean display projections use that canonical contract.",
+    "invariant": "Supported locale values and normalization have one renderer-safe owner; metadata typing and Korean display projections use that canonical contract. Locale dictionary imports must not query or initialize any host runtime; only explicit resource assembly selects host copy.",
     "failure_mode": "Unsupported narrow metadata indexing fails typecheck; optional metadata has an explicit display policy without changing tool state or execution.",
     "exception_policy": "none",
     "strategy": "Move the pure list/type/normalizer to the shared contract, keep host mutable state separate, use DesktopLocale for MCP metadata and injected callbacks, and explicitly accept ko at existing notification and telemetry boundaries.",
@@ -951,7 +1146,9 @@
       "electron/productionRun/productionNotifications.ts",
       "electron/settings/telemetryIpc.ts",
       "electron/telemetry/telemetryEvents.ts",
-      "electron/telemetry/telemetryOutbox.ts"
+      "electron/telemetry/telemetryOutbox.ts",
+      "src/i18n/resources.ts",
+      "src/i18n/locales/ko/index.ts"
     ]
   },
   "regression_tests": [
@@ -962,7 +1159,8 @@
   ],
   "class_regression_tests": [
     "src/i18n/localeNormalize.equivalence.test.ts",
-    "electron/capabilityCore/mcpLauncherLocale.test.ts"
+    "electron/capabilityCore/mcpLauncherLocale.test.ts",
+    "src/i18n/koreanHost.test.ts"
   ],
   "legacy_paths": {
     "status": "removed",

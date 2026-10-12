@@ -718,6 +718,32 @@
       ],
       "whyNotIntegrated": "HTTP, SSE, multipart parsing and serving are provided by Hono and Node. The adapter is only the Nomi-specific composition of its existing preload API, project binding, canonical media URL, candidate delivery, local-only generation receipt and export lifecycle. Electron IPC cannot run in a normal browser; duplicating these domain owners would split preview/export and persistence semantics.",
       "revisitWhen": "An upstream headless host offers the same server-owned manual workflow and browser surface; replace this transport without migrating the canonical project format."
+    },
+    {
+      "id": "supported-locale-projection",
+      "capability": "Nomi의 지원 언어 계약과 기존 호스트/MCP/복구 안내의 한국어 투영",
+      "status": "justified",
+      "paths": [
+        "electron/shared/contracts/locale.ts",
+        "electron/capabilityCore/mcpLocaleText.ts",
+        "electron/locales/recoveryKo.ts"
+      ],
+      "alternativesChecked": [
+        {
+          "name": "기존 i18next resource assembly",
+          "source": "src/i18n/index.ts"
+        },
+        {
+          "name": "기존 electron-free 호스트 언어 소유자",
+          "source": "electron/desktopLocale.ts"
+        },
+        {
+          "name": "기존 복구 의미 투영",
+          "source": "electron/capabilityCore/generationRecoveryProjection.ts"
+        }
+      ],
+      "whyNotIntegrated": "Nomi의 bare Node MCP launcher와 복구 권한 계약은 Electron/renderer 초기화 없이 같은 지원 언어 목록과 안내를 사용해야 한다. 번역 엔진은 기존 i18next를 유지하며 별도 언어 탐지·저장 시스템을 추가하지 않는다.",
+      "revisitWhen": "호스트와 bare Node launcher가 동일한 번역 엔진의 초기화 없는 사전 계약을 채택할 때 검토"
     }
   ]
 }

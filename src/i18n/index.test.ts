@@ -69,6 +69,15 @@ describe('app locale', () => {
     expect(documentElement.lang).toBe('ko')
   })
 
+  it('composes web copy only after the web host is installed', async () => {
+    installBrowserState('ko')
+    Object.assign(window, { nomiDesktop: { platform: 'web' } })
+    const locale = await import('./index')
+    expect(locale.default.t('library.local')).toBe('서버에 저장됨')
+    const { resources } = await import('./resources')
+    expect(resources.ko.translation.library.local).not.toBe('서버에 저장됨')
+  })
+
   it('detects Korean on first launch and forwards it to the host', async () => {
     const { documentElement } = installBrowserState()
     const setLocale = vi.fn()
