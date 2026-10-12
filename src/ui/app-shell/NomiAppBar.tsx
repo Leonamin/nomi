@@ -157,7 +157,6 @@ export default function NomiAppBar({
                   'hover:bg-[var(--nomi-ink-05)] hover:text-[var(--nomi-ink)]',
                   'max-[700px]:hidden',
                 )}
-                aria-label={t('appBar.backToLibrary')}
                 onClick={onBackToLibrary}
               >
                 {t('appBar.projectLibrary')}

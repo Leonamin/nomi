@@ -135,7 +135,7 @@ const CANVAS_DISPLAY_OWNER_PATTERNS = [
   // 主进程画布落地投影与 Run 状态机（谁写节点运行记录、谁收尾）
   /^electron\/productionRun\/(?:canvasLandingHost|canvasShotClaim|multiShotCanvasLanding|productionRunCanvasLandingReducer|productionRunLifecycle|productionRunReducer|productionRunProjections|batchScheduleDerivation|batchSchedulerKick|multiShotBatchScheduler)(?:\.|$)/,
   // 渲染层：落地投影写入点与制作侧的镜头认领 / 动作
-  /^src\/workbench\/capability\/multiShotCanvasLanding(?:\.|$)/,
+  /^src\/workbench\/capability\/multiShotCanvasLanding(?:Core)?(?:\.|$)/,
   /^src\/workbench\/production\/(?:ProductionCanvasLandingHost|productionCanvasLandingStore|productionShotOwnership|productionShotActions|reportDetachedShotNodes|watchDeletedProductionNodes)(?:\.|$)/,
   // 画布子树里产出显示的目录（reactFlow 另有自己的 full 规则）
   /^src\/workbench\/generationCanvas\/(?:nodes|spend|store|runner|model|agent|events|adapters)\//,
