@@ -470,6 +470,17 @@ try {
     c9bGenerationCard.locator('button').last().click().catch(() => {}))
   await c9bGenerationCard.waitFor({ state: 'detached', timeout: 8_000 }).catch(() => {})
   await c9bBaselineGatePromise.catch(() => {})
+  // Phase A 的基线计划只是一枚探针：断言已拿到，就别把它留在 C9 项目里。
+  // 留着的代价是任务中心多一条 active Run（draft + 预算门 waiting，updatedAt 可能比四镜 Run 还新），
+  // 那张整卡就会在两份 Run 之间摇摆——C12 的 UI 步会点错卡。（同 400 行 stale 计划同一条取消路径。）
+  const c9bBaselineCancelled = await call(mcp, 'nomi_operation_control', {
+    projectId: c9bProjectId, leaseHandle: c9bLease, operationId: c9bBaselineOperationId, action: 'cancel',
+  })
+  const c9bBaselineCancelledData = resultTextJson(c9bBaselineCancelled)
+  check(
+    ((c9bBaselineCancelledData.operation || resultData(c9bBaselineCancelled).operation) || {}).state === 'cancelled',
+    'C9b Phase A 探针计划取消后不再占任务中心整卡',
+  )
   // Phase B：c9bClient（声明 elicitation）在自己的项目上创建计划。
   // projectSelectionHandle 是 connection-bound（含 sessionId/connectionNonce），
   // 不能把 Phase A 的 mcp 句柄跨连接交给 c9bClient；这样测到的只会是
@@ -658,15 +669,9 @@ try {
   const taskPanel = win.locator('[data-nomi-right-panel="tasks"]')
   const cardTexts = await taskPanel.locator('[data-production-task-card]').allTextContents()
   console.log('  C12 task cards=', JSON.stringify(cardTexts))
-  // The task center keeps the last opened Run card mounted; select the semantic
-  // Run row when another production Run currently owns that card.
-  let productionCard = taskPanel.locator('[data-production-task-card]').filter({ hasText: /导出|成片|export/i }).first()
-  if (await productionCard.count() === 0) {
-    const semanticRunRow = taskPanel.getByText(/generation\.single-shot/).first()
-    await semanticRunRow.waitFor({ timeout: 20_000 })
-    await semanticRunRow.click()
-    productionCard = taskPanel.locator('[data-production-task-card]').filter({ hasText: /导出|成片|export/i }).first()
-  }
+  // 卡按 Run 身份寻址，不按可见文案：卡正文里带着阶段名（…「导出待开始」），
+  // 「含导出」的过滤会把预算确认卡也捞进来，点它的主动作当然等不到粗剪确认框。
+  const productionCard = taskPanel.locator(`[data-production-task-card][data-production-run-id="${operationId}"]`)
   await productionCard.waitFor({ timeout: 20_000 })
   await productionCard.locator('[data-production-primary-action]').click()
   const roughCutConfirm = win.locator('[data-confirm-dialog-confirm="true"]:visible').first()
@@ -683,7 +688,7 @@ try {
   check(reviewedStatus === 'awaiting_export', 'C12 粗剪审看确认后进入 awaiting_export')
   if (await taskPanel.isVisible().catch(() => false)) await win.locator('[data-task-center-trigger="true"]').click()
   await win.locator('[data-task-center-trigger="true"]').click()
-  const exportPrimary = taskPanel.locator('[data-production-task-card] [data-production-primary-action]').first()
+  const exportPrimary = taskPanel.locator(`[data-production-task-card][data-production-run-id="${operationId}"] [data-production-primary-action]`).first()
   await exportPrimary.waitFor({ timeout: 20_000 })
   await exportPrimary.click()
   const exportDialog = win.locator('.fixed.inset-0').filter({ hasText: /审看粗剪并批准导出/ }).last()

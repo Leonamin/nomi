@@ -8,7 +8,7 @@ import type { ProductionRunView } from './productionRunView'
 vi.mock('react-i18next', () => ({ useTranslation: () => ({ t: (key: string) => key, i18n: { language: 'en' } }) }))
 
 const view: ProductionRunView = {
-  group: 'attention', tone: 'attention', playbookLabelKey: 'generationCommon.production.playbook.brandPromo', titleKey: 'generationCommon.production.status.paused',
+  group: 'attention', tone: 'attention', runId: 'run-1', playbookLabelKey: 'generationCommon.production.playbook.brandPromo', titleKey: 'generationCommon.production.status.paused',
   descriptionKey: 'generationCommon.production.description.paused', primaryAction: 'resume-run',
   controls: ['cancel'], decisionHome: 'nomi', originHost: 'nomi',
   details: {
@@ -36,5 +36,10 @@ describe('production task feedback', () => {
   })
   it('removes the old failure when the host clears it for a retry', () => {
     expect(render(null)).not.toContain('data-production-action-error')
+  })
+  // 任务中心同时可能列着多份 Run。卡必须报出自己的身份，读侧（走查 / 工具）才能精确寻址，
+  // 不必去猜可见文案——正文里带着阶段名，按「导出」之类的字面匹配会点错卡（mcp-l2 C12 踩过）。
+  it('addresses itself by run identity', () => {
+    expect(render(null)).toContain('data-production-run-id="run-1"')
   })
 })

@@ -38,6 +38,8 @@ export type ProductionRunView = {
    */
   group: TaskCenterGroup
   tone: ProductionRunTone
+  /** 这份制作的身份（`runId`）。任务面板同时可能列着多份 Run，卡必须报出自己的是哪一份，读侧才能精确寻址。 */
+  runId: string
   /** 流程的人话名（`playbook.name` 是身份，不上屏）。 */
   playbookLabelKey: TranslationKey
   titleKey: TranslationKey
@@ -170,6 +172,7 @@ export function buildProductionRunView(
       status: run.status === 'completed' ? 'completed' as const : status,
     }))
   const base = {
+    runId: run.runId,
     group: productionRunStatusGroup(run.status),
     playbookLabelKey: productionPlaybookLabelKey(run.playbook.name),
     controls: [] as ProductionRunControl[],
