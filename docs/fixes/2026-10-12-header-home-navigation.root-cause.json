@@ -3,14 +3,15 @@
   "id": "2026-10-12-header-home-navigation",
   "problem_type": "Header navigation affordances must use the project leave owner",
   "symptom": "Clicking the Nomi header brand selects text instead of returning to the project library.",
-  "direct_cause": "Both platform headers wrap NomiBrand in a non-interactive span; the separate breadcrumb home action is hidden on narrow screens.",
+  "direct_cause": "Both platform headers wrap NomiBrand in a non-interactive span; the separate breadcrumb home action is hidden on narrow screens. Actual browser validation also found subscription close incorrectly required the already-released project authority.",
   "class_root": "The stable brand affordance has no semantic navigation control connected to the existing save-before-leave lifecycle.",
   "affected_population": [
     "Web, macOS/Linux and Windows header layouts, including narrow screens"
   ],
   "scope_paths": [
     "src/ui/app-shell/NomiAppBar.tsx",
-    "src/workbench/WorkbenchShell.tsx"
+    "src/workbench/WorkbenchShell.tsx",
+    "web/agentLanes.ts"
   ],
   "entry_points": [
     "Nomi header brand click and keyboard activation"
@@ -63,6 +64,11 @@
       "path": "src/workbench/WorkbenchShell.tsx",
       "symbol": "WorkbenchShell",
       "responsibility": "Use the same callback for the Windows title bar."
+    },
+    {
+      "path": "web/agentLanes.ts",
+      "symbol": "WebAgentLanes",
+      "responsibility": "Close only the owning browser subscription after project release, without cancelling server execution."
     }
   ],
   "same_class_entry_points": [
@@ -102,14 +108,17 @@
     "strategy": "Replace static spans in both header layouts with existing WorkbenchButton controls.",
     "artifacts": [
       "src/ui/app-shell/NomiAppBar.tsx",
-      "src/workbench/WorkbenchShell.tsx"
+      "src/workbench/WorkbenchShell.tsx",
+      "web/agentLanes.ts"
     ]
   },
   "regression_tests": [
-    "src/ui/app-shell/homeNavigation.test.ts"
+    "src/ui/app-shell/homeNavigation.test.ts",
+    "web/agentLanes.test.ts"
   ],
   "class_regression_tests": [
-    "src/ui/app-shell/homeNavigation.test.ts"
+    "src/ui/app-shell/homeNavigation.test.ts",
+    "web/agentLanes.test.ts"
   ],
   "legacy_paths": {
     "status": "removed",
@@ -131,7 +140,7 @@
   "detected_by": "user",
   "recurrence_check_on": "2026-11-11",
   "invariant_owner_layer": {
-    "layer": "ui",
+    "layer": "src/ui/app-shell",
     "tests": [
       "src/ui/app-shell/homeNavigation.test.ts"
     ]
