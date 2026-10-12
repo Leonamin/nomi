@@ -7,6 +7,7 @@ import { realNomiProfile, seedRealCredentials } from './_realProfile.mjs'
 import fs from 'node:fs'
 import path from 'node:path'
 import { screenshotSettled } from './_assert.mjs'
+import { resolveWalkProjectTemplate } from './fixtures/realProjectTemplate.mjs'
 const shotsDir = path.join(repoRoot, 'tests/ux/shots/parambar')
 fs.mkdirSync(shotsDir, { recursive: true })
 
@@ -21,11 +22,11 @@ fs.mkdirSync(projectsDir, { recursive: true })
 // 本走查 userData 与 settings 同目录。
 if (fs.existsSync(realNomiProfile().catalogPath)) seedRealCredentials({ settingsDir, userDataDir: settingsDir })
 
-// 复制一个真实 Seedance 多视频节点项目的 project.json（只 project.json，不要 assets——量参数栏不需要真图）
-const srcProj = '/Users/aoqimin/Documents/Nomi Projects/未命名项目 06_18 11_56-mqiyx4om-5e071915/.nomi/project.json'
+// 复制一个真实 Seedance 多视频节点项目的 project.json（只 project.json，不要 assets——量参数栏不需要真图）。
+// NOMI_WALK_PROJECT 必须指向含 seedance 多供应商的真实项目，否则 D2 触发条件不成立。
 const dstDir = path.join(projectsDir, 'parambar-walk')
 fs.mkdirSync(path.join(dstDir, '.nomi'), { recursive: true })
-const proj = JSON.parse(fs.readFileSync(srcProj, 'utf8'))
+const proj = resolveWalkProjectTemplate()
 proj.name = '参数栏几何实测'
 fs.writeFileSync(path.join(dstDir, '.nomi', 'project.json'), JSON.stringify(proj))
 
