@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { load } from 'js-yaml'
 
 import { CI_E2E_CHAIN } from './run-ci-e2e-chain.mjs'
+import { MANUAL_SURFACES } from './select-quality-gate-profile.mjs'
 import { CORE_SMOKE_ADVISORY_CHECK_NAMES, CORE_SMOKE_ADVISORY_FIXTURES, CORE_SMOKE_BLOCKING_CHECK_NAMES, CORE_SMOKE_BLOCKING_FIXTURES, CORE_SMOKE_CHECK_NAMES, CORE_SMOKE_FIXTURES, coreSmokeCheckName } from './validation-policy.mjs'
 import { REQUIRED_MERGED_CHECKS } from './git-delivery.mjs'
 import { CORE_SMOKE_SCENARIOS } from '../tests/ux/core-smoke/scenarios.mjs'
@@ -47,6 +48,13 @@ test('quality gate runs for pull requests and real main before/after pushes', ()
           type: 'choice',
           options: ['full'],
         },
+        surfaces: {
+          description: 'Run a single surface only (manual recovery; PRs always use the risk profile)',
+          required: false,
+          default: 'all',
+          type: 'choice',
+          options: ['all', 'contracts', 'unit', 'core-smoke', 'e2e', 'canvas-acceptance', 'canvas-performance', 'mac-package'],
+        },
       },
     },
   })
@@ -62,6 +70,21 @@ test('quality gate runs for pull requests and real main before/after pushes', ()
   assert.equal(scopeEnvironment.NOMI_HEAD_SHA, '${{ github.sha }}')
 })
 
+test('manual single-surface recovery stays drift-free against the whitelist', () => {
+  // 输入选项就是白名单本身：加一格 surface 只改 select-quality-gate-profile.mjs，忘了改工作流这份选项表就红。
+  assert.deepEqual(workflow.on.workflow_dispatch.inputs.surfaces.options, ['all', ...MANUAL_SURFACES])
+  // contracts / unit 两个常开 job 靠 inputs.surfaces 关自己（其余 job 由 scope 的档位管）。
+  for (const [job, surface] of [['contracts', 'contracts'], ['unit', 'unit']]) {
+    assert.match(String(workflow.jobs[job].if), new RegExp(`inputs\\.surfaces == '${surface}'`), `${job} 必须能被 surfaces 关掉`)
+  }
+  // 手动单面复跑时，结论只要求被点名的那一格——每一格都要在 quality 的 branch 里点名。
+  const qualityRun = runCommands(workflow.jobs.quality).join('\n')
+  assert.match(qualityRun, /if \[ -n "\$\{\{ needs\.scope\.outputs\.only_surface \}\}" \]/)
+  for (const surface of MANUAL_SURFACES) {
+    assert.match(qualityRun, new RegExp(`\\b${surface.replaceAll('-', '\\-')}\\)`), `quality 的 subset 分支漏了 ${surface}`)
+  }
+})
+
 test('scope exposes every independent validation surface from the shared classifier', () => {
   assert.deepEqual(workflow.jobs.scope.outputs, {
     core_smoke: '${{ steps.profile.outputs.core_smoke }}',
@@ -75,6 +98,7 @@ test('scope exposes every independent validation surface from the shared classif
     fail_closed: '${{ steps.profile.outputs.fail_closed }}',
     reason: '${{ steps.profile.outputs.reason }}',
     changed_count: '${{ steps.profile.outputs.changed_count }}',
+    only_surface: '${{ steps.profile.outputs.only_surface }}',
   })
   assert.match(runCommands(workflow.jobs.scope).join('\n'), /select-quality-gate-profile\.mjs/)
 })
@@ -94,10 +118,12 @@ test('quality gate uses Node 24-native actions without a forced runtime shim', (
   }
 })
 
-test('contracts always run and unit alone chooses focused or full coverage', () => {
+test('contracts runs for every PR and push; unit alone chooses focused or full coverage', () => {
   const contracts = workflow.jobs.contracts
   assert.equal(contracts.needs, undefined)
-  assert.equal(contracts.if, undefined)
+  // 2026-10-12：PR / push / merge_group 下 inputs.surfaces 为空，所以 contracts 照旧每个班都跑；
+  // 只有 workflow_dispatch 的手动单面复跑能点名跳过它。
+  assert.equal(contracts.if, "${{ inputs.surfaces == '' || inputs.surfaces == 'all' || inputs.surfaces == 'contracts' }}")
   assert.ok(runCommands(contracts).includes('pnpm run test:system:contracts'))
   assert.equal(
     contracts.env.ROOT_CAUSE_BASE_REF,
@@ -147,7 +173,6 @@ test('Linux walkthrough job builds once and keeps only smoke, journey, and criti
     [
       selectedSteps['Electron smoke'].run,
       selectedSteps['CI-safe user journeys'].run,
-      selectedSteps['MCP L1 handshake journey'].run,
       selectedSteps['MCP elicitation-first journey'].run,
       selectedSteps['Real user loopback journey gate'].run,
       selectedSteps['Golden path (Agent storyboard lands on canvas)'].run,
@@ -156,7 +181,6 @@ test('Linux walkthrough job builds once and keeps only smoke, journey, and criti
     [
       'xvfb-run -a pnpm run test:e2e',
       'xvfb-run -a pnpm run test:journeys',
-      'xvfb-run -a pnpm run test:mcp-journey',
       'xvfb-run -a pnpm run test:mcp-elicitation',
       'xvfb-run -a pnpm run test:real-user-journeys:ci',
       'xvfb-run -a pnpm run test:golden',
@@ -166,7 +190,7 @@ test('Linux walkthrough job builds once and keeps only smoke, journey, and criti
   // 2026-09-18（B 件）：七步一律 continue-on-error，job 的结论交给末尾那一步。
   // 串行 fail-fast 让每轮 CI 只暴露一条红（#804 连三轮各红一条不同走查）。
   const chainSteps = [
-    'Browser feel mechanism', 'Electron smoke', 'CI-safe user journeys', 'MCP L1 handshake journey',
+    'Browser feel mechanism', 'Electron smoke', 'CI-safe user journeys',
     'MCP elicitation-first journey', 'Real user loopback journey gate', 'Critical canvas acceptance',
   ]
   for (const name of chainSteps) {
@@ -192,7 +216,6 @@ test('Linux walkthrough job builds once and keeps only smoke, journey, and criti
 
   assert.equal(selectedSteps['Electron smoke'].if, "needs.scope.outputs.desktop == 'true'")
   assert.equal(selectedSteps['CI-safe user journeys'].if, "needs.scope.outputs.journeys == 'true'")
-  assert.equal(selectedSteps['MCP L1 handshake journey'].if, "needs.scope.outputs.journeys == 'true'")
   assert.equal(selectedSteps['MCP elicitation-first journey'].if, "needs.scope.outputs.journeys == 'true'")
   assert.equal(selectedSteps['Real user loopback journey gate'].if, "needs.scope.outputs.journeys == 'true'")
   assert.equal(selectedSteps['Golden path (Agent storyboard lands on canvas)'].if, "needs.scope.outputs.journeys == 'true'")

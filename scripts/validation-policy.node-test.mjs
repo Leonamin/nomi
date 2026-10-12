@@ -433,6 +433,7 @@ test('GitHub output exposes every policy dimension with stable snake-case names'
     fail_closed: 'false',
     reason: 'electron:electron/preload.ts',
     changed_count: '1',
+    only_surface: '',
   })
 })
 

@@ -22,6 +22,23 @@ on:
         type: choice
         options:
           - full
+      surfaces:
+        # 2026-10-12：手动只跑一格闸门。此前想验证一条走查就要把整张矩阵（实测 80 job-min）拉起来；
+        # 这个入口让人工恢复只付那一格的代价（e2e 约 13 分钟）。PR 永远走风险分类器，
+        # 这条只在 workflow_dispatch 下生效——不是把闸关小，而是只把一格闸门跑起来。
+        description: Run a single surface only (manual recovery; PRs always use the risk profile)
+        required: false
+        default: all
+        type: choice
+        options:
+          - all
+          - contracts
+          - unit
+          - core-smoke
+          - e2e
+          - canvas-acceptance
+          - canvas-performance
+          - mac-package
 
 # PR 按 PR 号分组：PR 里 github.sha 每次推送都变，按 sha 分组就不会取消旧班、会堆积；按 PR 号才对。
 # 其余事件（push / merge_group / workflow_dispatch）按 commit SHA 分组。
@@ -62,6 +79,7 @@ jobs:
       fail_closed: ${{ steps.profile.outputs.fail_closed }}
       reason: ${{ steps.profile.outputs.reason }}
       changed_count: ${{ steps.profile.outputs.changed_count }}
+      only_surface: ${{ steps.profile.outputs.only_surface }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -71,6 +89,7 @@ jobs:
         env:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           NOMI_VALIDATION_MODE: ${{ inputs.validation_mode || '' }}
+          NOMI_ONLY_SURFACE: ${{ inputs.surfaces || '' }}
           NOMI_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before || '' }}
           NOMI_HEAD_SHA: ${{ github.sha }}
         run: node scripts/select-quality-gate-profile.mjs
@@ -79,6 +98,8 @@ jobs:
     name: Contracts
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # surfaces（手动单面复跑）没点名这一格时不跑；非 dispatch 事件 inputs.surfaces 为空 → 照常跑。
+    if: ${{ inputs.surfaces == '' || inputs.surfaces == 'all' || inputs.surfaces == 'contracts' }}
     env:
       VOCAB_BASE_REF: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before || inputs.base_ref }}
       ROOT_CAUSE_BASE_REF: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before || inputs.base_ref }}
@@ -117,6 +138,7 @@ jobs:
     needs: scope
     runs-on: ubuntu-latest
     timeout-minutes: 50
+    if: ${{ inputs.surfaces == '' || inputs.surfaces == 'all' || inputs.surfaces == 'unit' }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -192,11 +214,10 @@ jobs:
         continue-on-error: true
         if: needs.scope.outputs.journeys == 'true'
         run: xvfb-run -a pnpm run test:journeys
-      - name: MCP L1 handshake journey
-        id: mcp-journey
-        continue-on-error: true
-        if: needs.scope.outputs.journeys == 'true'
-        run: xvfb-run -a pnpm run test:mcp-journey
+      # 2026-10-12：删掉 `test:mcp-journey`（l1+l2+skills）这一步。紧邻的 real-user 门岗
+      # 已把同样三个脚本各包成一条门岗再跑一遍——实测重复 2.08 分钟，而且同一趟旅程跑两遍
+      # 本身就是 flake 面（mcp-l2 的整卡摇摆就是这么被放大出来的）。覆盖面不减：
+      # l1 / l2 / skills 仍是 real-user 门岗里的三条。
       - name: MCP elicitation-first journey
         id: mcp-elicitation
         continue-on-error: true
@@ -228,7 +249,6 @@ jobs:
             feel:${{ steps.feel.outcome }}
             smoke:${{ steps.smoke.outcome }}
             journeys:${{ steps.journeys.outcome }}
-            mcp-journey:${{ steps.mcp-journey.outcome }}
             mcp-elicitation:${{ steps.mcp-elicitation.outcome }}
             real-user-journeys:${{ steps.real-user-journeys.outcome }}
             canvas-critical:${{ steps.canvas-critical.outcome }}
@@ -468,6 +488,21 @@ jobs:
         run: |
           test "${{ steps.ci-hygiene.outcome }}" = "success"
           test "${{ needs.scope.result }}" = "success"
+          # 手动单面复跑（workflow_dispatch 的 surfaces）：只要求被点名的那一格绿，其余面 skipped。
+          # PR / push / merge_group 下 only_surface 为空，落到下面的全量判据——这条改不了 PR 的闸门强度。
+          if [ -n "${{ needs.scope.outputs.only_surface }}" ]; then
+            case "${{ needs.scope.outputs.only_surface }}" in
+              contracts)            test "${{ needs.contracts.result }}" = "success" ;;
+              unit)                 test "${{ needs.unit.result }}" = "success" ;;
+              core-smoke)           test "${{ needs['core-smoke'].result }}" = "success" ;;
+              e2e)                  test "${{ needs['desktop-linux'].result }}" = "success" ;;
+              canvas-acceptance)    test "${{ needs['canvas-acceptance'].result }}" = "success" ;;
+              canvas-performance)   test "${{ needs['canvas-performance'].result }}" = "success" ;;
+              mac-package)          test "${{ needs['mac-package'].result }}" = "success" ;;
+              *) echo "✖ 不认识的 only_surface：${{ needs.scope.outputs.only_surface }}"; exit 1 ;;
+            esac
+            exit 0
+          fi
           test "${{ needs.contracts.result }}" = "success"
           test "${{ needs.unit.result }}" = "success"
           # 核心冒烟：只有纯文档才允许 skipped；其余（含分类器没给出结论）一律要求 success。

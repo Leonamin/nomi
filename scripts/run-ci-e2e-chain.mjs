@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// 本地按 **CI 同序** 跑完那七条走查（2026-09-18）。入口：`pnpm run test:e2e:ci-chain`。
+// 本地按 **CI 同序** 跑完那六条走查（2026-09-18；2026-10-12 去掉重复的 mcp-journey 一步，见下）。入口：`pnpm run test:e2e:ci-chain`。
 //
-// 为什么要它：CI 的 desktop-linux job 跑的这七步，**本地 `pnpm run gates` 一步都不含**。
+// 为什么要它：CI 的 desktop-linux job 跑的这六步，**本地 `pnpm run gates` 一步都不含**。
 // 于是「本地五门全绿」和「CI 会不会红」是两件互不相干的事——2026-09-17 PR #804
 // 本地连过五轮 gates，CI 仍然连红三轮，每轮红的还是另一条不同的走查。
 // 那不是手滑，是流程缺口：**能在本地一次跑完的，不该靠一轮 40 分钟的 CI 去逐条发现**（R17）。
@@ -9,7 +9,7 @@
 // 两条设计选择，理由都在上面那句：
 //   · **红了继续跑**，最后出一张汇总表。第一条红就停 = 本地也变成「一轮学一件事」，
 //     那就白抄了一遍 CI 的坑。判据与渲染和 CI 汇总步共用 scripts/lib/chainSummary.mjs。
-//   · **只持一次 gates 锁**。七个 `test:*` 脚本各自套着 with-gates-lock.py，若本条链不套锁，
+//   · **只持一次 gates 锁**。六个 `test:*` 脚本各自套着 with-gates-lock.py，若本条链不套锁，
 //     它们就要**逐个重新排队**（本机常有 20+ worktree，那是几十分钟的墙钟）。
 //     套在最外层后，子命令靠 NOMI_GATES_LOCK_TOKEN 继承同一把锁，全程只排一次队
 //     （package.json 里的 `gates` 就是这个写法）。
@@ -29,6 +29,8 @@ const LOG_DIR = path.join(repoRoot, 'outputs', 'ci-e2e-chain')
 
 /**
  * 顺序照抄 .github/workflows/quality-gate.yml 的 desktop-linux job。
+ * 注：`test:mcp-journey`（l1+l2+skills）不再单列一步——real-user 门岗已把同样三个脚本各跑一遍，
+ * 单列就是同一趟旅程跑两遍（2026-10-12 删）。
  * 改那边的顺序/命令时，check:quality-gate-workflow 的回归测试会逼这份表跟上——
  * 两份清单各写各的，就是下一个「本地跑的和 CI 跑的不是同一套」。
  */
@@ -36,7 +38,6 @@ export const CI_E2E_CHAIN = Object.freeze([
   Object.freeze({ id: 'feel', script: 'test:feel:browser', display: false }),
   Object.freeze({ id: 'smoke', script: 'test:e2e', display: true }),
   Object.freeze({ id: 'journeys', script: 'test:journeys', display: true }),
-  Object.freeze({ id: 'mcp-journey', script: 'test:mcp-journey', display: true }),
   Object.freeze({ id: 'mcp-elicitation', script: 'test:mcp-elicitation', display: true }),
   Object.freeze({ id: 'real-user-journeys', script: 'test:real-user-journeys:ci', display: true }),
   Object.freeze({ id: 'canvas-critical', script: 'test:canvas:critical', display: true }),
@@ -66,9 +67,9 @@ function hasXvfb() {
 function ensureBuilt() {
   const missing = ['dist', 'dist-electron'].filter((dir) => !fs.existsSync(path.join(repoRoot, dir)))
   if (missing.length === 0) return null
-  // CI 在这七步之前先 `pnpm run build`。本地缺构建产物时，失败会以「Electron 起不来」
+  // CI 在这六步之前先 `pnpm run build`。本地缺构建产物时，失败会以「Electron 起不来」
   // 这种完全不像根因的样子出现——所以在这里就说清楚，不让人去查一条假线索。
-  return `缺少构建产物（${missing.join(', ')}）。CI 在这七步之前先跑 \`pnpm run build\`，本机也要：`
+  return `缺少构建产物（${missing.join(', ')}）。CI 在这六步之前先跑 \`pnpm run build\`，本机也要：`
     + '\n  pnpm run build && pnpm run test:e2e:ci-chain'
 }
 
