@@ -146,6 +146,7 @@ export function ProductionRunTaskCard({
   return (
     <section
       data-production-task-card
+      data-production-run-id={view.runId}
       className={cn('grid gap-2.5 rounded-nomi border border-nomi-line-soft bg-nomi-bg p-2.5')}
       aria-label={t('generationCommon.production.runPanel.aria')}
     >

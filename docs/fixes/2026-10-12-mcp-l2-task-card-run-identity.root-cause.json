@@ -1,0 +1,136 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-mcp-l2-task-card-run-identity",
+  "problem_type": "Production task cards must be addressable by run identity, not by visible text",
+  "symptom": "The MCP L2 semantic journey's final UI step is red: after clicking the task-center card's primary action the rough-cut confirm dialog never appears, so `real-user-journeys` fails (8 passed / 1 failed) and the E2E Walkthroughs job blocks.",
+  "direct_cause": "The journey picked the card with `hasText: /导出|成片|export/i`; the budget-approval card also matches because its body renders the stage list including 导出, so the journey clicked that card's normal primary action (a budget/contract gate, `primaryAction: 'open-gate'`), which cannot raise the rough-cut confirm dialog, and then waited 20s for it.",
+  "class_root": "A production task card exposed no run identity, so a reader could only guess which run a card represented from visible text — while one project may hold several active runs and the panel mounts a single full card for whichever run is most recently updated.",
+  "affected_population": [
+    "Any reader of the task-center production card: walkthrough scripts, evals, and future tooling that drives a production run's gates",
+    "Any project that holds more than one active production run (agent probe plans, stale plans, parallel agents)"
+  ],
+  "scope_paths": [
+    "src/workbench/production/productionRunView.ts",
+    "src/workbench/production/ProductionRunTaskCard.tsx",
+    "src/workbench/production/ProductionRunTaskCard.test.ts",
+    "tests/ux/mcp-l2-journeys.e2e.mjs"
+  ],
+  "entry_points": [
+    "Task-center production card rendered for the currently opened run",
+    "Walkthrough selection of the card whose gate needs a decision"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "This is an internal renderer DOM-contract and test-selection invariant between Nomi's task-center projection and its walkthroughs; no third-party documentation or package decides it.",
+  "invariants": [
+    "Every rendered production task card reports the run it renders through `data-production-run-id`.",
+    "A reader addresses a production run by id; selecting a production card by visible text is not a supported contract."
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "src/workbench/production/productionRunView.ts",
+      "symbol": "buildProductionRunView"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/production/ProductionRunTaskCard.tsx",
+      "symbol": "ProductionRunTaskCard"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/production/useProductionStatus.ts",
+      "symbol": "buildProductionRunView"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/taskCenter/TaskCenterPanel.tsx",
+      "symbol": "ProductionRunTaskCard"
+    }
+  ],
+  "door_reduction": {
+    "before": 4,
+    "after": 4,
+    "why_not": "No door is merged here. The projection writer (productionRunView.ts via buildProductionRunView, called from useProductionStatus.ts) is the only place that knows the run, and the card renderer (ProductionRunTaskCard.tsx, mounted by TaskCenterPanel.tsx) is the only place the card element exists. Merging consumer into producer would move DOM rendering into the production store; the id is carried at the write end and emitted at the read end so every other reader stays free."
+  },
+  "generality_proof": "The identity is produced once in buildProductionRunView from the run itself and emitted once by ProductionRunTaskCard, so every reader of the card — not only the mcp-l2 journey — can address a run without matching text. The same change removes the failing journey's text filter and its dead semantic-row fallback, and the journey now cancels the probe run it created, so no second active run can own the card.",
+  "shared_boundaries": [
+    {
+      "path": "src/workbench/production/productionRunView.ts",
+      "symbol": "buildProductionRunView",
+      "responsibility": "Carry the run identity (`runId`) in the projection every consumer reads, including status-only branches such as awaiting_rough_cut_review."
+    },
+    {
+      "path": "src/workbench/production/ProductionRunTaskCard.tsx",
+      "symbol": "ProductionRunTaskCard",
+      "responsibility": "Emit the rendered run identity as `data-production-run-id` on the card element so readers address the card by run."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "tests/ux/mcp-l2-journeys.e2e.mjs",
+      "entry_point": "C12 task-center rough-cut / export approval",
+      "disposition": "enforced",
+      "evidence": "Now selects `[data-production-task-card][data-production-run-id=\"<operationId>\"]` for both the rough-cut and export steps, and cancels the abandoned C9b Phase A probe run so the four-shot run deterministically owns the single full card."
+    },
+    {
+      "path": "tests/ux/production-mcp-journey.e2e.mjs",
+      "entry_point": "task-center card primary action",
+      "disposition": "not-affected",
+      "evidence": "It drives exactly one production run per project and never selects a card by gate/stage text, so its `[data-production-primary-action]` target is unambiguous; it is unaffected by the class but is the second consumer confirming the card contract."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Adding another active run in a project (an agent probe, a stale plan, a parallel agent) re-creates the ambiguity for any reader, and text matching against stage/scope labels re-creates the false positive. Two distinct runs in one project reproduced it locally, and the same script passed or failed across identical runs.",
+    "same_class_scan": [
+      "door-map buildProductionRunView: single write door src/workbench/production/useProductionStatus.ts",
+      "door-map ProductionRunTaskCard: single read door src/workbench/taskCenter/TaskCenterPanel.tsx",
+      "grep `data-production-task-card|data-production-primary-action` under tests/: only mcp-l2-journeys matched a card by scope/stage text (fixed). production-mcp-journey, agent-spend-video-landing, task-center-states and ~a dozen full-walk consumers read the card but never filter it by stage/scope text, and each drives a single run per project"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "src/workbench/production/ProductionRunTaskCard.tsx",
+    "invariant": "Every rendered production task card carries the identity of the run it renders.",
+    "failure_mode": "A reader that addresses a run which is not currently mounted finds no element and fails loudly, instead of silently acting on a different run's card.",
+    "exception_policy": "none",
+    "strategy": "The card is the only place a production card is rendered; emitting `data-production-run-id` there (fed by the single projection writer) makes run identity a property of the card rather than something readers re-derive from copy.",
+    "artifacts": [
+      "src/workbench/production/ProductionRunTaskCard.tsx",
+      "src/workbench/production/productionRunView.ts"
+    ]
+  },
+  "detected_by": "ci",
+  "recurrence_check_on": "2026-11-12",
+  "invariant_owner_layer": {
+    "layer": "src/workbench/production",
+    "tests": [
+      "src/workbench/production/ProductionRunTaskCard.test.ts"
+    ]
+  },
+  "regression_tests": [
+    "src/workbench/production/ProductionRunTaskCard.test.ts",
+    "tests/ux/mcp-l2-journeys.e2e.mjs"
+  ],
+  "class_regression_tests": [
+    "src/workbench/production/ProductionRunTaskCard.test.ts",
+    "tests/ux/mcp-l2-journeys.e2e.mjs"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "tests/ux/mcp-l2-journeys.e2e.mjs"
+    ],
+    "rationale": "Removed the text-based card filter (`hasText: /导出|成片|export/i`) and the dead semantic-row fallback it guarded; both are replaced by run-id addressing."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "No third-party dependency controls this invariant; it is a renderer DOM contract plus a walkthrough selection rule.",
+    "exit_criteria": []
+  },
+  "migration": "No stored data or paths change. The card gains one DOM attribute and the journey stops leaving an abandoned probe run active in the project it drives.",
+  "residual_risks": [
+    "The task center still opens the most recently updated active run when a project holds several; a panel user cannot pin a specific run's card while the panel stays open (unchanged product behavior, out of scope for this CI-only fix).",
+    "The journey ran green three consecutive times and the full real-user-journeys gate was re-run locally; the visual appearance of the card is unchanged, so no screenshot re-approval was required."
+  ]
+}
