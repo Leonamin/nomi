@@ -1,3 +1,4 @@
+import { mcpLocaleText } from './mcpLocaleText'
 import type { ResultLocale } from './mcpToolResults'
 
 type DocumentConfirmation = {
@@ -27,9 +28,7 @@ export async function handleDocumentEditConfirmation(
     dependencies.reply(input.id, {
       content: [{
         type: 'text',
-        text: dependencies.locale() === 'en'
-          ? 'Not applied: the document change was not approved.'
-          : '未生效：这次文稿修改没有获得批准。',
+        text: mcpLocaleText(dependencies.locale(), '未生效：这次文稿修改没有获得批准。', 'Not applied: the document change was not approved.'),
       }],
       isError: true,
       structuredContent: {

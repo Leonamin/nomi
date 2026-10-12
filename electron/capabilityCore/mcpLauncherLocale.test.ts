@@ -4,6 +4,7 @@ import os from 'node:os'
 import path from 'node:path'
 import { createMcpProtocol, type McpTransport } from './mcpProtocol'
 import { resolveLauncherLocale } from './mcpNodeLauncher'
+import { SUPPORTED_LOCALES, type DesktopLocale } from '../desktopLocale'
 import { readPersistedLocale } from '../settings/localePreference'
 
 // Fix B · bare-Node launcher 的 locale 接线：生产 MCP 入口是 mcpNodeLauncher（ELECTRON_RUN_AS_NODE=1，无
@@ -55,14 +56,14 @@ describe('resolveLauncherLocale（注入 provider → 归一 OS locale，缺省 
     expect(resolveLauncherLocale(() => '')).toBe('zh-CN')
   })
   it("默认（不注入）读真实 OS locale → 合法双语枚举之一（不抛）", () => {
-    expect(['en', 'zh-CN']).toContain(resolveLauncherLocale())
+    expect(SUPPORTED_LOCALES).toContain(resolveLauncherLocale())
   })
 })
 
 // 与 mcpLocale.test.ts 同款假 transport：证明 launcher 解出的 locale 经 getLocale 贯穿到 tool-result 的 L() 文本。
 type RpcMessage = { id?: unknown; method?: string; params?: Record<string, unknown>; result?: unknown }
 
-function harness(getLocale: () => 'zh-CN' | 'en') {
+function harness(getLocale: () => DesktopLocale) {
   const frames: RpcMessage[] = []
   const transport: McpTransport = {
     send: (m) => frames.push(m as RpcMessage),
@@ -97,5 +98,24 @@ describe('launcher locale → protocol getLocale → tool-result L() 文本', ()
     protocol.handleIncoming({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'nomi_read', arguments: { target: 'models' } } } as never)
     await flush()
     expect(listModelsText(frames)).toContain('可用模型')
+  })
+})
+
+
+describe('Korean launcher locale', () => {
+  it('normalizes Korean OS locale and honors persisted Korean', () => {
+    expect(resolveLauncherLocale(() => 'ko-KR')).toBe('ko')
+    expect(resolveLauncherLocale(() => 'en-US', () => 'ko')).toBe('ko')
+  })
+  it('projects Korean model guidance and optional tool titles', async () => {
+    const { protocol, frames } = harness(() => 'ko')
+    protocol.handleIncoming({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'nomi_read', arguments: { target: 'models' } } } as never)
+    protocol.handleIncoming({ jsonrpc: '2.0', id: 2, method: 'tools/list' } as never)
+    await flush()
+    expect(listModelsText(frames)).toMatch(/[가-힣]/)
+    const tools = (frames.find((frame) => frame.id === 2)?.result as { tools: Array<{ title?: string }> }).tools
+    expect(tools.length).toBeGreaterThan(0)
+    expect(tools.some((tool) => tool.title === '문서 편집')).toBe(true)
+    protocol.dispose()
   })
 })

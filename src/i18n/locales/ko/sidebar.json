@@ -1,0 +1,19 @@
+{
+  "categoryPanel": "분류 창",
+  "explorer": "프로젝트 자료 탐색",
+  "navigation": "프로젝트 옆 메뉴",
+  "assetLibrary": "소재 보관함",
+  "groups": "묶음",
+  "promptLibrary": "장면 설명 보관함",
+  "prompts": "장면 설명",
+  "skillLibrary": "스킬 보관함",
+  "skills": "스킬",
+  "workflowLibrary": "작업 흐름 보관함",
+  "workflows": "작업 흐름",
+  "expand": "옆 메뉴 펼치기",
+  "collapse": "옆 메뉴 접기",
+  "newGroup": "새 묶음",
+  "categoryName": "분류 이름",
+  "derivedNode": "파생 카드",
+  "resize": "드래그해서 옆 메뉴 크기 조절"
+}

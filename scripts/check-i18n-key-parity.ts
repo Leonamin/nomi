@@ -5,7 +5,7 @@
 // 只有真的把界面切到英文、并且正好走到那条分支,才会看见一句中文。故只能靠比对键集机器拦。
 //
 // 同时拦反向(zh 缺键 → 中文界面显英文)与 en 值里混进汉字(复制粘贴时把中文抄进了英文块)。
-import { zhCN, en } from '../src/i18n/resources'
+import { zhCN, en, resources } from '../src/i18n/resources'
 
 function flatten(node: unknown, prefix: string, out: Map<string, string>): void {
   if (typeof node === 'string') {
@@ -33,9 +33,20 @@ const HAN = /[一-鿿]/
 const ALLOWED_HAN_IN_EN = new Set(['common.chinese'])
 const hanInEn = [...enKeys.entries()].filter(([key, value]) => HAN.test(value) && !ALLOWED_HAN_IN_EN.has(key))
 
-const problems = missingInEn.length + missingInZh.length + hanInEn.length
+const koKeys = new Map<string, string>()
+flatten(resources.ko.translation, '', koKeys)
+const missingInKo = [...enKeys.keys()].filter(key => !koKeys.has(key))
+const extraInKo = [...koKeys.keys()].filter(key => !enKeys.has(key))
+const interpolation = (value: string) => JSON.stringify((value.match(/\{\{.*?\}\}/g) ?? []).sort())
+const brokenInKo = [...enKeys.entries()].filter(([key, value]) => koKeys.has(key) && interpolation(value) !== interpolation(koKeys.get(key)!))
+const hanInKo = [...koKeys.entries()].filter(([key, value]) => HAN.test(value) && !ALLOWED_HAN_IN_EN.has(key))
+for (const key of missingInKo) console.error(`- missing in ko: ${key}`)
+for (const key of extraInKo) console.error(`- extra in ko: ${key}`)
+for (const [key] of brokenInKo) console.error(`- damaged interpolation in ko: ${key}`)
+for (const [key, value] of hanInKo) console.error(`- Chinese characters inside a ko value: ${key} = ${JSON.stringify(value)}`)
+const problems = missingInKo.length + extraInKo.length + brokenInKo.length + hanInKo.length + missingInEn.length + missingInZh.length + hanInEn.length
 if (problems === 0) {
-  console.log(`i18n key-parity gate passed (${zhKeys.size} keys, zh-CN ↔ en in lockstep)`)
+  console.log(`i18n key-parity gate passed (${zhKeys.size} keys, zh-CN ↔ en ↔ ko in lockstep; Korean interpolation intact)`)
   process.exit(0)
 }
 

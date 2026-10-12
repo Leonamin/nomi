@@ -1,3 +1,4 @@
+import { mcpLocaleText } from './mcpLocaleText'
 // 能力核 · MCP 「以后 ¥X 内别再逐镜问」的客户端确认（nomi_run_control action=set_trust → budget_only）。
 //
 // 2026-09-10 21:00 用户拍板：外部 MCP 客户端不该被逼回 Nomi 界面点确认——否则他为什么在外面用 MCP。
@@ -25,15 +26,9 @@ export type TrustDowngradeDependencies = {
 }
 
 const COPY = {
-  unpriced: (locale: ResultLocale) => locale === 'en'
-    ? 'Not applied: Nomi cannot state an exact ceiling for this run yet, so it will not ask you to approve one. Seal the shot plan first (every shot needs a known price).'
-    : '未生效：这个制作还算不出确切的上限，Nomi 不会拿一个说不清的数字问你批准。请先把镜头计划封存（每一镜都要有已知价格）。',
-  denied: (locale: ResultLocale) => locale === 'en'
-    ? 'Not applied: you did not approve running the remaining shots without a per-shot question.'
-    : '未生效：你没有批准「以后在这个上限内不再逐镜问」。',
-  noSurface: (locale: ResultLocale) => locale === 'en'
-    ? 'Not applied: neither your AI client nor an open Nomi window could ask you to confirm this spending change.'
-    : '未生效：你的 AI 客户端和 Nomi 窗口都没能向你征求这次花费授权的确认。',
+  unpriced: (locale: ResultLocale) => mcpLocaleText(locale, '未生效：这个制作还算不出确切的上限，Nomi 不会拿一个说不清的数字问你批准。请先把镜头计划封存（每一镜都要有已知价格）。', 'Not applied: Nomi cannot state an exact ceiling for this run yet, so it will not ask you to approve one. Seal the shot plan first (every shot needs a known price).'),
+  denied: (locale: ResultLocale) => mcpLocaleText(locale, '未生效：你没有批准「以后在这个上限内不再逐镜问」。', 'Not applied: you did not approve running the remaining shots without a per-shot question.'),
+  noSurface: (locale: ResultLocale) => mcpLocaleText(locale, '未生效：你的 AI 客户端和 Nomi 窗口都没能向你征求这次花费授权的确认。', 'Not applied: neither your AI client nor an open Nomi window could ask you to confirm this spending change.'),
 }
 
 function errorReply(deps: TrustDowngradeDependencies, id: unknown, text: string): void {

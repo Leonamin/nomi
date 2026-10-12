@@ -439,7 +439,8 @@
       "electronLanguages": [
         "en",
         "zh_CN",
-        "zh_TW"
+        "zh_TW",
+        "ko"
       ]
     },
     "win": {
@@ -455,7 +456,8 @@
       "electronLanguages": [
         "en-US",
         "zh-CN",
-        "zh-TW"
+        "zh-TW",
+        "ko"
       ]
     },
     "nsis": {

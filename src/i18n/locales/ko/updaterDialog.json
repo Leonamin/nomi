@@ -1,0 +1,12 @@
+{
+  "availableTitle": "새 버전이 있어요",
+  "downloadingTitle": "업데이트 다운로드 중",
+  "downloadedTitle": "업데이트 준비 완료",
+  "errorTitle": "업데이트하지 못했어요",
+  "version": "버전 {{version}}",
+  "progress": "다운로드 {{percent}}%",
+  "errorBody": "업데이트를 마치지 못했어요. 다시 시도하세요.",
+  "restartInstall": "다시 설치",
+  "badge": "업데이트 대기 중",
+  "runningHint": "작업이 진행 중이에요. 작업이 끝나면 업데이트해요."
+}

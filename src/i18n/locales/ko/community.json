@@ -1,0 +1,17 @@
+{
+  "title": "의견 보내기와 공유",
+  "homeHint": "막힌 부분을 알려주거나 영상을 만드는 사람에게 Nomi를 소개하세요.",
+  "reportProblem": "의견 하나 보내기",
+  "reportProblemHint": "문제를 알리거나 구체적인 제안을 해주세요",
+  "shareNomi": "Nomi 공유",
+  "shareNomiHint": "한 번에 복사할 수 있는 소개 글이에요",
+  "trustLine": "기본적으로 이 컴퓨터에 저장해요. 대화, 소재, 키를 몰래 업로드하지 않아요.",
+  "back": "뒤로",
+  "shareTitle": "친구에게 Nomi 소개하기",
+  "shareHint": "아래 글을 복사해서 친구나 함께 작업하는 사람에게 보내세요. Nomi 계정은 필요 없어요.",
+  "shareMessage": "영상 만들 때 써볼 만한 앱을 찾았어. Nomi라는 AI 영상 작업실이야. 원하는 장면을 한 문장으로 적으면 스토리보드를 짜고 만들어줘. 내 영상 자료는 내 컴퓨터에 보관하고 클라우드 작업 대기도 없어.\n웹사이트: {{website}}\nGitHub: {{github}}",
+  "shareMessageCopy": "소개 글 복사",
+  "shareMessageCopied": "복사했어요 · 친구에게 붙여넣으세요",
+  "website": "웹사이트 열기",
+  "github": "GitHub 보기"
+}

@@ -303,7 +303,8 @@ async function transcribeShots(
  * 这里只修默认派生（取界面语言）；把它做成用户可选那一步归 TODO 的 T-DS-15。
  */
 function transcribeLanguage(): string {
-  return getDesktopLocale() === "en" ? "en" : "zh";
+  const locale = getDesktopLocale();
+  return locale === "ko" ? "ko" : locale === "en" ? "en" : "zh";
 }
 
 function messageOf(error: unknown): string {

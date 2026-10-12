@@ -11,7 +11,7 @@ const portableConfigBundleSchema = z.object({
   }),
   defaults: z.unknown(),
   prompts: z.unknown(),
-  preferences: z.object({ language: z.enum(["zh-CN", "en"]).optional(), theme: z.enum(["light", "dark"]).optional() }),
+  preferences: z.object({ language: z.enum(["zh-CN", "en", "ko"]).optional(), theme: z.enum(["light", "dark"]).optional() }),
   redactions: z.object({ apiKeys: z.literal("omitted"), absolutePaths: z.literal("omitted"), deviceState: z.literal("omitted") }),
 });
 
@@ -40,7 +40,7 @@ export function createPortableConfigBundle(input: {
   catalog: { vendors: unknown[]; models: unknown[]; mappings: unknown[] };
   defaults: unknown;
   prompts: unknown;
-  preferences?: { language?: "zh-CN" | "en"; theme?: "light" | "dark" };
+  preferences?: { language?: "zh-CN" | "en" | "ko"; theme?: "light" | "dark" };
   exportedAt?: string;
 }): PortableConfigBundleV1 {
   return portableConfigBundleSchema.parse({

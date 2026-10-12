@@ -1,3 +1,4 @@
+import { koreanDemoName, koreanDemoStory, koreanDemoPlan } from '../../i18n/locales/ko/exampleContent'
 /**
  * 引导旅途的预置内容：「修好一个小机器人」示例片。
  *
@@ -14,6 +15,7 @@ import { logRendererError } from '../../desktop/rendererLog'
 export const DEMO_PROJECT_NAME = '示例：修好一个小机器人'
 
 export function getDemoProjectName(): string {
+  if (getAppLocale() === 'ko') return koreanDemoName
   return getAppLocale() === 'en' ? 'Example: Fixing a Little Robot' : DEMO_PROJECT_NAME
 }
 
@@ -38,6 +40,7 @@ const EN_DEMO_STORY = [
 ].join('\n')
 
 export function getDemoStory(): string {
+  if (getAppLocale() === 'ko') return koreanDemoStory
   return getAppLocale() === 'en' ? EN_DEMO_STORY : DEMO_STORY
 }
 
@@ -47,6 +50,7 @@ export function getDemoStory(): string {
  * 拿到真实节点 id 给聚光精准指向。
  */
 export function buildDemoStoryboardPlan(): StoryboardPlan {
+  if (getAppLocale() === 'ko') return structuredClone(koreanDemoPlan)
   if (getAppLocale() === 'en') {
     return {
       title: 'Fixing a Little Robot',

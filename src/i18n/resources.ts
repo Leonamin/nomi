@@ -23,12 +23,14 @@ import { enAgentPanelV4, zhAgentPanelV4 } from './locales/agentPanelV4'
 import { enAgentLaneError, zhAgentLaneError } from './locales/agentLaneError'
 import { enAgentToolFailure, zhAgentToolFailure } from './locales/agentToolFailure'
 
+import { ko } from './locales/ko'
+
 export const zhCN = {
   shotTable: zhShotTable,
   common: {
     language: '语言',
     chinese: '简体中文',
-    english: 'English',
+    english: 'English', korean: '한국어',
     retry: '重试',
     reload: '重新加载',
     cancel: '取消',
@@ -448,7 +450,7 @@ export const zhCN = {
   agentToolFailure: zhAgentToolFailure,
 } as const
 
-type TranslationShape<T> = {
+export type TranslationShape<T> = {
   [K in keyof T]: T[K] extends string ? string : TranslationShape<T[K]>
 }
 
@@ -457,7 +459,7 @@ export const en = {
   common: {
     language: 'Language',
     chinese: '简体中文',
-    english: 'English',
+    english: 'English', korean: '한국어',
     retry: 'Retry',
     reload: 'Reload',
     cancel: 'Cancel',
@@ -878,5 +880,5 @@ export const en = {
 
 export const resources = {
   'zh-CN': { translation: zhCN },
-  en: { translation: en },
+  en: { translation: en }, ko: { translation: ko },
 } as const

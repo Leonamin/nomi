@@ -1,3 +1,4 @@
+import { koreanHandbookContent } from '../../i18n/locales/ko/handbook'
 /**
  * 新手上手手册的唯一内容源（纯数据 + 文案，无 React、无样式）。
  *
@@ -197,7 +198,8 @@ const EN_HANDBOOK_GOTCHAS: HandbookGotcha[] = [
   },
 ]
 
-export function handbookContentForLocale(locale: string) {
+export function handbookContentForLocale(locale: string, isWeb = false) {
+  if (locale.startsWith('ko')) return koreanHandbookContent(isWeb)
   if (locale !== 'en') {
     return {
       title: HANDBOOK_TITLE,

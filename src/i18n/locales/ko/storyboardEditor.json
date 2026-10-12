@@ -1,0 +1,358 @@
+{
+  "placeOnCanvas": "캔버스에 놓기",
+  "viewOnCanvas": "캔버스 보기",
+  "anchorPolicy": {
+    "catalogMissing": "장면 {{index}}의 인물 참고 이미지를 사용할 수 있는 모델이 없어요. 사용 가능한 모델을 선택하고 다시 시도하세요.",
+    "capacityExceeded": "장면 {{index}}의 인물 참고 이미지가 너무 많거나 필수 입력이 빠졌어요. 참고 이미지나 모델을 바꾸고 다시 시도하세요.",
+    "ignoredReason": "{{mode}} 모드에 맞는 참고 입력란이 없어 이 자료는 사용하지 않아요",
+    "switchMode": "장면 {{index}}은 {{mode}} 모드여서 참고 이미지 {{anchors}}을 보내지 않아요. 같은 모델의 {{alternative}} 모드로 바꾸거나 이미지를 제거하세요.",
+    "removeAnchors": "장면 {{index}}의 {{mode}} 모드에서는 참고 이미지 {{anchors}}을 보내지 않아요. 이미지를 제거하거나 이미지를 받는 모델을 선택하세요.",
+    "rowIgnored": "{{mode}} 모드는 참고 이미지를 쓰지 않아 ‘{{names}}’을 보내지 않아요. 포함하려면 ‘{{other}}’로 바꾸세요",
+    "rowIgnoredNoAlt": "{{mode}} 모드는 참고 이미지를 쓰지 않아 ‘{{names}}’을 보내지 않아요",
+    "nameSeparator": ", "
+  },
+  "overrides": {
+    "effective": "캔버스의 ‘{{value}}’ 값으로 생성해요",
+    "adopt": "계획 적용",
+    "discard": "버리기"
+  },
+  "empty": {
+    "title": "아직 장면 계획이 없어요",
+    "description": "글쓰기 화면에서 이야기를 적고 AI에게 장면을 나눠 달라고 하세요. 여기서 내용을 확인하고 캔버스에 추가할 수 있어요.",
+    "backToCreation": "글쓰기로 이동"
+  },
+  "shotParams": {
+    "mode": "모드",
+    "applyAll": "모두 적용"
+  },
+  "sceneGroup": {
+    "unassigned": "묶음 없음",
+    "untitled": "장면 묶음 {{index}}",
+    "summary": "장면 {{count}}개 · {{seconds}}초",
+    "missingRequired": "참고 자료 {{count}}개 부족",
+    "doneCount": "{{count}}개 완료",
+    "lockedCount": "{{count}}개 잠김",
+    "filteredSummary": "장면 {{visible}}/{{total}}개 · {{seconds}}초"
+  },
+  "frame": {
+    "generate": "생성",
+    "generateAria": "장면 {{index}} 생성",
+    "retry": "다시 시도",
+    "retryHint": "이 장면 다시 생성",
+    "failed": "생성 실패",
+    "recoverable": "결과 복구 가능",
+    "recoverableRefetch": "결과 다시 가져오기",
+    "recoverableRefetching": "가져오는 중…",
+    "recoverableHint": "이미 생성 요청을 보냈고 서비스에서 완료했을 가능성이 높아요. 새로 생성하지 말고 결과를 다시 가져오세요.",
+    "generating": "생성 중",
+    "generatingPercent": "생성 중 {{percent}}%",
+    "durationBadge": "{{seconds}}초",
+    "resultAlt": "장면 {{index}}의 결과",
+    "lockedBadge": "잠김",
+    "regenerate": "다시 생성",
+    "variants3": "후보 3개",
+    "zoom": "확대",
+    "lock": "잠그기 (묶음 생성과 재생성에서 제외)",
+    "unlock": "잠금 해제",
+    "refChangedBadge": "참고 자료 변경됨"
+  },
+  "footer": {
+    "progress": "장면 {{done}}/{{total}}개 생성 완료",
+    "reasonMissing": "필수 참고 자료 {{count}}개 부족",
+    "reasonGenerating": "{{count}}개 생성 중",
+    "reasonRecoverable": "{{count}}개 요청 완료, 결과 가져오기 대기",
+    "reasonLocked": "{{count}}개 잠김",
+    "reasonSeparator": ", ",
+    "excludedSuffix": " (묶음 생성에서 제외)",
+    "generateRemaining": "남은 장면 생성"
+  },
+  "exec": {
+    "actionFailed": "실행하지 못했어요. 다시 시도하세요."
+  },
+  "row": {
+    "refChangedLine": "‘{{name}}’을 다시 생성했어요. 이 장면은 아직 이전 이미지를 사용해요",
+    "refChangedLineMore": "‘{{name}}’을 포함한 참고 자료 {{count}}개를 다시 생성했어요. 이 장면은 아직 이전 이미지를 사용해요",
+    "rerunFreshRefs": "새 참고 자료로 생성",
+    "missingRequired": "{{slot}} 필요",
+    "missingRequiredHint": "이 모델은 참고 이미지가 있어야 생성할 수 있어요. 모델이나 모드를 바꾸거나 이 장면에 참고 카드를 연결하세요.",
+    "noRefAcceptedSwitch": "{{mode}}는 참고 자료를 받지 않아요. {{slot}}을 추가하려면 ‘{{other}}’로 바꾸세요",
+    "noRefAcceptedSwitchSame": "{{mode}}는 참고 자료를 받지 않아요. 추가하려면 ‘{{other}}’ 모드로 바꾸세요",
+    "slotAccepts": {
+      "image": "‘{{label}}’에는 이미지만 넣을 수 있어요",
+      "video": "‘{{label}}’에는 영상만 넣을 수 있어요",
+      "audio": "‘{{label}}’에는 오디오만 넣을 수 있어요"
+    },
+    "slotFull": "‘{{label}}’에는 최대 {{max}}개를 넣을 수 있어요",
+    "refIntakeCap": "참고 자료",
+    "aspectAria": "이 장면의 화면 비율",
+    "stayHint": "이미지 장면의 길이는 타임라인이나 순서대로 재생할 때 이 이미지를 보여 주는 시간이에요",
+    "atRefAria": "@를 입력해 참고 자료 선택",
+    "atRefTitle": "장면 설명에 참고 자료 넣기 (@로 목록 열기)",
+    "atRefUnavailableTitle": "이 줄에서는 @ 참고 자료를 사용할 수 없어요",
+    "copy": "장면 복제",
+    "delete": "장면 삭제",
+    "selectAria": "장면 {{index}} 선택",
+    "outputTagHint": "이 후보의 이름은 @{{tag}}예요. 다른 장면에서 @를 입력해 참고할 수 있어요"
+  },
+  "filter": {
+    "active": "‘{{name}}’을 참고하는 장면 {{count}}개 표시 중",
+    "hiddenGenerating": "다른 장면 {{count}}개 생성 중",
+    "clear": "필터 해제",
+    "empty": "이 카드를 참고하는 장면이 없어요"
+  },
+  "playback": {
+    "start": "순서대로 재생",
+    "aria": "생성한 결과를 장면 순서대로 재생",
+    "scene": "장면 묶음 재생",
+    "sceneAria": "{{name}} 재생",
+    "position": "장면 {{index}} / {{total}}",
+    "previous": "이전 장면",
+    "next": "다음 장면",
+    "progressAria": "재생 진행 상태",
+    "notGenerated": "이 장면에는 생성한 결과가 없어요",
+    "allNotGenerated": "아직 재생할 결과가 없어요",
+    "notGeneratedShot": "장면 {{index}}: 생성하지 않아 건너뛰었어요",
+    "shotLabel": "장면 {{index}}",
+    "audioForShot": "장면 {{index}}의 오디오",
+    "audio": "장면 오디오"
+  },
+  "scriptProvenance": {
+    "original": "대본에서 가져옴",
+    "edited": "대본에서 가져온 뒤 수정함"
+  },
+  "resultIntake": {
+    "useAs": "다음 용도로 사용…",
+    "reference": "참고 자료로 저장",
+    "firstFrame": "첫 프레임",
+    "noFirstFrameSlot": "장면 {{index}}의 현재 모드에서는 이 이미지를 받을 수 없어요. 첫 프레임이나 이미지 입력란이 없거나 가득 찼어요",
+    "targetShot": "사용할 장면",
+    "nextShot": "다음 장면 ({{index}})",
+    "shot": "장면 {{index}}"
+  },
+  "selection": {
+    "aria": "선택한 장면 작업",
+    "count": "장면 {{count}}개 선택됨",
+    "generate": "선택한 장면 생성",
+    "moveToScene": "장면 묶음으로 이동",
+    "allScenes": "묶음 없음",
+    "applyModel": "같은 모델 사용",
+    "applyModelScoped": "같은 모델 사용 · {{scope}}",
+    "delete": "선택 항목 삭제",
+    "clear": "선택 해제",
+    "insert": "여기에 장면 추가",
+    "lock": "잠그기"
+  },
+  "rowActions": {
+    "open": "장면 작업",
+    "drag": "끌어서 장면 순서 바꾸기",
+    "deleteTitle": "생성한 장면을 삭제할까요?",
+    "deleteMessage": "캔버스의 생성 카드도 삭제돼요. ⌘Z로 되돌릴 수 있어요."
+  },
+  "promptSkeleton": {
+    "choose": "미리 정한 설명 선택",
+    "segmentAria": "{{label}}: {{value}}",
+    "segment": {
+      "shotSize": "화면 크기 · 카메라",
+      "emotion": "감정"
+    }
+  },
+  "bulk": {
+    "scope": "모든 장면",
+    "mixed": "서로 다름",
+    "typeAria": "모든 장면의 종류",
+    "modelAria": "모든 장면의 모델",
+    "durationAria": "모든 장면의 길이",
+    "aspectAria": "모든 장면의 화면 비율",
+    "aspectDefault": "모델 기본값",
+    "hint": "여기서 바꾸면 장면 {{count}}개에 모두 적용돼요"
+  },
+  "issue": {
+    "noShots": "아직 장면이 없어요",
+    "emptyPrompt": "장면 {{index}}에 설명이 없어요",
+    "anchorNoName": "이름이 없는 참고 카드가 있어요"
+  },
+  "titleAria": "계획 제목",
+  "titlePlaceholder": "계획 이름을 적으세요",
+  "shotCount": "장면 {{count}}개",
+  "draftEditable": "AI 초안 · 자유롭게 수정하세요",
+  "spendHint": "참고 카드를 먼저 생성해 모습을 정한 뒤 장면을 생성하세요",
+  "consistencyTitle": "장면마다 같은 모습 유지",
+  "consistencyHint": "참고 이미지를 생성해 모습을 정하세요. 글만 사용하면 각 장면의 설명에 포함돼요",
+  "noAnchors": "아직 참고 카드가 없어요. 카드를 추가하거나 장면을 바로 적으세요.",
+  "addAnchor": "참고 자료 추가",
+  "addAnchorHint": "인물 / 배경 참고 / 소품 참고 / 스타일",
+  "aspectScope": {
+    "followDefault": "기본값 따르기",
+    "overrideMark": "따로 설정됨",
+    "rowMenu": "화면 비율 바꾸기…",
+    "bulkHint": "비율을 따로 설정한 장면 {{count}}개는 그대로 유지돼요",
+    "unsupportedHint": "장면 {{count}}개의 모델은 영상 화면 비율을 받지 않아요. 모델 자체 크기나 참고 이미지를 따라요"
+  },
+  "composerBar": {
+    "doneTag": "생성 완료",
+    "lockedTag": "잠김 · 묶음 생성 제외",
+    "switchesAria": "이 장면의 옵션 (오디오 생성, 마지막 프레임 받기 등)",
+    "overflowAria": "이 장면의 추가 설정: {{items}}"
+  },
+  "skip": {
+    "aria": "이번 생성에서 장면 {{index}} 건너뛰기",
+    "hint": "이번 묶음 생성에서만 제외해요. 내용은 유지되며 생성이 시작되면 선택이 해제돼요. 잠그기와는 달라요",
+    "tag": "이번 생성에서 제외"
+  },
+  "variants": {
+    "open": "이 장면의 후보 {{count}}개 보기",
+    "openHint": "다시 생성해도 기존 이미지는 바뀌지 않아요. 새 후보를 여기서 확인하고 마음에 드는 결과를 적용하세요",
+    "title": "장면 {{index}} · 후보 {{count}}개",
+    "hint": "적용을 눌러야 이미지가 바뀌어요. 이 창을 닫으면 그대로 유지돼요",
+    "close": "후보 닫기",
+    "adopt": "적용",
+    "adopted": "적용됨",
+    "delete": "이 후보 삭제",
+    "thumbAlt": "후보 {{tag}}"
+  },
+  "slot": {
+    "openAria": "‘{{label}}’ 참고 자료 수정",
+    "used": "{{used}}개 추가됨",
+    "usedOf": "{{used}}/{{max}}개 추가됨",
+    "remove": "{{name}} 제거",
+    "requiredCaption": "{{label}} (필수)",
+    "optionalCaption": "{{label}} (선택)",
+    "plannedFirstFrame": "첫 프레임",
+    "plannedFirstFrameTitle": "{{label}}: 생성할 때 이 장면의 첫 프레임 이미지가 들어가요",
+    "anchorDescription": "설정: {{text}}",
+    "ignorePlaceholder": "이번에는 따라 하지 않을 부분 (예: 네온 배경)",
+    "ignoreAria": "이번에 {{name}}을 참고할 때 제외할 특징",
+    "moreAria": "참고 입력란 {{count}}개 더 있어요. 열어서 모두 확인하세요",
+    "moreTitle": "이 장면에는 참고 입력란이 {{total}}개 있어요. 편집 화면이 좁아 첫 번째만 보여요. 열어서 모두 확인하세요",
+    "collapseAria": "다른 참고 입력란 접기"
+  },
+  "rowMenu": {
+    "insertAbove": "위에 추가",
+    "insertBelow": "아래에 추가",
+    "moveToScene": "다른 장면 묶음으로 이동…",
+    "deleteUndoable": "삭제"
+  },
+  "agentHandoff": {
+    "row": "AI에게 요청",
+    "selection": "AI에게 요청",
+    "footer": "{{count}}개 · AI에게 요청"
+  },
+  "storyboardHeading": "장면 계획 · 장면 {{count}}개",
+  "addShot": "장면 추가",
+  "issuesSummary": "확인할 항목 {{count}}개: {{issue}}",
+  "backToCreation": "초안으로 이동",
+  "second": "{{count}}초",
+  "defaultModel": "기본 모델",
+  "type": "종류",
+  "image": "이미지",
+  "video": "영상",
+  "imageVideo": "이미지+영상",
+  "duration": "길이",
+  "aspect": "화면 비율",
+  "imageModel": "이미지 모델",
+  "videoModel": "영상 모델",
+  "model": "모델",
+  "provider": "서비스",
+  "unnamed": "이름 없음",
+  "promptAria": "장면 {{index}}의 설명",
+  "keyframePrompt": "기준 이미지",
+  "videoPrompt": "영상 설명",
+  "keyframePromptAria": "장면 {{index}}의 기준 이미지 설명",
+  "keyframePromptPlaceholder": "첫 화면의 구도, 화면 크기, 빛, 자세와 표정을 적으세요. 정지 이미지이므로 카메라 움직임이나 대사는 넣지 마세요",
+  "imagePromptPlaceholder": "화면의 구도, 화면 크기, 인물 자세와 표정을 적으세요. 정지 이미지이므로 카메라 움직임은 넣지 마세요",
+  "videoPromptPlaceholder": "카메라 움직임과 행동의 흐름을 적으세요. 참고 카드에 적은 고정된 모습은 반복하지 않아도 돼요",
+  "anchor": {
+    "kind": {
+      "character": "인물",
+      "scene": "배경",
+      "prop": "소품",
+      "style": "스타일"
+    },
+    "modelAria": "참고 카드의 모델",
+    "modelLabel": "생성 모델",
+    "noImageModel": "사용할 이미지 모델이 없어요. 설정에서 이미지 모델을 연결하고 확인하세요.",
+    "namePlaceholder": "이름을 적으세요",
+    "nameAria": "참고 카드 이름",
+    "delete": "참고 카드 삭제",
+    "descriptionAria": "참고 카드 설명",
+    "visualPlaceholder": "참고 이미지에 사용할 외모, 옷차림, 빛을 적으세요",
+    "textPlaceholder": "색감, 브랜드 색, 옷차림처럼 글로 정할 특징을 적으세요. 이 카드를 참고하는 모든 장면에 포함돼요",
+    "switchToText": "글만 사용하기",
+    "switchToVisual": "참고 이미지 생성으로 바꾸기",
+    "visual": "참고 이미지",
+    "text": "글",
+    "resultAlt": "참고 카드 ‘{{name}}’",
+    "generateAria": "참고 카드 ‘{{name}}’ 생성",
+    "writeDescFirst": "설명을 먼저 적으세요",
+    "lockTitle": "잠그기 (모습 확정 — 이 카드를 쓰는 장면을 함께 생성할 수 있어요)",
+    "expandAll": "모두 펼치기",
+    "collapseAll": "모두 접기",
+    "textNoRefs": "글 참고 카드는 자료를 받지 않아요. 설명을 모든 장면에 넣어요",
+    "headReady": "{{count}}개 준비됨",
+    "headGenerating": "{{count}}개 생성 중",
+    "headPending": "{{count}}개 대기 중",
+    "stat": {
+      "textOnly": "글만 사용",
+      "referenced": "사용 중 ({{count}}개)",
+      "generated": "생성 완료",
+      "ungenerated": "생성 전"
+    }
+  },
+  "planCard": {
+    "defaultTitle": "장면 계획",
+    "committed": "캔버스에 있음",
+    "draft": "초안",
+    "stale": "동기화 필요"
+  },
+  "action": {
+    "storyboardLead": "이야기를 장면으로 나누려는 것 같아요.",
+    "storyboardCta": "장면 나누기 · 캔버스에 추가",
+    "fixationLead": "인물 참고 카드를 만들려는 것 같아요.",
+    "fixationCta": "인물 카드 만들기",
+    "dismiss": "닫기",
+    "typeHint": "장면마다 이미지나 영상을 나중에 선택하세요",
+    "started": "시작됨",
+    "nudgeLead": "이야기를 다 썼나요? 장면으로 나눠 캔버스에 놓으세요."
+  },
+  "strategy": {
+    "heading": "실행 계획",
+    "resolving": "실제 모델이 지원하는 길이와 설정을 확인하는 중…",
+    "hint": "모든 장면을 모델의 길이와 설정 제한에 맞춰 확인하고 합치거나 나눌 방법을 제안해요. 자동으로 계산하지만 계획은 수정할 수 있어요.",
+    "merge": "합치기",
+    "split": "나누기",
+    "requiredBadge": "필수",
+    "advisoryBadge": "추천",
+    "adopt": "적용",
+    "why": "이유",
+    "shotTag": "장면 {{index}} ({{seconds}}초)",
+    "shotTagShort": "#{{index}}",
+    "affectedShots": "장면 {{count}}개: {{shots}}",
+    "blockersHeading": "먼저 해결하세요. 그대로 생성하면 잘리거나 실패할 수 있어요",
+    "error": "실행 계획을 확인하지 못했어요. 잠시 뒤 다시 시도하세요.",
+    "rowOverflow": "모델이 한 번에 만들 수 있는 길이보다 길어요",
+    "rowUnderflow": "모델이 한 번에 만들 수 있는 길이보다 짧아요",
+    "rowWarningAria": "장면 {{index}}: {{reason}}",
+    "noVideoModelTitle": "아직 사용할 영상 모델이 없어요",
+    "noVideoModelBody": "영상 모델을 추가하고 켜면 여기서 모든 장면을 실제 길이 제한에 맞춰 확인해요.",
+    "goToSettings": "설정 열기",
+    "projectStale": "프로젝트가 바뀌었어요. 이 장면 계획을 다시 열어 확인하세요.",
+    "issue": {
+      "noCandidates": "사용할 영상 모델이 없어 아직 이 장면의 모드나 설정이 없어요.",
+      "modelMissing": "목록에 ‘{{requested}}’ 모델이 없어 {{modelLabel}}을 대신 사용해요.",
+      "modeFallback": "{{modelLabel}}에는 ‘{{requested}}’ 모드가 없어 기본 ‘{{modeLabel}}’ 모드를 사용해요.",
+      "modeMissing": "{{modelLabel}}에는 사용할 수 있는 생성 모드가 없어요.",
+      "paramUnknown": "‘{{modeLabel}}’에는 ‘{{key}}’ 설정이 없어 제외했어요. 설정값은 모델 목록에 있는 값이어야 해요.",
+      "paramClamped": "‘{{key}}’ 값 {{value}}가 {{min}}–{{max}} 범위를 벗어나 {{clamped}}로 바뀌었어요.",
+      "paramValue": "‘{{key}}’ 값 {{value}}가 허용값 {{allowed}}에 없어 기본값을 사용했어요.",
+      "durationUnsupported": "‘{{modeLabel}}’에는 길이 설정이 없어 길이를 보내지 않아요.",
+      "durationClamped": "원하는 길이 {{wanted}}초가 ‘{{modeLabel}}’의 {{min}}–{{max}}초 범위를 벗어나 {{clamped}}초로 바뀌었어요.",
+      "durationUnderflow": "이 장면은 {{wanted}}초로, {{modelLabel}} ‘{{modeLabel}}’의 최소 {{min}}초보다 짧아요. 같은 묶음의 이웃 장면과 합치거나 {{min}}초보다 길게 늘리세요.",
+      "durationOverflow": "이 장면은 {{wanted}}초가 필요해 {{modelLabel}} ‘{{modeLabel}}’의 최대 {{max}}초를 넘어요. 그대로 생성하면 잘리므로 첫 프레임과 마지막 프레임으로 연결되는 {{pieces}}개 부분으로 나누세요."
+    },
+    "reason": {
+      "mergeAdvisory": "{{shots}}은 합쳐서 {{total}}초예요. 같은 묶음과 모델이며 {{modelLabel}} ‘{{modeLabel}}’의 {{min}}–{{max}}초 범위 안에 있어요. 하나로 생성하면 여러 번 대신 한 번의 생성 비용이 들고 움직임과 빛이 이어져요.",
+      "mergeRequired": "{{shots}}에는 {{modelLabel}} ‘{{modeLabel}}’의 최소 {{min}}초보다 짧은 장면이 있어 이웃 장면과 합쳐야 해요. 합친 {{duration}}초 장면은 {{min}}–{{max}}초 범위 안에 있어 생성할 수 있어요.",
+      "split": "이 장면은 {{duration}}초가 필요해 {{modelLabel}} ‘{{modeLabel}}’의 최대 {{max}}초를 넘어요. 잘리지 않도록 {{count}}개 부분 ({{pieces}}초)으로 나누고 첫 프레임과 마지막 프레임으로 연결하세요."
+    }
+  }
+}
