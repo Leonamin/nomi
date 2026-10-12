@@ -26,7 +26,8 @@
   "invariants": [
     "Generation and candidate selection never alter existing timeline cuts",
     "Explicit source replacement preserves timeline placement, visible duration, source in/out times, framing and audio",
-    "An insufficient candidate rejects the entire replacement"
+    "An insufficient candidate rejects the entire replacement",
+    "Candidate command feedback is visible inside the tray that owns the command, never under stacked card decoration"
   ],
   "doors": [
     {
@@ -105,10 +106,12 @@
     ]
   },
   "regression_tests": [
-    "src/workbench/generationCanvas/model/explicitCandidateReplacement.test.ts"
+    "src/workbench/generationCanvas/model/explicitCandidateReplacement.test.ts",
+    "src/workbench/generationCanvas/nodes/NodeResultStack.feedback.test.ts"
   ],
   "class_regression_tests": [
-    "src/workbench/generationCanvas/model/explicitCandidateReplacement.test.ts"
+    "src/workbench/generationCanvas/model/explicitCandidateReplacement.test.ts",
+    "src/workbench/generationCanvas/nodes/NodeResultStack.feedback.test.ts"
   ],
   "legacy_paths": {
     "status": "removed",

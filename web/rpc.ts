@@ -4,7 +4,7 @@ import * as catalog from '../electron/catalog/catalogStore'
 import * as exportJobs from '../electron/export/exportJobs'
 import { isComfyuiVendor } from '../electron/catalog/types'
 import { setDesktopLocale } from '../electron/desktopLocale'
-import { listProjectAssets, writeAsset, copyProjectAsset } from '../electron/assets/projectAssetStore'
+import { listProjectAssets, writeAsset, copyProjectAsset, importRemoteAsset } from '../electron/assets/projectAssetStore'
 import { getAssetFolders, saveAssetFolders } from '../electron/assets/assetFolders'
 import { ensurePlayableAsset, ensureLocalAssetPreview } from '../electron/assets/localFileImport'
 import { extractVideoFrameToAsset, extractVideoFilmstripToAsset } from '../electron/video/extractVideoFrame'
@@ -88,6 +88,12 @@ export async function dispatchWebRpc(channel: string, args: unknown[], surface: 
     'nomi:settings:project-location-get': () => ({ ok: true, location: getProjectLocationState() }),
     'nomi:settings:project-location-check': () => ({ ok: true, location: getProjectLocationState() }),
     'nomi:assets:list': listProjectAssets,
+    'nomi:assets:import-remote-url': async (payload: { projectId: string; url: string }) => {
+      authorizeWebProject(surface, payload.projectId)
+      if (!/^(?:data:(?:image|video|audio)\/|nomi-local:\/\/asset\/)/.test(payload.url)) throw new Error('Only project-owned or inline media can be imported here')
+      const asset = await importRemoteAsset({ ...payload, projectBinding: undefined }, { assertCurrent: () => authorizeWebProject(surface, payload.projectId) })
+      return { ok: true, asset }
+    },
     'nomi:assets:folders-get': getAssetFolders,
     'nomi:assets:folders-save': saveAssetFolders,
     'nomi:assets:ensure-playable': ensurePlayableAsset,
@@ -107,7 +113,7 @@ export async function dispatchWebRpc(channel: string, args: unknown[], surface: 
     'nomi:events:read': (payload: { projectId: string; fromSeq: number }) => ({ ok: true, events: readEvents(payload.projectId, { fromSeq: payload.fromSeq }) }),
     'nomi:events:generation-eta-stats': (payload: { projectId: string }) => ({ ok: true, stats: deriveGenerationEtaStats(readEvents(payload.projectId)) }),
     'nomi:workspace:sync-inspect': (input: string | { projectId: string }) => { const id = typeof input === 'string' ? input : input.projectId; const root = projects.projectDirById(id); if (!root) throw new Error('Project not found'); return inspectWorkspaceSync(root, id) },
-    'nomi:prompt-library:list': async () => ({ ok: true, prompts: await getPromptLibrary() }),
+    'nomi:prompt-library:list': async () => ({ ok: true, prompts: await getPromptLibrary({ shouldIncludeSkillPrompts: false }) }),
     'nomi:prompt-library:text-brain': () => ({ ok: false, brain: null, status: 'missing' }),
     'nomi:production-runs:list': () => [],
     'nomi:integration-handoff:list': () => [],

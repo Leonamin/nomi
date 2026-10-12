@@ -8,6 +8,7 @@ import { getCuratedPrompts } from "./curatedPrompts";
 import { readSkillRecords } from "../skills/skillStore";
 
 const BUILTIN_PROMPTS = expressionPack as unknown as LibraryPrompt[];
+export type BuiltinPromptOptions = { shouldIncludeSkillPrompts?: boolean };
 
 /** 内置包占用的 sourceId 集合（用于对外部/缓存数据去重，保证幂等）。 */
 export const BUILTIN_SOURCE_IDS: ReadonlySet<string> = new Set([
@@ -15,12 +16,13 @@ export const BUILTIN_SOURCE_IDS: ReadonlySet<string> = new Set([
 ]);
 
 /** 内置条目（防御性拷贝，防调用方原地改动污染模块常量）。策展条目从技能目录投影（目录由 pi 的加载器给，async）。 */
-export async function getBuiltinPrompts(): Promise<LibraryPrompt[]> {
-  return [...BUILTIN_PROMPTS.map((prompt) => ({ ...prompt })), ...getCuratedPrompts(await readSkillRecords())];
+export async function getBuiltinPrompts(options: BuiltinPromptOptions = {}): Promise<LibraryPrompt[]> {
+  const skillPrompts = options.shouldIncludeSkillPrompts === false ? [] : getCuratedPrompts(await readSkillRecords());
+  return [...BUILTIN_PROMPTS.map((prompt) => ({ ...prompt })), ...skillPrompts];
 }
 
 /** 唯一咽喉：内置包前置 + 按 sourceId 过滤入参同源条目（老磁盘缓存/重复调用均幂等）。 */
-export async function withBuiltinPrompts(prompts: LibraryPrompt[]): Promise<LibraryPrompt[]> {
+export async function withBuiltinPrompts(prompts: LibraryPrompt[], options: BuiltinPromptOptions = {}): Promise<LibraryPrompt[]> {
   const external = prompts.filter((prompt) => !BUILTIN_SOURCE_IDS.has(prompt.sourceId));
-  return [...await getBuiltinPrompts(), ...external];
+  return [...await getBuiltinPrompts(options), ...external];
 }
