@@ -1,6 +1,6 @@
 # 한국어 지원 검증
 
-상태: 已实现未推送 · 한국어 구현 및 변경 범위 검증 완료, 전체 gates의 기존 시각 기준 불일치 확인 중.
+상태: 已推送待合入 · 한국어 구현 및 변경 범위 검증 완료, 전체 gates의 기존 시각 기준 불일치 확인 중.
 
 - 날짜: 2026-10-12
 - 작업선: `feat/korean-guidance`, sibling worktree `nomi-web-korean-guidance`
@@ -44,3 +44,5 @@
 첫 `pnpm run gates`에서 design-lab 시각 기준 152개가 실패하고 36개가 통과했다. 타입·경계·샘플 계약에서 이 변경으로 생긴 실패는 수정하여 각각 재검증했다. 시각 기준은 바꾸지 않았다. 같은 SHA의 변경 없는 detached worktree에서 188개 전체 시각 검사를 재실행했다. 양쪽 모두 같은 152개가 실패하고 36개가 통과했다. [비교 기록](2026-10-12-korean-visual-baseline.json)에 실패 집합과 실제 PNG 비교 결과를 저장했다. 재실행은 다른 작업의 공용 검증 잠금에 대기하여 종료했다. 수정한 실패 항목은 개별 재검증을 통과했다. 전체 gates가 통과했다고 보고하지 않는다.
 
 실제 ComfyUI 이미지/영상 생성, GPU 실행, 생성된 MP4 결과, Electron 네이티브 대화상자는 자원이 연결되지 않아 **unverified**. 생성 및 비용 동작은 이 변경에서 수정하지 않았다. 운영 서버 배포와 병합 검증도 수행하지 않았다.
+
+검토용 Draft PR: https://github.com/Leonamin/nomi-web/pull/3
