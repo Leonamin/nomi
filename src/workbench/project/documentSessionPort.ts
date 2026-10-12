@@ -14,28 +14,14 @@
 //
 // revision 不再是组件私有计数器：它就是文档的 `updatedAt`（store 每次改正文都盖新戳），基线与
 // 增强两边读到的是同一个数，一次发送在两种端口之间切换也对得上。
-import StarterKit from '@tiptap/starter-kit'
-import { generateText, type JSONContent } from '@tiptap/core'
-import type { DocumentAnchorRef, PreconditionSet, TargetRef } from '../../../electron/shared/capabilityTargeting'
+import type { TargetRef } from '../../../electron/shared/capabilityTargeting'
 import { SurfacePortWireError } from '../../../electron/shared/surfacePortBinding'
-import { RICH_TEXT_FEATURE_EXTENSIONS } from '../common/useNomiRichTextEditor'
-import { markdownToTiptapContent } from '../creation/markdownToTiptap'
-import { assertDocumentWritePreconditions, documentContentHash } from '../creation/documentWriteTarget'
-import { normalizeWorkbenchContentJson, type WorkbenchDocument } from '../workbenchTypes'
+import { assertDocumentWritePreconditions } from '../creation/documentWriteTarget'
+import type { WorkbenchDocument } from '../workbenchTypes'
 import { useWorkbenchStore } from '../workbenchStore'
-
-export type DocumentWriteOperation = 'insert' | 'replace' | 'append'
-
-export type DocumentSessionState = Readonly<{ revision: number; contentHash: string; anchor: DocumentAnchorRef }>
-
-export type DocumentSessionWriteInput = Readonly<{
-  operation: DocumentWriteOperation
-  content: string
-  target: TargetRef
-  preconditions: PreconditionSet
-}>
-
-export type DocumentSessionWriteResult = Readonly<{ applied: true; revision: number; contentHash: string }>
+import { workbenchDocumentPlainText, documentSessionState, applyWholeDocumentWrite, type DocumentSessionState, type DocumentSessionWriteInput, type DocumentSessionWriteResult } from './documentSessionCore'
+export { workbenchDocumentPlainText, documentSessionState, applyWholeDocumentWrite, WHOLE_DOCUMENT_ANCHOR } from './documentSessionCore'
+export type { DocumentWriteOperation, DocumentSessionState, DocumentSessionWriteInput, DocumentSessionWriteResult } from './documentSessionCore'
 
 /** 当前生效的文稿端口——基线（随项目会话）或增强（创作页编辑器挂载时覆盖）。永远非空。 */
 export type DocumentSessionPort = Readonly<{
@@ -46,49 +32,13 @@ export type DocumentSessionPort = Readonly<{
   applyDocumentWrite: (input: DocumentSessionWriteInput) => DocumentSessionWriteResult
 }>
 
-export const WHOLE_DOCUMENT_ANCHOR: DocumentAnchorRef = Object.freeze({ kind: 'whole-document' as const })
-
-// 和 `useNomiRichTextEditor` 里创作编辑器的 schema 一致（Placeholder / 持久选区不改 schema）。
-const DOCUMENT_TEXT_EXTENSIONS = [StarterKit, ...RICH_TEXT_FEATURE_EXTENSIONS]
-
-/** 文档正文的唯一派生：和 `editor.getText({ blockSeparator: '\n' }).trim()` 逐字相同。 */
-export function workbenchDocumentPlainText(document: Pick<WorkbenchDocument, 'contentJson'> | null | undefined): string {
-  const content = normalizeWorkbenchContentJson(document?.contentJson) as JSONContent
-  return generateText(content, DOCUMENT_TEXT_EXTENSIONS, { blockSeparator: '\n' }).trim()
-}
-
-export function documentSessionState(document: WorkbenchDocument, anchor: DocumentAnchorRef = WHOLE_DOCUMENT_ANCHOR): DocumentSessionState {
-  return Object.freeze({ revision: document.updatedAt, contentHash: documentContentHash(workbenchDocumentPlainText(document)), anchor })
-}
-
-function unsupported(): never {
-  throw new SurfacePortWireError('capability_unsupported')
-}
+function unsupported(): never { throw new SurfacePortWireError('capability_unsupported') }
 
 function activeDocument(): WorkbenchDocument {
   const state = useWorkbenchStore.getState()
   const document = state.workbenchDocuments.find((item) => item.id === state.activeDocumentId) ?? state.workbenchDocuments[0]
   if (!document) throw new SurfacePortWireError('surface_port_unavailable')
   return document
-}
-
-/**
- * whole-document 写：不需要编辑器，直接改 store 里的 contentJson。
- * `insert` 需要一个位置，整篇文档没有位置——回 `capability_unsupported`，让模型改用 append/replace。
- */
-export function applyWholeDocumentWrite(
-  document: WorkbenchDocument,
-  operation: DocumentWriteOperation,
-  content: string,
-): WorkbenchDocument {
-  if (operation === 'insert') unsupported()
-  const nodes = markdownToTiptapContent(content)
-  if (!nodes.length) throw new SurfacePortWireError('capability_input_invalid')
-  const current = normalizeWorkbenchContentJson(document.contentJson) as { type: 'doc'; content?: unknown[] }
-  const contentJson = operation === 'append'
-    ? { ...current, content: [...(Array.isArray(current.content) ? current.content : []), ...nodes] }
-    : { ...current, content: nodes }
-  return { ...document, contentJson, updatedAt: Date.now() }
 }
 
 function assertDocumentTarget(target: TargetRef, documentId: string): Extract<TargetRef, { kind: 'document' }> {

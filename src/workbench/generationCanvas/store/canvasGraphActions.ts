@@ -1,3 +1,4 @@
+import { createCanvasGroupSnapshot } from '../model/canvasGroup'
 import { backfillShotIndexes } from '../model/shotNumbering'
 import { materializeGroupLink, materializeGroupOutputLink, type GroupMaterializedConnection } from './canvasConnectionMaterialization'
 import { connectNodes, disconnectEdge, removeNodes } from '../model/graphOps'
@@ -368,50 +369,17 @@ export const createCanvasGraphActions: CanvasSliceCreator<CanvasGraphActions> = 
       : [{ type: 'canvas.edge.disconnected', payload: { edgeId } }])
   },
   createGroup: (categoryId, name, options) => {
-    const id = String(categoryId || '').trim()
-    if (!isCategoryId(id)) return null
-    const now = Date.now()
-    const existingCount = get().groups.filter((group) => group.categoryId === id).length
-    // P4 S5：物化通道可传入明确的成员 id（节点刚建好、还没进 selection），避免「先 selectNodes 再 group」
-    // 的两步竞态。传入时按分类过滤（只收该分类节点，与 groupSelectedNodes 同规则）+ 从旧组抢走。
-    const explicitNodeIds = Array.isArray(options?.nodeIds)
-      ? get().nodes.filter((node) => options!.nodeIds!.includes(node.id) && (node.categoryId || 'shots') === id).map((node) => node.id)
-      : []
-    const stamp = options?.materializationOperationId?.trim()
-    // 框的边界（2026-09-06 起是真相之一）：调用方给了就用它；没给就按成员包围盒算一次——
-    // 建组当下算好，画布不必再靠「成员包围盒」这层皮反推（那正是拖出去框会追着长大的成因）。
-    const frameBounds = options?.frameBounds ?? frameBoundsFromMembers(
-      get().nodes
-        .filter((node) => explicitNodeIds.includes(node.id))
-        .map((node) => ({ x: node.position.x, y: node.position.y, ...resolveNodeVisualSize(node) })),
-    )
-    const group: NodeGroup = {
-      id: createGroupId(id),
-      name: (name || '').trim() || `组 ${existingCount + 1}`,
-      categoryId: id,
-      nodeIds: explicitNodeIds,
-      ...(frameBounds ? { frameBounds } : {}),
-      ...(stamp ? { materializationOperationId: stamp } : {}),
-      createdAt: now,
-      updatedAt: now,
-    }
+    const next = createCanvasGroupSnapshot(get(), categoryId, name, options)
+    if (!next.group) return null
     pushUndoSnapshot(get())
     set((state) => {
-      // 抢走旧组成员（同 groupSelectedNodes 语义）：一个节点只属一个组。
-      if (explicitNodeIds.length) {
-        for (const existingGroup of state.groups) {
-          existingGroup.nodeIds = existingGroup.nodeIds.filter((nodeId) => !explicitNodeIds.includes(nodeId))
-        }
-        for (const node of state.nodes) {
-          if (explicitNodeIds.includes(node.id)) node.groupId = group.id
-        }
-      }
-      state.groups.push(group)
+      state.nodes = next.snapshot.nodes
+      state.groups = next.snapshot.groups
       bumpPersistRevision(state)
       Object.assign(state, getHistoryFlags())
     })
-    emitCanvasGesture([{ type: 'canvas.group.created', payload: { group } }])
-    return group
+    emitCanvasGesture([{ type: 'canvas.group.created', payload: { group: next.group } }])
+    return next.group
   },
   groupSelectedNodes: (categoryId, name) => {
     const id = String(categoryId || '').trim()

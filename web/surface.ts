@@ -14,6 +14,7 @@ export function createWebSurface(origin: string) {
     return ensureWorkspaceProjectIdentity(dir)
   } })
   return {
+    id,
     registry,
     suspend: (input: { surfaceInstanceId: string }) => ({ ok: true, value: { suspension: registry.suspend(owner, input) } }),
     commit: async (input: { projectId: string; suspension: unknown }) => ({ ok: true, value: { binding: await registry.commitCanvasRead(owner, { projectId: input.projectId, suspension: registry.resolveSuspensionWire(owner, input.suspension) }) } }),
@@ -26,7 +27,7 @@ type Session = { surface: Surface; surfaceId: string; connections: number; timer
 /** Browser authorities are leased; durable generation/export jobs never live in this pool. */
 export class WebSurfaceSessions {
   private sessions = new Map<string, Session>()
-  constructor(private createSurface: typeof createWebSurface = createWebSurface) {}
+  constructor(private createSurface: typeof createWebSurface = createWebSurface, private retireSurface: (surface: Surface) => void = () => undefined) {}
   get size() { return this.sessions.size }
   private entry(clientId: string, origin: string): Session {
     if (!/^[a-f0-9-]{36}$/.test(clientId)) throw new Error('Invalid browser session')
@@ -35,7 +36,7 @@ export class WebSurfaceSessions {
       if (this.sessions.size >= 256) {
         const inactive = [...this.sessions].find(([, value]) => value.connections === 0)
         if (!inactive) throw new Error('Too many active browser tabs; close an unused tab')
-        clearTimeout(inactive[1].timer); this.sessions.delete(inactive[0])
+        clearTimeout(inactive[1].timer); this.sessions.delete(inactive[0]); this.retireSurface(inactive[1].surface)
       }
       session = { surface: this.createSurface(origin), surfaceId: randomUUID(), connections: 0 }
       this.sessions.set(clientId, session)
@@ -46,7 +47,7 @@ export class WebSurfaceSessions {
   private scheduleExpiry(clientId: string, session: Session) {
     clearTimeout(session.timer)
     session.timer = setTimeout(() => {
-      if (session.connections === 0 && this.sessions.get(clientId) === session) this.sessions.delete(clientId)
+      if (session.connections === 0 && this.sessions.get(clientId) === session) { this.sessions.delete(clientId); this.retireSurface(session.surface) }
     }, 30_000)
     session.timer.unref()
   }

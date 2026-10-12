@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import { useTranslation } from "react-i18next";
 import "./workbench.css";
 import { IconBrowser } from "@tabler/icons-react";
-import { NomiBrand, NomiLoadingMark } from "../design";
+import { NomiBrand, NomiLoadingMark, WorkbenchButton } from "../design";
 import NomiAppBar from "../ui/app-shell/NomiAppBar";
 import {
     isWorkspaceMode,
@@ -307,17 +307,19 @@ export default function WorkbenchShell({
                     aria-label={t("appBar.windowTitleBar")}
                     onDoubleClick={handleWindowTitlebarDoubleClick}
                 >
-                    {/* 品牌回归纯品牌（§1.5 归位）：过去这颗钮一钮四用（品牌 + 上手手册 + 明暗 + 检查更新），
-                        四件事已各自归位到设置「关于」/「通用」。mac 那面（NomiAppBar）同步处理，两平台一致。 */}
-                    <span
+                    <WorkbenchButton
                         className={cn(
                             "workbench-windowbar__brand",
-                            "app-no-drag relative z-[2] inline-flex h-full items-center pl-4 pr-3",
+                            "app-no-drag relative z-[2] inline-flex h-full items-center select-none border-0 bg-transparent pl-4 pr-3",
                             "text-workbench-ink",
                         )}
+                        aria-label={t("appBar.backToLibrary")}
+                        title={t("appBar.backToLibrary")}
+                        disabled={!onBackToLibrary}
+                        onClick={onBackToLibrary}
                     >
                         <NomiBrand markSize={18} wordSize={14} />
-                    </span>
+                    </WorkbenchButton>
                     <div
                         className="app-drag relative z-[1] h-full min-w-0 flex-1"
                         data-window-drag-region="true"

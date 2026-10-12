@@ -1,0 +1,311 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-web-host-connections",
+  "problem_type": "Host advertises desktop connection and agent affordances without implementing their state owners",
+  "symptom": "The web connection page cannot probe, change endpoints or import workflows; the existing agent panel has no supported execution backend.",
+  "direct_cause": "The web RPC allowlist omitted connection management and deleted the agent lane bridge; Electron graph conversion cannot run in Node.",
+  "class_root": "Host capabilities were bridged method-by-method instead of assembling complete domain contracts with host-specific execution ports.",
+  "affected_population": [
+    "All web ComfyUI instances, workflow API/Save imports, and reconnecting agent conversations"
+  ],
+  "scope_paths": [
+    "web/rpc.ts",
+    "web/client.ts",
+    "web/server.ts",
+    "web/surface.ts",
+    "web/comfyuiConnections.ts",
+    "web/comfyuiGraphHost.ts",
+    "web/agentLanes.ts",
+    "web/agentProcess.ts",
+    "web/agentTools.ts",
+    "web/agentMcp.ts",
+    "web/projectState.ts",
+    "web/generationJobs.ts",
+    "electron/comfyuiGraphConvert.ts",
+    "electron/shared/webAgentContracts.ts",
+    "src/desktop/bridge.ts",
+    "src/workbench/ai/v4/useAgentPanelV4Data.ts",
+    "src/workbench/ai/v4/agentPanelV4ModelRows.ts",
+    "src/workbench/generationCanvas/runner/useWebGenerationSync.ts",
+    "src/ui/onboarding/onboardingDrawerConnections.ts",
+    "tsconfig.web.json",
+    "src/workbench/project/projectRecordSchema.ts",
+    "src/workbench/project/workbenchProjectSession.ts",
+    "src/workbench/project/projectNormalize.ts",
+    "scripts/web/deploy-web-host.mjs",
+    "scripts/web/install-browser.mjs",
+    "web/runtimeHost.ts",
+    "package.json",
+    "pnpm-lock.yaml"
+  ],
+  "entry_points": [
+    "ComfyUI card probe/address/save/import/test",
+    "Agent panel workspace-open/prompt/engine selection/stop/reconnect"
+  ],
+  "external_sources": [
+    {
+      "kind": "official-doc",
+      "url": "https://opencode.ai/docs/cli/",
+      "checked_at": "2026-10-12",
+      "purpose": "Use installed native CLI JSON events and preserve provider authentication."
+    },
+    {
+      "kind": "official-doc",
+      "url": "https://opencode.ai/docs/mcp-servers/",
+      "checked_at": "2026-10-12",
+      "purpose": "Use MCP for Nomi domain tools rather than direct agent filesystem editing."
+    },
+    {
+      "kind": "official-doc",
+      "url": "https://modelcontextprotocol.io/docs/develop/build-server",
+      "checked_at": "2026-10-12",
+      "purpose": "Reuse the MCP SDK transport and tool execution instead of a handwritten protocol."
+    },
+    {
+      "kind": "official-doc",
+      "url": "https://opencode.ai/v2/docs/permissions",
+      "checked_at": "2026-10-12",
+      "purpose": "Installed v2 permissions are ordered rules; only the per-turn Nomi MCP tools are allowed."
+    },
+    {
+      "kind": "official-doc",
+      "url": "https://chromium.googlesource.com/chromium/src/+/main/docs/security/apparmor-userns-restrictions.md",
+      "checked_at": "2026-10-12",
+      "purpose": "Keep Chromium sandbox enabled using a dedicated AppArmor profile for the web-owned browser path; no global sysctl changes."
+    },
+    {
+      "kind": "source-code",
+      "url": "https://github.com/microsoft/playwright/blob/v1.64.0/packages/playwright-core/src/server/registry/index.ts",
+      "checked_at": "2026-10-12",
+      "purpose": "Supported Ubuntu 26.04 browser artifacts are declared by the installed browser registry, without a platform override in production."
+    }
+  ],
+  "invariants": [
+    "Complete web connection commands use existing catalog/parser/certification owners.",
+    "Unrelated providers and original desktop data cannot be mutated by the web connection host.",
+    "Accepted server jobs survive loss of browser subscriptions.",
+    "Server projections are scoped to the committed project identity and subscription.",
+    "Agent native authentication stays at its existing installation; model/usage facts must be truthful.",
+    "Capability tokens, lease signing keys and approval receipts stay in the dedicated web profile, never in the existing Nomi authority directory."
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "electron/integrationCertification/comfyuiConnector.ts",
+      "symbol": "analyzeComfyWorkflowTextSmart"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/ai/lane/laneClient.ts",
+      "symbol": "resolveLaneBridge"
+    },
+    {
+      "kind": "write",
+      "path": "electron/comfyuiIpc.ts",
+      "symbol": "analyzeComfyWorkflowTextSmart"
+    },
+    {
+      "kind": "write",
+      "path": "electron/main.ts",
+      "symbol": "upsertRendererCatalogVendor"
+    },
+    {
+      "kind": "write",
+      "path": "electron/main.ts",
+      "symbol": "upsertRendererCatalogModel"
+    },
+    {
+      "kind": "write",
+      "path": "web/comfyuiConnections.ts",
+      "symbol": "upsertRendererCatalogVendor"
+    },
+    {
+      "kind": "write",
+      "path": "web/comfyuiConnections.ts",
+      "symbol": "upsertRendererCatalogModel"
+    },
+    {
+      "kind": "write",
+      "path": "web/comfyuiConnections.ts",
+      "symbol": "analyzeComfyWorkflowTextSmart"
+    },
+    {
+      "kind": "read",
+      "path": "electron/comfyuiGraphConvert.ts",
+      "symbol": "ComfyGraphWindow"
+    },
+    {
+      "kind": "read",
+      "path": "electron/shared/webAgentContracts.ts",
+      "symbol": "WebAgentEngine"
+    },
+    {
+      "kind": "read",
+      "path": "src/desktop/bridge.ts",
+      "symbol": "PersistedAiMessage"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/ai/v4/useAgentPanelV4Data.ts",
+      "symbol": "WebAgentEngine"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/ai/v4/agentPanelV4ModelRows.ts",
+      "symbol": "AgentModelChoice"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/runner/useWebGenerationSync.ts",
+      "symbol": "getDesktopBridge"
+    },
+    {
+      "kind": "write",
+      "path": "src/ui/onboarding/onboardingDrawerConnections.ts",
+      "symbol": "isComfyuiVendorKey"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/projectRecordSchema.ts",
+      "symbol": "workbenchProjectSummarySchema"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/workbenchProjectSession.ts",
+      "symbol": "WorkbenchProjectPayload"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/projectNormalize.ts",
+      "symbol": "WorkbenchProjectSummary"
+    }
+  ],
+  "door_reduction": {
+    "before": 18,
+    "after": 18,
+    "why_not": "Desktop IPC and integration connector keep their independent native authority domains. The web ComfyUI transport is a new host that delegates vendor/model writes to the same renderer mutation boundary and graph reads to the same converter. The lane client is the single shared projection consumer. New web doors are transport composition, not separate catalog or parser owners."
+  },
+  "generality_proof": "Address, API/Save workflow and both external engine inputs converge on server-owned, project-scoped contracts; shared catalog and certification parsers decide validity for every instance. Browser disconnect only retires subscriptions.",
+  "shared_boundaries": [
+    {
+      "path": "web/comfyuiConnections.ts",
+      "symbol": "createWebComfyuiCommands",
+      "responsibility": "Assemble the existing ComfyUI management/certification surface, reject non-ComfyUI writes and in-flight endpoint replacement."
+    },
+    {
+      "path": "web/agentLanes.ts",
+      "symbol": "WebAgentLanes",
+      "responsibility": "Own persisted, ordered conversations and native engine admissions independently of browser lifetime."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "src/ui/onboarding/ComfyuiLocalCard.tsx",
+      "entry_point": "probe and address save",
+      "disposition": "enforced",
+      "evidence": "Existing UI invokes catalog probe and vendor upsert; both are absent in the original web allowlist."
+    },
+    {
+      "path": "src/ui/onboarding/ComfyuiWorkflowImportPanel.tsx",
+      "entry_point": "analyze and import workflow",
+      "disposition": "enforced",
+      "evidence": "Uses canonical analyze/reconcile/stage plus integration session prepare/get; same missing domain surface."
+    },
+    {
+      "path": "src/workbench/ai/lane/laneClient.ts",
+      "entry_point": "workspace-open and say",
+      "disposition": "enforced",
+      "evidence": "Existing panel relies on send/onProjection, typed conversation identity and synchronous admission ACK."
+    },
+    {
+      "path": "electron/comfyuiIpc.ts",
+      "entry_point": "registerComfyuiIpc",
+      "disposition": "not-affected",
+      "evidence": "Desktop already registers canonical management commands and retains its native window sender guard."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every additional instance, workflow format or agent engine can hit an incomplete web host contract.",
+    "same_class_scan": [
+      "door-map analyzeComfyWorkflowTextSmart/upsertModelCatalogVendor/resolveLaneBridge",
+      "Read modelOnboardingBridge, integrationSessionIpc/runtime install, ComfyUI graph converter, laneClient/contracts/IPC lifecycle",
+      "Compared actual browser provider detail with native ComfyUI card routing."
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "web/comfyuiConnections.ts",
+    "invariant": "Host management and execution ports are complete, validated and owned on the server.",
+    "failure_mode": "Reject unavailable/non-ComfyUI writes and stale project or conversation selectors before mutation; never return synthetic connection/generation success.",
+    "exception_policy": "none",
+    "strategy": "Reuse domain owners and shared lane contracts; adapt native host execution at declared ports and scope all subscriptions.",
+    "artifacts": [
+      "web/comfyuiConnections.ts",
+      "web/agentLanes.ts",
+      "web/agentTools.ts",
+      "web/server.ts",
+      "web/projectState.ts",
+      "src/ui/onboarding/onboardingDrawerConnections.ts",
+      "web/runtimeHost.ts"
+    ]
+  },
+  "regression_tests": [
+    "web/comfyuiConnections.test.ts",
+    "web/agentLanes.test.ts",
+    "web/agentProcess.test.ts",
+    "web/agentTools.test.ts",
+    "src/ui/onboarding/onboardingDrawerConnections.test.ts",
+    "web/agentMcp.test.ts",
+    "src/workbench/project/workbenchProjectSession.persistence.test.ts",
+    "web/runtimeIsolation.test.ts",
+    "scripts/web/browserRuntime.test.mjs"
+  ],
+  "class_regression_tests": [
+    "web/comfyuiConnections.test.ts",
+    "web/agentLanes.test.ts",
+    "web/agentTools.test.ts",
+    "src/ui/onboarding/onboardingDrawerConnections.test.ts",
+    "web/agentMcp.test.ts",
+    "src/workbench/project/workbenchProjectSession.persistence.test.ts",
+    "web/runtimeIsolation.test.ts",
+    "scripts/web/browserRuntime.test.mjs"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "web/client.ts",
+      "web/rpc.ts"
+    ],
+    "rationale": "Remove unconditional agent bridge deletion and unavailable connection placeholders as the real host contracts are assembled; desktop code stays the owner of existing domains."
+  },
+  "dependency_lifecycle": {
+    "decision": "upgrade-now",
+    "rationale": "The first Linux deployment failed before service activation because Playwright 1.60 has no Ubuntu 26.04 Chromium artifact. Upgrade the standalone browser runtime to the supported 1.64.0 release; keep existing desktop test-runner dependency and all original services untouched. Native CLIs/MCP keep their verified protocols.",
+    "current": "Playwright 1.60.0",
+    "target": "Standalone Playwright 1.64.0 with official Ubuntu 26.04 Chromium artifacts",
+    "exit_criteria": [
+      "Actual Ubuntu 26.04 sandboxed launch, ComfyUI Save conversion and GPU import must pass.",
+      "Chromium platform dry-run tests cover Ubuntu 26.04 x64 and macOS arm64; existing contract/unit/build gates pass."
+    ]
+  },
+  "migration": "Existing web catalog/projects are preserved; connection drafts and conversations are stored under the dedicated web data root. Default engine applies to new conversations; explicit user selection is persisted.",
+  "residual_risks": [
+    "Actual engine/GPU acceptance and native Save graph conversion still require browser and server verification."
+  ],
+  "detected_by": "user",
+  "recurrence_check_on": "2026-11-11",
+  "invariant_owner_layer": {
+    "layer": "web",
+    "tests": [
+      "web/comfyuiConnections.test.ts",
+      "web/agentLanes.test.ts",
+      "web/agentProcess.test.ts",
+      "web/agentTools.test.ts",
+      "src/ui/onboarding/onboardingDrawerConnections.test.ts",
+      "web/agentMcp.test.ts",
+      "src/workbench/project/workbenchProjectSession.persistence.test.ts",
+      "web/runtimeIsolation.test.ts"
+    ]
+  }
+}

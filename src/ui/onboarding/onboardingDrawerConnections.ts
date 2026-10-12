@@ -38,7 +38,7 @@ export function projectOnboardingConnections({ models, vendorMeta, dreaminaStatu
   const otherModels = models.filter((m) =>
     !isKnownVendor(m.vendorKey) &&
     m.vendorKey !== 'dreamina' &&
-    m.vendorKey !== COMFYUI_VENDOR_KEY &&
+    !isComfyuiVendorKey(m.vendorKey) &&
     m.vendorKey !== CODEX_LOCAL_VENDOR_KEY &&
     m.vendorKey !== LOCAL_TEXT_VENDOR_KEY &&
     m.vendorKey !== ANTIGRAVITY_VENDOR_KEY,

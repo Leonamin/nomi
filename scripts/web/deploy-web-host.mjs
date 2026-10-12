@@ -6,6 +6,7 @@
  *
  *   NOMI_WEB_RELEASE_DIR       release root              (default: $HOME/apps/nomi-web)
  *   NOMI_WEB_DATA_DIR          dedicated web data root    (default: $HOME/nomi-web-data)
+ *   NOMI_WEB_BROWSER_DIR       dedicated Chromium root     (default: $NOMI_WEB_DATA_DIR/browser)
  *   NOMI_WEB_LEGACY_DATA_DIR   root that must stay separate (default: $HOME/nomi-data)
  *   NOMI_WEB_ORIGIN            exact Host/Origin boundary (default: http://127.0.0.1:$NOMI_WEB_PORT)
  *   NOMI_WEB_PORT              local web port             (default: 9031)
@@ -21,6 +22,7 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import { execFileSync } from 'node:child_process'
+import { installWebBrowser } from './install-browser.mjs'
 
 const sha = process.argv[2]
 if (!/^[a-f0-9]{40}$/.test(sha || '')) throw new Error('Pass an exact fetched commit SHA')
@@ -29,6 +31,7 @@ const env = process.env
 const home = os.homedir()
 const base = env.NOMI_WEB_RELEASE_DIR || path.join(home, 'apps', 'nomi-web')
 const data = env.NOMI_WEB_DATA_DIR || path.join(home, 'nomi-web-data')
+const browserRoot = env.NOMI_WEB_BROWSER_DIR || path.join(data, 'browser')
 const legacyData = env.NOMI_WEB_LEGACY_DATA_DIR || path.join(home, 'nomi-data')
 const webPort = Number(env.NOMI_WEB_PORT || 9031)
 const comfyPort = Number(env.NOMI_WEB_COMFYUI_PORT || 19188)
@@ -69,6 +72,7 @@ if (fs.realpathSync(data) !== data) throw new Error('Web data root must be a rea
 if (fs.existsSync(legacyData) && fs.realpathSync(data) === fs.realpathSync(legacyData)) throw new Error('Web data root must stay independent from the legacy data root')
 run('corepack', ['pnpm', 'install', '--frozen-lockfile'], release)
 run('corepack', ['pnpm', 'run', 'build:web'], release)
+installWebBrowser({ release, browserRoot })
 assertClean(release)
 fs.mkdirSync(unitRoot, { recursive: true })
 const units = {
@@ -80,9 +84,14 @@ for (const [name, body] of Object.entries(units)) {
   if (fs.existsSync(target) && !fs.readFileSync(target, 'utf8').includes('# Managed by nomi-web')) throw new Error(`Existing unrelated unit preserved: ${name}`)
   fs.writeFileSync(target, body, { mode: 0o600 })
 }
-const runtimeEnv = [`NOMI_WEB_DATA_DIR=${data}`, `NOMI_WEB_PORT=${webPort}`, `NOMI_WEB_ORIGIN=${origin}`, `NOMI_BUILD_SHA=${sha}`]
+const envPath = path.join(data, 'runtime.env')
+const ownedKeys = new Set(['NOMI_WEB_DATA_DIR', 'NOMI_WEB_PORT', 'NOMI_WEB_ORIGIN', 'NOMI_BUILD_SHA', 'NOMI_WEB_SOURCE_REPO', 'PLAYWRIGHT_BROWSERS_PATH'])
+const preservedEnv = fs.existsSync(envPath)
+  ? fs.readFileSync(envPath, 'utf8').split('\n').filter(line => line.trim() && !ownedKeys.has(line.split('=')[0]))
+  : []
+const runtimeEnv = [`NOMI_WEB_DATA_DIR=${data}`, `NOMI_WEB_PORT=${webPort}`, `NOMI_WEB_ORIGIN=${origin}`, `NOMI_BUILD_SHA=${sha}`, `PLAYWRIGHT_BROWSERS_PATH=${browserRoot}`]
 if (sourceRepo) runtimeEnv.push(`NOMI_WEB_SOURCE_REPO=${sourceRepo}`)
-fs.writeFileSync(path.join(data, 'runtime.env'), `${runtimeEnv.join('\n')}\n`, { mode: 0o600 })
+fs.writeFileSync(envPath, `${[...preservedEnv, ...runtimeEnv].join('\n')}\n`, { mode: 0o600 })
 const next = path.join(base, 'current.next')
 if (fs.existsSync(next)) throw new Error('Pending release symlink exists; refusing overwrite')
 fs.symlinkSync(release, next)

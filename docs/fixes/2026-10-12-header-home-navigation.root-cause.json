@@ -1,0 +1,149 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-header-home-navigation",
+  "problem_type": "Header navigation affordances must use the project leave owner",
+  "symptom": "Clicking the Nomi header brand selects text instead of returning to the project library.",
+  "direct_cause": "Both platform headers wrap NomiBrand in a non-interactive span; the separate breadcrumb home action is hidden on narrow screens. Actual browser validation also found subscription close incorrectly required the already-released project authority.",
+  "class_root": "The stable brand affordance has no semantic navigation control connected to the existing save-before-leave lifecycle.",
+  "affected_population": [
+    "Web, macOS/Linux and Windows header layouts, including narrow screens"
+  ],
+  "scope_paths": [
+    "src/ui/app-shell/NomiAppBar.tsx",
+    "src/workbench/WorkbenchShell.tsx",
+    "web/agentLanes.ts"
+  ],
+  "entry_points": [
+    "Nomi header brand click and keyboard activation"
+  ],
+  "external_sources": [],
+  "invariants": [
+    "Every workspace header provides an accessible brand home button.",
+    "Home uses the existing backToLibrary callback and project persistence lifecycle."
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "src/devlab/designLab/primitivesSurfaces/states/03-structure.tsx",
+      "symbol": "NomiBrand"
+    },
+    {
+      "kind": "read",
+      "path": "src/ui/app-shell/NomiAppBar.tsx",
+      "symbol": "NomiBrand"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/ai/v4/AgentPanelV4Panel.tsx",
+      "symbol": "NomiBrand"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/onboarding/SplashIntro.tsx",
+      "symbol": "NomiBrand"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/WorkbenchShell.tsx",
+      "symbol": "NomiBrand"
+    }
+  ],
+  "door_reduction": {
+    "before": 5,
+    "after": 5,
+    "why_not": "Both platform header doors provide the same project navigation callback. Design lab, agent message branding and onboarding intro are display-only brand consumers and must remain non-navigating."
+  },
+  "generality_proof": "Both header platform branches use semantic buttons with the same save-before-leave callback, so keyboard, pointer and narrow layouts converge on the existing project owner.",
+  "shared_boundaries": [
+    {
+      "path": "src/ui/app-shell/NomiAppBar.tsx",
+      "symbol": "NomiAppBar",
+      "responsibility": "Expose home through the supplied project leave callback in native/web headers."
+    },
+    {
+      "path": "src/workbench/WorkbenchShell.tsx",
+      "symbol": "WorkbenchShell",
+      "responsibility": "Use the same callback for the Windows title bar."
+    },
+    {
+      "path": "web/agentLanes.ts",
+      "symbol": "WebAgentLanes",
+      "responsibility": "Close only the owning browser subscription after project release, without cancelling server execution."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "src/ui/app-shell/NomiAppBar.tsx",
+      "entry_point": "brand header",
+      "disposition": "enforced",
+      "evidence": "Non-Windows brand span and hidden narrow breadcrumb reproduce the reported symptom."
+    },
+    {
+      "path": "src/workbench/WorkbenchShell.tsx",
+      "entry_point": "Windows title bar brand",
+      "disposition": "enforced",
+      "evidence": "The same static span prevents activation on Windows."
+    },
+    {
+      "path": "src/workbench/onboarding/SplashIntro.tsx",
+      "entry_point": "intro brand",
+      "disposition": "not-affected",
+      "evidence": "No project is active in this display-only intro."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "The static header brand reproduces across platform and viewport entries.",
+    "same_class_scan": [
+      "node scripts/door-map.mjs NomiBrand found five consumers, two workspace headers.",
+      "Read NomiStudioApp.leaveProject and useProjectLeaveAction: save, unbind and release happen before library navigation."
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "src/ui/app-shell/NomiAppBar.tsx",
+    "invariant": "Workspace brand controls invoke the supplied canonical project leave callback.",
+    "failure_mode": "When no leave callback is supplied the brand control is disabled; save failures retain the project via the existing leave owner.",
+    "exception_policy": "none",
+    "strategy": "Replace static spans in both header layouts with existing WorkbenchButton controls.",
+    "artifacts": [
+      "src/ui/app-shell/NomiAppBar.tsx",
+      "src/workbench/WorkbenchShell.tsx",
+      "web/agentLanes.ts"
+    ]
+  },
+  "regression_tests": [
+    "src/ui/app-shell/homeNavigation.test.ts",
+    "web/agentLanes.test.ts"
+  ],
+  "class_regression_tests": [
+    "src/ui/app-shell/homeNavigation.test.ts",
+    "web/agentLanes.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "src/ui/app-shell/NomiAppBar.tsx",
+      "src/workbench/WorkbenchShell.tsx"
+    ],
+    "rationale": "Remove static header brand wrappers; retain display-only branding elsewhere."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "Uses existing WorkbenchButton and project leave lifecycle.",
+    "exit_criteria": []
+  },
+  "migration": "No stored data or paths change.",
+  "residual_risks": [
+    "Actual browser save, home and reopen verification pending."
+  ],
+  "detected_by": "user",
+  "recurrence_check_on": "2026-11-11",
+  "invariant_owner_layer": {
+    "layer": "src/ui/app-shell",
+    "tests": [
+      "src/ui/app-shell/homeNavigation.test.ts"
+    ]
+  },
+  "internal_only_reason": "This is an internal UI and persistence ownership contract; no dependency change is needed."
+}

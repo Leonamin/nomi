@@ -1,0 +1,688 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-web-production-project-ports",
+  "problem_type": "Creation ports require host independent canonical project ownership",
+  "symptom": "Web AI production cannot read/write canonical creation documents or materialize production candidates without an Electron renderer",
+  "direct_cause": "Original project creation and production landing owners close over global renderer stores",
+  "class_root": "Canonical creation algorithms and project persistence are not separated from the UI session adapter",
+  "affected_population": [
+    "Browser disconnected or unopened creation editor, desktop renderer, external agent creation"
+  ],
+  "scope_paths": [
+    "src/workbench/project/documentSessionPort.ts",
+    "src/workbench/project/documentSessionCore.ts",
+    "src/workbench/common/useNomiRichTextEditor.ts",
+    "src/workbench/creation/documentTextExtensions.ts",
+    "src/workbench/capability/multiShotCanvasLanding.ts",
+    "src/workbench/capability/multiShotCanvasLandingCore.ts",
+    "web/productionProjectPort.ts",
+    "src/workbench/creation/storyboard/agentStoryboardDesign.ts",
+    "src/workbench/creation/storyboard/agentStoryboardDesignCore.ts",
+    "src/workbench/generationCanvas/model/canvasGroup.ts",
+    "src/workbench/generationCanvas/store/canvasGraphActions.ts"
+  ],
+  "entry_points": [
+    "Native agent script writing and storyboard authoring",
+    "Production canvas landing and reconnect projection"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "Canonical Nomi project persistence and renderer ownership are internal contracts.",
+  "invariants": [
+    "Both hosts use the identical canonical text schema and document write algorithm.",
+    "Materialization preserves candidate revision, detached nodes, existing selections and user-owned running generation.",
+    "Every server write is serialized and expectedBinding pinned.",
+    "A turn captures one document admission snapshot; missing documents and explicit selectors for another document fail stale even when the project binding is unchanged. A fresh turn may explicitly admit that document.",
+    "Storyboard source freshness executes inside the same mutateProject critical section before authoring, using that exact current record. The admitted document pin observer returns a copy without refreshing unread human edits."
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "src/workbench/ai/v4/useAgentPanelV4Actions.ts",
+      "symbol": "getDocumentSessionPort"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/capabilityApplyHandler.ts",
+      "symbol": "getDocumentSessionPort"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLanding.ts",
+      "symbol": "materializeShots"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLanding.ts",
+      "symbol": "attachShotResult"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLanding.ts",
+      "symbol": "handleMultiShotCanvasLandingOp"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "LandingCanvasState"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "LandingProject"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "LandingContext"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "MaterializeShotCandidate"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "MaterializeShotGeneration"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "MaterializeShotInput"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "MultiShotLandingPorts"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "MaterializeShotsPayload"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "MaterializeShotsResult"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "AttachShotResultOutcome"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "AttachShotResultPayload"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "attachShotResult"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "handleMultiShotCanvasLandingOp"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "materializeShots"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/common/useNomiRichTextEditor.ts",
+      "symbol": "NomiRichTextTools"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/common/useNomiRichTextEditor.ts",
+      "symbol": "readSelectedText"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/common/useNomiRichTextEditor.ts",
+      "symbol": "RichTextApplyMode"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/creation/storyboard/agentStoryboardDesign.ts",
+      "symbol": "upsertAgentStoryboardDesign"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/creation/storyboard/agentStoryboardDesign.ts",
+      "symbol": "patchAgentStoryboardDesign"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/creation/storyboard/agentStoryboardDesignCore.ts",
+      "symbol": "patchAgentStoryboardDesign"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/creation/storyboard/agentStoryboardDesignCore.ts",
+      "symbol": "upsertAgentStoryboardDesign"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/creation/WorkbenchEditor.tsx",
+      "symbol": "RICH_TEXT_FEATURE_EXTENSIONS"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/creation/WorkbenchEditor.tsx",
+      "symbol": "DocumentSessionPort"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/NomiStudioApp.tsx",
+      "symbol": "readDocumentThroughSessionPort"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/NomiStudioApp.tsx",
+      "symbol": "writeDocumentThroughSessionPort"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionCore.ts",
+      "symbol": "DocumentWriteOperation"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionCore.ts",
+      "symbol": "RICH_TEXT_FEATURE_EXTENSIONS"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionCore.ts",
+      "symbol": "DocumentSessionState"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionCore.ts",
+      "symbol": "WHOLE_DOCUMENT_ANCHOR"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "DocumentSessionState"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "DocumentSessionWriteInput"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "DocumentSessionWriteResult"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "DocumentSessionPort"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "getDocumentSessionPort"
+    },
+    {
+      "kind": "read",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "WebProductionProjectPortOptions"
+    },
+    {
+      "kind": "read",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "DocumentSessionWriteInput"
+    },
+    {
+      "kind": "read",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "LandingCanvasState"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/assets/PromptEditor.tsx",
+      "symbol": "useNomiTiptapEditor"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/capability/capabilityApplyHandler.ts",
+      "symbol": "handleMultiShotCanvasLandingOp"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/capability/capabilityApplyHandler.ts",
+      "symbol": "upsertAgentStoryboardDesign"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/capability/capabilityApplyHandler.ts",
+      "symbol": "patchAgentStoryboardDesign"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/capability/multiShotCanvasLanding.ts",
+      "symbol": "createMultiShotCanvasLanding"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "attachShotResult"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "materializeShots"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/common/richTextActions.tsx",
+      "symbol": "isEditorReady"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/common/useNomiRichTextEditor.ts",
+      "symbol": "useNomiTiptapEditor"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/common/useNomiRichTextEditor.ts",
+      "symbol": "isEditorReady"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/creation/storyboard/agentStoryboardDesign.ts",
+      "symbol": "createAgentStoryboardDesign"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/creation/WorkbenchEditor.tsx",
+      "symbol": "useNomiRichTextEditor"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/creation/WorkbenchEditor.tsx",
+      "symbol": "documentSessionState"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/creation/WorkbenchEditor.tsx",
+      "symbol": "overrideDocumentSessionPort"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/render/TextDocumentNode.tsx",
+      "symbol": "useNomiRichTextEditor"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/store/canvasGraphActions.ts",
+      "symbol": "createCanvasGroupSnapshot"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/store/generationCanvasStore.ts",
+      "symbol": "createCanvasGraphActions"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/NomiStudioApp.tsx",
+      "symbol": "writeDocumentThroughSessionPort"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/documentSessionCore.ts",
+      "symbol": "workbenchDocumentPlainText"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "workbenchDocumentPlainText"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "documentSessionState"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "symbol": "applyWholeDocumentWrite"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "documentSessionState"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "workbenchDocumentPlainText"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "applyWholeDocumentWrite"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "createAgentStoryboardDesign"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "patchAgentStoryboardDesign"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "upsertAgentStoryboardDesign"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "createCanvasGroupSnapshot"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "createMultiShotCanvasLanding"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionProjectPort.ts",
+      "symbol": "materializeShots"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/common/useNomiRichTextEditor.ts",
+      "symbol": "AnyExtension"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/creation/documentTextExtensions.ts",
+      "symbol": "AnyExtension"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/creation/documentTextExtensions.ts",
+      "symbol": "HighlightWithZh"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/agent/applyCanvasToolCall.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/agent/sendFrameToTimeline.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/components/canvasArrivalModel.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/components/canvasResultDrag.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/components/generationCanvasGeometry.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/model/canvasGroup.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/artifact/artifactNodeSlots.tsx",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/BaseGenerationNode.tsx",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/ClipNode.tsx",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/director/DirectorNode.tsx",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/extractShotCutsToNodes.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/extractVideoFrameToNode.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/nodeSizing.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/shotTable/factBridge.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/useNodeImageEditing.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/reactFlow/generationCanvasReactFlowAdapter.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/reactFlow/GenerationCanvasReactFlowNodes.tsx",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/reactFlow/useGenerationCanvasReactFlowEffects.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/store/canvasGraphActions.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/store/canvasNodeActions.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/store/canvasSnapshotNormalizer.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/store/generationCanvasStore.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/store/nodeRunOutcome.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/videoDepth/startVideoDepthDerivation.ts",
+      "symbol": "resolveNodeVisualSize"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/creation/documentTextExtensions.ts",
+      "symbol": "markInputRule"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/creation/documentTextExtensions.ts",
+      "symbol": "markPasteRule"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/components/generationCanvasGeometry.ts",
+      "symbol": "frameBoundsFromMembers"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/model/canvasFrameBounds.ts",
+      "symbol": "frameBoundsFromMembers"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/model/canvasGroup.ts",
+      "symbol": "frameBoundsFromMembers"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/model/canvasGroup.ts",
+      "symbol": "createGroupId"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/plugins/canvasWorkflowTemplates.ts",
+      "symbol": "createGroupId"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/store/canvasGraphActions.ts",
+      "symbol": "frameBoundsFromMembers"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/store/canvasGraphActions.ts",
+      "symbol": "createGroupId"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/store/canvasGroupMoveActions.ts",
+      "symbol": "createGroupId"
+    }
+  ],
+  "door_reduction": {
+    "before": 110,
+    "after": 110,
+    "why_not": "Document reading/writing, rich text schema, storyboard authoring and production landing adapters are separate domain entry points; desktop and web adapters delegate to the same canonical owner rather than removing required entry points."
+  },
+  "generality_proof": "Canonical algorithms execute through injected project/canvas state, avoiding global focused project or DOM dependencies for every host.",
+  "shared_boundaries": [
+    {
+      "path": "src/workbench/project/documentSessionCore.ts",
+      "symbol": "applyWholeDocumentWrite",
+      "responsibility": "Shared markdown, canonical schema text and whole-document write."
+    },
+    {
+      "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "symbol": "createMultiShotCanvasLanding",
+      "responsibility": "Shared idempotent candidate landing and generation outcome semantics."
+    },
+    {
+      "path": "web/productionProjectPort.ts",
+      "symbol": "createWebProductionProjectPort",
+      "responsibility": "Serialized, project-binding-pinned creation project mutations."
+    },
+    {
+      "path": "src/workbench/generationCanvas/model/canvasGroup.ts",
+      "symbol": "createCanvasGroupSnapshot",
+      "responsibility": "Canonical group membership and geometry without renderer undo/event side effects."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "src/workbench/project/documentSessionPort.ts",
+      "entry_point": "applyWholeDocumentWrite",
+      "disposition": "enforced",
+      "evidence": "Baseline renderer document port reexports and calls canonical extracted core."
+    },
+    {
+      "path": "src/workbench/capability/multiShotCanvasLanding.ts",
+      "entry_point": "materializeShots",
+      "disposition": "enforced",
+      "evidence": "Desktop landing becomes the injected adapter of the same shared landing core."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every automatic script and multi-shot turn can hit missing renderer ownership.",
+    "same_class_scan": [
+      "door-map workbenchDocumentPlainText --roots=src,electron,web",
+      "door-map materializeShots --roots=src,electron,web",
+      "read documentSessionPort, agentStoryboardDesign and multiShotCanvasLanding owners",
+      "door-map complete changed production files --roots=src,electron,web (actual exported symbols, including types and read adapters)",
+      "door-map actual shared owner dependency references markInputRule markPasteRule HighlightWithZh AnyExtension createGroupId frameBoundsFromMembers resolveNodeVisualSize --roots=src,electron,web",
+      "P1 RW: document resolver admission is one owner; characteristic red tests cover later document creation and another explicit selector before refactoring."
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "web/productionProjectPort.ts",
+    "invariant": "Project-pinned ports use one canonical mutation owner on both hosts.",
+    "failure_mode": "Invalid project/document/preconditions throw before persistence.",
+    "exception_policy": "none",
+    "strategy": "Extract canonical algorithms and inject host-specific state/persistence boundaries.",
+    "artifacts": [
+      "src/workbench/project/documentSessionCore.ts",
+      "src/workbench/capability/multiShotCanvasLandingCore.ts",
+      "web/productionProjectPort.ts",
+      "src/workbench/generationCanvas/model/canvasGroup.ts"
+    ]
+  },
+  "regression_tests": [
+    "web/productionProjectPort.test.ts"
+  ],
+  "class_regression_tests": [
+    "web/productionProjectPort.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "src/workbench/project/documentSessionPort.ts",
+      "src/workbench/capability/multiShotCanvasLanding.ts"
+    ],
+    "rationale": "Algorithm copies removed from adapters and moved to shared owners in the same change."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "Existing Tiptap schema and Nomi domain owners retained; this is host adapter extraction.",
+    "exit_criteria": []
+  },
+  "migration": "Existing persisted documents and candidate metadata remain identical; no data migration.",
+  "residual_risks": [
+    "Browser and GPU evidence must be provided by coordinator before merge."
+  ],
+  "invariant_owner_layer": {
+    "layer": "web/productionProjectPort.ts",
+    "tests": [
+      "web/productionProjectPort.test.ts"
+    ]
+  },
+  "detected_by": "user",
+  "recurrence_check_on": "2026-11-11"
+}

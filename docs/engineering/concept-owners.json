@@ -1289,12 +1289,12 @@
       "fact_kind": "projection",
       "migration_status": "converged",
       "owner": {
-        "path": "src/workbench/capability/multiShotCanvasLanding.ts",
+        "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
         "symbol": "applyShotGeneration"
       },
       "write_api": [
         {
-          "path": "src/workbench/capability/multiShotCanvasLanding.ts",
+          "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
           "symbol": "applyShotGeneration"
         }
       ],
@@ -1302,10 +1302,12 @@
       "allowed_consumers": [
         "electron/productionRun/multiShotCanvasLanding.ts",
         "electron/shared/productionShotPhase.ts",
-        "src/workbench/generationCanvas/store/canvasSnapshotNormalizer.ts"
+        "src/workbench/generationCanvas/store/canvasSnapshotNormalizer.ts",
+        "src/workbench/capability/multiShotCanvasLanding.ts",
+        "web/productionProjectPort.ts"
       ],
       "since": "2026-09-26",
-      "notes": "制作投影写进节点的那条运行记录（id 由 productionShotPhase.productionRunRecordId 生成、isProductionRunRecord 认）只归制作投影写：主进程 buildMaterializeShotsPayload 算出每镜的「生成中 / 失败 / 结束 / 出片」，渲染层 applyShotGeneration 落到节点上。画布自己的重开收敛（canvasSnapshotNormalizer.convergeStuckMidFlightNode）不许碰它——2026-09-26 真付费 T5：重开窗口后在跑的第 1 镜被当幽灵收成空闲，看着像没在跑（合同 docs/fixes/2026-09-26-inflight-shot-reload-display.root-cause.json）。"
+      "notes": "制作投影写进节点的那条运行记录（id 由 productionShotPhase.productionRunRecordId 生成、isProductionRunRecord 认）只归制作投影写：主进程 buildMaterializeShotsPayload 算出每镜的「生成中 / 失败 / 结束 / 出片」，渲染层 applyShotGeneration 落到节点上。画布自己的重开收敛（canvasSnapshotNormalizer.convergeStuckMidFlightNode）不许碰它——2026-09-26 真付费 T5：重开窗口后在跑的第 1 镜被当幽灵收成空闲，看着像没在跑（合同 docs/fixes/2026-09-26-inflight-shot-reload-display.root-cause.json）。 2026-10-12：原算法移入注入状态的shared core；桌面文件只保留adapter，Web读写真实项目payload。"
     },
     {
       "name": "渲染层发给制作 Run 的命令号（怎么造 + IPC 认不认）",
@@ -3363,11 +3365,21 @@
         {
           "path": "electron/capabilityCore/canvasReadSurfacePort.ts",
           "symbol": "createCanvasReadSurfacePortRuntime"
+        },
+        {
+          "path": "src/workbench/project/documentSessionCore.ts",
+          "symbol": "applyWholeDocumentWrite"
+        },
+        {
+          "path": "web/productionProjectPort.ts",
+          "symbol": "createWebProductionProjectPort"
         }
       ],
       "forbidden_derivations": [],
       "allowed_consumers": [
-        "electron/capabilityCore/canvasReadExecutionRuntime.ts"
+        "electron/capabilityCore/canvasReadExecutionRuntime.ts",
+        "src/workbench/project/documentSessionCore.ts",
+        "web/productionProjectPort.ts"
       ],
       "since": "2026-10-01",
       "notes": "一次改动型请求渲染层回了错误码：它在碰文稿之前验目标发现对不上而拒绝（surface_port_stale）= 结局已知，什么都没执行，如实往上报；被取消 / 端口不可用 / 被挂起 / 绑定过期可能发生在派发之后 = 结局不明，才是 capability_receipt_unresolved。把已知拒绝当不明会让回执永远停在 preparing（pb04 走查 agent-write-receipt-stuck 的第一根因）。"
@@ -3983,12 +3995,20 @@
           "symbol": "buildMaterializeShotsPayload"
         },
         {
-          "path": "src/workbench/capability/multiShotCanvasLanding.ts",
+          "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
           "symbol": "materializeShots"
         },
         {
           "path": "src/workbench/production/watchDeletedProductionNodes.ts",
           "symbol": "watchDeletedProductionNodes"
+        },
+        {
+          "path": "src/workbench/capability/multiShotCanvasLandingCore.ts",
+          "symbol": "createMultiShotCanvasLanding"
+        },
+        {
+          "path": "src/workbench/generationCanvas/model/canvasGroup.ts",
+          "symbol": "createCanvasGroupSnapshot"
         }
       ],
       "forbidden_derivations": [],
@@ -3997,10 +4017,14 @@
         "electron/productionRun/productionRunCanvasLandingReducer.ts",
         "electron/capabilityCore/appIntegration.ts",
         "src/workbench/production/ProductionCanvasLandingHost.tsx",
-        "src/workbench/production/reportDetachedShotNodes.ts"
+        "src/workbench/production/reportDetachedShotNodes.ts",
+        "src/workbench/capability/multiShotCanvasLandingCore.ts",
+        "src/workbench/generationCanvas/model/canvasGroup.ts",
+        "src/workbench/capability/multiShotCanvasLanding.ts",
+        "web/productionProjectPort.ts"
       ],
       "since": "2026-10-03",
-      "notes": "「这一镜的节点在不在画布上」只有已装载的画布文档说了算；Run 里的 nodeId / canvasDetached 只是上报留下的记录（合同 docs/fixes/2026-10-03-switch-project-landing.root-cause.json，S1-5）。写这份记录的只有两条：删节点上报 watchDeletedProductionNodes（只认同一份已装载画布上的消失——前后两拍 isReady 都成立；装载 / 卸下只重记基线）和落地绑定（canvasLandingHost → plan.bind-shot-nodes）。每一次落地投影（确认即落 / 草稿 / 跟随 / 打开项目对账，含已结束的 Run）都把记了 detached 的镜投成 existingOnly：节点真不在不复活，节点还在就对上真实状态并回报绑定；纠正型绑定的命令号带它纠正的 revision，仓库的命令号幂等重放吞不掉它。不许再在别处按 canvasDetached 把一镜从投影里滤掉。"
+      "notes": "「这一镜的节点在不在画布上」只有已装载的画布文档说了算；Run 里的 nodeId / canvasDetached 只是上报留下的记录（合同 docs/fixes/2026-10-03-switch-project-landing.root-cause.json，S1-5）。写这份记录的只有两条：删节点上报 watchDeletedProductionNodes（只认同一份已装载画布上的消失——前后两拍 isReady 都成立；装载 / 卸下只重记基线）和落地绑定（canvasLandingHost → plan.bind-shot-nodes）。每一次落地投影（确认即落 / 草稿 / 跟随 / 打开项目对账，含已结束的 Run）都把记了 detached 的镜投成 existingOnly：节点真不在不复活，节点还在就对上真实状态并回报绑定；纠正型绑定的命令号带它纠正的 revision，仓库的命令号幂等重放吞不掉它。不许再在别处按 canvasDetached 把一镜从投影里滤掉。 2026-10-12：原算法移入注入状态的shared core；桌面文件只保留adapter，Web读写真实项目payload。"
     },
     {
       "name": "主进程按项目寻址的渲染层工作在哪个项目寿命里签发",

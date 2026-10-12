@@ -51,6 +51,9 @@ export class WebGenerationJobs {
       } else if (job.receipt && !job.result && !job.error) { this.watch(job); void this.collect(job).catch(error => this.fail(job, error)) }
     }
   }
+  hasPendingConnection(vendorKey: string): boolean {
+    return [...this.jobs.values()].some(job => job.payload.vendor === vendorKey && !job.result && !job.error)
+  }
   async submit(raw: unknown): Promise<TaskResult> {
     const payload = inputSchema.parse(raw)
     const { projectId, nodeId, idempotencyKey, modelKey } = payload.request.extras

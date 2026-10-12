@@ -6,7 +6,7 @@ import { getDesktopBridge } from '../../desktop/bridge'
 import type { WorkbenchProjectPayload, WorkbenchProjectRecordV1 } from './projectRecordSchema'
 import type { ProjectHydrationGuard } from './projectCanvasReadSurface'
 
-export function readCurrentWorkbenchProjectPayload(): WorkbenchProjectPayload {
+export function readCurrentWorkbenchProjectPayload(projectId = activeWorkbenchProjectSaveTarget?.projectId): WorkbenchProjectPayload {
   const workbench = useWorkbenchStore.getState()
   const generation = useGenerationCanvasStore.getState()
   return {
@@ -18,6 +18,7 @@ export function readCurrentWorkbenchProjectPayload(): WorkbenchProjectPayload {
     categories: workbench.categories,
     // S5-b-1:尾部重放游标(append 回执维护;回执延迟导致略旧也安全——reducer 幂等)
     generationCanvasLastSeq: getCanvasEventLastSeq(),
+    ...(projectId && getDesktopBridge()?.web ? { webAgentSeenNodeIds: [...getDesktopBridge()!.web!.appliedAgentNodeIds(projectId)] } : {}),
     storyboardDesignsByDocumentId: workbench.storyboardDesignsByDocumentId,
     editingPanelLayout: workbench.editingPanelLayout,
   }
@@ -288,7 +289,7 @@ export function subscribeWorkbenchProjectPersistence(options: WorkbenchProjectPe
   }
   const saveIfReady = () => {
     if (disposed || !ownsRuntime()) return
-    ownedPayload = readCurrentWorkbenchProjectPayload()
+    ownedPayload = readCurrentWorkbenchProjectPayload(options.projectId)
     saveScheduled = true
     if (saveTimer) clearTimeout(saveTimer)
     saveTimer = setTimeout(() => { void flushSave() }, PROJECT_SAVE_DEBOUNCE_MS)
@@ -302,7 +303,7 @@ export function subscribeWorkbenchProjectPersistence(options: WorkbenchProjectPe
     canPersist: () => !disposed && ownsRuntime(),
     persist: async () => {
       if (!ownsRuntime()) return null
-      ownedPayload = readCurrentWorkbenchProjectPayload()
+      ownedPayload = readCurrentWorkbenchProjectPayload(options.projectId)
       saveScheduled = true
       let record: WorkbenchProjectRecordV1 | null
       do {

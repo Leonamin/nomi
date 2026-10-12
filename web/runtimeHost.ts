@@ -8,7 +8,7 @@ const root = process.env.NOMI_WEB_DATA_DIR
 if (!root || !path.isAbsolute(root)) throw new Error('NOMI_WEB_DATA_DIR must be an absolute, dedicated directory')
 fs.mkdirSync(root, { recursive: true, mode: 0o700 })
 if (fs.realpathSync(root) !== path.resolve(root) || /(?:^|\/)nomi-data(?:\/|$)/.test(root)) throw new Error('The web data root must be independent and cannot be a symlink or the desktop data directory')
-for (const [key, leaf] of [['NOMI_SETTINGS_DIR', 'profile'], ['NOMI_PROJECTS_DIR', 'projects']] as const) {
+for (const [key, leaf] of [['NOMI_SETTINGS_DIR', 'profile'], ['NOMI_PROJECTS_DIR', 'projects'], ['NOMI_CAPABILITY_DIR', 'profile/capability-core']] as const) {
   const expected = path.join(root, leaf)
   if (process.env[key] && process.env[key] !== expected) throw new Error(`${key} must be inside the web data directory`)
   fs.mkdirSync(expected, { recursive: true, mode: 0o700 })
