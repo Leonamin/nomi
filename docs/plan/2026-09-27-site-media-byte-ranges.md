@@ -1,6 +1,6 @@
 # 官网视频支持分段请求（Safari / iPhone 能播宣传片）
 
-> 📋 方案待拍板 · 状态由 docs-autosync 自动登记，作者请按实修改
+> 📎 从 upstream v0.23.1（66d6eaf）继承的参考记录；原文的审批/交付状态不代表本 fork 的在办任务。
 
 - 日期：2026-09-27
 - 触发：#901 手动部署上线后核对线上，`Range: bytes=0-1` 请求 `nomiaqm.com/assets/video/nomi-0.22-film.mp4` 回的是 200 + 整个 8 MB 文件（走不走本机代理都一样）。

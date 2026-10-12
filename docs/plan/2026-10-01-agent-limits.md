@@ -1,6 +1,6 @@
 # Agent 的上限与时限：每次请求的输入预算 · 写入回执的准备时限与已知拒绝
 
-> 📋 方案待拍板 · 状态由 docs-autosync 自动登记，作者请按实修改
+> 📎 从 upstream v0.23.1（66d6eaf）继承的参考记录；原文的审批/交付状态不代表本 fork 的在办任务。
 
 > 状态：已实现（PR 见开 PR 后的正文）。来源：铁律走查 pb04（长对话）的两条规则 `input-tokens-over-budget`（10 次）、`agent-write-receipt-stuck`（1 次）；真实用户反馈两条——「Assistant request exceeded the context window」「这一步的结果没对上账，先别按已完成算」。
 > 对应合同：`docs/fixes/2026-10-01-agent-request-input-budget.root-cause.json`、`docs/fixes/2026-10-01-agent-write-receipt-stuck.root-cause.json`。
