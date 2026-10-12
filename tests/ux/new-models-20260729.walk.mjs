@@ -6,6 +6,7 @@ import { realNomiProfile, seedRealCredentials } from './_realProfile.mjs'
 import fs from 'node:fs'
 import path from 'node:path'
 import { screenshotSettled } from './_assert.mjs'
+import { resolveWalkProjectTemplate } from './fixtures/realProjectTemplate.mjs'
 const shotsDir = path.join(repoRoot, 'tests/ux/shots/new-models-20260729')
 fs.mkdirSync(shotsDir, { recursive: true })
 
@@ -26,7 +27,7 @@ const nodes = [
 const projectId = 'new-models-0001'
 const projDir = path.join(projectsDir, `new-models-${projectId}`)
 fs.mkdirSync(path.join(projDir, '.nomi'), { recursive: true })
-const tmpl = JSON.parse(fs.readFileSync('/Users/aoqimin/Documents/Nomi Projects/未命名项目 06_18 11_56-mqiyx4om-5e071915/.nomi/project.json', 'utf8'))
+const tmpl = resolveWalkProjectTemplate()
 tmpl.id = projectId; tmpl.name = '新模型走查'; tmpl.lastKnownRootPath = projDir
 tmpl.payload.generationCanvas = { nodes, edges: [], selectedNodeIds: [], groups: [] }
 fs.writeFileSync(path.join(projDir, 'project.json'), JSON.stringify(tmpl))
