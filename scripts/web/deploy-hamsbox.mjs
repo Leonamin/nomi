@@ -7,7 +7,7 @@ const base = '/home/leonamin/apps/nomi-web'
 const data = '/home/leonamin/nomi-web-data'
 const origin = 'https://hamsbox.badger-viper.ts.net:8445'
 if (!/^[a-f0-9]{40}$/.test(sha || '')) throw new Error('Pass an exact fetched commit SHA')
-const run = (command, args, cwd, capture = false) => execFileSync(command, args, { cwd, encoding: 'utf8', stdio: capture ? 'pipe' : 'inherit' })
+const run = (command, args, cwd, shouldCaptureOutput = false) => execFileSync(command, args, { cwd, encoding: 'utf8', stdio: shouldCaptureOutput ? 'pipe' : 'inherit' })
 const release = path.join(base, 'releases', sha)
 const current = path.join(base, 'current')
 const assertClean = dir => {

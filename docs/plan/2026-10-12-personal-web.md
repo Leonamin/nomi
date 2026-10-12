@@ -1,14 +1,14 @@
 # Nomi 개인용 웹 버전 — 설계와 실제 검증 계획
 
-작성일: 2026-10-12. 구현선: `nomi-web-implementation`. 상태: 조사 및 샘플 작성, 제품 구현 전.
+작성일: 2026-10-12. 구현선: `nomi-web-implementation`. 실제 GPU·브라우저 검증 결과: [검증 보고서](../qa/2026-10-12-personal-web.md). Git 합입과 exact SHA CI 수령 여부는 PR #1 및 delivery receipt로 별도 확인한다.
 
 ## 개발 기준
 
 - 검증된 소스: upstream v0.23.1, `66d6eafed07ad6239acd765dd05c9eb0870cf849`. 이전 실제 검증 보고서: `/Users/leonamin/.codex/qa/nomi/2026-10-12/report.md`.
 - 조사한 최신 upstream main: `8f7a9271854cb656fda1ba77f090a6b63a8c4e3c`. 검증 버전에서 1,799커밋, 4,926파일, 308,132줄 추가, 38,580줄 삭제. 현재 package version 문자열도 0.23.1이므로 버전 문자열 대신 SHA로 기준을 고정한다.
 - 주요 차이: 생성 목록 화면, 캔버스 외곽 컨트롤과 그룹 배치, 입력 이벤트, source-video 편집, 생성 복구 및 개발 규칙 변경. 웹 포팅과 동시에 전부 반영하면 기존 실제 검증을 기준으로 삼기 어렵다.
-- 권장: 새 fork main의 초기 기준만 검증 SHA로 설정한다. 이후 모든 변경은 최신 개인 fork origin/main에서 별도 sibling worktree와 `feat/personal-web` 브랜치로 시작하고 PR로 전달한다. 초기 main 설정은 저장소 규칙의 예외가 필요하므로 사용자 결정 대기. upstream 추적 remote는 유지한다.
-- 생성한 공개 fork: https://github.com/Leonamin/nomi-web . 현재 main은 upstream 최신 SHA이며, Mac checkout에는 origin을 연결했다. 아직 main ref 변경, 작업 브랜치 생성, 구현 커밋, hamsbox 설치는 하지 않았다.
+- 사용자 승인으로 새 fork main의 초기 기준을 검증 SHA로 설정했다. 그 기준의 최신 개인 fork origin/main에서 sibling worktree `/Users/leonamin/dev/nomi-web-personal-web`, `feat/personal-web`을 생성하고 preflight/install 후 구현했다. 이후 main 직접 push와 force push 없이 PR로 전달한다. upstream 추적 remote는 유지한다.
+- 공개 fork: https://github.com/Leonamin/nomi-web . 개인 fork [PR #1](https://github.com/Leonamin/nomi-web/pull/1)에서 전달하며, hamsbox에는 push한 커밋을 fetch해서만 배포했다. 원래 Mac checkout과 기존 hamsbox Nomi checkout을 수정하지 않았다.
 
 ## 구조 조사와 구현 경계
 
