@@ -22,6 +22,12 @@ const OS_LOCALES = [
 ]
 
 describe('locale 归一：渲染层与主进程逐项一致', () => {
+  it('한국어 시스템을 한국어로 유지한다', () => {
+    for (const raw of ['ko', 'ko-KR', 'KO-kr', ' ko-KR ']) {
+      expect(normalizeSystemLocale(raw)).toBe('ko')
+      expect(normalizeDesktopLocale(raw)).toBe('ko')
+    }
+  })
   it('每个 OS locale 串在两侧得到同一个结果', () => {
     for (const raw of OS_LOCALES) {
       expect(normalizeSystemLocale(raw), `mismatch for ${raw}`).toBe(normalizeDesktopLocale(raw))
@@ -37,7 +43,7 @@ describe('locale 归一：渲染层与主进程逐项一致', () => {
 
   // 这就是这次修的病：非中文非英文的系统必须落英文,不能落中文。
   it('既非中文也非英文的系统落英文，不落中文', () => {
-    for (const raw of ['tr-TR', 'de-DE', 'fr-FR', 'ja-JP', 'ko-KR', 'ru-RU']) {
+    for (const raw of ['tr-TR', 'de-DE', 'fr-FR', 'ja-JP', 'ru-RU']) {
       expect(normalizeSystemLocale(raw), `renderer ${raw}`).toBe('en')
       expect(normalizeDesktopLocale(raw), `main ${raw}`).toBe('en')
     }

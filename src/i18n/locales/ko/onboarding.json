@@ -1,0 +1,27 @@
+{
+  "skip": "건너뛰기",
+  "trigger": "처음 시작하기",
+  "progressLabel": "시작 안내: {{total}}단계 중 {{done}}단계 완료",
+  "panelLabel": "4단계로 시작하기",
+  "collapse": "접기",
+  "fullHandbook": "전체 안내",
+  "dismiss": "안내 닫기",
+  "steps": {
+    "model": {
+      "label": "모델 연결하기",
+      "hint": "발급받은 API 키로 AI 서비스를 연결하세요."
+    },
+    "storyboard": {
+      "label": "장면 하나 구상하기",
+      "hint": "구상에서 Nomi에게 아이디어를 장면으로 나눠 달라고 하세요."
+    },
+    "generated": {
+      "label": "이미지 만들기",
+      "hint": "장면 카드에서 모델을 고르고 만들기를 누르세요."
+    },
+    "exported": {
+      "label": "영상 내보내기",
+      "hint": "타임라인에 클립을 놓고 MP4로 내보내세요."
+    }
+  }
+}

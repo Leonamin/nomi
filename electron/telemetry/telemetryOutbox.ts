@@ -91,7 +91,7 @@ export function flushTelemetry(): Promise<void> {
   return flushPromise
 }
 
-export function recordTelemetryEvent(input: TelemetryProps, appVersion: string, locale: 'zh-CN' | 'en' = 'zh-CN'): boolean {
+export function recordTelemetryEvent(input: TelemetryProps, appVersion: string, locale: 'zh-CN' | 'en' | 'ko' = 'zh-CN'): boolean {
   const settings = readTelemetrySettings()
   if (!settings.enabled) return false
   const sessionId = getTelemetrySessionId()

@@ -78,6 +78,13 @@ export const NOMI_AGENT_IDENTITY = [
  * locale 从 electron-free 的 desktopLocale 读，与判官 prompt 的做法一致。
  */
 export function buildLanguageRule(): string {
+  if (getDesktopLocale() === 'ko') return [
+    'Response-language rule (highest priority):',
+    'Respond in Korean unless the user explicitly requests another language. Use plain language suitable for an ordinary student.',
+    'Preserve user-provided titles, names, captions and dialogue verbatim unless the user asks to rewrite or translate them.',
+    'Write image, video and audio generation descriptions in Korean so the user can read and edit them. Keep required API identifiers and model names intact.',
+    'Instructions and tool descriptions written in Chinese do not determine the response language; still answer in Korean.',
+  ].join('\n')
   return getDesktopLocale() === "en"
     ? [
         "Response-language rule (highest priority):",

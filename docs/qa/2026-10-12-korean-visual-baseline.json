@@ -1,0 +1,620 @@
+{
+  "baseline_sha": "3f5ba5e728b4123a4d18d470129ff31db0eae985",
+  "task_failed": 152,
+  "baseline_failed": 152,
+  "failed_cases_equal": true,
+  "task_only_failures": [],
+  "baseline_only_failures": [],
+  "actual_png_compared": 152,
+  "actual_png_identical": 144,
+  "comparisons": [
+    {
+      "path": "design-lab.visual-design-l-df24b-expanded-·-锚区-·-展开（与镜头行同解剖）/storyboard/sb-zone-02-anchors-expanded-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-855fd-ginal-·-行-·-来自剧本未改（F-SEG-B）/storyboard/sb-row-16-script-source-original-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-257e6-oin-·-拖入反馈-·-框边亮起、计数「3-→-4」/canvas-frame/canvas-frame-03-drag-join-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-68e0e-m-9-16-·-全-9-16-五行-·-竖版同一只盒/storyboard/sb-zone-13-uniform-9-16-actual.png",
+      "identical_bytes": false
+    },
+    {
+      "path": "design-lab.visual-design-l-eda14-d-·-折叠成卡-·-沿用现役形态（一张卡-左右锚点）/canvas-frame/canvas-frame-05-collapsed-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-22c5e-e-·-封闭-tone-词表（生产零调用-·-待推广）/primitives-surfaces/ps-02-design-badge-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-39f8e-Select-·-触发-pill-的形态矩阵（收起态）/primitives-forms/pf-07-nomi-select-triggers-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-265c8--empty-·-空框-·-刚画完，还没放东西（虚线）/canvas-frame/canvas-frame-01-empty-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-b7988-loading-·-第一次用-·-卡已经在了，权重在下/depth-action/depth-action-02-downloading-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-8c522--·-一家都没接入-·-诚实空态：说清现状-一步去接入/vendor-order/vo-04-picker-empty-no-vendor-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-4e71d-ences-·-槽矩阵-·-文生视频（该模式不吃参考）/storyboard/sb-slot-01-no-references-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-96016-omiSkeleton-·-加载态两件（按真实调用点）/primitives-surfaces/ps-04-progress-skeleton-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-a2146-态-pf-audio-failed-·-音频-·-失败/process-feedback/pf-audio-failed-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-b8161--06-failed-dark-·-没有接进来-·-暗/settings/assisted-06-failed-dark-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-f42ba-态-pf-image-queued-·-图片-·-排队/process-feedback/pf-image-queued-actual.png",
+      "identical_bytes": false
+    },
+    {
+      "path": "design-lab.visual-design-l-2dcd1-02-clip-·-属性面板-·-片段（选中一段视频）/editing/inspector-02-clip-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-ea29e-pped-·-行-·-本次跳过（60-标签，≠-锁定）/storyboard/sb-row-10-skipped-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-96121-ne-×-三-variant（生产零调用-·-待推广）/primitives-surfaces/ps-01-status-badge-tones-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-767e5-槽浮层-·-描述-「要忽略的特征」（参考列本身不变宽）/storyboard/sb-slot-07-slot-popover-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-65a9f--展开态（供应商-chip-行-选中对勾-避让减淡行）/primitives-forms/pf-08-nomi-select-open-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-81109-ames-·-槽矩阵-·-首尾帧（2-个格，各自独立）/storyboard/sb-slot-03-first-last-frames-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-cd7fb-kbenchButton-·-三变体-×-两尺寸全矩阵/primitives-actions/pa-01-workbench-button-matrix-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-b823e-ng-恒配-disabled-type-submit）/primitives-actions/pa-06-design-button-busy-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-c3367-oolbar-dark-·-选中视频-·-浮条（暗色）/depth-action/depth-action-01-toolbar-dark-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-5b996-le-facts-ready-·-拆解表-·-事实就绪/shot-table/shot-table-facts-ready-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-7aac5-eedback-状态-pf-late-·-软超时仍运行/process-feedback/pf-late-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-435ab--fx-organic-·-生成动效-·-有机像素对照/process-feedback/pf-fx-organic-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-543f1-实形态（几乎总被-className-改写尺寸与配色）/primitives-actions/pa-03-workbench-icon-button-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-a0459-iveness-dark-·-未列出旁注与删除-·-暗/catalog-liveness/catalog-liveness-dark-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-9d25b--audio-finalizing-·-音频-·-落盘/process-feedback/pf-audio-finalizing-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-8dbb3--01-dialog-·-快捷键面板-·-11-条键位/editing/shortcuts-01-dialog-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-5d09e--video-finalizing-·-视频-·-落盘/process-feedback/pf-video-finalizing-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-7bd6d-d-状态-sound-04-playing-·-试听中/settings-sound/sound-04-playing-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-9470f-条-·-整片默认画幅（-「已覆盖的-N-镜不跟着变」）/storyboard/sb-zone-04-bulkbar-project-aspect-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-e6b1c-ck-empty-·-播放全部-·-全部未生成（空态）/storyboard/sb-zone-11-playback-empty-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-47739--·-PlatformEvidence-·-三平台证据/find-reference/fr-platform-evidence-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-f72f7--row-·-选中态-·-对勾与-chip-同行不打架/vendor-order/vo-05-picker-selected-row-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-82cdd--audio-submitting-·-音频-·-提交/process-feedback/pf-audio-submitting-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-41230--·-App-之外挂载设计组件的最小-provider/primitives-surfaces/ps-16-preview-host-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-8b044-referred-·-有偏好-·-偏好那家排第一并高亮/vendor-order/vo-01-picker-preferred-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-9dd4b-1-film-·-属性面板-·-整片（没选中任何东西）/editing/inspector-01-film-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-fe786-pported-·-转场选择器-·-甩镜（不支持提示）/editing/picker-03-unsupported-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-0f5d3--帮我接入-·-默认（Claude-Code-已连上）/settings/assisted-01-idle-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-c3d0d--生产真实用到的四变体（outline-零调用，不摆）/primitives-actions/pa-05-design-button-variants-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-7967f--·-行-·-底栏-⋯-开关弹层（生成音频-返回尾帧）/storyboard/sb-row-18-composer-switches-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-3d652-mposite-·-整屏拼装-·-批量条-锚区-分镜表/storyboard/sb-zone-08-screen-composite-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-beb53-archable-展开态（长枚举走搜索-长文件名换行）/primitives-forms/pf-09-nomi-select-searchable-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-6d212-nSearchInput-·-sm-md-×-空-有值/primitives-forms/pf-05-search-input-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-46198-e-dark-·-用-AI-帮我接入-·-默认-·-暗/settings/assisted-05-idle-dark-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-ae156-dited-·-行-·-来自剧本已改（回跳-chip）/storyboard/sb-row-17-script-source-edited-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-83e8f-k-skipped-·-播放全部-·-未生成行灰色跳过/storyboard/sb-zone-10-playback-skipped-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-3eac1-9-·-行-·-画幅覆盖-16-9（横版第一次有身材）/storyboard/sb-row-02-aspect-override-16-9-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-e3c30-x-done-clean-·-生成动效-·-完成零遮挡/process-feedback/pf-fx-done-clean-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-175df-city-·-槽矩阵-·-改图（已放-1，上限-14）/storyboard/sb-slot-06-edit-capacity-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-140f7-状态-pf-preview-dark-·-暗色真实预览/process-feedback/pf-preview-dark-actual.png",
+      "identical_bytes": false
+    },
+    {
+      "path": "design-lab.visual-design-l-9a620-ogress-·-导入中-·-42-（进度驱动的渐显）/process-feedback/pf-import-progress-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-c8ec8-ne-·-完成-·-它就是一个普通视频节点，标题带出身/depth-action/depth-action-04-done-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-6d28c-ack-状态-pf-zoom-60-·-60-缩放可读/process-feedback/pf-zoom-60-actual.png",
+      "identical_bytes": false
+    },
+    {
+      "path": "design-lab.visual-design-l-ade16-入线（键盘可达：focus-也现身，不只-hover）/storyboard/sb-zone-07-insert-line-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-b19e1-firmDialog-·-危险动作确认（danger）/primitives-surfaces/ps-11-confirm-dialog-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-f8a8b-veness-light-·-未列出旁注与删除-·-明/catalog-liveness/catalog-liveness-light-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-2ae15-pf-fx-reduced-·-生成动效-·-减弱动态/process-feedback/pf-fx-reduced-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-429e1-d-·-行-·-底栏装不下：清晰度进-⋯，模型停在下限/storyboard/sb-row-19-composer-demoted-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-cb9d4-equired-·-槽矩阵-·-首帧（1-个红必填格）/storyboard/sb-slot-02-first-frame-required-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-46a86-ing-required-·-行-·-缺必填参考（红）/storyboard/sb-row-05-missing-required-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-ee684-issolve-·-转场选择器-·-溶解（带时长步进）/editing/picker-01-dissolve-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-76a42-review-reveal-·-生成动效-·-真帧揭示/process-feedback/pf-fx-preview-reveal-actual.png",
+      "identical_bytes": false
+    },
+    {
+      "path": "design-lab.visual-design-l-eb9bf-图标钮-禁用外包-span-长文案覆写（三种真实形态）/primitives-surfaces/ps-10-tooltip-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-14acb--关）-DesignNumberInput（无步进器）/primitives-forms/pf-02-textarea-number-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-19f18-ns-specimen-dark-·-已实施-·-暗色/creation-columns/columns-specimen-dark-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-f263d-态-pf-video-queued-·-视频-·-排队/process-feedback/pf-video-queued-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-999c4-ry-default（项目库主入口，全仓仅此-3-张）/primitives-actions/pa-04-action-card-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-cbf8e--aspect-·-行-·-待生成（画幅继承整片默认）/storyboard/sb-row-01-draft-inherited-aspect-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-cb50d-dors-·-默认走哪家-·-两家（首尾两端的禁用态）/vendor-order/vo-09-settings-two-vendors-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-e6535-03-text-·-属性面板-·-字幕（选中一条字幕）/editing/inspector-03-text-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-fda83-w-09-locked-·-行-·-已锁定（不进批量）/storyboard/sb-row-09-locked-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-1ca8d--状态-sound-03-custom-·-自定义文件/settings-sound/sound-03-custom-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-a5479-·-供应商清单里暂时没有它-·-如实标一句，照样选得了/vendor-order/vo-11-picker-unlisted-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-1daa8--collapsed-·-锚区-·-收起（紧凑参考条）/storyboard/sb-zone-01-anchors-collapsed-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-c3c29-4-music-·-属性面板-·-配乐（选中一段配乐）/editing/inspector-04-music-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-f314a--行-·-装不下时点开-⋯：挪下来的枚举是能改值的控件/storyboard/sb-row-20-composer-demoted-open-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-76765-s-NomiSegmented（原生）·-同轴两套并排/primitives-forms/pf-06-segmented-controls-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-3a584--final-reveal-·-生成动效-·-最终揭示/process-feedback/pf-fx-final-reveal-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-20165--08-修复前-size-是死的，三档全渲染成-sm）/primitives-actions/pa-08-design-button-sizes-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-4433e-image-generating-·-图片-·-生成中/process-feedback/pf-image-generating-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-1f9b5-型框里显示哪些、排在哪-·-含「已隐藏-·-2」找回组/vendor-order/vo-10-settings-model-box-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-ea78c-3-saved-·-导出成功-·-结果行报条目数与体积/settings/privacy-03-saved-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-bdec2-ading-dark-·-第一次用-·-下载中（暗色）/depth-action/depth-action-02-downloading-dark-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-8e27a-·-全能参考（图-视频-音频三格，图槽叠放-5-30）/storyboard/sb-slot-04-omni-stacked-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-25ba8-video-generating-·-视频-·-生成中/process-feedback/pf-video-generating-actual.png",
+      "identical_bytes": false
+    },
+    {
+      "path": "design-lab.visual-design-l-e1105-ing-·-处理中-·-进度在顶上，画面全是实时深度帧/depth-action/depth-action-03-processing-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-dc751--·-有没接入的家-·-它们直接不出现（不是灰显沉底）/vendor-order/vo-03-picker-hides-unconnected-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-588ab-override-1-1-·-行-·-画幅覆盖-1-1/storyboard/sb-row-03-aspect-override-1-1-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-c4566-态-pf-audio-queued-·-音频-·-排队/process-feedback/pf-audio-queued-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-aae5b-here-·-另一份-Nomi-·-常驻归属与主动切换/host-config/host-config-01-elsewhere-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-fb850-ve-·-拖出反馈-·-框边变虚线、计数「3-→-2」/canvas-frame/canvas-frame-04-drag-leave-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-f52ca--image-submitting-·-图片-·-提交/process-feedback/pf-image-submitting-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-e2e61-erence-·-无偏好-·-按供应商分级（官方在前）/vendor-order/vo-02-picker-no-preference-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-ddcd4-场分组-·-组头（合计时长-缺必填计数）-五镜混排画幅/storyboard/sb-zone-05-scene-groups-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-51543-贴锚点展开（onClose-是必需接线，不是可选装饰）/primitives-surfaces/ps-09-anchored-popover-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-bc365-lumns-specimen-·-已实施-·-统一外框/creation-columns/columns-specimen-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-d11af-单（含「交给-Agent-改这一镜」「这一镜换画幅」）/storyboard/sb-row-13-row-menu-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-d64d2--·-正在打包（按钮禁用-·-文案换成「正在打包…」）/settings/privacy-02-exporting-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-a1b64-ing（loading-自动禁用-aria-busy）/primitives-actions/pa-02-workbench-button-busy-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-719e6--menu-·-⋯-菜单-·-头部那颗与框边右键同一份/canvas-frame/canvas-frame-06-menu-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-64511-i-身份族-·-字标-品牌-标记-转圈-AI-标-步进/primitives-surfaces/ps-14-identity-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-a8048-层-单字母回退-无回退（sm-下拉触发、md-下拉行）/primitives-surfaces/ps-15-identity-icon-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-9bec0-apsed-dark-·-A-1-·-收起态-·-暗色/creation-columns/columns-collapsed-dark-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-14d9e-dle-·-隐私与诊断-·-默认（遥测关-·-未导出）/settings/privacy-01-idle-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-7da88--video-submitting-·-视频-·-提交/process-feedback/pf-video-submitting-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-a77ce--tree-·-A-1-·-分镜面左栏-同一张圆角卡片/creation-columns/columns-storyboard-tree-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-ddb22-态-pf-video-failed-·-视频-·-失败/process-feedback/pf-video-failed-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-6c966-ced-·-导入中-·-减弱动态（静态格子，无进度线）/process-feedback/pf-import-reduced-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-ea7f0-audio-generating-·-音频-·-生成中/process-feedback/pf-audio-generating-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-1cae9-f-fx-generating-·-生成动效-·-等待/process-feedback/pf-fx-generating-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-b74ea-ted-dragover-·-行-·-选中-拖拽落点线/storyboard/sb-row-12-selected-dragover-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-e5fc8-anged-·-行-·-参考已变（只报事实-一键补跑）/storyboard/sb-row-11-ref-changed-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-62050-06-generating-·-行-·-生成中-37-/storyboard/sb-row-06-generating-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-f2698-lumns-current-·-生产-·-真实创作外壳/creation-columns/columns-current-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-4704d-·-行-·-已生成（动作条在图下方-tag-变体计数）/storyboard/sb-row-08-done-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-81e14-t-table-selected-·-分镜表-·-选中/shot-table/shot-table-selected-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-019ed-6-9-五行-·-四条线逐行对齐（媒体盒铺满、无黑边）/storyboard/sb-zone-12-uniform-16-9-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-ce42a-ying-·-播放本场-·-播放中（镜-i-n-进度）/storyboard/sb-zone-09-playback-playing-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-6e17b-r-02-cut-·-转场选择器-·-硬切（无时长行）/editing/picker-02-cut-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-315bd-age-shot-·-行-·-图片镜（时长语义-停留）/storyboard/sb-row-15-image-shot-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-c7468--sound-状态-sound-01-on-·-默认开/settings-sound/sound-01-on-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-5c48d-s-·-同一家多条连接-·-只有重名的那行改显示连接名/vendor-order/vo-07-picker-sibling-connections-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-90917-llapsed-·-A-1-·-创作面收起「创作内容」/creation-columns/columns-collapsed-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-e0a78-w-07-failed-·-行-·-失败（红边-重试）/storyboard/sb-row-07-failed-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-e7246-阵-·-同一-mode-内必填度不同（首帧红-尾帧灰）/storyboard/sb-slot-05-mixed-required-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-7df3f--failed-·-导出失败-·-结果行说人话并请再试/settings/privacy-04-failed-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-07379-家-·-一行状态-去连接（卡上没有第二颗「一键接入」）/settings/assisted-02-not-connected-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-66236-用仍受控）-DesignCheckbox-唯一真实用法/primitives-forms/pf-03-switch-checkbox-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-4f509-在接-·-五步进度（stage-certifying）/settings/assisted-03-progress-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-b485c-sound-状态-sound-02-off-·-已关闭/settings-sound/sound-02-off-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-7cbd0-态-pf-image-failed-·-图片-·-失败/process-feedback/pf-image-failed-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-c8605-r-·-行-·-历史变体抽屉（显式「采用」才换画面格）/storyboard/sb-row-14-variants-drawer-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-65c44--状态-fr-main-·-Main-·-真实归一结果/find-reference/fr-main-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-7d12c--filled-·-有内容-·-实线-标题-说明-计数/canvas-frame/canvas-frame-02-filled-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-21c77-oolbar-·-选中视频-·-浮条上多了「提取深度」/depth-action/depth-action-01-toolbar-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-ccf02--改尺寸-·-aria-label-title-成对）/primitives-actions/pa-07-icon-action-button-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-c932e-态（受控-·-外挂标题-·-布尔报错-·-等宽-密码）/primitives-forms/pf-01-text-input-four-states-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-df3ca--·-多选浮条-·-纸白胶囊（含「交给-Agent」）/storyboard/sb-zone-06-selection-toolbar-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-00393--·-原始错误码-Key-不丢（不复用「进行中」的壳）/settings/assisted-04-failed-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-cc067--·-六态同屏（空-生成中-失败-已生成-已锁-文字）/storyboard/sb-zone-03-anchor-state-matrix-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-a3148-dback-状态-pf-preview-·-真实预览帧/process-feedback/pf-preview-actual.png",
+      "identical_bytes": false
+    },
+    {
+      "path": "design-lab.visual-design-l-03ca8-tings-order-·-默认走哪家-·-三家可排序/vendor-order/vo-08-settings-order-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-bee00-3-processing-dark-·-处理中（暗色）/depth-action/depth-action-03-processing-dark-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-b5e38--image-finalizing-·-图片-·-落盘/process-feedback/pf-image-finalizing-actual.png",
+      "identical_bytes": false
+    },
+    {
+      "path": "design-lab.visual-design-l-561b5-型框-·-按手排的顺序、藏起来的不在、手点过的那家高亮/vendor-order/vo-06-picker-model-box-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-24232-ates-·-FailStates-·-英文检索空结果/find-reference/fr-fail-states-actual.png",
+      "identical_bytes": true
+    },
+    {
+      "path": "design-lab.visual-design-l-6a94d-ction-04-done-dark-·-完成（暗色）/depth-action/depth-action-04-done-dark-actual.png",
+      "identical_bytes": true
+    }
+  ]
+}

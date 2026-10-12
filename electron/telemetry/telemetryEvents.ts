@@ -20,7 +20,7 @@ export type ToolCallBucket = '0' | '1-3' | '4+'
 export type ModelClass = 'builtin' | 'custom' | 'local'
 
 export type TelemetryProps =
-  | { eventName: 'app.started'; props: { appMajor: number; appMinor: number; osFamily: 'macos' | 'windows' | 'linux' | 'other'; locale: 'zh-CN' | 'en' } }
+  | { eventName: 'app.started'; props: { appMajor: number; appMinor: number; osFamily: 'macos' | 'windows' | 'linux' | 'other'; locale: 'zh-CN' | 'en' | 'ko' } }
   | { eventName: 'feature.used'; props: { featureId: FeatureId; result: TelemetryResult } }
   | { eventName: 'generation.completed'; props: { capability: CapabilitySlot; durationBucket: DurationBucket; result: TelemetryResult; attemptCountBucket: AttemptCountBucket; /** 只在 result='failure' 时带：失败类别码，永远不是原文。 */ errorType?: string } }
   | { eventName: 'export.completed'; props: { format: ExportFormat; durationBucket: DurationBucket; result: TelemetryResult } }
@@ -33,7 +33,7 @@ export type TelemetryEnvelope = {
   sessionId: string
   eventName: TelemetryEventName
   props: TelemetryProps['props']
-  systemProps: { locale: 'zh-CN' | 'en'; osFamily: 'macos' | 'windows' | 'linux' | 'other'; appMajor: number; appMinor: number; /** 只在「这个进程是被测试 / 走查启动的」时出现，值恒为 true；真实用户的事件里根本没有这一格。 */ automated?: true }
+  systemProps: { locale: 'zh-CN' | 'en' | 'ko'; osFamily: 'macos' | 'windows' | 'linux' | 'other'; appMajor: number; appMinor: number; /** 只在「这个进程是被测试 / 走查启动的」时出现，值恒为 true；真实用户的事件里根本没有这一格。 */ automated?: true }
 }
 
 const EVENT_SET = new Set<string>(TELEMETRY_EVENT_NAMES)
@@ -99,7 +99,7 @@ export function isTelemetryProps(value: unknown, eventName: TelemetryEventName):
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false
   const props = value as Record<string, unknown>
   if (Object.values(props).some((item) => !isPrimitive(item))) return false
-  if (eventName === 'app.started') return hasExactKeys(props, ['appMajor', 'appMinor', 'osFamily', 'locale']) && Number.isInteger(props.appMajor) && Number.isInteger(props.appMinor) && ['macos', 'windows', 'linux', 'other'].includes(String(props.osFamily)) && ['zh-CN', 'en'].includes(String(props.locale))
+  if (eventName === 'app.started') return hasExactKeys(props, ['appMajor', 'appMinor', 'osFamily', 'locale']) && Number.isInteger(props.appMajor) && Number.isInteger(props.appMinor) && ['macos', 'windows', 'linux', 'other'].includes(String(props.osFamily)) && ['zh-CN', 'en', 'ko'].includes(String(props.locale))
   if (eventName === 'feature.used') return hasExactKeys(props, ['featureId', 'result']) && FEATURE_SET.has(props.featureId as FeatureId) && RESULT_SET.has(props.result as TelemetryResult)
   if (eventName === 'generation.completed') return hasGenerationKeys(props) && CAPABILITY_SET.has(props.capability as CapabilitySlot) && DURATION_SET.has(props.durationBucket as DurationBucket) && RESULT_SET.has(props.result as TelemetryResult) && ATTEMPT_SET.has(props.attemptCountBucket as AttemptCountBucket)
   if (eventName === 'export.completed') return hasExactKeys(props, ['format', 'durationBucket', 'result']) && EXPORT_SET.has(props.format as ExportFormat) && DURATION_SET.has(props.durationBucket as DurationBucket) && RESULT_SET.has(props.result as TelemetryResult)
@@ -108,7 +108,7 @@ export function isTelemetryProps(value: unknown, eventName: TelemetryEventName):
   return false
 }
 
-export function buildTelemetryEnvelope(input: TelemetryProps, sessionId: string, appVersion: string, locale: 'zh-CN' | 'en' = 'zh-CN', platform = process.platform, automated = isAutomatedLaunch()): TelemetryEnvelope {
+export function buildTelemetryEnvelope(input: TelemetryProps, sessionId: string, appVersion: string, locale: 'zh-CN' | 'en' | 'ko' = 'zh-CN', platform = process.platform, automated = isAutomatedLaunch()): TelemetryEnvelope {
   const [major, minor] = String(appVersion || '0.0').split('.').map((part) => Number.parseInt(part, 10) || 0)
   const now = new Date()
   const timestamp = `${now.toISOString().slice(0, 10)}T00:00:00.000Z`
@@ -120,6 +120,6 @@ export function isTelemetryEnvelope(value: unknown): value is TelemetryEnvelope 
   const envelope = value as Record<string, unknown>
   const system = envelope.systemProps as Record<string, unknown> | null
   const systemKeys = system && 'automated' in system ? ['locale', 'osFamily', 'appMajor', 'appMinor', 'automated'] : ['locale', 'osFamily', 'appMajor', 'appMinor']
-  const validSystem = Boolean(system && !Array.isArray(system) && hasExactKeys(system, systemKeys) && (!('automated' in system) || system.automated === true) && ['zh-CN', 'en'].includes(String(system.locale)) && ['macos', 'windows', 'linux', 'other'].includes(String(system.osFamily)) && Number.isInteger(system.appMajor) && Number.isInteger(system.appMinor))
+  const validSystem = Boolean(system && !Array.isArray(system) && hasExactKeys(system, systemKeys) && (!('automated' in system) || system.automated === true) && ['zh-CN', 'en', 'ko'].includes(String(system.locale)) && ['macos', 'windows', 'linux', 'other'].includes(String(system.osFamily)) && Number.isInteger(system.appMajor) && Number.isInteger(system.appMinor))
   return envelope.schemaVersion === TELEMETRY_SCHEMA_VERSION && typeof envelope.timestamp === 'string' && typeof envelope.sessionId === 'string' && EVENT_SET.has(String(envelope.eventName)) && validSystem && isTelemetryProps(envelope.props, envelope.eventName as TelemetryEventName)
 }

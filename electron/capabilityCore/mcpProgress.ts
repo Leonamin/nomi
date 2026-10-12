@@ -6,7 +6,7 @@
 // progress 只是单调递增的帧序号（规范要求递增）；心跳消息只报真实已用时长。
 // 纯逻辑、可注入时钟 —— 与 mcpProtocol 同边界，裸 node 单测。
 
-export type ProgressLocale = 'zh-CN' | 'en'
+export type ProgressLocale = 'zh-CN' | 'en' | 'ko'
 
 export type ProgressReporter = {
   /** 发一条真实阶段消息（如「镜头 3/16 · 供应商已受理」）。无 token 时是 no-op。 */
@@ -58,7 +58,7 @@ export function createProgressReporter(options: {
 
   function heartbeat(): void {
     const elapsed = formatElapsed(now() - startedAt)
-    frame(locale === 'en' ? `still working · elapsed ${elapsed}` : `仍在进行 · 已用 ${elapsed}`)
+    frame(locale === 'ko' ? `진행 중 · 경과 ${elapsed}` : locale === 'en' ? `still working · elapsed ${elapsed}` : `仍在进行 · 已用 ${elapsed}`)
   }
 
   function armTimer(): void {

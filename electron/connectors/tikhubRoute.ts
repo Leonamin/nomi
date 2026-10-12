@@ -89,7 +89,7 @@ export type TikhubRouteDeps = {
   /** 探测器（默认真实健康探测）。测试注入。 */
   probe?: (host: string) => Promise<boolean>;
   /** 当前 locale（默认 getDesktopLocale）。测试注入。 */
-  locale?: () => "zh-CN" | "en";
+  locale?: () => "zh-CN" | "en" | "ko";
 };
 
 /**

@@ -1,3 +1,4 @@
+import { mcpLocaleText } from './mcpLocaleText'
 import { SKILL_URI_PREFIX, skillResourceUri, parseSkillResourceUri, skillFileMimeType, type SkillSummaryFrame, type SkillContentFrame } from './mcpSkillResources'
 import { buildSkillPrompts, buildSkillResources } from './mcpPassiveDiscovery'
 import { McpConnectionAuthenticationError } from './mcpConnectionContext'
@@ -266,7 +267,7 @@ export function createMcpProtocol(transport: McpTransport) {
     const title = typeof gate.title === 'string' && gate.title.trim() ? gate.title.trim() : gateId
     const summary = typeof gate.summary === 'string' ? gate.summary.trim() : ''
     const choiceText = typeof choice?.title === 'string' ? choice.title.trim() : choiceKey
-    const isEnglish = locale() === 'en'
+    const isEnglish = locale() !== 'zh-CN'
     const decisionText = approved
       ? (isEnglish ? 'Approve and continue' : '批准并继续')
       : (isEnglish ? 'Reject and stop here' : '否决并停在这里')
@@ -370,8 +371,11 @@ export function createMcpProtocol(transport: McpTransport) {
       reply(id, {
         tools: MCP_TOOL_RESOLVER.list().map((tool) => {
           const { name, description, inputSchema } = tool
-          const localizedTitles = (tool as { titleByLocale?: { 'zh-CN': string; en: string } }).titleByLocale
-          const selectedTitle = localizedTitles?.[locale()] ?? ((tool as { title?: unknown }).title as string | undefined)
+          const localizedTitles = (tool as { titleByLocale?: Partial<Record<ResultLocale, string>> }).titleByLocale
+          const defaultTitle = (tool as { title?: unknown }).title as string | undefined
+          const selectedTitle = localizedTitles?.[locale()] ?? (locale() === 'ko' && localizedTitles?.en
+            ? mcpLocaleText('ko', localizedTitles.en, localizedTitles.en)
+            : defaultTitle)
           const title = typeof selectedTitle === 'string' && selectedTitle.length > 0 ? { title: selectedTitle } : {}
           // 挂活 widget 的工具：预声明 _meta.ui.resourceUri（MCP Apps 标准）+ openai/outputTemplate（ChatGPT 别名）
           // + 调用状态文案。always 广告（宿主不支持则忽略 _meta，spec 设计）→ 跨 Claude/ChatGPT 通用（P4）。
@@ -449,9 +453,7 @@ export function createMcpProtocol(transport: McpTransport) {
             reply(id, {
               content: [{
                 type: 'text',
-                text: locale() === 'en'
-                  ? 'Not applied: this client cannot show Nomi\'s required human confirmation. Decide this gate in Nomi instead.'
-                  : '未生效：当前客户端无法显示 Nomi 强制的人为确认，请改在 Nomi 中决定这道门。',
+                text: mcpLocaleText(locale(), '未生效：当前客户端无法显示 Nomi 强制的人为确认，请改在 Nomi 中决定这道门。', 'Not applied: this client cannot show Nomi\'s required human confirmation. Decide this gate in Nomi instead.'),
               }],
               isError: true,
             })
@@ -461,9 +463,7 @@ export function createMcpProtocol(transport: McpTransport) {
             reply(id, {
               content: [{
                 type: 'text',
-                text: locale() === 'en'
-                  ? 'Not applied: you did not confirm this creative decision.'
-                  : '未生效：你没有确认这次创意决定。',
+                text: mcpLocaleText(locale(), '未生效：你没有确认这次创意决定。', 'Not applied: you did not confirm this creative decision.'),
               }],
               isError: true,
             })
@@ -510,9 +510,7 @@ export function createMcpProtocol(transport: McpTransport) {
             reply(id, {
               content: [{
                 type: 'text',
-                text: locale() === 'en'
-                  ? 'Not applied: the storyboard patch was not approved.'
-                  : '未生效：这次分镜修改没有获得批准。',
+                text: mcpLocaleText(locale(), '未生效：这次分镜修改没有获得批准。', 'Not applied: the storyboard patch was not approved.'),
               }],
               isError: true,
               structuredContent: {

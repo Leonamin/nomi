@@ -1,0 +1,15 @@
+{
+  "aria": "사용할 미디어",
+  "collapse": "접기",
+  "railLabel": "미디어",
+  "expand": "사용할 미디어 펼치기",
+  "tabs": {
+    "shots": "장면",
+    "assets": "소재"
+  },
+  "shots": {
+    "emptyTitle": "아직 캔버스에 완성한 장면이 없어요",
+    "emptyDescription": "생성 화면에서 장면을 만들면 여기 표시돼요.",
+    "itemHint": "{{name}} · 트랙으로 끌어 놓거나 클릭해 끝에 추가"
+  }
+}

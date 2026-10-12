@@ -11,6 +11,7 @@
 
 | 车道 | 执行体 / 分支 | 热点文件面 | 状态与避让规则 |
 |---|---|---|---|
+| **한국어 안내** | Codex `feat/korean-guidance` · sibling worktree `nomi-web-korean-guidance` | `src/i18n/`, 언어 타입·저장, 서버 안내, 한국어 도움말 | 사용자 승인한 학생용 말투로 한국어 추가. 영어·중국어 원문 보존. 별도 PR로 전달하며 운영 배포·자동 병합은 하지 않음 |
 | **M2 生成纵切** | Codex，分支前缀 `m2/*` | `electron/projectAgentHost/` + 生成域（生成管线 / 画布生成节点） | 在途。别的战线勿动 projectAgentHost 与生成域核心；要动先与 M2 协调 |
 | **Agent 界面实施（交互 epic）** | **未开工**。设计已拍板：裁决包在分支 `docs/agent-ui-redesign-20260901`（`docs/design/2026-09-01-agent-ui-final-redesign.md` + `…-redesign-decisions.md`） | `src/workbench/ai/`（驻留壳）+ 画布右槽 | 验收合同 = 同分支**双层 conformance spec**：`2026-09-02-agent-ui-conformance-testspec.md`（界面层）+ `…-functional-conformance-testspec.md`（行为层）。开工前动这些面的改动都要能被该合同兼容 |
 | **架构二期（archetype 归一）** | `arch/phase2-archetype-consolidation`（PR #310） | `src/config/modelArchetypes/`、`electron/shared/videoCapabilities/` | 收口中。**模型接入线避让**：新模型档案 / 能力面改动等它合入再动这两个面 |

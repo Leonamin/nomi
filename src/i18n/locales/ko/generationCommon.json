@@ -1,0 +1,1628 @@
+{
+  "defaultTitles": {
+    "referenceImage": "참고 이미지",
+    "referenceVideo": "참고 영상",
+    "prompt": "장면 설명",
+    "webMedia": "웹 미디어"
+  },
+  "exportStatus": {
+    "emptyTimeline": "타임라인이 비어 있어요. 먼저 미디어를 추가해 주세요.",
+    "converting": "MP4로 변환 중",
+    "exporting": "내보내는 중 {{percent}}%"
+  },
+  "workspace": {
+    "timelineChunk": "생성 타임라인",
+    "aria": "생성 작업 공간",
+    "expandTimeline": "생성 타임라인 펼치기",
+    "timeline": "타임라인",
+    "clipSummary": "영상 조각 {{count}}개 · {{duration}}",
+    "resizeAssistant": "드래그해 도우미 크기 조절",
+    "timelineActionPrefix": "생성 타임라인 - "
+  },
+  "comfyuiCancel": {
+    "queueOnly": "이 ComfyUI 버전은 대기 중인 작업만 안전하게 지울 수 있어요. 실행 중인 작업은 내 컴퓨터에서 계속 진행돼요.",
+    "failed": "ComfyUI가 작업을 취소했는지 확인하지 못했어요. 내 컴퓨터에서 계속 실행 중일 수 있어요."
+  },
+  "spendHostingDisclosure": {
+    "message": "참고 이미지를 사용하려면 임시 공개 저장소에 먼저 올려야 해요. 소재가 이 컴퓨터 밖으로 나가고, 짧은 시간 동안 공개 주소로 접근할 수 있어 개인정보 노출 위험이 있어요. 설정에서 업로드 경로를 바꿀 수 있어요.",
+    "remember": "이 선택을 기억하고 다시 묻지 않기",
+    "autonomousBlocked": "내 컴퓨터의 소재를 임시 공개 저장소에 올려야 해요. 자동 작업에서는 대신 결정하지 않아요. 설정에서 업로드 경로를 바꾸거나 익명 소재 업로드를 허용한 뒤 다시 시도해 주세요."
+  },
+  "provenance": {
+    "dialogAria": "생성 기록",
+    "title": "생성 기록 · {{name}}",
+    "unavailable": "이 카드에는 확인할 수 있는 생성 기록이 없어요.",
+    "possibleReasons": "가능한 이유:",
+    "legacyReason": "카드가 v0.4.0 이전 프로젝트에서 왔어요(생성 기록은 v0.5부터 추가됐어요)",
+    "localReason": "AI로 만들지 않고 내 컴퓨터에서 가져온 소재예요",
+    "failedReason": "생성 기록을 저장하기 전에 요청이 실패했어요",
+    "provider": "서비스",
+    "model": "모델",
+    "time": "시간",
+    "prompt": "장면 설명",
+    "empty": "(비어 있음)",
+    "copyPrompt": "장면 설명 복사",
+    "negativePrompt": "제외할 내용",
+    "params": "설정",
+    "requestId": "서비스 요청 ID",
+    "actualCost": "실제 결제 비용",
+    "view": "생성 기록 보기",
+    "actionTitle": "생성 기록 / 출처",
+    "seed": "시드"
+  },
+  "imagePreview": {
+    "image": "이미지",
+    "untitled": "제목 없는 이미지",
+    "video": "영상",
+    "mediaAria": "{{title}} 미리보기",
+    "mediaHeader": "{{type}} · {{title}}",
+    "closeMedia": "미리보기 닫기",
+    "closeMediaEsc": "미리보기 닫기(Esc)"
+  },
+  "chunk": {
+    "model3dViewer": "3D 모델 미리보기",
+    "textEditor": "텍스트 카드 편집기",
+    "panoramaViewer": "파노라마 미리보기",
+    "composer": "카드 생성 패널",
+    "stagingCapture": "3D 배치 화면 촬영",
+    "cameraMoveCapture": "3D 카메라 이동 촬영",
+    "batchPlan": "일괄 생성 패널"
+  },
+  "screenshot": {
+    "title": "화면을 캡처해 캔버스에 추가",
+    "hint": "영역을 드래그하거나, 전체 화면을 쓰려면 바로 확인을 눌러 주세요",
+    "cancel": "취소",
+    "commit": "캔버스에 추가",
+    "selected": "선택 영역 {{width}} × {{height}}",
+    "whole": "전체 화면 {{width}} × {{height}}",
+    "nodeTitle": "화면 캡처",
+    "denied": "macOS에서 Nomi의 화면 기록을 허용하지 않아 캡처하지 못했어요. 설정 · 일반에서 권한을 켜 주세요.",
+    "noProject": "캡처한 화면을 추가할 프로젝트를 먼저 열어 주세요",
+    "failed": "캡처하지 못했어요. 단축키를 다시 눌러 주세요"
+  },
+  "contactSheet": {
+    "action": "모아 보기 이미지 만들기({{count}}개)",
+    "nodeTitle": "모아 보기 · {{count}}개",
+    "needTwo": "생성한 이미지가 2개 이상 있어야 모아 보기 이미지를 만들 수 있어요",
+    "failed": "모아 보기 이미지를 만들지 못했어요",
+    "missing": "이미지를 불러오지 못했어요",
+    "someMissing": "이미지 {{count}}개를 불러오지 못해 해당 칸을 비워 뒀어요"
+  },
+  "nodeEmpty": {
+    "image": {
+      "title": "이미지 카드",
+      "description": "아래에 장면 설명을 입력한 뒤 만들어 보세요."
+    },
+    "video": {
+      "title": "영상 카드",
+      "description": "아래에 장면 설명을 입력한 뒤 영상을 만들어 보세요."
+    },
+    "audio": {
+      "title": "소리 카드",
+      "description": "음악·효과음·내레이션을 추가하세요."
+    },
+    "text": {
+      "title": "텍스트 카드",
+      "description": "대본·대사·제작 메모를 적어 보세요."
+    },
+    "clip": {
+      "title": "영상 조각 카드",
+      "description": "영상 카드를 연결하거나 보관함의 이미지·영상을 추가하세요."
+    },
+    "model3d": {
+      "title": "3D 모델 카드",
+      "description": "원하는 모델을 설명하거나 참고 이미지를 연결해 3D 모델을 만들어 보세요."
+    },
+    "whiteboard": {
+      "title": "스케치 카드",
+      "description": "구도를 잡을 참고 그림을 그리거나 표시해 보세요.",
+      "action": "스케치 열기"
+    },
+    "director": {
+      "title": "3D 연출 카드",
+      "description": "인물과 카메라를 배치한 뒤 참고 이미지나 영상을 촬영하세요.",
+      "action": "3D 연출 열기"
+    },
+    "character": {
+      "title": "인물 카드",
+      "description": "참고할 인물 이미지를 추가해 같은 사람의 모습을 유지하세요."
+    },
+    "scene": {
+      "title": "배경 카드",
+      "description": "참고할 배경을 추가해 공간과 분위기를 유지하세요."
+    },
+    "prop": {
+      "title": "소품 카드",
+      "description": "참고할 소품을 추가해 중요한 물건의 모습을 유지하세요."
+    },
+    "panorama": {
+      "title": "파노라마 카드",
+      "description": "공간을 참고할 파노라마 이미지를 추가하세요."
+    },
+    "waiting": "입력이 연결됐어요. 앞 카드의 결과를 기다리고 있어요.",
+    "firstFrame": "영상의 첫 화면으로 쓸 이미지를 먼저 추가하세요."
+  },
+  "canvas": {
+    "aria": "AI 영상 창작 캔버스",
+    "arrival": {
+      "one": {
+        "right": "오른쪽에 새 카드",
+        "left": "왼쪽에 새 카드",
+        "up": "위에 새 카드",
+        "down": "아래에 새 카드"
+      },
+      "many": {
+        "right": "오른쪽에 새 카드 {{count}}개",
+        "left": "왼쪽에 새 카드 {{count}}개",
+        "up": "위에 새 카드 {{count}}개",
+        "down": "아래에 새 카드 {{count}}개"
+      },
+      "categoryOne": "“{{category}}”에 새 카드",
+      "categoryMany": "“{{category}}”에 새 카드 {{count}}개",
+      "go": "이동"
+    },
+    "noImportableAssets": "캔버스로 가져올 수 있는 소재가 없어요",
+    "importedOne": "캔버스에 가져왔어요",
+    "importedMany": "소재 {{count}}개를 캔버스에 가져왔어요",
+    "deletedNodesUndo": "카드 {{count}}개를 삭제했어요",
+    "edge": {
+      "select": "연결 선택: {{source}} → {{target}}",
+      "disconnect": "연결 끊기: {{source}} → {{target}}",
+      "disconnectAction": "연결 끊기",
+      "changeMode": "연결 용도 바꾸기: 현재 {{mode}}",
+      "modeMenu": "연결 용도",
+      "modes": {
+        "reference": "소재 참고",
+        "first_frame": "첫 프레임",
+        "last_frame": "마지막 프레임",
+        "style_ref": "스타일",
+        "character_ref": "인물",
+        "composition_ref": "구도"
+      }
+    },
+    "empty": {
+      "categories": {
+        "shots": "이미지·영상",
+        "cast": "인물",
+        "scene": "배경",
+        "prop": "소품",
+        "audio": "소리",
+        "fallback": "카드"
+      },
+      "title": "아직 {{category}}이(가) 없어요",
+      "description": "첫 카드를 추가해 시작하세요. 카드를 옮기고 묶거나 다른 종류로 복사할 수 있어요.",
+      "createAria": "{{category}} 카드 만들기",
+      "create": "+ 새 {{category}}"
+    },
+    "controlsHelp": {
+      "aria": "캔버스 조작 안내",
+      "sections": {
+        "selection": "선택",
+        "pan": "캔버스 이동",
+        "zoom": "확대·축소",
+        "create": "만들기",
+        "node": "편집"
+      },
+      "shortcuts": {
+        "blankDrag": "빈 공간 드래그",
+        "blankClick": "빈 공간 클릭",
+        "shiftDrag": "Shift + 드래그",
+        "shiftClick": "Shift + 클릭",
+        "spaceDrag": "Space + 드래그",
+        "middleOrRightDrag": "가운데 / 오른쪽 버튼 드래그",
+        "wheelOrTwoFinger": "휠 / 두 손가락",
+        "wheel": "휠",
+        "pinch": "두 손가락 벌리기·모으기",
+        "modWheel": "{{mod}} + 휠",
+        "modA": "{{mod}} A",
+        "modCopyPaste": "{{mod}} C / {{mod}} V",
+        "altDrag": "{{alt}} + 드래그",
+        "modPlusMinus": "{{mod}} + / {{mod}} −",
+        "tab": "Tab",
+        "modEnter": "{{mod}} Enter",
+        "modL": "{{mod}} L",
+        "modD": "{{mod}} D",
+        "modG": "{{mod}} G",
+        "modShiftG": "{{mod}} {{shift}} G",
+        "frameKey": "F",
+        "optShiftF": "{{opt}} {{shift}} F",
+        "modX": "{{mod}} X",
+        "modZ": "{{mod}} Z",
+        "modShiftZ": "{{mod}} {{shift}} Z",
+        "delete": "Delete / Backspace",
+        "escape": "Escape"
+      },
+      "actions": {
+        "boxSelect": "영역 선택(기존 선택에 추가)",
+        "clearSelection": "선택 해제",
+        "toggleSelection": "선택 추가 / 해제",
+        "pan": "화면 이동",
+        "zoom": "확대·축소",
+        "selectAll": "모두 선택",
+        "copyPaste": "커서 위치에 복사 / 붙여넣기",
+        "duplicateDrag": "복사본 드래그",
+        "zoomStep": "확대 / 축소",
+        "addNode": "포인터 위치에 새 카드",
+        "generateSelection": "선택한 카드 생성",
+        "connect": "선택한 두 카드 연결",
+        "duplicate": "카드와 연결 복제",
+        "group": "묶기",
+        "ungroup": "묶음 풀기",
+        "frame": "프레임 그리기",
+        "tidy": "캔버스 정리",
+        "cut": "잘라내기",
+        "undo": "되돌리기",
+        "redo": "다시 실행",
+        "deleteSelection": "선택 항목 삭제",
+        "cancel": "현재 작업 취소"
+      }
+    },
+    "audioToTimeline": "음악으로 쓰려면 소리를 타임라인의 소리 트랙으로 드래그하세요",
+    "group": {
+      "dragNamed": "“{{name}}” 묶음 드래그",
+      "drag": "묶음 드래그",
+      "connectHere": "“{{name}}”에 연결 · {{count}}개 각각에 연결",
+      "connectFromHere": "“{{name}}”을(를) 입력으로 사용 · {{count}}개 모두 연결",
+      "connectedWithSkips": "{{connected}}개를 연결하고 {{skipped}}개는 건너뛰었어요. 해당 모델은 이 참고 자료를 사용할 수 없어요.",
+      "connectAllSkipped": "{{count}}개 모두 이 참고 자료를 사용할 수 없어 연결하지 않았어요",
+      "connectEmpty": "이 묶음은 아직 비어 있어요",
+      "collapse": "카드 묶음으로 접기",
+      "collapseNamed": "“{{name}}” 묶음 접기",
+      "collapsedAria": "접힌 묶음 “{{name}}” · 카드 {{count}}개",
+      "nodeStackCount": "카드 {{count}}개",
+      "dragWhole": "묶음 드래그",
+      "aggregateInput": "묶음 입력",
+      "aggregateOutput": "묶음 출력",
+      "disconnectAggregate": "묶음 전체의 연결 끊기",
+      "frameTool": "프레임 그리기",
+      "frameToolHint": "드래그해 장면을 모을 프레임 만들기 · F",
+      "frameToolArmed": "프레임 그리는 중 · 사각형을 드래그하세요. 취소는 Esc",
+      "untitledFrame": "제목 없는 프레임",
+      "descriptionPlaceholder": "메모 추가",
+      "renameAria": "“{{name}}” 프레임 이름 바꾸기",
+      "describeAria": "“{{name}}” 프레임 메모 수정",
+      "moreActions": "“{{name}}” 프레임 더 보기",
+      "menuEdit": "이름 / 메모",
+      "menuGenerate": "프레임 전체 생성",
+      "menuTimeline": "프레임 전체를 타임라인에 추가",
+      "menuCollapse": "카드 하나로 접기",
+      "menuDissolve": "프레임 풀기",
+      "menuDissolveHint": "프레임만 없애고 카드와 연결은 유지해요",
+      "menuDelete": "삭제",
+      "menuDeleteHint": "프레임과 안의 내용을 모두 삭제해요",
+      "countPreview": "{{from}} → {{to}}",
+      "joinPreview": "놓으면 “{{name}}”에 {{count}}개를 담아요",
+      "leavePreview": "놓으면 “{{name}}”에서 빠져나와요. {{count}}개가 남아요.",
+      "nestedNotSupported": "프레임 안에는 다른 프레임을 넣을 수 없어요. 먼저 바깥 프레임을 풀어 주세요.",
+      "generateEmpty": "이 프레임에 생성할 수 있는 항목이 없어요",
+      "timelineEmpty": "이 프레임에 타임라인으로 보낼 영상이나 영상 조각이 없어요",
+      "timelineDoneWithSkips": "{{count}}개를 배치하고 {{skipped}}개는 건너뛰었어요(영상이 아니거나 아직 생성하지 않았어요)"
+    },
+    "minimapAria": "캔버스 작은 지도 탐색"
+  },
+  "observability": {
+    "action": {
+      "reconcile": {
+        "main": "작업 센터에서 보기",
+        "alt": "먼저 작업 센터에서 확인"
+      },
+      "viewTask": {
+        "main": "제작 작업 보기",
+        "alt": "작업 센터 열기"
+      },
+      "releaseRegenerate": {
+        "main": "확인했어요. 다시 생성",
+        "alt": "확인했어요. 다시 생성"
+      },
+      "retry": {
+        "main": "다시 시도",
+        "alt": "그래도 다시 시도"
+      },
+      "switchModel": {
+        "main": "모델 바꾸기",
+        "alt": "모델 바꾸기"
+      },
+      "modelAccess": {
+        "main": "모델 확인",
+        "alt": "모델 확인"
+      },
+      "fixModelKind": {
+        "main": "{{kind}}(으)로 바꾸고 다시 시도",
+        "alt": "{{kind}}(으)로 바꾸기"
+      }
+    },
+    "releaseConfirm": {
+      "message": "서비스의 작업 목록에 이 요청이 없는지 확인한 뒤에만 계속하세요. 계속하면 이 장면을 즉시 다시 생성해요. 이미 접수된 요청이었다면 두 번 제출돼요.",
+      "continue": "계속",
+      "cancel": "취소",
+      "failed": "확인 내용을 기록하지 못해 이 장면을 다시 생성할 수 없어요. 다시 시도해 주세요."
+    },
+    "progress": {
+      "submitting": "요청 보내는 중",
+      "preview": "미리보기 프레임",
+      "previewStep": "미리보기 프레임 · 단계 {{current}}/{{total}}",
+      "saved": "프로젝트에 저장했어요",
+      "typicalDuration": "보통 {{min}}–{{max}}분",
+      "queued": "대기 중",
+      "generating": "생성 중",
+      "generatingElapsed": "생성 중 · {{seconds}}초 경과",
+      "stillGenerating": "아직 생성 중 · 평소보다 오래 걸리고 있어요",
+      "stillGeneratingElapsed": "평소보다 오래 걸리고 있어요 · {{minutes}}분 경과 · 백그라운드에서 계속 진행 중",
+      "finalizing": "내 컴퓨터에 저장 중",
+      "comfyQueuedAhead": "대기 중 · 앞에 작업 {{count}}개"
+    },
+    "import": {
+      "progress": "가져오는 중 · {{percent}}% · {{size}}",
+      "progressUnknownSize": "가져오는 중 · {{percent}}%",
+      "checking": "가져오는 중 · 확인 중 · {{size}}",
+      "checkingUnknownSize": "가져오는 중 · 확인 중",
+      "finalizing": "가져오는 중 · 마무리 중 · {{size}}",
+      "finalizingUnknownSize": "가져오는 중 · 마무리 중"
+    },
+    "error": {
+      "auth": {
+        "reason": "API 키가 맞지 않아요",
+        "hint": "모델 연결에서 이 모델의 API 키를 확인하세요."
+      },
+      "balance": {
+        "reason": "잔액 부족",
+        "hint": "서비스 계정에 충전한 뒤 다시 시도하거나 모델 연결에서 다른 모델을 골라 주세요."
+      },
+      "quota": {
+        "reason": "사용량 또는 요청 횟수 제한",
+        "hint": "서비스 사용량을 다 썼거나 요청 횟수가 제한됐어요. 조금 뒤 다시 시도하거나 다른 모델을 골라 주세요."
+      },
+      "pollTimeout": {
+        "reason": "생성 대기 시간 초과",
+        "hint": "영상 생성의 대기 시간이 끝났어요. 작업은 계속 진행 중일 수 있어요. 나중에 확인하거나 Seedance Fast처럼 빠른 모델을 써 주세요."
+      },
+      "network": {
+        "reason": "서비스에 연결할 수 없어요",
+        "hint": "요청이 서비스에 도착하지 않았어요. 특히 해외 서비스는 네트워크나 프록시 연결이 원인일 수 있어요. 연결을 확인하고 다시 시도해 주세요."
+      },
+      "modelConfig": {
+        "reason": "모델이 설정되지 않았어요",
+        "hint": "모델 연결에서 이 모델을 설정하세요."
+      },
+      "modelKindMismatch": {
+        "reason": "모델 종류가 잘못 등록됐어요",
+        "hint": "연결할 때 모델 이름으로 종류를 추정했지만 이번에는 맞지 않았어요. “{{model}}”은(는) {{registered}}(으)로 등록돼 있지만 {{requested}}이(가) 필요해요. {{requested}}(으)로 바꾸면 사용할 수 있어요."
+      },
+      "modelNotOpen": {
+        "reason": "모델이 활성화되지 않았어요",
+        "hint": "서비스 관리 화면에서 이 모델을 활성화하거나 모델 연결에서 이미 활성화된 모델을 골라 주세요."
+      },
+      "modelUnavailableUpstream": {
+        "reason": "서비스에서 이 모델을 사용할 수 없어요",
+        "hint": "서비스에서 이 모델을 더 이상 제공하지 않아요. 다시 시도해도 해결되지 않으니 다른 모델로 바꿔 주세요."
+      },
+      "modelRetired": {
+        "reason": "이 모델은 삭제됐어요",
+        "hint": "모델 목록에 없어서 다시 시도할 수 없어요. 계속하려면 다른 모델로 바꿔 주세요."
+      },
+      "accountGate": {
+        "reason": "계정 권한이 부족해요",
+        "hint": "이 모델에는 더 높은 요금제나 기업용 API 키, 웹 인증이 필요해요. 아래 서비스 안내를 따르거나 다른 모델을 골라 주세요."
+      },
+      "imageRouteDisabled": {
+        "reason": "이 중계 그룹은 이미지 생성을 허용하지 않아요",
+        "hint": "중계 토큰 그룹에 OpenAI 이미지 주소(/v1/images/*) 접근 권한이 없어요. Nomi가 대화 경로로도 시도했어요. 계속 실패하면 해당 그룹은 대화로 이미지를 만드는 기능도 지원하지 않아요. 중계 설정에서 그룹을 바꾸거나 이미지 생성을 켜고, 또는 다른 모델을 골라 주세요."
+      },
+      "contentPolicy": {
+        "reason": "장면 설명이 차단됐어요",
+        "hint": "장면 설명이 안전 정책에 걸렸어요. 내용을 바꿔 다시 시도해 주세요."
+      },
+      "inputImageBlocked": {
+        "reason": "참고 이미지가 안전 정책으로 차단됐어요",
+        "hint": "서비스가 실제 사람이 담겼을 수 있다고 판단해 생성 전에 이 이미지를 거절했어요. 사진 같은 인물 이미지는 AI로 만들었어도 차단되는 경우가 많아요. 같은 이미지로 다시 시도해도 같아요. 다른 참고 이미지나 다른 모델을 써 주세요. 서비스마다 인물 이미지 기준이 달라요."
+      },
+      "assetUploadFailed": {
+        "reason": "참고 이미지가 서비스에 전달되지 않았어요",
+        "hint": "서비스가 접근할 수 있는 공개 이미지 주소가 필요해 무료 이미지 저장소에 올리려 했지만 실패했어요. 아직 생성 서비스에는 요청하지 않았어요. 두 저장소 모두 해외에 있어 네트워크나 프록시 연결 문제일 가능성이 커요. 프록시부터 확인해 주세요. KIE·apimart·로컬 ComfyUI처럼 자체 업로드 경로가 있는 서비스를 연결하면 그 경로를 먼저 써요."
+      },
+      "assetTooLarge": {
+        "reason": "소재가 너무 커서 올릴 수 없어요",
+        "hint": "내 컴퓨터의 소재를 공개 주소로 바꾸려 했지만 모든 업로드 경로의 크기 한도를 넘었어요(HTTP 413). 같은 파일을 다시 올려도 해결되지 않아요. 특히 영상은 압축하거나 짧게 자른 뒤 다시 추가하세요. 모델 연결에서 업로드 한도가 더 큰 경로를 연결할 수도 있어요. 아래 세부 정보에서 소재 이름과 크기를 확인할 수 있어요."
+      },
+      "assetInvalid": {
+        "reason": "참고 소재 파일에 문제가 있어요",
+        "hint": "파일을 읽거나 종류를 확인할 수 없거나 실제 이미지·영상이 아니어서 보내기 전에 멈췄어요. 예를 들어 웹페이지를 .png로 저장한 경우예요. 전송된 내용은 없어요. 캔버스의 참고 자료를 바꾸거나 원본 파일을 다시 가져온 뒤 시도해 주세요. 아래 세부 정보에 파일 이름이 있어요."
+      },
+      "outboundBlocked": {
+        "reason": "Nomi의 네트워크 정책이 다운로드를 막았어요",
+        "hint": "생성은 서비스에서 끝났을 가능성이 높고 결과도 남아 있어요. Nomi가 다운로드 주소를 사설 네트워크로 판단해 받지 않았어요. Clash / Surge / sing-box의 TUN(fake-IP) 모드가 주소를 198.18.x 같은 가상 주소로 바꾸는 경우에 흔해요. 모델 연결 > 네트워크에서 “로컬 프록시 감지됨”을 확인한 뒤 “결과 다시 가져오기”를 눌러 주세요. 다시 생성하면 새 결과를 만들게 돼요. 아래 세부 정보에 해당 주소가 있어요."
+      },
+      "outboundBlockedSubmit": {
+        "reason": "Nomi의 네트워크 정책으로 생성 요청을 보내지 않았어요",
+        "hint": "이 컴퓨터 밖으로 전송된 내용은 없고 서비스에도 요청하지 않았어요. Nomi가 서비스 주소를 사설 네트워크로 판단했어요. Clash / Surge / sing-box의 TUN(fake-IP) 모드가 주소를 198.18.x 같은 가상 주소로 바꿨지만 프록시 실행을 확인하지 못한 경우에 흔해요. 모델 연결 > 네트워크에서 “로컬 프록시 감지됨”을 확인한 뒤 다시 생성해 주세요. 직접 운영하는 로컬 서비스라면 전체 주소를 서비스 연결에 등록하세요. 아래 세부 정보에 해당 주소가 있어요."
+      },
+      "outboundBlockedCredentialOrigin": {
+        "reason": "확인하지 않은 주소로 키가 전송될 수 있어 요청을 멈췄어요",
+        "hint": "전송된 내용은 없고 서비스에도 요청하지 않았어요. 키를 저장할 때 확인한 주소와 이번 요청의 주소가 달라요. 서비스 주소를 직접 바꿨다면 모델 연결에서 해당 키를 다시 저장해 새 주소를 확인해 주세요. 바꾸지 않았다면 아래 세부 정보에 있는 저장된 주소와 요청 주소부터 확인해 주세요."
+      },
+      "credentialRedirect": {
+        "reason": "서비스가 다른 주소로 이동시켜 키 보호를 위해 멈췄어요",
+        "hint": "등록한 서비스 주소가 요청을 다른 주소로 보냈어요. Nomi는 키를 함께 보내지 않아요. 모델 연결에서 최종 도착 주소로 바꾼 뒤 다시 시도해 주세요. http에서 https로 바뀌었거나 주소 끝의 /가 달라졌거나 지역별 주소로 이동한 경우가 많아요."
+      },
+      "server": {
+        "reason": "서비스 오류",
+        "hint": "서비스를 사용할 수 없어요. 조금 뒤 다시 시도하거나 다른 모델을 골라 주세요."
+      },
+      "input": {
+        "reason": "생성 설정이 거절됐어요",
+        "hint": "서비스가 생성 설정을 거절했어요. 화면 비율·크기 등을 확인하거나 다른 모델을 골라 주세요."
+      },
+      "outputTruncated": {
+        "reason": "답변이 중간에 끊겼어요",
+        "hint": "모델의 답변 길이 한도를 넘었어요. 요청을 짧게 줄이거나 답변 한도가 더 큰 모델을 골라 주세요."
+      },
+      "outputUnreadable": {
+        "reason": "생성한 파일을 읽을 수 없어요",
+        "hint": "서비스에서 결과를 받았지만 파일을 읽지 못했어요. 파일이 손상됐거나 지원하지 않는 형식이거나 이미지·영상이 아닐 수 있어요. 생성 자체는 끝났으며 다시 시도하면 새 결과를 만들어요. 한 번 더 시도해 보고 계속 발생하면 “문제 제보”에서 세부 정보를 보내 주세요."
+      },
+      "submissionUnknown": {
+        "reason": "접수 여부 미확인: 서비스가 이 장면을 받았을 수 있어요",
+        "hint": "요청을 보냈지만 답변을 받지 못해 접수 여부를 확인할 수 없어요. Nomi가 직접 확인할 수 없어 자동으로 다시 보내지 않아요. 먼저 서비스의 작업 목록에서 이 요청을 확인하세요. 없다는 걸 확인한 뒤에만 다시 생성해야 중복 제출을 피할 수 있어요."
+      },
+      "unknown": {
+        "reason": "생성 실패",
+        "hint": "실패 원인을 확인할 수 없어요. 오류 카드의 “세부 정보”에 원래 답변 전체를 남겼어요. 한 번 더 시도하거나 다른 모델을 골라 주세요.",
+        "hintWithCode": "실패 원인을 확인할 수 없어요. 서비스 오류 코드는 {{code}}이며, 오류 카드의 “세부 정보”에 원래 답변 전체를 남겼어요. 한 번 더 시도하거나 다른 모델을 골라 주세요."
+      },
+      "opaque": {
+        "detail": "생성이 끝났지만 오류 정보를 받지 못했어요. 사용자 입력이 아닌 Nomi 쪽 기록의 문제예요. 이 카드의 “문제 제보”로 알려 주세요. 현재 확인할 수 있는 내용은 세부 정보에 있어요."
+      },
+      "nodeInFlight": {
+        "reason": "이 카드는 아직 생성 중이에요",
+        "hint": "이전 생성 결과를 기다리고 있어요. 이번 요청은 보내지 않았어요. 결과가 온 뒤 다시 생성해 주세요."
+      },
+      "shotClaimed": {
+        "generic": {
+          "reason": "제작 흐름에서 관리하는 장면이에요",
+          "hint": "다음 작업을 정하기 전에 제작 작업 상태를 확인하세요."
+        },
+        "queued": {
+          "reason": "제작 작업에서 대기 중인 장면이에요",
+          "hint": "제작이 끝날 때까지 기다리거나 작업 센터에서 진행 상황을 확인하세요."
+        },
+        "awaitingConfirmation": {
+          "reason": "이 장면은 비용 확인을 기다리고 있어요",
+          "hint": "캔버스에서 생성하기 전에 제작 비용 확인 카드에 답해 주세요."
+        },
+        "inFlight": {
+          "reason": "제작 작업에서 이미 생성 중인 장면이에요",
+          "hint": "다시 요청하지 말고 현재 제작 작업이 끝날 때까지 기다려 주세요."
+        },
+        "needsReconcile": {
+          "reason": "접수 여부 미확인: 서비스가 이 장면을 받았을 수 있어요",
+          "hint": "요청 중 답변을 받지 못해 접수 여부를 확인할 수 없어요. Nomi가 직접 확인할 수 없어 자동으로 다시 보내지 않아요. 먼저 서비스의 작업 목록을 확인하세요. 요청이 없다는 걸 확인한 뒤에만 다시 생성해야 중복 제출을 피할 수 있어요."
+        }
+      },
+      "webMedia": {
+        "reason": "웹 미디어를 내려받지 못했어요",
+        "hint": "일부 사이트는 외부 요청이나 직접 링크를 막아요. 이미지·영상을 내 컴퓨터에 내려받은 뒤 캔버스에 복사하거나 드래그해 주세요."
+      }
+    }
+  },
+  "imageToolbar": {
+    "matteProgress": {
+      "download": "첫 배경 제거: 모델 다운로드 중(약 50MB, 처음 한 번만)",
+      "decode": "이미지 읽는 중",
+      "inference": "주요 대상 찾는 중",
+      "mask": "투명 영역 만드는 중",
+      "encode": "투명 PNG 저장 중",
+      "model": "배경 제거 모델 불러오는 중",
+      "fallback": "배경 제거 중"
+    },
+    "aria": "이미지 작업",
+    "fullscreen": "전체 화면 미리보기",
+    "fullscreenAria": "이미지를 전체 화면으로 보기",
+    "freeze": "모습 확정",
+    "freezeHint": "이 참고 카드의 모습을 확정해요. 이를 참고하는 장면이 생성을 시작할 수 있어요.",
+    "frozen": "모습 확정됨",
+    "frozenHint": "모습을 확정했어요. 누르면 취소할 수 있어요. 참고 이미지를 바꾸면 다시 확정해 주세요.",
+    "crop": "자르기",
+    "cropHint": "프레임을 드래그해 자른 뒤 결과 목록에 추가하고 대표 이미지로 지정해요",
+    "removingBackground": "배경 제거 중",
+    "removeBackground": "배경 제거",
+    "removeBackgroundHint": "배경을 지운 결과를 목록에 추가하고 대표 이미지로 지정해요",
+    "cropSplit": "자르고 나누기",
+    "fourView": "4칸(2×2)",
+    "gridNine": "9칸(3×3)",
+    "splitting": "나누는 중",
+    "cropping": "자르는 중",
+    "tileTitle": "{{source}} 조각 {{index}}",
+    "tileGroupName": "{{source}} {{grid}}×{{grid}} 조각",
+    "editFailed": "이미지를 캔버스에서 읽을 수 없어요. 다시 가져와 주세요.",
+    "transform": "변형",
+    "rotateLeft": "왼쪽으로 90° 회전",
+    "rotateRight": "오른쪽으로 90° 회전",
+    "flipHorizontal": "좌우 뒤집기",
+    "flipVertical": "상하 뒤집기",
+    "whiteboard": "스케치",
+    "whiteboardHint": "스케치에서 편집하고 현재 이미지를 자동으로 가져와요",
+    "download": "다운로드",
+    "downloadHint": "내려받거나 내 컴퓨터에 저장",
+    "image": "이미지"
+  },
+  "shotConversion": {
+    "shot": "장면 {{index}}",
+    "firstFrame": "첫 프레임",
+    "video": "영상"
+  },
+  "clipNode": {
+    "addMaterial": "소재 추가",
+    "axis": "편집 구간",
+    "actions": "영상 조각 작업",
+    "timeline": "타임라인 편집",
+    "scrub": "타임라인에서 위치 찾기",
+    "count": "영상 조각 {{count}}개",
+    "totalDuration": "총 {{duration}}",
+    "remove": "영상 조각 제거",
+    "split": "영상 조각 나누기",
+    "splitUnavailable": "선택한 영상 조각 안에 재생 위치를 놓으면 나눌 수 있어요",
+    "duplicate": "영상 조각 복제",
+    "selectToEdit": "먼저 편집 구간에서 영상 조각을 선택하세요",
+    "resizeStart": "영상 조각 시작 위치 조절",
+    "resizeEnd": "영상 조각 끝 위치 조절",
+    "programMonitor": "완성 화면 미리보기",
+    "closePreview": "미리보기 닫기",
+    "playPreview": "미리보기 재생",
+    "pausePreview": "미리보기 일시 정지",
+    "export": "내보내기",
+    "exportOptions": "내보내기 설정",
+    "exportScope": "내보낼 범위",
+    "exportFull": "전체 편집본",
+    "exportSegments": "영상 조각 · {{count}}개",
+    "exportToCanvas": "캔버스에 추가",
+    "exportDownload": "다운로드",
+    "outputNodeTitle": "편집한 영상",
+    "outputClipTitle": "편집한 영상 조각 {{index}}",
+    "exporting": "내보내는 중…",
+    "exportDownloadComplete": "영상 파일 {{count}}개를 내보냈어요.",
+    "exportToCanvasComplete": "영상 카드 {{count}}개를 캔버스에 추가했어요.",
+    "exportFailed": "내보내지 못했어요. 다시 시도해 주세요.",
+    "uploadFailed": "소재를 복사하지 못했어요. 다시 가져와 주세요.",
+    "retryUpload": "다시 가져오기"
+  },
+  "cropGrid": {
+    "cancel": "취소",
+    "confirmCrop": "자르기 적용",
+    "confirmSplit": "나누기 적용"
+  },
+  "node": {
+    "videoRepairing": "지원하지 않는 영상 코덱이에요. 자동으로 변환하고 있어요…",
+    "generateFirst": "이 카드에는 아직 생성한 화면이 없어요. 먼저 생성하세요.",
+    "sourceMissing": "원본 카드가 더 이상 이 프로젝트에 없어요",
+    "copyFromCategory": "별도 복사본({{category}} · {{source}}에서 가져옴)",
+    "copyFrom": "별도 복사본({{source}}에서 가져옴)",
+    "copySourceMissing": "별도 복사본(원본 카드 없음)",
+    "connectHere": "이 카드에 연결",
+    "startConnection": "이 카드에서 연결 시작",
+    "panoramaActions": "파노라마 작업",
+    "panoramaPreview": "파노라마 미리보기",
+    "reupload": "다시 올리기",
+    "reuploadPanorama": "파노라마 다시 올리기",
+    "locateSource": "원본 카드 찾기: {{source}}",
+    "locateNode": "카드 찾기",
+    "sourceNoLongerExists": "원본 카드가 없어졌어요",
+    "independentCopy": "별도 복사본",
+    "duplicateVariant": "다른 버전으로 복제",
+    "reshoot": "장면 다시 촬영",
+    "resizeAria": "{{direction}} 방향에서 카드 크기 조절",
+    "resize": "카드 크기 조절",
+    "model3dLoadFailed": "3D 모델을 불러오지 못했어요",
+    "uploadPanorama": "+ 파노라마 올리기",
+    "editName": "누르면 이름을 바꿔요",
+    "unnamed": "제목 없음",
+    "mountTitle": "연결됨: {{title}}",
+    "mountSeparator": ", ",
+    "mountOverflow": "{{names}}… 총 {{count}}개",
+    "generateBeforeTimeline": "타임라인으로 옮기기 전에 이 카드를 생성하세요",
+    "providerDisconnected": "{{vendor}}의 모델을 사용할 수 없어요. 키·연결·모델 상태를 확인하거나 다른 서비스를 골라 주세요.",
+    "candidateModelUnavailable": "AI 도우미가 이 카드에 고른 모델({{model}} · {{vendor}})을 지금 사용할 수 없어요. 선택은 유지했어요. 서비스 키와 모델 상태를 확인하거나 직접 다른 모델을 골라 주세요.",
+    "providerFailed": "{{vendor}}: {{reason}}. {{hint}}",
+    "switchProvider": "{{vendor}} · {{model}}(으)로 바꾸기",
+    "technicalReview": {
+      "fallback": "결과에 문제가 있을 수 있어요",
+      "title": "확인 필요: {{reasons}} — 내용은 그대로예요. 필요하면 다시 생성하세요."
+    },
+    "panoramaScreenshotTitle": "파노라마 화면 캡처",
+    "panoramaScreenshotPrompt": "파노라마 보기 화면 캡처",
+    "lock": {
+      "unlockAria": "카드 잠금 해제(AI가 다시 수정할 수 있어요)",
+      "lockAria": "카드 잠금(AI가 수정할 수 없지만 참고 자료로 쓸 수 있어요)",
+      "unlockHint": "잠김: AI가 수정할 수 없어요. 누르면 잠금을 풀어요.",
+      "lockHint": "잠금: AI가 설명·삭제·연결을 바꿀 수 없어요. 참고 자료로는 계속 사용할 수 있어요."
+    },
+    "extractFrame": {
+      "first": "첫 프레임",
+      "last": "마지막 프레임",
+      "missingProject": "현재 프로젝트가 없어 프레임을 추출하지 못했어요. 프로젝트를 저장하고 다시 시도해 주세요.",
+      "desktopOnly": "이 환경에서는 프레임을 추출할 수 없어요. 데스크톱 앱을 써 주세요.",
+      "failed": "{{frame}} 추출 실패: {{message}}",
+      "empty": "{{frame}}을(를) 추출하지 못했어요. 영상에서 프레임을 읽을 수 없어요.",
+      "defaultVideoTitle": "영상",
+      "nodeTitle": "{{title}} · {{frame}}"
+    },
+    "shotCuts": {
+      "title": "장면별로 나누기",
+      "detecting": "장면이 바뀌는 곳을 찾고 있어요…",
+      "failed": "장면이 바뀌는 곳을 찾지 못했어요",
+      "desktopOnly": "장면별로 나누려면 데스크톱 앱이 필요해요",
+      "found": "장면 {{count}}개를 찾았어요",
+      "foundAutoRelaxed": "장면 {{count}}개를 찾았어요 · 민감도를 자동으로 낮췄어요",
+      "noCuts": "장면 전환이 없어요. 끊김 없이 촬영한 하나의 장면일 수 있어요.",
+      "oneShot": "하나의 연속 장면 · 나눌 곳 없음",
+      "oneShotBody": "전체 {{duration}}초가 끊김 없는 장면이에요. AI 영상은 대부분 그래요. 정지 이미지를 꺼내려면 아래 기능을 써 보세요.",
+      "evenFrames": "프레임 {{count}}개 추출",
+      "filteredOut": "민감도가 너무 높아 모든 장면 전환이 제외됐어요.",
+      "relaxAction": "{{count}}개 보기",
+      "capped": "장면 전환이 빠른 영상이에요({{detected}}곳). 기준을 자동으로 {{threshold}}까지 높여 가장 뚜렷한 {{kept}}곳을 남겼어요. 영상 전체는 그대로 포함돼요. 더 자세히 나누려면 슬라이더를 왼쪽으로 옮기세요.",
+      "sensitivity": "민감도",
+      "hintMany": "높음 · 카메라 이동도 감지",
+      "hintFew": "낮음 · 확실한 전환만 감지",
+      "hintJust": "보통",
+      "selectAll": "모두 선택",
+      "selectNone": "모두 해제",
+      "commit": "추가({{count}}개)",
+      "committing": "추출 중 {{done}}/{{total}}",
+      "close": "닫기",
+      "nodeTitle": "{{title}} · {{time}}",
+      "groupName": "{{title}}에서 나눔",
+      "someFailed": "프레임 {{failed}}개 실패({{created}}개 추가)"
+    },
+    "deconstruct": {
+      "desktopOnly": "영상을 분석하려면 데스크톱 앱에서 프로젝트를 열고 원본 영상을 선택해야 해요",
+      "phaseCuts": "내 컴퓨터에서 장면 전환 찾기",
+      "phaseVision": "각 장면의 화면 읽기",
+      "phaseDialogue": "대사를 장면별로 배치"
+    },
+    "assetDrop": {
+      "full": "최대 {{max}} {{label}}",
+      "noSlot": "현재 모드는 이 종류의 소재를 참고 자료로 쓸 수 없어요",
+      "unsupported": "지원하지 않는 파일 형식",
+      "defaultName": "추가한 소재",
+      "missingUrl": "서버에서 소재 주소를 받지 못했어요",
+      "uploadFailed": "파일을 올리지 못했어요"
+    }
+  },
+  "spend": {
+    "agentNotice": "AI 도우미가 시작한 작업 · 비용을 쓰기 전에 확인이 필요해요",
+    "agentNoticePlan": "AI 도우미가 시작한 작업 · 생성 전에 확인이 필요해요",
+    "ignore": "무시",
+    "cancel": "취소",
+    "confirm": "생성 확인",
+    "startGeneration": "생성 시작",
+    "generate": "생성",
+    "generateVariant": "다른 버전 생성",
+    "cost": {
+      "text_one": "텍스트 결과 {{count}}개 생성 · 모델 크레딧 사용",
+      "text_other": "텍스트 결과 {{count}}개 생성 · 모델 크레딧 사용",
+      "media": "{{count}} {{unit}} 생성 · 약 {{minutes}}분 · 모델 크레딧 사용",
+      "units": {
+        "image_one": "이미지",
+        "image_other": "이미지",
+        "video_one": "영상",
+        "video_other": "영상",
+        "audio_one": "내레이션",
+        "audio_other": "내레이션",
+        "model3d_one": "3D 모델",
+        "model3d_other": "3D 모델",
+        "mixed_one": "소재",
+        "mixed_other": "소재"
+      }
+    }
+  },
+  "parameters": {
+    "auto": "자동",
+    "workflowParams": "작업 흐름 설정 · {{count}}개",
+    "moreParameters": "추가 설정 · {{count}}개",
+    "configureModel": "모델 설정",
+    "openModelCatalog": "모델 설정 열기",
+    "configure": "설정하기 →",
+    "model": "모델",
+    "selectModel": "모델 선택",
+    "recentlyFailing": "최근 실패 잦음",
+    "variant": "다른 버전",
+    "generationParameters": "생성 설정",
+    "parameters": "설정",
+    "panel": "생성 설정 패널",
+    "provider": "서비스",
+    "untried": "아직 사용 전",
+    "unlisted": "목록에 없음",
+    "noVendorConnected": "아직 연결한 서비스가 없어요",
+    "connectVendorAction": "연결",
+    "hiddenModels": "{{count}}개 숨김 · 설정에서 다시 표시",
+    "referenceTotal": "참고 자료는 이미지·영상·소리 합쳐 최대 {{max}}개예요",
+    "referenceFull": "참고 자료가 가득 찼어요(연결 포함 최대 {{max}}개)",
+    "maximum": "최대 {{max}} {{label}}",
+    "missingAssetUrl": "서버에서 소재 주소를 받지 못했어요",
+    "sourceVideo": "원본 영상",
+    "missingVideoUrl": "서버에서 영상 주소를 받지 못했어요",
+    "imageOnly": "이미지 파일 선택",
+    "videoOnly": "영상 파일 선택",
+    "missingImageUrl": "서버에서 이미지 주소를 받지 못했어요",
+    "audioOnly": "소리 파일 선택",
+    "missingAudioUrl": "서버에서 소리 주소를 받지 못했어요",
+    "channelSingleReferenceOnly": "이 연결은 참고 이미지 하나만 전달할 수 있어요",
+    "firstFrame": "첫 프레임",
+    "lastFrame": "마지막 프레임",
+    "referencesAria": "참고 소재",
+    "generationMode": "생성 방식",
+    "comfyNoPrompt": "이 작업 흐름에는 장면 설명이 필요 없어요",
+    "narrowedModeName": "“{{mode}}”",
+    "narrowedModeSeparator": ", ",
+    "narrowedModeSwitch": "{{vendor}}은(는) {{modes}}을(를) 지원하지 않아요. {{targetVendor}}에서 사용할 수 있어요.",
+    "narrowedModeSwitchAction": "{{targetVendor}}(으)로 바꾸기",
+    "narrowedModeGuidanceDismiss": "생성 방식 안내 닫기",
+    "narrowedModeNone": "연결한 중계 서비스는 {{modes}}을(를) 보낼 수 없어요. 다른 연결 모델도 지원하지 않아요."
+  },
+  "resultDownload": {
+    "actions": "결과 작업",
+    "download": "다운로드",
+    "downloadHint": "내려받거나 내 컴퓨터에 저장",
+    "defaultVideoName": "영상",
+    "defaultImageName": "이미지",
+    "defaultAudioName": "소리",
+    "defaultModel3dName": "3D 모델",
+    "saved": "내 컴퓨터에 저장했어요",
+    "failed": "내려받지 못했어요"
+  },
+  "resultStack": {
+    "title": "결과 버전",
+    "versionCount": "버전 {{count}}개",
+    "trayAria": "결과 버전 {{count}}개",
+    "versionLabel": "버전 {{index}}",
+    "current": "현재",
+    "setCurrent": "현재 버전으로 지정",
+    "timelineUnchanged": "후보를 선택하면 이 카드가 바뀌어요. 타임라인의 영상 조각은 직접 교체할 때까지 원본을 유지해요.",
+    "replaceTimeline": "장면 교체",
+    "timelineReplaced": "타임라인의 원본을 교체했어요. 위치와 잘라 둔 범위는 유지해요.",
+    "timelineTooShort": "이 후보가 너무 짧아 기존의 자른 범위를 유지할 수 없어요. 타임라인은 그대로예요.",
+    "timelineReplaceFailed": "타임라인 원본을 교체하지 못했어요.",
+    "preview": "미리보기",
+    "download": "이 버전 내려받기",
+    "delete": "삭제",
+    "deleteTitle": "이 결과를 삭제할까요?",
+    "deleteMessage": "버전 기록과 내 컴퓨터의 프로젝트에서 지워요.",
+    "deleteFailed": "삭제하지 못했어요",
+    "deleteFileFailed": "기록은 바꿨지만 일부 로컬 파일은 삭제하지 못했어요",
+    "assetUnavailable": "이전 결과를 내 컴퓨터에서 찾을 수 없어요",
+    "showMore": "{{count}}개 더 보기",
+    "videoProgress": "영상 재생 위치",
+    "videoProgressValue": "{{current}} / {{duration}}초"
+  },
+  "textDocument": {
+    "formattingAria": "글 서식",
+    "dragAria": "텍스트 카드 드래그",
+    "label": "텍스트"
+  },
+  "composerBarV1": {
+    "promptTools": "장면 설명 도우미",
+    "effects": "장면 설명 예시",
+    "seconds": "{{value}}초"
+  },
+  "composer": {
+    "attachmentImage": "이미지",
+    "attachmentFile": "파일",
+    "generationMode": "생성 방식",
+    "append": "이어 쓰기",
+    "rewrite": "수정",
+    "replace": "새로 쓰기",
+    "appendPlaceholder": "어떻게 이어 쓸지 알려 주세요…(비우면 바로 이어 써요)",
+    "rewritePlaceholder": "어떻게 고칠지 알려 주세요…(먼저 문서에서 글을 선택하세요)",
+    "replacePlaceholder": "문서 전체를 어떻게 새로 쓸지 알려 주세요…",
+    "videoReferenceRequired": "먼저 참고 자료를 추가하세요(드래그·연결·+ 클릭)",
+    "referenceCompanionRequired": "{{slot}}만으로는 사용할 수 없어요. {{companions}}도 추가하세요.",
+    "companionOr": " 또는 ",
+    "videoFirstFrameRequired": "첫 프레임으로 쓸 이미지 카드를 연결하세요",
+    "promptReferenceUnsupported": "이 모델은 참고 이미지를 지원하지 않아 설명만 적용했어요",
+    "imageReferenceRequired": "이미지로 이미지를 만들려면 참고 자료가 필요해요(드래그·연결·+ 클릭). 또는 글로 이미지 만들기로 바꿔 주세요.",
+    "imageConnectionRequired": "이미지로 이미지를 만들려면 참고 자료가 필요해요. 이미지 카드를 연결하거나 참고 자료를 추가하거나 글로 이미지 만들기로 바꿔 주세요.",
+    "model3dReferenceRequired": "이미지로 3D를 만들려면 참고 자료가 필요해요. 이미지 카드를 연결하거나 참고 칸에 추가하거나 글로 3D 만들기로 바꿔 주세요.",
+    "unsupportedKind": "“{{kind}}”은(는) 아직 바로 생성할 수 없어요",
+    "generating": "생성 중…",
+    "generateReferencesFirst": "이 장면보다 참고 자료를 먼저 생성하세요",
+    "regenerate": "다시 생성",
+    "variantCountAria": "한 번에 만들 개수",
+    "expandPrompt": "장면 설명 펼치기",
+    "collapsePrompt": "장면 설명 접기",
+    "variantCountTitle": "한 번에 {{count}}개 생성",
+    "variantCountOption_one": "결과 {{count}}개",
+    "variantCountOption_other": "결과 {{count}}개",
+    "generate": "생성",
+    "generateAsset": "소재 생성",
+    "uploading": "올리는 중",
+    "uploadingEllipsis": "올리는 중…",
+    "dropToAddReference": "놓으면 참고 자료로 추가해요"
+  },
+  "whiteboard": {
+    "imageReadFailed": "이미지를 읽지 못했어요",
+    "screenshotAndCreateNode": "캡처하고 이미지 카드 만들기",
+    "canvasNotReady": "캔버스가 아직 준비되지 않았어요",
+    "brushPath": "붓 선 {{index}}",
+    "importedImage": "가져온 이미지",
+    "originalImage": "원본 이미지",
+    "selectImageFile": "이미지 파일 선택",
+    "importFailed": "이미지를 가져오지 못했어요",
+    "asset": "소재",
+    "copyName": "{{name}} 복사본",
+    "resultImage": "결과 이미지",
+    "backgroundRemoved": "배경을 지운 결과로 교체했어요",
+    "removeBackgroundFailed": "배경을 지우지 못했어요. 네트워크 연결을 확인하고 다시 시도해 주세요.",
+    "title": "스케치",
+    "openAria": "스케치 열기",
+    "removingBackgroundAria": "배경 제거 중",
+    "removingBackground": "배경 제거 중",
+    "importImage": "이미지 가져오기",
+    "customBrushColor": "직접 고른 붓 색",
+    "colorAria": "색상 {{color}}",
+    "deleteSelected": "선택한 요소 삭제",
+    "deleteBlockedLocked": "잠긴 레이어예요. 잠금을 푼 뒤 삭제하세요.",
+    "deleteBlockedBackground": "배경은 삭제할 수 없어요",
+    "brush": "붓",
+    "select": "선택",
+    "eraser": "지우개",
+    "shape": "도형",
+    "ratioAria": "스케치 화면 비율 {{value}}",
+    "ratio": "비율",
+    "selectRatio": "스케치 화면 비율 선택",
+    "imageNodeMissing": "이미지 카드가 없어요",
+    "snapshotSaveFailed": "스케치 캡처를 저장하지 못했어요. 잠시 뒤 다시 시도해 주세요.",
+    "savedPrimary": "대표 이미지로 저장했어요",
+    "saveFailed": "스케치를 저장하지 못했어요",
+    "screenshotName": "{{title}} 캡처",
+    "screenshotCreated": "스케치 캡처 카드를 만들었어요",
+    "screenshotFailed": "스케치를 캡처하지 못했어요",
+    "close": "닫기",
+    "closeAria": "스케치 닫기",
+    "done": "완료",
+    "doneAria": "스케치 마치고 저장",
+    "savePrimary": "대표 이미지로 저장",
+    "imageResult": "이미지 결과",
+    "canvasAria": "Leafer 보드",
+    "drawingLayerAria": "그리기 영역",
+    "group": "묶기",
+    "flipHorizontal": "좌우 뒤집기",
+    "flipVertical": "상하 뒤집기",
+    "removeBackground": "배경 제거",
+    "library": {
+      "title": "소재 보관함",
+      "board": "보드",
+      "results": "결과",
+      "dragResult": "보드에 드래그해 추가",
+      "dragBoard": "보드에 드래그해 복제",
+      "fromCanvas": "캔버스에서",
+      "dragHint": "보드로 드래그",
+      "emptyBoard": "보드가 비어 있어요. 그림을 그리거나 이미지를 가져오거나 결과에서 드래그하세요.",
+      "emptyResults": "캔버스에서 생성하거나 연결한 이미지 결과가 여기에 나와요",
+      "hide": "{{name}} 숨기기",
+      "show": "{{name}} 보기",
+      "delete": "{{name}} 삭제"
+    }
+  },
+  "assistant": {
+    "toolCall": {
+      "quotedTitle": "“{{text}}”",
+      "listSeparator": ", ",
+      "lineSeparator": ", ",
+      "andMore": "{{head}} 외(총 {{n}}개)",
+      "createNodes_one": "카드 1개 만들기",
+      "createNodes_other": "카드 {{count}}개 만들기",
+      "createNodesWithSummary_one": "카드 1개 만들기: {{summary}}",
+      "createNodesWithSummary_other": "카드 {{count}}개 만들기: {{summary}}",
+      "connectEdges_one": "참고 연결 1개 만들기",
+      "connectEdges_other": "참고 연결 {{count}}개 만들기",
+      "connectEdgesWithModes_one": "참고 연결 1개 만들기({{parts}})",
+      "connectEdgesWithModes_other": "참고 연결 {{count}}개 만들기({{parts}})",
+      "setNodePrompt": "“{{title}}” 장면 설명 새로 쓰기",
+      "setNodePromptGeneric": "카드 장면 설명 새로 쓰기",
+      "deleteNodes_one": "카드 1개 삭제",
+      "deleteNodes_other": "카드 {{count}}개 삭제",
+      "runGenerationBatch_one": "카드 1개 생성(생성 비용이 들어요)",
+      "runGenerationBatch_other": "카드 {{count}}개 생성(생성 비용이 들어요)",
+      "readCanvasState": "현재 캔버스 상태 읽기",
+      "arrangeTimeline_one": "대본 순서대로 타임라인에 장면 1개 배치",
+      "arrangeTimeline_other": "대본 순서대로 타임라인에 장면 {{count}}개 배치",
+      "arrangeTimelineAll": "대본 순서대로 타임라인에 전체 장면 계획 배치",
+      "tidyCanvas": "{{target}} 정리(장면 순서로 재배치 · ⌘Z로 되돌리기)",
+      "tidyCanvasCurrent": "현재 캔버스",
+      "stagingReference": "인물 배치 참고 이미지 만들기({{parts}})",
+      "stagingCharacters_one": "인물 1명",
+      "stagingCharacters_other": "인물 {{count}}명",
+      "cameraMove": "카메라 이동 참고 영상 만들기({{label}} · {{shot}} · 약 {{duration}}초)",
+      "cameraMoveFallback": "카메라 이동",
+      "nodeToCategory": "“{{title}}” → {{category}}",
+      "edgeModeCount": "{{label}} {{n}}",
+      "edgePair": "“{{source}}” → “{{target}}”",
+      "defaultNodeTitle": "{{kind}} {{index}}",
+      "exportTimeline": "타임라인 내보내기({{resolution}} · {{quality}}){{suffix}}",
+      "inspectExportJob": "내보내기 진행 상황 보기",
+      "verifyRender": "내보낸 결과 확인",
+      "cancelExportJob": "내보내기 취소",
+      "exportQualitySmall": "작은 파일",
+      "exportQualityHigh": "고품질",
+      "exportQualityStandard": "표준 품질",
+      "exportOutputName": ": {{name}}"
+    }
+  },
+  "lightweightNode": {
+    "untitled": "제목 없는 카드"
+  },
+  "navigation": {
+    "aria": "캔버스 탐색",
+    "zoomControls": "캔버스 확대·축소",
+    "fitView": "전체 보기",
+    "emptyCanvas": "캔버스가 비어 있어요",
+    "resetView": "화면 초기화",
+    "zoomRatio": "확대 비율",
+    "tidy": "캔버스 정리",
+    "tidyHint": "캔버스를 보기 좋게 정리해요 · ⌘Z로 되돌릴 수 있어요",
+    "hideMinimap": "작은 지도 숨기기",
+    "showMinimap": "작은 지도 보기",
+    "minimapThreshold": "카드가 {{count}}개 이상일 때 작은 지도 보기",
+    "canvasControls": "캔버스 조작"
+  },
+  "cameraMove": {
+    "move": {
+      "orbit_left": "왼쪽으로 돌기",
+      "orbit_right": "오른쪽으로 돌기",
+      "push_in": "앞으로 이동",
+      "pull_out": "뒤로 이동",
+      "crane_up": "위로 이동",
+      "crane_down": "아래로 이동",
+      "track_left": "왼쪽으로 이동",
+      "track_right": "오른쪽으로 이동",
+      "arc_left": "왼쪽으로 원호 이동",
+      "arc_right": "오른쪽으로 원호 이동",
+      "zoom_in": "확대",
+      "zoom_out": "축소",
+      "dolly_zoom": "돌리 줌"
+    }
+  },
+  "audio": {
+    "progress": "재생 위치",
+    "uploadFailed": "소리를 프로젝트에 저장하지 못했어요. 다시 가져와 주세요.",
+    "noSubtitleContent": "자막으로 쓸 내용이 없어요",
+    "subtitleCopied": "자막을 SRT로 복사했어요. .srt 파일에 붙여 넣으세요.",
+    "copyTranscript": "대사 기록 복사",
+    "copy": "복사",
+    "generateSubtitleHint": "대사 시간에 맞춰 SRT 자막 만들기",
+    "generateSubtitle": "자막 만들기",
+    "pause": "일시 정지",
+    "play": "재생",
+    "upload": "소리 올리기",
+    "title": "소리",
+    "empty": "소리 올리기 또는 연결",
+    "sfx": "효과음",
+    "vo": "내레이션"
+  },
+  "card": {
+    "shot": "장면 {{index}}",
+    "open": "열기",
+    "variants": "⊕ 다른 버전 {{count}}개",
+    "removingBackground": "배경 제거 중",
+    "removeBackgroundNode": "배경 제거 카드",
+    "generatingTransparentPng": "{{title}}에서 투명 PNG를 만들고 있어요",
+    "generating": "생성 중",
+    "generationCancel": "취소",
+    "generationCancelAria": "이번 생성 취소",
+    "comfyPreviewAlt": "ComfyUI 생성 과정 실시간 미리보기",
+    "upload": "+ {{label}} 올리기",
+    "node": "카드",
+    "prop": {
+      "image": "소품 이미지",
+      "unnamed": "제목 없는 소품",
+      "ownedBy": "{{owner}} 소유",
+      "ownerLabel": "{{owner}}의"
+    },
+    "character": {
+      "image": "인물 이미지",
+      "unnamed": "제목 없는 인물"
+    },
+    "scene": {
+      "image": "배경 이미지",
+      "unnamed": "제목 없는 배경"
+    }
+  },
+  "optimizer": {
+    "imageKind": "이미지 생성",
+    "videoKind": "영상 생성",
+    "intro": "당신은 {{kind}} 설명 작성 전문가입니다. 아래 설명을 더 구체적으로 다듬어 더 좋은 {{resultType}} 결과가 나오도록 하세요:",
+    "blank": "(비어 있습니다. 사용자의 아이디어를 바탕으로 완성하세요.)",
+    "idea": "사용자 아이디어를 반영하세요: {{idea}}",
+    "imageDetails": "이미지를 구체적인 사실로 나눠 각각 작성하세요. 대상과 주요 특징(개수·외모·재질), 대상 사이와 환경과의 공간 관계, 동작과 상태를 포함하세요. 형용사를 늘어놓거나 길이를 채우지 마세요.",
+    "videoDetails": "영상을 구체적인 사실로 나눠 각각 작성하세요. 누가 또는 무엇이 있는지와 주요 특징, 장소, 공간 관계, 동작 순서, 카메라 이동, 진행 속도를 포함하세요. 형용사를 늘어놓거나 길이를 채우지 마세요.",
+    "pollutionRule": "필수 규칙: 카메라에 보이는 것만 설명하세요. 의식·기억·운명 같은 추상 개념은 피하고 동공 수축처럼 눈에 보이는 신호로 쓰세요. 응시하거나 바라본다는 표현은 몸의 방향과 화면에 보이는 대상의 구체적 설명으로 나누세요. 그렇지 않으면 모델이 얼굴을 정면으로 만들어 뒷모습 장면을 망칠 수 있어요. 게임·운전·싸움 같은 사건 이름 대신 구체적인 동작과 다루는 물건을 쓰세요. 움직임 설명에 인물 이름을 쓰지 말고 외모로 지칭하세요. 모델은 고유명사를 구분하지 못해요.",
+    "outputRule": "원래 의도를 유지하세요. 개선한 설명만 반환하고 해설·따옴표·글머리표는 넣지 마세요.",
+    "imageResult": "이미지",
+    "videoResult": "영상",
+    "configureTextModel": "먼저 모델 설정에서 텍스트 모델을 켜 주세요",
+    "emptyResult": "개선한 결과를 받지 못했어요. 다시 시도해 주세요.",
+    "failed": "설명을 다듬지 못했어요",
+    "optimizedTitle": "Nomi가 다듬은 버전(강조한 글이 바뀌었어요)",
+    "ideaTitle": "장면 설명을 어떻게 다듬을지 Nomi에게 알려 주세요",
+    "apply": "장면 설명 적용",
+    "retry": "다시 다듬기",
+    "optimizing": "다듬는 중…",
+    "placeholder": "예: 노을로 바꾸기, 긴장감 높이기, 안개 추가…(선택)",
+    "ideaAria": "다듬을 방향",
+    "optimizePrompt": "장면 설명 다듬기",
+    "aria": "Nomi로 장면 설명 다듬기",
+    "running": "다듬는 중…"
+  },
+  "translator": {
+    "intro": "세 겹 따옴표 안의 이미지·영상 생성 설명을 {{target}}(으)로 번역하세요. 의미와 화면의 모든 세부 사항을 유지하고, 고유명사와 8k·--ar 16:9 같은 설정은 그대로 복사하세요.",
+    "targetEnglish": "영어",
+    "targetChinese": "중국어 간체",
+    "placeholderRule": "{{example}} 같은 표시자는 참고 미디어를 뜻해요. 번역에서도 알맞은 위치에 각각 정확히 한 번, 변경 없이 넣으세요.",
+    "outputRule": "원래 줄바꿈을 유지하세요. 원문이 마침표로 끝나지 않으면 마침표를 추가하지 마세요. 문장 일부일 수 있어요. 설명·따옴표·세 겹 따옴표 없이 번역만 출력하세요.",
+    "aria": "장면 설명 번역(중국어 ↔ 영어 · 글을 선택하면 그 부분만 번역)",
+    "running": "번역 중…(누르면 취소)",
+    "emptyReason": "먼저 장면 설명을 써 주세요",
+    "nothingToTranslate": "선택 영역에 번역할 글이 없어요",
+    "emptyResult": "번역 결과를 받지 못했어요. 설명은 그대로예요.",
+    "failed": "번역하지 못했어요. 설명은 그대로예요.",
+    "failedWithReason": "번역하지 못했어요({{reason}}). 설명은 그대로예요.",
+    "placeholderMismatch": "번역의 미디어 참조가 맞지 않아 참고 자료를 유지하도록 설명을 그대로 뒀어요.",
+    "promptChanged": "번역 중 설명이 바뀌어 교체하지 않았어요."
+  },
+  "videoToolbar": {
+    "aria": "영상 작업",
+    "fullscreen": "전체 화면 미리보기",
+    "fullscreenAria": "영상을 전체 화면으로 보기",
+    "extracting": "프레임 추출 중…",
+    "firstFrame": "첫 프레임",
+    "firstFrameHint": "첫 프레임을 별도 이미지 카드로 꺼내 첫 화면이나 참고 자료로 써요",
+    "lastFrame": "마지막 프레임",
+    "lastFrameHint": "마지막 프레임을 별도 이미지 카드로 꺼내 끝 화면·이어 만들기·참고 자료로 써요",
+    "shotCuts": "장면 전환에서 나누기",
+    "shotCutsHint": "이 영상의 장면 전환을 찾아요. 미리 보고 고른 프레임을 캔버스에 추가하세요.",
+    "extractFrame": "프레임 추출",
+    "breakDown": "분석",
+    "shotTable": "장면 표",
+    "deconstructHint": "영상을 구도·분위기·화면·자막·대사·장면 설명 표로 분석해요. 배울 장면을 골라 캔버스에 가져오세요."
+  },
+  "panorama": {
+    "created": "파노라마 캡처 카드를 만들었어요",
+    "screenshotTitle": "파노라마 캡처",
+    "screenshotPrompt": "구도를 잡은 파노라마 캡처",
+    "notReady": "파노라마가 아직 준비되지 않았어요. 잠시 뒤 다시 시도해 주세요.",
+    "capturing": "캡처 중…",
+    "captureFailed": "캡처하지 못했어요. 다시 시도해 주세요.",
+    "capturingShort": "캡처 중",
+    "captureFrame": "현재 구도 캡처",
+    "closePreview": "미리보기 닫기",
+    "empty": "파노라마를 올리거나 이미지 카드를 연결하세요",
+    "enterAria": "파노라마 미리보기 열기",
+    "enter": "파노라마 열기",
+    "preview": "파노라마 미리보기"
+  },
+  "batchPlan": {
+    "retryFailed": "실패한 {{count}}개 다시 시도",
+    "waveTitle": "{{wave}}번째 묶음에서 실행",
+    "summary": "실행 계획 · 카드 {{count}}개 · {{waves}}묶음",
+    "firstWave": "첫 묶음에서 {{count}}개를 동시에 실행해요. 확인하기 전에는 요청하지 않아요.",
+    "estCost": "예상 약 {{credits}}크레딧",
+    "estCostUnknown": "가격 미확인",
+    "blocked": " · {{count}}개 진행 불가(⚠ 확인)",
+    "cancel": "취소",
+    "generate": "생성",
+    "authorizationFailed": "비용 사용을 승인하지 못했어요",
+    "waitingUpstream": "{{count}}개는 앞쪽 참고 카드의 생성을 기다리고 있어요",
+    "unfrozenAnchors": "장면 {{count}}개는 인물·배경 카드의 모습 확정을 기다려요. 카드에서 “모습 확정”을 눌러 주세요.",
+    "cyclicReferences": "{{count}}개가 서로 순환하며 참고하고 있어요",
+    "detailSeparator": "; ",
+    "blockedNotice": "{{details}}은(는) 아직 진행할 수 없어요. 먼저 생성하거나 연결을 정리한 뒤 일괄 실행하세요.",
+    "startTitle": "생성 시작",
+    "confirmGenerate": "생성",
+    "unavailable": "아직 생성할 수 없어요: {{notice}}",
+    "noRunnableNodes": "생성할 준비가 된 카드가 없어요",
+    "blockedTail": ". {{notice}}",
+    "completed": "{{count}}개 완료{{tail}}",
+    "failed": "일괄 생성 실패: {{count}}개 미완료{{tail}}",
+    "partiallyCompleted": "{{successes}}개 완료, {{failures}}개 실패 — 캔버스에서 각각 다시 시도하세요{{tail}}",
+    "exception": "예상치 못한 문제로 일괄 생성이 실패했어요"
+  },
+  "committedProposal": {
+    "applied": "적용됨: {{summary}}",
+    "mismatch": "일치하지 않음",
+    "viewSteps": "단계 보기",
+    "undo": "되돌리기",
+    "lostEdits": "되돌리면 이 제안을 적용한 뒤 바꾼 내용도 지워요:",
+    "cancel": "취소",
+    "confirmUndo": "그래도 되돌리기"
+  },
+  "memory": {
+    "kinds": {
+      "character": "기본 설정",
+      "style": "스타일",
+      "brand": "브랜드",
+      "preference": "선호",
+      "constraint": "제약"
+    },
+    "aria": "프로젝트 기억",
+    "count": "AI가 기억한 내용 {{count}}개",
+    "editHint": "두 번 누르면 수정해요. 수정한 항목은 AI가 자동으로 덮어쓰지 않아요.",
+    "unpin": "고정 해제",
+    "pin": "중요한 맥락으로 고정",
+    "delete": "이 기억 삭제",
+    "changeFailed": "기억을 바꾸지 못했어요. 다시 시도해 주세요."
+  },
+  "reconcile": {
+    "fields": {
+      "referenceEdge": "참고 연결",
+      "edgeSemantics": "연결 용도",
+      "node": "카드",
+      "type": "종류",
+      "prompt": "장면 설명",
+      "title": "제목",
+      "model": "모델",
+      "parameter": "설정 {{name}}",
+      "arrayReferenceSlot": "참고 자료 목록 칸 {{name}}",
+      "identity": "대상 정체성",
+      "composition": "구도",
+      "continuity": "장면 연속성"
+    },
+    "values": {
+      "connected": "연결됨",
+      "notConnected": "연결 안 됨",
+      "genericReference": "일반 참고",
+      "created": "만듦",
+      "missing": "없음",
+      "autoFallback": "자동 대체",
+      "defaultValue": "기본값",
+      "exists": "있음",
+      "deleted": "삭제됨",
+      "stillExists": "아직 있음",
+      "committedEdge": "저장된 연결 있음",
+      "edgeBackedSource": "캔버스 소재는 순서 있는 연결을 사용해야 해요",
+      "orphanEdgeReference": "실제 연결 없이 참고 연결이 표시돼요",
+      "orphanMeta": "실제 연결 없이 정보만 남은 참고 자료예요",
+      "matchesBrief": "요청과 일치해요",
+      "tier": "등급 {{n}}"
+    },
+    "reasons": {
+      "unsupportedReference": "선택한 모델은 이 참고 연결을 지원하지 않아요",
+      "sourceNotReferenceable": "원본 카드에 참고로 쓸 수 있는 결과가 없어요",
+      "dangling": "연결의 한쪽 카드를 찾을 수 없어요"
+    },
+    "contentMismatch": "이미지가 정해 둔 세부 내용과 다릅니다({{actual}})",
+    "contentFallbackReason": "{{dimension}}이(가) 기준보다 낮아요(등급 {{n}})",
+    "edgeReason": "연결 안 됨 · {{reason}}",
+    "edgeMissing": "이 연결을 만들지 않았어요",
+    "edgeSemantics": "연결이 “{{actual}}”(으)로 바뀌었어요. 승인한 값은 “{{expected}}”였어요.",
+    "nodeChange": "{{expected}} → {{actual}}",
+    "approvedActual": "승인 “{{expected}}” · 실제 “{{actual}}”",
+    "contentCaption": "화면 검증을 마쳤어요. 아래 장면은 정해 둔 세부 내용이나 설명과 다르고, 나머지는 정상으로 보여요.",
+    "structuralCaption": "아래 항목은 승인한 대로 적용되지 않았어요. 나머지 카드는 정상적으로 적용됐어요.",
+    "aria": "승인 내용과 실행 결과의 차이",
+    "exhausted": "AI가 할 수 있는 수정은 마쳤어요. 남은 장면은 직접 조정해 주세요.",
+    "aiFix": "AI로 수정",
+    "keep": "결과 유지",
+    "acknowledge": "확인",
+    "undo": "되돌리기"
+  },
+  "selection": {
+    "aria": "선택 영역 작업",
+    "count": "{{count}}개 선택",
+    "generateHint": "참고 자료부터 순서대로 선택한 카드를 생성해요. 빠진 참고 자료가 있으면 알려 줘요.",
+    "ungroup": "묶음 풀기(⇧⌘G)",
+    "group": "묶기(⌘G)",
+    "clear": "선택 해제",
+    "saveWorkflow": "작업 흐름으로 저장",
+    "defaultWorkflowName": "작업 흐름 · 카드 {{count}}개",
+    "workflowSaved": "“{{name}}” 작업 흐름을 저장했어요",
+    "workflowMenu": "저장한 작업 흐름 다시 쓰기"
+  },
+  "workflowPlugin": {
+    "addCheckpoint": "작업 흐름 확인 지점 추가",
+    "checkpointTitle": "작업 흐름 확인 지점",
+    "checkpointAction": "확인 완료로 표시",
+    "checked": "확인 완료",
+    "checkpointHint": "작업 흐름에서 다시 쓸 수 있는 사람이 확인할 지점이에요.",
+    "missingTitle": "플러그인 카드를 사용할 수 없어요",
+    "missingHint": "데이터는 유지했어요. 플러그인을 다시 켜면 카드를 복원할 수 있어요.",
+    "restoreHint": "원본 카드와 연결 유지됨",
+    "readOnly": "보기 전용 캔버스"
+  },
+  "production": {
+    "anchorRole": {
+      "female": "여자 주인공",
+      "male": "남자 주인공",
+      "scene": "배경",
+      "prop": "소품"
+    },
+    "aria": "캔버스 일괄 생성",
+    "generateAll": "전체 {{count}}개 생성",
+    "generateSelected": "선택한 {{count}}개 생성",
+    "noPending": "기다리는 카드가 없어요",
+    "concurrency": "동시 실행 수",
+    "dismiss": "일괄 생성 막대 숨기기",
+    "unifyModel": "모델 지정",
+    "lockedModelChange": "선택한 생성 카드가 잠겨 있어요. 잠금을 푼 뒤 모델을 바꿔 주세요.",
+    "modelChanged": "카드 {{count}}개를 {{model}}(으)로 바꿨어요",
+    "modelGroup": {
+      "image": "이미지 ×{{count}}",
+      "video": "영상 ×{{count}}",
+      "text": "텍스트 ×{{count}}",
+      "audio": "소리 ×{{count}}",
+      "model3d": "3D ×{{count}}"
+    },
+    "modeModelGroup": {
+      "chat": "텍스트 생성 ×{{count}}",
+      "prompt_refine": "장면 설명 다듬기 ×{{count}}",
+      "text_to_image": "글로 이미지 만들기 ×{{count}}",
+      "image_to_prompt": "이미지에서 설명 추출 ×{{count}}",
+      "image_edit": "참고 이미지 편집 ×{{count}}",
+      "text_to_video": "글로 영상 만들기 ×{{count}}",
+      "image_to_video": "참고 이미지로 영상 만들기 ×{{count}}",
+      "text_to_audio": "글을 음성으로 만들기 ×{{count}}",
+      "image_to_audio": "이미지로 소리 만들기 ×{{count}}",
+      "transcribe": "음성을 글로 옮기기 ×{{count}}",
+      "text_to_3d": "글로 3D 만들기 ×{{count}}",
+      "image_to_3d": "이미지로 3D 만들기 ×{{count}}"
+    },
+    "status": {
+      "submissionUnknown": "접수 결과를 알 수 없어 자동 재시도를 멈췄어요",
+      "approvalRequired": "제작을 계속하려면 확인이 필요해요",
+      "directionGate": "창작 방향에 대한 답을 기다리고 있어요",
+      "sampleGate": "샘플 장면이 준비됐어요",
+      "shotGate": "장면 {{index}}은(는) 요청 전에 확인을 기다려요",
+      "checkpointGate": "주인공 모습이 준비됐어요. 확인한 뒤 촬영하세요.",
+      "exportGate": "최종 편집본이 내보내기 확인을 기다리고 있어요",
+      "needsAttention": "현재 제작 단계에 확인이 필요해요",
+      "providerStale": "서비스가 한동안 새로운 상태를 보내지 않았어요",
+      "completed": "이 제작을 마쳤어요",
+      "roughCutReady": "초벌 편집본을 확인할 수 있어요",
+      "exportReady": "최종 편집본을 내보낼 수 있어요",
+      "draft": "제작 초안이 시작을 기다리고 있어요",
+      "stalledDraft": "이 제작은 계속할 수 없어요",
+      "running": "Nomi가 제작을 계속하고 있어요",
+      "paused": "제작 일시 정지됨",
+      "pausing": "안전하게 멈추는 중",
+      "scriptReady": "대본 초안을 확인해 주세요",
+      "storyboardReady": "장면 계획을 확인해 주세요",
+      "contractDeclined": "이번 일괄 생성을 거절했어요",
+      "cancelled": "이 제작을 취소했어요"
+    },
+    "description": {
+      "submissionUnknown": "요청이 서비스에 도착했을 수 있어요. 다시 시도하면 중복 제출될 수 있어 뒤쪽 작업을 안전한 지점에서 멈췄어요.",
+      "approvalRequired": "제작 범위와 사용할 비용을 확인하세요. 승인하기 전에는 유료 모델을 실행하지 않아요.",
+      "directionGate": "방향이 정해진 뒤에 장면 계획을 써요. 이 단계에서는 모델을 호출하지 않아요.",
+      "sampleGate": "샘플 장면 하나를 확인하세요. 승인하면 나머지를 진행하고, 멈추면 이 장면의 비용만 들어요.",
+      "shotGate": "장면 {{index}}({{node}})은(는) {{provider}} · {{model}}을(를) 사용해요. 승인하기 전에는 이 장면을 서비스에 요청하지 않아요.",
+      "checkpointGate": "인물의 정지 이미지가 준비됐어요. 확인한 뒤 이미 승인한 장면을 촬영하세요. 마음에 들지 않는 이미지는 다시 촬영할 수 있어요.",
+      "exportGate": "내보내기는 초벌 편집본을 최종 파일로 조립해요. 승인한 뒤에만 실행해요.",
+      "needsAttention": "자동 진행을 멈췄어요. 현재 장면이나 단계를 열어 문제를 해결하세요.",
+      "providerStale": "Nomi는 기존 작업 상태를 계속 확인해요. 늦어진다고 다시 제출하지 않아요.",
+      "completed": "승인한 모든 단계를 마쳤어요. 결과물은 내 컴퓨터의 프로젝트에 남아 있어요.",
+      "roughCutReady": "미리보기에서 속도·자막·소리를 확인하세요. Nomi는 편집 내용을 자동으로 덮어쓰지 않아요.",
+      "exportReady": "미리보기에서 최종 버전을 확인하세요. 내보내기는 직접 실행해야 해요.",
+      "draft": "이 초안은 유료 요청을 하지 않았어요. 요약을 승인한 뒤에만 제작을 시작해요.",
+      "stalledDraft": "선택한 제작 방식이 아직 지원되지 않아 어떤 단계도 만들지 않았고 자동으로 진행되지도 않아요. 제출한 요청은 없어요. 취소한 뒤 지원되는 방식으로 다시 시작하세요.",
+      "running": "실제 상태가 여기에 표시돼요. 서비스가 진행 상황을 보내지 않으면 Nomi가 임의로 백분율을 표시하지 않아요.",
+      "paused": "이미 접수된 작업은 취소할 수 없고 결과도 남아요. 새 작업은 제출하지 않아요. 다시 시작할 때 이미 한 일을 반복하지 않아요.",
+      "pausing": "멈추는 중: 이미 서비스에 접수된 작업은 취소할 수 없어 완료까지 진행돼요. 이후 정산하고 새 작업은 제출하지 않아요.",
+      "scriptReady": "먼저 대본을 검토하고 확정하세요. 승인하기 전에는 장면 계획이나 유료 요청을 시작하지 않아요.",
+      "storyboardReady": "먼저 장면 계획을 검토하고 확정하세요. 확인하면 Nomi가 배치하고 생성을 시작해요.",
+      "contractDeclined": "선택을 기록했어요. 생성 요청은 제출하지 않았어요. 장면 계획이나 범위를 바꾼 뒤 새 일괄 생성을 승인하세요.",
+      "cancelled": "새 작업은 제출하지 않아요. 완성된 결과는 내 컴퓨터의 프로젝트에 남아요."
+    },
+    "playbook": {
+      "shotGeneration": "장면 생성",
+      "brandPromo": "브랜드 홍보",
+      "unknown": "제작"
+    },
+    "stage": {
+      "brief": "요청 내용",
+      "direction": "방향",
+      "script": "대본",
+      "storyboard": "장면 계획",
+      "build": "캔버스",
+      "generate": "생성",
+      "qa": "검토",
+      "assemble": "초벌 편집",
+      "export": "내보내기",
+      "unknown": "기타 단계"
+    },
+    "origin": {
+      "nomi": "Nomi",
+      "external": "외부 앱"
+    },
+    "runPanel": {
+      "aria": "현재 제작 상태",
+      "origin": "{{host}}에서",
+      "previewAlt": "최근 결과",
+      "details": "제작 세부 내용",
+      "playPreview": "이 미리보기 재생",
+      "openPreview": "이 결과물 열기"
+    },
+    "route": {
+      "waiting": "{{host}}에서 결정을 기다리고 있어요. 그곳에서 답해 주세요.",
+      "fallback": "여기서 결정"
+    },
+    "runAction": {
+      "open-stage": "현재 단계 열기",
+      "review-script": "대본 초안 검토",
+      "review-storyboard": "장면 계획 검토",
+      "open-gate": "검토하고 승인",
+      "reconcile": "안전하게 멈춘 이유 보기",
+      "release-unknown": "확인했어요. 다시 생성",
+      "review-rough-cut": "초벌 편집본 검토",
+      "open-export": "내보내기 열기",
+      "resume-run": "확인 지점에서 다시 시작"
+    },
+    "control": {
+      "pause": "일시 정지",
+      "cancel": "제작 취소",
+      "cancelTitle": "이 제작을 취소할까요?",
+      "cancelMessage": "이미 서비스에 접수된 작업은 취소할 수 없어 완료까지 진행해요. 새 작업은 제출하지 않아요. 완성된 결과물은 프로젝트에 남아요. 되돌릴 수 없어요.",
+      "cancelConfirm": "제작 취소",
+      "failed": "작업 실패"
+    },
+    "runDetails": {
+      "stages": "단계 진행 상황",
+      "stageCount": "{{completed}} / {{total}}단계 완료",
+      "authorized": "승인됨",
+      "reserved": "예산 확보됨",
+      "actual": "정산됨",
+      "unsettled": "미정산",
+      "skills": "불러온 스킬",
+      "noSkills": "스킬 사용 근거 기록 없음",
+      "updatedAt": "최근 업데이트",
+      "stageStatus": {
+        "pending": "대기 중",
+        "running": "진행 중",
+        "awaiting_gate": "승인 필요",
+        "completed": "완료",
+        "needs_attention": "확인 필요",
+        "cancelled": "취소됨"
+      }
+    },
+    "artifactKind": {
+      "brief": "제작 요청",
+      "direction": "방향",
+      "script": "대본",
+      "storyboard": "장면 계획",
+      "image": "이미지",
+      "video": "영상",
+      "audio": "소리",
+      "timeline": "타임라인",
+      "export": "최종 영상"
+    },
+    "gate": {
+      "approve": "승인하고 계속",
+      "failed": "승인이 반영되지 않았어요",
+      "openSettings": "자동 진행 설정 열기",
+      "openProductionPolicy": "모델 연결",
+      "missingPolicyTitle": "{{count}}개 미연결",
+      "missingPolicyFallbackTitle": "이 작업에 필요한 서비스나 모델이 연결되지 않았어요",
+      "missingPolicyMessage": "승인하기 전에 모델 메뉴에서 연결하세요. 아직 생성 요청이나 비용 사용을 승인하지 않았어요.",
+      "missingPolicyProviders": "연결되지 않은 서비스: {{providers}}",
+      "missingPolicyModels": "연결되지 않았거나 사용할 수 없는 모델: {{models}}",
+      "directionTitle": "창작 방향 확정",
+      "directionSummary": "모델이나 유료 API를 요청하기 전에 대상·게시 채널·말투·사실로 뒷받침되는 장점을 확인하세요.",
+      "directionPickTitle": "어떤 방향으로 만들까요?",
+      "directionPickSummary": "방향 하나를 골라 주세요. 이를 바탕으로 장면 계획을 쓸게요. 승인하기 전에는 모델이나 유료 API를 요청하지 않아요.",
+      "sampleTitle": "샘플이 준비됐어요. 먼저 확인하세요.",
+      "sampleSummary": "첫 장면을 만들었어요. 승인하면 나머지를 생성해요. 스타일을 바꾸려면 취소하세요. 일시 정지한 뒤 설명을 바꾸고 다시 시작할 수 있고 샘플은 남겨 둬요.",
+      "sampleApprove": "좋아요. 나머지 생성",
+      "sampleReject": "멈추고 조정",
+      "shotTitle": "장면 {{index}} 제출 전 확인",
+      "shotSummary": "장면 {{index}}({{node}})을(를) {{provider}}의 {{model}}(으)로 요청할 예정이에요. 승인하기 전에는 서비스를 호출하지 않아요.",
+      "shotApprove": "승인하고 이 장면 제출",
+      "shotReject": "제출하지 않고 제작 멈추기",
+      "shotLabel": "장면",
+      "providerModelLabel": "서비스와 모델",
+      "contractTitle": "이번 일괄 생성과 예산 확인",
+      "contractSummary": "Nomi가 유료 생성을 요청하기 전에 장면·모델·최대 비용을 확인하세요.",
+      "exportTitle": "초벌 편집본 검토 후 내보내기 승인",
+      "exportSummary": "미리보기에서 진행 속도와 미디어를 확인한 뒤 MP4 내보내기를 승인하세요."
+    },
+    "checkpoint": {
+      "title": "주인공 모습이 준비됐어요. 확인한 뒤 촬영하세요.",
+      "subtitle": "인물 카드 {{count}}개 준비됨 · 모두 새로 촬영",
+      "subtitleWithReuse": "인물 카드 {{count}}개 준비됨: 새 촬영 {{fresh}}개 · 기존 모습 재사용 {{reused}}개(검토와 비용 없음)",
+      "badgeNew": "새 촬영",
+      "badgeReuse": "재사용",
+      "reworkThis": "이것 다시 촬영",
+      "unnamed": "인물",
+      "viewLarge": "크게 보기: {{name}}",
+      "stillAlt": "인물 정지 이미지",
+      "stillLargeAlt": "확대한 인물 정지 이미지",
+      "note": "확인하면 이미 승인한 장면 {{count}}개를 촬영해요. 이번 확인으로 비용이 더 붙지는 않아요. 마음에 들지 않는 것만 다시 촬영하면 해당 장면 비용만 들어요.",
+      "noteWithBudget": "확인하면 승인한 {{budget}} 안에서 장면 {{count}}개를 촬영해요. 이번 확인으로 비용이 더 붙지는 않아요. 마음에 들지 않는 것만 다시 촬영하면 해당 장면 비용만 들어요.",
+      "defer": "아직이요",
+      "approve": "좋아요. 장면 {{count}}개 촬영",
+      "reworkSelected": "선택한 것부터 다시 촬영"
+    },
+    "reconcile": {
+      "releaseTitle": "확인했어요. 다시 생성",
+      "releaseMessage": "서비스의 작업 목록에 이 요청이 없는지 확인한 뒤에만 계속하세요. 계속하면 즉시 다시 생성해요. 이미 접수된 요청이면 두 번 제출돼요.",
+      "releaseContinue": "계속",
+      "submittedAt": "{{time}}에 제출",
+      "questionTitle": "서비스 작업 확인",
+      "message": "서비스: {{provider}}\n작업 ID: {{taskId}}\nNomi는 자동으로 다시 제출하지 않아요. 서비스에 작업이 있는지 확인한 뒤 다시 시작하거나 생성할지 정하세요.",
+      "unknownProvider": "알 수 없음",
+      "noTaskId": "접수되지 않음",
+      "found": "찾음 · 계속 추적",
+      "notFound": "찾지 못함",
+      "notFoundTitle": "서비스에 이 작업이 없는 게 맞나요?",
+      "notFoundMessage": "Nomi는 “찾지 못함”으로 기록하고 일시 정지를 유지해요. 자동으로 다시 제출하지 않아요.",
+      "confirmNotFound": "작업 없음 확인",
+      "failed": "확인 결과가 반영되지 않았어요"
+    },
+    "roughCut": {
+      "title": "초벌 편집본 검토 확인",
+      "message": "먼저 미리보기에서 진행 속도·자막·소리·미디어를 확인하세요. 초벌 편집본을 승인하면 내보내기를 따로 확인해요.",
+      "accept": "초벌 편집본 승인",
+      "keepReviewing": "계속 검토"
+    },
+    "contract": {
+      "duration": "길이",
+      "aspectRatio": "화면 비율",
+      "language": "언어",
+      "shots": "장면",
+      "durationValue": "약 {{count}}초",
+      "shotValue": "장면 {{count}}개",
+      "notProvided": "제공되지 않음",
+      "claims": "주장과 실제 근거",
+      "evidenceCount": "근거 {{count}}개",
+      "unverified": "근거 없음",
+      "noClaims": "이번 요약에는 홍보성 주장을 기록하지 않았어요.",
+      "skills": "실제로 불러온 스킬",
+      "models": "서비스와 모델",
+      "noneRecorded": "기록 없음",
+      "estimateKnown": "예상 {{minimum}}–{{maximum}}",
+      "estimateUnknown": "아직 비용을 예상할 수 없어요",
+      "retryBoundary": "작업마다 최대 {{count}}번 시도해요. 모델이나 서비스를 바꾸면 다시 승인을 기다려요.",
+      "hardLimit": "최대 비용 한도",
+      "notSet": "설정 안 됨",
+      "policyAllowed": "연결됨",
+      "policyMissing": "연결 안 됨",
+      "irreversibleNote": "이번 승인은 이 제작 요약에만 적용돼요. 게시·삭제·파일 교체는 따로 확인해요.",
+      "planIdentity": "계획 v{{version}} · {{hash}}",
+      "trustLevel": "자동 진행 범위",
+      "trustLevelValue": {
+        "key_confirm": "중요 단계 확인(기본 · 모든 확인 단계 사용)",
+        "budget_only": "예산만 확인(창작 방향·샘플 확인 생략)",
+        "confirm_all": "모두 확인(장면마다 멈춤)"
+      }
+    },
+    "batch": {
+      "body": "{{project}} · Nomi가 주인공 모습을 먼저 만들어요. 확인하면 촬영을 시작해요.",
+      "specDuration": "전체 길이",
+      "specAspect": "화면 비율",
+      "specShots": "장면",
+      "specWait": "예상 대기",
+      "durationValue": "약 {{count}}초",
+      "waitValue": "약 {{count}}분",
+      "unknown": "알 수 없음",
+      "anchorsTitle": "주인공",
+      "anchorLeadIn": "인물 이미지부터",
+      "shotsSummary": "장면 {{total}}개",
+      "shotsSummaryReminder": "장면 {{total}}개 · {{reminder}}개에 주의 표시",
+      "shotNo": "장면 {{index}}",
+      "shotPrice": "¥{{amount}}",
+      "shotPriceUnknown": "가격 미확인",
+      "estimateTotal": "예상 총액 ¥{{amount}}",
+      "estimateTotalWithUnknown": "예상 총액 ¥{{amount}}(가격 미확인 장면 {{count}}개)",
+      "retryPromise": "장면 하나가 마음에 안 들면 그 장면만 다시 촬영하세요. 해당 장면 비용만 들어요.",
+      "maxSpend": "최대 비용 ≤¥{{amount}}",
+      "maxSpendUnset": "최대 비용: 한도 없음",
+      "frozenLead": "확인한 뒤 고정되는 내용: ",
+      "frozen": {
+        "shots": "장면 목록",
+        "models": "모델",
+        "references": "참고 자료",
+        "price": "가격"
+      },
+      "backToEdit": "편집",
+      "trialFirst": "먼저 장면 1 시험 생성(¥{{amount}})",
+      "trialFirstUnknown": "먼저 장면 1 시험 생성",
+      "ignore": "무시",
+      "confirm": "장면 {{count}}개 생성"
+    },
+    "canvasLanding": {
+      "groupName": "장면 묶음 · {{name}}",
+      "groupFallbackName": "장면 묶음",
+      "shotFallbackTitle": "장면 {{shot}}",
+      "awaitingConfirmation": "답변 기다리는 중",
+      "notGenerated": "생성 전",
+      "removedNotGenerated": "제거됨 · 생성하지 않음",
+      "queued": "대기 중",
+      "queuedNth": "대기 중 · {{index}}/{{total}}",
+      "stoppedManual": "남은 장면을 멈췄어요. 여기서 촬영을 이어갈 수 있어요.",
+      "stoppedAfterFailure": "앞 장면이 실패해 아직 시작하지 않았어요. 이 장면만 선택해 생성하거나 작업 메뉴에서 전체를 취소하세요.",
+      "stoppedForRecovery": "앱을 다시 시작한 뒤 진행 중이던 장면을 확인해야 해서 아직 시작하지 않았어요. 작업 메뉴에서 확인하세요.",
+      "stoppedCancelled": "이 장면을 시작하기 전에 작업을 취소했어요. 선택하면 이 장면만 생성할 수 있어요.",
+      "stoppedUnknown": "멈춤 · 이 장면은 아직 시작하지 않았어요.",
+      "stoppedConsentExpired": "이 장면은 아직 시작하지 않았어요. 다시 승인이 필요해요.",
+      "resume": "계속",
+      "continueRemaining": "나머지 계속",
+      "detachFailed": "삭제한 장면을 제작 작업에서 빼지 못해 생성될 수 있어요. 작업 메뉴에서 일시 정지하거나 취소하세요.",
+      "actionFailure": {
+        "requestInvalid": "작업이나 장면 ID가 빠져 제작 기록이 불완전해요. 여기서 다시 만들 수 없으니 캔버스에서 장면을 선택해 생성하세요.",
+        "bridgeUnavailable": "이 창이 Nomi 데스크톱 앱에 연결되지 않아 실행할 수 없어요.",
+        "coreStarting": "Nomi 생성 기능을 시작하고 있어요. 몇 초 뒤 다시 시도해 주세요.",
+        "runNotOpen": "이 프로젝트가 열려 있지 않아요. 연 뒤 다시 시도해 주세요.",
+        "runMissing": "제작 기록이 없어 계속할 수 없어요. 캔버스에서 장면을 선택해 생성하세요.",
+        "runUnreadable": "제작 기록을 읽지 못했어요. 파일이 손상됐거나 다른 프로그램이 사용 중일 수 있어요. 실행한 내용은 없어요. 파일을 사용하는 프로그램을 닫고 다시 시도해 주세요.",
+        "notMultishot": "여러 장면을 만드는 묶음에 속한 카드가 아니에요. 카드에서 바로 다시 생성하세요.",
+        "projectUnavailable": "프로젝트 정보를 읽지 못했어요. 폴더가 이동했을 수 있어요. 실행한 내용은 없어요. 프로젝트를 다시 열고 시도해 주세요.",
+        "confirmationUnavailable": "이 창에서는 비용 확인을 표시할 수 없어 시작하지 않았어요. Nomi 기본 창에서 다시 시도해 주세요.",
+        "providerUnavailable": "이 장면의 서비스 연결이 삭제됐거나 키가 없어 시작하지 않았어요. 모델 연결에서 다시 연결한 뒤 시도해 주세요.",
+        "noPriorAttempt": "아직 생성하지 않은 장면이에요. 먼저 촬영을 마쳐 주세요.",
+        "previousAttemptUnsettled": "이 장면의 마지막 생성이 끝나지 않았어요. 끝날 때까지 기다려 주세요.",
+        "attemptLimit": "이 장면의 재시도 한도에 도달했어요. 캔버스에서 선택해 생성하세요.",
+        "runChanged": "방금 작업 상태가 바뀌어 처리하지 못했어요. 다시 시도해 주세요.",
+        "approvalStale": "확인 중 프로젝트가 바뀌어 시작하지 않았어요. 다시 시도하고 한 번 더 확인해 주세요.",
+        "approvalExpired": "확인 시간이 만료돼 시작하지 않았어요. 다시 시도해 주세요.",
+        "runFinished": "이 작업은 끝났어요. 계속할 장면이 없어요.",
+        "notStopped": "멈춘 작업이 아니라 다시 시작할 내용이 없어요.",
+        "planNotSubmitted": "아직 시작하지 않은 계획이에요. 먼저 AI 도우미 패널에서 확인하세요.",
+        "ledgerWriteFailed": "이 단계를 프로젝트 기록에 저장하지 못했어요. 디스크가 가득 찼거나 폴더에 쓰기 권한이 없을 수 있어요. 실행한 내용은 없어요. 공간이나 권한을 확인하고 다시 시도하세요.",
+        "internalError": "Nomi 자체의 문제로 처리하지 못했어요. 오류 기록이 남아 있으니 의견 및 공유 메뉴에서 보내 주세요."
+      }
+    },
+    "degradation": {
+      "model_cannot_take_character_reference": "이 모델은 인물 얼굴을 유지하기 어려워 다른 얼굴로 바뀔 위험이 커요"
+    }
+  },
+  "savePrompt": {
+    "saveFailed": "설명 보관함에 저장하지 못했어요: {{message}}",
+    "imageType": "이미지 장면 설명",
+    "videoType": "영상 장면 설명",
+    "title": "장면 설명 저장",
+    "removeReference": "참고 이미지 제거",
+    "type": "설명 종류",
+    "selectedText": "선택한 글",
+    "cancel": "취소",
+    "save": "저장"
+  },
+  "error": {
+    "taskFailed": "모델 작업이 실패했어요",
+    "noText": "모델 작업은 끝났지만 텍스트를 받지 못했어요",
+    "noVideoUrl": "모델 작업은 끝났지만 영상 주소를 받지 못했어요",
+    "noAudio": "내레이션 생성은 끝났지만 소리를 받지 못했어요",
+    "noImageUrl": "모델 작업은 끝났지만 이미지 주소를 받지 못했어요",
+    "failedAria": "생성 실패: {{reason}}",
+    "providerMessage": "서비스 안내: ",
+    "copied": "복사했어요",
+    "copyDetails": "세부 정보 복사",
+    "feedback": "문제 제보",
+    "technicalDetails": "세부 정보",
+    "dismiss": "이 오류 닫기"
+  },
+  "recoverable": {
+    "aria": "서비스 작업이 끝났을 수 있어요. 결과를 다시 가져오세요.",
+    "title": "서비스 작업이 끝났을 수 있어요",
+    "description": "대기 시간은 끝났지만 서비스가 결과를 만들었을 수 있어요. 서비스 관리 화면에서 직접 내려받지 않고 여기서 가져올 수 있어요.",
+    "recover": "결과 가져오기",
+    "recovering": "가져오는 중…",
+    "dismiss": "실패로 표시",
+    "missingTask": "작업 ID나 모델 정보가 없어 결과를 가져올 수 없어요. 다시 생성해 주세요.",
+    "otherProjectTask": "다른 프로젝트의 작업이에요. 작업을 시작한 프로젝트를 열어 결과를 가져오세요.",
+    "retrievingResult": "결과를 다시 가져오고 있어요…",
+    "stillUpstream": "서비스에서 아직 작업 중이에요. 나중에 다시 가져와 주세요."
+  },
+  "phaseDeadline": {
+    "resultSilent": "결과 확인에 {{minutes}}분 동안 답변이 없어 기다리기를 멈췄어요. 서비스 작업은 끝났을 수 있으니 다시 가져와 주세요.",
+    "savingSilent": "이 컴퓨터에 저장하는 데 {{minutes}}분이 지나 기다리기를 멈췄어요. 결과를 다시 가져와 주세요.",
+    "stalledUncharged": "이 단계가 {{minutes}}분 동안 진행되지 않아 기다리기를 멈췄어요. 서비스에는 요청하지 않았으니 다시 시도할 수 있어요.",
+    "stalledMaybeCharged": "요청한 뒤 {{minutes}}분 동안 접수 확인이 없어 기다리기를 멈췄어요. 접수됐을 수 있으니 다시 생성하기 전에 서비스 작업 목록을 확인하세요."
+  },
+  "agentRuntime": {
+    "shotTitle": "장면 {{index}}",
+    "shotKeyframeTitle": "장면 {{index}} 핵심 프레임",
+    "textModelHint": "설정에서 연결한 모델로 글을 실시간 생성",
+    "shotNotGenerated": "장면 생성 전",
+    "videoAndKeyframeMissing": "영상과 핵심 프레임 모두 생성하지 않았어요",
+    "videoAndPlaceholderMissing": "영상을 생성하지 않았고 대신 표시할 핵심 프레임도 없어요"
+  },
+  "clipboard": {
+    "downloading": "내려받는 중"
+  }
+}

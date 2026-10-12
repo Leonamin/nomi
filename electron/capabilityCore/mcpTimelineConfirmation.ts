@@ -1,3 +1,4 @@
+import { mcpLocaleText } from './mcpLocaleText'
 import type { ResultLocale } from './mcpToolResults'
 
 // `nomi_timeline_edit` apply/undo is a reversible project write that an outside agent asks for, so it
@@ -51,12 +52,8 @@ const COPY = {
       title: '确认撤销时间轴改动',
       description: 'Approve to undo the last timeline edit. Decline or timeout leaves the timeline unchanged.',
     },
-  unsupported: (locale: ResultLocale) => locale === 'en'
-    ? 'Not applied: your AI client cannot ask you to confirm, and Nomi will not change the timeline without a human approval. Open Nomi and apply the previewed edit there, or use a client that supports MCP elicitation.'
-    : '未生效：你的 AI 客户端没法向你征求确认，Nomi 不会在没有真人批准的情况下改时间轴。请回 Nomi 里应用刚才预览的改动，或换一个支持 MCP elicitation 的客户端。',
-  denied: (locale: ResultLocale) => locale === 'en'
-    ? 'Not applied: the timeline change was not approved.'
-    : '未生效：这次时间轴修改没有获得批准。',
+  unsupported: (locale: ResultLocale) => mcpLocaleText(locale, '未生效：你的 AI 客户端没法向你征求确认，Nomi 不会在没有真人批准的情况下改时间轴。请回 Nomi 里应用刚才预览的改动，或换一个支持 MCP elicitation 的客户端。', 'Not applied: your AI client cannot ask you to confirm, and Nomi will not change the timeline without a human approval. Open Nomi and apply the previewed edit there, or use a client that supports MCP elicitation.'),
+  denied: (locale: ResultLocale) => mcpLocaleText(locale, '未生效：这次时间轴修改没有获得批准。', 'Not applied: the timeline change was not approved.'),
 }
 
 /**

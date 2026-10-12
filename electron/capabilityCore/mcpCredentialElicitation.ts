@@ -1,3 +1,4 @@
+import { mcpLocaleText } from './mcpLocaleText'
 import type { ElicitationClient } from './mcpElicitation'
 import type { ResultLocale } from './mcpToolResults'
 
@@ -27,7 +28,7 @@ import type { ResultLocale } from './mcpToolResults'
 const POLL_INTERVAL_MS = 1000
 const DEFAULT_WAIT_MS = 5 * 60 * 1000
 
-const L = (locale: ResultLocale, zh: string, en: string): string => (locale === 'en' ? en : zh)
+const L = (locale: ResultLocale, zh: string, en: string): string => (mcpLocaleText(locale, zh, en))
 
 // 降级成「人工填 key」时，模型需要被明确告知**它这一步该做的是等**。不说清楚，它就会
 // 把「没成功」当成「再试一次」——2026-09-10 实测里同一个循环在花费确认那一关烧掉了三次白点。

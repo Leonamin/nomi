@@ -1,3 +1,4 @@
+import { mcpLocaleText } from './mcpLocaleText'
 // 工具结果收口（A2 结果重写 + A6 错误契约 · plan 2026-08-11-mcp-conversation-native-p0）。
 //
 // 这里产出的 text 是「模型转述的原材料」= 用户在 CLI 里真正读到的内容（R15 可见文字）：
@@ -14,10 +15,10 @@ import { projectGenerationRecovery } from './generationRecoveryProjection'
 export { buildToolErrorOutcome } from './mcpToolErrorResults'
 export { buildCanonicalMcpToolResult, type CanonicalMcpToolResult } from './mcpCanonicalToolResult'
 
-export type ResultLocale = 'zh-CN' | 'en'
+export type ResultLocale = 'zh-CN' | 'en' | 'ko'
 
 type Ctx = { locale: ResultLocale }
-const L = (ctx: Ctx, zh: string, en: string): string => (ctx.locale === 'en' ? en : zh)
+const L = (ctx: Ctx, zh: string, en: string): string => (mcpLocaleText(ctx.locale, zh, en))
 
 /** run 状态 → 人话 + 下一步动作（状态机 productionRunState.ts 的对外翻译，缺省透传原状态）。 */
 const RUN_STATUS_HINT: Record<string, { zh: string; en: string; nextZh: string; nextEn: string; action: string }> = {

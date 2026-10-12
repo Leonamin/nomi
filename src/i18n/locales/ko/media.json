@@ -1,0 +1,7 @@
+{
+  "imageLoadFailedWithSource": "이미지를 불러오지 못했어요: {{source}}",
+  "noImage": "이미지 없음",
+  "imageLoadFailed": "이미지를 불러오지 못했어요",
+  "loadFailed": "불러오지 못했어요",
+  "loadTimedOut": "불러오는 시간이 너무 길어졌어요. 다시 시도하세요."
+}
