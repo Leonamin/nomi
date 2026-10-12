@@ -38,8 +38,8 @@ app.get('/api/health', context => context.json({ status: 'ok', version: '0.23.1-
 app.post('/api/rpc', bodyLimit({ maxSize: 8 * 1024 * 1024 }), async context => {
   const { channel, args } = rpcSchema.parse(await context.req.json())
   const surface = getWebSurface(context.req.header('x-nomi-client') || '', origin)
-  const value = await dispatchWebRpc(channel, translateMediaValues(args, 'server') as unknown[], surface)
-  return context.json({ ok: true, value: translateMediaValues(value, 'browser') ?? null })
+  const value = await dispatchWebRpc(channel, translateMediaValues(args, 'server', origin) as unknown[], surface)
+  return context.json({ ok: true, value: translateMediaValues(value, 'browser', origin) ?? null })
 })
 app.post('/api/upload', bodyLimit({ maxSize: 256 * 1024 * 1024 }), async context => {
   const form = await context.req.formData()
@@ -47,11 +47,11 @@ app.post('/api/upload', bodyLimit({ maxSize: 256 * 1024 * 1024 }), async context
   if (!(file instanceof File)) throw new Error('A media file is required')
   const payload = z.object({ projectId: z.string() }).passthrough().parse(JSON.parse(String(form.get('payload'))))
   const value = await uploadWebAsset(getWebSurface(context.req.header('x-nomi-client') || '', origin), payload, file)
-  return context.json({ ok: true, value: translateMediaValues(value, 'browser') })
+  return context.json({ ok: true, value: translateMediaValues(value, 'browser', origin) })
 })
 app.get('/api/events', context => streamSSE(context, async stream => {
   const lease = acquireWebSurface(context.req.query('clientId') || '', origin)
-  const forward = (message: unknown) => { void stream.writeSSE({ data: JSON.stringify(translateMediaValues(message, 'browser')) }).catch(() => undefined) }
+  const forward = (message: unknown) => { void stream.writeSSE({ data: JSON.stringify(translateMediaValues(message, 'browser', origin)) }).catch(() => undefined) }
   try {
     await stream.writeSSE({ data: JSON.stringify({ channel: 'nomi:web:session', payload: { token, surfaceId: lease.surfaceId } }) })
     hostEvents.on('message', forward)

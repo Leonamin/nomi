@@ -12,11 +12,11 @@ const { token } = JSON.parse(tokenRequest.responseText) as { token: string }
 const headers = { 'content-type': 'application/json', 'x-nomi-token': token, 'x-nomi-client': clientId }
 
 function requestBody(channel: string, args: unknown[]) {
-  return JSON.stringify({ channel, args: translateMediaValues(args, 'server') })
+  return JSON.stringify({ channel, args: translateMediaValues(args, 'server', location.origin) })
 }
 function readResponse(raw: { ok: boolean; value?: unknown; error?: string }) {
   if (!raw.ok) throw new Error(raw.error || 'Nomi Web request failed')
-  return translateMediaValues(raw.value, 'browser')
+  return translateMediaValues(raw.value, 'browser', location.origin)
 }
 async function invoke(channel: string, ...args: unknown[]) {
   const response = await fetch('/api/rpc', { method: 'POST', headers, body: requestBody(channel, args) })
@@ -30,7 +30,7 @@ export const ipcRenderer = {
     Object.entries(headers).forEach(([key, value]) => request.setRequestHeader(key, value))
     request.send(requestBody(channel, args))
     const raw = JSON.parse(request.responseText)
-    return raw.ok ? { ok: true, value: translateMediaValues(raw.value, 'browser') } : raw
+    return raw.ok ? { ok: true, value: translateMediaValues(raw.value, 'browser', location.origin) } : raw
   },
   send(channel: string, ...args: unknown[]) { void invoke(channel, ...args).catch(error => console.error('Nomi Web:', channel, error)) },
   on(channel: string, listener: Listener) {
@@ -48,7 +48,7 @@ events.onmessage = event => {
     surfaceId = payload.surfaceId
     return
   }
-  for (const callback of listeners.get(channel) ?? []) callback(null, translateMediaValues(payload, 'browser'))
+  for (const callback of listeners.get(channel) ?? []) callback(null, translateMediaValues(payload, 'browser', location.origin))
 }
 export const webUtils = { getPathForFile: () => '' }
 export const contextBridge = {
@@ -79,8 +79,9 @@ export const contextBridge = {
       return { ok: true }
     }
     bridge.assets.download = async (payload: { url?: string }) => {
-      if (!payload.url?.startsWith('/api/media/')) throw new Error('Only project media can be downloaded')
-      download(payload.url); return { ok: true }
+      const url = new URL(payload.url || '', location.origin)
+      if (url.origin !== location.origin || !url.pathname.startsWith('/api/media/')) throw new Error('Only project media can be downloaded')
+      download(url.href); return { ok: true }
     }
     Object.defineProperty(window, name, { value: bridge })
     Object.defineProperty(window, 'nomiWeb', { value: true })
