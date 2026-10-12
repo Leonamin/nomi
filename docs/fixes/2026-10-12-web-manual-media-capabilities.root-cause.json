@@ -1,0 +1,134 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-web-manual-media-capabilities",
+  "problem_type": "Manual host media and prompt composition capabilities",
+  "symptom": "Generated inline preview bytes cannot persist and manual preset reads try an unavailable native skill runtime",
+  "direct_cause": "Inline import RPC was omitted and builtin prompt composition always included native skill catalog",
+  "class_root": "Manual host must expose its owned byte import and compose only available optional prompt producers",
+  "affected_population": [
+    "Inline media migration and generated thumbnails",
+    "Manual prompt presets",
+    "Desktop existing skill-composed prompt lists"
+  ],
+  "scope_paths": [
+    "web/rpc.ts",
+    "electron/promptLibrary/builtinPacks.ts",
+    "electron/promptLibrary/promptLibraryStore.ts"
+  ],
+  "entry_points": [
+    "Inline asset import",
+    "Local asset reference import",
+    "Manual builtin/external prompt list",
+    "Desktop skill prompt composition"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "The Nomi surface authority is a domain authorization object; jobs have separate persistent ownership",
+  "invariants": [
+    "Only committed project-owned or inline media can enter the web byte import",
+    "Manual prompt hosts do not instantiate unsupported skill catalogs",
+    "Desktop default prompt composition remains unchanged"
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "web/rpc.ts",
+      "symbol": "dispatchWebRpc"
+    },
+    {
+      "kind": "read",
+      "path": "electron/promptLibrary/builtinPacks.ts",
+      "symbol": "getBuiltinPrompts"
+    },
+    {
+      "kind": "write",
+      "path": "electron/promptLibrary/promptLibraryStore.ts",
+      "symbol": "withBuiltinPrompts"
+    }
+  ],
+  "door_reduction": {
+    "before": 3,
+    "after": 3,
+    "why_not": "Web host, builtin composition owner and library cache owner are separate existing roles"
+  },
+  "generality_proof": "The original asset owner processes inline and canonical URLs after project authorization; one builtin composition option controls native catalog inclusion across every host call",
+  "shared_boundaries": [
+    {
+      "path": "web/rpc.ts",
+      "symbol": "dispatchWebRpc",
+      "responsibility": "Authorize manual byte import and select supported prompt producers"
+    },
+    {
+      "path": "electron/promptLibrary/builtinPacks.ts",
+      "symbol": "getBuiltinPrompts",
+      "responsibility": "Compose available builtin producers"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "web/rpc.ts",
+      "entry_point": "dispatchWebRpc",
+      "disposition": "enforced",
+      "evidence": "Actual inline write, foreign project and network URL tests"
+    },
+    {
+      "path": "electron/promptLibrary/promptLibraryStore.ts",
+      "entry_point": "getPromptLibrary",
+      "disposition": "enforced",
+      "evidence": "Composition option propagates through cache/library owner"
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every hydrated inline image and preset read can repeat the omitted capability",
+    "same_class_scan": [
+      "door-map getBuiltinPrompts and withBuiltinPrompts: existing pack and library owners",
+      "door-map getPromptLibrary: IPC caller; inspected web caller and native skill loader",
+      "projectMediaMigration data URL import and projectAssetStore canonical/data URL paths inspected"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "web/rpc.ts",
+    "invariant": "Manual capability selection stays at host and shared composition boundaries",
+    "failure_mode": "Foreign project or network URL import rejects; unsupported skill producer is not instantiated",
+    "exception_policy": "none",
+    "strategy": "Use existing asset import with authority and explicit optional producer composition",
+    "artifacts": [
+      "web/rpc.ts",
+      "electron/promptLibrary/builtinPacks.ts",
+      "electron/promptLibrary/promptLibraryStore.ts"
+    ]
+  },
+  "regression_tests": [
+    "web/assetImport.test.ts",
+    "web/promptLibrary.test.ts"
+  ],
+  "class_regression_tests": [
+    "web/assetImport.test.ts",
+    "web/promptLibrary.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "not-applicable",
+    "rationale": "New web transport keeps the existing runtime contract; there is no alternate legacy collector",
+    "removed_paths": []
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "The application owns source windows and generation completion policy",
+    "exit_criteria": []
+  },
+  "migration": "Server canonical media and desktop defaults remain valid; no existing data is rewritten",
+  "residual_risks": [
+    "Deployed preset and inline preview persistence need browser verification"
+  ],
+  "recurrence_check_on": "2026-11-11",
+  "detected_by": "review",
+  "invariant_owner_layer": {
+    "layer": "web/rpc.ts",
+    "tests": [
+      "web/assetImport.test.ts",
+      "web/promptLibrary.test.ts"
+    ],
+    "why": "Host boundary chooses authorized media and available prompt sources"
+  }
+}

@@ -1,3 +1,4 @@
+import { chromium } from 'playwright';
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
@@ -26,7 +27,7 @@ const work = fs.mkdtempSync(path.join(os.tmpdir(), "nomi-decode-verdict-"));
 afterAll(() => fs.rmSync(work, { recursive: true, force: true }));
 beforeEach(() => { logged.info.length = 0; logged.warn.length = 0; });
 
-/** 真编码器（随包 ffmpeg 自己的 mjpeg / png / libwebp）产出的图，不是手写的字节。 */
+/** Real FFmpeg JPEG/PNG fixtures. A decoder distribution need not include a WebP encoder. */
 function encode(name: string, extra: string[] = []): Buffer {
   const output = path.join(work, name);
   const result = spawnSync(resolveFfmpegPath(), [
@@ -39,10 +40,26 @@ function encode(name: string, extra: string[] = []): Buffer {
 let jpeg: Buffer;
 let png: Buffer;
 let webp: Buffer;
-beforeAll(() => {
+beforeAll(async () => {
   jpeg = encode("base.jpg", ["-q:v", "3"]);
   png = encode("base.png");
-  webp = encode("base.webp");
+  const browser = await chromium.launch({ headless: true });
+  try {
+    const page = await browser.newPage();
+    const encoded = await page.evaluate(async (base64Png) => {
+      const image = new Image();
+      image.src = `data:image/png;base64,${base64Png}`;
+      await image.decode();
+      const canvas = document.createElement('canvas');
+      canvas.width = image.width; canvas.height = image.height;
+      const context = canvas.getContext('2d');
+      if (!context) throw new Error('Fixture image context unavailable');
+      context.drawImage(image, 0, 0);
+      return canvas.toDataURL('image/webp');
+    }, png.toString('base64'));
+    if (!encoded.startsWith('data:image/webp;base64,')) throw new Error('Real WebP fixture encoding failed');
+    webp = Buffer.from(encoded.slice('data:image/webp;base64,'.length), 'base64');
+  } finally { await browser.close(); }
 });
 
 const decodes = (kind: "image" | "video" | "audio", bytes: Buffer, contentType: string) =>

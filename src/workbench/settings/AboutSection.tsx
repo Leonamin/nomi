@@ -115,6 +115,12 @@ export function AboutSection({ onClose, onReplaySplash }: AboutSectionProps): JS
         ) : null}
       </div>
 
+      {window.nomiDesktop?.platform === 'web' ? (
+        <p className="mb-4 text-body-sm text-nomi-ink-60">
+          <a className="text-nomi-accent" href="/source" target="_blank" rel="noreferrer">{t('about.sourceCode')}</a>
+          {' · '}<a className="text-nomi-accent" href="/LICENSE" target="_blank" rel="noreferrer">{t('about.license')}</a>
+        </p>
+      ) : null}
       <div className="border-t border-nomi-line-soft pt-4">
         {!updater.supported ? (
           <p className="text-body-sm text-nomi-ink-60">{t('about.desktopUpdateUnsupported')}</p>

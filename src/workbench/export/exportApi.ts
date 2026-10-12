@@ -136,7 +136,7 @@ export async function exportTimelineToMp4(options: ExportTimelineToMp4Options): 
     return result
   } catch (error) {
     trackExport('failure')
-    if (!finishedTempInput && desktop.exports.cancel) {
+    if (!finishedTempInput && desktop.platform !== 'web' && desktop.exports.cancel) {
       try {
         await desktop.exports.cancel(jobId)
       } catch (cancelError) {

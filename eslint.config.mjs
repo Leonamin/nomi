@@ -13,6 +13,7 @@ export default tseslint.config(
   {
     ignores: [
       'dist/**',
+      'public/web-bridge.js',
       'dist-electron/**',
       'release/**',
       // R0 历史兼容探针产物保留；正式 pi 源码在 electron/harness/runtime/pi 参加 lint。

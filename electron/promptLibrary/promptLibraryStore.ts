@@ -8,7 +8,7 @@ import { hardenedFetchText } from "../hardenedFetch";
 import { writeJsonFileAtomic } from "../jsonFile";
 import { getSettingsRoot, readJson } from "../runtimePaths";
 import { PROMPT_SOURCES, type PromptSource } from "./promptSources";
-import { withBuiltinPrompts } from "./builtinPacks";
+import { withBuiltinPrompts, type BuiltinPromptOptions } from "./builtinPacks";
 import type { LibraryPrompt } from "./promptLibraryTypes";
 import seedJson from "./promptLibrarySeed.json";
 
@@ -114,9 +114,9 @@ async function getExternalPrompts(): Promise<LibraryPrompt[]> {
 }
 
 /** 取全部提示词 = 内置包(随构建,恒在最前) + 外部源。唯一对外出口,内置永不被在线拉取顶掉。 */
-export async function getPromptLibrary(): Promise<LibraryPrompt[]> {
+export async function getPromptLibrary(options: BuiltinPromptOptions = {}): Promise<LibraryPrompt[]> {
   hydrateFromDisk();
-  const local = await withBuiltinPrompts(floor());
+  const local = await withBuiltinPrompts(floor(), options);
   // Remote freshness must not delay bundled media; the existing single-flight
   // refresh persists its result for the next read, including manual reloads.
   void getExternalPrompts();

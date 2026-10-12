@@ -76,10 +76,16 @@ const APPROVED_NON_MODEL_SECTION_SHA256 = {
   // （失败面那条路不再套带标题的 modal 外壳，直接呈现反馈卡）；② `FeedbackShareContent` 的
   // `variant` prop 只剩一个合法值，删掉之后这里的 `variant="embedded"` 也跟着去掉。
   // 布局、区块顺序、文案一个字没动。更新这颗钉子是因为它钉的是整份文件的内容。
-  'AboutSection.tsx': 'f355cbcbd965dd5b49593b04b7044605f08efa5cc36df288b9d169d91d9c26b5',
+  // 2026-10-12: the requested web host exposes its exact source and AGPL license; desktop rendering is unchanged.
+  'AboutSection.tsx': '9b7a62c0e63205a9f4a6408364e8ca8987688393868dd933c0bd94bceed79edd',
 } as const
 
 describe('settings dialog structure', () => {
+  it('offers exact running source and license only for the personal web host', () => {
+    expect(aboutSource).toContain("window.nomiDesktop?.platform === 'web'")
+    expect(aboutSource).toContain('href="/source"')
+    expect(aboutSource).toContain('href="/LICENSE"')
+  })
   // 2026-08-12 由五 tab 扩到六 tab（用户拍板）。原五 tab 拍板为什么不再成立：
   // 定它那会儿「模型」= 几个 API key，塞进「AI 与模型」够用；现在多实例 ComfyUI + 自定义工作流
   // 已长成一个要整页的子系统。而原 ai tab 里的东西服务的是 MCP 代跑护栏（trustedHosts /

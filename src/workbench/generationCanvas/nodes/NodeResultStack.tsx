@@ -30,6 +30,8 @@ import { resolveResultStackPlacement, type ResultStackPlacement } from './nodeRe
 import { getGenerationNodeIcon } from './renderRegistry'
 import { CANVAS_RESULT_DRAG_MIME, encodeCanvasResultDrag } from '../components/canvasResultDrag'
 import { logRendererError } from '../../../desktop/rendererLog'
+import { useWorkbenchStore } from '../../workbenchStore'
+import { DesignButton } from '../../../design'
 
 const INITIAL_VISIBLE_RESULTS = 12
 
@@ -284,6 +286,17 @@ export function NodeResultStack({
   const trayRef = React.useRef<HTMLElement | null>(null)
   const entries = React.useMemo(() => listStableNodeMediaResults(node), [node])
   const currentId = node.result ? resultIdentity(node.result) : ''
+  const hasTimelineClips = useWorkbenchStore(state => state.timeline.tracks.some(track => track.clips.some(clip => clip.sourceNodeId === node.id)))
+  const canReplaceTimelineCandidate = useWorkbenchStore(state => Boolean(node.result?.url) && state.timeline.tracks.some(track => track.clips.some(clip => clip.sourceNodeId === node.id && clip.url !== node.result?.url)))
+  const replaceTimelineCandidate = () => {
+    try {
+      useWorkbenchStore.getState().reconcileTimelineForUpdatedNodes(node.id, node.result ?? null)
+      reportFeedback(t('generationCommon.resultStack.timelineReplaced'))
+    } catch (error) {
+      reportFeedback(t(error instanceof Error && error.message === 'timeline_candidate_too_short'
+        ? 'generationCommon.resultStack.timelineTooShort' : 'generationCommon.resultStack.timelineReplaceFailed'))
+    }
+  }
 
   React.useEffect(() => {
     if (!open) {
@@ -375,7 +388,6 @@ export function NodeResultStack({
 
   return (
     <>
-      {feedback ? <p role="status" className="m-0 px-2 py-1 text-caption text-nomi-ink-60">{feedback}</p> : null}
       <CardStackPeeks
         count={entries.length}
         label={t('generationCommon.resultStack.versionCount', { count: entries.length })}
@@ -523,6 +535,13 @@ export function NodeResultStack({
                 </button>
               ) : null}
             </div>
+            {feedback ? <p role="status" className="m-0 shrink-0 border-t border-nomi-line px-3 py-2 text-caption text-nomi-ink-60">{feedback}</p> : null}
+            {!readOnly && hasTimelineClips ? (
+              <div className="border-t border-nomi-line p-3">
+                <p className="mb-2 mt-0 text-caption text-nomi-ink-60">{t('generationCommon.resultStack.timelineUnchanged')}</p>
+                <DesignButton size="sm" className="w-full" disabled={!canReplaceTimelineCandidate} onClick={replaceTimelineCandidate}>{t('generationCommon.resultStack.replaceTimeline')}</DesignButton>
+              </div>
+            ) : null}
           </motion.section>
         ) : null}
       </AnimatePresence>

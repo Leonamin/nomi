@@ -220,7 +220,7 @@ export default function ProjectLibraryPage({
     { id: 'native', label: t('library.local'), count: sourceCounts.native },
     { id: 'folder', label: t('library.folders'), count: sourceCounts.folder },
   ]
-  const textModelMissing = hasTextModel === false
+  const textModelMissing = hasTextModel === false && getDesktopBridge()?.platform !== 'web'
   const openProject = React.useCallback((projectId: string): void => {
     const status = syncInspectionByProject[projectId]?.status
     if (status && syncStatusBlocksOpen(status)) {
@@ -234,6 +234,7 @@ export default function ProjectLibraryPage({
   const showModelEntry = Boolean(onOpenModelCatalog) && !textModelMissing
   // Windows：库窗也 frame:false，需自绘标题栏才能拖动/关窗。mac/Linux：原生 chrome，右上操作留在 header 原位。
   const isWindows = window.nomiDesktop?.platform === 'win32'
+  const canOpenBrowser = Boolean(window.nomiDesktop?.browser)
   const openBrowser = React.useCallback(() => {
     window.dispatchEvent(new CustomEvent('nomi-open-browser'))
   }, [])
@@ -258,6 +259,7 @@ export default function ProjectLibraryPage({
           {t('library.models')}
         </button>
       ) : null}
+      {canOpenBrowser ? (
       <button
         type="button"
         onClick={openBrowser}
@@ -270,6 +272,7 @@ export default function ProjectLibraryPage({
         <IconBrowser size={14} stroke={1.8} aria-hidden="true" />
         {t('library.browser')}
       </button>
+      ) : null}
       {onOpenSettings ? (
         <button
           type="button"

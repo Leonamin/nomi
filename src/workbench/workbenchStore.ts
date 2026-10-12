@@ -16,7 +16,6 @@ import {
   setTimelinePlayheadFrame,
   setTimelineScale,
   splitClipAtFrame,
-  updateClipsBySourceNodeId,
 } from './timeline/timelineEdit'
 import { applyRegeneratedResultToClip } from './generationCanvas/model/buildClipFromGenerationNode'
 import type { GenerationNodeResult } from './generationCanvas/model/generationCanvasTypes'
@@ -615,12 +614,14 @@ export const useWorkbenchStore = create<WorkbenchState>()(subscribeWithSelector(
     set((state) => {
       const id = String(nodeId || '').trim()
       if (!id) return state
-      const nextTimeline = updateClipsBySourceNodeId(state.timeline, id, (clip) =>
-        applyRegeneratedResultToClip(clip, result, state.timeline.fps),
-      )
-      if (nextTimeline === state.timeline) return state // 无引用该节点的 clip → 不动、不触发自动保存
+      if (!state.timeline.tracks.some(track => track.clips.some(clip => clip.sourceNodeId === id))) return state
+      const nextTimeline = { ...state.timeline, tracks: state.timeline.tracks.map(track => ({ ...track,
+        clips: track.clips.map(clip => clip.sourceNodeId === id ? applyRegeneratedResultToClip(clip, result, state.timeline.fps) : clip),
+      })) }
       return {
         timeline: nextTimeline,
+        timelineUndoStack: pushTimelineUndo(state.timelineUndoStack, state.timeline),
+        timelineRedoStack: [],
         persistRevision: state.persistRevision + 1,
       }
     })

@@ -1,0 +1,69 @@
+import { readProject, saveProject, type ProjectRecord } from '../electron/projects/repository'
+import { nodeRunOutcomePatch, type NodeRunOutcome } from '../src/workbench/generationCanvas/store/nodeRunOutcome'
+import type { GenerationCanvasNode } from '../src/workbench/generationCanvas/model/generationCanvasTypes'
+import type { WorkbenchProjectPayload } from '../src/workbench/project/projectRecordSchema'
+
+const writes = new Map<string, Promise<unknown>>()
+/** Serialize Nomi project edits and background outcome delivery at the same boundary. */
+export function mutateWebProject<T>(projectId: string, operation: () => Promise<T>): Promise<T> {
+  const previous = writes.get(projectId) ?? Promise.resolve()
+  const result = previous.catch(() => undefined).then(operation)
+  const settled = result.then(() => undefined, () => undefined)
+  writes.set(projectId, settled)
+  void settled.finally(() => { if (writes.get(projectId) === settled) writes.delete(projectId) })
+  return result
+}
+export function projectCanvas(record: ProjectRecord): WorkbenchProjectPayload {
+  if (!record.payload || typeof record.payload !== 'object') throw new Error('Project canvas is missing')
+  return record.payload as WorkbenchProjectPayload
+}
+export async function deliverWebOutcome(projectId: string, nodeId: string, outcome: NodeRunOutcome) {
+  return mutateWebProject(projectId, async () => {
+    const record = readProject(projectId)
+    if (!record) return
+    const payload = projectCanvas(record)
+    const nodes = payload.generationCanvas.nodes.map(node => node.id === nodeId ? { ...node, ...nodeRunOutcomePatch(node, outcome) } : node)
+    await saveProject(projectId, { ...record, payload: { ...payload, generationCanvas: { ...payload.generationCanvas, nodes } } })
+  })
+}
+
+/** Incoming edits cannot erase results which the server delivered after that browser read. */
+export function mergeServerResults(current: GenerationCanvasNode, incoming: GenerationCanvasNode): GenerationCanvasNode {
+  const currentResults = [current.result, ...(current.history ?? [])].filter(result => result !== undefined)
+  const incomingResults = [incoming.result, ...(incoming.history ?? [])].filter(result => result !== undefined)
+  const history = [...new Map([...currentResults, ...incomingResults].map(result => [result.id, result])).values()]
+  const hasSeenCurrentResult = !current.result || incomingResults.some(result => result.id === current.result!.id)
+  const currentRun = current.runs?.[0]
+  const incomingRun = incoming.runs?.[0]
+  const isServerPending = current.meta?.isWebGenerationOwned === true && (current.status === 'running' || current.status === 'queued')
+  const isSameOrOlderRun = !incomingRun || Boolean(currentRun && (incomingRun.id === currentRun.id || incomingRun.startedAt <= currentRun.startedAt))
+  const hasStaleTerminalStatus = (current.status === 'error' || current.status === 'idle' || current.status === 'success') && (incoming.status === 'running' || incoming.status === 'queued' || incoming.status === 'recoverable') && isSameOrOlderRun
+  const hasNewCompletedResult = current.status === 'success' && !hasSeenCurrentResult
+  return {
+    ...incoming,
+    history,
+    meta: { ...incoming.meta, ...(current.meta?.isWebGenerationOwned ? { isWebGenerationOwned: true, webJobKey: current.meta.webJobKey } : {}) },
+    ...(hasNewCompletedResult || hasStaleTerminalStatus || isServerPending ? { result: current.result, status: current.status, error: current.error, progress: current.progress, runs: current.runs } : {}),
+  }
+}
+export async function saveWebProject(projectId: string, incoming: ProjectRecord) {
+  return mutateWebProject(projectId, async () => {
+    const current = readProject(projectId)
+    if (!current) throw new Error('Project not found')
+    const payload = projectCanvas(incoming)
+    const currentNodes = new Map(projectCanvas(current).generationCanvas.nodes.map(node => [node.id, node]))
+    const nodes = payload.generationCanvas.nodes.map(node => currentNodes.has(node.id) ? mergeServerResults(currentNodes.get(node.id)!, node) : node)
+    return saveProject(projectId, { ...incoming, payload: { ...payload, generationCanvas: { ...payload.generationCanvas, nodes } } })
+  })
+}
+
+
+export async function markWebGenerationOwned(projectId: string, nodeId: string, jobKey: string) {
+  return mutateWebProject(projectId, async () => {
+    const record = readProject(projectId)
+    if (!record) throw new Error('Project not found')
+    const payload = projectCanvas(record)
+    const nodes = payload.generationCanvas.nodes.map(node => node.id === nodeId ? { ...node, meta: { ...node.meta, isWebGenerationOwned: true, webJobKey: jobKey }, ...nodeRunOutcomePatch(node, { kind: 'status', status: 'running' }) } : node)
+    await saveProject(projectId, { ...record, payload: { ...payload, generationCanvas: { ...payload.generationCanvas, nodes } } })
+  })
+}

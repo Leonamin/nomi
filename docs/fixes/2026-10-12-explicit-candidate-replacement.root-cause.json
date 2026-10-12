@@ -1,0 +1,141 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-explicit-candidate-replacement",
+  "problem_type": "Generation selection and editorial timeline ownership were coupled",
+  "symptom": "Regenerating a selected shot silently replaces and resizes already edited timeline cuts",
+  "direct_cause": "Three generation controller paths call timeline reconciliation and the clip replacement helper clamps trims to a new source duration",
+  "class_root": "A generation completion is not an explicit editorial command and cannot own authored timeline source windows",
+  "affected_population": [
+    "Manual single regeneration",
+    "Batch generation of an already placed shot",
+    "Previously trimmed clips and multiple uses of a shot"
+  ],
+  "scope_paths": [
+    "src/workbench/generationCanvas/runner/generationRunController.ts",
+    "src/workbench/workbenchStore.ts",
+    "src/workbench/generationCanvas/model/buildClipFromGenerationNode.ts",
+    "src/workbench/generationCanvas/nodes/NodeResultStack.tsx"
+  ],
+  "entry_points": [
+    "Single regeneration",
+    "Batch completion",
+    "Candidate selection and explicit timeline replacement"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "This is the Nomi internal split between candidate ownership and authored timeline state; provider documentation cannot decide it",
+  "invariants": [
+    "Generation and candidate selection never alter existing timeline cuts",
+    "Explicit source replacement preserves timeline placement, visible duration, source in/out times, framing and audio",
+    "An insufficient candidate rejects the entire replacement",
+    "Candidate command feedback is visible inside the tray that owns the command, never under stacked card decoration"
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/NodeResultStack.tsx",
+      "symbol": "reconcileTimelineForUpdatedNodes"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/workbenchStore.ts",
+      "symbol": "applyRegeneratedResultToClip"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/model/buildClipFromGenerationNode.ts",
+      "symbol": "applyRegeneratedResultToClip"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/runner/generationRunController.ts",
+      "symbol": "runGenerationNodesBatch"
+    }
+  ],
+  "door_reduction": {
+    "before": 2,
+    "after": 4,
+    "why_not": "The automatic generation mutator is removed. Three explicit declarations/call boundaries implement one atomic editorial command; provider completion has no timeline write entry."
+  },
+  "generality_proof": "All automatic reconciliation call sites are removed. The sole explicit clip source helper validates the old source window against the new candidate before publishing any new timeline.",
+  "shared_boundaries": [
+    {
+      "path": "src/workbench/generationCanvas/model/buildClipFromGenerationNode.ts",
+      "symbol": "applyRegeneratedResultToClip",
+      "responsibility": "Reject insufficient sources and preserve the editorial source window"
+    },
+    {
+      "path": "src/workbench/workbenchStore.ts",
+      "symbol": "reconcileTimelineForUpdatedNodes",
+      "responsibility": "Publish an atomic explicit replacement and keep undo history"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "src/workbench/generationCanvas/runner/generationRunController.ts",
+      "entry_point": "runGenerationNodesBatch",
+      "disposition": "enforced",
+      "evidence": "Completion no longer invokes the timeline mutator"
+    },
+    {
+      "path": "src/workbench/generationCanvas/nodes/NodeResultStack.tsx",
+      "entry_point": "switchTo",
+      "disposition": "enforced",
+      "evidence": "Candidate selection remains a node edit; a separate button is the sole timeline replacement trigger"
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every future regeneration of an edited shot can silently alter authored timing",
+    "same_class_scan": [
+      "door-map reconcileTimelineForUpdatedNodes finds three calls in generationRunController",
+      "door-map applyRegeneratedResultToClip finds the workbench store consumer",
+      "Read updateClipsBySourceNodeId and applyRegeneratedResultToClip trim/overlap mutations"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "src/workbench/generationCanvas/model/buildClipFromGenerationNode.ts",
+    "invariant": "The authored visible source window survives explicit replacement; generation does not mutate the timeline",
+    "failure_mode": "Throw timeline_candidate_too_short before store publication",
+    "exception_policy": "none",
+    "strategy": "Remove automatic mutation and enforce replacement at the shared source boundary",
+    "artifacts": [
+      "src/workbench/generationCanvas/model/buildClipFromGenerationNode.ts",
+      "src/workbench/workbenchStore.ts",
+      "src/workbench/generationCanvas/runner/generationRunController.ts"
+    ]
+  },
+  "regression_tests": [
+    "src/workbench/generationCanvas/model/explicitCandidateReplacement.test.ts",
+    "src/workbench/generationCanvas/nodes/NodeResultStack.feedback.test.ts"
+  ],
+  "class_regression_tests": [
+    "src/workbench/generationCanvas/model/explicitCandidateReplacement.test.ts",
+    "src/workbench/generationCanvas/nodes/NodeResultStack.feedback.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "src/workbench/generationCanvas/runner/generationRunController.ts"
+    ],
+    "rationale": "Remove all three implicit reconciliation invocations"
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "The application owns source windows and generation completion policy",
+    "exit_criteria": []
+  },
+  "migration": "Existing clips retain their authored fields. New candidates require an explicit replacement. No disk migration is needed.",
+  "residual_risks": [
+    "Real browser and GPU candidate replacement remains to be exercised"
+  ],
+  "recurrence_check_on": "2026-11-11",
+  "detected_by": "review",
+  "invariant_owner_layer": {
+    "layer": "src/workbench/generationCanvas/model/buildClipFromGenerationNode.ts",
+    "tests": [
+      "src/workbench/generationCanvas/model/explicitCandidateReplacement.test.ts"
+    ],
+    "why": "This shared clip source boundary enforces duration and trim preservation before publication."
+  }
+}

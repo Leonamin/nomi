@@ -43,6 +43,7 @@ function convergeStuckMidFlightNode(
 ): Omit<GenerationCanvasNode, 'categoryId'> {
   if (node.status !== 'running' && node.status !== 'queued') return node
   // 这个窗口的提交口上还挂着这个节点的一笔请求（切项目再切回来，不是重启）：它不是幽灵，照旧在生成。
+  if (typeof window !== 'undefined' && window.nomiDesktop?.platform === 'web' && node.meta?.isWebGenerationOwned === true) return node
   if (isNodeSubmitInFlight(node.id)) return node
   const runs: GenerationNodeRunRecord[] = Array.isArray(node.runs) ? node.runs : []
   if (isProductionRunRecord(runs[0])) return node

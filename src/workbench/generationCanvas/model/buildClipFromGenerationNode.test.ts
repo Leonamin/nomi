@@ -106,40 +106,22 @@ function result(over: Partial<GenerationNodeResult>): GenerationNodeResult {
   return { id: 'r2', type: 'video', createdAt: 2, ...over }
 }
 
-describe('applyRegeneratedResultToClip 回填（位置不变 + trim 越界夹取）', () => {
-  it('image clip 只换 URL，时长/位置/offset 不动', () => {
+describe('explicit replacement preserves placement and trims', () => {
+  it('replaces only the image source', () => {
     const clip = videoClip({ type: 'image', frameCount: 90, endFrame: 100, startFrame: 10 })
-    const next = applyRegeneratedResultToClip(clip, result({ type: 'image', providerUrl: 'https://cdn/x.png' }), 30)
-    expect(next.url).toBe('https://cdn/x.png')
-    expect(next.frameCount).toBe(90)
-    expect(next.startFrame).toBe(10)
-    expect(next.endFrame).toBe(100)
+    expect(applyRegeneratedResultToClip(clip, result({ type: 'image', providerUrl: 'https://cdn/x.png' }), 30)).toMatchObject({ ...clip, url: 'https://cdn/x.png' })
   })
-
-  it('video 变短：frameCount 缩、endFrame 重算、startFrame 不变', () => {
-    const next = applyRegeneratedResultToClip(videoClip(), result({ providerUrl: 'https://cdn/v.mp4', durationSeconds: 3 }), 30)
-    expect(next.frameCount).toBe(90)
-    expect(next.startFrame).toBe(10)
-    expect(next.endFrame).toBe(100) // 10 + 90
+  it('rejects a short source', () => {
+    expect(() => applyRegeneratedResultToClip(videoClip(), result({ providerUrl: 'https://cdn/v.mp4', durationSeconds: 3 }), 30)).toThrow('timeline_candidate_too_short')
   })
-
-  it('video 变长：endFrame 跟着长，startFrame 不变', () => {
-    const next = applyRegeneratedResultToClip(videoClip(), result({ providerUrl: 'https://cdn/v.mp4', durationSeconds: 8 }), 30)
-    expect(next.frameCount).toBe(240)
-    expect(next.endFrame).toBe(250) // 10 + 240
+  it('keeps visible duration when a new source is longer', () => {
+    expect(applyRegeneratedResultToClip(videoClip(), result({ providerUrl: 'https://cdn/v.mp4', durationSeconds: 8 }), 30)).toMatchObject({ frameCount: 240, startFrame: 10, endFrame: 160, offsetEndFrame: 90 })
   })
-
-  it('video 越界：旧 offset 大于新时长 → 夹到至少可见 1 帧', () => {
-    const clip = videoClip({ offsetStartFrame: 30, offsetEndFrame: 30, endFrame: 100 }) // 旧可见 90
-    const next = applyRegeneratedResultToClip(clip, result({ providerUrl: 'https://cdn/v.mp4', durationSeconds: 2 }), 30) // 新 60 帧
-    expect(next.frameCount).toBe(60)
-    expect(next.offsetStartFrame).toBe(30)
-    expect(next.offsetEndFrame).toBe(29) // min(30, 60-30-1)
-    expect(next.endFrame - next.startFrame).toBeGreaterThanOrEqual(1)
-    expect(next.startFrame).toBe(10)
+  it('rejects a source unable to cover the original in-point and duration', () => {
+    const clip = videoClip({ offsetStartFrame: 30, offsetEndFrame: 30, endFrame: 100 })
+    expect(() => applyRegeneratedResultToClip(clip, result({ providerUrl: 'https://cdn/v.mp4', durationSeconds: 2 }), 30)).toThrow('timeline_candidate_too_short')
   })
-
-  it('无可用产物 → 原样返回', () => {
+  it('keeps a clip with no usable result', () => {
     const clip = videoClip()
     expect(applyRegeneratedResultToClip(clip, result({}), 30)).toBe(clip)
   })

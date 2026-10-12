@@ -1,0 +1,125 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-web-media-transport",
+  "problem_type": "Canonical media URL transport",
+  "symptom": "Full preview rejects persisted relative media URL and falls back to an inaccessible GPU loopback URL",
+  "direct_cause": "The web bridge emitted a relative URL while the shared reference URL owner accepts absolute HTTP or canonical asset schemes",
+  "class_root": "Transported media URLs must remain valid through shared domain URL owners and round-trip to canonical server persistence",
+  "affected_population": [
+    "Timeline preview",
+    "Timeline export manifests",
+    "Candidate/reference selection",
+    "Downloads"
+  ],
+  "scope_paths": [
+    "web/mediaUrls.ts",
+    "web/client.ts",
+    "web/server.ts"
+  ],
+  "entry_points": [
+    "RPC and SSE media translation",
+    "Upload response",
+    "Browser persistence",
+    "Shared reference and timeline URL resolution"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "The Nomi surface authority is a domain authorization object; jobs have separate persistent ownership",
+  "invariants": [
+    "Persisted local media remains preferred over provider URL",
+    "Only same-origin media URLs round-trip to canonical assets"
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "web/client.ts",
+      "symbol": "translateMediaValues"
+    },
+    {
+      "kind": "write",
+      "path": "web/mediaUrls.ts",
+      "symbol": "translateMediaValues"
+    },
+    {
+      "kind": "write",
+      "path": "web/server.ts",
+      "symbol": "translateMediaValues"
+    }
+  ],
+  "door_reduction": {
+    "before": 3,
+    "after": 3,
+    "why_not": "Client sends and reads, server sends and reads, and recursive transport translator are necessary boundaries"
+  },
+  "generality_proof": "All bridge values use one translator with an explicit trusted origin; domain URL owners receive absolute HTTP and server owners retain canonical asset identifiers",
+  "shared_boundaries": [
+    {
+      "path": "web/mediaUrls.ts",
+      "symbol": "translateMediaValues",
+      "responsibility": "Canonical asset to browser HTTP and reverse conversion"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "src/workbench/generationCanvas/runner/referenceUrl.ts",
+      "entry_point": "resultUrl",
+      "disposition": "enforced",
+      "evidence": "Real shared URL owner tested on translated result"
+    },
+    {
+      "path": "src/workbench/timeline/timelinePlaybackUrl.ts",
+      "entry_point": "resolveTimelineClipPlaybackUrl",
+      "disposition": "enforced",
+      "evidence": "Real timeline URL owner tested on translated candidate"
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every generated media result and timeline clip passes this transport",
+    "same_class_scan": [
+      "door-map translateMediaValues --roots=web: all three transport files",
+      "door-map resultUrl: 16 domain callers; shared whitelist deliberately rejects relative roots"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "web/mediaUrls.ts",
+    "invariant": "Transport preserves a usable and canonical media identity",
+    "failure_mode": "External hosts are never rewritten into local assets",
+    "exception_policy": "none",
+    "strategy": "Explicit same-origin absolute URLs at one transport translator",
+    "artifacts": [
+      "web/mediaUrls.ts",
+      "web/client.ts",
+      "web/server.ts"
+    ]
+  },
+  "regression_tests": [
+    "web/mediaUrls.test.ts"
+  ],
+  "class_regression_tests": [
+    "web/mediaUrls.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "not-applicable",
+    "rationale": "New web transport keeps the existing runtime contract; there is no alternate legacy collector",
+    "removed_paths": []
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "The application owns source windows and generation completion policy",
+    "exit_criteria": []
+  },
+  "migration": "Existing server assets remain canonical; browser hydration translates them to the current trusted origin",
+  "residual_risks": [
+    "Actual browser playback and final export comparison need re-verification"
+  ],
+  "recurrence_check_on": "2026-11-11",
+  "detected_by": "review",
+  "invariant_owner_layer": {
+    "layer": "web/mediaUrls.ts",
+    "tests": [
+      "web/mediaUrls.test.ts"
+    ],
+    "why": "Transport owns representation conversion without weakening domain URL validation"
+  }
+}

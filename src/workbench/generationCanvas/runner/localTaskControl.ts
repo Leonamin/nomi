@@ -97,6 +97,18 @@ export function requestTaskCancel(node: {
     }).catch(() => report('failed'))
     return
   }
+  if (getDesktopBridge()?.platform === 'web') {
+    if (!promptId || !tasks?.comfyuiInterrupt) { report('failed'); return }
+    void tasks.comfyuiInterrupt(promptId).then(result => {
+      if (!result.ok) { report('failed'); return }
+      const current = useGenerationCanvasStore.getState().nodes.find(candidate => candidate.id === node.id)
+      if ((current?.progress?.taskId || current?.runs?.[0]?.taskId) !== promptId) return
+      markTaskCancelRequested(node.id)
+      useNodeLivePreviewStore.getState().clearPreview(node.id)
+      useGenerationCanvasStore.getState().setNodeStatus(node.id, 'idle')
+    }).catch(() => report('failed'))
+    return
+  }
   markTaskCancelRequested(node.id)
   if (promptId) {
     void tasks?.comfyuiInterrupt?.(promptId)
