@@ -591,3 +591,41 @@ test('approved scanner migration admits exactly three source-proven historical t
   }
   assert.equal(restoreApprovedWebReferenceDoors(initial, { read: file => file === 'web/rpc.ts' ? sources[file] : '' }), initial)
 })
+
+test('exact consumer admits only its actual symbol and keeps pending write history frozen', () => {
+  const oldDoor = { concept: '待决身份', path: 'electron/canvasSpend.ts', symbol: 'mintLegacyGrant' }
+  const exact = { path: 'electron/canvasSpend.ts', symbol: 'mintLegacyGrant' }
+  const scoped = pendingConcept(['electron/legacyGrant.ts', exact])
+  scoped.forbidden_derivations.push({ symbol: 'mintFourthGrant', kind: 'reference', why: 'A fourth symbol is not approved' })
+  const repo = makeRepo({ concepts: [scoped], files: { ...PENDING_FILES, 'electron/legacyGrant.ts': PENDING_FILES['electron/legacyGrant.ts'] + 'export function mintFourthGrant() { return 4 }\n' }, base: baseline({ pending_write_doors: [oldDoor] }) })
+  try {
+    assert.equal(run(repo).status, 0, run(repo).output)
+    write(repo.root, { 'electron/canvasSpend.ts': PENDING_FILES['electron/canvasSpend.ts'] + "import { mintFourthGrant } from './legacyGrant'\nexport const futureReader = mintFourthGrant\n" })
+    const reader = run(repo)
+    assert.equal(reader.status, 1, reader.output)
+    assert.match(reader.output, /pending-unlisted-consumer/)
+    assert.match(reader.output, /mintFourthGrant/)
+    write(repo.root, { 'electron/canvasSpend.ts': PENDING_FILES['electron/canvasSpend.ts'] + "import { mintFourthGrant } from './legacyGrant'\nexport const futureWriter = mintFourthGrant()\n", [REGISTRY]: registry([{ ...scoped, allowed_consumers: [...scoped.allowed_consumers, { path: exact.path, symbol: 'mintFourthGrant' }] }]) })
+    const writer = run(repo)
+    assert.equal(writer.status, 1, writer.output)
+    assert.match(writer.output, /pending-new-write-door/)
+  } finally { cleanup(repo) }
+})
+
+test('exact consumer schema rejects broader or malformed selectors and a different actual path', () => {
+  const oldDoor = { concept: '待决身份', path: 'electron/canvasSpend.ts', symbol: 'mintLegacyGrant' }
+  const repo = makeRepo({ concepts: [pendingConcept(['electron/legacyGrant.ts', { path: oldDoor.path, symbol: oldDoor.symbol }])], files: PENDING_FILES, base: baseline({ pending_write_doors: [oldDoor] }) })
+  try {
+    for (const selected of [{ path: oldDoor.path }, { path: oldDoor.path, symbol: '*' }, { path: oldDoor.path, symbol: oldDoor.symbol, hasWildcard: true }]) {
+      write(repo.root, { [REGISTRY]: registry([pendingConcept(['electron/legacyGrant.ts', selected])]) })
+      const invalid = run(repo)
+      assert.equal(invalid.status, 1, invalid.output)
+      assert.match(invalid.output, /registry-invalid/)
+    }
+    write(repo.root, { [REGISTRY]: registry([pendingConcept([{ path: 'electron/legacyGrant.ts', symbol: oldDoor.symbol }])]) })
+    const wrongPath = run(repo)
+    assert.equal(wrongPath.status, 1, wrongPath.output)
+    assert.match(wrongPath.output, /pending-unlisted-consumer/)
+    assert.match(wrongPath.output, /electron\/canvasSpend\.ts/)
+  } finally { cleanup(repo) }
+})

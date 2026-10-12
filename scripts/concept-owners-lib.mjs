@@ -100,6 +100,21 @@ export function isIdentifierSymbol(symbol) {
   return IDENTIFIER_PATTERN.test(String(symbol ?? ''))
 }
 
+// Exact selectors retain approval granularity; legacy string entries stay file-scoped.
+function isConsumerEntry(entry) {
+  return text(entry) || (entry && typeof entry === 'object' && !Array.isArray(entry)
+    && Object.keys(entry).every(key => key === 'path' || key === 'symbol')
+    && text(entry.path) && isIdentifierSymbol(entry.symbol))
+}
+function consumerPath(entry) { return typeof entry === 'string' ? entry : entry.path }
+function consumerKey(entry) {
+  return typeof entry === 'string' ? `file:${normalizePath(entry)}` : `symbol:${pairKey(entry.path, entry.symbol)}`
+}
+function canConsumeDoor(entry, door) {
+  return isConsumerEntry(entry) && normalizePath(consumerPath(entry)) === normalizePath(door.path)
+    && (typeof entry === 'string' || entry.symbol === door.symbol)
+}
+
 export function trustDomainOfPath(file) {
   const rel = normalizePath(file)
   if (rel === 'web/client.ts') return 'renderer'
@@ -257,13 +272,13 @@ export function validateRegistry(registry, { exists }) {
     }
 
     const consumers = concept.allowed_consumers
-    if (!Array.isArray(consumers) || consumers.some((consumer) => !text(consumer))) {
-      invalid('allowed_consumers 必须是路径数组', label)
+    if (!Array.isArray(consumers) || consumers.some((consumer) => !isConsumerEntry(consumer))) {
+      invalid('allowed_consumers 必须是路径字符串或严格的 {path,symbol} 数组', label)
     } else {
-      if (new Set(consumers.map(normalizePath)).size !== consumers.length) invalid('allowed_consumers 有重复路径', label)
+      if (new Set(consumers.map(consumerKey)).size !== consumers.length) invalid('allowed_consumers 有重复 selector', label)
       for (const consumer of consumers) {
-        if (!exists(consumer)) {
-          findings.push(finding('consumer-missing', { concept: label, path: consumer, message: `allowed_consumers 里的路径不存在：${consumer}` }))
+        if (!exists(consumerPath(consumer))) {
+          findings.push(finding('consumer-missing', { concept: label, path: consumerPath(consumer), message: `allowed_consumers 里的路径不存在：${consumerPath(consumer)}` }))
         }
       }
     }
@@ -297,7 +312,7 @@ export function sanitizeConcepts(concepts) {
       owner: concept.owner && typeof concept.owner === 'object' && !Array.isArray(concept.owner) ? concept.owner : null,
       write_api: entries(concept.write_api, (entry) => entry && text(entry.path) && text(entry.symbol)),
       forbidden_derivations: entries(concept.forbidden_derivations, (entry) => entry && text(entry.symbol) && FORBIDDEN_KINDS.has(entry.kind)),
-      allowed_consumers: entries(concept.allowed_consumers, (entry) => text(entry)),
+      allowed_consumers: entries(concept.allowed_consumers, isConsumerEntry),
       identity_fields: Array.isArray(concept.identity_fields) ? concept.identity_fields.filter((field) => text(field)) : undefined,
     }))
 }
@@ -420,13 +435,13 @@ export function evaluateDoorPolicy({ concept, doors }) {
   const findings = []
   const writeDoors = []
   const ownPaths = writeApiPaths(concept)
-  const consumers = new Set((concept.allowed_consumers ?? []).map(normalizePath))
+  const consumers = concept.allowed_consumers ?? []
   const legacy = referenceSymbols(concept)
   const pending = concept.migration_status === 'pending'
   for (const door of doors) {
     const file = normalizePath(door.path)
     if (ownPaths.has(file)) continue
-    if (!consumers.has(file)) {
+    if (!consumers.some(consumer => canConsumeDoor(consumer, door))) {
       findings.push(finding(pending ? 'pending-unlisted-consumer' : 'forbidden-reference', {
         concept: concept.name,
         path: file,

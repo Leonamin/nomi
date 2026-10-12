@@ -1,0 +1,137 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-12-symbol-specific-concept-consumers",
+  "problem_type": "Exact symbol approvals cannot be represented as file-wide concept consumers",
+  "symptom": "An approved historical writer tuple still reports pending-unlisted-consumer; adding its whole file would admit unrelated symbol consumers",
+  "direct_cause": "Consumer schema and matcher accept only a path string",
+  "class_root": "Approval granularity is lost before comparing the actual AST-generated path and symbol door",
+  "affected_population": [
+    "Pending and forbidden-reference concept consumers in every product host"
+  ],
+  "scope_paths": [
+    "scripts/concept-owners-lib.mjs"
+  ],
+  "entry_points": [
+    "Registry validation and sanitization",
+    "Pending and forbidden-reference actual door policy"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "Nomi concept ownership ratchet and approved consumer declarations are repository-specific governance data.",
+  "invariants": [
+    "Existing string consumer declarations retain their exact current behavior.",
+    "An exact record permits only its path and actual generated door symbol; a fourth symbol or different path fails.",
+    "Malformed records fail schema validation instead of becoming whole-file permissions.",
+    "Pending write-door history and baseline rules are unchanged, even for an exact allowed consumer."
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "sanitizeConcepts"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "validateRegistry"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-concept-owners.mjs",
+      "symbol": "evaluateDoorPolicy"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-framework-boundary.mjs",
+      "symbol": "validateRegistry"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/self-written-lib.mjs",
+      "symbol": "validateRegistry"
+    }
+  ],
+  "door_reduction": {
+    "before": 5,
+    "after": 5,
+    "why_not": "Validation, sanitization and policy consume the same exact selector through distinct existing checker entry points."
+  },
+  "generality_proof": "The shared consumer matcher uses actual path/symbol doors for every concept and product host, with no vendor or filename exception.",
+  "shared_boundaries": [
+    {
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "validateRegistry",
+      "responsibility": "Preserves the exact consumer selector through registry validation, sanitization or actual door matching."
+    },
+    {
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "sanitizeConcepts",
+      "responsibility": "Preserves the exact consumer selector through registry validation, sanitization or actual door matching."
+    },
+    {
+      "path": "scripts/concept-owners-lib.mjs",
+      "symbol": "evaluateDoorPolicy",
+      "responsibility": "Preserves the exact consumer selector through registry validation, sanitization or actual door matching."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "scripts/concept-owners-lib.mjs",
+      "entry_point": "validateRegistry",
+      "disposition": "enforced",
+      "evidence": "Characteristic exact records and malformed record validation."
+    },
+    {
+      "path": "scripts/concept-owners-lib.mjs",
+      "entry_point": "evaluateDoorPolicy",
+      "disposition": "enforced",
+      "evidence": "Same-file fourth reader/writer stays rejected; new pending write remains frozen even when consumer is exact."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every future exact approved consumer can be broadened by losing symbol granularity.",
+    "same_class_scan": [
+      "door-map validateRegistry sanitizeConcepts evaluateDoorPolicy --roots=src,electron,web,scripts",
+      "read pending and forbidden-reference consumer matching and schema sanitization"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "scripts/concept-owners-lib.mjs",
+    "invariant": "Consumer records preserve exact path/symbol identity through the one existing checker.",
+    "failure_mode": "Invalid records fail schema; a different actual door remains unlisted.",
+    "exception_policy": "none",
+    "strategy": "Add a strictly typed exact selector alongside existing string consumer declarations, without changing pending write history.",
+    "artifacts": [
+      "scripts/concept-owners-lib.mjs"
+    ]
+  },
+  "regression_tests": [
+    "scripts/check-concept-owners.node-test.mjs"
+  ],
+  "class_regression_tests": [
+    "scripts/check-concept-owners.node-test.mjs"
+  ],
+  "legacy_paths": {
+    "status": "not-applicable",
+    "rationale": "Existing string path consumers remain supported unchanged; broadening a new exact declaration is removed from the matching model.",
+    "removed_paths": []
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "No third-party dependency or runtime involved.",
+    "exit_criteria": []
+  },
+  "migration": "Only separately approved existing path/symbol tuples will use the exact record form. No history/baseline additions.",
+  "residual_risks": [
+    "Existing inherited desktop owner registration remains advisory and outside this feature scope."
+  ],
+  "invariant_owner_layer": {
+    "layer": "scripts/concept-owners-lib.mjs",
+    "tests": [
+      "scripts/check-concept-owners.node-test.mjs"
+    ]
+  },
+  "detected_by": "review",
+  "recurrence_check_on": "2026-11-11"
+}
