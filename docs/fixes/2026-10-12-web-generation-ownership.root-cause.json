@@ -25,7 +25,7 @@
   "internal_only_reason": "This is the Nomi internal split between candidate ownership and authored timeline state; provider documentation cannot decide it",
   "invariants": [
     "A stale browser cannot overwrite server pending or terminal run fields; first or strictly newer deliberate runs are accepted",
-    "Reconnecting views read current server job snapshots",
+    "Reconnecting views read current server job snapshots, including a missed failed run that preserves an earlier success candidate",
     "Cancellation changes state only after an owned, targeted provider acknowledgement"
   ],
   "doors": [
@@ -100,11 +100,13 @@
   },
   "regression_tests": [
     "web/projectState.test.ts",
+    "web/generationSync.test.ts",
     "src/workbench/generationCanvas/runner/localTaskControl.test.ts",
     "src/workbench/generationCanvas/store/canvasSnapshotNormalizer.test.ts"
   ],
   "class_regression_tests": [
     "web/projectState.test.ts",
+    "web/generationSync.test.ts",
     "src/workbench/generationCanvas/runner/localTaskControl.test.ts",
     "src/workbench/generationCanvas/store/canvasSnapshotNormalizer.test.ts"
   ],

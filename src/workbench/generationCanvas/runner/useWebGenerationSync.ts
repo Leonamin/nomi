@@ -22,7 +22,8 @@ export function useWebGenerationSync(projectId: string | null | undefined): void
           if (!current) continue
           const node = entry.node
           const hasSeenResult = node.result && [current.result, ...(current.history ?? [])].some(result => result?.id === node.result?.id)
-          if (!entry.isPending && hasSeenResult && current.status === 'success') { seen.add(entry.key); continue }
+          const hasAppliedSameRun = current.runs?.[0]?.id === node.runs?.[0]?.id
+          if (!entry.isPending && node.status === 'success' && hasSeenResult && current.status === 'success' && hasAppliedSameRun) { seen.add(entry.key); continue }
           // Never overwrite a newly authored run with the preceding completed job.
           if (!entry.isPending && current.runs?.[0] && node.runs?.[0] && current.runs[0].startedAt > node.runs[0].startedAt) { seen.add(entry.key); continue }
           useGenerationCanvasStore.getState().updateNode(node.id, {
