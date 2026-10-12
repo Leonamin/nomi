@@ -17,6 +17,8 @@
  *   NOMI_WEB_NODE_BIN          node binary for the unit    (default: the running node)
  *   NOMI_WEB_SSH_BIN           ssh binary for the unit     (default: /usr/bin/ssh)
  *   NOMI_WEB_SYSTEMD_USER_DIR  user unit dir               (default: $HOME/.config/systemd/user)
+ *   NOMI_WEB_KEEP_RELEASES     releases to keep after activation; unset keeps all  (default: unset)
+ *                              (sets this to 1 to discard the previous version's build artifacts)
  */
 import fs from 'node:fs'
 import os from 'node:os'
@@ -100,4 +102,29 @@ run('systemctl', ['--user', 'daemon-reload'], release)
 if (comfySsh) run('systemctl', ['--user', 'enable', '--now', comfyUnit], release)
 run('systemctl', ['--user', 'enable', webUnit], release)
 run('systemctl', ['--user', 'restart', webUnit], release)
+// 2026-10-12：NOMI_WEB_KEEP_RELEASES 를 주면 활성화가 끝난 뒤 오래된 release **산출물**을 정리한다.
+// 데이터 루트(projects/assets/exports/runtime.env/browser)는 절대 건드리지 않는다 — 지우는 것은
+// release worktree(빌드 산출물)뿐이다. 서비스가 새 release로 재시작된 뒤에만 지우므로 도는 프로세스의
+// 작업 디렉터리를 뽑아내지 않는다. 기본값(미지정)은 지금까지처럼 전부 보존 = 롤백 여지 유지.
+const keepRaw = env.NOMI_WEB_KEEP_RELEASES
+if (keepRaw !== undefined && keepRaw !== '') {
+  const keep = Number(keepRaw)
+  if (!Number.isInteger(keep) || keep < 1) throw new Error('NOMI_WEB_KEEP_RELEASES must be a positive integer')
+  const releasesRoot = path.join(base, 'releases')
+  const stale = fs.readdirSync(releasesRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && path.join(releasesRoot, entry.name) !== release)
+    .map((entry) => ({ dir: path.join(releasesRoot, entry.name), mtime: fs.statSync(path.join(releasesRoot, entry.name)).mtimeMs }))
+    .sort((a, b) => b.mtime - a.mtime)
+    .slice(Math.max(0, keep - 1))
+  for (const { dir } of stale) {
+    try {
+      execFileSync('git', ['worktree', 'remove', '--force', dir], { cwd: release, stdio: 'pipe' })
+    } catch {
+      // release worktree 로 등록돼 있지 않으면(예: 손으로 만든 클론) 디렉터리만 지운다.
+      fs.rmSync(dir, { recursive: true, force: true })
+    }
+    console.log(JSON.stringify({ event: 'web-release-pruned', release: dir }))
+  }
+  if (stale.length > 0) run('git', ['worktree', 'prune'], release, true)
+}
 console.log(JSON.stringify({ event: 'web-deployed', sha, release, data, origin }))
