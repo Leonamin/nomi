@@ -671,6 +671,55 @@ export class OperationLedger {
     }));
   }
 
+  /**
+   * 「provider 가 수락하지 않은 것이 확정」을 종결로 적는다.
+   *
+   * 왜 필요한가(2026-10-13 개인 웹 실측): ComfyUI `/prompt` 처럼 **동기 수락/거부**인 wire 에서
+   * create 가 거부(4xx)되거나 아예 발송되지 않으면(정책·검증 실패) 원장은 `submitting` 으로 남고,
+   * `IntegrationSessionService` 의 실패 분기가 그걸 `submission_unknown` 으로 올린다. 그런데 그
+   * 상태에서 나가는 정식 전이가 **하나도 없었다**: `markSettled` 는 submitting|submitted 만,
+   * `cancel` 은 submitting|submitted|unknown 이 하나라도 있으면 거부, `markReconciled` 는 remote id 가
+   * 필요하다. 결과는 그 계열(source) 전체의 재인증 **영구 차단** — 잘못된 워크플로 하나로 그 집이
+   * 잠기고, 그 상태를 푸는 코드 경로가 없다(실제로 잠겼고, 손으로 원장을 고쳐서 풀었다).
+   *
+   * 이 전이는 **remote id 가 없을 때만** 허용한다. id 가 있으면 「수락됐을 수도 있다」이므로
+   * `/history` 로 대조하는 `markReconciled` 가 유일한 정답이고, 여기서 종결이라고 적으면 중복
+   * 제출을 막던 안전 속성이 사라진다.
+   *
+   * 남는 위험을 정직하게 적어 둔다: 발송 도중 프로세스가 죽어 provider 는 수락했는데 우리가 id 를
+   * 받지 못한 경우, 이 전이는 그 사실을 「수락 안 됨」으로 적는다 — 다음 시도가 한 번 중복 제출될
+   * 수 있다(ComfyUI 자기 점검 1회, 부작용은 생성물 한 장). id 가 없으니 대조할 방법 자체가 없다는
+   * 것이 이 선택의 근거이고, 영구 교착보다 낫다.
+   */
+  settleRejected(runId: string, input: {
+    operationKey?: string;
+    expectedRevision: number;
+    reasonCode: string;
+    stage?: CertificationSettledResult["stage"];
+    errorCategory?: CertificationSettledResult["errorCategory"];
+    now: string;
+  }): CertificationOperationRecord {
+    return this.update(runId, input.expectedRevision, (current) => this.updateCurrentMode(current, input.operationKey, (mode) => {
+      if (mode.remoteTaskId) throw new Error("Submitted remote work must reconcile, not settle as rejected");
+      if (!["submitting", "unknown"].includes(mode.submissionState)) throw new Error("Only work that never reached the provider can settle as rejected");
+      return validateMode({
+        ...mode,
+        submissionState: "settled",
+        checkpoint: "settled",
+        artifactEvidence: [],
+        settledResult: {
+          ok: false,
+          taskKind: mode.taskKind,
+          ...(input.stage ? { stage: input.stage } : {}),
+          ...(input.errorCategory ? { errorCategory: input.errorCategory } : {}),
+          reasonCode: input.reasonCode,
+        },
+        userAction: undefined,
+        updatedAt: input.now,
+      });
+    }));
+  }
+
   markReconciled(runId: string, input: { operationKey?: string; remoteTaskId: string; expectedRevision: number; now: string }): CertificationOperationRecord {
     return this.update(runId, input.expectedRevision, (current) => this.updateCurrentMode(current, input.operationKey, (mode) => {
       if (!["unknown", "submitted"].includes(mode.submissionState)) throw new Error("Only submitted or unknown work can reconcile");
