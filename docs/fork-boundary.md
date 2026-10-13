@@ -31,6 +31,12 @@ upstream에 없고 이 fork가 소유한다. 여기서는 fork 가정을 마음�
    git fetch upstream && git merge upstream/main
    ```
 
+## 병합 정책 (2026-10-13 사용자 결정)
+
+- **차단성 검사만 기다리고 병합한다**: `Contracts` · `Unit` · `Quality Gate`가 통과하면 합친다. `Canvas Acceptance` / `Canvas Performance` / `E2E Walkthroughs` / `Mac Package` 같은 나머지 표면은 결과를 기다리지 않아도 된다.
+- GitHub 쪽에는 **강제가 없다**(main에 branch protection·ruleset 없음, 관리자 병합 가능). 그래서 이 정책은 기계가 아니라 **약속**이고, 어기면 main이 조용히 red가 된다.
+- 비용의 실례: #19를 검사 대기 중 병합 → `src/i18n/locales/modelSetup.ts`가 "model" 토큰 때문에 `journey` 표면으로 분류됐는데 그 표면이 skip돼 **main Quality Gate가 실패**했다(코드는 정상, 분류 정책 문제 — #18이 수정).
+
 ## 알려진 상속 debt
 
 `check:concept-owners`는 advisory로 실패한다 — fork의 web 근본원인 계약(`docs/fixes/2026-10-12-web-*.root-cause.json`)이 등록 개념의 write_api에 아직 안 묶여 있다. main의 `.github/workflows/docs-autosync.yml`이 자동 보충하므로 개별 PR에서 단독 commit으로 고치지 않는다.
