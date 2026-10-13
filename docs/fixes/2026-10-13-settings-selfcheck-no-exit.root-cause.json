@@ -1,0 +1,91 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-13-settings-selfcheck-no-exit",
+  "change_kind": "corrective",
+  "problem_type": "A full-screen replacement panel offered a single action, so entering it trapped the user",
+  "symptom": "설정 → 모델에서 ComfyUI 워크플로를 등록하다 자체 점검 화면(\"연결 점검 시작\")에 들어가면 **나갈 길이 없다**. 유일한 닫기(✕)는 설정 모달 전체를 닫고, handoff가 남아 있어 다시 열면 같은 화면이 뜬다 — 사용자 표현: \"다시 되돌아가지 못하고 있어\".",
+  "direct_cause": "`OnboardingDrawer`가 홈 페이지를 `<IntegrationSelfCheckPanel>`로 **통째로 대체**하는데, 그 패널은 「점검 시작」 버튼 하나만 그린다. 되돌아가기(보류)도, 보류한 뒤 다시 들어갈 입구도 없었다.",
+  "class_root": "전체 화면을 대체하는 화면은 **나가는 길과 다시 들어오는 길을 함께** 제공해야 한다는 규약이 없었다. 다른 페이지들은 `renderInModelDialog(... onClose=...)`로 감싸 나가기 규약을 지키지만, 이 분기만 그 규약 밖에 있었다.",
+  "affected_population": [
+    "설정 → 모델에서 워크플로 등록 후 자체 점검 화면에 들어간 모든 사용자",
+    "특히 점검을 미루고 다른 모델 작업을 하려는 운영자"
+  ],
+  "scope_paths": [
+    "src/ui/onboarding/OnboardingDrawer.tsx",
+    "src/ui/onboarding/IntegrationSelfCheckPanel.tsx"
+  ],
+  "entry_points": [
+    "설정 → 모델 → (워크플로 가져오기) → 자체 점검 화면",
+    "자체 점검 화면의 「나중에 하기」",
+    "모델 페이지의 「아직 하지 않은 연결 점검이 있어요 · 점검 시작」"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "이 결함은 저장소 안 화면 전이(홈을 대체하는 패널과 그 출구)에서만 나온다. 외부 프로토콜·서드파티 API가 개입하지 않으므로 인용할 공식 문서가 없다.",
+  "invariants": [
+    "홈을 대체하는 화면은 반드시 되돌아갈 길을 준다.",
+    "보류해도 handoff는 지워지지 않는다 — 다시 들어갈 입구가 화면에 남는다.",
+    "점검을 실제로 통과했을 때만 handoff를 ack한다."
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "src/ui/onboarding/OnboardingDrawer.tsx",
+      "symbol": "IntegrationSelfCheckPanel"
+    },
+    {
+      "kind": "write",
+      "path": "src/ui/onboarding/IntegrationSelfCheckPanel.tsx",
+      "symbol": "IntegrationSelfCheckPanel"
+    }
+  ],
+  "door_reduction": {
+    "before": 2,
+    "after": 2,
+    "why_not": "문 수는 그대로다. 없던 **출구 하나**를 더했을 뿐, 상태를 쓰는 곳을 합치거나 없애는 변경이 아니다."
+  },
+  "generality_proof": "출구는 특정 점검 화면이 아니라 '홈을 대체하는 화면'이라는 상황에 붙는다 — 같은 방식으로 홈을 대체하는 화면이 늘어나도 같은 규약(나가기 + 재진입 입구)을 따른다.",
+  "shared_boundaries": [
+    {
+      "path": "src/ui/onboarding/OnboardingDrawer.tsx",
+      "symbol": "OnboardingDrawer",
+      "responsibility": "모델 설정 안의 모든 화면 전이를 소유한다. 홈을 대체하는 화면에는 나가기와 재진입 입구를 함께 제공한다."
+    }
+  ],
+  "same_class_entry_points": [
+    "`page.type === 'verification'`(어댑터 작업)과 `page.type === 'script'` 등 다른 전이들은 이미 `onBack`/`onClose`를 받는다 — 같은 규약을 지키는지 확인했다."
+  ],
+  "recurrence": {
+    "classification": "one_off",
+    "reason": "화면 전이를 소유하는 파일이 하나뿐이고, 이 분기 하나가 규약에서 빠져 있었다. 같은 원인이 재발하려면 새 화면이 같은 방식으로 홈을 대체해야 한다.",
+    "same_class_scan": [
+      "grep -n \"renderInModelDialog\" src/ui/onboarding/OnboardingDrawer.tsx → 다른 페이지들은 모두 onClose/onBack을 받음을 확인",
+      "grep -n \"page.type ===\" src/ui/onboarding/OnboardingDrawer.tsx → 홈을 통째로 대체하는 분기가 이 하나뿐임을 확인"
+    ]
+  },
+  "regression_tests": [
+    "src/ui/onboarding/selfCheckExit.structure.test.ts"
+  ],
+  "class_regression_tests": [
+    "같은 테스트가 \"홈을 대체하는 화면은 나가기와 재진입 입구를 함께 준다\"를 소스 계약으로 고정한다."
+  ],
+  "legacy_paths": [
+    "upstream v0.23.1에도 같은 결함이 있다(이 두 파일은 포크가 손대지 않았다) — 고칠 때 포크 가정을 넣지 않아 업스트림에 그대로 보탤 수 있다."
+  ],
+  "dependency_lifecycle": {
+    "decision": "none",
+    "why": "새 의존성이 없다. 기존 `DesignButton`(variant 8값 안)과 기존 i18n 키 체계만 쓴다."
+  },
+  "migration": "없음 — 화면 상태만 바뀐다. 저장되는 데이터·스키마 변화 없음.",
+  "residual_risks": [
+    "보류 상태는 화면 메모리(`deferredVerificationId`)에만 있다 — 모달을 완전히 닫았다 열면 자체 점검이 다시 앞에 뜬다(의도: 미룬 점검을 잊지 않게).",
+    "시각 확인(실제 캡처)은 아직 unverified — 배포 후 사용자 화면에서 확인해야 한다."
+  ],
+  "detected_by": "user",
+  "recurrence_check_on": "2027-01-13",
+  "invariant_owner_layer": {
+    "layer": "web",
+    "tests": [
+      "src/ui/onboarding/selfCheckExit.structure.test.ts"
+    ]
+  }
+}
