@@ -62,6 +62,26 @@ test('changed Vitest tests are run directly and docs-only changes have no target
   assert.deepEqual(selectFocusedTargets(['docs/README.md']), { vitest: [], related: [], node: [] })
 })
 
+// 2026-10-13: 루트 vitest 설정(include)은 `web/**` 을 포함하지 않는다 — web 테스트는 별도
+// `vitest.web.config.ts` / `pnpm run test:web` 이 소유한다. web 파일을 그대로 선택하면
+// `vitest run web/x.test.ts` 가 "No test files found" 로 exit 1 이 되므로 focused 레인에서 제외한다.
+test('web tests and sources are not selected by the root focused lane', () => {
+  const projectRoot = makeProject()
+  write(projectRoot, 'web/client.ts')
+  write(projectRoot, 'web/client.test.ts')
+  assert.deepEqual(
+    selectFocusedTargets(['web/client.ts', 'web/client.test.ts'], projectRoot),
+    { vitest: [], related: [], node: [] },
+  )
+  // 옆에 루트 레인의 파일이 있으면 그것만 선택된다.
+  write(projectRoot, 'src/widget.ts')
+  write(projectRoot, 'src/widget.test.ts')
+  assert.deepEqual(
+    selectFocusedTargets(['web/client.ts', 'src/widget.ts'], projectRoot).vitest,
+    ['src/widget.test.ts'],
+  )
+})
+
 test('keeps direct and related Vitest invocations when a change set needs both', () => {
   const projectRoot = makeProject()
   write(projectRoot, 'src/without-sibling.ts')

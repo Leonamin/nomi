@@ -527,3 +527,33 @@ test('认不出的路径 fail-closed 到全量；认得出的孤立改动仍是 
   assert.equal(isolated.reason, 'isolated_change')
   assert.equal(classifyValidationPolicy(['docs/x.md']).reason, 'docs_only')
 })
+
+// 2026-10-13: 브라우저 워크스페이스(`web/`)는 electron/src 를 단방향으로만 import 하고(역방향 0건),
+// 루트 tsconfig 와 데스크톱 build 도 web 을 포함하지 않는다. 그래서 web 만 바꾼 diff 는
+// 데스크톱 전용 레인(Electron 워크스루·캔버스 인수/성능·Mac 패키지)을 올릴 수 없다.
+// 이전에는 `web` 이 인식 경로에 없어 unrecognized_path_fail_closed → 전량을 냈다(PR #14 실측).
+test('web-only changes pay only focused-unit cost and never the desktop matrix', () => {
+  for (const file of ['web/agentLanes.ts', 'web/client.ts', 'web/rpc.ts']) {
+    const result = classifyValidationPolicy([file])
+    assert.deepEqual(surfaces(result), focusedOnly, file)
+    assert.equal(result.failClosed, false, file)
+    assert.match(result.reason, /^web_surface:/, file)
+  }
+  // 문서 + web 혼합도 web_surface(비-문서 파일이 전부 web).
+  const withDocs = classifyValidationPolicy([
+    { status: 'M', path: 'web/client.ts' },
+    { status: 'M', path: 'docs/personal-web.md' },
+  ])
+  assert.deepEqual(surfaces(withDocs), focusedOnly)
+  assert.match(withDocs.reason, /^web_surface:/)
+})
+
+test('web changes never downgrade and never add lanes when mixed with electron or src', () => {
+  const mixed = classifyValidationPolicy(['web/client.ts', 'electron/tasks/taskAdmission.ts'])
+  assert.deepEqual(surfaces(mixed), { ...focusedOnly, unit: 'full', desktop: true })
+  const withAgent = classifyValidationPolicy(['web/client.ts', 'src/workbench/ai/v4/agentPanelV4Data.ts'])
+  assert.equal(withAgent.unit, 'full')
+  assert.equal(withAgent.journeys, true)
+  assert.equal(withAgent.canvas, 'none')
+  assert.equal(withAgent.performance, false)
+})
