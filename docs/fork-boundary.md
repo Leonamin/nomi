@@ -33,9 +33,15 @@ upstream에 없고 이 fork가 소유한다. 여기서는 fork 가정을 마음�
 
 ## 병합 정책 (2026-10-13 사용자 결정)
 
-- **차단성 검사만 기다리고 병합한다**: `Contracts` · `Unit` · `Quality Gate`가 통과하면 합친다. `Canvas Acceptance` / `Canvas Performance` / `E2E Walkthroughs` / `Mac Package` 같은 나머지 표면은 결과를 기다리지 않아도 된다.
-- GitHub 쪽에는 **강제가 없다**(main에 branch protection·ruleset 없음, 관리자 병합 가능). 그래서 이 정책은 기계가 아니라 **약속**이고, 어기면 main이 조용히 red가 된다.
-- 비용의 실례: #19를 검사 대기 중 병합 → `src/i18n/locales/modelSetup.ts`가 "model" 토큰 때문에 `journey` 표면으로 분류됐는데 그 표면이 skip돼 **main Quality Gate가 실패**했다(코드는 정상, 분류 정책 문제 — #18이 수정).
+- **CI를 기다리지 않는다.** 저장소 Actions를 **껐다** — PR에 체크가 뜨지 않고, 병합은 즉시 가능하다.
+  ```sh
+  gh api -X PUT repos/Leonamin/nomi/actions/permissions -F enabled=false   # 끄기
+  gh api -X PUT repos/Leonamin/nomi/actions/permissions -F enabled=true    # 되돌리기
+  ```
+- **품질 검사는 로컬에서 한다**: `pnpm run gates`가 CI의 Contracts 잡과 **같은 스크립트**를 돌린다. 원격 사본이 사라져도 품질 자체는 유지된다. 병합 전 스캔은 `pnpm run merge:preflight <PR>`.
+- **왜**: CI는 애초에 병합을 막은 적이 없다(main에 branch protection·ruleset 없음). 그런데 그 빨간 표시를 기다리느라 작업 흐름이 끊겼다 — 사용자 판단으로 **하루의 절반이 CI 대기로 사라졌다**. 그래서 표시 자체를 없앤다.
+- **잃는 것 하나**: `docs-autosync`가 문서 인덱스/상태표 자동 PR을 더 이상 만들지 않는다 → `check:docs-index`·`check:doc-status`는 필요할 때 손으로 맞춘다. 데스크톱 릴리스 워크플로도 함께 멈추므로, 데스크톱 패키징이 필요해지면 Actions를 다시 켠다.
+- (기록) 결정 전의 실례: #19를 검사 대기 중 병합 → main Quality Gate red → 그 red를 확인하느라 또 대기. 같은 고리를 끊기 위해 Actions를 껐다.
 
 ## 알려진 상속 debt
 
