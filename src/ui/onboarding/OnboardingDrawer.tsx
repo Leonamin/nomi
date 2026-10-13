@@ -24,6 +24,7 @@ import { projectOnboardingConnections } from './onboardingDrawerConnections'
 import { getDesktopBridge } from '../../desktop/bridge'
 import type { DesktopHttpCertificationRun, IntegrationHandoff } from '../../desktop/onboardingBridgeTypes'
 import { confirmDialog } from '../../design'
+import { DesignButton } from '../../design'
 import { notify } from '../notificationPolicy'
 import {
   ConnectionWorkspacePage,
@@ -73,6 +74,9 @@ export function OnboardingDrawer({ pageRequest = null }: { pageRequest?: ModelPa
   const adaptationIntentKey = React.useRef(new CertificationIntentKey())
   const [navigation, setNavigation] = React.useState(createModelSettingsNavigation)
   const [integrationHandoffs, setIntegrationHandoffs] = React.useState<IntegrationHandoff[]>([])
+  // 「나중에 하기」로 빠져나온 자체 점검. 이 화면은 홈을 통째로 대체하므로, 표시를 막지 않으면
+  // 들어온 사용자가 나갈 수 없다(닫아도 handoff가 남아 다시 뜬다).
+  const [deferredVerificationId, setDeferredVerificationId] = React.useState<string | null>(null)
   const openedIntegrationHandoff = React.useRef<string | null>(null)
   const verificationRefreshTimer = React.useRef<number | null>(null)
   const page = currentModelSettingsPage(navigation)
@@ -566,14 +570,16 @@ export function OnboardingDrawer({ pageRequest = null }: { pageRequest?: ModelPa
   }
 
   const verificationHandoff = integrationHandoffs.find((item) => item.target === 'verification')
-  if (page.type === 'home' && verificationHandoff) {
+  const pendingVerification = verificationHandoff && verificationHandoff.requestId !== deferredVerificationId ? verificationHandoff : undefined
+  if (page.type === 'home' && pendingVerification) {
     return (
       <IntegrationSelfCheckPanel
-        handoff={verificationHandoff as IntegrationVerificationHandoff}
+        handoff={pendingVerification as IntegrationVerificationHandoff}
         onDone={() => {
           void reloadIntegrationHandoffs()
           refreshAfterIntegrationVerification()
         }}
+        onDefer={() => setDeferredVerificationId(pendingVerification.requestId)}
       />
     )
   }
@@ -748,7 +754,18 @@ export function OnboardingDrawer({ pageRequest = null }: { pageRequest?: ModelPa
     )
   }
   return (
-    <ModelSettingsHome
+    <>
+      {/* 「나중에」로 빠져나온 뒤에도 돌아갈 길을 남긴다: handoff가 살아 있는데 모델 페이지가
+          그 사실을 숨기면, 그 점검은 다시 시작할 수 없다. */}
+      {verificationHandoff ? (
+        <div className="mb-3 flex flex-wrap items-center gap-3 rounded-nomi-sm border border-nomi-line bg-nomi-paper px-3 py-2 text-caption text-nomi-ink-60">
+          <span className="min-w-0 flex-1">{t('modelSetup.integrationSelfCheckPending')}</span>
+          <DesignButton variant="light" onClick={() => setDeferredVerificationId(null)}>
+            {t('modelSetup.integrationSelfCheckAction')}
+          </DesignButton>
+        </div>
+      ) : null}
+      <ModelSettingsHome
       connections={homeConnections}
       availableConnections={availableHomeConnections}
       mappings={mappings}
@@ -790,6 +807,7 @@ export function OnboardingDrawer({ pageRequest = null }: { pageRequest?: ModelPa
       onReload={reloadFromError}
       onCustomApi={() => openWizard('newapi')}
       onDirectScript={() => openWizard(undefined, undefined, 'scriptDraft')}
-    />
+      />
+    </>
   )
 }
