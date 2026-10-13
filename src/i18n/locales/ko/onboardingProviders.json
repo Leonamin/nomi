@@ -1012,7 +1012,8 @@
     "hint": "컴퓨터마다 설치한 모델이 달라 작업 흐름과 없는 파일을 따로 확인해요. 캔버스에서 실행할 컴퓨터를 볼 수 있어요.",
     "remove": "컴퓨터 제거",
     "removeTitle": "이 ComfyUI 제거",
-    "removeMessage": "\"{{name}}\"과 작업 흐름 {{count}}개를 제거해요. 해당 주소를 사용하므로 연결을 지우면 실행할 수 없어요. 이 컴퓨터의 연결은 그대로예요."
+    "removeMessage": "\"{{name}}\"과 작업 흐름 {{count}}개를 제거해요. 해당 주소를 사용하므로 연결을 지우면 실행할 수 없어요. 이 컴퓨터의 연결은 그대로예요.",
+    "addrPlaceholder": "호스트 또는 주소:포트 (이 컴퓨터 / 같은 네트워크 / 클라우드)"
   },
   "comfyTemplates": {
     "sectionTitle": "내 ComfyUI의 공식 템플릿 {{count}}개",
