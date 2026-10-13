@@ -2,6 +2,7 @@ import crypto from "node:crypto";
 import path from "node:path";
 import { capabilityCoreDir, type CapabilityOriginHost } from "../capabilityCore/security";
 import { writeCertificationJsonAtomic } from "./certificationPersistence";
+import { settleComfyOperationAfterFailure } from "./comfyUnsettledOperation";
 import { logError } from "../logging/logger";
 import { ConnectionCertificationService, getConnectionCertificationService } from "./service";
 import type {
@@ -1343,11 +1344,9 @@ export class IntegrationSessionService {
             now: (this.deps.now || (() => new Date().toISOString()))(),
           });
         } else if (["submitting", "submitted"].includes(current.submissionState)) {
-          this.deps.comfyOperationLedger.markUnknown(comfyReservation.operation.runId, {
-            expectedRevision: current.revision,
-            userAction: "reconcile_or_contact_provider",
-            now: (this.deps.now || (() => new Date().toISOString()))(),
-            ...(current.remoteTaskId ? { remoteTaskId: current.remoteTaskId } : {}),
+          settleComfyOperationAfterFailure({
+            ledger: this.deps.comfyOperationLedger, runId: comfyReservation.operation.runId, operation: current,
+            reasonCode: outcome?.blockingReason?.code, now: (this.deps.now || (() => new Date().toISOString()))(),
           });
         } else {
           this.deps.comfyOperationLedger.cancel(comfyReservation.operation.runId, {

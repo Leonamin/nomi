@@ -79,6 +79,19 @@ export const contextBridge = {
     delete bridge.telemetry
     delete bridge.log
     if (bridge.tasks) { delete bridge.tasks.comfyuiWatch; delete bridge.tasks.comfyuiUnwatch }
+    // 2026-10-13 실측: 웹 서버에는 production-run 유료 확인 표면이 없다(`web/rpc.ts` 의
+    // `dispatchWebRpc` 가 `nomi:production-runs:pending-spend` 를 구현하지 않는다 — 웹은
+    // 캔버스 경로의 `nomi:tasks:quote-spend`/`grant-spend` 만 갖는다). 그런데 데스크톱 preload 의
+    // `productionRuns` 는 통째로 넘어와, 에이전트 패널이 주기적으로 그 채널을 부르고 실패해
+    // 「확인 카드가 여기 있어야 해요 / host-unreachable」 폴백을 **상시** 띄웠다(실제 콘솔 로그:
+    // `[nomi:missing-intervention-card] {announcer: "spend-confirm", reason: "host-unreachable"}`).
+    // 없는 표면은 노출하지 않는다 — `hasPendingSpendCapability()` 가 false 가 되어 카드가 안 뜨고,
+    // 대신 웹에 실제로 있는 캔버스 유료 확인(SpendConfirmDialog)이 그대로 동작한다.
+    if (bridge.productionRuns) {
+      for (const member of ['pendingSpend', 'reviseSpend', 'discardSpend', 'confirmSpend', 'removeSpendShot', 'confirmSpendRemaining'] as const) {
+        delete (bridge.productionRuns as Partial<typeof bridge.productionRuns>)[member]
+      }
+    }
     if (bridge.i18n) bridge.i18n.getSystemLocale = () => navigator.language
     if (bridge.app) bridge.app.hardReloadWindow = () => location.reload()
     bridge.assets.importNativeFile = async (file: File, payload: Record<string, unknown>) => {

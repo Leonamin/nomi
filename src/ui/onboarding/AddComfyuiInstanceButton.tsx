@@ -26,7 +26,7 @@ export function AddComfyuiInstanceButton({ onAdded }: { onAdded: () => void }): 
   const { t } = useTranslation()
   const [open, setOpen] = React.useState(false)
   const [name, setName] = React.useState('')
-  const [addr, setAddr] = React.useState('http://192.168.1.10:8188')
+  const [addr, setAddr] = React.useState('')
   const [busy, setBusy] = React.useState(false)
   const [error, setError] = React.useState('')
 
@@ -85,6 +85,7 @@ export function AddComfyuiInstanceButton({ onAdded }: { onAdded: () => void }): 
       <label className="text-micro text-nomi-ink-40">{t('onboardingProviders.comfyInstance.addrLabel')}</label>
       <input
         value={addr} onChange={(e) => setAddr(e.target.value)} spellCheck={false}
+        placeholder={t('onboardingProviders.comfyInstance.addrPlaceholder')}
         aria-label={t('onboardingProviders.comfyInstance.addrLabel')}
         className="h-8 px-2.5 rounded-nomi-sm border border-nomi-line bg-nomi-paper font-mono text-caption text-nomi-ink focus:border-nomi-accent outline-none"
       />
