@@ -20,6 +20,35 @@ describe('model settings home', () => {
     expect(resolveModelHomeStatus(model({ customCallDraft: true }), [])).toBe('needsSetup')
   })
 
+  // 2026-10-13 실측 회귀(개인 웹): 사용자가 가져온 ComfyUI 워크플로 모델은 archetype 도
+  // customCapabilityContract 도 없다. 그런데 자체 점검을 통과해 published·verified·usable 인데도
+  // 설정 홈이 「need setup / 0 usable」로 표시했다(캔버스에서는 정상 생성). 계약의 증거는
+  // `published`(활성 mapping 으로 발행된 실행 계약)가 이미 들고 있다.
+  it('accepts a published workflow model as a known contract without an archetype', () => {
+    const mapping = [{
+      id: 'comfy-qwen',
+      vendorKey: 'comfyui-local--candidate',
+      modelKey: 'comfy-qwen-image',
+      taskKind: 'text_to_image',
+      enabled: true,
+      create: { method: 'POST', path: '/prompt' },
+    }] as unknown as Mapping[]
+    const workflowModel = model({
+      vendorKey: 'comfyui-local--candidate',
+      modelKey: 'comfy-qwen-image',
+      kind: 'image',
+      published: true,
+      availability: { usable: true },
+      adapterState: 'verified',
+    })
+    expect(resolveModelHomeStatus(workflowModel, mapping)).toBe('verified')
+    expect(resolveModelHomeStatus({ ...workflowModel, adapterState: undefined }, mapping)).toBe('ready')
+    // 발행됐어도 그 kind 에 적용되는 mapping 이 없으면 여전히 「설정 필요」다.
+    expect(resolveModelHomeStatus(workflowModel, [])).toBe('needsSetup')
+    // 근거가 하나도 없는 모델은 published 가 없으므로 그대로 「설정 필요」다.
+    expect(resolveModelHomeStatus({ ...workflowModel, published: false }, mapping)).toBe('needsSetup')
+  })
+
   it('shows configured, verified, disabled, working and failed states from real contracts', () => {
     const mapping = [{
       id: 'future-video',

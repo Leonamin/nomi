@@ -22,7 +22,15 @@ export function resolveModelHomeStatus(model: ChipModel, mappings: readonly Mapp
   if (model.customCallDraft) return 'needsSetup'
 
   const capability = projectModelCapability({ model, mappings })
-  const capabilityKnown = model.kind === 'text' || capability.inputContract === 'known'
+  // 2026-10-13 실측(개인 웹): 내장 archetype 도 `meta.customCapabilityContract` 도 없는 모델은
+  // 여기서 계약 미상('unknown')으로 떨어졌다 — 그런데 **사용자가 가져온 ComfyUI 워크플로**가
+  // 정확히 그 모양이다(계약은 archetype 이 아니라 워크플로 가져오기가 만든 mapping 의 create/query).
+  // 그래서 자체 점검을 통과해 verified·usable 인데도 설정 홈이 「N need setup / 0 usable」로
+  // 표시하고, 캔버스에서는 같은 모델로 정상 생성됐다(실측: Qwen Image 2.1 / SD1.5 / H3).
+  // 계약이 있다는 증거는 이미 `published`(= 활성 mapping 으로 실행 계약이 발행됨)가 들고 있으므로,
+  // 그 한 가지를 계약 인정의 근거로 추가한다. **여전히** 그 kind 에 적용되는 mapping 이 하나도
+  // 없으면(transportAvailable) 아래에서 needsSetup 이다 — 근거 없는 모델을 쓸 수 있다고 하지 않는다.
+  const capabilityKnown = model.kind === 'text' || capability.inputContract === 'known' || model.published === true
   const transportAvailable = model.kind === 'text' || capability.customCall.enabled || capability.transport.mappings.length > 0
   if (!capabilityKnown || !transportAvailable) return 'needsSetup'
   const availability = model.availability
