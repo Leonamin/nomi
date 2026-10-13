@@ -33,7 +33,7 @@ import { createWebComfyuiCommands, initWebConnections } from './comfyuiConnectio
 import { installWebGraphHost } from './comfyuiGraphHost'
 import { WebAgentLanes } from './agentLanes'
 import type { LaneDesktopCommand } from '../electron/shared/agentLane/laneDesktopContracts'
-import type { WebAgentEngine } from '../electron/shared/webAgentContracts'
+import type { WebAgentEngine, WebAgentSelection } from '../electron/shared/webAgentContracts'
 
 type Surface = ReturnType<typeof createWebSurface>
 const surfaces = new WebSurfaceSessions(createWebSurface, surface => agentLanes.detachSurface(surface.id))
@@ -118,7 +118,8 @@ export async function dispatchWebRpc(channel: string, args: unknown[], surface: 
       return [...snapshot, ...nodes.filter(node => node.meta?.isWebAgentCreated === true && !snapshot.some(entry => entry.node?.id === node.id)).map(node => ({ key: `agent:${node.id}`, node, isPending: false }))]
     },
     'nomi:agent-lane:command': (command: LaneDesktopCommand) => agentLanes.send(surface, command),
-    'nomi:web:agent-settings': (engine?: WebAgentEngine) => agentLanes.settings(surface, engine),
+    'nomi:web:agent-settings': (selection?: WebAgentEngine | WebAgentSelection) => agentLanes.settings(surface, typeof selection === 'string' ? { engine: selection } : (selection ?? {})),
+    'nomi:web:agent-models': (engine?: WebAgentEngine) => agentLanes.listModels(surface, engine),
     'nomi:tasks:comfyui:interrupt': (taskId: string) => generationJobs.cancel(taskId, selection(surface).projectId),
     'nomi:tasks:quote-spend': (inputs: Parameters<typeof prepareSpendQuote>[0]) => { if (!Array.isArray(inputs) || inputs.some(input => !isComfyuiVendor({ key: input.vendorKey }))) throw new Error('Only local ComfyUI is available'); return prepareSpendQuote(inputs) },
     'nomi:tasks:grant-spend': (input: { nodeIds: string[] }) => { const record = projects.readProject(selection(surface).projectId); const nodes = (record?.payload as { generationCanvas?: { nodes?: { id: string }[] } })?.generationCanvas?.nodes ?? []; if (!Array.isArray(input.nodeIds) || input.nodeIds.some(id => !nodes.some(node => node.id === id))) throw new Error('Save the generation targets first'); return { grantId: mintSpendGrant({ nodeIds: input.nodeIds, maxAttemptsPerNode: 1 }) } },

@@ -75,13 +75,32 @@ export function buildV4ModelRows(data: Pick<AgentPanelV4Data, 'models' | 'vendor
     (cost) => t('agentPanelV4.modelCredits', { cost }),
   )
   const selectedChat = data.selectedModel ? encodeModelIdentity(data.selectedModel) : ''
-  if (data.webAgent) rows.push({
-    slot: t('agentPanelV4.modelChat'),
-    name: data.modelLabel,
-    options: data.webAgent.settings.engines.map(engine => ({ value: engine, label: engine === 'opencode' ? 'OpenCode' : 'Codex' })),
-    selectedValue: data.webAgent.settings.engine,
-    onChange: value => data.webAgent?.selectEngine(value as 'opencode' | 'codex'),
-  })
+  if (data.webAgent) {
+    const agent = data.webAgent
+    rows.push({
+      slot: t('agentPanelV4.modelChat'),
+      name: data.modelLabel,
+      options: agent.settings.engines.map(engine => ({ value: engine, label: engine === 'opencode' ? 'OpenCode' : 'Codex' })),
+      selectedValue: agent.settings.engine,
+      onChange: value => agent.selectEngine(value as 'opencode' | 'codex'),
+    })
+    // 모델이 수백 개라 제공자 단계로 먼저 좁힌다(실측 463). 제공자가 하나뿐이면 접는다.
+    if (agent.providers.length > 1) rows.push({
+      slot: t('agentPanelV4.modelProvider'),
+      name: agent.selectedProvider || t('agentPanelV4.modelProviderAll'),
+      options: [{ value: '', label: t('agentPanelV4.modelProviderAll') }, ...agent.providers.map(provider => ({ value: provider, label: provider }))],
+      selectedValue: agent.selectedProvider,
+      onChange: (value: string) => agent.selectProvider(value),
+    })
+    // 엔진이 **실제로 인증한** 모델만 나열한다. 읽었는데 없거나 못 읽으면 '없음'이라고 말한다(발명하지 않음).
+    rows.push({
+      slot: t('agentPanelV4.modelNative'),
+      name: agent.settings.model || t('agentPanelV4.modelAuto'),
+      ...(agent.models.length
+        ? { options: agent.models.map(model => ({ value: model, label: model })), selectedValue: agent.settings.model, onChange: (value: string) => agent.selectModel(value) }
+        : { empty: t('agentPanelV4.modelNone') }),
+    })
+  }
   else rows.push({
     slot: t('agentPanelV4.modelChat'),
     name: data.modelLabel,

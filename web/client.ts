@@ -69,7 +69,8 @@ export const contextBridge = {
       generationSnapshot: projectId => invoke('nomi:web:generation-snapshot', projectId) as ReturnType<NonNullable<DesktopBridge['web']>['generationSnapshot']>,
       acknowledgeAgentNodes: async (projectId, ids) => { rememberAgentNodes(projectId, ids) },
       appliedAgentNodeIds: projectId => [...(appliedAgentNodes.get(projectId) || [])],
-      agentSettings: engine => invoke('nomi:web:agent-settings', engine) as ReturnType<NonNullable<DesktopBridge['web']>['agentSettings']>,
+      agentSettings: selection => invoke('nomi:web:agent-settings', selection) as ReturnType<NonNullable<DesktopBridge['web']>['agentSettings']>,
+      agentModels: engine => invoke('nomi:web:agent-models', engine) as ReturnType<NonNullable<DesktopBridge['web']>['agentModels']>,
     }
     delete bridge.browser
     delete bridge.capability

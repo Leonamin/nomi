@@ -184,7 +184,9 @@ export type DesktopBridge = DesktopMediaBridge &
     generationSnapshot: (projectId: string) => Promise<Array<{ key: string; isPending: boolean; node?: import('../workbench/generationCanvas/model/generationCanvasTypes').GenerationCanvasNode }>>
     acknowledgeAgentNodes: (projectId: string, ids: string[]) => Promise<void>
     appliedAgentNodeIds: (projectId: string) => readonly string[]
-    agentSettings: (engine?: import('../../electron/shared/webAgentContracts').WebAgentEngine) => Promise<import('../../electron/shared/webAgentContracts').WebAgentSettings>
+    agentSettings: (selection?: import('../../electron/shared/webAgentContracts').WebAgentEngine | import('../../electron/shared/webAgentContracts').WebAgentSelection) => Promise<import('../../electron/shared/webAgentContracts').WebAgentSettings>
+    /** 엔진이 실제로 인증한 모델 목록(못 읽으면 이유를 함께). Nomi는 모델을 만들어내지 않는다. */
+    agentModels: (engine?: import('../../electron/shared/webAgentContracts').WebAgentEngine) => Promise<{ models: readonly string[]; error?: string }>
   }
   i18n?: {
     setLocale: (locale: 'zh-CN' | 'en' | 'ko') => void
