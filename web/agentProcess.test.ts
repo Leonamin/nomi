@@ -4,9 +4,14 @@ import { nativeAgentConfig, parseNativeAgentEvent } from './agentProcess'
 describe('native agent transport boundary', () => {
   it('keeps OpenCode v2 native tools and unrelated MCP servers disabled', () => {
     const config = nativeAgentConfig('http://127.0.0.1:9031/agent/mcp/turn', ['linear', 'exa'])
-    expect(config.mcp.servers.linear).toEqual({ enabled: false })
+    // v2 只认 mcp.<name> 直接键；mcp.servers.<name> 会被判 malformed 并整个跳过（2026-10-13 真机实测）。
+    expect(config.mcp).not.toHaveProperty('servers')
+    expect(config.mcp.linear).toEqual({ enabled: false })
     expect(config.permissions).toContainEqual({ action: '*', resource: '*', effect: 'deny' })
-    expect(config.mcp.servers.nomi).toMatchObject({ type: 'remote', codemode: false })
+    // Code Mode 的 execute 必须放行，否则 deny * 会连工具调用一起掐掉。
+    expect(config.permissions).toContainEqual({ action: 'execute', resource: '*', effect: 'allow' })
+    expect(config.permissions).toContainEqual({ action: 'nomi_*', resource: '*', effect: 'allow' })
+    expect(config.mcp.nomi).toMatchObject({ type: 'remote', url: 'http://127.0.0.1:9031/agent/mcp/turn' })
   })
   it.each([
     ['opencode', { type: 'text', sessionID: 'native-1', part: { text: 'Connected', id: 'part-1' } }],
