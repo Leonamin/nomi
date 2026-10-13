@@ -254,9 +254,20 @@ export function classifyValidationPolicy(changedFiles, options = {}) {
   const webOnly = !docsOnly && webSurface.length > 0 && files.every(
     (entry) => DOCS_ONLY_PATTERN.test(entry.path) || matchesAny(entry.path, WEB_SURFACE_PATTERNS),
   )
+  // 삭제(`D`)는 지운 경로 자체를 담는다. 소비자가 같은 면 안에만 있는 경로의 삭제는 다른 면의
+  // 런타임 소비자를 고립시킬 수 없다:
+  //   · 문서(docs/·marketing/·README*·AGENTS.md·CLAUDE.md)는 런타임이 읽지 않고, 참조 dangling은
+  //     contracts의 check:docs-index / check:doc-status / check:site가 잡으며 docs-autosync가 보정한다.
+  //   · web/은 역방향 의존이 0건이라 web 테스트와 tsc가 그 면 안에서 잡는다(개인 웹 워크플로).
+  // rename(`R`)은 원본 경로를 빠뜨릴 수 있어(gitNameStatus가 새 경로만 남긴다: `src/foo.ts → docs/foo.md`가
+  // 문서처럼 보인다) 그대로 fail-closed로 둔다. 생산·테스트·CI·미인식 경로 삭제도 그대로 fail-closed.
+  // (2026-09-08 계약을 대체: docs/fixes/2026-10-13-deletion-scope-same-surface.root-cause.json)
+  const deletionStaysWithinItsSurface = (path) =>
+    DOCS_ONLY_PATTERN.test(path) || matchesAny(path, WEB_SURFACE_PATTERNS)
   const ambiguousStructuralChange = files.find(
     (entry) =>
-      (entry.status.startsWith('D') || entry.status.startsWith('R')) &&
+      (entry.status.startsWith('R') ||
+        (entry.status.startsWith('D') && !deletionStaysWithinItsSurface(entry.path))) &&
       !docsOnly &&
       !matchesAny(entry.path, VALIDATION_INFRASTRUCTURE_PATTERNS),
   )

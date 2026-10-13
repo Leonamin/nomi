@@ -90,9 +90,54 @@ test('docs-only deletions, including the historical README QR replacement, stay 
     assert.deepEqual(surfaces(result), docsOnly)
     assert.equal(result.reason, 'docs_only')
   }
-  // The historical commit also edited a test: its complete diff must stay full.
-  assert.equal(classifyValidationPolicy([...qrFiles,
-    { status: 'M', path: 'tests/ux/marketing-home.static.mjs' }]).unit, 'full')
+  // The historical commit also edited tests/ux/marketing-home.static.mjs. Historically that forced
+  // full (the docs-media deletion was treated as structural uncertainty); under the same-surface
+  // deletion exemption the docs deletion no longer escalates, so this mixed diff is an ordinary
+  // isolated change. No coverage is lost: that walkthrough runs in Contracts via check:site
+  // (scripts/check-site.mjs) on every PR.
+  const withTestEdit = classifyValidationPolicy([...qrFiles,
+    { status: 'M', path: 'tests/ux/marketing-home.static.mjs' }])
+  assert.equal(withTestEdit.reason, 'isolated_change')
+  assert.equal(withTestEdit.unit, 'focused')
+  assert.equal(withTestEdit.failClosed, false)
+})
+
+// 2026-10-13: 삭제(`D`)는 지운 경로 자체를 담는다. 소비자가 같은 면(문서/web) 안에만 있는 경로의 삭제는
+// 다른 면의 런타임 소비자를 고립시킬 수 없으므로 전량을 강제하지 않는다(2026-09-08 계약의 invariant를
+// 대체: docs/fixes/2026-10-13-deletion-scope-same-surface.root-cause.json). rename(`R`)은 원본 경로를
+// 빠뜨릴 수 있어(gitNameStatus가 새 경로만 남긴다) 그대로 fail-closed다.
+test('same-surface deletions no longer force full; renames and cross-surface deletions still do', () => {
+  // 문서 삭제 + 코드 변경 → fail-closed 아님(이전에는 전량).
+  const docsDeletionPlusCode = classifyValidationPolicy([
+    { status: 'M', path: 'src/utils/foo.ts' },
+    { status: 'D', path: 'docs/fork-boundary.md' },
+  ])
+  assert.equal(docsDeletionPlusCode.failClosed, false)
+  assert.equal(docsDeletionPlusCode.reason, 'isolated_change')
+
+  // web 삭제 + web 코드 변경 → web 서피스 프로파일(데스크톱 면 없음).
+  const webDeletion = classifyValidationPolicy([
+    { status: 'M', path: 'web/client.ts' },
+    { status: 'D', path: 'web/legacy.ts' },
+  ])
+  assert.equal(webDeletion.failClosed, false)
+  assert.match(webDeletion.reason, /^web_surface:/)
+  assert.equal(webDeletion.desktop, false)
+
+  // 생산·테스트·CI·미인식 경로 삭제는 여전히 전량 fail-closed.
+  for (const file of ['src/legacy.ts', 'electron/legacy.ts', 'tests/fixtures/old.png', 'public/icon.png']) {
+    const result = classifyValidationPolicy([
+      { status: 'M', path: 'web/client.ts' },
+      { status: 'D', path: file },
+    ])
+    assert.equal(result.failClosed, true, file)
+    assert.equal(result.unit, 'full', file)
+  }
+
+  // rename은 문서/web 경로여도 여전히 fail-closed(원본 경로를 모른다).
+  for (const file of ['docs/new.md', 'web/renamed.ts', 'src/renamed.ts']) {
+    assert.equal(classifyValidationPolicy([{ status: 'R100', path: file }]).failClosed, true, file)
+  }
 })
 
 test('production deletions and mixed unsafe paths cannot use the docs-only exemption', () => {
