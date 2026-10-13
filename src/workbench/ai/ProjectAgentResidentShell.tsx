@@ -248,6 +248,14 @@ export default function ProjectAgentResidentShell({ surface }: { surface: Reside
   const historyIdentity = data.snapshot.workspaceId && historyConversation
     ? JSON.stringify([data.snapshot.workspaceId, historyConversation.laneName, historyConversation.sessionId, surface]) : undefined
   const [popover, setPopover] = React.useState<ComposerPopover | null>(null)
+  // 2026-10-13 실측: 접힌 도크의 composer 는 이 상태를 아예 못 받아, 모델(OpenCode/Codex)·스킬·
+  // 권한 세 버튼이 전부 무반응이었다(눌러도 aria-expanded 가 false, 팝오버 DOM 0개). 대화 패널을
+  // 펼치지 않으면 엔진을 바꿀 수 없다는 뜻이라, 같은 토글을 두 composer 가 함께 쓴다 — 두 벌로
+  // 갈라 두면 한쪽만 고쳐지는 그 형태가 다시 온다.
+  const toggleComposerPopover = React.useCallback(
+    (next: ComposerPopover) => setPopover((current) => (current === next ? null : next)),
+    [],
+  )
   // 系统提示词编辑器（2026-09-14 从设置 → AI 策略搬来）：权限弹层底部那一行打开，Mantine 弹窗承载。
   const [systemPromptOpen, setSystemPromptOpen] = React.useState(false)
   // 2026-09-10 走查反馈：弹层只有 Escape 和原按钮 toggle 两条关闭路径，点面板其他地方
@@ -539,6 +547,9 @@ export default function ProjectAgentResidentShell({ surface }: { surface: Reside
             onRemoveChip={removeComposerChip}
             modelLabel={data.modelLabel}
             skillSelected={Boolean(activeSkill || actions.selectedLibraryPrompt)}
+            openPopover={popover}
+            onTogglePopover={toggleComposerPopover}
+            {...(composerPopover ? { popover: composerPopover } : {})}
           />
         </V4CollapsedDock>}
       </section>
@@ -654,7 +665,7 @@ export default function ProjectAgentResidentShell({ surface }: { surface: Reside
           // 先说别的。判据只有一个（槽的 kind），和卡自己画不画那一行自由输入同源。
           awaitingAnswer: activeSlot?.kind === 'question',
           openPopover: popover,
-          onTogglePopover: (next) => setPopover((current) => (current === next ? null : next)),
+          onTogglePopover: toggleComposerPopover,
           ...(composerPopover ? { popover: composerPopover } : {}),
         }}
       />
