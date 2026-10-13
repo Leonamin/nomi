@@ -90,6 +90,8 @@
   "integrationSelfCheckHint": "키가 작동하는지, 모델 목록을 가져오는지, 요청 규칙이 완성되었는지 확인해요. 만들기 요청은 보내지 않아요.",
   "integrationSelfCheckScope": "여기에 표시된 연결 주소만 점검해요. API 키는 AI 도우미에게 보여주지 않아요.",
   "integrationSelfCheckAction": "점검 시작",
+  "integrationSelfCheckDefer": "나중에 하기",
+  "integrationSelfCheckPending": "아직 하지 않은 연결 점검이 있어요.",
   "integrationSelfCheckFailed": "점검을 시작하지 못했어요. 창을 확인하고 다시 시도하세요.",
   "integrationFailed": "확인을 통과하지 못했어요. 아직 연결되지 않은 작업 흐름이에요.",
   "integrationFailedWithReason": "확인을 통과하지 못했어요 · {{code}}. 아직 연결되지 않은 작업 흐름이에요.",

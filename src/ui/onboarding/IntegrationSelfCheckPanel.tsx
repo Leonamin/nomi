@@ -17,12 +17,14 @@ export type IntegrationVerificationHandoff = {
 type Props = {
   handoff: IntegrationVerificationHandoff
   onDone: () => void
+  /** 나중에 하기: 점검을 시작하지 않고 모델 설정으로 돌아간다(handoff는 그대로 남아 다시 열 수 있다). */
+  onDefer?: () => void
 }
 
 /** 模型页的「开始自检」那一屏。自检是一次**不花钱**的检查（密钥能不能用、模型清单拉不拉得到、
  * 调用方式全不全），所以这里没有报价、没有挑战、没有收据——只是让用户知道要检查什么，
  * 并亲手按下开始。钱的闸只有一处：画布每次提交时的报价卡。 */
-export function IntegrationSelfCheckPanel({ handoff, onDone }: Props): JSX.Element {
+export function IntegrationSelfCheckPanel({ handoff, onDone, onDefer }: Props): JSX.Element {
   const { t } = useTranslation()
   const [session, setSession] = React.useState<Record<string, unknown> | null>(null)
   const [busy, setBusy] = React.useState(false)
@@ -130,6 +132,13 @@ export function IntegrationSelfCheckPanel({ handoff, onDone }: Props): JSX.Eleme
         </div>
       ) : null}
       <div className="flex justify-end gap-2">
+        {/* 这一屏过去是全屏替换、只有「开始自检」一个出口：进来就出不去（关闭弹层也只会再弹回来）。
+            加一条「稍后」出口；handoff 原样留着，模型页上有重新进入的入口。 */}
+        {onDefer ? (
+          <DesignButton variant="outline" onClick={onDefer} disabled={busy}>
+            {t('modelSetup.integrationSelfCheckDefer')}
+          </DesignButton>
+        ) : null}
         <DesignButton variant="filled" onClick={() => void startSelfCheck()} loading={busy} disabled={!session || busy}>
           <IconCheck size={15} aria-hidden="true" />
           {t('modelSetup.integrationSelfCheckAction')}
