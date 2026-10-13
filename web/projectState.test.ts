@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { mergeServerResults } from './projectState'
+import { mergeServerResults, projectCanvas } from './projectState'
+import type { ProjectRecord } from '../electron/projects/repository'
 import type { GenerationCanvasNode } from '../src/workbench/generationCanvas/model/generationCanvasTypes'
 const node: GenerationCanvasNode = { id: 'shot', kind: 'video', title: 'Shot', position: { x: 0, y: 0 }, result: { id: 'old', type: 'video', createdAt: 1, url: 'old.mp4' } }
 const run = { id: 'run', startedAt: 1, updatedAt: 2 }
@@ -28,5 +29,13 @@ describe('server-owned generation fields survive stale browser saves', () => {
     const current: GenerationCanvasNode = { ...node, status: 'success', result: fresh, history: [fresh, node.result!] }
     expect(mergeServerResults(current, node).result?.id).toBe('fresh')
     expect(mergeServerResults(current, { ...node, status: 'success', history: current.history }).result?.id).toBe('old')
+  })
+})
+describe('server canvas tolerates a freshly created project', () => {
+  it('lays the default canvas over a payload which has none yet', () => {
+    const record = { id: 'fresh', payload: { workbenchDocuments: [] } } as unknown as ProjectRecord
+    const payload = projectCanvas(record)
+    expect(payload.generationCanvas.nodes).toEqual([])
+    expect(payload.timeline).toBeTruthy()
   })
 })

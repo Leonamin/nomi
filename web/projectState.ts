@@ -1,7 +1,7 @@
 import { readProject, saveProject, type ProjectRecord } from '../electron/projects/repository'
 import { nodeRunOutcomePatch, type NodeRunOutcome } from '../src/workbench/generationCanvas/store/nodeRunOutcome'
 import type { GenerationCanvasNode } from '../src/workbench/generationCanvas/model/generationCanvasTypes'
-import type { WorkbenchProjectPayload } from '../src/workbench/project/projectRecordSchema'
+import { createDefaultWorkbenchProjectPayload, type WorkbenchProjectPayload } from '../src/workbench/project/projectRecordSchema'
 
 const writes = new Map<string, Promise<unknown>>()
 /** Serialize Nomi project edits and background outcome delivery at the same boundary. */
@@ -15,7 +15,12 @@ export function mutateWebProject<T>(projectId: string, operation: () => Promise<
 }
 export function projectCanvas(record: ProjectRecord): WorkbenchProjectPayload {
   if (!record.payload || typeof record.payload !== 'object') throw new Error('Project canvas is missing')
-  return record.payload as WorkbenchProjectPayload
+  const payload = record.payload as Partial<WorkbenchProjectPayload>
+  if (payload.generationCanvas) return payload as WorkbenchProjectPayload
+  // 新規作成直後の payload には canvas がまだ無い（renderer は読込時に正規化する）。サーバ側の読書き
+  // （agent ツール / outcome 反映 / 保存マージ）が `undefined.nodes` で落ちるので、ここで既定を敷く
+  // （2026-10-13 実機: Nomi エージェントの nomi_project_read が新規プロジェクトで例外）。
+  return { ...createDefaultWorkbenchProjectPayload(), ...payload } as WorkbenchProjectPayload
 }
 export async function deliverWebOutcome(projectId: string, nodeId: string, outcome: NodeRunOutcome) {
   return mutateWebProject(projectId, async () => {
