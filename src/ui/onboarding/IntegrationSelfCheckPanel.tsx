@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { IconAlertTriangle, IconCheck, IconLock } from '../../vendor/tablerIcons'
 import { DesignButton } from '../../design'
 import { getDesktopBridge } from '../../desktop/bridge'
+import type { IntegrationHandoff } from '../../desktop/onboardingBridgeTypes'
 import { integrationSelfCheckOutcome } from './integrationSelfCheckOutcome'
 
 export type IntegrationVerificationHandoff = {
@@ -145,5 +146,50 @@ export function IntegrationSelfCheckPanel({ handoff, onDone, onDefer }: Props): 
         </DesignButton>
       </div>
     </div>
+  )
+}
+
+type GateProps = {
+  /** 이 화면이 홈일 때만 점검 화면이 홈을 통째로 대체한다(다른 페이지 분기는 손대지 않는다). */
+  home: boolean
+  handoff?: IntegrationHandoff
+  onDone: () => void
+  children: React.ReactNode
+}
+
+/** 홈을 대체하는 자체 점검 handoff만 이 게이트가 다룬다. */
+function isVerificationHandoff(handoff: IntegrationHandoff): handoff is IntegrationVerificationHandoff {
+  return handoff.target === 'verification'
+}
+
+/**
+ * 「점검 시작」 화면은 홈을 통째로 대체한다. 그대로 두면 들어온 사용자가 나갈 수 없다
+ * (닫아도 handoff가 남아 다시 뜬다) — 그래서 나가는 길(보류)과, 보류한 뒤 돌아올 입구를 함께 남긴다.
+ * handoff는 점검을 실제로 통과했을 때만(onDone) ack되므로 미룬 점검은 잊히지 않는다.
+ *
+ * 이 게이트는 OnboardingDrawer의 줄수 기준선(규칙 12)을 넘기지 않도록 이 모듈로 분리했다.
+ */
+export function IntegrationSelfCheckGate({ home, handoff, onDone, children }: GateProps): JSX.Element {
+  const { t } = useTranslation()
+  const [deferredId, setDeferredId] = React.useState<string | null>(null)
+  const pending =
+    home && handoff && isVerificationHandoff(handoff) && handoff.requestId !== deferredId ? handoff : undefined
+  if (pending) {
+    return (
+      <IntegrationSelfCheckPanel handoff={pending} onDone={onDone} onDefer={() => setDeferredId(pending.requestId)} />
+    )
+  }
+  return (
+    <>
+      {handoff ? (
+        <div className="mb-3 flex flex-wrap items-center gap-3 rounded-nomi-sm border border-nomi-line bg-nomi-paper px-3 py-2 text-caption text-nomi-ink-60">
+          <span className="min-w-0 flex-1">{t('modelSetup.integrationSelfCheckPending')}</span>
+          <DesignButton variant="light" onClick={() => setDeferredId(null)}>
+            {t('modelSetup.integrationSelfCheckAction')}
+          </DesignButton>
+        </div>
+      ) : null}
+      {children}
+    </>
   )
 }
