@@ -11,17 +11,25 @@ export type NativeAgentEvent =
   | { kind: 'error'; text: string }
   | { kind: 'usage'; input: number; output: number; cacheRead: number }
 
+/**
+ * OpenCode v2 的配置形状（2026-10-13 真机实测，逐条改错）：
+ *  · `mcp.<name>` 直接键；旧形状 `mcp.servers.<name>` 会被判 malformed 并**整个跳过**（日志
+ *    `path=$.mcp.servers.nomi kind=invalid action="skipped malformed recognized value"`）。
+ *  · remote MCP 的工具走 Code Mode 的 `execute` 动作；`deny *` 若不显式放行 `execute`，模型根本
+ *    发不出工具调用（只会把工具语法当文本瞎编：`<｜｜DSML｜｜ invoke name="nomi_get_project">`）。
+ *  · `references` / `codemode` 不是 v2 合法字段，去掉。
+ *  · 用 `default_agent` 选 agent，**不要**在 `run` 上传 `--agent`——实测 `--agent nomi` 会切断工具调用。
+ */
 export function nativeAgentConfig(url: string, otherServers: string[]) {
-  const permissions = [{ action: '*', resource: '*', effect: 'deny' }, { action: 'nomi_*', resource: '*', effect: 'allow' }]
+  const permissions = [{ action: '*', resource: '*', effect: 'deny' }, { action: 'execute', resource: '*', effect: 'allow' }, { action: 'nomi_*', resource: '*', effect: 'allow' }]
   return {
     permissions,
-    references: [],
     default_agent: 'nomi',
     agents: { nomi: { description: 'Nomi personal video assistant', mode: 'primary', permissions, system: 'Use only Nomi MCP tools. Do not access files, shell, web or other agents. Never regenerate, select candidates or change the timeline without the user requesting it.' } },
-    mcp: { servers: {
+    mcp: {
       ...Object.fromEntries(otherServers.map(key => [key, { enabled: false }])),
-      nomi: { type: 'remote', url, oauth: false, codemode: false, timeout: 1800000, headers: { Authorization: 'Bearer {env:NOMI_WEB_AGENT_MCP_TOKEN}' } },
-    } } as { servers: Record<string, Record<string, unknown>> },
+      nomi: { type: 'remote', url, oauth: false, timeout: 1800000, headers: { Authorization: 'Bearer {env:NOMI_WEB_AGENT_MCP_TOKEN}' } },
+    } as Record<string, Record<string, unknown>>,
   }
 }
 
@@ -57,7 +65,7 @@ export async function runNativeAgent(turn: NativeAgentTurn): Promise<void> {
     const configPath = path.join(os.homedir(), '.config/opencode/opencode.json')
     const config = fs.existsSync(configPath) ? JSON.parse(fs.readFileSync(configPath, 'utf8')) : {}
     Object.assign(env, { OPENCODE_CONFIG_CONTENT: JSON.stringify(nativeAgentConfig(turn.mcpUrl, Object.keys(config.mcp?.servers || {}))), OPENCODE_DISABLE_PROJECT_CONFIG: 'true', OPENCODE_CONFIG_PROJECT_DISABLE: 'true', OPENCODE_DISABLE_AUTOUPDATE: 'true' })
-    args = ['run', '--standalone', '--format', 'json', '--model', turn.model, '--agent', 'nomi', ...(turn.sessionId ? ['--session', turn.sessionId] : []), turn.prompt]
+    args = ['run', '--standalone', '--format', 'json', '--model', turn.model, ...(turn.sessionId ? ['--session', turn.sessionId] : []), turn.prompt]
   } else {
     args = ['exec', ...(turn.sessionId ? ['resume', turn.sessionId] : []), '--json', '--ignore-user-config', '--ignore-rules', '--skip-git-repo-check', '--disable', 'shell_tool', '--disable', 'apps', '--disable', 'plugins', '--disable', 'hooks', '--disable', 'multi_agent', '-c', 'web_search="disabled"', '-c', 'sandbox_mode="read-only"', '-c', `mcp_servers.nomi.url=${JSON.stringify(turn.mcpUrl)}`, '-c', 'mcp_servers.nomi.bearer_token_env_var="NOMI_WEB_AGENT_MCP_TOKEN"', '-c', 'mcp_servers.nomi.tool_timeout_sec=1800', ...(turn.model ? ['--model', turn.model] : []), '-']
   }
