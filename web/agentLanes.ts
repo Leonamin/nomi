@@ -113,15 +113,14 @@ export class WebAgentLanes {
     const { state } = this.scope(surface)
     const target = engine ?? state.engine
     z.enum(['opencode', 'codex']).parse(target)
-    if (target === 'codex') return { models: [], error: 'engine-lists-no-models' }
     const controller = new AbortController()
     const timer = setTimeout(() => controller.abort(), 12_000)
     timer.unref?.()
     try {
       const models = await listNativeAgentModels(target, controller.signal)
-      return models.length ? { models } : { models: [], error: 'engine-models-empty' }
-    } catch (error) {
-      return { models: [], error: error instanceof Error ? error.message : String(error) }
+      if (models.length) return { models }
+      // Codex에 목록 커맨드가 없다는 사실과, OpenCode가 빈손인 것은 다른 이야기다.
+      return { models: [], error: target === 'codex' ? 'engine-lists-no-models' : 'engine-models-empty' }
     } finally { clearTimeout(timer) }
   }
   async send(surface: Surface, command: LaneDesktopCommand): Promise<LaneDesktopResult> {

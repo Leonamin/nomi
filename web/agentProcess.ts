@@ -57,7 +57,6 @@ function nativeAgentExecutable(engine: WebAgentEngine): string {
     : process.env.NOMI_WEB_CODEX_BIN || path.join(os.homedir(), '.local/bin/codex')
 }
 
-// no-control-regex를 피하려고 제어문자는 동적으로 조립한다(값은 ESC).
 const ANSI = new RegExp(`${String.fromCharCode(27)}\\[[0-9;]*m`, 'g')
 const MODEL_ID = /^[A-Za-z0-9._-]+\/[A-Za-z0-9._/-]+$/
 /** `opencode models` 每行一个 `provider/model`（可能带 ANSI）。Nomi 只认这个形状，不发明模型 id。 */
@@ -70,12 +69,25 @@ export function parseNativeAgentModels(stdout: string): string[] {
   return [...seen].slice(0, 500)
 }
 
+const CODEX_CONFIG_MODEL = /^\s*model\s*=\s*"([^"]+)"\s*$/m
+/** Codex CLI 没有列模型的子命令；只能把它**配置里写着的**那个模型如实报出来，不发明列表。 */
+export function parseCodexConfiguredModel(configText: string): string[] {
+  const value = CODEX_CONFIG_MODEL.exec(configText)?.[1]?.trim()
+  return value ? [value] : []
+}
+
 /**
- * 엔진이 **실제로 인증한** 모델 목록. Codex CLI에는 목록 서브커맨드가 없어 빈 배열을 돌려주고,
- * UI는 그 사실을 정직하게 표시한다(모델을 만들어내지 않는다).
+ * 엔진이 **실제로 아는** 모델 목록.
+ * · OpenCode: `models` 서브커맨드가 인증된 provider를 모두 돌려준다.
+ * · Codex: 목록 서브커맨드가 없어 설정의 `model` 한 줄만 정직하게 보고한다.
  */
 export async function listNativeAgentModels(engine: WebAgentEngine, signal: AbortSignal): Promise<string[]> {
-  if (engine !== 'opencode') return []
+  if (engine !== 'opencode') {
+    try {
+      const home = process.env.CODEX_HOME || path.join(os.homedir(), '.codex')
+      return parseCodexConfiguredModel(fs.readFileSync(path.join(home, 'config.toml'), 'utf8'))
+    } catch { return [] }
+  }
   return new Promise<string[]>(resolve => {
     const child = spawn(nativeAgentExecutable(engine), ['models'], { stdio: ['ignore', 'pipe', 'pipe'], detached: true })
     let stdout = ''
