@@ -75,13 +75,24 @@ export function buildV4ModelRows(data: Pick<AgentPanelV4Data, 'models' | 'vendor
     (cost) => t('agentPanelV4.modelCredits', { cost }),
   )
   const selectedChat = data.selectedModel ? encodeModelIdentity(data.selectedModel) : ''
-  if (data.webAgent) rows.push({
-    slot: t('agentPanelV4.modelChat'),
-    name: data.modelLabel,
-    options: data.webAgent.settings.engines.map(engine => ({ value: engine, label: engine === 'opencode' ? 'OpenCode' : 'Codex' })),
-    selectedValue: data.webAgent.settings.engine,
-    onChange: value => data.webAgent?.selectEngine(value as 'opencode' | 'codex'),
-  })
+  if (data.webAgent) {
+    const agent = data.webAgent
+    rows.push({
+      slot: t('agentPanelV4.modelChat'),
+      name: data.modelLabel,
+      options: agent.settings.engines.map(engine => ({ value: engine, label: engine === 'opencode' ? 'OpenCode' : 'Codex' })),
+      selectedValue: agent.settings.engine,
+      onChange: value => agent.selectEngine(value as 'opencode' | 'codex'),
+    })
+    // 엔진이 **실제로 인증한** 모델만 나열한다. 읽었는데 없거나 못 읽으면 '없음'이라고 말한다(발명하지 않음).
+    rows.push({
+      slot: t('agentPanelV4.modelNative'),
+      name: agent.settings.model || t('agentPanelV4.modelAuto'),
+      ...(agent.models.length
+        ? { options: agent.models.map(model => ({ value: model, label: model })), selectedValue: agent.settings.model, onChange: (value: string) => agent.selectModel(value) }
+        : { empty: t('agentPanelV4.modelNone') }),
+    })
+  }
   else rows.push({
     slot: t('agentPanelV4.modelChat'),
     name: data.modelLabel,

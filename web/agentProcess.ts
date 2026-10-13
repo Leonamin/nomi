@@ -50,6 +50,53 @@ export function parseNativeAgentEvent(engine: WebAgentEngine, value: unknown): N
   }
 }
 
+/** 엔진 실행 파일: env override + 기존 기본값. 설치 위치가 다르면 env로만 바꾼다. */
+function nativeAgentExecutable(engine: WebAgentEngine): string {
+  return engine === 'opencode'
+    ? process.env.NOMI_WEB_OPENCODE_BIN || path.join(os.homedir(), '.opencode/bin/opencode')
+    : process.env.NOMI_WEB_CODEX_BIN || path.join(os.homedir(), '.local/bin/codex')
+}
+
+// no-control-regex를 피하려고 제어문자는 동적으로 조립한다(값은 ESC).
+const ANSI = new RegExp(`${String.fromCharCode(27)}\\[[0-9;]*m`, 'g')
+const MODEL_ID = /^[A-Za-z0-9._-]+\/[A-Za-z0-9._/-]+$/
+/** `opencode models` 每行一个 `provider/model`（可能带 ANSI）。Nomi 只认这个形状，不发明模型 id。 */
+export function parseNativeAgentModels(stdout: string): string[] {
+  const seen = new Set<string>()
+  for (const line of stdout.split('\n')) {
+    const value = line.replace(ANSI, '').trim()
+    if (MODEL_ID.test(value)) seen.add(value)
+  }
+  return [...seen].slice(0, 500)
+}
+
+/**
+ * 엔진이 **실제로 인증한** 모델 목록. Codex CLI에는 목록 서브커맨드가 없어 빈 배열을 돌려주고,
+ * UI는 그 사실을 정직하게 표시한다(모델을 만들어내지 않는다).
+ */
+export async function listNativeAgentModels(engine: WebAgentEngine, signal: AbortSignal): Promise<string[]> {
+  if (engine !== 'opencode') return []
+  return new Promise<string[]>(resolve => {
+    const child = spawn(nativeAgentExecutable(engine), ['models'], { stdio: ['ignore', 'pipe', 'pipe'], detached: true })
+    let stdout = ''
+    let settled = false
+    const finish = (value: string[]) => {
+      if (settled) return
+      settled = true
+      clearTimeout(timer)
+      try { process.kill(-child.pid!, 'SIGTERM') } catch { /* already exited */ }
+      resolve(value)
+    }
+    const timer = setTimeout(() => finish([]), 10_000)
+    timer.unref?.()
+    child.stdout.on('data', data => { stdout += data.toString() })
+    child.on('error', () => finish([]))
+    child.on('close', () => finish(parseNativeAgentModels(stdout)))
+    if (signal.aborted) finish([])
+    else signal.addEventListener('abort', () => finish([]), { once: true })
+  })
+}
+
 export type NativeAgentTurn = {
   engine: WebAgentEngine; model: string; prompt: string; directory: string; sessionId?: string
   mcpUrl: string; mcpToken: string; signal: AbortSignal; onEvent: (event: NativeAgentEvent) => void
@@ -57,9 +104,7 @@ export type NativeAgentTurn = {
 export async function runNativeAgent(turn: NativeAgentTurn): Promise<void> {
   const env = { ...process.env, NOMI_WEB_AGENT_MCP_TOKEN: turn.mcpToken }
   // Existing user authentication stays in its owning installation. No token files are copied.
-  const executable = turn.engine === 'opencode'
-    ? process.env.NOMI_WEB_OPENCODE_BIN || path.join(os.homedir(), '.opencode/bin/opencode')
-    : process.env.NOMI_WEB_CODEX_BIN || path.join(os.homedir(), '.local/bin/codex')
+  const executable = nativeAgentExecutable(turn.engine)
   let args: string[]
   if (turn.engine === 'opencode') {
     const configPath = path.join(os.homedir(), '.config/opencode/opencode.json')

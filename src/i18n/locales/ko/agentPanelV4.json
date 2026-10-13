@@ -32,6 +32,7 @@
   "skill": "스킬",
   "model": "GPT-5.6",
   "modelChat": "대화",
+  "modelNative": "모델",
   "chatModel": "GPT-5.6",
   "imageDefault": "기본 이미지 모델",
   "imageModel": "NanoBanana 2",

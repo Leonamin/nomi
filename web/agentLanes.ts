@@ -9,8 +9,8 @@ import type { LaneDesktopCommand, LaneDesktopResult, LaneComposerContext } from 
 import { parseLaneCommand } from '../electron/agentLane/laneCommandCodec'
 import { sameProjectAgentBinding, projectAgentPartitionKey, type ProjectBinding } from '../electron/shared/projectBinding'
 import { DEFAULT_PROJECT_AGENT_APPROVAL_POLICY, capabilityMayReuseSafeApproval, spendDecidedByPolicy } from '../electron/shared/agentCapabilities/capabilityApprovalPolicy'
-import type { WebAgentEngine, WebAgentSettings } from '../electron/shared/webAgentContracts'
-import { runNativeAgent, type NativeAgentTurn, type NativeAgentEvent } from './agentProcess'
+import type { WebAgentEngine, WebAgentSelection, WebAgentSettings } from '../electron/shared/webAgentContracts'
+import { listNativeAgentModels, runNativeAgent, type NativeAgentTurn, type NativeAgentEvent } from './agentProcess'
 import { openAgentMcp } from './agentMcp'
 import { createAgentTools, type AgentTool } from './agentTools'
 import type { WebGenerationJobs } from './generationJobs'
@@ -21,10 +21,11 @@ import { ensureWorkspaceProjectIdentity } from '../electron/workspace/workspaceP
 
 type Surface = ReturnType<typeof createWebSurface>
 type Conversation = { id: string; createdAt: number; updatedAt: number; parts: LanePart[]; nativeSessions: Partial<Record<WebAgentEngine, string>>; usage: LaneUsage; isRunning: boolean; model?: { provider: string; modelId: string } }
-type ProjectState = { binding: ProjectBinding; active: string; engine: WebAgentEngine; lanes: Record<string, Conversation> }
+type ProjectState = { binding: ProjectBinding; active: string; engine: WebAgentEngine; /** 사용자가 고른 모델(비어 있으면 엔진 기본값). */ model?: string; lanes: Record<string, Conversation> }
 type RunningTurn = { controller: AbortController; pending?: LanePendingApproval; answer?: (hasApproved: boolean) => void; safeGrants: Set<string> }
 type View = { surfaceId: number; state: ProjectState }
 const unknown = { state: 'unknown', reason: 'no-settled-turn' } as const
+const AGENT_ENGINES = ['opencode', 'codex'] as const
 function emptyUsage(): LaneUsage { return { inputTokens: 0, outputTokens: 0, cacheReadTokens: 0, cacheWriteTokens: 0, totalTokens: 0, cost: unknown, contextTokens: unknown, reasoningTokens: unknown } }
 function conversation(): Conversation { return { id: randomUUID(), createdAt: Date.now(), updatedAt: Date.now(), parts: [], nativeSessions: {}, usage: emptyUsage(), isRunning: false } }
 const failure = (diagnostic: string): LaneDesktopResult => ({ ok: false, code: 'agent_lane_execute_failed', diagnostic })
@@ -75,27 +76,53 @@ export class WebAgentLanes {
     if ((command.expectedLane && command.expectedLane !== view.state.active) || (command.expectedSessionId && command.expectedSessionId !== lane.id)) throw new Error('Agent conversation changed')
     return view.state
   }
-  settings(surface: Surface, engine?: WebAgentEngine): WebAgentSettings {
+  private scope(surface: Surface) {
     const selected = surface.registry.getCommittedProjectSelection()
     if (!selected) throw new Error('Open a project first')
     const binding = { projectId: selected.projectId, immutableProjectUuid: selected.immutableProjectUuid, projectGeneration: selected.projectGeneration }
     const state = this.load(binding)
-    if (engine) {
-      z.enum(['opencode', 'codex']).parse(engine)
-      if (state.lanes[state.active].isRunning) throw new Error('Stop or finish the current request before changing agents')
-      state.engine = engine; this.publish(state)
+    return { state, lane: state.lanes[state.active] }
+  }
+  /** 선택이 없을 때 엔진이 스스로 기억하는 기본 모델(env → 엔진 저장소). Nomi가 만들어내지 않는다. */
+  private defaultModel(state: ProjectState): string {
+    if (state.engine !== 'opencode') return process.env.NOMI_WEB_CODEX_MODEL || ''
+    const fromEnv = process.env.NOMI_WEB_OPENCODE_MODEL || ''
+    if (fromEnv) return fromEnv
+    try {
+      const file = path.join(os.homedir(), '.local/state/opencode/model.json')
+      const saved = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : {}
+      const choice = [...(saved.favorite || []), ...(saved.recent || [])].find(row => typeof row.providerID === 'string' && row.providerID.trim() && typeof row.modelID === 'string' && row.modelID.trim())
+      return choice ? `${choice.providerID}/${choice.modelID}` : ''
+    } catch { return '' }
+  }
+  settings(surface: Surface, selection: WebAgentSelection = {}): WebAgentSettings {
+    const { state, lane } = this.scope(surface)
+    const wantsChange = selection.engine !== undefined || selection.model !== undefined
+    if (wantsChange && lane.isRunning) throw new Error('Stop or finish the current request before changing agents')
+    if (selection.engine) {
+      z.enum(['opencode', 'codex']).parse(selection.engine)
+      state.engine = selection.engine
     }
-    let model: string
-    if (state.engine === 'opencode') {
-      model = process.env.NOMI_WEB_OPENCODE_MODEL || ''
-      if (!model) {
-        const file = path.join(os.homedir(), '.local/state/opencode/model.json')
-        const saved = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : {}
-        const choice = [...(saved.favorite || []), ...(saved.recent || [])].find(row => typeof row.providerID === 'string' && row.providerID.trim() && typeof row.modelID === 'string' && row.modelID.trim())
-        if (choice) model = `${choice.providerID}/${choice.modelID}`
-      }
-    } else model = process.env.NOMI_WEB_CODEX_MODEL || ''
-    return { engine: state.engine, model, engines: ['opencode', 'codex'] }
+    // 엔진이 실제로 아는 모델만 받는다. 빈 값은 '엔진 기본값으로 되돌림'.
+    if (selection.model !== undefined) state.model = selection.model.trim() || undefined
+    if (wantsChange) this.publish(state)
+    return { engine: state.engine, model: state.model ?? this.defaultModel(state), models: [], engines: AGENT_ENGINES }
+  }
+  /** 엔진이 **실제로 인증한** 모델 목록. 못 읽으면 이유를 그대로 돌려준다(성공으로 위장하지 않음). */
+  async listModels(surface: Surface, engine?: WebAgentEngine): Promise<{ models: readonly string[]; error?: string }> {
+    const { state } = this.scope(surface)
+    const target = engine ?? state.engine
+    z.enum(['opencode', 'codex']).parse(target)
+    if (target === 'codex') return { models: [], error: 'engine-lists-no-models' }
+    const controller = new AbortController()
+    const timer = setTimeout(() => controller.abort(), 12_000)
+    timer.unref?.()
+    try {
+      const models = await listNativeAgentModels(target, controller.signal)
+      return models.length ? { models } : { models: [], error: 'engine-models-empty' }
+    } catch (error) {
+      return { models: [], error: error instanceof Error ? error.message : String(error) }
+    } finally { clearTimeout(timer) }
   }
   async send(surface: Surface, command: LaneDesktopCommand): Promise<LaneDesktopResult> {
     try {

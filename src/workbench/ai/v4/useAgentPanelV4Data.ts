@@ -118,7 +118,7 @@ export type AgentPanelV4Data = Readonly<{
   vendors: Readonly<Record<string, string>>
   selectedModel: ModelCatalogModelDto | undefined
   modelLabel: string
-  webAgent?: { settings: WebAgentSettings; selectEngine: (engine: WebAgentEngine) => void }
+  webAgent?: { settings: WebAgentSettings; selectEngine: (engine: WebAgentEngine) => void; selectModel: (model: string) => void; models: readonly string[]; modelsError?: string; loadModels: () => void }
   skills: readonly SkillListItemDto[]
   /** 技能 key → 界面上的名字（`skillLabelForKey`）。气泡、composer、恢复草稿行都读它，谁都不另存名字。 */
   skillLabel: (key: string) => string
@@ -149,13 +149,26 @@ export function useAgentPanelV4Data(surface: ResidentSurface): AgentPanelV4Data 
   const [skills, setSkills] = React.useState<readonly SkillListItemDto[]>([])
   const [webAgentSettings, setWebAgentSettings] = React.useState<WebAgentSettings>()
   const [webAgentFailure, setWebAgentFailure] = React.useState<LaneDesktopResult | null>(null)
+  const [webAgentModels, setWebAgentModels] = React.useState<readonly string[]>([])
+  const [webAgentModelsError, setWebAgentModelsError] = React.useState<string | undefined>()
   React.useEffect(() => {
     const api = getDesktopBridge()?.web
     if (!api || !snapshot.workspaceId) return
     let isCurrent = true
     void api.agentSettings().then(settings => { if (isCurrent) setWebAgentSettings(settings) }).catch(() => undefined)
+    void api.agentModels().then(result => { if (isCurrent) { setWebAgentModels(result.models); setWebAgentModelsError(result.error) } }).catch(() => undefined)
     return () => { isCurrent = false }
   }, [snapshot.workspaceId, activeThreadId])
+  /** 엔진·모델 선택은 같은 채널로 저장된다. 진행 중이면 서버가 거절하고 그 이유를 그대로 보여준다. */
+  const applyWebAgentSelection = React.useCallback((selection: { engine?: WebAgentEngine; model?: string }) => {
+    void getDesktopBridge()?.web?.agentSettings(selection).then(settings => { setWebAgentSettings(settings); setWebAgentFailure(null) }).catch(error => {
+      setWebAgentFailure({ ok: false, code: snapshot.active.running ? 'agent_lane_busy_running' : 'agent_lane_execute_failed', diagnostic: String(error) })
+    })
+  }, [snapshot.active.running])
+  /** 모델 목록은 엔진 CLI에서 온다 — 실패해도 패널은 계속 쓸 수 있고, 이유만 정직하게 남긴다. */
+  const loadWebAgentModels = React.useCallback(() => {
+    void getDesktopBridge()?.web?.agentModels().then(result => { setWebAgentModels(result.models); setWebAgentModelsError(result.error) }).catch(error => { setWebAgentModels([]); setWebAgentModelsError(String(error)) })
+  }, [])
   const skillLabel = React.useCallback((key: string) => skillLabelForKey(skills, key, i18n.language), [skills, i18n.language])
   const [generationModels, setGenerationModels] = React.useState<readonly ModelCatalogModelDto[]>([])
   const orderedVendorKeys = useVendorPreferenceOrder()
@@ -371,11 +384,14 @@ export function useAgentPanelV4Data(surface: ResidentSurface): AgentPanelV4Data 
     vendors,
     selectedModel,
     modelLabel,
-    webAgent: webAgentSettings ? { settings: webAgentSettings, selectEngine: engine => {
-      void getDesktopBridge()?.web?.agentSettings(engine).then(settings => { setWebAgentSettings(settings); setWebAgentFailure(null) }).catch(error => {
-        setWebAgentFailure({ ok: false, code: snapshot.active.running ? 'agent_lane_busy_running' : 'agent_lane_execute_failed', diagnostic: String(error) })
-      })
-    } } : undefined,
+    webAgent: webAgentSettings ? {
+      settings: webAgentSettings,
+      models: webAgentModels,
+      ...(webAgentModelsError ? { modelsError: webAgentModelsError } : {}),
+      selectEngine: engine => applyWebAgentSelection({ engine }),
+      selectModel: model => applyWebAgentSelection({ model }),
+      loadModels: loadWebAgentModels,
+    } : undefined,
     skills,
     skillLabel,
     liveChips,
