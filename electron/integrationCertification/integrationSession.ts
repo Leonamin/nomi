@@ -2,6 +2,7 @@ import crypto from "node:crypto";
 import path from "node:path";
 import { capabilityCoreDir, type CapabilityOriginHost } from "../capabilityCore/security";
 import { writeCertificationJsonAtomic } from "./certificationPersistence";
+import { settleComfyOperationAfterFailure } from "./comfyUnsettledOperation";
 import { logError } from "../logging/logger";
 import { ConnectionCertificationService, getConnectionCertificationService } from "./service";
 import type {
@@ -1342,23 +1343,10 @@ export class IntegrationSessionService {
             expectedRevision: current.revision,
             now: (this.deps.now || (() => new Date().toISOString()))(),
           });
-        } else if (current.submissionState === "submitting" && !current.remoteTaskId) {
-          // 2026-10-13 실측(개인 웹): provider 가 우리 create 를 **받아들이기 전에** 끝난 경우
-          // (동기 4xx 거부, 발송 전 정책·검증 실패)다. remote id 가 없으니 대조할 것도, 중복을
-          // 막을 idempotency 도 없다 — unknown 으로 세우면 그 계열은 재인증이 영구히 막혔다
-          // (settleRejected 주석에 실측 경위·남는 위험 기록). 사실대로 종결한다.
-          this.deps.comfyOperationLedger.settleRejected(comfyReservation.operation.runId, {
-            expectedRevision: current.revision,
-            reasonCode: outcome?.blockingReason?.code || "create_failed_before_acceptance",
-            stage: "contract",
-            now: (this.deps.now || (() => new Date().toISOString()))(),
-          });
         } else if (["submitting", "submitted"].includes(current.submissionState)) {
-          this.deps.comfyOperationLedger.markUnknown(comfyReservation.operation.runId, {
-            expectedRevision: current.revision,
-            userAction: "reconcile_or_contact_provider",
-            now: (this.deps.now || (() => new Date().toISOString()))(),
-            ...(current.remoteTaskId ? { remoteTaskId: current.remoteTaskId } : {}),
+          settleComfyOperationAfterFailure({
+            ledger: this.deps.comfyOperationLedger, runId: comfyReservation.operation.runId, operation: current,
+            reasonCode: outcome?.blockingReason?.code, now: (this.deps.now || (() => new Date().toISOString()))(),
           });
         } else {
           this.deps.comfyOperationLedger.cancel(comfyReservation.operation.runId, {
