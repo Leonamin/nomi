@@ -2,6 +2,8 @@
 
 이 fork는 실제 검증한 upstream v0.23.1 (`66d6eafed07ad6239acd765dd05c9eb0870cf849`)의 UI, 프로젝트 형식, 후보, 타임라인과 FFmpeg 내보내기를 사용한다. 브라우저는 기존 preload 계약을 HTTP로 호출하며 Electron/noVNC를 실행하지 않는다.
 
+경계(포크 소유 경로와 web 우선)는 [fork 경계](fork-boundary.md)에 정리한다.
+
 수동 ComfyUI 생성과 서버 MP4 내보내기는 브라우저 수명과 분리된다. 수락 전 intent와 수락한 prompt ID를 별도 작업 파일에 기록한다. 재접속 중에는 서버의 작업 상태를 조회한다. 서버가 재시작되면 수락한 생성은 같은 prompt ID를 다시 조회하며, 수락 여부가 불명확한 요청은 자동 재제출하지 않는다. 진행 중 export의 서비스 재시작은 기존 export manager가 중단 실패로 회수하고 사용자가 새 내보내기를 시작한다. 완료된 파일은 보존된다.
 
 후보 선택은 노드의 현재 후보만 바꾼다. 이미 배치한 컷은 별도 **Replace shot / 替换镜头** 버튼으로 교체한다. 순서, 배치, source in-point, 보이는 길이, framing과 audio 설정을 유지한다. 새 소스가 이 구간보다 짧으면 전체 교체를 거절한다. 타임라인 교체는 undo할 수 있다.
