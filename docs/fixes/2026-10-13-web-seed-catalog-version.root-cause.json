@@ -1,0 +1,109 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-13-web-seed-catalog-version",
+  "change_kind": "corrective",
+  "problem_type": "A seeder wrote a foreign schema version into the web catalog, so the app could read it but never edit it",
+  "symptom": "개인 웹의 설정 → 모델이 읽기 전용이 된다: 『더 최신 Nomi에서 저장된 설정이라 지금은 읽기만 가능해요. 파일은 v14에서 저장했고 지금은 v13을 사용하고 있어요.』 서버 로그는 `[nomi:catalog] file-newer-than-app-readonly fileVersion=14 appVersion=13`. 사용자는 모델을 고를 수도, 워크플로를 등록할 수도 없고 화면은 원인을 \"업데이트하라\"로만 말한다.",
+  "direct_cause": "`scripts/web/seed-local-comfyui.mjs`가 쓴 카탈로그의 `version`을 `catalog.version`, 즉 **원본 파일의 버전**으로 채웠다. 원본이 더 새 앱이 저장한 파일이면 웹 데이터에 더 새 버전 파일이 생기고, `electron/catalog/catalogStore.ts`는 조용한 다운그레이드를 막느라 쓰기를 거부한다(refusing to write: on-disk version > app version).",
+  "class_root": "복사 도구가 **대상 시스템의 스키마 버전**이 아니라 **원본 파일의 자기 서술**을 신뢰했다. 버전은 파일이 주장하는 값이 아니라 그것을 소유한 앱이 정하는 값인데, 편의 스크립트가 그 소유권을 넘겨받은 것처럼 다뤘다.",
+  "affected_population": [
+    "웹 데이터 루트를 데스크톱(또는 더 새 Nomi) 카탈로그로 시드한 모든 개인 웹 인스턴스",
+    "시드 이후 모델·워크플로를 화면에서 고치려는 운영자"
+  ],
+  "scope_paths": [
+    "scripts/web/seed-local-comfyui.mjs"
+  ],
+  "entry_points": [
+    "node scripts/web/seed-local-comfyui.mjs <read-only catalog> <web data root> <verified model key> <loopback URL>"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "이 결함은 저장소 안 두 정본의 관계에서만 나온다 — 앱이 선언한 카탈로그 버전(`electron/catalog/catalogVersion.json`)과 카탈로그 스토어의 쓰기 거부 가드(`catalogStore.ts`). 외부 문서·서드파티 API가 개입하지 않으므로 인용할 공식 문서가 없다.",
+  "invariants": [
+    "웹 데이터의 카탈로그 버전은 이 앱이 소유한다 — 원본 파일이 주장하는 값이 아니다.",
+    "앱이 소유할 수 없는(더 새) 원본은 시드하지 않는다 — 고칠 수 없는 파일을 만들지 않는다.",
+    "시드는 기존 카탈로그를 덮어쓰지 않는다(현행 유지)."
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "electron/catalog/catalogStore.ts",
+      "symbol": "readCatalog"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/catalogStore.ts",
+      "symbol": "modelCatalogReadOnlyStatus"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/catalogStore.ts",
+      "symbol": "normalizeProviderKind"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/catalogStore.ts",
+      "symbol": "deleteModelCatalogModels"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/modelOnboarding/dispatch.ts",
+      "symbol": "upsertModelCatalogModel"
+    },
+    {
+      "kind": "write",
+      "path": "electron/settings/portableConfig.ts",
+      "symbol": "parsePortableConfigBundle"
+    }
+  ],
+  "door_reduction": {
+    "before": 6,
+    "after": 6,
+    "why_not": "이 수정은 문 수를 줄이지 않는다 — 시드가 파일에 써 넣는 버전 한 값을 고쳐, 이미 있던 문(카탈로그 스토어의 쓰기 거부 가드)이 정상 작동하게 만들 뿐이다. 문을 줄이려면 시드가 카탈로그 스토어를 통과하도록 다시 쓰는 별개 작업이 필요하고, 그건 이 결함의 범위가 아니다."
+  },
+  "generality_proof": "판정 기준이 파일 이름이 아니라 `electron/catalog/catalogVersion.json`(앱이 선언한 버전) 하나로 고정된다. 어떤 원본을 주더라도 결과 파일의 버전은 앱 것이다.",
+  "shared_boundaries": [
+    {
+      "path": "scripts/web/seed-local-comfyui.mjs",
+      "symbol": "seed-local-comfyui",
+      "responsibility": "읽기 전용 원본에서 검증된 auth-none 로컬 ComfyUI 한 건만 골라 웹 데이터로 옮긴다. 버전은 앱 값을 쓰고, 원본이 더 새로우면 거부한다."
+    }
+  ],
+  "same_class_entry_points": [
+    "데스크톱 카탈로그를 웹으로 옮기는 다른 경로가 있다면 같은 판정을 받아야 한다(현재는 이 시드 하나뿐)."
+  ],
+  "recurrence": {
+    "classification": "one_off",
+    "reason": "이 시드는 웹 인스턴스를 세울 때 한 번 도는 도구이고 같은 파일을 두 번 만들지 않는다(기존 파일이 있으면 거부). 같은 원인이 재발하려면 새 복사 도구가 생겨야 한다.",
+    "same_class_scan": [
+      "node scripts/door-map.mjs scripts/web/seed-local-comfyui.mjs → export가 없어 문을 못 셈(CLI 전용)임을 확인",
+      "scripts/web/ 아래를 훑어 카탈로그를 복사하는 다른 도구가 이 시드 하나뿐임을 확인",
+      "electron/catalog/catalogStore.ts의 쓰기 거부 가드를 읽어 '더 새 버전이면 거부'가 유일한 방어임을 확인"
+    ]
+  },
+  "regression_tests": [
+    "scripts/web/seed-local-comfyui.test.mjs"
+  ],
+  "class_regression_tests": [
+    "같은 테스트의 첫 케이스가 '더 새 원본은 거부하고 파일을 만들지 않는다'를 고정한다 — 복사 도구가 원본 버전을 신뢰하는 순간 빨간불이 된다."
+  ],
+  "legacy_paths": [
+    "이미 시드된 v14 파일은 코드로 고치지 않는다 — 운영자가 백업 후 복원하며, 그 판단 근거(내용 동일성)는 이 계약에 남긴다."
+  ],
+  "dependency_lifecycle": {
+    "decision": "none",
+    "why": "새 의존성이 없다. `catalogVersion.json`은 이미 저장소에 있는 정본이다."
+  },
+  "migration": "운영 데이터 마이그레이션은 코드가 아니라 사람이 한다(백업 → 복원). 실기기에서 v14 파일을 v13으로 복원하고 v14는 `model-catalog.v14.keep.json`으로 남겼으며, 두 파일의 차이는 ComfyUI 중복 후보 2개뿐임을 확인했다.",
+  "residual_risks": [
+    "원본이 더 새 버전이면 이제 시드가 아예 실패한다 — 운영자는 더 새 앱에 맞는 원본을 준비해야 한다(의도한 실패).",
+    "복원한 v13 카탈로그가 v14에서만 쓰이던 필드를 갖고 있었다면 다음 쓰기에서 사라질 수 있다. 실측(v13 백업 = v14 − 중복 후보 2개)에서는 그런 필드가 없었다."
+  ],
+  "detected_by": "user",
+  "recurrence_check_on": "2027-01-13",
+  "invariant_owner_layer": {
+    "layer": "web",
+    "tests": [
+      "scripts/web/seed-local-comfyui.test.mjs"
+    ]
+  }
+}
