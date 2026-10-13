@@ -11,14 +11,14 @@
         "R5.3",
         "R20"
       ],
-      "rule": "只写我们独有的领域；通用能力默认接入现成的，自写进 self-written.json，理由只认领域约束；能力按通用场景设计，与具体供应商解耦。",
-      "disease": "agent 默认爱造轮子；通用能力被写成供应商专用",
+      "rule": "只写我们独有的领域；通用能力默认接入现成的，自写进 self-written.json，理由只认领域约束；能力按通用场景设计，与具体供应商解耦；环境 / 引擎已经报得出的事实（安装路径、模型清单、套餐 / 计划范围）不许硬编码或硬作用域，一律从所属系统读。",
+      "disease": "agent 默认爱造轮子；通用能力被写成供应商专用；把可发现的事实写死，换个装法 / 套餐 / provider 就错",
       "enforcement": [
         "gate:check:self-written",
         "gate:check:prior-art",
         "hook:self-check(先查别人块)"
       ],
-      "evidence": "CI 里 check:self-written / prior-art 有红记录；用户纠正过「先接入再自写」",
+      "evidence": "CI 里 check:self-written / prior-art 有红记录；用户纠正过「先接入再自写」；2026-10-13 用户当场拦下「用 env 硬作用域模型清单」的提案，并把 web 侧硬编码的引擎路径 / 模型解析改为一处解析 + 引擎 CLI 列举",
       "owner": "协调会话",
       "review_on": "2026-12-01",
       "delete_when": "check:self-written 完全表达它，且连续 2 个周期零违规",
