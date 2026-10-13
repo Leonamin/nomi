@@ -106,7 +106,7 @@ export const zhModelSetup = {
   integrationSelfCheckHint: '自检只做三件事：确认密钥可用、拉一次模型清单、检查调用方式是否完整。不会发起生成请求。',
   integrationSelfCheckScope: '自检只访问显示的接入地址。Nomi 不会把 API Key 展示给对话助手。',
   integrationSelfCheckAction: '开始自检',
-  integrationSelfCheckDefer: '稍后再说',
+  integrationSelfCheckDefer: '不自检',
   integrationSelfCheckPending: '还有一项连接自检没有做。',
   integrationSelfCheckFailed: '自检没有跑起来，请检查窗口状态后重试。',
   integrationFailed: '验证没有通过，这条工作流还没接进来。',
@@ -259,7 +259,7 @@ export const enModelSetup = {
   integrationSelfCheckScope:
     'The self-check only reaches the integration address shown here. Nomi never shows your API key to the assistant.',
   integrationSelfCheckAction: 'Start self-check',
-  integrationSelfCheckDefer: 'Later',
+  integrationSelfCheckDefer: 'Skip',
   integrationSelfCheckPending: 'A connection self-check is still pending.',
   integrationSelfCheckFailed: 'The self-check did not start. Check the window and try again.',
   integrationFailed: 'Verification did not pass. This workflow is not connected yet.',
