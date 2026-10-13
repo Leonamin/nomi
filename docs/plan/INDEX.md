@@ -585,3 +585,6 @@
 - [2026-10-08-gate-family-direction-check](2026-10-08-gate-family-direction-check.md)
 - [2026-10-08-vocab-gate-release-base](2026-10-08-vocab-gate-release-base.md)
 - [2026-10-12-personal-web](2026-10-12-personal-web.md)
+- [2026-10-12-symbol-specific-concept-consumers](2026-10-12-symbol-specific-concept-consumers.md)
+- [2026-10-12-web-ai-connections](2026-10-12-web-ai-connections.md)
+- [2026-10-12-web-production-project-ports](2026-10-12-web-production-project-ports.md)

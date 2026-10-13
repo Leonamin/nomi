@@ -1,5 +1,7 @@
 # 웹 ComfyUI 연결 관리와 외부 에이전트 패널
 
+> 📋 方案待拍板 · 状态由 docs-autosync 自动登记，作者请按实修改
+
 기준: own origin/main `3f5ba5e728b4123a4d18d470129ff31db0eae985`; branch `feat/web-ai-connections`; 구현선 `nomi-web-connections-implementation`; 독립선 `nomi-web-connections-acceptance`. 사용자 요청: 기존 UI를 유지하여 ComfyUI 주소 변경/연결 검사/워크플로 가져오기, OpenCode 기본/Codex 선택, 실제 연결과 생성 검증. 기존 Nomi/Japonica/leo 및 기존 OpenCode 서비스·설정 보존. commit→push→hamsbox fetch 배포만 사용한다.
 
 ## 설계 카드
