@@ -1,0 +1,140 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-13-deletion-scope-same-surface",
+  "problem_type": "삭제/rename fail-closed이 '소비자가 같은 면 안에만 갇힌 삭제'까지 전량으로 과선택",
+  "symptom": "PR #14(feat/web-agent-model-selection)가 문서 파일 2건을 삭제했다는 이유만으로 deletion_or_rename_fail_closed → Canvas Acceptance(full) + Canvas Performance(실측 26분) + Mac Package까지 돌았다. 삭제 2건을 걷어낸 같은 diff는 canvas=critical 급도 아니었다.",
+  "direct_cause": "scripts/validation-policy.mjs 의 ambiguousStructuralChange 가, diff 전체가 순수 문서가 아닌 한 D/R 엔트리를 경로와 무관하게 곧바로 FULL_POLICY 로 보낸다(2026-09-08 도입).",
+  "class_root": "삭제의 '구조적 불확실성'을 경로가 어느 면(surface)에 속하는지로 먼저 좁히지 않고 상태 문자(D/R)만 보고 전량으로 보냈다. 소비자가 그 면 안에만 있는 경로(문서, web)의 삭제는 다른 면을 건드릴 수 없는데도 매번 최고 비용을 낸다.",
+  "migration": "ambiguousStructuralChange 를 좁힌다: rename 은 그대로 fail-closed, 삭제(`D`)는 지운 경로가 docs/marketing/README*/AGENTS.md/CLAUDE.md/web 이면 예외. 기존 2026-09-08 계약의 invariant('Only a wholly documentation-safe A/M/D diff may bypass deletion fail-closed')를 이 계약이 **대체**한다(그 파일은 역사로 보존, 이 계약이 현행 판정을 소유). 생산·테스트·CI·미인식 경로 삭제는 그대로 fail-closed.",
+  "affected_population": [
+    "문서 삭제를 코드 변경과 함께 낸 PR (이 fork에서 흔함: 옛 plan/문서를 지우며 코드를 바꿈)",
+    "web 파일 삭제를 포함한 PR",
+    "본机 pnpm run gates / CI / 합후 receipt(모두 같은 classifyValidationPolicy)"
+  ],
+  "scope_paths": [
+    "scripts/validation-policy.mjs",
+    "scripts/validation-policy.node-test.mjs"
+  ],
+  "entry_points": [
+    "scripts/validation-policy.mjs#classifyValidationPolicy",
+    "scripts/validation-policy.mjs#ambiguousStructuralChange",
+    "scripts/validation-policy.mjs#deletionStaysWithinItsSurface"
+  ],
+  "invariants": [
+    "삭제(`D`)가 같은 면(문서 패턴 또는 web/) 안에 머물면 deletion fail-closed 를 강제하지 않는다",
+    "rename(`R`)은 경로와 무관하게 fail-closed 를 유지한다(원본 경로를 빠뜨릴 수 있음)",
+    "생산·테스트·CI·미인식 경로의 삭제·rename 은 그대로 전량 fail-closed",
+    "삭제 예외는 '그 삭제 엔트리'에만 적용되고 다른 파일의 위험도를 낮추지 않는다(단조성 유지)"
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "scripts/git-delivery.mjs",
+      "symbol": "classifyValidationPolicy"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/run-gates-tests.mjs",
+      "symbol": "classifyValidationPolicy"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/select-quality-gate-profile.mjs",
+      "symbol": "classifyValidationPolicy"
+    }
+  ],
+  "door_reduction": {
+    "before": 3,
+    "after": 3,
+    "why_not": "세 호출자(합후 수령 · 본机 gates · CI 选档)가 처음부터 classifyValidationPolicy 한 함수를 공유한다. 이번에도 함수 내부 판정만 바꾸므로 문 수는 그대로다."
+  },
+  "generality_proof": "판정은 classifyValidationPolicy 한 함수뿐이고 세 호출자가 이를 공유한다. 예외를 'D 이면서 경로가 같은 면'이라는 조건으로 함수 내부에 두면, 문서·web 어느 쪽에서든 같은 클래스가 재발하지 않는다. 교차 면 삭제와 rename 은 조건이 false 라 종전 경로로 fail-closed 로 남는다.",
+  "shared_boundaries": [
+    {
+      "path": "scripts/validation-policy.mjs",
+      "symbol": "classifyValidationPolicy",
+      "responsibility": "diff 를 검증 면으로 분류하고 삭제/rename 의 구조적 불확실성을 fail-closed 로 처리할지 결정"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "scripts/select-quality-gate-profile.mjs",
+      "entry_point": "resolveProfileFromEnvironment",
+      "disposition": "enforced",
+      "evidence": "PR/push/merge_group 세 이벤트 모두 같은 classifyValidationPolicy 로 들어가므로, 예외가 CI 选档에 그대로 반영된다."
+    },
+    {
+      "path": "scripts/git-delivery.mjs",
+      "entry_point": "mergedCheckRequirement",
+      "disposition": "enforced",
+      "evidence": "merge SHA 의 요구 check 를 같은 분류기로 정한다. 삭제 예외로 coreSmoke 가 유지되는 한 receipt 요건도 그대로다."
+    },
+    {
+      "path": "scripts/run-gates-tests.mjs",
+      "entry_point": "resolveGatesTier",
+      "disposition": "enforced",
+      "evidence": "본机 gates 도 같은 분류기에서 unit 档을 정한다. 문서 삭제가 섞여도 이제 full 로 승격되지 않는다."
+    },
+    {
+      "path": "scripts/lib/gitPaths.mjs",
+      "entry_point": "gitNameStatus",
+      "disposition": "not-affected",
+      "evidence": "R/C 는 새 경로만 남기고 D 는 지운 경로를 그대로 준다. 이 파서 계약을 바꾸지 않으므로 rename fail-closed 판단이 그대로 유효하다."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "문서·web 삭제를 코드와 함께 내는 PR 마다 같은 상태문자 기반 규칙이 최고 비용을 부른다. 2026-09-08 이 '순수 문서 diff'만 구제했고, 혼합 diff 는 여전히 과선택이었다.",
+    "same_class_scan": [
+      "scripts/validation-policy.mjs ambiguousStructuralChange: 변경 전에는 (D||R) && !docsOnly 를 그대로 failClosed",
+      "scripts/lib/gitPaths.mjs gitNameStatus: R/C 는 records[i+2](새 경로)만 보존 — rename 을 경로로 판정하면 src→docs 이동을 놓친다",
+      "docs/fixes/2026-09-08-docs-deletion-scope.root-cause.json residual_risks: 역사적 QR 커밋 fb79d8ac 의 혼합 diff 가 의도적으로 full 로 남는다고 기록",
+      "scripts/check-site.mjs:33: tests/ux/marketing-home.static.mjs 는 check:site(Contracts)가 실행 — 혼합 diff 를 full 로 유지해도 추가 커버리지가 없다",
+      "grep 런타임의 docs 읽기: src/electron 에서 docs 파일을 여는 코드 없음(문서 경로는 주석/표시 문자열)"
+    ]
+  },
+  "prevention": {
+    "kind": "static-gate",
+    "enforcement_path": "scripts/validation-policy.mjs",
+    "invariant": "삭제가 같은 면(문서·web) 안에 머물면 전량을 강제하지 않는다; rename 과 교차 면 삭제는 fail-closed 를 유지한다",
+    "failure_mode": "scripts/validation-policy.node-test.mjs 红(随 check:quality-gate-workflow 가 CI contracts 에서 실행)",
+    "exception_policy": "none",
+    "strategy": "구조적 불확실성을 상태문자(D/R)가 아니라 '지운 경로가 어느 면에 속하나'로 먼저 좁힌다. rename 은 원본 경로를 알 수 없으므로 예외에서 제외한다.",
+    "artifacts": [
+      "scripts/validation-policy.mjs",
+      "scripts/validation-policy.node-test.mjs"
+    ]
+  },
+  "regression_tests": [
+    "scripts/validation-policy.node-test.mjs"
+  ],
+  "class_regression_tests": [
+    "scripts/validation-policy.node-test.mjs"
+  ],
+  "legacy_paths": {
+    "status": "not-applicable",
+    "removed_paths": [],
+    "rationale": "종전 동작은 별도 구현이 아니라 같은 함수 안의 조건이라 삭제할 병행 경로가 없다. history 보존을 위해 2026-09-08 계약 파일은 수정하지 않고 이 계약이 현행 판정을 소유한다."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "순수 내부 CI 选档이며 써드파티 런타임에 의존하지 않는다.",
+    "exit_criteria": []
+  },
+  "detected_by": "review",
+  "recurrence_check_on": "2026-11-12",
+  "invariant_owner_layer": {
+    "layer": "scripts/validation-policy.mjs",
+    "tests": [
+      "scripts/validation-policy.node-test.mjs"
+    ],
+    "why": "classifyValidationPolicy 는 CI 选档·본机 gates·합후 receipt 세 곳이 공유하는 유일한 분류 함수다. 삭제 예외도 그 안에 두고 그 자체 테스트(문서/web 삭제, 교차 면 삭제, rename)로 지킨다."
+  },
+  "external_sources": [],
+  "internal_only_reason": "내부 CI 분류 규칙이며, 판정 근거는 본 저장소의 import 방향·설정 파일·git name-status 파서 계약·기존 테스트이다.",
+  "residual_risks": [
+    "삭제가 머무는 면을 여전히 '경로 패턴'으로 판정한다. 새로 추가되는 면(자기 소비자가 자기 안에만 있는 루트)은 다시 여기 추가해야 한다.",
+    "문서 삭제로 인한 참조 dangling 은 contracts 의 check:docs-index(advisory) / check:doc-status / check:site 가 잡고 main 의 docs-autosync 가 보정한다. 이 셋이 못 잡는 참조(예: 저장소 밖 문서 링크)는 여전히 놓칠 수 있다.",
+    "web 삭제의 안전성은 'web 역방향 의존 0건'에 의존한다. 이후 src/electron 이 web 을 import 하기 시작하면 이 예외를 재검토해야 한다."
+  ]
+}
