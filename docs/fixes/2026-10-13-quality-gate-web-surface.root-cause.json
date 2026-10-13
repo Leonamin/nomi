@@ -1,0 +1,148 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-13-quality-gate-web-surface",
+  "problem_type": "验证分档漏判：分类器不认识新加的浏览器工作区 `web/` 根，web 专属改动被迫跑整张桌面矩阵",
+  "symptom": "PR #14（feat/web-agent-model-selection）改的多数是 `web/**` 与 web 相关的 electron/src 契约，却跑了 Canvas Acceptance（full）、Canvas Performance（实测 26 分钟）、Mac Package 与全部 Electron 走查。实测同一份 diff 去掉删除后仍报 `unrecognized_path_fail_closed:web/agentLanes.ts`，整张矩阵照跑。",
+  "direct_cause": "`scripts/validation-policy.mjs` 的 `RECOGNIZED_ROOT_PATTERNS` 里没有 `web`。该文件的规则是「认不出的路径一律 fail-closed 到全量」，于是 `web/**` 的每个改动都被判成不认识，直接升级到 FULL_POLICY（canvas=full、performance=true、package=true）。",
+  "class_root": "分类器的风险模型比它要覆盖的代码面晚了一步：`web/` 是 2026-10-12 才加进来的独立 surface，但没有任何地方为「一个新 surface 属于哪些验证面」表态，于是默认落进最贵的全量档。同一类问题会随每个后续 web PR 复发，也会随下一个新增 surface 复发。",
+  "migration": "新增 `WEB_SURFACE_PATTERNS` 常量并在 `RECOGNIZED_ROOT_PATTERNS` 认领 `web`；在基础分档里加一条 `webOnly` 分支（非文档文件全是 web → coreSmoke + focused-unit，不开桌面专用面）；文件循环里 web 路径不抬任何档，保持档位只升不降。没有旧实现要删：`web` 之前只是没被认领。",
+  "affected_population": [
+    "改了 `web/**` 的 PR（浏览器工作区的每个改动）",
+    "本地 `pnpm run gates`（同一分类器选档）遇到 web 改动的开发者",
+    "未来任何新增的独立 surface 根目录改动"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "纯内部 CI 分档问题；判据来自本仓的 import 方向、tsconfig、vitest 配置与既有分类器测试，不依赖任何第三方库行为。",
+  "scope_paths": [
+    "scripts/validation-policy.mjs",
+    "scripts/validation-policy.node-test.mjs",
+    "scripts/test-focused.mjs",
+    "scripts/test-focused.node-test.mjs"
+  ],
+  "entry_points": [
+    "scripts/validation-policy.mjs#classifyValidationPolicy",
+    "scripts/validation-policy.mjs#WEB_SURFACE_PATTERNS",
+    "scripts/validation-policy.mjs#RECOGNIZED_ROOT_PATTERNS",
+    "scripts/test-focused.mjs#selectFocusedTargets"
+  ],
+  "invariants": [
+    "非文档文件全是 `web/` 的 diff，canvas/performance/package 一律 false，desktop 与 journeys 一律 false",
+    "`web` 与 `electron`/`src` 混在同一个 diff 时，档位只升不降：electron/src 各自抬起的桌面面原样保留",
+    "`web` 不再触发 manifest 未认领路径的 fail-closed（unrecognized_path_fail_closed）",
+    "根 vitest 车道不含 `web/**`，`selectFocusedTargets` 不得把 web 测试/源文件交给根 vitest（否则 exit 1）"
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "scripts/git-delivery.mjs",
+      "symbol": "classifyValidationPolicy"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/run-gates-tests.mjs",
+      "symbol": "classifyValidationPolicy"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/select-quality-gate-profile.mjs",
+      "symbol": "classifyValidationPolicy"
+    }
+  ],
+  "door_reduction": {
+    "before": 3,
+    "after": 3,
+    "why_not": "三个调用方（交付收据、本机 gates、CI 选档）本来就共用 classifyValidationPolicy 这一个函数，没有各自的第二份判据；本次改的是函数内部的数据表与分档分支，门数不变也不该变。"
+  },
+  "generality_proof": "档位只由 classifyValidationPolicy 一个函数决定（三个调用方共用同一份），所以把「web 属于哪些验证面」做进它的数据表与基础分档、并在文件循环里对 web 路径整体跳过抬档，就同时封住了「web 单改」和「web 混入 electron/src」两条回来的路；对新增 surface 的复发由 `check:quality-gate-workflow`（本文件的 node-test）兜住。",
+  "shared_boundaries": [
+    {
+      "path": "scripts/validation-policy.mjs",
+      "symbol": "classifyValidationPolicy",
+      "responsibility": "决定一个 diff 要跑哪些验证面；认领根路径、给出 unit 档位、决定 desktop/journeys/canvas/performance/package 是否开启"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "scripts/select-quality-gate-profile.mjs",
+      "entry_point": "resolveProfileFromEnvironment",
+      "disposition": "enforced",
+      "evidence": "把解析后的 Git entries 与事件名传进 classifyValidationPolicy，CI 的 scope job 消费它的输出。web 走同一函数，所以自动拿到 webOnly 档。"
+    },
+    {
+      "path": "scripts/run-gates-tests.mjs",
+      "entry_point": "resolveGatesTier",
+      "disposition": "enforced",
+      "evidence": "本机 gates 用同一个 classifyValidationPolicy 选 unit 档；webOnly 的 unit=focused → 本机走 focused，但 test-focused 已排除 web（见下），不会 exit 1。"
+    },
+    {
+      "path": "scripts/git-delivery.mjs",
+      "entry_point": "mergedCheckRequirement",
+      "disposition": "not-affected",
+      "evidence": "合后收据按同一 diff 分类：web 单改 diff 的 coreSmoke 为 true → 仍要求 Core Flow Smoke(empty) success；package=false 让 Mac Package 变 skipped，而 evaluateRequiredChecks 接受 skipped，收据照发。"
+    },
+    {
+      "path": "scripts/test-focused.mjs",
+      "entry_point": "selectFocusedTargets",
+      "disposition": "enforced",
+      "evidence": "根 vitest include 不含 web/**，`vitest run web/x.test.ts` 实测 exit 1；selectFocusedTargets 已在入口滤掉 web 路径，把 web 测试归给 personal-web.yml / pnpm run test:web。"
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "只要 `web` 没被认领，每一个 web PR 都从同一条 unrecognized_path_fail_closed 走进全量档；这不是一次性输入，而是每个后续 web 改动都会命中的机制。新增 surface 未表态会重复同一形状。",
+    "same_class_scan": [
+      "scripts/validation-policy.mjs RECOGNIZED_ROOT_PATTERNS：此前已认领 src/electron/scripts/tests/evals/skills/public/assets/infra/worker/workers/experiments/artifacts/.claude 等，仅 `web` 缺席",
+      "grep 全仓「web 的 import 方向」：web→electron(93)/web→src(29)，反向 0 件；确认 web 是独立 surface 而非 electron 的一部分",
+      "tsconfig.json include 与 pnpm run build：均不含 web，确认 web 改动进不了桌面构建",
+      "vitest.config.ts include 与 vitest.web.config.ts：确认 web 测试属独立车道",
+      "scripts/validation-policy.node-test.mjs 既有「认不出的路径 fail-closed」测试：新增 web 断言不回归该性质"
+    ]
+  },
+  "prevention": {
+    "kind": "static-gate",
+    "enforcement_path": "scripts/validation-policy.mjs",
+    "invariant": "非文档文件全为 web 的 diff 必须落在 web 档（不开桌面专用面）；web 混入 electron/src 时档位只升不降；web 不再触发 unrecognized_path_fail_closed",
+    "failure_mode": "scripts/validation-policy.node-test.mjs 与 scripts/test-focused.node-test.mjs 红（随 check:quality-gate-workflow 在 CI contracts 里跑）",
+    "exception_policy": "none",
+    "strategy": "把「web 属于哪些验证面」做成分类器的数据表 + 一条 webOnly 分支，并在文件循环里对 web 路径整体跳过抬档；web 测试交给 personal-web.yml / pnpm run test:web 这一既有车道，不新建第二份。",
+    "artifacts": [
+      "scripts/validation-policy.mjs",
+      "scripts/validation-policy.node-test.mjs",
+      "scripts/test-focused.mjs",
+      "scripts/test-focused.node-test.mjs"
+    ]
+  },
+  "regression_tests": [
+    "scripts/validation-policy.node-test.mjs",
+    "scripts/test-focused.node-test.mjs"
+  ],
+  "class_regression_tests": [
+    "scripts/validation-policy.node-test.mjs",
+    "scripts/test-focused.node-test.mjs"
+  ],
+  "legacy_paths": {
+    "status": "not-applicable",
+    "removed_paths": [],
+    "rationale": "没有旧实现要删：`web` 之前只是没被分类器认领，不存在并行的第二份判据。"
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "纯内部 CI 分档问题，不依赖任何第三方运行时。",
+    "exit_criteria": []
+  },
+  "detected_by": "review",
+  "recurrence_check_on": "2026-11-12",
+  "invariant_owner_layer": {
+    "layer": "scripts/validation-policy.mjs",
+    "tests": [
+      "scripts/validation-policy.node-test.mjs",
+      "scripts/test-focused.node-test.mjs"
+    ],
+    "why": "classifyValidationPolicy 是 CI 选档、本机 gates、交付收据三处共用的唯一分类函数；「web 属于哪些验证面」做成它的数据表与分支，并由它自己的测试（web 单改、web 混合 electron/src、web 不出现在根 focused 车道）守住。"
+  },
+  "residual_risks": [
+    "web 文件**删除**仍按既有删除 fail-closed 走全量：diff 里出现 `D web/...` 且整体非纯文档时升级全量。放宽它要改 schema-v3 合同 docs/fixes/2026-09-08-docs-deletion-scope.root-cause.json 的不变量，另行处理。",
+    "文本文档删除与 web 混在同一 diff 时同样仍走全量（同一份删除合同）。",
+    "`web` 自身的单测/构建仍由 personal-web.yml 与 pnpm run test:web 承担，本次不改其所有权；质量门只保证不动桌面专用面。"
+  ]
+}

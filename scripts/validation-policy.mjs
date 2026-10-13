@@ -69,8 +69,12 @@ const DOCS_ONLY_PATTERN = /^(?:docs\/|marketing\/|README[^/]*$|AGENTS\.md$|CLAUD
 // 认得出的路径（2026-10-02，复盘 fixes 行 52、133：新路径悄悄落进「孤立改动 → focused」而漏跑该跑的档）。
 // 默认值反过来：**认不出的路径一律跑全量**，再按事故顺序逐个加性质测试；认得出 = 下面这几类里的某一类。
 // 往这里加一类之前先问「这类路径的改动真的只会影响同目录 sibling 测试吗」，不确定就别加。
+// `web` 는 브라우저 워크스페이스(2026-10-12 `docs/plan/2026-10-12-personal-web.md`)의 루트다.
+// 여기 넣지 않으면 "인식 못 하는 경로 → 전량"에 걸려, web만 바꾼 PR도 데스크톱 전용 레인
+// (캔버스 인수·성능·Electron 워크스루·Mac 패키지)을 전부 돈다. web 전용 프로파일은
+// 아래 WEB_SURFACE_PATTERNS + `webOnly` 분기가 정한다 — 여기서 "인식"만 시킨다.
 const RECOGNIZED_ROOT_PATTERNS = [
-  /^(?:src|electron|scripts|tests|evals|skills|agent-skills|public|assets|infra|worker|workers|experiments|artifacts|\.claude|\.agents|\.codex|\.superpowers|\.design-sync)\//,
+  /^(?:src|electron|scripts|tests|evals|skills|agent-skills|public|assets|infra|worker|workers|experiments|artifacts|web|\.claude|\.agents|\.codex|\.superpowers|\.design-sync)\//,
   /^(?:index|design-lab|director-lab)\.html$/,
   /^[^/]+\.md$/,
   /^(?:LICENSE|\.gitignore|\.gitattributes|\.prettierignore|\.prettierrc\.json|\.mcp\.json)$/,
@@ -118,6 +122,14 @@ const JOURNEY_PATTERNS = [
 ]
 
 const DESKTOP_PATTERNS = [/^src\/desktop\/bridge\.(?:ts|tsx|js|jsx)$/]
+
+// 브라우저 워크스페이스(2026-10-12). `web/` 는 `electron/**`(93곳)·`src/**`(29곳)을 단방향으로
+// import 하지만 **역방향 의존은 0건**이다 — `src`/`electron` 어디도 `web/` 을 import 하지 않는다.
+// 루트 tsconfig 도 데스크톱 build 도 `web/` 을 포함하지 않으므로, web만 바꾼 diff 는
+// 데스크톱 Electron 앱이나 캔버스 성능·패키징에 영향을 줄 수 없다 → 그 레인들을 올리지 않는다.
+// web 자체 테스트는 별도 `vitest.web.config.ts` / `pnpm run test:web` / `personal-web.yml` 이 소유한다
+// (루트 vitest include 에 없어, 여기서 focused 로 보내면 "No test files found" 로 red 가 난다).
+const WEB_SURFACE_PATTERNS = [/^web(?:\/|$)/]
 
 // 「谁决定画布上显示什么」——改它们等于改画布上用户看得见的状态，必须跑 full 画布验收
 // （canvas-landing / canvas-reconcile / batch-production 只在 full 档里）。
@@ -237,6 +249,11 @@ export function classifyValidationPolicy(changedFiles, options = {}) {
   const validationInfrastructure = files.filter((entry) =>
     matchesAny(entry.path, VALIDATION_INFRASTRUCTURE_PATTERNS),
   )
+  const webSurface = files.filter((entry) => matchesAny(entry.path, WEB_SURFACE_PATTERNS))
+  // 비-문서 파일이 전부 web 뿐인 diff → web 서피스 프로파일(데스크톱 레인을 올리지 않음).
+  const webOnly = !docsOnly && webSurface.length > 0 && files.every(
+    (entry) => DOCS_ONLY_PATTERN.test(entry.path) || matchesAny(entry.path, WEB_SURFACE_PATTERNS),
+  )
   const ambiguousStructuralChange = files.find(
     (entry) =>
       (entry.status.startsWith('D') || entry.status.startsWith('R')) &&
@@ -254,6 +271,18 @@ export function classifyValidationPolicy(changedFiles, options = {}) {
       && !matchesAny(entry.path, PACKAGE_PATTERNS))
     if (unrecognized) return failClosed(files, `unrecognized_path_fail_closed:${unrecognized.path}`)
   }
+  // webOnly · isolated · docs_only 가 공유하는 기본 면(포커스드 단위 + 핵심 스모크, 데스크톱 면 없음).
+  const focusedSurfaces = {
+    coreSmoke: !docsOnly,
+    unit: 'focused',
+    desktop: false,
+    journeys: false,
+    canvas: 'none',
+    performance: false,
+    package: false,
+    release: false,
+    failClosed: false,
+  }
   const policy = validationInfrastructure.length > 0
     ? {
         ...VALIDATION_INFRASTRUCTURE_POLICY,
@@ -263,20 +292,21 @@ export function classifyValidationPolicy(changedFiles, options = {}) {
         reasons: [`validation_infrastructure:${validationInfrastructure[0].path}`],
         files,
       }
-    : {
-        coreSmoke: !docsOnly,
-        unit: 'focused',
-        desktop: false,
-        journeys: false,
-        canvas: 'none',
-        performance: false,
-        package: false,
-        release: false,
-        failClosed: false,
-        reason: docsOnly ? 'docs_only' : 'isolated_change',
-        reasons: [],
-        files,
-      }
+    : webOnly
+      ? {
+          // web 서피스 프로파일: 계약 + 핵심 스모크 + (루트 vitest 가 web 을 포함하지 않으므로 사실상 no-op 인)
+          // focused 단위 레인만. 데스크톱 전용인 Electron 워크스루·캔버스 인수·성능·패키징은 올리지 않는다.
+          ...focusedSurfaces,
+          reason: `web_surface:${webSurface[0].path}`,
+          reasons: [`web_surface:${webSurface[0].path}`],
+          files,
+        }
+      : {
+          ...focusedSurfaces,
+          reason: docsOnly ? 'docs_only' : 'isolated_change',
+          reasons: [],
+          files,
+        }
 
   for (const { path } of files) {
     if (matchesAny(path, PERFORMANCE_INSTRUMENT_PATTERNS)) {
@@ -287,6 +317,9 @@ export function classifyValidationPolicy(changedFiles, options = {}) {
       policy.reasons.push(`performance-instrument:${path}`)
     }
     if (matchesAny(path, VALIDATION_INFRASTRUCTURE_PATTERNS)) continue
+    // web 경로는 어느 데스크톱 레인도 올리지 않는다(web+electron 혼합 diff 에서도 Electron 쪽이
+    // 올린 만큼만 남는다 — 단조 상승). web 만 바꾼 diff 는 위 webOnly 분기가 이미 처리한다.
+    if (matchesAny(path, WEB_SURFACE_PATTERNS)) continue
     if (path.startsWith('electron/')) {
       policy.unit = 'full'
       policy.desktop = true

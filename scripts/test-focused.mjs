@@ -44,7 +44,12 @@ function siblingTests(file, projectRoot = root) {
 }
 
 export function selectFocusedTargets(files, projectRoot = root) {
-  const normalized = files.map((file) => file.replaceAll('\\', '/'))
+  // 루트 vitest 설정(include)은 `web/**` 을 포함하지 않는다 — web 테스트는 별도
+  // `vitest.web.config.ts` / `pnpm run test:web` / `personal-web.yml` 이 소유한다. web 파일을
+  // 그대로 선택하면 `vitest run web/x.test.ts` 가 "No test files found" 로 exit 1 이 된다(실측).
+  const normalized = files
+    .map((file) => file.replaceAll('\\', '/'))
+    .filter((file) => !file.startsWith('web/'))
   const directVitest = new Set(normalized.filter(isVitestFile).filter((file) => !isNodeTestFile(file)))
   const directNode = new Set(normalized.filter(isNodeTestFile))
   const related = new Set()

@@ -269,6 +269,7 @@
 | [2026-08-29-focused-validation-policy.md](2026-08-29-focused-validation-policy.md) | PR `fast/full` 两档验证历史基线（已被 08-30 独立风险面取代） | 📎 |
 | [2026-08-30-risk-scoped-validation-evidence.md](2026-08-30-risk-scoped-validation-evidence.md) | **按真实风险拆分 unit/desktop/journey/canvas/performance/package，并用 exact-SHA CI 证据替代合并后第三遍全量测试** | ✅ |
 | [2026-09-05-ci-gate-mechanics.md](2026-09-05-ci-gate-mechanics.md) | **CI 门岗机制修法**：三个文档/生成物门（docs-index / doc-status / ledger）降为 advisory 并由 main 上的 docs-autosync 自动补齐；`gates:contracts` 51 个 `&&` 改成「全跑完再汇总」 | ✅ |
+| [2026-10-13-quality-gate-web-surface.md](2026-10-13-quality-gate-web-surface.md) | **품질 게이트 web 서피스 인식**：브라우저 워크스페이스 `web/`를 분류기에 인정시켜, web 전용 diff가 데스크톱 전용 레인(캔버스 성능·Electron 워크스루·Mac 패키지)을 태우지 않게 함 | ✅ |
 | [2026-09-06-logging-and-diagnostics-bundle.md](2026-09-06-logging-and-diagnostics-bundle.md) | **主进程统一落盘日志 + 导出诊断包**：按天滚动/大小上限/保留期的单一文件写手，99 处 console.* 收口到一个类型化出口（提示词/密钥/路径没有参数位），设置「隐私与诊断」里一键打 zip 交给用户自己保存 | 🚧 |
 | [2026-09-06-mcp-locale-and-tool-titles.md](2026-09-06-mcp-locale-and-tool-titles.md) | MCP 结果跟随 Nomi 语言，并为九个语义工具补齐中英文人话标题 | 🚧 |
 | [2026-08-29-root-cause-contract-v2.md](2026-08-29-root-cause-contract-v2.md) | 根因合同 v2、跨 AI 强制执行与规则收敛 | 🚧 |
@@ -589,3 +590,4 @@
 - [2026-10-12-web-ai-connections](2026-10-12-web-ai-connections.md)
 - [2026-10-12-web-production-project-ports](2026-10-12-web-production-project-ports.md)
 - [2026-10-13-web-agent-model-selection](2026-10-13-web-agent-model-selection.md)
+- [2026-10-13-quality-gate-web-surface](2026-10-13-quality-gate-web-surface.md)
