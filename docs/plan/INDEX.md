@@ -588,3 +588,4 @@
 - [2026-10-12-symbol-specific-concept-consumers](2026-10-12-symbol-specific-concept-consumers.md)
 - [2026-10-12-web-ai-connections](2026-10-12-web-ai-connections.md)
 - [2026-10-12-web-production-project-ports](2026-10-12-web-production-project-ports.md)
+- [2026-10-13-web-agent-model-selection](2026-10-13-web-agent-model-selection.md)
