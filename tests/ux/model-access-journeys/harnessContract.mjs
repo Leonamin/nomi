@@ -44,5 +44,5 @@ export const IGNORED_DRAWER_COMPONENTS = Object.freeze({
   ModelCapabilityEditor: 'edits capabilities of an already-connected model, not an access method',
   // Separate connector/certification flows with their own end-to-end coverage.
   AntigravityConnectionCard: 'Antigravity connector has its own connection flow outside the model-access matrix',
-  IntegrationSelfCheckPanel: 'conversational integration certification has its own free self-check flow',
+  IntegrationSelfCheckGate: 'conversational integration certification has its own free self-check flow (home-replacement + defer/re-entry wrapper around IntegrationSelfCheckPanel)',
 })
