@@ -43,7 +43,7 @@ export function koreanHandbookContent(isWeb: boolean) {
       intentRoutes: [
         { iconKey: 'layout-grid', title: '새 결과로 편집한 장면 바꾸기', body: '현재 후보를 고르는 일과 이미 배치한 장면을 바꾸는 일은 별도예요. 생성 카드의 결과 목록에서 장면 교체를 사용하세요.' },
         { iconKey: 'movie', title: '영상 파일 받기', body: '프로젝트와 결과는 서버에 저장돼요. 내보내기가 끝나면 다운로드해서 받으세요.' },
-        { iconKey: 'alert-triangle', title: 'AI에게 영상 제작 맡기기', body: '현재 개인 웹은 직접 카드를 조작하는 ComfyUI 생성 방식입니다. AI 자동 제작은 제공하지 않습니다.', warn: true },
+        { iconKey: 'alert-triangle', title: 'AI에게 영상 제작 맡기기', body: '기본은 카드를 직접 만들어 ComfyUI로 생성하는 방식입니다. 운영자가 서버에 외부 AI 엔진(OpenCode/Codex)을 연결한 경우에만 도우미 패널로 카드 만들기와 생성을 맡길 수 있습니다.', warn: true },
       ] satisfies HandbookIntentRoute[],
       gotchas: [
         { iconKey: 'plug-connected-x', title: '선택할 모델이 없어요', body: '운영자에게 ComfyUI 연결과 모델 등록을 확인해 달라고 요청하세요.' },

@@ -96,7 +96,7 @@ export const koWeb = {
   library: {
     ...base.library,
     local: '서버에 저장됨',
-    textModelMissing: '이 웹에서는 AI 자동 제작을 제공하지 않아요',
+    textModelMissing: '이 웹에서는 내장 도우미를 쓰지 않아요',
     textModelMissingHint: '연결된 ComfyUI 모델로 직접 이미지와 영상을 만들 수 있어요.',
     connectTextModel: '연결된 모델 보기',
   },

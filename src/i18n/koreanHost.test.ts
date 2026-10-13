@@ -46,7 +46,7 @@ describe('한국어 호스트와 도움말', () => {
     const web = handbookContentForLocale('ko', true)
     expect(web.firstWin[2].body).toContain('ComfyUI')
     expect(web.intentRoutes.some(route => route.body.includes('서버'))).toBe(true)
-    expect(web.intentRoutes.some(route => route.body.includes('AI 자동 제작은 제공하지 않습니다'))).toBe(true)
+    expect(web.intentRoutes.some(route => route.body.includes('운영자가 서버에 외부 AI 엔진(OpenCode/Codex)을 연결한 경우에만'))).toBe(true)
     expect(handbookContentForLocale('en').title).toBe('Nomi quick-start guide')
     expect(handbookContentForLocale('zh-CN').title).toContain('Nomi')
   })
