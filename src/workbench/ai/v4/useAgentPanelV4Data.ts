@@ -118,7 +118,7 @@ export type AgentPanelV4Data = Readonly<{
   vendors: Readonly<Record<string, string>>
   selectedModel: ModelCatalogModelDto | undefined
   modelLabel: string
-  webAgent?: { settings: WebAgentSettings; selectEngine: (engine: WebAgentEngine) => void; selectModel: (model: string) => void; models: readonly string[]; modelsError?: string; loadModels: () => void }
+  webAgent?: { settings: WebAgentSettings; selectEngine: (engine: WebAgentEngine) => void; selectModel: (model: string) => void; models: readonly string[]; providers: readonly string[]; selectedProvider: string; selectProvider: (provider: string) => void; modelsError?: string; loadModels: () => void }
   skills: readonly SkillListItemDto[]
   /** 技能 key → 界面上的名字（`skillLabelForKey`）。气泡、composer、恢复草稿行都读它，谁都不另存名字。 */
   skillLabel: (key: string) => string
@@ -151,6 +151,7 @@ export function useAgentPanelV4Data(surface: ResidentSurface): AgentPanelV4Data 
   const [webAgentFailure, setWebAgentFailure] = React.useState<LaneDesktopResult | null>(null)
   const [webAgentModels, setWebAgentModels] = React.useState<readonly string[]>([])
   const [webAgentModelsError, setWebAgentModelsError] = React.useState<string | undefined>()
+  const [webAgentProvider, setWebAgentProvider] = React.useState('')
   React.useEffect(() => {
     const api = getDesktopBridge()?.web
     if (!api || !snapshot.workspaceId) return
@@ -169,6 +170,14 @@ export function useAgentPanelV4Data(surface: ResidentSurface): AgentPanelV4Data 
   const loadWebAgentModels = React.useCallback(() => {
     void getDesktopBridge()?.web?.agentModels().then(result => { setWebAgentModels(result.models); setWebAgentModelsError(result.error) }).catch(error => { setWebAgentModels([]); setWebAgentModelsError(String(error)) })
   }, [])
+  // 모델 목록이 수백 개(실측 463)라 제공자 단계로 먼저 좁힌다. 기본은 현재 모델의 제공자.
+  const webAgentProviders = React.useMemo(() => [...new Set(webAgentModels.map(model => model.split('/')[0]).filter(Boolean))].sort(), [webAgentModels])
+  const webAgentCurrentProvider = webAgentSettings?.model.split('/')[0] ?? ''
+  const activeWebAgentProvider = webAgentProviders.includes(webAgentProvider) ? webAgentProvider : (webAgentProviders.includes(webAgentCurrentProvider) ? webAgentCurrentProvider : '')
+  const visibleWebAgentModels = React.useMemo(
+    () => activeWebAgentProvider ? webAgentModels.filter(model => model.startsWith(`${activeWebAgentProvider}/`)) : webAgentModels,
+    [webAgentModels, activeWebAgentProvider],
+  )
   const skillLabel = React.useCallback((key: string) => skillLabelForKey(skills, key, i18n.language), [skills, i18n.language])
   const [generationModels, setGenerationModels] = React.useState<readonly ModelCatalogModelDto[]>([])
   const orderedVendorKeys = useVendorPreferenceOrder()
@@ -386,7 +395,10 @@ export function useAgentPanelV4Data(surface: ResidentSurface): AgentPanelV4Data 
     modelLabel,
     webAgent: webAgentSettings ? {
       settings: webAgentSettings,
-      models: webAgentModels,
+      models: visibleWebAgentModels,
+      providers: webAgentProviders,
+      selectedProvider: activeWebAgentProvider,
+      selectProvider: setWebAgentProvider,
       ...(webAgentModelsError ? { modelsError: webAgentModelsError } : {}),
       selectEngine: engine => applyWebAgentSelection({ engine }),
       selectModel: model => applyWebAgentSelection({ model }),
