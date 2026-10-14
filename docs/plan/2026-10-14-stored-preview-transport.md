@@ -1,5 +1,7 @@
 # Stored preview transport design card
 
+> 📋 方案待拍板 · 状态由 docs-autosync 自动登记，作者请按实修改
+
 Owner: OpenCode execution implementation line. Category: corrective DTO boundary.
 
 | Cell | Decision and evidence |

@@ -1,5 +1,7 @@
 # Engine/model identity correction
 
+> 📋 方案待拍板 · 状态由 docs-autosync 自动登记，作者请按实修改
+
 Implementation line: opencode_execution. Existing UI; no layout changes.
 
 | Cell | Decision and evidence |
