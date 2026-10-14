@@ -1,3 +1,4 @@
+import { assertSourceExecutionCandidateOwnership } from '../shared/storyboard/storyboardSubjectAdapter';
 import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
@@ -402,6 +403,10 @@ export function createProductionRunRepository(deps: ProductionRunRepositoryDeps 
     /** true = 起草了、还没摆给用户：不开出价（`presentations` 为空）。缺省 = 建好就摆上卡。 */
     cardHidden?: boolean;
   }): ProductionRun {
+    if (input.origin.sourceDocument) {
+      assertSourceExecutionCandidateOwnership(input.candidate);
+      for (const shot of input.shots ?? []) assertSourceExecutionCandidateOwnership(shot.candidate);
+    }
     const projectId = String(input.projectId || "").trim();
     const operationId = String(input.operationId || "").trim();
     if (!/^[A-Za-z0-9._:-]{1,240}$/.test(operationId)) throw new Error("Invalid generation operation id");

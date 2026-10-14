@@ -47,7 +47,7 @@ function comfyuiErrorMessage(status: Record<string, unknown>): string {
 }
 
 /** 从 image 产物项拼 /view 完整 URL（baseUrl 缺省回落默认端口）。 */
-function buildViewUrl(baseUrl: string, img: Record<string, unknown>): string {
+export function buildViewUrl(baseUrl: string, img: Record<string, unknown>): string {
   const base = (baseUrl || "http://127.0.0.1:8188").replace(/\/+$/, "");
   const qs = new URLSearchParams({
     filename: String(img.filename ?? ""),
@@ -55,6 +55,32 @@ function buildViewUrl(baseUrl: string, img: Record<string, unknown>): string {
     type: typeof img.type === "string" ? img.type : "output",
   }).toString();
   return `${base}/view?${qs}`;
+}
+
+/** Shared input receipt invariant for upload responses and approved /view snapshots. */
+export function comfyInputName(receipt: Record<string, unknown>): string {
+  const name = receipt.filename ?? receipt.name, subfolder = receipt.subfolder ?? '';
+  if (typeof name !== 'string' || !name.trim() || /[/\\\0]/.test(name) || name === '.' || name === '..'
+    || typeof subfolder !== 'string' || /[\\\0]/.test(subfolder) || subfolder.startsWith('/')
+    || subfolder.split('/').some(part => part === '..' || part === '.') || receipt.type !== 'input') {
+    throw new Error('generation_reference_comfy_input_invalid');
+  }
+  return subfolder ? `${subfolder}/${name}` : name;
+}
+
+/** Input snapshots are provider-owned receipts, never arbitrary remotely hosted images. */
+export function comfyInputNameFromViewUrl(baseUrl: string, value: string): string {
+  try {
+    const base = new URL(baseUrl), url = new URL(value);
+    if (!['http:', 'https:'].includes(base.protocol) || url.origin !== base.origin
+      || url.pathname !== base.pathname.replace(/\/+$/, '') + '/view' || url.username || url.password || url.hash
+      || ['filename', 'subfolder', 'type'].some(key => url.searchParams.getAll(key).length > 1)) {
+      throw new Error('invalid');
+    }
+    return comfyInputName({ filename: url.searchParams.get('filename'), subfolder: url.searchParams.get('subfolder') ?? '', type: url.searchParams.get('type') });
+  } catch {
+    throw new Error('generation_reference_comfy_input_invalid');
+  }
 }
 
 // model3d 是 Nomi 的一等公民产物（GenerationResultType 含 model3d；runtime 读 model_url 取它；

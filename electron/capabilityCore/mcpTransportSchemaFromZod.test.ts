@@ -70,7 +70,8 @@ describe("the published canvas.write transport schema is derived, not hand-writt
   it("carries the Zod prompt-writing guidance all the way to tools/list", () => {
     const nodePrompt = ((properties.nodes?.items as Record<string, unknown>)?.properties as Record<string, { description?: string }>)?.prompt;
     expect(nodePrompt?.description).toBe(plannedNodeSchema.innerType().shape.prompt.description);
-    expect(nodePrompt?.description).toMatch(/Generation prompt/);
+    expect(nodePrompt?.description).toMatch(/English.*prompt.*unless profile declares/);
+    expect(nodePrompt?.description).toMatch(/empty for agent-artifact/);
     // 20 动词：镜头提示词只由 `draft_shots` 写（`generation.plan`），跨字段的写作指引随它进系统提示词；
     // 对外 `nomi_canvas_edit` 仍靠字段级 Zod 描述带指引（外部画布面按动词拆名与 #754 同一刀定）。
     const draftShots = modelFacingToolSpecs('internal').find(item => item.name === 'draft_shots');

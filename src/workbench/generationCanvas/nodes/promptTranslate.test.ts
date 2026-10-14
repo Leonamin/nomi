@@ -16,8 +16,16 @@ const REF_A = encodeMention('nomi-asset://project/cat.png')
 const REF_B = encodeMention('https://example.com/a very long/english-url.jpg')
 
 describe('detectTranslateDirection', () => {
+  it.each(['붉은 종이등이 은은하게 빛나는 고요한 밤', '붉은 등', '赤い提灯が静かに揺れる夜'])('non-Latin scene %s translates to English', (prompt) => {
+    expect(detectTranslateDirection(prompt)).toBe('source-to-en')
+  })
+
+  it('Korean with cinematography terms and references remains source-to-English', () => {
+    expect(detectTranslateDirection(`붉은 종이등이 밤바람에 흔들린다 cinematic ${REF_B}`)).toBe('source-to-en')
+  })
+
   it('纯中文 → 译成英文', () => {
-    expect(detectTranslateDirection('一只橘猫坐在窗台上，黄昏的光')).toBe('zh-to-en')
+    expect(detectTranslateDirection('一只橘猫坐在窗台上，黄昏的光')).toBe('source-to-en')
   })
 
   it('纯英文 → 译成中文', () => {
@@ -25,7 +33,7 @@ describe('detectTranslateDirection', () => {
   })
 
   it('中文为主、夹几个英文术语 → 仍是中文为主', () => {
-    expect(detectTranslateDirection('赛博朋克城市夜景，霓虹灯倒映在积水里，cinematic, 8k')).toBe('zh-to-en')
+    expect(detectTranslateDirection('赛博朋克城市夜景，霓虹灯倒映在积水里，cinematic, 8k')).toBe('source-to-en')
   })
 
   it('英文为主、夹一个中文词 → 英文为主', () => {
@@ -33,7 +41,7 @@ describe('detectTranslateDirection', () => {
   })
 
   it('引用标记里的英文 url 不参与判断：中文 + 引用仍是中文', () => {
-    expect(detectTranslateDirection(`让${REF_B}里的女孩转身微笑`)).toBe('zh-to-en')
+    expect(detectTranslateDirection(`让${REF_B}里的女孩转身微笑`)).toBe('source-to-en')
   })
 
   it('只有引用/数字/标点 → null（没有可翻译的文字）', () => {
@@ -93,7 +101,7 @@ describe('cleanTranslationOutput / splitOuterWhitespace', () => {
 describe('buildTranslatePrompt', () => {
   it('中译英：目标语言、原文、输出只要译文三件都在', async () => {
     await i18n.changeLanguage('zh-CN')
-    const p = buildTranslatePrompt('一只猫', 'zh-to-en', 0)
+    const p = buildTranslatePrompt('一只猫', 'source-to-en', 0)
     expect(p).toContain('英文')
     expect(p).toContain('"""\n一只猫\n"""')
     expect(p).toContain('只输出译文')
@@ -102,7 +110,7 @@ describe('buildTranslatePrompt', () => {
 
   it('有引用时把「占位符原样保留」写进指令', async () => {
     await i18n.changeLanguage('zh-CN')
-    const p = buildTranslatePrompt('⟦1⟧里的猫', 'zh-to-en', 1)
+    const p = buildTranslatePrompt('⟦1⟧里的猫', 'source-to-en', 1)
     expect(p).toContain('⟦1⟧')
     expect(p).toContain('原样保留')
   })

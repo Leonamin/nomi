@@ -1,3 +1,5 @@
+import { buildViewUrl, comfyInputName } from '../catalog/comfyuiLocal';
+import { rewriteVendorUrl } from '../vendor/vendorBaseFallback';
 import { readCatalog } from '../catalog/catalogStore';
 import { localizeAssetsForVendor } from '../catalog/assetLocalization';
 import { assetIngestionResolver, assetLocalizationOptions } from '../catalog/assetTransportRuntime';
@@ -11,13 +13,32 @@ async function localize(providerId: string, urls: readonly string[]): Promise<re
   const catalog = readCatalog();
   const vendor = catalog.vendors.find(vendor => vendor.key === providerId);
   if (!vendor) throw new Error('generation_reference_provider_unavailable');
-  const result = await localizeAssetsForVendor({ urls }, assetIngestionResolver(vendor, catalog),
-    readNomiLocalAsset, postJsonForAssetUpload, postMultipartForAssetUpload,
-    assetLocalizationOptions(undefined), putBinaryForAssetUpload);
-  const values = (result.value as { urls?: unknown }).urls;
-  if (!Array.isArray(values) || values.length !== urls.length || values.some(value => typeof value !== 'string' || !/^https?:\/\//.test(value))) {
-    throw new Error('generation_reference_url_unavailable');
-  }
+  const resolveIngestion = assetIngestionResolver(vendor, catalog);
+  const uploadEndpoints = new Set<string>();
+  const uploadedViewUrls = new Map<string, string>();
+  const result = await localizeAssetsForVendor({ urls }, kind => {
+    const candidates = resolveIngestion(kind);
+    for (const candidate of candidates) if (candidate.ingestion.strategy === 'comfyui-upload') uploadEndpoints.add(candidate.ingestion.endpoint);
+    return candidates;
+  }, readNomiLocalAsset, postJsonForAssetUpload, async (...args) => {
+    const response = await postMultipartForAssetUpload(...args);
+    if (uploadEndpoints.has(args[0])) {
+      const receipt = response && typeof response === 'object' && !Array.isArray(response) ? response as Record<string, unknown> : {};
+      const name = receipt.name, subfolder = receipt.subfolder ?? '';
+      let inputName: string;
+      try { inputName = comfyInputName({ filename: name, subfolder, type: receipt.type }); } catch { throw new Error('generation_reference_upload_receipt_invalid'); }
+      const endpoint = new URL(rewriteVendorUrl(args[0]));
+      if (!['http:', 'https:'].includes(endpoint.protocol) || !endpoint.pathname.endsWith('/upload/image')) throw new Error('generation_reference_upload_endpoint_invalid');
+      const base = endpoint.origin + endpoint.pathname.slice(0, -'/upload/image'.length);
+      uploadedViewUrls.set(inputName, buildViewUrl(base, { filename: name, subfolder, type: 'input' }));
+    }
+    return response;
+  }, assetLocalizationOptions(undefined), putBinaryForAssetUpload);
+  const localized = (result.value as { urls?: unknown }).urls;
+  if (!Array.isArray(localized) || localized.length !== urls.length) throw new Error('generation_reference_url_unavailable');
+  const values = localized.map(value => typeof value === 'string' && uploadedViewUrls.has(value) ? uploadedViewUrls.get(value)! : value);
+  if (values.some(value => typeof value !== 'string' || !/^https?:\/\//.test(value))) throw new Error('generation_reference_url_unavailable');
+
   return values;
 }
 

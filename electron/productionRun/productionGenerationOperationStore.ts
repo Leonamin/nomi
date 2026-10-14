@@ -121,7 +121,7 @@ export function createProductionGenerationOperationStore(
       const current = read(projectId, operationId);
       const targetRun = owner.readFull(projectId, operationId);
       assertTarget(targetRun, target);
-      // 改一镜：幂等键跟着**那一镜**的候选 revision 走（reducer 只给那一镜 +1，顶层候选不动——
+      // 改一镜：幂等键跟着**那一镜**的候选 revision 走（reducer 给那一镜 +1；顶层候选若是它的镜像会原子同步——
       // 沿用顶层 revision 会让第二次改同一镜撞上第一次的键、被当成重放吃掉）。
       const targetShot = shotId ? current.shots?.find((shot) => shot.shotId === shotId) : undefined;
       if (shotId && !targetShot) throw new Error(`Generation shot not found: ${shotId}`);

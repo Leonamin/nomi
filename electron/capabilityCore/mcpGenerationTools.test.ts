@@ -1117,3 +1117,42 @@ describe('document production execution owner', () => {
     expect(assertDocumentOperation).toHaveBeenCalledWith('project-1', 'document-owner')
   })
 })
+
+
+it.each([false, true])('returns the current source operation after author-side durable writes (multi=%s)', async isMulti => {
+  const backing = createInMemoryGenerationOperationStore()
+  const revisions = new Map<string, number>()
+  const operations = { ...backing,
+    create: async (input: Parameters<typeof backing.create>[0]) => {
+      const operation = await backing.create(input)
+      revisions.set(operation.operationId, 0)
+      return { ...operation, runRevision: 0 }
+    },
+    read: async (projectId: string, operationId: string) => {
+      const operation = await backing.read(projectId, operationId)
+      return operation ? { ...operation, runRevision: revisions.get(operationId) } : operation
+    },
+  }
+  const handler = createGenerationPlanningHandler({ registry, operations, requestRenderer: async (_operation, payload) => {
+    const id = (payload as { designId: string }).designId
+    revisions.set(id, (revisions.get(id) ?? 0) + 1)
+    return { status: 'saved', designId: id }
+  } })
+  const candidate = { candidateId: 'execution-id', revision: 1, moduleId: 'generation.single-shot', providerId: 'fixture-provider', modelId: 'fixture-model', mode: 'text-to-image', prompt: 'Original', parameters: {}, references: [] }
+  const result = await handler({ capability: 'create', lease, origin: { host: 'nomi', sourceDocument: { documentId: 'doc', revision: 1, contentHash: 'hash' } }, params: { operationId: `post-author-${isMulti}`, ...(isMulti ? { shots: [{ shotId: 'shot', candidate, storyboard: { anchorIds: [] } }] } : { candidate, storyboard: { anchorIds: [] } }) } }) as { operation: GenerationOperation }
+  expect(result.operation.runRevision).toBe(1)
+  expect(result.operation).toEqual(await operations.read('project-1', result.operation.operationId))
+})
+
+
+it.each([false, true])('rejects conflicting source author reference inputs before durable creation (multi=%s)', async isMulti => {
+  const operations = createInMemoryGenerationOperationStore()
+  const requestRenderer = vi.fn()
+  const handler = createGenerationPlanningHandler({ registry, operations, requestRenderer, resolveStoryboardReferenceUrl: () => 'http://localhost/asset.png' })
+  const candidate = { candidateId: 'c', revision: 1, moduleId: 'generation.single-shot', providerId: 'fixture-provider', modelId: 'fixture-model', mode: 'image-to-image', prompt: 'Lantern', parameters: {}, references: [{ assetId: 'image-a', contentHash: 'hash', version: 1, kind: 'image' as const, role: 'first_frame' as const }] }
+  const subject = { candidate, storyboard: { anchorIds: [], referenceBindings: { first_frame: [{ url: 'http://localhost/other.png' }] } } }
+  const operationId = `invalid-source-${isMulti}`
+  await expect(handler({ capability: 'create', lease, origin: { host: 'nomi', sourceDocument: { documentId: 'doc', revision: 1, contentHash: 'hash' } }, params: { operationId, ...(isMulti ? { shots: [{ ...subject, shotId: 'shot' }] } : subject) } })).rejects.toMatchObject({ code: 'generation_input_invalid' })
+  expect(await operations.read('project-1', operationId)).toBeNull()
+  expect(requestRenderer).not.toHaveBeenCalled()
+})

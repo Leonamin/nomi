@@ -848,8 +848,9 @@ describe("comfyui-upload（本地 ComfyUI 首帧上传，S2）", () => {
     expect(url).toBe("http://127.0.0.1:8188/upload/image");
     expect(headers).toEqual({});
     expect(fileField).toBe("image");
-    expect(extraFields).toEqual({ type: "input", overwrite: "true" });
-    expect([fileName, contentType]).toEqual(["a.png", "image/png"]);
+    expect(extraFields).toEqual({ type: "input", overwrite: "false" });
+    expect(fileName).toMatch(/^nomi-reference-[a-f0-9]{64}\.png$/);
+    expect(contentType).toBe("image/png");
   });
 
   it("resolveLocalAsset comfyui-upload：无 subfolder → 只返回 name", async () => {
@@ -1061,5 +1062,18 @@ describe("local raster metadata validation", () => {
     }
     expect(matchNomiErrorCode(message)).toBe("asset-invalid");
     expect(message).not.toMatch(/视频生成/);
+  });
+});
+
+describe('shared Comfy reference byte identity', () => {
+  it('separates same-basename different bytes and deduplicates identical bytes without overwrite', async () => {
+    const post=vi.fn(async (_url:string,_headers:unknown,_bytes:unknown,name:string)=>({name,subfolder:'',type:'input'}));
+    const ingestion:AssetIngestion={strategy:'comfyui-upload',endpoint:'http://localhost:8188/upload/image',accepts:['image']};
+    const asset=(suffix:string):LocalAsset=>({bytes:Buffer.concat([PNG_BYTES,Buffer.from(suffix)]),contentType:'image/png',fileName:'same.png'});
+    const first=await resolveLocalAsset(localUrl('a/same.png'),ingestion,'',()=>asset('first'),vi.fn(),post);
+    const last=await resolveLocalAsset(localUrl('b/same.png'),ingestion,'',()=>asset('last'),vi.fn(),post);
+    const same=await resolveLocalAsset(localUrl('c/renamed.png'),ingestion,'',()=>asset('first'),vi.fn(),post);
+    expect(first).not.toBe(last);expect(same).toBe(first);
+    for(const call of post.mock.calls)expect((call as unknown[])[5]).toEqual({type:'input',overwrite:'false'});
   });
 });

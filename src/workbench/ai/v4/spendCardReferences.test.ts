@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { applySpendReferences, pendingReferenceInputs, referenceInputsFromNode } from './spendCardReferences'
-import { candidatePatchFromNode } from './spendCardDraft'
+import { candidatePatchFromNode, projectSpendNode } from './spendCardDraft'
 import type { GenerationCanvasNode } from '../../generationCanvas/model/generationCanvasTypes'
 import type { PendingSpendShot } from '../../../desktop/productionRunBridgeTypes'
 function fixture(modeId: string): { node: GenerationCanvasNode; shot: PendingSpendShot } {
@@ -39,4 +39,15 @@ it('keeps unsupported first-frame references inactive instead of converting them
   expect(displayed.meta?.referenceImageUrls ?? []).toEqual([])
   const changed = { ...displayed, meta: { ...displayed.meta, referenceImageUrls: ['nomi-local://asset/new.png'] } }
   expect(referenceInputsFromNode(changed, referenced)).toContainEqual(pendingReferenceInputs(referenced)[0])
+})
+
+it('projects an image-to-video-only custom model with both pinned frame previews', () => {
+  const contract = { version: 1, kind: 'video', defaultModeId: 'frames', transportTaskKind: 'image_to_video', modes: [{ id: 'frames', intent: 'firstlast', vendorTerm: 'First and last frame', hint: '', promptRequired: true, transportTaskKind: 'image_to_video', slots: [{ kind: 'first_frame', label: 'First frame', min: 1, max: 1, inputKey: 'first_image' }, { kind: 'last_frame', label: 'Last frame', min: 1, max: 1, inputKey: 'last_image' }], params: [] }] }
+  const option = { value: 'opaque-custom-workflow', modelKey: 'opaque-custom-workflow', vendor: 'comfyui:custom', label: 'Actual imported model', kind: 'video' as const, meta: { customCapabilityContract: contract, secretToken: 'must-not-copy' } }
+  const shot: PendingSpendShot = { shotId: 'row', index: 1, kind: 'video', mode: 'image_to_video', modeId: 'frames', providerId: option.vendor, modelId: option.modelKey, prompt: 'A lantern sways', parameters: {}, price: { known: false }, references: [{ assetId: 'keyframe', contentHash: 'image-hash', version: 1, kind: 'image', role: 'first_frame', url: 'nomi-local://asset/p/keyframe.png' }, { assetId: 'keyframe', contentHash: 'image-hash', version: 1, kind: 'image', role: 'last_frame', url: 'nomi-local://asset/p/keyframe.png' }] }
+  const node = projectSpendNode(shot, undefined, option)!
+  expect(node.meta).toMatchObject({ modelLabel: option.label, customCapabilityContract: contract, firstFrameUrl: shot.references![0].url, lastFrameUrl: shot.references![1].url })
+  expect(node.meta).not.toHaveProperty('secretToken')
+  expect(referenceInputsFromNode(node, shot)).toEqual(pendingReferenceInputs(shot))
+  expect(candidatePatchFromNode(node, shot, option)).toBeUndefined()
 })

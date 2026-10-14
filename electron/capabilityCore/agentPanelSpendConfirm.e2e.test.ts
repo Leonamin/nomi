@@ -454,7 +454,8 @@ describe('reliability: scoped presentation and dismissal', () => {
     expect(await withWindow.revisePendingSpend({ quoteId: withWindow.listPendingSpend(PROJECT_ID)[0].quoteId,projectId:PROJECT_ID, operationId:OPERATION_ID,
       shotId:'shot-17', patch:{prompt:'edited seventeenth'}})).toMatchObject({ok:true});
     const after = base.repository.read(PROJECT_ID, OPERATION_ID)!.generationPlan!;
-    expect(after.candidate).toEqual(before.candidate);
+    expect(before.candidate).toEqual(before.shots!.find(shot => shot.shotId === 'shot-17')!.candidate);
+    expect(after.candidate).toEqual(after.shots!.find(shot => shot.shotId === 'shot-17')!.candidate);
     expect(after.shots?.filter(shot => shot.shotId !== 'shot-17')).toEqual(before.shots?.filter(shot => shot.shotId !== 'shot-17'));
     expect(after.shots?.find(shot => shot.shotId === 'shot-17')?.candidate.prompt).toBe('edited seventeenth');
     const pending = withWindow.listPendingSpend(PROJECT_ID)[0];

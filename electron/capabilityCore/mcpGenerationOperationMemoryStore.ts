@@ -1,3 +1,5 @@
+import { assertSourceExecutionCandidateOwnership } from '../shared/storyboard/storyboardSubjectAdapter';
+import { generationCandidateOwnerShot } from '../shared/generationCandidateOwner';
 import { generationShotEnvelopeOf } from "../shared/generationShotEnvelope";
 import { resolveGenerationShotScope } from "../shared/agentCapabilities/generationShotScope";
 import { applyPlanCandidatePatch } from "./executionContract";
@@ -23,6 +25,10 @@ export function createInMemoryGenerationOperationStore(): GenerationOperationSto
   const read = (projectId: string, operationId: string) => operations.get(keyFor(projectId, operationId)) ?? null;
   return {
     create(input) {
+      if (input.origin?.sourceDocument) {
+        assertSourceExecutionCandidateOwnership(input.candidate);
+        for (const shot of input.shots ?? []) assertSourceExecutionCandidateOwnership(shot.candidate);
+      }
       const key = keyFor(input.projectId, input.operationId);
       if (operations.has(key)) throw new Error(`Generation operation already exists: ${input.operationId}`);
       const operation = freeze({
@@ -45,11 +51,19 @@ export function createInMemoryGenerationOperationStore(): GenerationOperationSto
     patch(projectId, operationId, patch, now, shotId) {
       const current = read(projectId, operationId);
       if (!current) throw new Error(`Generation operation not found: ${operationId}`);
+      if (current.sourceDocumentId) {
+        assertSourceExecutionCandidateOwnership(current.candidate);
+        for (const shot of current.shots ?? []) assertSourceExecutionCandidateOwnership(shot.candidate);
+        assertSourceExecutionCandidateOwnership(patch);
+      }
       if (current.state !== "draft") throw new Error("new_draft_required: edit a new generation draft");
+      const owner = generationCandidateOwnerShot(current, shotId);
+      const mirror = generationCandidateOwnerShot(current);
+      shotId = owner?.shotId ?? shotId;
       if (shotId) {
         if (!current.shots?.some((shot) => shot.shotId === shotId)) throw new Error(`Generation shot not found: ${shotId}`);
         const shots = current.shots.map((shot) => shot.shotId === shotId ? { ...shot, candidate: applyPlanCandidatePatch(shot.candidate, patch) } : shot);
-        const next = freeze({ ...current, shots, updatedAt: now });
+        const next = freeze({ ...current, shots, ...(mirror?.shotId === shotId ? { candidate: shots.find(shot => shot.shotId === shotId)!.candidate } : {}), updatedAt: now });
         operations.set(keyFor(projectId, operationId), next);
         return next;
       }

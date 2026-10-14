@@ -1,0 +1,115 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-14-unicode-lane-names",
+  "problem_type": "Locale-generated conversation names rejected by ASCII/Han-only validation",
+  "symptom": "Korean browser new conversation 새 대화2 fails agent_lane_execute_failed before native OpenCode can run.",
+  "direct_cause": "LANE_NAME_SHAPE only accepts ASCII letters/numbers and a partial Han range.",
+  "class_root": "Safe path components are incorrectly defined by language-specific character ranges instead of Unicode character roles.",
+  "affected_population": [
+    "Korean conversation names",
+    "Japanese, Cyrillic, Arabic and combining-mark user conversation names"
+  ],
+  "scope_paths": [
+    "electron/agentLane/laneCommandCodec.ts"
+  ],
+  "entry_points": [
+    "WebAgentLanes.command lane-create/select/delete",
+    "laneIpc lane-create/select/delete"
+  ],
+  "external_sources": [],
+  "invariants": [
+    "Names keep exact original spelling and Unicode normalization form.",
+    "Names begin with a Unicode letter or number and contain only letters, numbers, combining marks, ASCII space, underscore and hyphen.",
+    "Names remain 1-64 Unicode code points; separators, controls and punctuation are rejected."
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "electron/agentLane/laneCommandCodec.ts",
+      "symbol": "parseLaneName"
+    },
+    {
+      "kind": "read",
+      "path": "electron/agentLane/laneCommandCodec.ts",
+      "symbol": "LANE_NAME_SHAPE"
+    }
+  ],
+  "door_reduction": {
+    "before": 2,
+    "after": 2,
+    "why_not": "Three lane commands share the parser and that parser reads one character-role shape; neither entry is a bypass."
+  },
+  "generality_proof": "Unicode letter/number/mark roles cover any writing system without provider, locale or script branches. Path characters remain excluded and names are not normalized or trimmed.",
+  "shared_boundaries": [
+    {
+      "path": "electron/agentLane/laneCommandCodec.ts",
+      "symbol": "parseLaneName",
+      "responsibility": "Validate all lane-create/select/delete names before either host mutates session state."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "web/agentLanes.ts",
+      "entry_point": "WebAgentLanes.command",
+      "disposition": "enforced",
+      "evidence": "Calls parseLaneCommand which routes all three lane commands to parseLaneName."
+    },
+    {
+      "path": "electron/agentLane/laneIpc.ts",
+      "entry_point": "registerAgentLaneIpc",
+      "disposition": "enforced",
+      "evidence": "Calls parseLaneCommand before runtime command dispatch."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every localized Korean fresh conversation and equivalent user-language name can enter the same command parser.",
+    "same_class_scan": [
+      "rg parseLaneCommand web electron/agentLane",
+      "door-map parseLaneName and LANE_NAME_SHAPE --roots=src,electron,web",
+      "Read laneSessionCwd and session identity storage: exact names are identity, no normalization permitted."
+    ]
+  },
+  "prevention": {
+    "kind": "schema-validation",
+    "enforcement_path": "electron/agentLane/laneCommandCodec.ts",
+    "invariant": "Names begin with a Unicode letter or number and contain only letters, numbers, combining marks, ASCII space, underscore and hyphen.",
+    "failure_mode": "LaneCommandError rejects unsafe components before persistence.",
+    "exception_policy": "none",
+    "strategy": "Replace language-specific alphabet ranges with Unicode character properties at the existing shared parser.",
+    "artifacts": [
+      "electron/agentLane/laneCommandCodec.ts"
+    ]
+  },
+  "regression_tests": [
+    "electron/agentLane/laneCommandCodec.test.ts"
+  ],
+  "class_regression_tests": [
+    "electron/agentLane/laneCommandCodec.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "electron/agentLane/laneCommandCodec.ts"
+    ],
+    "rationale": "Remove ASCII/Han-only alphabet and Chinese-specific error wording; no second parser is introduced."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "No runtime dependency owns this internal instruction conflict; use native agent translation and existing user-visible prompt review.",
+    "exit_criteria": []
+  },
+  "migration": "Existing transcript names remain byte-for-byte unchanged. New accepted names are validated without normalization or trimming.",
+  "residual_risks": [
+    "Real browser new conversation and native engine execution need rerun after server rebuild."
+  ],
+  "detected_by": "user",
+  "recurrence_check_on": "2027-01-14",
+  "invariant_owner_layer": {
+    "layer": "electron/agentLane/laneCommandCodec.ts",
+    "tests": [
+      "electron/agentLane/laneCommandCodec.test.ts"
+    ]
+  },
+  "internal_only_reason": "An internal command/path safety invariant; no external dependency controls lane name validation."
+}

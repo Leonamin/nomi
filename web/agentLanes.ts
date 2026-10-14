@@ -103,6 +103,7 @@ export class WebAgentLanes {
     if (shouldChange && lane.isRunning) throw new Error('Stop or finish the current request before changing agents')
     if (selection.engine) {
       z.enum(['opencode', 'codex']).parse(selection.engine)
+      if (state.engine !== selection.engine) state.model = undefined
       state.engine = selection.engine
     }
     // 엔진이 실제로 아는 모델만 받는다. 빈 값은 '엔진 기본값으로 되돌림'.
@@ -200,7 +201,7 @@ export class WebAgentLanes {
       if (!directory || !sameProjectAgentBinding(selected, await ensureWorkspaceProjectIdentity(directory))) throw new Error('Creation project identity changed')
       const settings = this.settings(surface)
       if (settings.engine === 'opencode' && !settings.model) throw new Error('Select an authenticated OpenCode model')
-      await this.run({ engine: settings.engine, model: settings.model, mcpUrl: mcp.url, mcpToken: mcp.token, prompt: `${webCreationSystemPrompt(context)}\n\nUser request:\n${parsed.text}`, directory: path.join(this.root, 'sandbox', lane.id), signal: controller.signal, onEvent: event => {
+      await this.run({ engine: settings.engine, model: settings.model, mcpUrl: mcp.url, mcpToken: mcp.token, toolNames: [], prompt: `${webCreationSystemPrompt(context)}\n\nUser request:\n${parsed.text}`, directory: path.join(this.root, 'sandbox', lane.id), signal: controller.signal, onEvent: event => {
         if (event.kind === 'text' || event.kind === 'thinking') this.part(lane, { kind: event.kind === 'text' ? 'assistant-text' : 'thinking', text: event.text, streaming: false })
         else if (event.kind === 'error') this.part(lane, { kind: 'error', text: event.text })
         else if (event.kind === 'usage') lane.usage = { ...lane.usage, inputTokens: lane.usage.inputTokens + event.input, outputTokens: lane.usage.outputTokens + event.output, cacheReadTokens: lane.usage.cacheReadTokens + event.cacheRead, totalTokens: lane.usage.totalTokens + event.input + event.output + event.cacheRead }
@@ -275,7 +276,7 @@ export class WebAgentLanes {
     setApprovalWaiting(false)
     try {
       const history = lane.parts.filter(part => part.kind === 'user' || part.kind === 'assistant-text').slice(-12)
-      await this.run({ engine: settings.engine, model: settings.model, prompt: `${webCreationSystemPrompt(context)}\nUse only the Nomi MCP tools. Use read_script, list_models and draft_shots for the original document storyboard. Use generate only when the user requested GPU generation; its original Nomi confirmation settles the action. Never automatically retry generation, select candidates or alter the timeline.\nRecent conversation: ${JSON.stringify(history).slice(-40000)}\nUser request: ${prompt}`, directory: path.join(this.root, 'sandbox', lane.id), sessionId: lane.nativeSessions[settings.engine], mcpUrl: mcp.url, mcpToken: mcp.token, signal: controller.signal, onEvent })
+      await this.run({ engine: settings.engine, model: settings.model, prompt: `${webCreationSystemPrompt(context)}\nUse only the Nomi MCP tools. Their native identifiers are: ${domain.tools.map(tool => settings.engine === 'opencode' ? `nomi_${tool.name}` : tool.name).join(', ')}. Use read_script, list_models and draft_shots for the original document storyboard. Use generate only when the user requested GPU generation; its original Nomi confirmation settles the action. Never automatically retry generation, select candidates or alter the timeline.\nRecent conversation: ${JSON.stringify(history).slice(-40000)}\nUser request: ${prompt}`, directory: path.join(this.root, 'sandbox', lane.id), sessionId: lane.nativeSessions[settings.engine], mcpUrl: mcp.url, mcpToken: mcp.token, toolNames: domain.tools.map(tool => tool.name), signal: controller.signal, onEvent })
     } catch (error) { if (!controller.signal.aborted) this.part(lane, { kind: 'error', text: error instanceof Error ? error.message : String(error) }) }
     finally { clearTimeout(deadline); turn.answer?.(false); controller.abort('native-turn-ended'); await toolQueue.catch(() => undefined); await mcp.close(); domain.dispose(); this.turns.delete(lane.id); lane.isRunning = false; this.publish(state) }
   }

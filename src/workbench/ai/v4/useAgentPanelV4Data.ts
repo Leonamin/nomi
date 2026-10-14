@@ -152,27 +152,60 @@ export function useAgentPanelV4Data(surface: ResidentSurface): AgentPanelV4Data 
   const [webAgentModels, setWebAgentModels] = React.useState<readonly string[]>([])
   const [webAgentModelsError, setWebAgentModelsError] = React.useState<string | undefined>()
   const [webAgentProvider, setWebAgentProvider] = React.useState('')
+  const webAgentEngineRef = React.useRef<WebAgentEngine | undefined>(undefined)
+  const webAgentModelReadRef = React.useRef(0)
+  const webAgentSelectionReadRef = React.useRef(0)
+  /** Discovery is scoped to the selected engine and the current workspace lifetime. */
+  const loadWebAgentModels = React.useCallback((engine: WebAgentEngine | undefined = webAgentEngineRef.current) => {
+    const api = getDesktopBridge()?.web
+    if (!api || !engine) return
+    const identity = ++webAgentModelReadRef.current
+    setWebAgentModels([]); setWebAgentModelsError(undefined); setWebAgentProvider('')
+    void api.agentModels(engine).then(result => {
+      if (identity !== webAgentModelReadRef.current || engine !== webAgentEngineRef.current) return
+      setWebAgentModels(result.models); setWebAgentModelsError(result.error)
+    }).catch(error => {
+      if (identity !== webAgentModelReadRef.current || engine !== webAgentEngineRef.current) return
+      setWebAgentModels([]); setWebAgentModelsError(String(error))
+    })
+  }, [])
+  const invalidateWebAgentReads = React.useCallback(() => {
+    webAgentSelectionReadRef.current++; webAgentModelReadRef.current++; webAgentEngineRef.current = undefined
+  }, [])
   React.useEffect(() => {
     const api = getDesktopBridge()?.web
     if (!api || !snapshot.workspaceId) return
-    let isCurrent = true
-    void api.agentSettings().then(settings => { if (isCurrent) setWebAgentSettings(settings) }).catch(() => undefined)
-    void api.agentModels().then(result => { if (isCurrent) { setWebAgentModels(result.models); setWebAgentModelsError(result.error) } }).catch(() => undefined)
-    return () => { isCurrent = false }
-  }, [snapshot.workspaceId, activeThreadId])
-  /** 엔진·모델 선택은 같은 채널로 저장된다. 진행 중이면 서버가 거절하고 그 이유를 그대로 보여준다. */
+    const identity = ++webAgentSelectionReadRef.current
+    webAgentModelReadRef.current++; webAgentEngineRef.current = undefined
+    setWebAgentSettings(undefined); setWebAgentModels([]); setWebAgentProvider('')
+    void api.agentSettings().then(settings => {
+      if (identity !== webAgentSelectionReadRef.current) return
+      webAgentEngineRef.current = settings.engine
+      setWebAgentSettings(settings); loadWebAgentModels(settings.engine)
+    }).catch(() => undefined)
+    return invalidateWebAgentReads
+  }, [snapshot.workspaceId, activeThreadId, loadWebAgentModels, invalidateWebAgentReads])
+  /** The server owns selection; previous-engine model replies cannot cross this boundary. */
   const applyWebAgentSelection = React.useCallback((selection: { engine?: WebAgentEngine; model?: string }) => {
-    void getDesktopBridge()?.web?.agentSettings(selection).then(settings => { setWebAgentSettings(settings); setWebAgentFailure(null) }).catch(error => {
+    const api = getDesktopBridge()?.web
+    if (!api) return
+    const identity = ++webAgentSelectionReadRef.current
+    const shouldReloadModels = selection.engine !== undefined && selection.engine !== webAgentEngineRef.current
+    if (shouldReloadModels) { webAgentModelReadRef.current++; setWebAgentModels([]); setWebAgentModelsError(undefined); setWebAgentProvider('') }
+    void api.agentSettings(selection).then(settings => {
+      if (identity !== webAgentSelectionReadRef.current) return
+      webAgentEngineRef.current = settings.engine
+      setWebAgentSettings(settings); setWebAgentFailure(null)
+      if (shouldReloadModels) loadWebAgentModels(settings.engine)
+    }).catch(error => {
+      if (identity !== webAgentSelectionReadRef.current) return
       setWebAgentFailure({ ok: false, code: snapshot.active.running ? 'agent_lane_busy_running' : 'agent_lane_execute_failed', diagnostic: String(error) })
+      if (shouldReloadModels) loadWebAgentModels()
     })
-  }, [snapshot.active.running])
-  /** 모델 목록은 엔진 CLI에서 온다 — 실패해도 패널은 계속 쓸 수 있고, 이유만 정직하게 남긴다. */
-  const loadWebAgentModels = React.useCallback(() => {
-    void getDesktopBridge()?.web?.agentModels().then(result => { setWebAgentModels(result.models); setWebAgentModelsError(result.error) }).catch(error => { setWebAgentModels([]); setWebAgentModelsError(String(error)) })
-  }, [])
+  }, [snapshot.active.running, loadWebAgentModels])
   // 모델 목록이 수백 개(실측 463)라 제공자 단계로 먼저 좁힌다. 기본은 현재 모델의 제공자.
-  const webAgentProviders = React.useMemo(() => [...new Set(webAgentModels.map(model => model.split('/')[0]).filter(Boolean))].sort(), [webAgentModels])
-  const webAgentCurrentProvider = webAgentSettings?.model.split('/')[0] ?? ''
+  const webAgentProviders = React.useMemo(() => [...new Set(webAgentModels.filter(model => model.includes('/')).map(model => model.split('/')[0]).filter(Boolean))].sort(), [webAgentModels])
+  const webAgentCurrentProvider = webAgentSettings?.model.includes('/') ? webAgentSettings.model.split('/')[0] : ''
   const activeWebAgentProvider = webAgentProviders.includes(webAgentProvider) ? webAgentProvider : (webAgentProviders.includes(webAgentCurrentProvider) ? webAgentCurrentProvider : '')
   const visibleWebAgentModels = React.useMemo(
     () => activeWebAgentProvider ? webAgentModels.filter(model => model.startsWith(`${activeWebAgentProvider}/`)) : webAgentModels,

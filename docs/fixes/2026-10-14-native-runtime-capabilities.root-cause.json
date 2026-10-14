@@ -1,0 +1,167 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-14-native-runtime-capabilities",
+  "problem_type": "Unchecked native CLI execution contracts",
+  "symptom": "Installed OpenCode1 rejects the v2-only --standalone launch and Codex binary is absent at hardcoded home path; same-session followup reports no tools despite MCP connecting eight tools; inherited PWD selects shared repository instead of sandbox",
+  "direct_cause": "Unchecked launch assumes runtime config shape;2.0.28 ignores enabled-only legacy disables, CodeMode catalog updates can advertise empty tools on resume, and CLI chooses inherited PWD before cwd; private auto-start can snapshot direct tool registry before asynchronous MCP discovery completes",
+  "class_root": "Native runtime selection must resolve through the environment and validate isolated execution capabilities before tool-bearing launch",
+  "affected_population": [
+    "OpenCode1 installations",
+    "PATH-installed Codex",
+    "OpenCode2 with direct global MCP entries"
+  ],
+  "scope_paths": [
+    "web/agentProcess.ts",
+    "web/agentLanes.ts"
+  ],
+  "entry_points": [
+    "Native model discovery",
+    "Native turn launch"
+  ],
+  "external_sources": [
+    {
+      "kind": "official-doc",
+      "url": "https://opencode.ai/docs/config/",
+      "checked_at": "2026-10-14",
+      "purpose": "Configuration precedence and environment injection"
+    },
+    {
+      "kind": "source-code",
+      "url": "https://github.com/anomalyco/opencode/blob/f576da508d70ecfb59dd0499d4bd48851e87ee34/packages/core/src/config.ts",
+      "checked_at": "2026-10-14",
+      "purpose": "Inspected source entries() config-document shape and OPENCODE_CONFIG_CONTENT precedence; source SHA256 6605855e85363d2e6b11d17b80913f2aaac57ce5392afe66b34e55c32db93d3b"
+    },
+    {
+      "kind": "source-code",
+      "url": "https://registry.npmjs.org/@opencode/cli-darwin-arm64/-/cli-darwin-arm64-2.0.28.tgz",
+      "checked_at": "2026-10-14",
+      "purpose": "Actual official package2.0.28 inspected and executed; npm tarball SHA1 c03d53bc9f7834016545afa8888b497c8c7cd1c5; binary SHA256 7d9e936ab23af4928e0dfbf94c9fe313aac0728eef34a06709e1d86ca8987341"
+    },
+    {
+      "kind": "source-code",
+      "url": "https://github.com/anomalyco/opencode/blob/dev/packages/schema/src/mcp.ts",
+      "checked_at": "2026-10-14",
+      "purpose": "Inspected canonical disabled flag, codemode:false and typed server definitions"
+    },
+    {
+      "kind": "source-code",
+      "url": "https://github.com/anomalyco/opencode/blob/dev/packages/cli/src/server-process.ts",
+      "checked_at": "2026-10-14",
+      "purpose": "Inspected stdio server private lease, random loopback port, inherited ephemeral password, and stdin-close disposal"
+    }
+  ],
+  "invariants": [
+    "Unsupported isolated runtime is rejected before turn execution",
+    "Only the Nomi MCP server is enabled in effective execution configuration",
+    "Executable paths come from explicit override or PATH",
+    "Present configuration info and MCP maps must be records; malformed owner shape fails closed rather than treating servers as absent",
+    "Every native process must see PWD equal to its private execution directory",
+    "Supported v2 canonical MCP map disables unrelated servers using actual source type/url/command",
+    "Nomi tools use direct MCP discovery on both initial and resumed session without CodeMode catalog intermediary"
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "web/agentProcess.ts",
+      "symbol": "nativeAgentExecutable"
+    },
+    {
+      "kind": "read",
+      "path": "web/agentLanes.ts",
+      "symbol": "runNativeAgent"
+    }
+  ],
+  "door_reduction": {
+    "before": 2,
+    "after": 2,
+    "why_not": "Process launch owns validated native contract; lane adapter supplies actual admitted tool names for both regular and tool-free turns."
+  },
+  "generality_proof": "Both model discovery and turn launch resolve the same executable; OpenCode tool-bearing launch validates supported capabilities and disables every effective unrelated MCP key",
+  "shared_boundaries": [
+    {
+      "path": "web/agentProcess.ts",
+      "symbol": "nativeAgentExecutable",
+      "responsibility": "Resolve executable through environment"
+    },
+    {
+      "path": "web/agentProcess.ts",
+      "symbol": "assertOpenCodeCapabilities",
+      "responsibility": "Reject unsupported isolated execution contract"
+    },
+    {
+      "path": "web/agentProcess.ts",
+      "symbol": "startOpenCodeServer",
+      "responsibility": "Own one authenticated loopback server per turn and wait for actual MCP readiness before provider invocation"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "web/agentProcess.ts",
+      "entry_point": "listNativeAgentModels",
+      "disposition": "enforced",
+      "evidence": "Shared executable resolution"
+    },
+    {
+      "path": "web/agentProcess.ts",
+      "entry_point": "runNativeAgent",
+      "disposition": "enforced",
+      "evidence": "Shared resolution plus supported OpenCode execution assertion"
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Runtime package and PATH differ across installations and upgrades",
+    "same_class_scan": [
+      "rg nativeAgentExecutable web",
+      "rg runNativeAgent and listNativeAgentModels web: agentLanes calls both",
+      "Mac1.18.26 run --help vs hamsbox2.0.28 run --help"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "web/agentProcess.ts",
+    "invariant": "Every native turn validates supported CLI, pins private cwd/PWD, disables unrelated actual MCP definitions, and awaits admitted Nomi MCP readiness on its authenticated private server before invoking the model",
+    "failure_mode": "Clear unsupported runtime error before provider execution",
+    "exception_policy": "none",
+    "strategy": "Inspect owning runtime version/help and effective config, never reuse incompatible launch assumptions",
+    "artifacts": [
+      "web/agentProcess.ts",
+      "web/agentLanes.ts"
+    ]
+  },
+  "regression_tests": [
+    "web/agentProcess.test.ts"
+  ],
+  "class_regression_tests": [
+    "web/agentProcess.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "web/agentProcess.ts"
+    ],
+    "rationale": "Remove fixed home executable paths and obsolete nested MCP config lookup"
+  },
+  "dependency_lifecycle": {
+    "decision": "retain-with-exit",
+    "rationale": "Keep supported installed OpenCode2 execution contract; isolated QA installs actual2.0.28 without mutating global v1",
+    "current": "OpenCode1.18.26 on Mac and2.0.28 on hamsbox",
+    "target": "OpenCode2 with authenticated loopback private-server JSON execution and owning MCP readiness",
+    "exit_criteria": [
+      "Any config or isolation capability change requires documented probe and changed class regressions"
+    ]
+  },
+  "migration": "Existing correctly scoped native sessions continue with their exact session ID. Legacy sessions created in a shared repository are rejected before provider invocation with a new-conversation instruction; their transcript remains intact. No silent session.move or new-session fallback.",
+  "residual_risks": [
+    "Legacy wrong-directory session transcripts remain readable but cannot execute until the user starts a new conversation",
+    "Production deployment remains outside this task"
+  ],
+  "detected_by": "review",
+  "recurrence_check_on": "2027-01-14",
+  "invariant_owner_layer": {
+    "layer": "web",
+    "tests": [
+      "web/agentProcess.test.ts"
+    ]
+  }
+}

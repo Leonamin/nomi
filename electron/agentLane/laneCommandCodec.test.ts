@@ -106,3 +106,24 @@ describe("lane command codec", () => {
     });
   });
 });
+
+
+describe('Unicode lane-name path boundary', () => {
+  it.each(['새 대화2', '次のシーン 2', 'Сцена_2', 'مشهد-٢', 'Cafe\u0301 2', '새 대화', '𐐀 Scene'])('preserves safe name %s for every lane command', (laneName) => {
+    for (const kind of ['lane-create', 'lane-select', 'lane-delete'] as const) {
+      expect(parseLaneCommand({ kind, laneName })).toEqual({ kind, laneName })
+    }
+  })
+
+  it.each(['a/b', 'a\\b', '../escape', 'a:b', 'a.b', 'a\nname', 'a\tname', 'a\u0000name', 'a\u200Dname', '\u0301name', ' 새 대화', '💡name', 'a$name'])('rejects unsafe name %j', (laneName) => {
+    expect(() => parseLaneCommand({ kind: 'lane-create', laneName })).toThrow(LaneCommandError)
+  })
+
+  it('bounds Unicode names by code points without silently changing identity', () => {
+    for (const letter of ['가', '𐐀']) {
+      const laneName = letter.repeat(64)
+      expect(parseLaneCommand({ kind: 'lane-create', laneName })).toEqual({ kind: 'lane-create', laneName })
+      expect(() => parseLaneCommand({ kind: 'lane-create', laneName: letter.repeat(65) })).toThrow(LaneCommandError)
+    }
+  })
+})

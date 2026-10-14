@@ -8,6 +8,7 @@ import { hostEvents } from './runtimeHost'
 import { readProject, saveProject, createProject } from '../electron/projects/repository'
 import { createWebSurface } from './surface'
 import { createWebProductionHost } from './productionHost'
+import { sourceStoryboardHash } from './sourceStoryboardExecution'
 import { dispatchWebRpc } from './rpc'
 import { DEFAULT_PROJECT_AGENT_APPROVAL_POLICY } from '../electron/shared/agentCapabilities/capabilityApprovalPolicy'
 async function fixture(payload?: unknown) {
@@ -59,12 +60,13 @@ describe('actual web production host integration', () => {
     await expect(dispatchWebRpc('nomi:production-runs:confirm-spend', [{ projectId: 'foreign', operationId: 'run', quoteId: 'quote' }], f.surface)).rejects.toThrow('another project')
     host.runtime.dispose()
   })
-  it.each(['source', 'plan', 'keyframe', 'promptSegments', 'anchorIds'])('presents document drafts through the durable Run and rejects a %s edited during approval', async edited => {
+  it.each(['source', 'plan', 'keyframe', 'promptSegments', 'anchorIds'].flatMap(edited => [false, true].map(isPinned => ({ edited, isPinned }))))('rejects $edited edited during approval (durable pin=$isPinned)', async ({ edited, isPinned }) => {
     const document = createDefaultWorkbenchDocument(), pin = documentSessionState(document), designId = 'canonical-document-run'
     const candidate = { candidateId: 'candidate', revision: 1, moduleId: 'generation.single-shot', providerId: 'comfyui:test', modelId: 'model', mode: 'text_to_image', prompt: 'Fox', parameters: {}, references: [] }
     const plan = storyboardPlanFromDraftSubjects([{ shotId: candidate.candidateId, candidate }], 'unused')
     const f = await fixture({ workbenchDocuments: [document], activeDocumentId: document.id, storyboardDesignsByDocumentId: { [document.id]: [{ id: designId, documentId: document.id, title: 'Plan', plan, committed: false, status: 'draft', sourceDocumentUpdatedAt: document.updatedAt, createdAt: 1, updatedAt: 1 }] } }), host = createWebProductionHost()
-    host.runtime.repository.createGenerationDraft({ projectId: f.project.id, operationId: designId, origin: { host: 'nomi', sourceDocument: { documentId: document.id, revision: pin.revision, contentHash: pin.contentHash } }, candidate })
+    const run = host.runtime.repository.createGenerationDraft({ projectId: f.project.id, operationId: designId, origin: { host: 'nomi', sourceDocument: { documentId: document.id, revision: pin.revision, contentHash: pin.contentHash } }, candidate })
+    if (isPinned) host.runtime.repository.execute(f.project.id, designId, { commandId: 'source-pin', expectedRevision: run.revision, type: 'generation.source_storyboard.pin', payload: { contentHash: sourceStoryboardHash(plan) }, issuedAt: new Date().toISOString() })
     try {
       const scope = host.forSurface(f.surface), lease = await scope.leaseFor(f.selected)
       await expect(host.runtime.planning({ capability: 'present', lease, params: { operationId: designId } })).resolves.toMatchObject({ nextAction: 'await_user' })
@@ -80,6 +82,40 @@ describe('actual web production host integration', () => {
     } finally { host.runtime.dispose() }
   })
 
+  it('refuses browser-forged source pins and pins without a source draft', async () => {
+    const f = await fixture(), host = createWebProductionHost()
+    const candidate = { candidateId: 'candidate', revision: 1, moduleId: 'generation.single-shot', providerId: 'comfyui:test', modelId: 'model', mode: 'text_to_image', prompt: 'Fox', parameters: {}, references: [] }
+    try {
+      const run = host.runtime.repository.createGenerationDraft({ projectId: f.project.id, operationId: 'pin-without-source', origin: { host: 'nomi' }, candidate })
+      const command = { commandId: 'forged-source-pin', expectedRevision: run.revision, type: 'generation.source_storyboard.pin', payload: { contentHash: 'a'.repeat(64) }, issuedAt: new Date().toISOString() }
+      expect(() => host.runtime.repository.execute(f.project.id, run.runId, command)).toThrow('storyboard_pin_requires_source_draft')
+      await expect(dispatchWebRpc('nomi:production-runs:command', [{ projectId: f.project.id, runId: run.runId, command }], f.surface)).rejects.toThrow()
+      expect(host.runtime.repository.read(f.project.id, run.runId)!.generationPlan!.sourceStoryboardHash).toBeUndefined()
+    } finally { host.runtime.dispose() }
+  })
+
+  it('persists the whole source author pin across a host restart and admits editorial fields', async () => {
+    const document = createDefaultWorkbenchDocument(), pin = documentSessionState(document), designId = 'rich-pinned-source'
+    const candidate = { candidateId: 'candidate', revision: 1, moduleId: 'generation.single-shot', providerId: 'comfyui:test', modelId: 'model', mode: 'text_to_image', prompt: 'Fox', parameters: {}, references: [] }
+    const plan = storyboardPlanFromDraftSubjects([{ shotId: candidate.candidateId, candidate }], 'unused')
+    plan.shots[0].anchorIds = ['editorial']
+    plan.shots[0].promptSegments = [{ key: 'subject', start: 0, end: 3 }]
+    const f = await fixture({ workbenchDocuments: [document], activeDocumentId: document.id, storyboardDesignsByDocumentId: { [document.id]: [{ id: designId, documentId: document.id, title: 'Plan', plan, committed: false, status: 'draft', sourceDocumentUpdatedAt: document.updatedAt, createdAt: 1, updatedAt: 1 }] } })
+    const first = createWebProductionHost()
+    try {
+      const run = first.runtime.repository.createGenerationDraft({ projectId: f.project.id, operationId: designId, origin: { host: 'nomi', sourceDocument: { documentId: document.id, revision: pin.revision, contentHash: pin.contentHash } }, candidate })
+      first.runtime.repository.execute(f.project.id, designId, { commandId: 'pin-source', expectedRevision: run.revision, type: 'generation.source_storyboard.pin', payload: { contentHash: sourceStoryboardHash(plan) }, issuedAt: new Date().toISOString() })
+    } finally { first.runtime.dispose() }
+    const restored = createWebProductionHost()
+    try {
+      const lease = await restored.forSurface(f.surface).leaseFor(f.selected)
+      await expect(restored.runtime.planning({ capability: 'present', lease, params: { operationId: designId } })).resolves.toMatchObject({ nextAction: 'await_user' })
+      const record = readProject(f.project.id)!, payload = projectCanvas(record)
+      await saveProject(f.project.id, { ...record, expectedBinding: f.agentBinding, payload: { ...payload, storyboardDesignsByDocumentId: { ...payload.storyboardDesignsByDocumentId, [document.id]: payload.storyboardDesignsByDocumentId[document.id].map(design => ({ ...design, plan: { ...design.plan, title: 'Changed while server restarted' } })) } } })
+      await expect(restored.runtime.planning({ capability: 'present', lease, params: { operationId: designId } })).rejects.toThrow('storyboard_content_conflict')
+    } finally { restored.runtime.dispose() }
+  })
+
   it('keeps an approved card edit aligned with its source author plan through the same operation writer', async () => {
     const document = createDefaultWorkbenchDocument(), pin = documentSessionState(document), designId = 'source-card-edit'
     const candidate = { candidateId: 'candidate', revision: 1, moduleId: 'generation.single-shot', providerId: 'comfyui:test', modelId: 'model', mode: 'text_to_image', prompt: 'Fox', parameters: {}, references: [] }
@@ -87,11 +123,58 @@ describe('actual web production host integration', () => {
     const f = await fixture({ workbenchDocuments: [document], activeDocumentId: document.id, storyboardDesignsByDocumentId: { [document.id]: [{ id: designId, documentId: document.id, title: 'Plan', plan, committed: false, status: 'draft', sourceDocumentUpdatedAt: document.updatedAt, createdAt: 1, updatedAt: 1 }] } }), host = createWebProductionHost()
     try {
       const run = host.runtime.repository.createGenerationDraft({ projectId: f.project.id, operationId: designId, origin: { host: 'nomi', sourceDocument: { documentId: document.id, revision: pin.revision, contentHash: pin.contentHash } }, candidate })
-      await host.runtime.operations.revise!(f.project.id, designId, { expectedRevision: run.revision, patch: { prompt: 'A lantern', parameters: { seed: 123 } } }, new Date().toISOString())
+      const edited = await host.runtime.operations.revise!(f.project.id, designId, { expectedRevision: run.revision, patch: { prompt: 'A lantern', parameters: { seed: 123 } } }, new Date().toISOString())
+      expect(edited.runRevision).toBe(host.runtime.repository.read(f.project.id, designId)!.revision)
+      const second = await host.runtime.operations.revise!(f.project.id, designId, { expectedRevision: edited.runRevision, patch: { prompt: 'A lantern' } }, new Date().toISOString())
+      expect(second.runRevision).toBe(host.runtime.repository.read(f.project.id, designId)!.revision)
+      const patched = await host.runtime.operations.patch(f.project.id, designId, { prompt: 'A glowing lantern' }, new Date().toISOString())
+      expect(patched.runRevision).toBe(host.runtime.repository.read(f.project.id, designId)!.revision)
+      await host.runtime.operations.revise!(f.project.id, designId, { expectedRevision: patched.runRevision, patch: { prompt: 'A lantern' } }, new Date().toISOString())
       const saved = projectCanvas(readProject(f.project.id)!).storyboardDesignsByDocumentId[document.id][0].plan.shots[0]
       expect(saved).toMatchObject({ prompt: 'A lantern', params: { seed: 123 } })
       expect(host.runtime.repository.read(f.project.id, designId)!.generationPlan!.candidate).toMatchObject({ prompt: 'A lantern', parameters: { seed: 123 } })
       const scope = host.forSurface(f.surface), lease = await scope.leaseFor(f.selected)
+      await expect(host.runtime.planning({ capability: 'present', lease, params: { operationId: designId } })).resolves.toMatchObject({ nextAction: 'await_user' })
+    } finally { host.runtime.dispose() }
+  })
+
+  it('normalizes source multi-shot parameters using real author row identity and atomic top mirrors', async () => {
+    const document = createDefaultWorkbenchDocument(), pin = documentSessionState(document), designId = 'multi-row-normalization'
+    const candidate = { candidateId: 'cand-shot-1', revision: 1, moduleId: 'generation.single-shot', providerId: 'comfyui:test', modelId: 'model', mode: 'text_to_image', prompt: 'Lantern', parameters: { duration: 5.167 }, references: [] }
+    const shots = [{ shotId: 'shot-1', candidate }]
+    const plan = storyboardPlanFromDraftSubjects(shots, 'unused')
+    const f = await fixture({ workbenchDocuments: [document], activeDocumentId: document.id, storyboardDesignsByDocumentId: { [document.id]: [{ id: designId, documentId: document.id, title: 'Plan', plan, committed: false, status: 'draft', sourceDocumentUpdatedAt: document.updatedAt, createdAt: 1, updatedAt: 1 }] } }), host = createWebProductionHost()
+    try {
+      host.runtime.repository.createGenerationDraft({ projectId: f.project.id, operationId: designId, origin: { host: 'nomi', sourceDocument: { documentId: document.id, revision: pin.revision, contentHash: pin.contentHash } }, candidate, shots })
+      const changed = await host.runtime.operations.patch(f.project.id, designId, { parameters: {} }, new Date().toISOString())
+      expect(changed.candidate).toEqual(changed.shots![0].candidate)
+      expect(changed.shots![0].candidate.parameters).toEqual({})
+      const sourcePlan = projectCanvas(readProject(f.project.id)!).storyboardDesignsByDocumentId[document.id][0].plan
+      expect(sourcePlan.shots[0]).toMatchObject({ shotId: 'shot-1', params: {} })
+      const lease = await host.forSurface(f.surface).leaseFor(f.selected)
+      await expect(host.runtime.planning({ capability: 'present', lease, params: { operationId: designId } })).resolves.toMatchObject({ nextAction: 'await_user' })
+    } finally { host.runtime.dispose() }
+  })
+
+  it('keeps author metadata only in the project when source operations are patched or revised from another view', async () => {
+    const document = createDefaultWorkbenchDocument(), pin = documentSessionState(document), designId = 'multi-row-normalization'
+    const candidate = { candidateId: 'cand-shot-1', revision: 1, moduleId: 'generation.single-shot', providerId: 'comfyui:test', modelId: 'model', mode: 'text_to_image', prompt: 'Lantern', parameters: { duration: 5.167 }, references: [] }
+    const shots = [{ shotId: 'shot-1', candidate }]
+    const plan = storyboardPlanFromDraftSubjects(shots, 'unused')
+    const f = await fixture({ workbenchDocuments: [document], activeDocumentId: document.id, storyboardDesignsByDocumentId: { [document.id]: [{ id: designId, documentId: document.id, title: 'Plan', plan, committed: false, status: 'draft', sourceDocumentUpdatedAt: document.updatedAt, createdAt: 1, updatedAt: 1 }] } }), host = createWebProductionHost()
+    try {
+      host.runtime.repository.createGenerationDraft({ projectId: f.project.id, operationId: designId, origin: { host: 'nomi', sourceDocument: { documentId: document.id, revision: pin.revision, contentHash: pin.contentHash } }, candidate, shots })
+      const author = { anchorIds: [], promptSegments: [{ key: 'segment-1', start: 0, end: 1 }] }
+      const changed = await host.runtime.operations.patch(f.project.id, designId, { parameters: {}, storyboard: author }, new Date().toISOString())
+      expect(changed.candidate.storyboard).toBeUndefined()
+      const revised = await host.runtime.operations.revise!(f.project.id, designId, { expectedRevision: changed.runRevision, patch: { storyboard: author } }, new Date().toISOString())
+      expect(revised.candidate.storyboard).toBeUndefined()
+      expect(revised.shots![0].candidate.storyboard).toBeUndefined()
+      expect(changed.candidate).toEqual(changed.shots![0].candidate)
+      expect(changed.shots![0].candidate.parameters).toEqual({})
+      const sourcePlan = projectCanvas(readProject(f.project.id)!).storyboardDesignsByDocumentId[document.id][0].plan
+      expect(sourcePlan.shots[0]).toMatchObject({ shotId: 'shot-1', params: {}, promptSegments: author.promptSegments })
+      const lease = await host.forSurface(f.surface).leaseFor(f.selected)
       await expect(host.runtime.planning({ capability: 'present', lease, params: { operationId: designId } })).resolves.toMatchObject({ nextAction: 'await_user' })
     } finally { host.runtime.dispose() }
   })

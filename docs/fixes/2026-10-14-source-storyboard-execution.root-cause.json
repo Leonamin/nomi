@@ -1,0 +1,402 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-14-source-storyboard-execution",
+  "problem_type": "Author-body reconstruction loses execution-equivalent fields",
+  "symptom": "A source storyboard with prompt segments or a ready keyframe cannot reach canonical approval",
+  "direct_cause": "Guard reconstructs author fields from candidate, although candidate intentionally does not retain them; post-author pin writes also increment Run revision after the original operation result is captured; model-facing string-only references erase first/last roles and conflicting author references are checked after creating Run; stored normalization patches top alias separately and assumes candidateId is author row shotId; spend card default video catalog query excludes image_to_video-only models, and transient node projection drops custom capability metadata; editor compares normalized stored JSON against raw Tiptap serialization, so omitted empty content arrays spuriously mint a source revision",
+  "class_root": "Semantic projection discards execution intent, and author validation occurs after durable creation",
+  "affected_population": [
+    "Web source-authored advanced storyboard drafts",
+    "Desktop and web durable multi-shot draft normalization and mirror edits"
+  ],
+  "scope_paths": [
+    "web/productionHost.ts",
+    "web/productionRuntime.ts",
+    "electron/productionRun/productionRunTypes.ts",
+    "electron/productionRun/productionRunReducer.ts",
+    "web/sourceStoryboardExecution.ts",
+    "electron/capabilityCore/mcpGenerationTools.ts",
+    "electron/shared/agentCapabilities/generationPlanSchemas.ts",
+    "electron/shared/agentCapabilities/verbs/writeVerbs.ts",
+    "electron/shared/agentCapabilities/verbs/draftShotsProjection.ts",
+    "electron/shared/storyboard/storyboardSubjectAdapter.ts",
+    "electron/capabilityCore/generationPlanPatch.ts",
+    "electron/productionRun/productionGenerationPlanEdits.ts",
+    "electron/shared/generationCandidateOwner.ts",
+    "electron/capabilityCore/mcpGenerationOperationMemoryStore.ts",
+    "electron/productionRun/productionGenerationOperationStore.ts",
+    "src/workbench/ai/v4/useAgentPanelSpendConfirm.ts",
+    "src/workbench/ai/v4/spendCardDraft.ts",
+    "electron/catalog/comfyuiWorkflowCapabilities.ts",
+    "electron/catalog/comfyuiWorkflowImport.ts",
+    "electron/shared/imageCapabilities/comfyWorkflowInputRoles.ts",
+    "src/workbench/creation/WorkbenchEditor.tsx",
+    "src/workbench/project/documentSessionCore.ts",
+    "web/comfyuiProductionProvider.ts",
+    "electron/catalog/comfyuiLocal.ts",
+    "electron/capabilityCore/productionReferenceUrls.ts",
+    "electron/productionRun/productionRunRepository.ts"
+  ],
+  "entry_points": [
+    "semantic planning",
+    "canonical approval authorization",
+    "source card revision"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "Source author ownership and execution projection are repository domain contracts",
+  "invariants": [
+    "Author body has one project owner",
+    "Persist derived full author digest separately from compiler execution projection",
+    "Enabled keyframe requires explicit approved ready first_frame dependency before video submission",
+    "Every create, patch and revise result reflects the revision after its source author pin is durable",
+    "Model references preserve role/kind at one outer boundary and host consumers receive only canonical object references",
+    "Validate source author plan before creating any durable Run",
+    "A multi-shot top candidate is a uniquely identified shot mirror; normalization patches each real row once and updates its mirror atomically",
+    "Approval cards resolve the quoted model across all published modes and retain only its normalized custom capability contract",
+    "Submitted multi-shot revisions must explicitly name a shot",
+    "Capability derivation preserves importer canonical frame-role keys without guessing roles by number or workflow/vendor name",
+    "Editor hydration and schema serialization compare raw full JSON with only empty node-child arrays canonicalized before minting a new document revision; real text/marks/attrs edits still advance revision"
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpGenerationTools.ts",
+      "symbol": "assertDocumentOperation"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionRuntime.ts",
+      "symbol": "assertDocumentOperation"
+    },
+    {
+      "kind": "read",
+      "path": "web/productionHost.ts",
+      "symbol": "sourceStoryboardHash"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionHost.ts",
+      "symbol": "sourceStoryboardHash"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpGenerationTools.ts",
+      "symbol": "saveDocumentPlan"
+    },
+    {
+      "kind": "write",
+      "path": "electron/shared/agentCapabilities/verbs/draftShotsProjection.ts",
+      "symbol": "semanticsOf"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpGenerationTools.ts",
+      "symbol": "storyboardPlanFromDraftSubjects"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionHost.ts",
+      "symbol": "storyboardPlanFromDraftSubjects"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpGenerationTools.ts",
+      "symbol": "normalizeStoredDraft"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionGenerationPlanEdits.ts",
+      "symbol": "applyGenerationCandidatePatch"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionRunReducer.ts",
+      "symbol": "applyGenerationCandidatePatch"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/generationPlanPatch.ts",
+      "symbol": "generationCandidateOwnerShot"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpGenerationOperationMemoryStore.ts",
+      "symbol": "generationCandidateOwnerShot"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionGenerationPlanEdits.ts",
+      "symbol": "generationCandidateOwnerShot"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionRuntime.ts",
+      "symbol": "generationCandidateOwnerShot"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/ai/v4/useAgentPanelSpendConfirm.ts",
+      "symbol": "projectSpendNode"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/comfyuiWorkflowCapabilityMigration.ts",
+      "symbol": "comfyWorkflowCapability"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/comfyuiWorkflowImport.ts",
+      "symbol": "comfyWorkflowCapability"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/creation/WorkbenchEditor.tsx",
+      "symbol": "applyEditorDocumentContentChange"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/productionReferenceUrls.ts",
+      "symbol": "buildViewUrl"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/comfyuiLocal.ts",
+      "symbol": "buildViewUrl"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/productionReferenceUrls.ts",
+      "symbol": "comfyInputName"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/comfyuiLocal.ts",
+      "symbol": "comfyInputName"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/agentPanelSpendConfirmTestUtils.ts",
+      "symbol": "createGenerationDraft"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunRepository.ts",
+      "symbol": "createGenerationDraft"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunService.ts",
+      "symbol": "createGenerationDraft"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionGenerationOperationStore.ts",
+      "symbol": "createGenerationDraft"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionRunService.ts",
+      "symbol": "createGenerationDraft"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionRunReducer.ts",
+      "symbol": "applyGenerationRevise"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpGenerationOperationMemoryStore.ts",
+      "symbol": "assertSourceExecutionCandidateOwnership"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionRunReducer.ts",
+      "symbol": "assertSourceExecutionCandidateOwnership"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionRunRepository.ts",
+      "symbol": "assertSourceExecutionCandidateOwnership"
+    }
+  ],
+  "door_reduction": {
+    "before": 32,
+    "after": 32,
+    "why_not": "Semantic admission and authorization recheck have different lifetimes but share one assertion. Derived digest adds original author read and durable pin write; saveDocumentPlan is the sole source create boundary and its caller must read the resulting durable revision. Comfy view URLs are produced for approved inputs and generated outputs; only the provider adapter lowers validated input receipts, while output URLs retain HTTP preview semantics. Durable create, patch and revise preserve their separate lifecycle guards and converge on the same source candidate ownership assertion."
+  },
+  "generality_proof": "Same compiler and persistent digest protect every semantic operation and browser confirmation across restart",
+  "shared_boundaries": [
+    {
+      "path": "web/productionHost.ts",
+      "symbol": "assertDocumentOperation",
+      "responsibility": "Fresh author digest and compiler candidate equality"
+    },
+    {
+      "path": "web/productionRuntime.ts",
+      "symbol": "readAfterSourceWrite",
+      "responsibility": "Return current durable operation after card author write and digest pin"
+    },
+    {
+      "path": "electron/capabilityCore/mcpGenerationTools.ts",
+      "symbol": "saveDocumentPlan",
+      "responsibility": "Source create must finish author write before reading its returned durable revision"
+    },
+    {
+      "path": "electron/shared/agentCapabilities/verbs/draftShotsProjection.ts",
+      "symbol": "semanticsOf",
+      "responsibility": "Normalize legacy reference IDs once while retaining role and kind"
+    },
+    {
+      "path": "electron/capabilityCore/mcpGenerationTools.ts",
+      "symbol": "prepareDocumentPlan",
+      "responsibility": "Validate author projection before durable generation draft creation"
+    },
+    {
+      "path": "electron/shared/generationCandidateOwner.ts",
+      "symbol": "generationCandidateOwnerShot",
+      "responsibility": "Resolve author row by unique candidate identity, rejecting missing or ambiguous ownership"
+    },
+    {
+      "path": "src/workbench/ai/v4/spendCardDraft.ts",
+      "symbol": "projectSpendNode",
+      "responsibility": "Project quoted model normalized custom capability metadata before filling approval reference slots"
+    },
+    {
+      "path": "electron/catalog/comfyuiWorkflowCapabilities.ts",
+      "symbol": "comfyWorkflowCapability",
+      "responsibility": "Preserve importer canonical first/last input role keys when deriving model capability slots"
+    },
+    {
+      "path": "src/workbench/project/documentSessionCore.ts",
+      "symbol": "applyEditorDocumentContentChange",
+      "responsibility": "Compare full raw editor JSON with only empty node child arrays canonicalized before minting a source revision; preserve real formatting changes"
+    },
+    {
+      "path": "electron/catalog/comfyuiLocal.ts",
+      "symbol": "comfyInputNameFromViewUrl",
+      "responsibility": "Validate authorized input snapshot identity against selected provider and lower it to Comfy input filename before request sealing."
+    },
+    {
+      "path": "electron/catalog/comfyuiLocal.ts",
+      "symbol": "comfyInputName",
+      "responsibility": "Own upload receipt and snapshot filename/subfolder/type validation once."
+    },
+    {
+      "path": "electron/shared/storyboard/storyboardSubjectAdapter.ts",
+      "symbol": "assertSourceExecutionCandidateOwnership",
+      "responsibility": "Prevent a source-backed execution candidate from persisting project-owned author metadata, while preserving all other execution fields."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "electron/capabilityCore/mcpGenerationTools.ts",
+      "entry_point": "planning",
+      "disposition": "enforced",
+      "evidence": "assertDocumentOperation callback"
+    },
+    {
+      "path": "web/productionRuntime.ts",
+      "entry_point": "prepareAuthorization",
+      "disposition": "enforced",
+      "evidence": "assertSource before approval and assertCurrent"
+    },
+    {
+      "path": "web/comfyuiProductionProvider.ts",
+      "entry_point": "requestFor",
+      "disposition": "enforced",
+      "evidence": "First/last and generic references share the same upload receipt lowering; HTTP snapshots previously reached LoadImage unchanged."
+    },
+    {
+      "path": "web/productionRuntime.ts",
+      "entry_point": "syncDocumentPatch",
+      "disposition": "enforced",
+      "evidence": "Source operation patches can arrive from document or generation active view; after canonical source sync only execution fields reach the store."
+    },
+    {
+      "path": "electron/agentLane/laneDesktopTasks.test.ts",
+      "entry_point": "applyProductionCommand",
+      "disposition": "not-affected",
+      "evidence": "Legacy/missing-origin non-source task records preserve original artifact review and generation patch guards; source ownership precheck only applies to records with an explicit sourceDocument binding. Red log /tmp/nomi-source-origin-red.log."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Any richer authored field absent from candidate reproduces",
+    "same_class_scan": [
+      "door-map assertDocumentOperation",
+      "storyboardRowActions and compileShotOutbound callers"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "web/productionHost.ts",
+    "invariant": "Fresh whole author digest plus compiler execution equivalence",
+    "failure_mode": "Conflict or missing first_frame refuses submission",
+    "exception_policy": "none",
+    "strategy": "Separate content freshness from execution projection",
+    "artifacts": [
+      "web/productionHost.ts",
+      "web/sourceStoryboardExecution.ts",
+      "web/comfyuiProductionProvider.ts",
+      "electron/catalog/comfyuiLocal.ts",
+      "electron/productionRun/productionRunRepository.ts",
+      "electron/capabilityCore/mcpGenerationOperationMemoryStore.ts",
+      "electron/shared/storyboard/storyboardSubjectAdapter.ts"
+    ]
+  },
+  "regression_tests": [
+    "web/sourceStoryboardExecution.test.ts",
+    "web/productionHost.test.ts",
+    "electron/capabilityCore/mcpGenerationTools.test.ts",
+    "electron/shared/agentCapabilities/verbs/draftShotsProjection.test.ts",
+    "electron/capabilityCore/anchorsOnlyDraftIsAllowed.test.ts",
+    "electron/shared/agentCapabilities/malformedJsonArgument.test.ts",
+    "electron/capabilityCore/generationPlanPatch.test.ts",
+    "src/workbench/ai/v4/spendCardReferences.test.ts",
+    "electron/catalog/comfyuiWorkflowCapabilities.test.ts",
+    "src/workbench/project/documentSessionCore.test.ts",
+    "web/comfyuiProductionProvider.test.ts",
+    "electron/productionRun/legacyEditorialRecord.test.ts"
+  ],
+  "class_regression_tests": [
+    "web/sourceStoryboardExecution.test.ts",
+    "web/productionHost.test.ts",
+    "electron/capabilityCore/mcpGenerationTools.test.ts",
+    "electron/shared/agentCapabilities/verbs/draftShotsProjection.test.ts",
+    "electron/capabilityCore/anchorsOnlyDraftIsAllowed.test.ts",
+    "electron/shared/agentCapabilities/malformedJsonArgument.test.ts",
+    "electron/capabilityCore/generationPlanPatch.test.ts",
+    "src/workbench/ai/v4/spendCardReferences.test.ts",
+    "electron/catalog/comfyuiWorkflowCapabilities.test.ts",
+    "src/workbench/project/documentSessionCore.test.ts",
+    "web/comfyuiProductionProvider.test.ts",
+    "electron/productionRun/legacyEditorialRecord.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "web/productionHost.ts"
+    ],
+    "rationale": "Replaces strict reconstruction for newly pinned plans; old unpinned snapshots remain conservatively limited"
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "Internal domain compiler and run reducer own invariant",
+    "exit_criteria": []
+  },
+  "migration": "Legacy string asset IDs normalize once to object inputs; typed reference role/kind is now optional on the model face. Host contentHash/version remain server-owned. New authored upserts pin digest; missing-pin legacy remains conservative. Source plans precompile before Run creation; return reads follow author writes. The intentional draft_shots model-face baseline changed for this supported input expansion and concise guidance, with MCP ceiling unchanged. Existing explicit capability contracts are not rewritten. Re-save the original imported workflow through its owning UI to derive corrected role slots.",
+  "residual_risks": [
+    "Actual GPU keyframe video and browser acceptance belong to coordinator validation",
+    "Legacy workbench normalization outside editor change identity can still discard rich attrs; this narrow fix preserves emitted content and does not change explicit document writes.",
+    "Existing QA duplicated candidate.storyboard records remain readable and preserved; source editing requires a fresh canonical draft, not silent author metadata deletion."
+  ],
+  "detected_by": "review",
+  "recurrence_check_on": "2027-01-14",
+  "invariant_owner_layer": {
+    "layer": "web",
+    "tests": [
+      "web/sourceStoryboardExecution.test.ts",
+      "web/productionHost.test.ts"
+    ]
+  }
+}

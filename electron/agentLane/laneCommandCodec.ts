@@ -74,12 +74,12 @@ function parseEntryId(value: unknown): string {
  * 一条「新建对话」就能让会话文件落到项目目录外面，而删除那条对话时同一个名字会跟着走。
  * 长度上限同理——目录名有文件系统上限，超了不是报错而是创建失败。
  */
-const LANE_NAME_SHAPE = /^[A-Za-z0-9一-龥][A-Za-z0-9一-龥 _-]{0,63}$/u;
+const LANE_NAME_SHAPE = /^[\p{L}\p{N}][\p{L}\p{N}\p{M} _-]{0,63}$/u;
 
 function parseLaneName(value: unknown): string {
   if (typeof value !== "string" || !LANE_NAME_SHAPE.test(value)) {
     throw new LaneCommandError(
-      `A lane name must be 1-64 characters of letters, digits, Chinese, space, "_" or "-" (got ${JSON.stringify(value)})`,
+      `A lane name must be 1-64 Unicode characters of letters, numbers, combining marks, space, "_" or "-" (got ${JSON.stringify(value)})`,
     );
   }
   return value;

@@ -1,0 +1,194 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-14-production-reference-http-snapshot",
+  "problem_type": "Provider upload locator mismatches sealed reference snapshot",
+  "symptom": "Browser approval of first/last keyframe video fails Reference URL snapshot does not match authorized assets before GPU submission",
+  "direct_cause": "Web injects no-op localization returning nomi-local URLs; canonical Comfy upload returns an input filename rather than the HTTP URL required by authorization; Comfy upload used original filename with overwrite:true, allowing another reference to mutate a sealed URL; first content-addressing implementation introduced Node-only imports into a shared renderer module, reproduced by actual browser build and unit composer suites",
+  "class_root": "Every production host must localize pinned assets through owning transport and convert successful provider upload receipts to canonical HTTP snapshot URLs before sealing",
+  "affected_population": [
+    "Web and desktop reference-backed ProductionRun approvals",
+    "Same-asset first/last frames and multiple uploaded keyframes"
+  ],
+  "scope_paths": [
+    "web/productionRuntime.ts",
+    "electron/capabilityCore/productionReferenceUrls.ts",
+    "electron/catalog/comfyuiLocal.ts",
+    "electron/catalog/assetLocalization.ts"
+  ],
+  "entry_points": [
+    "Web pending spend approval",
+    "Desktop and MCP production authorization preparation"
+  ],
+  "external_sources": [
+    {
+      "kind": "source-code",
+      "url": "https://github.com/Comfy-Org/ComfyUI/blob/master/server.py",
+      "checked_at": "2026-10-14",
+      "purpose": "Inspected upload/image receipt name/subfolder/type and view HTTP query protocol"
+    }
+  ],
+  "invariants": [
+    "Authorization accepts only HTTP snapshots for exact pinned reference identities",
+    "Provider locators must match actual successful upload receipts",
+    "Web and desktop use the same transport owner before sealing",
+    "Shared Comfy uploads use content-addressed filenames and never overwrite an existing input",
+    "Shared asset localization remains browser-importable and uses standard Web Crypto plus the existing pure MIME extension owner"
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/appIntegration.ts",
+      "symbol": "prepareProductionGenerationAuthorizationWithReferences"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpStdioServer.ts",
+      "symbol": "prepareProductionGenerationAuthorizationWithReferences"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionRuntime.ts",
+      "symbol": "prepareProductionGenerationAuthorizationWithReferences"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/productionReferenceUrls.ts",
+      "symbol": "localizeAssetsForVendor"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/customCallDispatch.ts",
+      "symbol": "localizeAssetsForVendor"
+    },
+    {
+      "kind": "write",
+      "path": "electron/runtime.ts",
+      "symbol": "localizeAssetsForVendor"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/comfyuiLocal.ts",
+      "symbol": "buildViewUrl"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/productionReferenceUrls.ts",
+      "symbol": "buildViewUrl"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/shotVerifyDeps.ts",
+      "symbol": "resolveLocalAsset"
+    },
+    {
+      "kind": "read",
+      "path": "electron/catalog/assetLocalization.ts",
+      "symbol": "resolveLocalAsset"
+    }
+  ],
+  "door_reduction": {
+    "before": 7,
+    "after": 10,
+    "why_not": "Three production host entry points remain adapters to canonical reference owner; generic vendor localization callers and output URL builder remain distinct consumers of existing shared transports."
+  },
+  "generality_proof": "Canonical resolver owns receipt-to-HTTP transformation for every production caller and every admitted upload strategy; only the declared Comfy upload transport can return file locators, and every mapped locator requires its actual input receipt",
+  "shared_boundaries": [
+    {
+      "path": "electron/capabilityCore/productionReferenceUrls.ts",
+      "symbol": "resolveProductionReferenceUrls",
+      "responsibility": "Pin assets, upload through owning transport, and provide sealed HTTP reference URLs"
+    },
+    {
+      "path": "electron/catalog/comfyuiLocal.ts",
+      "symbol": "buildViewUrl",
+      "responsibility": "Canonical Comfy receipt HTTP URL encoding"
+    },
+    {
+      "path": "electron/catalog/assetLocalization.ts",
+      "symbol": "resolveLocalAsset",
+      "responsibility": "Every Comfy upload caller uses content-addressed input names and overwrite:false"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "web/productionRuntime.ts",
+      "entry_point": "prepareAuthorization",
+      "disposition": "enforced",
+      "evidence": "Remove no-op resolver injection and use canonical production authorization default resolver"
+    },
+    {
+      "path": "electron/capabilityCore/appIntegration.ts",
+      "entry_point": "prepareProductionGenerationAuthorizationWithReferences",
+      "disposition": "enforced",
+      "evidence": "Desktop uses same canonical reference URL owner"
+    },
+    {
+      "path": "electron/catalog/customCallDispatch.ts",
+      "entry_point": "localizeAssetsForVendor",
+      "disposition": "not-affected",
+      "evidence": "Ordinary dispatch consumes provider-native uploaded filenames directly and does not seal HTTP authorization snapshots"
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every locally materialized reference and every Comfy filename upload can reproduce snapshot mismatch",
+    "same_class_scan": [
+      "door-map resolveProductionReferenceUrls roots=electron,web",
+      "door-map localizeAssetsForVendor roots=electron,web",
+      "door-map buildViewUrl roots=electron,web",
+      "door-map prepareProductionGenerationAuthorizationWithReferences roots=electron,web",
+      "Actual build:web red createHash not exported by __vite-browser-external plus seven browser composer failures preserved in QA build-web-final.log/full-test-final.log"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "electron/capabilityCore/productionReferenceUrls.ts",
+    "invariant": "Only HTTP URLs from matching real upload receipts or original HTTP transport outputs cross into production seal",
+    "failure_mode": "Malformed or unmatched provider file locators reject before paid submission",
+    "exception_policy": "none",
+    "strategy": "Reuse asset ingestion, upload IO and canonical Comfy view formatter; delete web no-op bypass",
+    "artifacts": [
+      "electron/capabilityCore/productionReferenceUrls.ts",
+      "electron/catalog/comfyuiLocal.ts",
+      "web/productionRuntime.ts",
+      "electron/catalog/assetLocalization.ts"
+    ]
+  },
+  "regression_tests": [
+    "electron/capabilityCore/productionReferenceTransport.test.ts",
+    "electron/catalog/assetLocalization.test.ts"
+  ],
+  "class_regression_tests": [
+    "electron/capabilityCore/productionReferenceTransport.test.ts",
+    "electron/catalog/assetLocalization.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "web/productionRuntime.ts"
+    ],
+    "rationale": "Remove the callable web no-op localization bypass"
+  },
+  "dependency_lifecycle": {
+    "decision": "retain-with-exit",
+    "current": "Installed ComfyUI upload/image and view protocol",
+    "target": "Same supported upload receipt HTTP protocol",
+    "rationale": "Owning provider transport already reports all required facts; fix application snapshot contract rather than upgrade GPU runtime",
+    "exit_criteria": [
+      "Changed upload receipt or view protocol must fail class tests and require owner adaptation before execution"
+    ]
+  },
+  "migration": "No stored plan migration. Existing failed approval can present a fresh quote and reapprove with exact pinned assets; sealed stale/non-HTTP authorization remains rejected.",
+  "residual_risks": [
+    "Actual browser GPU first/last submission pending coordinator verification",
+    "Renderer build/browser suites must pass after shared Web Crypto correction"
+  ],
+  "detected_by": "review",
+  "recurrence_check_on": "2027-01-14",
+  "invariant_owner_layer": {
+    "layer": "electron/capabilityCore",
+    "tests": [
+      "electron/capabilityCore/productionReferenceTransport.test.ts"
+    ]
+  }
+}

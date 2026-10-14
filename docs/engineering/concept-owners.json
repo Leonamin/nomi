@@ -4104,6 +4104,18 @@
         {
           "path": "web/productionHost.ts",
           "symbol": "createWebProductionHost"
+        },
+        {
+          "path": "web/productionHost.ts",
+          "symbol": "assertDocumentOperation"
+        },
+        {
+          "path": "web/productionRuntime.ts",
+          "symbol": "readAfterSourceWrite"
+        },
+        {
+          "path": "electron/capabilityCore/mcpGenerationTools.ts",
+          "symbol": "saveDocumentPlan"
         }
       ],
       "forbidden_derivations": [],
@@ -4180,6 +4192,420 @@
       ],
       "since": "2026-10-14",
       "notes": "Restored existing Nomi domain ownership across the web host. No parallel production writer or guessed capability identity."
+    },
+    {
+      "name": "생성 모델 입력 언어",
+      "subject": "generation.prompt-language",
+      "lifecycle": "execution",
+      "authority_kind": "writer",
+      "trust_domain": "shared",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "electron/shared/agentCapabilities/generationPromptGuidance.ts",
+        "symbol": "GENERATION_PROMPT_LANGUAGE_GUIDELINE"
+      },
+      "write_api": [
+        {
+          "path": "electron/shared/agentCapabilities/generationPromptGuidance.ts",
+          "symbol": "GENERATION_PROMPT_LANGUAGE_GUIDELINE"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "electron/shared/agentCapabilities/canvasWrite.ts",
+        "electron/shared/agentCapabilities/verbs/writeVerbs.ts",
+        "electron/harness/context/agentContext.ts"
+      ],
+      "since": "2026-10-14",
+      "notes": "Own the existing execution boundary and preserve creator source and explicit approval. Runtime and model facts come from their owning systems."
+    },
+    {
+      "name": "프롬프트 번역 방향",
+      "subject": "prompt.translation-direction",
+      "lifecycle": "execution",
+      "authority_kind": "writer",
+      "trust_domain": "renderer",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "src/workbench/generationCanvas/nodes/promptTranslate.ts",
+        "symbol": "detectTranslateDirection"
+      },
+      "write_api": [
+        {
+          "path": "src/workbench/generationCanvas/nodes/promptTranslate.ts",
+          "symbol": "detectTranslateDirection"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "src/workbench/generationCanvas/nodes/promptTranslate.ts"
+      ],
+      "since": "2026-10-14",
+      "notes": "Own the existing execution boundary and preserve creator source and explicit approval. Runtime and model facts come from their owning systems."
+    },
+    {
+      "name": "네이티브 에이전트 실행 경계",
+      "subject": "web.native-agent-runtime",
+      "lifecycle": "execution",
+      "authority_kind": "writer",
+      "trust_domain": "main",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "web/agentProcess.ts",
+        "symbol": "runNativeAgent"
+      },
+      "write_api": [
+        {
+          "path": "web/agentProcess.ts",
+          "symbol": "runNativeAgent"
+        },
+        {
+          "path": "web/agentProcess.ts",
+          "symbol": "nativeAgentExecutable"
+        },
+        {
+          "path": "web/agentProcess.ts",
+          "symbol": "assertOpenCodeCapabilities"
+        },
+        {
+          "path": "web/agentProcess.ts",
+          "symbol": "startOpenCodeServer"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "web/agentLanes.ts",
+        "web/agentProcess.ts"
+      ],
+      "since": "2026-10-14",
+      "notes": "Own the existing execution boundary and preserve creator source and explicit approval. Runtime and model facts come from their owning systems."
+    },
+    {
+      "name": "웹 에이전트 엔진 선택",
+      "subject": "web.agent-engine-selection",
+      "lifecycle": "execution",
+      "authority_kind": "writer",
+      "trust_domain": "main",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "web/agentLanes.ts",
+        "symbol": "WebAgentLanes"
+      },
+      "write_api": [
+        {
+          "path": "web/agentLanes.ts",
+          "symbol": "WebAgentLanes"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "web/agentLanes.ts"
+      ],
+      "since": "2026-10-14",
+      "notes": "Own the shared admission boundary for creator state and preserve canonical execution ownership."
+    },
+    {
+      "name": "웹 모델 선택 수명",
+      "subject": "agent-panel.web-model-selection",
+      "lifecycle": "execution",
+      "authority_kind": "writer",
+      "trust_domain": "renderer",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "src/workbench/ai/v4/useAgentPanelV4Data.ts",
+        "symbol": "applyWebAgentSelection"
+      },
+      "write_api": [
+        {
+          "path": "src/workbench/ai/v4/useAgentPanelV4Data.ts",
+          "symbol": "applyWebAgentSelection"
+        },
+        {
+          "path": "src/workbench/ai/v4/useAgentPanelV4Data.ts",
+          "symbol": "useAgentPanelV4Data"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "src/workbench/ai/v4/useAgentPanelV4Data.ts"
+      ],
+      "since": "2026-10-14",
+      "notes": "Own the shared admission boundary for creator state and preserve canonical execution ownership."
+    },
+    {
+      "name": "생성 참조 입력 투영",
+      "subject": "generation.reference-input-projection",
+      "lifecycle": "execution",
+      "authority_kind": "writer",
+      "trust_domain": "shared",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "electron/shared/agentCapabilities/verbs/draftShotsProjection.ts",
+        "symbol": "semanticsOf"
+      },
+      "write_api": [
+        {
+          "path": "electron/shared/agentCapabilities/verbs/draftShotsProjection.ts",
+          "symbol": "semanticsOf"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "electron/shared/agentCapabilities/verbs/draftShotsProjection.ts"
+      ],
+      "since": "2026-10-14",
+      "notes": "Own the shared admission boundary for creator state and preserve canonical execution ownership."
+    },
+    {
+      "name": "생성 원문 초안 검증",
+      "subject": "generation.source-plan-admission",
+      "lifecycle": "execution",
+      "authority_kind": "writer",
+      "trust_domain": "main",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "electron/capabilityCore/mcpGenerationTools.ts",
+        "symbol": "prepareDocumentPlan"
+      },
+      "write_api": [
+        {
+          "path": "electron/capabilityCore/mcpGenerationTools.ts",
+          "symbol": "prepareDocumentPlan"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "electron/capabilityCore/mcpGenerationTools.ts"
+      ],
+      "since": "2026-10-14",
+      "notes": "Own the shared admission boundary for creator state and preserve canonical execution ownership."
+    },
+    {
+      "name": "생성 후보 원문 행 소유권",
+      "subject": "generation.candidate-row-owner",
+      "lifecycle": "execution",
+      "authority_kind": "writer",
+      "trust_domain": "shared",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "electron/shared/generationCandidateOwner.ts",
+        "symbol": "generationCandidateOwnerShot"
+      },
+      "write_api": [
+        {
+          "path": "electron/shared/generationCandidateOwner.ts",
+          "symbol": "generationCandidateOwnerShot"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "electron/capabilityCore/mcpGenerationTools.ts",
+        "electron/capabilityCore/mcpGenerationOperationMemoryStore.ts",
+        "electron/productionRun/productionGenerationPlanEdits.ts",
+        "web/productionRuntime.ts"
+      ],
+      "since": "2026-10-14",
+      "notes": "Own the shared admission boundary for creator state and preserve canonical execution ownership."
+    },
+    {
+      "name": "대화 이름 입력 검증",
+      "subject": "agent-lane.name-admission",
+      "lifecycle": "execution",
+      "authority_kind": "writer",
+      "trust_domain": "main",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "electron/agentLane/laneCommandCodec.ts",
+        "symbol": "parseLaneName"
+      },
+      "write_api": [
+        {
+          "path": "electron/agentLane/laneCommandCodec.ts",
+          "symbol": "parseLaneName"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "electron/agentLane/laneCommandCodec.ts"
+      ],
+      "since": "2026-10-14",
+      "notes": "Own the shared admission boundary for creator state and preserve canonical execution ownership."
+    },
+    {
+      "name": "편집기 문서 내용 쓰기",
+      "subject": "document.editor-content-write",
+      "lifecycle": "execution",
+      "authority_kind": "writer",
+      "trust_domain": "renderer",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "src/workbench/project/documentSessionCore.ts",
+        "symbol": "applyEditorDocumentContentChange"
+      },
+      "write_api": [
+        {
+          "path": "src/workbench/project/documentSessionCore.ts",
+          "symbol": "applyEditorDocumentContentChange"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "src/workbench/creation/WorkbenchEditor.tsx"
+      ],
+      "since": "2026-10-14",
+      "notes": "Normalize full editor JSON at the existing write owner before deciding whether the document revision changes; explicit document writes retain their existing revision contract."
+    },
+    {
+      "name": "생성 참조 URL 봉인",
+      "subject": "generation.reference-url-seal",
+      "lifecycle": "execution",
+      "authority_kind": "writer",
+      "trust_domain": "main",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "electron/capabilityCore/productionReferenceUrls.ts",
+        "symbol": "resolveProductionReferenceUrls"
+      },
+      "write_api": [
+        {
+          "path": "electron/capabilityCore/productionReferenceUrls.ts",
+          "symbol": "resolveProductionReferenceUrls"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "electron/productionRun/prepareProductionGenerationAuthorization.ts"
+      ],
+      "since": "2026-10-14",
+      "notes": "Preserve content-pinned reference bytes through the owning upload and URL encoder before the existing HTTP authorization seal."
+    },
+    {
+      "name": "Comfy 자산 HTTP 주소",
+      "subject": "asset.comfy-view-url",
+      "lifecycle": "execution",
+      "authority_kind": "writer",
+      "trust_domain": "main",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "electron/catalog/comfyuiLocal.ts",
+        "symbol": "buildViewUrl"
+      },
+      "write_api": [
+        {
+          "path": "electron/catalog/comfyuiLocal.ts",
+          "symbol": "buildViewUrl"
+        },
+        {
+          "path": "electron/catalog/comfyuiLocal.ts",
+          "symbol": "comfyInputName"
+        },
+        {
+          "path": "electron/catalog/comfyuiLocal.ts",
+          "symbol": "comfyInputNameFromViewUrl"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "electron/catalog/comfyuiLocal.ts",
+        "electron/capabilityCore/productionReferenceUrls.ts"
+      ],
+      "since": "2026-10-14",
+      "notes": "Preserve content-pinned reference bytes through the owning upload and URL encoder before the existing HTTP authorization seal."
+    },
+    {
+      "name": "로컬 자산 업로드",
+      "subject": "asset.local-ingestion",
+      "lifecycle": "execution",
+      "authority_kind": "writer",
+      "trust_domain": "main",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "electron/catalog/assetLocalization.ts",
+        "symbol": "resolveLocalAsset"
+      },
+      "write_api": [
+        {
+          "path": "electron/catalog/assetLocalization.ts",
+          "symbol": "resolveLocalAsset"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "electron/catalog/assetLocalization.ts"
+      ],
+      "since": "2026-10-14",
+      "notes": "Preserve content-pinned reference bytes through the owning upload and URL encoder before the existing HTTP authorization seal."
+    },
+    {
+      "name": "원문 실행 저작 정보 소유권",
+      "subject": "generation.source-execution-ownership",
+      "lifecycle": "execution",
+      "authority_kind": "writer",
+      "trust_domain": "shared",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "electron/shared/storyboard/storyboardSubjectAdapter.ts",
+        "symbol": "assertSourceExecutionCandidateOwnership"
+      },
+      "write_api": [
+        {
+          "path": "electron/shared/storyboard/storyboardSubjectAdapter.ts",
+          "symbol": "assertSourceExecutionCandidateOwnership"
+        },
+        {
+          "path": "electron/shared/storyboard/storyboardSubjectAdapter.ts",
+          "symbol": "executionPatchAfterSourceSync"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "web/sourceStoryboardExecution.ts",
+        "web/productionHost.ts",
+        "electron/productionRun/productionRunRepository.ts",
+        "electron/productionRun/productionRunReducer.ts"
+      ],
+      "since": "2026-10-14",
+      "notes": "Canonical project plans own authored storyboard fields; source-backed durable execution records admit derived identity without duplicate author metadata."
+    },
+    {
+      "name": "저장된 소재 미리보기 DTO",
+      "subject": "assets.stored-preview-transport",
+      "lifecycle": "projection",
+      "authority_kind": "writer",
+      "trust_domain": "main",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "electron/assets/assetPreview.ts",
+        "symbol": "withPreviewFields"
+      },
+      "write_api": [
+        {
+          "path": "electron/assets/assetPreview.ts",
+          "symbol": "withPreviewFields"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "electron/assets/assetPreview.ts",
+        "electron/assets/projectAssetStore.ts"
+      ],
+      "since": "2026-10-14",
+      "notes": "The existing preview owner derives thumbnail URLs from stored preview metadata before transport; importing and listing share the same DTO admission."
     }
   ]
 }

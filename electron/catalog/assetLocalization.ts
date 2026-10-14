@@ -22,7 +22,7 @@ import {
   parseInlineDataAsset,
   unreachableAssetValueError,
 } from "./assetValueScheme";
-import { contentTypeFromMagicBytes, isMarkupMasquerade, mediaKindFromContentType } from "../assets/mediaTypes";
+import { contentTypeFromMagicBytes, isMarkupMasquerade, mediaKindFromContentType, extensionFromContentType } from "../assets/mediaTypes";
 import { tagNomiError } from "../shared/nomiErrorCodes";
 import { desktopT } from "../desktopStrings";
 import {
@@ -310,15 +310,19 @@ export async function resolveLocalAsset(
   if (!asset) throw new Error(tagNomiError("asset-invalid", `参考素材的本地文件读取失败（可能已被删除或随项目迁移）：${describeAssetValue(localUrl)}。请换一张或重新导入这张素材。`));
   assertLocalAssetMediaBytes(asset);
   // 本地 ComfyUI：LoadImage 只认上传回的 input 目录文件名（非公网 URL），故**跳过下面的 trustedOriginalUrl
-  // 公网 URL 快路**，恒把本地字节 POST 到 /upload/image 换文件名（field 名 "image"、type=input、overwrite 避重名堆积）。
+  // 公网 URL 快路**，恒把本地字节 POST 到 /upload/image；按内容命名且不覆盖，保护已授权参考的字节。
   if (ingestion.strategy === "comfyui-upload") {
+    const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", Uint8Array.from(asset.bytes)));
+    const hash = Array.from(digest, byte => byte.toString(16).padStart(2, "0")).join("");
+    const extension = extensionFromContentType(asset.contentType);
+    if (!extension) throw new Error("ComfyUI reference media type has no canonical extension");
     const response = await postMultipart(
       ingestion.endpoint,
       {}, // 本地服务无鉴权
       asset.bytes,
-      asset.fileName,
+      `nomi-reference-${hash}.${extension}`,
       asset.contentType,
-      { type: "input", overwrite: "true" },
+      { type: "input", overwrite: "false" },
       "image",
     );
     const rec = response && typeof response === "object" ? (response as Record<string, unknown>) : {};

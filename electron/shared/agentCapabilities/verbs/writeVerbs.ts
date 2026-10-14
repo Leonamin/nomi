@@ -1,4 +1,4 @@
-import { storyboardAuthorFieldsSchema } from '../generationPlanSchemas'
+import { storyboardAuthorFieldsSchema, planReferenceInput } from '../generationPlanSchemas'
 // 十三个写动词（设计正本 §5.2）：一个动词一种状态一种效果。执行那一半住 `electron/agentLane/`：常驻的
 // （write_script / 三个画布写 / start_model_setup）在 `laneDocumentTools.ts` / `laneCanvasTools.ts` /
 // `laneDesktopTools.ts` 各自绑定；延迟组的经 `laneVerbTransport.ts` 翻成传输方法，`laneExtendedDesktopPorts.ts` 执行。
@@ -28,33 +28,38 @@ import {
 
 const shotId = z.string().trim().min(1).max(160);
 const generationParameters = z.record(z.union([z.string(), z.number(), z.boolean()]));
+const draftReference = planReferenceInput.schema.omit({ contentHash: true, version: true }).extend({
+  assetId: planReferenceInput.schema.shape.assetId.describe("Project asset id."),
+  kind: planReferenceInput.schema.shape.kind.describe("Media kind."),
+  role: planReferenceInput.schema.shape.role.describe("Reference slot."),
+});
 
 /** 一镜草稿：模型填的是**语义**（提示词/模型/参数/参考），候选身份由宿主按目录合成，与单镜路径同一个解析器。 */
 export const draftShotSchema = z.object({
-  shotId: shotId.optional().describe("Existing shot id to update; omit to create one."),
+  shotId: shotId.optional().describe("Shot id to revise; omit to create."),
   storyboard: storyboardAuthorFieldsSchema.optional().describe("Original author fields; anchors require kind and carrier."),
-  title: z.string().trim().min(1).max(120).optional().describe("Short human title in the user's language, shown on the canvas node and spend card."),
-  prompt: z.string().trim().min(1).max(8_000).optional().describe("Prompt in the user's language. Required for a new shot; when revising (operationId + shotId) send it only to change it."),
+  title: z.string().trim().min(1).max(120).optional().describe("Short title in the user's language for node/card."),
+  prompt: z.string().trim().min(1).max(8_000).optional().describe("English unless profile says otherwise. Required for new shots; omit if unchanged."),
   // 2026-09-30（付费卡① 第 9 条）：种类不再按提示词猜。点名了模型（或 modeId）就由它定；两样都没点名时必须写明。
   // 措辞压到最短：这几句算在 draft_shots 的 schema 预算里（stage3-probe-p5 的 core 785），规矩写一遍在这里，modeId / modelId / 顶层只留指向。
-  taskKind: z.enum(["text_to_image", "image_edit", "text_to_video", "image_to_video"]).optional().describe("What to make. Omit when modelId or modeId decides it; otherwise required."),
-  role: z.enum(["anchor", "shot"]).optional().describe("anchor = a character/scene/style reference card reused by other shots; shot (default) = a numbered shot."),
-  durationSec: z.number().positive().max(600).optional().describe("Clip length in seconds; omit for stills. The only place for length, never parameters."),
-  modelId: z.string().trim().min(1).optional().describe("Catalog model id from list_models; omit for the user's default."),
+  taskKind: z.enum(["text_to_image", "image_edit", "text_to_video", "image_to_video"]).optional().describe("Required unless modelId/modeId decides media kind."),
+  role: z.enum(["anchor", "shot"]).optional().describe("anchor = reference card; shot = numbered shot (default)."),
+  durationSec: z.number().positive().max(600).optional().describe("Seconds; omit for stills. Use here, never parameters."),
+  modelId: z.string().trim().min(1).optional().describe("list_models id; omit for user's default."),
   // 2026-09-22：`taskKind` 与 `modeId` 是同一件事实的两种写法。模式定了，种类就定了
   // （`transportTaskKindForModeId` 从档案扫出来），所以说明书直接告诉模型「写了模式就别再写种类」——
   // 两个都填正是它自己给自己造矛盾的地方（run2 A3/A6 三次）。
-  modeId: z.string().trim().min(1).optional().describe("Mode id from list_models; it decides taskKind."),
+  modeId: z.string().trim().min(1).optional().describe("list_models mode; decides taskKind."),
   candidate: z.object({
-    providerId: z.string().trim().min(1).describe("Provider id from list_models."),
-    modelId: z.string().trim().min(1).describe("Model id from list_models."),
-  }).optional().describe("Catalog candidate identity when known."),
-  parameters: generationParameters.optional().describe("Values the model's profile declares, except length (use durationSec). The host clamps them and reports every clamp."),
+    providerId: z.string().trim().min(1).describe("list_models provider."),
+    modelId: z.string().trim().min(1).describe("list_models model."),
+  }).optional().describe("Known catalog identity."),
+  parameters: generationParameters.optional().describe("Profile values; length uses durationSec. Host reports clamps."),
   // 2026-09-22：这句话原来写着「asset ids …**or shot ids** (from look_at_canvas or this call)」，
   // 而解析这一头（`pinAssetReference`）只认项目素材库里的 assetId——镜头 id 送进来**必然**被拒，
   // 理由还是「不在这个项目的素材库里」（run2 的 A1/A4 各一次，模型照着说明书做的）。
   // 跨镜复用走的是 `storyboard.anchorIds`，不是这里。说明书按真的那份写。
-  references: z.array(z.string().trim().min(1)).max(30).optional().describe("Asset ids from look_at_media. To reuse another shot's look use storyboard.anchorIds, not a shot id."),
+  references: z.array(z.union([z.string().trim().min(1), draftReference])).max(30).optional().describe("Project asset ids or {assetId,kind,role}; frame roles first_frame/last_frame. No storyboard.referenceBindings."),
 }).strict();
 
 /**
@@ -175,19 +180,19 @@ export function writeVerbs(): VerbDeclaration[] {
     name: "draft_shots", profiles: ["internal"], profileReason: "mcpHandwrittenTransport", contractId: "generation.plan", effect: "reversible_local", nextAction: "none", internalGroup: "generation",
     effectGroups: ["canvas-node-creation"],
     describe: {
-      does: "Create or update image, video, audio or 3D shot drafts in the project; document plans are saved without automatic canvas placement.",
-      useWhen: "Whenever the user asks to make, draw, render, regenerate, restyle or re-time any media — including a single image — or to split text into shots, or to change a shot's prompt, model, parameters or references. Pass shotId to update an existing draft; omit it to create.",
-      notWhen: "New drafts do not request generation or show a spend card — call generate for that, unless the user said not to generate yet. Updating an already-presented draft retains its existing approval policy; use the returned result to determine whether that policy started generation. Not for links, groups or layout (arrange_canvas), not for hand-made artifacts (make_artifact), not for staging or camera references (stage_shot).",
-      params: "shots[] each with prompt, optional title, taskKind, durationSec, modelId (or candidate with providerId + modelId, never both for one shot), modeId, parameters, references, role. For anchor role, include storyboard with kind (character/scene/prop/style) and carrier (visual/text); title names the anchor and prompt describes it. Original shot details (anchorIds, keyframe, referenceBindings) also go in storyboard. A top-level candidate or taskKind is the default for shots that omit their own. Model and parameter values come from list_models; reuse operationId and shotId from the current draft result. Two shapes: creating a shot needs prompt; revising one (operationId + shotId) carries only the fields you are changing — prompt, model, modeId, parameters, references — and leaves the rest out, including title and role, which are fixed when the shot is created. The host clamps values to the model's real limits and reports every clamp.",
+      does: "Draft or revise media shots; source plans save to the document without automatic canvas placement.",
+      useWhen: "Make, regenerate or edit media, split text into shots, or revise prompt/model/parameters/references. Use shotId to revise; omit to create.",
+      notWhen: "New drafts need generate for approval; skip it when generation was not requested. Revisions retain prior approval policy; inspect result for execution. Layout uses arrange_canvas; hand-made artifacts make_artifact; staging/camera stage_shot.",
+      params: "shots[]: prompt, title, taskKind, durationSec, modelId OR candidate {providerId,modelId}, modeId, parameters, references, role. Catalog values come from list_models; top-level candidate/taskKind defaults apply only when absent on the shot. Anchor role needs storyboard.kind and carrier; title names it, prompt describes it. Author details (anchorIds, keyframe, referenceBindings) belong in storyboard. Creating needs prompt; revising (operationId + shotId) sends only changed prompt/model/mode/parameters/references/durationSec; title and role stay fixed. The host reports clamps. For keyframe video, generate and review the image first, then use its project asset as references role first_frame before requesting video approval.",
     },
     promptGuidelines: [...READ_GUIDELINES, ...CANVAS_NODE_PROMPT_GUIDELINES],
     schema: z.object({
-      operationId: z.string().trim().min(1).max(160).optional().describe("operationId from an earlier draft_shots call, to update it."),
+      operationId: z.string().trim().min(1).max(160).optional().describe("Earlier draft_shots operationId to revise."),
       taskKind: z.enum(["text_to_image", "image_edit", "text_to_video", "image_to_video"]).optional().describe("Default taskKind for shots that set none."),
       candidate: z.object({
-        providerId: z.string().trim().min(1).describe("Provider id from list_models."),
-        modelId: z.string().trim().min(1).describe("Model id from list_models."),
-      }).optional().describe("Default catalog candidate for these shots."),
+        providerId: z.string().trim().min(1).describe("list_models provider."),
+        modelId: z.string().trim().min(1).describe("list_models model."),
+      }).optional().describe("Default catalog identity."),
       shots: z.array(draftShotSchema).min(1).max(40).describe("The shots to create or update."),
     }).strict().superRefine((value, context) => {
       // `shotId` 只在「改已有草稿」时有意义。少了这条约束，模型发

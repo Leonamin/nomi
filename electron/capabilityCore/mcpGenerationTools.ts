@@ -311,18 +311,25 @@ export function createGenerationPlanningHandler(deps: GenerationPlanningHandlerD
    * duplicated and placed on the canvas by the user. The draft id **is** the plan id, so the
    * id the model holds and the row the user sees are one identity.
    */
+  const prepareDocumentPlan = (
+    projectId: string,
+    origin: Parameters<GenerationPlanningHandler>[0]['origin'],
+    shots: readonly GenerationOperationDraftShot[],
+  ) => {
+    if (!origin?.sourceDocument) return undefined;
+    if (!deps.requestRenderer) throw new Error('storyboard_renderer_required');
+    return storyboardPlanFromDraftSubjects(shots, projectId, deps.resolveStoryboardReferenceUrl);
+  };
   const saveDocumentPlan = async (
     projectId: string,
     origin: Parameters<GenerationPlanningHandler>[0]['origin'],
     designId: string,
-    shots: readonly GenerationOperationDraftShot[],
+    plan: ReturnType<typeof prepareDocumentPlan>,
     target: GenerationInvocationContext['storyboardTarget'],
   ): Promise<StoryboardSavedFact | undefined> => {
     const source = origin?.sourceDocument;
-    if (!source) return undefined;
+    if (!source || !plan) return undefined;
     if (!deps.requestRenderer) throw new Error('storyboard_renderer_required');
-    const plan = storyboardPlanFromDraftSubjects(shots, projectId, deps.resolveStoryboardReferenceUrl);
-    // 谁发起的：只有用户亲手点「拆分镜」（目标上带 openResult）才替他打开；Agent 自己决定建的只入列表。
     const initiator = target?.openResult ? 'user' : 'agent';
     await upsertStoryboardDesign(deps.requestRenderer, { projectId, documentId: source.documentId, designId, plan, initiator });
     return storyboardSavedFact(designId, plan.title, initiator === 'user');
@@ -482,8 +489,11 @@ export function createGenerationPlanningHandler(deps: GenerationPlanningHandlerD
         for (const shot of normalizedShots) admitShotIdentity(shot.candidate, deps.registry, shot.role);
         // 顶层 candidate = 第一个 shot 的 candidate (reducer seal 硬要顶层 contract 匹配顶层 draft candidate,
         // productionRunReducer.ts generation.seal). 与 S4 e2e setup 同构 (top = shots[0]).
-        const operation = await deps.operations.create({ operationId, projectId: input.lease.projectId, candidate: normalizedShots[0].candidate, shots: normalizedShots, now: now(), origin: input.origin, ...(params.cardHidden === true ? { cardHidden: true } : {}) });
-        const savedPlan = await saveDocumentPlan(capturedProjectId, input.origin, operation.operationId, normalizedShots, input.storyboardTarget);
+        const preparedPlan = prepareDocumentPlan(capturedProjectId, input.origin, normalizedShots);
+        const createdOperation = await deps.operations.create({ operationId, projectId: input.lease.projectId, candidate: normalizedShots[0].candidate, shots: normalizedShots, now: now(), origin: input.origin, ...(params.cardHidden === true ? { cardHidden: true } : {}) });
+        const savedPlan = await saveDocumentPlan(capturedProjectId, input.origin, createdOperation.operationId, preparedPlan, input.storyboardTarget);
+        const operation = await deps.operations.read(capturedProjectId, createdOperation.operationId);
+        if (!operation) throw new GenerationOperationNotFoundError();
         // 「这份草稿只有参考卡」是一条**安静提示**，不是一次拒绝（2026-09-22，用户 09-21 点名）。
         // 它照样会生成、照样在报价卡上逐张标价；缺的只是「还没有镜头用到它们」这件事实，
         // 说一句就够——模型据此可以接着补镜头，也可以照用户的意思就停在这里。
@@ -519,9 +529,11 @@ export function createGenerationPlanningHandler(deps: GenerationPlanningHandlerD
       }
       const normalizedSingle = normalizeVideoCandidate(singleCandidate, deps.videoModelCandidates);
       admitShotIdentity(normalizedSingle, deps.registry);
-      const operation = await deps.operations.create({ operationId, projectId: input.lease.projectId, candidate: normalizedSingle, now: now(), origin: input.origin, ...(params.cardHidden === true ? { cardHidden: true } : {}) });
-      const savedSingle = await saveDocumentPlan(capturedProjectId, input.origin, operation.operationId,
-        [{shotId:normalizedSingle.candidateId,candidate:normalizedSingle,storyboard:params.storyboard as GenerationOperationDraftShot['storyboard']}], input.storyboardTarget);
+      const preparedPlan = prepareDocumentPlan(capturedProjectId, input.origin, [{ shotId: normalizedSingle.candidateId, candidate: normalizedSingle, storyboard: params.storyboard as GenerationOperationDraftShot['storyboard'] }]);
+      const createdOperation = await deps.operations.create({ operationId, projectId: input.lease.projectId, candidate: normalizedSingle, now: now(), origin: input.origin, ...(params.cardHidden === true ? { cardHidden: true } : {}) });
+      const savedSingle = await saveDocumentPlan(capturedProjectId, input.origin, createdOperation.operationId, preparedPlan, input.storyboardTarget);
+      const operation = await deps.operations.read(capturedProjectId, createdOperation.operationId);
+      if (!operation) throw new GenerationOperationNotFoundError();
       const singleDeviations = declaredDefaultDeviations([{ params, candidate: normalizedSingle }], deps.defaultModelForTaskKind, input.modelNames);
       return { operation, taskRef: generationTaskReference(operation.operationId), nextAction: "preview",
         ...(savedSingle ? { storyboardSaved: savedSingle } : {}),
