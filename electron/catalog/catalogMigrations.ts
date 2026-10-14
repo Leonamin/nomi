@@ -2,6 +2,7 @@
 import { migrateRelayImageEditProtocols } from "./relayImageEditMigration";
 import { migrateRelayVideoImageToVideo } from "./relayVideoI2vMigration";
 import { migrateComfyWorkflowOutputs } from "./comfyuiWorkflowOutputMigration";
+import { migrateComfyWorkflowCapabilities } from './comfyuiWorkflowCapabilityMigration';
 import { migrateCatalogMediaContracts } from "./catalogMediaContractMigration";
 import { migrateRelayImageEditCapability, migrateRelayParamMaps } from "./relayLegacyMigrations";
 import { migrateVendorFieldLossV13 } from "./vendorFieldLossRepair";
@@ -127,6 +128,11 @@ export function migrateCatalogForward(
   // （判据、以及「为什么是一次性迁移而不是加载时补齐」都在 vendorFieldLossRepair.ts）。
   if (s.version === 12) {
     s = migrateVendorFieldLossV13(s);
+    writeCatalog(s);
+  }
+
+  if (s.version === 13) {
+    s = { ...migrateComfyWorkflowCapabilities(s), version: 14 };
     writeCatalog(s);
   }
 

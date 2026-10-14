@@ -7,6 +7,7 @@ const deps = vi.hoisted(() => ({
   revision: 0,
   hasWebBridge: false,
   webAgentIds: [] as string[],
+  canvasKnowledge: { nodes: {} as Record<string, Record<string, string>>, groups: {} },
   workbenchState: {
     workbenchDocuments: [], activeDocumentId: null as string | null, timeline: null, categories: [],
     storyboardDesignsByDocumentId: {}, persistRevision: 0,
@@ -28,7 +29,7 @@ vi.mock('../workbenchStore', () => ({
     subscribe: (_selector: unknown, listener: () => void) => { deps.workbenchListener = listener; return vi.fn() },
   },
 }))
-vi.mock('../../desktop/bridge', () => ({ getDesktopBridge: () => deps.hasWebBridge ? { web: { appliedAgentNodeIds: () => deps.webAgentIds } } : null }))
+vi.mock('../../desktop/bridge', () => ({ getDesktopBridge: () => deps.hasWebBridge ? { web: { appliedAgentNodeIds: () => deps.webAgentIds, appliedCreationKnowledge: () => ({ documents: {}, designs: {} }), appliedCanvasKnowledge: () => structuredClone(deps.canvasKnowledge) } } : null }))
 vi.mock('../generationCanvas/events/canvasEventEmitter', () => ({
   emitCanvasGesture: vi.fn(), getCanvasEventLastSeq: vi.fn(() => 0), seedCanvasEventLastSeq: vi.fn(),
 }))
@@ -50,11 +51,21 @@ describe('canonical persistence barrier suppresses stale debounce writes', () =>
     deps.saves.length = 0
     deps.revision = 0
     deps.hasWebBridge = false
+    deps.canvasKnowledge = { nodes: {}, groups: {} }
     deps.webAgentIds = []
     Object.assign(globalThis, { window: { addEventListener: vi.fn(), removeEventListener: vi.fn() } })
   })
 
   afterEach(() => vi.useRealTimers())
+
+  it('captures canvas pins before a later polling acknowledgement changes them', () => {
+    deps.hasWebBridge = true
+    deps.canvasKnowledge = { nodes: { shot: { prompt: 'a'.repeat(64) } }, groups: {} }
+    const captured = readCurrentWorkbenchProjectPayload('project')
+    deps.canvasKnowledge.nodes.shot.prompt = 'b'.repeat(64)
+    expect(captured.webAgentSeenCanvas?.nodes.shot.prompt).toBe('a'.repeat(64))
+    expect(readCurrentWorkbenchProjectPayload('project').webAgentSeenCanvas?.nodes.shot.prompt).toBe('b'.repeat(64))
+  })
 
   it('captures agent knowledge with the payload before a queued save waits for another receipt', () => {
     deps.hasWebBridge = true

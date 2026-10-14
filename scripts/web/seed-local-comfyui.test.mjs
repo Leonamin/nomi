@@ -20,7 +20,7 @@ function sourceCatalog(version) {
 }
 
 function runSeed(version) {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nomi-seed-'))
+  const root = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'nomi-seed-')))
   const source = path.join(root, 'source-catalog.json')
   // 真实路径：源目录是只读的，数据目录另开一个。
   fs.writeFileSync(source, JSON.stringify(sourceCatalog(version)))

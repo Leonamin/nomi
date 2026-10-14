@@ -2,6 +2,8 @@ import { logRendererError } from '../../../desktop/rendererLog'
 import { useEffect } from 'react'
 import { getDesktopBridge } from '../../../desktop/bridge'
 import { useGenerationCanvasStore } from '../store/generationCanvasStore'
+import { useWorkbenchStore } from '../../workbenchStore'
+import { stableProjectAgentJson } from '../../../../electron/shared/legacyAgentJson'
 /** Reconnecting views follow the server-owned job; authored canvas edits stay local. */
 export function useWebGenerationSync(projectId: string | null | undefined): void {
   useEffect(() => {
@@ -9,36 +11,28 @@ export function useWebGenerationSync(projectId: string | null | undefined): void
     if (!api || !projectId) return
     let isStopped = false
     let isReading = false
-    const seen = new Set<string>()
     const sync = async () => {
       if (isReading) return
       isReading = true
       try {
-        const snapshot = await api.generationSnapshot(projectId)
+        const [snapshot, creation] = await Promise.all([api.generationSnapshot(projectId), api.creationSnapshot(projectId)])
         if (isStopped) return
-        for (const entry of snapshot) {
-          if (!entry.node || seen.has(entry.key)) continue
-          const current = useGenerationCanvasStore.getState().nodes.find(node => node.id === entry.node!.id)
-          if (!current) {
-            if (entry.node.meta?.isWebAgentCreated === true) {
-              useGenerationCanvasStore.getState().applyEventTail([{ type: 'canvas.node.added', payload: { node: entry.node } }])
-              await api.acknowledgeAgentNodes(projectId, [entry.node.id])
-            } else continue
-          }
-          const node = entry.node
-          const applied = current || node
-          const hasSeenResult = node.result && [applied.result, ...(applied.history ?? [])].some(result => result?.id === node.result?.id)
-          const hasAppliedSameRun = applied.runs?.[0]?.id === node.runs?.[0]?.id
-          if (!entry.isPending && node.status === 'success' && hasSeenResult && applied.status === 'success' && hasAppliedSameRun) { seen.add(entry.key); continue }
-          // Never overwrite a newly authored run with the preceding completed job.
-          if (!entry.isPending && applied.runs?.[0] && node.runs?.[0] && applied.runs[0].startedAt > node.runs[0].startedAt) { seen.add(entry.key); continue }
-          useGenerationCanvasStore.getState().updateNode(node.id, {
-            status: node.status, error: node.error, progress: node.progress, runs: node.runs,
-            result: node.result, history: node.history, size: node.size,
-            meta: { ...applied.meta, ...(node.meta?.isWebGenerationOwned ? { isWebGenerationOwned: true, webJobKey: entry.key } : {}) },
-          }, { history: false })
-          if (!entry.isPending) seen.add(entry.key)
+        const state = useWorkbenchStore.getState()
+        const local = { workbenchDocuments: state.workbenchDocuments, storyboardDesignsByDocumentId: state.storyboardDesignsByDocumentId }
+        const projected = api.projectCreation(local, creation.payload, api.appliedCreationKnowledge(projectId))
+        const json = (value: unknown) => stableProjectAgentJson(JSON.parse(JSON.stringify(value ?? null)))
+        if (json(local.workbenchDocuments) !== json(projected.workbenchDocuments)) state.hydrateWorkbenchDocuments(projected.workbenchDocuments || [], state.activeDocumentId)
+        if (json(local.storyboardDesignsByDocumentId) !== json(projected.storyboardDesignsByDocumentId)) state.hydrateStoryboardDesigns(projected.storyboardDesignsByDocumentId || {})
+        api.acknowledgeCreation(projectId, creation.knowledge)
+        const canvas = useGenerationCanvasStore.getState()
+        const localCanvas = { nodes: canvas.nodes, groups: canvas.groups, edges: canvas.edges }
+        const next = api.projectGenerationCanvas(localCanvas, snapshot.canvas, api.appliedCanvasKnowledge(projectId))
+        if (json(localCanvas) !== json({ nodes: next.nodes, groups: next.groups, edges: next.edges })) {
+          canvas.applyEventTail([{ type: 'canvas.snapshot.restored', payload: { snapshot: next } }])
         }
+        // Acknowledgement occurs only after the exact projection was applied.
+        api.acknowledgeCanvas(projectId, snapshot.knowledge)
+        await api.acknowledgeAgentNodes(projectId, next.nodes.filter(node => node.meta?.isWebAgentCreated === true).map(node => node.id))
       } catch (error) { if (!isStopped) logRendererError('web-generation-reconnect-query-failed', error) }
       finally { isReading = false }
     }

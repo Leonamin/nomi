@@ -4,7 +4,7 @@ import { openAgentMcp, handleAgentMcp } from './agentMcp'
 describe('private per-turn MCP endpoint', () => {
   it('requires the exact live turn secret and loopback host; retired tokens and browser origins are rejected', async () => {
     const controller = new AbortController()
-    const mcp = await openAgentMcp([{ name: 'nomi_read', description: 'Read', effect: 'read', schema: z.object({}), run: async () => ({}) }], controller.signal, async () => ({}))
+    const mcp = await openAgentMcp([{ name: 'nomi_read', description: 'Read', approvalSubject: { effect: 'read', effectClass: 'reversible_local', requiresPlanReview: false, destructiveHint: false }, schema: z.object({}), run: async () => ({}) }], controller.signal, async () => ({}))
     const call = (method: string, id = 1, url = mcp.url, token = mcp.token, origin?: string) => new Request(url, { method: 'POST', headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json', accept: 'application/json, text/event-stream', ...(origin ? { origin } : {}) }, body: JSON.stringify({ jsonrpc: '2.0', id, method, params: method === 'initialize' ? { protocolVersion: '2025-06-18', clientInfo: { name: 'test', version: '1' }, capabilities: {} } : {} }) })
     expect((await handleAgentMcp(call('initialize'))).status).toBe(200)
     // 无状态传输禁止跨请求复用：initialize 之后再发 tools/list 必须仍然成功（OpenCode v2 的真实顺序）。

@@ -16,7 +16,7 @@ const port = () => process.env.NOMI_WEB_PORT || 9031
  */
 function createServer(scope: TurnScope): McpServer {
   const server = new McpServer({ name: 'Nomi Web', version: '0.23.1' })
-  for (const tool of scope.tools) server.registerTool(tool.name, { description: tool.description, inputSchema: tool.schema.shape, annotations: { readOnlyHint: tool.effect === 'read', destructiveHint: false } }, async (input: Record<string, unknown>) => {
+  for (const tool of scope.tools) server.registerTool(tool.name, { description: tool.description, inputSchema: tool.schema, annotations: { readOnlyHint: tool.approvalSubject.effect === 'read', destructiveHint: tool.approvalSubject.destructiveHint } }, async (input: Record<string, unknown>) => {
     try {
       scope.signal.throwIfAborted()
       const output = await scope.execute(tool, input)

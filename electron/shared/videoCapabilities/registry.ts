@@ -4,6 +4,7 @@ import type {
   ModelArchetype,
   ModelParameterControl,
 } from "./types";
+import { customCapabilityArchetypeForModel } from '../modelArchetypes/customCapabilityContract';
 import type { VideoModelCandidate } from "./recommendation";
 import { resolveArchetypeVariant } from "../modelArchetypes/variantResolution";
 import { AGNES_VIDEO_ARCHETYPE } from "./agnesVideo";
@@ -50,6 +51,7 @@ export type VideoCatalogModel = {
   modelKey: string;
   label: string;
   archetypeId?: string;
+  meta?: unknown;
   parameterControls?: readonly ModelParameterControl[];
 };
 
@@ -203,6 +205,8 @@ function unknownVideoArchetype(model: VideoCatalogModel): ModelArchetype {
 }
 
 function profileFor(model: VideoCatalogModel): ModelArchetype {
+  const custom = customCapabilityArchetypeForModel({ modelKey: model.modelKey, meta: model.meta });
+  if (custom?.kind === 'video') return custom;
   const exact = model.archetypeId
     ? SOURCE_BACKED_PROFILES.find((profile) => profile.id === model.archetypeId)
     : undefined;

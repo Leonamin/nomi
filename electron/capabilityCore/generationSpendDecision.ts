@@ -29,12 +29,16 @@ import type { ApprovalReceiptAuthority } from "./approvalReceipt";
 import type { DispatchContext } from "./dispatcher";
 import type { ProjectLeaseV2 } from "./projectLease";
 
-/** 一次付费决议的凭证来源。两种，没有第三种；缺席不是一种。 */
+/** 一次付费决议的凭证来源。按真实宿主区分桌面手势、网页会话手势和策略决定；缺席不是一种。 */
 export type GenerationSpendDecision =
   | Readonly<{
     kind: "human-gesture";
     /** 真人点下去的那个渲染窗口。缺席 = 没有窗口可以代表真人 → 调用方必须 fail-closed。 */
     target: Readonly<{ webContentsId: number; frameId: number; origin: string }>;
+  }>
+  | Readonly<{
+    kind: "web-session-gesture";
+    target: Readonly<{ surfaceId: string; clientSessionId: string; origin: string }>;
   }>
   | Readonly<{
     kind: "policy-full-auto";
@@ -91,7 +95,9 @@ export async function decideGenerationSpend(
   const token = generationChallengeTokenOf(gate);
   const attestation = input.decision.kind === "human-gesture"
     ? deps.receipts.createMainProcessGestureAttestation(token, { ...input.decision.target, decision: "accept" })
-    : deps.receipts.createPolicyDecisionAttestation(token, { policyMode: "project", policySurface: input.decision.surface });
+    : input.decision.kind === "web-session-gesture"
+      ? deps.receipts.createWebSessionGestureAttestation(token, { ...input.decision.target, decision: "accept" })
+      : deps.receipts.createPolicyDecisionAttestation(token, { policyMode: "project", policySurface: input.decision.surface });
   const minted = deps.receipts.mintReceipt(token, attestation);
   await deps.authorizeGeneration({ params, lease: input.lease, receipt: minted.receipt });
   deps.receipts.consumeReceipt(minted.token);

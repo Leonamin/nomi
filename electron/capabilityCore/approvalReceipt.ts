@@ -72,6 +72,13 @@ export type MainProcessGestureAttestationV1 = {
   mac: string;
 };
 
+/** Server-verified browser gesture; never an Electron or elicitation claim. */
+export type WebSessionGestureAttestationV1 = Omit<MainProcessGestureAttestationV1, "kind" | "webContentsId" | "frameId"> & {
+  kind: "web_session_gesture";
+  surfaceId: string;
+  clientSessionId: string;
+};
+
 /**
  * Attestation produced by a registered MCP client that has confirmed a generation
  * gate via the MCP elicitation protocol (2025-06-18+). Recorded in the receipt's
@@ -126,17 +133,19 @@ export type PolicyDecisionAttestationV1 = {
 
 export type GestureAttestationV1 =
   | MainProcessGestureAttestationV1
+  | WebSessionGestureAttestationV1
   | ClientElicitationAttestationV1
   | PolicyDecisionAttestationV1;
 
 /**
- * 这张收据是**谁**决定的。三个值与 `gestureAttestation.kind` 一一对应，在铸造时派生
+ * 这张收据是**谁**决定的。四个值与 `gestureAttestation.kind` 一一对应，在铸造时派生
  * （不是第二个真相源），写进被 MAC 覆盖的载荷里，好让账本只读一个字段就说得清。
  */
-export const APPROVAL_DECIDED_BY = ["human:gesture", "human:elicitation", "policy:full_auto"] as const;
+export const APPROVAL_DECIDED_BY = ["human:gesture", "human:web_session", "human:elicitation", "policy:full_auto"] as const;
 export type ApprovalDecidedBy = (typeof APPROVAL_DECIDED_BY)[number];
 
 export function approvalDecidedByOf(attestation: GestureAttestationV1): ApprovalDecidedBy {
+  if (attestation.kind === "web_session_gesture") return "human:web_session";
   if (attestation.kind === "client_elicitation") return "human:elicitation";
   if (attestation.kind === "policy_decision") return "policy:full_auto";
   return "human:gesture";
@@ -475,6 +484,26 @@ export function createApprovalReceiptAuthority(deps: ApprovalReceiptAuthorityDep
     return { ...withoutMac, mac: sign(withoutMac, deps.macKey) };
   }
 
+  function createWebSessionGestureAttestation(token: string, input: {
+    surfaceId: string; clientSessionId: string; origin: string; decision: "accept" | "reject";
+  }): WebSessionGestureAttestationV1 {
+    const challenge = verifyChallenge(token);
+    const surfaceId = input.surfaceId.trim(), clientSessionId = input.clientSessionId.trim();
+    let origin: string;
+    try {
+      const url = new URL(input.origin);
+      if (!["http:", "https:"].includes(url.protocol) || url.origin !== input.origin) throw new Error();
+      origin = url.origin;
+    } catch { throw new ReceiptScopeError("Web approval requires an exact HTTP origin"); }
+    if (!surfaceId || !clientSessionId) throw new ReceiptScopeError("Web approval requires the verified surface and session");
+    const withoutMac: Omit<WebSessionGestureAttestationV1, "mac"> = {
+      kind: "web_session_gesture", issuer: "nomi-main", keyId,
+      challengeId: challenge.challengeId, decision: input.decision, surfaceId, clientSessionId, origin,
+      gestureNonce: challenge.nonce, issuedAt: now(), expiresAt: challenge.expiresAt,
+    };
+    return { ...withoutMac, mac: sign(withoutMac, deps.macKey) };
+  }
+
   /**
    * Create a client_elicitation attestation for a registered MCP client that has
    * confirmed a generation gate via the elicitation protocol. The main process
@@ -534,6 +563,18 @@ export function createApprovalReceiptAuthority(deps: ApprovalReceiptAuthorityDep
     const challenge = verifyChallenge(token);
     if (!value || typeof value !== "object" || Array.isArray(value)) throw new HumanApprovalRequiredError();
     const raw = value as Record<string, unknown>;
+    if (raw.kind === "web_session_gesture") {
+      const attestation = raw as WebSessionGestureAttestationV1;
+      if (attestation.issuer !== "nomi-main" || attestation.keyId !== keyId
+        || attestation.challengeId !== challenge.challengeId || attestation.gestureNonce !== challenge.nonce
+        || attestation.decision !== "accept" || typeof attestation.surfaceId !== "string" || !attestation.surfaceId
+        || typeof attestation.clientSessionId !== "string" || !attestation.clientSessionId
+        || typeof attestation.origin !== "string" || !attestation.origin
+        || typeof attestation.mac !== "string"
+        || !timingEqual(attestation.mac, sign({ ...attestation, mac: undefined }, deps.macKey))) throw new HumanApprovalRequiredError();
+      assertNotExpired(attestation, now());
+      return attestation;
+    }
     if (raw.kind === "policy_decision") {
       const attestation = raw as PolicyDecisionAttestationV1;
       if (attestation.issuer !== "nomi-main" || attestation.keyId !== keyId
@@ -607,7 +648,9 @@ export function createApprovalReceiptAuthority(deps: ApprovalReceiptAuthorityDep
           // 没有人点，所以这里记的是**那条策略**，不是编一个人出来。读账本的人一眼看得出
           // 这一笔是谁批的；`decidedBy` 则让机器不必去解析这个字符串。
           ? `policy:${attestation.policyMode}:${attestation.policySurface}`
-          : `web_contents:${attestation.webContentsId}:${attestation.frameId}:${attestation.origin}`,
+          : attestation.kind === "web_session_gesture"
+            ? `web_session:${attestation.surfaceId}:${attestation.clientSessionId}:${attestation.origin}`
+            : `web_contents:${attestation.webContentsId}:${attestation.frameId}:${attestation.origin}`,
       decidedBy: approvalDecidedByOf(attestation),
       gestureAttestation: attestation,
       receiptNonce: randomId(),
@@ -667,6 +710,7 @@ export function createApprovalReceiptAuthority(deps: ApprovalReceiptAuthorityDep
     verifyChallenge,
     resolveChallengeToken,
     createMainProcessGestureAttestation,
+    createWebSessionGestureAttestation,
     createClientElicitationAttestation,
     createPolicyDecisionAttestation,
     mintReceipt,

@@ -34,6 +34,13 @@ beforeEach(() => {
   availabilityUsable.mockReset();
 });
 
+it('retains imported video capability metadata at the shared usable boundary', async () => {
+  const contract = { version: 1, kind: 'video', defaultModeId: 'text_to_video', transportTaskKind: 'text_to_video', modes: [{ id: 'text_to_video', transportTaskKind: 'text_to_video', intent: 'text', vendorTerm: 'Workflow', hint: '', promptRequired: true, slots: [], params: [] }] }
+  readCatalog.mockReturnValue({ models: [{ ...videoModel('independent-workflow', 'comfyui-local'), meta: { customCapabilityContract: contract } }] })
+  availabilityUsable.mockReturnValue(true)
+  expect((await derive())[0].archetype).toMatchObject({ family: 'custom-capability', defaultModeId: 'text_to_video' })
+})
+
 describe("可用视频模型名单：每次问都重新算", () => {
   it("钥匙在进程起来之后才存进来 → 下一次问就该看见它（不是等重启）", async () => {
     readCatalog.mockReturnValue({ models: [videoModel("sora-2")] });

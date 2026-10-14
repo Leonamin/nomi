@@ -19,6 +19,8 @@ export function readCurrentWorkbenchProjectPayload(projectId = activeWorkbenchPr
     // S5-b-1:尾部重放游标(append 回执维护;回执延迟导致略旧也安全——reducer 幂等)
     generationCanvasLastSeq: getCanvasEventLastSeq(),
     ...(projectId && getDesktopBridge()?.web ? { webAgentSeenNodeIds: [...getDesktopBridge()!.web!.appliedAgentNodeIds(projectId)] } : {}),
+    ...(projectId && getDesktopBridge()?.web ? { webAgentSeenCanvas: structuredClone(getDesktopBridge()!.web!.appliedCanvasKnowledge(projectId)) } : {}),
+    ...(projectId && getDesktopBridge()?.web ? { webAgentSeenCreation: structuredClone(getDesktopBridge()!.web!.appliedCreationKnowledge(projectId)) } : {}),
     storyboardDesignsByDocumentId: workbench.storyboardDesignsByDocumentId,
     editingPanelLayout: workbench.editingPanelLayout,
   }

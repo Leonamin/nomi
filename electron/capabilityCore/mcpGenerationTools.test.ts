@@ -1097,3 +1097,23 @@ it('refuses a document-admitted draft when the renderer that owns plans is unrea
     params:{operation:'create',candidate:{candidateId:'c',revision:1,moduleId:'generation.single-shot',providerId:'fixture-provider',modelId:'fixture-model',mode:'text-to-image',prompt:'Original',parameters:{},references:[]}}}))
     .rejects.toThrow('storyboard_renderer_required')
 })
+
+
+describe('document production execution owner', () => {
+  it('keeps document plan and canonical candidate aligned and uses canonical preview, presentation, gate and withdrawal', async () => {
+    const operations = createInMemoryGenerationOperationStore(), requests: Array<{ op: string; payload: Record<string, unknown> }> = []
+    const requestRenderer = async (op: string, payload: unknown) => { const value = payload as Record<string, unknown>; requests.push({ op, payload: value }); return { status: 'saved', designId: value.designId, shotId: value.shotId } }
+    const assertDocumentOperation = vi.fn()
+    const handler = createGenerationPlanningHandler({ registry, operations, requestRenderer, documentGenerationOwner: 'production-run', assertDocumentOperation })
+    const candidate = { candidateId: 'shot', revision: 1, moduleId: 'generation.single-shot', providerId: 'fixture-provider', modelId: 'fixture-model', mode: 'text-to-image', prompt: 'Original', parameters: {}, references: [] }
+    await handler({ capability: 'create', lease, origin: { host: 'nomi', sourceDocument: { documentId: 'doc', revision: 1, contentHash: 'hash' } }, params: { operationId: 'document-owner', shots: [{ shotId: 'shot', candidate, storyboard: { anchorIds: [] } }] } })
+    await handler({ capability: 'plan', lease, params: { operationId: 'document-owner', shotId: 'shot', patch: { prompt: 'Revised' } } })
+    expect((await operations.read('project-1', 'document-owner'))?.shots?.[0].candidate.prompt).toBe('Revised')
+    await expect(handler({ capability: 'preview', lease, params: { operationId: 'document-owner' } })).resolves.toMatchObject({ contract: { providerId: 'fixture-provider' } })
+    await expect(handler({ capability: 'present', lease, params: { operationId: 'document-owner' } })).resolves.toMatchObject({ nextAction: 'await_user' })
+    await expect(handler({ capability: 'gate_request', lease, params: { operationId: 'document-owner' } })).resolves.toMatchObject({ operation: { state: 'sealed' } })
+    await expect(handler({ capability: 'withdraw', lease, params: { operationId: 'document-owner' } })).resolves.toMatchObject({ nextAction: 'present' })
+    expect(requests.some(request => request.op === 'storyboard.present')).toBe(false)
+    expect(assertDocumentOperation).toHaveBeenCalledWith('project-1', 'document-owner')
+  })
+})

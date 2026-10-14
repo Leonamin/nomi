@@ -1,3 +1,4 @@
+import { captureGenerationContext } from '../shared/agentCapabilities/generationInvocationContext'
 import { argumentFailure } from '../shared/agentLane/laneArgumentFailure';
 import { ZodError } from "zod";
 import type { CanvasWriteApprovalAuthority } from '../shared/agentCapabilities/transportContracts'
@@ -92,24 +93,6 @@ function rejectPreparation(code: string): never {
     nextAction: 'Read the current project again and request a new action with its current identifiers and revision.' })
 }
 
-function captureGenerationContext(context: LaneComposerContext | undefined): GenerationInvocationContext | undefined {
-  if (!context) return undefined;
-  // 模型名随这条消息的目录一起来（渲染层 displayName）：宿主递回给 Agent 的事实要带用户认得的名字。
-  const names = Object.fromEntries((context.availableModels ?? []).filter(entry => entry.vendor && entry.displayName)
-    .map(entry => [`${entry.vendor}/${entry.modelId}`, entry.displayName as string]));
-  const modelNames = Object.keys(names).length ? { modelNames: names } : {};
-  if (context.admissionSurface === 'document' && context.storyboardTarget) {
-    const target = structuredClone(context.storyboardTarget);
-    return { ...modelNames, storyboardTarget: target, sourceDocument: { documentId: target.sourceDocumentId,
-      revision: target.sourceDocumentRevision, contentHash: target.sourceDocumentContentHash } };
-  }
-  // 渲染层声称的来源文稿。记录与比对用（见 GenerationInvocationContext 的头注释），不是凭据。
-  const source = context.admissionSurface === 'document' && context.documentId && context.preconditions?.document
-    && typeof context.preconditions.document.contentHash === 'string'
-    ? { documentId: context.documentId, revision: context.preconditions.document.revision, contentHash: context.preconditions.document.contentHash }
-    : undefined;
-  return source || modelNames.modelNames ? { ...modelNames, ...(source ? { sourceDocument: source } : {}) } : undefined;
-}
 
 /**
  * One lane boundary over existing executors; it owns no second domain store or mutation path.

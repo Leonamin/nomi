@@ -54,6 +54,8 @@ type CommandRecord = {
 };
 
 export type ProductionRunRepositoryDeps = {
+  /** Host-owned scope: candidate-only creation must not claim downstream QA/export. */
+  semanticGenerationStages?: "candidates-only";
   projectDirResolver?: (projectId: string) => string | null;
   now?: () => string;
   randomId?: () => string;
@@ -423,7 +425,7 @@ export function createProductionRunRepository(deps: ProductionRunRepositoryDeps 
       // A semantic multi-shot generation is one durable production pipeline.  Seed the
       // downstream stages at draft creation so the owner can advance the same Run after
       // the scheduler materializes its jobs; single-shot drafts keep the historical shape.
-      stages: input.shots && input.shots.length > 0
+      stages: deps.semanticGenerationStages !== "candidates-only" && input.shots && input.shots.length > 0
         ? [
             { stageId: "generate", title: "Generate", status: "pending", order: 0 },
             { stageId: "qa", title: "QA", status: "pending", order: 1 },
