@@ -1,5 +1,7 @@
 # Generation prompt language design card
 
+> 📋 方案待拍板 · 状态由 docs-autosync 自动登记，作者请按实修改
+
 Implementation line: Korean quality agent. Category: spend verification, existing surface corrective change.
 
 | Cell | Decision and evidence |
