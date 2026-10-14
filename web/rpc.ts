@@ -1,3 +1,5 @@
+import { resolveGenerationPlanForProject, toResolveEnvelopeError } from '../electron/capabilityCore/generationResolveIpc'
+import { observeWebCanvas } from '../src/workbench/project/webCanvasProjection'
 import path from 'node:path'
 import { z } from 'zod'
 import * as projects from '../electron/projects/repository'
@@ -23,6 +25,7 @@ import { getProjectLocationState } from '../electron/runtimePaths'
 import { createWebSurface, WebSurfaceSessions } from './surface'
 import { WebGenerationJobs } from './generationJobs'
 import { saveWebProject, projectCanvas } from './projectState'
+import { observeWebCreation } from '../src/workbench/project/webCreationProjection'
 import { mintSpendGrant } from '../electron/spendGrant'
 import { prepareSpendQuote } from '../electron/spendQuote'
 import { getPromptLibrary } from '../electron/promptLibrary/promptLibraryStore'
@@ -32,6 +35,9 @@ import { hostEvents } from './runtimeHost'
 import { createWebComfyuiCommands, initWebConnections } from './comfyuiConnections'
 import { installWebGraphHost } from './comfyuiGraphHost'
 import { WebAgentLanes } from './agentLanes'
+import { createWebProductionHost } from './productionHost'
+import { rendererCommand } from '../electron/productionRun/productionRunRendererCommand'
+import { resolveIndexedReferencePreview } from '../electron/capabilityCore/pendingSpendReferences'
 import type { LaneDesktopCommand } from '../electron/shared/agentLane/laneDesktopContracts'
 import type { WebAgentEngine, WebAgentSelection } from '../electron/shared/webAgentContracts'
 
@@ -39,7 +45,9 @@ type Surface = ReturnType<typeof createWebSurface>
 const surfaces = new WebSurfaceSessions(createWebSurface, surface => agentLanes.detachSurface(surface.id))
 const exportExecutions = new Map<string, Promise<unknown>>()
 export const generationJobs = new WebGenerationJobs(path.join(process.env.NOMI_WEB_DATA_DIR!, 'jobs'))
-const agentLanes = new WebAgentLanes(path.join(process.env.NOMI_WEB_DATA_DIR!, 'agents'), generationJobs)
+let production: ReturnType<typeof createWebProductionHost> | undefined
+function productionHost() { if (!production) production = createWebProductionHost(); return production }
+const agentLanes = new WebAgentLanes(path.join(process.env.NOMI_WEB_DATA_DIR!, 'agents'), undefined, (surface, binding, context, signal, waiting) => productionHost().tools(surface, binding, context, signal, waiting))
 export function getWebSurface(clientId: string, origin: string) {
   return surfaces.get(clientId, origin)
 }
@@ -73,8 +81,12 @@ export async function dispatchWebRpc(channel: string, args: unknown[], surface: 
     'nomi:projects:recover': projects.recoverProject,
     'nomi:projects:delete': projects.deleteProject,
     'nomi:projects:save-async': (projectId: string, incoming: Parameters<typeof saveWebProject>[1], knownAgentIds: string[] = []) => saveWebProject(projectId, incoming, new Set(z.array(z.string()).max(10000).parse(knownAgentIds))),
+    'nomi:generation:resolve-plan': async (input: unknown) => {
+      try { return { ok: true, value: await resolveGenerationPlanForProject({ getCommittedProjectId: () => selection(surface).projectId, getGenerationPlanning: () => productionHost().runtime.planning }, input) } }
+      catch (error) { return { ok: false, error: toResolveEnvelopeError(error) } }
+    },
     'nomi:surface:suspend': surface.suspend,
-    'nomi:surface:commitCanvasRead': surface.commit,
+    'nomi:surface:commitCanvasRead': (payload: Parameters<typeof surface.commit>[0]) => surface.commit(payload),
     'nomi:surface:release': surface.release,
     'nomi:capability:set-active-project': () => undefined,
     'nomi:model-catalog:vendors:list': () => catalog.listModelCatalogVendors().filter(isComfyuiVendor),
@@ -110,12 +122,22 @@ export async function dispatchWebRpc(channel: string, args: unknown[], surface: 
     'nomi:assets:report-video-codecs': (payload: { codecs?: string[] }) => setProbedVideoCodecs(payload.codecs ?? []),
     'nomi:video:extract-frame': extractVideoFrameToAsset,
     'nomi:video:extract-filmstrip': extractVideoFilmstripToAsset,
+    'nomi:web:creation-snapshot': (projectId: string) => {
+      authorizeWebProject(surface, projectId)
+      const record = projects.readProject(projectId)
+      if (!record) throw new Error('Project not found')
+      const saved = projectCanvas(record)
+      const payload = { workbenchDocuments: saved.workbenchDocuments, storyboardDesignsByDocumentId: saved.storyboardDesignsByDocumentId, webManagedCreation: saved.webManagedCreation }
+      return { payload, knowledge: observeWebCreation(payload) }
+    },
     'nomi:web:generation-snapshot': (projectId: string) => {
       authorizeWebProject(surface, projectId)
       const snapshot = generationJobs.snapshot(projectId)
       const current = projects.readProject(projectId)
-      const nodes = current ? projectCanvas(current).generationCanvas.nodes : []
-      return [...snapshot, ...nodes.filter(node => node.meta?.isWebAgentCreated === true && !snapshot.some(entry => entry.node?.id === node.id)).map(node => ({ key: `agent:${node.id}`, node, isPending: false }))]
+      if (!current) throw new Error('Project not found')
+      const payload = projectCanvas(current)
+      const canvas = { nodes: payload.generationCanvas.nodes, groups: payload.generationCanvas.groups, edges: payload.generationCanvas.edges, webManagedCanvas: payload.webManagedCanvas }
+      return { jobs: snapshot, canvas, knowledge: observeWebCanvas(canvas) }
     },
     'nomi:agent-lane:command': (command: LaneDesktopCommand) => agentLanes.send(surface, command),
     'nomi:web:agent-settings': (selection?: WebAgentEngine | WebAgentSelection) => agentLanes.settings(surface, typeof selection === 'string' ? { engine: selection } : (selection ?? {})),
@@ -132,7 +154,33 @@ export async function dispatchWebRpc(channel: string, args: unknown[], surface: 
     'nomi:workspace:sync-inspect': (input: string | { projectId: string }) => { const id = typeof input === 'string' ? input : input.projectId; const root = projects.projectDirById(id); if (!root) throw new Error('Project not found'); return inspectWorkspaceSync(root, id) },
     'nomi:prompt-library:list': async () => ({ ok: true, prompts: await getPromptLibrary({ shouldIncludeSkillPrompts: false }) }),
     'nomi:prompt-library:text-brain': () => ({ ok: false, brain: null, status: 'missing' }),
-    'nomi:production-runs:list': () => [],
+    'nomi:production-runs:list': (payload: { projectId: string }) => { authorizeWebProject(surface, payload.projectId); return productionHost().runtime.repository.list(payload.projectId) },
+    'nomi:production-runs:read': (payload: { projectId: string; runId: string }) => { authorizeWebProject(surface, payload.projectId); const run = productionHost().runtime.repository.read(payload.projectId, payload.runId)
+      if (!run?.generationPlan) return run
+      const refs = run.generationPlan.shots?.length ? run.generationPlan.shots.flatMap(shot => shot.candidate.references) : run.generationPlan.candidate.references
+      return refs.length ? { ...run, storyboardReferenceUrls: Object.fromEntries(refs.map(ref => [ref.assetId, resolveIndexedReferencePreview(payload.projectId, ref)])) } : run },
+    'nomi:production-runs:command': (payload: { projectId: string; runId: string; command: unknown }) => {
+      authorizeWebProject(surface, payload.projectId)
+      const owner = productionHost().runtime.service, command = rendererCommand(payload.command)
+      const current = owner.readFull(payload.projectId, payload.runId)
+      if (command.type === 'generation.present') {
+        const source = current.origin.sourceDocument
+        if (current.origin.host !== 'nomi' || !source || command.payload.sourceDocumentId !== source.documentId || command.payload.sourceDocumentRevision !== source.revision) throw new Error('Storyboard source mismatch')
+      }
+      return owner.command(payload.projectId, payload.runId, command)
+    },
+    'nomi:production-runs:materialize-storyboard': (payload: { projectId: string; runId: string; artifactId: string; expectedVersion: number }) => {
+      authorizeWebProject(surface, payload.projectId)
+      if (!Number.isInteger(payload.expectedVersion) || payload.expectedVersion <= 0) throw new Error('Invalid storyboard artifact version')
+      return productionHost().runtime.service.materializeStoryboard(payload)
+    },
+    'nomi:production-runs:events': (payload: { projectId: string; runId: string; afterCursor?: number }) => { authorizeWebProject(surface, payload.projectId); return productionHost().runtime.repository.readEvents(payload.projectId, payload.runId, payload.afterCursor ?? 0) },
+    'nomi:production-runs:pending-spend': (payload: { projectId: string }) => { authorizeWebProject(surface, payload.projectId); return { surface: 'ready', rows: productionHost().forSurface(surface).pendingSpend.listPendingSpend(payload.projectId) } },
+    'nomi:production-runs:revise-spend': (payload: { projectId: string; operationId: string; quoteId: string; shotId?: string; patch: Record<string, unknown> }) => { authorizeWebProject(surface, payload.projectId); return productionHost().forSurface(surface).pendingSpend.revisePendingSpend(payload) },
+    'nomi:production-runs:discard-spend': (payload: { projectId: string; operationId: string; quoteId: string }) => { authorizeWebProject(surface, payload.projectId); return productionHost().forSurface(surface).pendingSpend.discardPendingSpend(payload) },
+    'nomi:production-runs:confirm-spend': (payload: { projectId: string; operationId: string; quoteId: string; shotId?: string }) => { authorizeWebProject(surface, payload.projectId); return productionHost().forSurface(surface).pendingSpend.confirmPendingSpend(payload) },
+    'nomi:production-runs:confirm-spend-remaining': (payload: { projectId: string; operationId: string; quoteId: string; shotIds: string[] }) => { authorizeWebProject(surface, payload.projectId); return productionHost().forSurface(surface).pendingSpend.confirmRemainingShots(payload) },
+    'nomi:production-runs:remove-spend-shot': (payload: { projectId: string; operationId: string; quoteId: string; shotId: string }) => { authorizeWebProject(surface, payload.projectId); return productionHost().forSurface(surface).pendingSpend.removePendingSpendShot(payload) },
     'nomi:prompt-library:user-list': () => ({ ok: true, prompts: listUserPrompts() }),
     'nomi:prompt-library:user-add': (input: Parameters<typeof addUserPrompt>[0]) => { addUserPrompt(input); return { ok: true, prompts: listUserPrompts() } },
     'nomi:prompt-library:user-update': (payload: { id: string; patch: Parameters<typeof updateUserPrompt>[1] }) => ({ ok: true, prompts: updateUserPrompt(payload.id, payload.patch) }),
@@ -175,4 +223,5 @@ export function initWebDomain() {
   initWebConnections()
   exportJobs.subscribeExportJobEvents(event => hostEvents.emit('message', { channel: 'nomi:exports:event', payload: event }))
   generationJobs.restore()
+  productionHost().restore()
 }

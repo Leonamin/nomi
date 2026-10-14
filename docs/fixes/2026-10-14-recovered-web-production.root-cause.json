@@ -1,0 +1,534 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-14-recovered-web-production",
+  "problem_type": "web production host and authored-state ownership",
+  "symptom": "Main lacks canonical script/storyboard production and stale browser snapshots erase server-authored documents and canvas groups; arbitrary imported ComfyUI names have no model capability. Browser/GPU verification exposed document generation artifacts absent from the canonical Run, and a human plan edit could otherwise execute a stale candidate.",
+  "direct_cause": "Web agent uses a separate small shot tool set; saveWebProject protects node outcomes only; imported workflows omit custom capability metadata. Document origin incorrectly selected renderer-only execution despite the web durable Run owner.",
+  "class_root": "Domain ownership and capability declarations do not cross the web host boundary consistently.",
+  "affected_population": [
+    "Web native agents and browser saves",
+    "Imported ComfyUI workflows and existing v13 catalogs"
+  ],
+  "scope_paths": [
+    "electron/agentLane/laneExtendedDesktopPorts.ts",
+    "electron/capabilityCore/appIntegrationSpendConfirm.ts",
+    "electron/capabilityCore/approvalReceipt.ts",
+    "electron/capabilityCore/generationSpendDecision.ts",
+    "electron/capabilityCore/generationTransportAdapters.ts",
+    "electron/capabilityCore/usableVideoModelCandidates.ts",
+    "electron/catalog/catalogMigrations.ts",
+    "electron/catalog/catalogVersion.json",
+    "electron/catalog/comfyuiWorkflowCapabilities.ts",
+    "electron/catalog/comfyuiWorkflowCapabilityMigration.ts",
+    "electron/catalog/comfyuiWorkflowImport.ts",
+    "electron/catalog/types.ts",
+    "electron/productionRun/productionRunIpc.ts",
+    "electron/productionRun/productionRunRepository.ts",
+    "electron/shared/videoCapabilities/registry.ts",
+    "scripts/build-web.mjs",
+    "src/desktop/bridge.ts",
+    "src/workbench/ai/lane/laneClient.ts",
+    "src/workbench/generationCanvas/runner/useWebGenerationSync.ts",
+    "src/workbench/project/projectNormalize.ts",
+    "src/workbench/project/projectRecordSchema.ts",
+    "src/workbench/project/webCanvasProjection.ts",
+    "src/workbench/project/webCreationProjection.ts",
+    "src/workbench/project/workbenchProjectSession.ts",
+    "web/agentLanes.ts",
+    "web/agentMcp.ts",
+    "web/agentTools.ts",
+    "web/client.ts",
+    "web/comfyuiProductionProvider.ts",
+    "web/creationContext.ts",
+    "web/productionHost.ts",
+    "web/productionRuntime.ts",
+    "web/projectState.ts",
+    "web/rpc.ts",
+    "web/semanticAgentTools.ts",
+    "web/surface.ts",
+    "electron/shared/agentCapabilities/generationInvocationContext.ts",
+    "electron/productionRun/productionRunRendererCommand.ts",
+    "web/agentProcess.ts",
+    "scripts/check-design-lab.mjs",
+    "electron/capabilityCore/mcpGenerationTools.ts"
+  ],
+  "entry_points": [
+    "Native MCP semantic tools",
+    "Web RPC project save and production commands",
+    "ComfyUI workflow importer and catalog migration",
+    "Browser plan preview delegates to the same planning seam, rather than a second planning runtime."
+  ],
+  "external_sources": [
+    {
+      "kind": "official-doc",
+      "url": "https://developers.openai.com/codex/config-reference",
+      "checked_at": "2026-10-14",
+      "purpose": "Scoped MCP server default_tools_approval_mode delegates approval to the Nomi host while retaining read-only CLI sandbox."
+    }
+  ],
+  "invariants": [
+    "The latest request-per-transport MCP and authenticated model selection remain intact.",
+    "Canonical ProductionRun/receipts own generation; no parallel web shot writer.",
+    "Server-authored field merges use captured browser observations and preserve actual human edits.",
+    "Every imported model declares capabilities through the shared importer and migration."
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/appIntegrationSpendConfirm.ts",
+      "symbol": "createPendingSpendActions"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/approvalReceipt.ts",
+      "symbol": "mintReceipt"
+    },
+    {
+      "kind": "read",
+      "path": "electron/capabilityCore/approvalReceipt.ts",
+      "symbol": "verifyReceipt"
+    },
+    {
+      "kind": "read",
+      "path": "electron/integrationCertification/comfyuiConnector.ts",
+      "symbol": "buildComfyImportModelMapping"
+    },
+    {
+      "kind": "read",
+      "path": "electron/productionRun/productionRunRepository.ts",
+      "symbol": "createProductionRunRepository"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/NomiStudioApp.tsx",
+      "symbol": "readCurrentWorkbenchProjectPayload"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/project/workbenchProjectSession.ts",
+      "symbol": "readCurrentWorkbenchProjectPayload"
+    },
+    {
+      "kind": "read",
+      "path": "web/agentLanes.ts",
+      "symbol": "createWebSurface"
+    },
+    {
+      "kind": "read",
+      "path": "web/productionHost.ts",
+      "symbol": "createWebSurface"
+    },
+    {
+      "kind": "read",
+      "path": "web/rpc.ts",
+      "symbol": "createWebSurface"
+    },
+    {
+      "kind": "read",
+      "path": "web/rpc.ts",
+      "symbol": "createWebProductionHost"
+    },
+    {
+      "kind": "read",
+      "path": "web/rpc.ts",
+      "symbol": "saveWebProject"
+    },
+    {
+      "kind": "read",
+      "path": "web/semanticAgentTools.ts",
+      "symbol": "createWebProductionRuntime"
+    },
+    {
+      "kind": "read",
+      "path": "web/surface.ts",
+      "symbol": "createWebSurface"
+    },
+    {
+      "kind": "write",
+      "path": "electron/agentLane/laneExtendedDesktopPorts.ts",
+      "symbol": "captureGenerationContext"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/agentPanelSpendConfirmTestUtils.ts",
+      "symbol": "createProductionRunRepository"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/agentPanelSpendConfirmTestUtils.ts",
+      "symbol": "createPendingSpendActions"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/agentPanelSpendConfirmTestUtils.ts",
+      "symbol": "createPiGenerationTransportAdapter"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/appIntegration.ts",
+      "symbol": "deriveUsableVideoModelCandidates"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/appIntegrationAuthorities.ts",
+      "symbol": "mintReceipt"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/appIntegrationSpendConfirm.ts",
+      "symbol": "createPendingSpendActions"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/approvalReceipt.ts",
+      "symbol": "verifyReceipt"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/generationDefaultModelResolver.ts",
+      "symbol": "buildVideoModelCandidates"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/generationDispatcher.ts",
+      "symbol": "verifyReceipt"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/generationDispatcher.ts",
+      "symbol": "mintReceipt"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/generationSpendDecision.ts",
+      "symbol": "mintReceipt"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/generationTransportAdapters.ts",
+      "symbol": "verifyReceipt"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpStdioServer.ts",
+      "symbol": "deriveUsableVideoModelCandidates"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/residentGenerationAdapterFactory.ts",
+      "symbol": "createPiGenerationTransportAdapter"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/runOwnedGenerationGateAuthority.ts",
+      "symbol": "verifyReceipt"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/usableVideoModelCandidates.ts",
+      "symbol": "buildVideoModelCandidates"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/catalogMigrations.ts",
+      "symbol": "migrateComfyWorkflowCapabilities"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/catalogStore.ts",
+      "symbol": "migrateCatalogForward"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/comfyuiWorkflowCapabilityMigration.ts",
+      "symbol": "comfyWorkflowCapability"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/comfyuiWorkflowImport.ts",
+      "symbol": "comfyWorkflowCapability"
+    },
+    {
+      "kind": "write",
+      "path": "electron/catalog/comfyuiWorkflowImport.ts",
+      "symbol": "buildComfyImportModelMapping"
+    },
+    {
+      "kind": "write",
+      "path": "electron/integrationCertification/comfyuiConnector.ts",
+      "symbol": "buildComfyImportModelMapping"
+    },
+    {
+      "kind": "write",
+      "path": "electron/parity/generationParityTestUtils.ts",
+      "symbol": "deriveUsableVideoModelCandidates"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionRunApprovalReceipt.ts",
+      "symbol": "verifyReceipt"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionRunDesktopLifecycle.ts",
+      "symbol": "createProductionRunRepository"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionRunIpc.ts",
+      "symbol": "createProductionRunRepository"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionRunIpc.ts",
+      "symbol": "rendererCommand"
+    },
+    {
+      "kind": "write",
+      "path": "electron/productionRun/productionRunService.ts",
+      "symbol": "createProductionRunRepository"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/projectNormalize.ts",
+      "symbol": "normalizePayload"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/projectRepository.ts",
+      "symbol": "normalizePayload"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/webCanvasProjection.ts",
+      "symbol": "mergeWebCanvas"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/project/webCreationProjection.ts",
+      "symbol": "mergeWebCreation"
+    },
+    {
+      "kind": "write",
+      "path": "web/agentLanes.ts",
+      "symbol": "openAgentMcp"
+    },
+    {
+      "kind": "write",
+      "path": "web/agentLanes.ts",
+      "symbol": "prepareWebCreationContext"
+    },
+    {
+      "kind": "write",
+      "path": "web/client.ts",
+      "symbol": "observeWebCanvas"
+    },
+    {
+      "kind": "write",
+      "path": "web/client.ts",
+      "symbol": "observeWebCreation"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionHost.ts",
+      "symbol": "createWebProductionRuntime"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionHost.ts",
+      "symbol": "createWebSemanticAgentTools"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionRuntime.ts",
+      "symbol": "createProductionRunRepository"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionRuntime.ts",
+      "symbol": "deriveUsableVideoModelCandidates"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionRuntime.ts",
+      "symbol": "createPiGenerationTransportAdapter"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionRuntime.ts",
+      "symbol": "createPendingSpendActions"
+    },
+    {
+      "kind": "write",
+      "path": "web/projectState.ts",
+      "symbol": "mergeWebCanvas"
+    },
+    {
+      "kind": "write",
+      "path": "web/projectState.ts",
+      "symbol": "mergeWebCreation"
+    },
+    {
+      "kind": "write",
+      "path": "web/rpc.ts",
+      "symbol": "createWebProductionHost"
+    },
+    {
+      "kind": "write",
+      "path": "web/rpc.ts",
+      "symbol": "saveWebProject"
+    },
+    {
+      "kind": "write",
+      "path": "web/rpc.ts",
+      "symbol": "observeWebCreation"
+    },
+    {
+      "kind": "write",
+      "path": "web/rpc.ts",
+      "symbol": "observeWebCanvas"
+    },
+    {
+      "kind": "write",
+      "path": "web/rpc.ts",
+      "symbol": "rendererCommand"
+    },
+    {
+      "kind": "write",
+      "path": "web/semanticAgentTools.ts",
+      "symbol": "captureGenerationContext"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/agentPanelSpendConfirmTestUtils.ts",
+      "symbol": "createGenerationPlanningHandler"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/appIntegration.ts",
+      "symbol": "createGenerationPlanningHandler"
+    },
+    {
+      "kind": "write",
+      "path": "electron/capabilityCore/mcpStdioServer.ts",
+      "symbol": "createGenerationPlanningHandler"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionRuntime.ts",
+      "symbol": "createGenerationPlanningHandler"
+    }
+  ],
+  "door_reduction": {
+    "before": 6,
+    "after": 69,
+    "why_not": "Independent existing transport, importer, migration, schema, renderer and approval entries converge on shared owners; desktop and web retain their platform authority."
+  },
+  "generality_proof": "Repository saves and live browser projection share the same observation merge, and all native tools use existing document and production owners; importer and forward migration declare capabilities for arbitrary model identities.",
+  "shared_boundaries": [
+    {
+      "path": "web/productionHost.ts",
+      "symbol": "createWebProductionHost",
+      "responsibility": "Compose canonical production/document ownership for web tools."
+    },
+    {
+      "path": "src/workbench/project/webCanvasProjection.ts",
+      "symbol": "mergeWebCanvas",
+      "responsibility": "Preserve authored state and human deltas across saves and polling."
+    },
+    {
+      "path": "electron/catalog/comfyuiWorkflowCapabilities.ts",
+      "symbol": "comfyWorkflowCapability",
+      "responsibility": "Declare workflow capability independently of model naming."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "web/rpc.ts",
+      "entry_point": "dispatchWebRpc",
+      "disposition": "enforced",
+      "evidence": "Project save and generation snapshot use the shared observation boundaries."
+    },
+    {
+      "path": "electron/integrationCertification/comfyuiConnector.ts",
+      "entry_point": "buildComfyImportModelMapping",
+      "disposition": "enforced",
+      "evidence": "Certification imports route through the same capability-declaring importer."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every server draft/group or independently named workflow can reproduce the invariant gap.",
+    "same_class_scan": [
+      "door-map saveWebProject buildComfyImportModelMapping createAgentTools --roots=src,electron,web",
+      "Compared native tool factory, RPC repository save, renderer polling, importer, and migration."
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "web/productionHost.ts",
+    "invariant": "One canonical document/production owner and observation merge govern every web entry.",
+    "failure_mode": "Stale project/document/receipt bindings are rejected before submission; failures surface honestly.",
+    "exception_policy": "none",
+    "strategy": "Replace the old web-specific shot writer with domain adapters and share authored-state merges.",
+    "artifacts": [
+      "web/productionHost.ts",
+      "web/agentTools.ts",
+      "src/workbench/project/webCanvasProjection.ts",
+      "src/workbench/project/webCreationProjection.ts",
+      "electron/catalog/comfyuiWorkflowCapabilities.ts"
+    ]
+  },
+  "regression_tests": [
+    "web/productionHost.test.ts",
+    "web/productionRuntime.test.ts",
+    "web/creationSave.test.ts",
+    "web/canvasSave.test.ts",
+    "web/agentMcp.test.ts",
+    "web/agentLanes.test.ts",
+    "electron/catalog/comfyuiWorkflowCapabilities.test.ts",
+    "src/workbench/project/webCanvasProjection.test.ts",
+    "web/productionCommand.test.ts",
+    "web/agentProcessApproval.test.ts",
+    "electron/capabilityCore/mcpGenerationTools.test.ts",
+    "scripts/web/seed-local-comfyui.test.mjs"
+  ],
+  "class_regression_tests": [
+    "web/creationSave.test.ts",
+    "web/canvasSave.test.ts",
+    "electron/catalog/comfyuiWorkflowCapabilities.test.ts",
+    "web/productionCommand.test.ts",
+    "web/agentProcessApproval.test.ts",
+    "web/productionHost.test.ts",
+    "electron/capabilityCore/mcpGenerationTools.test.ts",
+    "scripts/web/seed-local-comfyui.test.mjs"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "web/agentTools.ts"
+    ],
+    "rationale": "Remove the separate five-tool web shot mutation implementation; canonical semantic tools provide the sole production writer."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "Retain latest main dependency versions and protocol owners; this repair adds internal domain composition, no dependency replacement.",
+    "exit_criteria": []
+  },
+  "migration": "v13 catalogs gain proven generated workflow capability metadata through the original forward migration to v14. Project observation fields default to empty for older snapshots; authored state is protected until observed.",
+  "residual_risks": [
+    "Real Codex MCP/browser script, source/canvas image and canonical video generation verified on isolated QA data and real RTX 5080; OpenCode v2 live execution, native Electron/Windows, full OS restart and large batches remain unverified.",
+    "Candidate-only web production rejects authored keyframe/promptSegments/anchorIds that differ from canonical execution; no silent renderer fallback.",
+    "152 inherited local visual baseline mismatches also reproduce on origin/main (143 identical diff hashes); no baseline updates.",
+    "SD1.5 does not faithfully follow these Korean prompts; submitted prompt, GPU output and asset identity were verified but image semantic quality is limited."
+  ],
+  "detected_by": "review",
+  "recurrence_check_on": "2027-01-14",
+  "invariant_owner_layer": {
+    "layer": "web",
+    "tests": [
+      "web/productionHost.test.ts",
+      "web/canvasSave.test.ts"
+    ]
+  }
+}

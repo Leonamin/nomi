@@ -1,3 +1,4 @@
+import { resolveArchetypeForModel } from '../shared/modelArchetypes'
 import { readFileSync } from "node:fs";
 import { describe, it, expect } from "vitest";
 import {
@@ -442,7 +443,9 @@ describe("buildComfyImportModelMapping", () => {
     const { model, mapping } = buildComfyImportModelMapping(built, { modelKey: "comfy-wan-i2v", labelZh: "本地 WAN 图生视频" });
     expect(model.vendorKey).toBe("comfyui-local");
     expect(model.kind).toBe("video");
+    expect(resolveArchetypeForModel({ modelKey: String(model.modelKey), vendorKey: String(model.vendorKey), meta: model.meta as Record<string, unknown> })?.kind).toBe("video");
     expect(model.enabled).toBe(false);
+    expect(resolveArchetypeForModel({ modelKey: String(model.modelKey), vendorKey: String(model.vendorKey), meta: model.meta as Record<string, unknown> })?.modes[0].transportTaskKind).toBe("image_to_video");
     expect((model.meta as { parameters: unknown[] }).parameters.length).toBeGreaterThan(0);
     expect(mapping.taskKind).toBe("image_to_video");
     const query = mapping.query as { response_transform: string; response_mapping: Record<string, string> };

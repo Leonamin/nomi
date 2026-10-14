@@ -254,6 +254,12 @@ export function createLaneClient(bridge: LaneBridge | undefined = resolveLaneBri
       const now = conversation()
       if (!now || address.workspaceId !== now.workspaceId || address.laneName !== now.laneName || address.sessionId !== now.sessionId) return stale()
     }
+    if ((command.kind === 'prompt' || command.kind === 'single-shot') && typeof window !== 'undefined' && window.nomiDesktop?.platform === 'web') {
+      const admittedProjectId = command.kind === 'single-shot' ? command.projectId ?? current?.binding.projectId : current?.binding.projectId
+      const { persistActiveWorkbenchProjectNow } = await import('../../project/workbenchProjectSession')
+      const saved = await persistActiveWorkbenchProjectNow()
+      if (!saved || saved.id !== admittedProjectId || startedEpoch !== epoch || startedBridge !== bridge) return stale()
+    }
     return bridge.send({ ...command, ...(current ? { workspaceId: current.subscriptionId } : {}),
       ...(address ? { expectedLane: address.laneName, expectedSessionId: address.sessionId } : {}) })
   }

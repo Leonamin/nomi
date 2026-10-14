@@ -148,6 +148,10 @@ export function normalizePayload(input: unknown): WorkbenchProjectPayload {
     categories: normalizeCategories(payload.categories),
     generationCanvasLastSeq: payload.generationCanvasLastSeq,
     ...(payload.webAgentSeenNodeIds ? { webAgentSeenNodeIds: [...payload.webAgentSeenNodeIds] } : {}),
+    ...(payload.webAgentSeenCanvas ? { webAgentSeenCanvas: structuredClone(payload.webAgentSeenCanvas) } : {}),
+    ...(payload.webManagedCanvas ? { webManagedCanvas: structuredClone(payload.webManagedCanvas) } : {}),
+    ...(payload.webAgentSeenCreation ? { webAgentSeenCreation: structuredClone(payload.webAgentSeenCreation) } : {}),
+    ...(payload.webManagedCreation ? { webManagedCreation: structuredClone(payload.webManagedCreation) } : {}),
     ...(payload.editingPanelLayout ? { editingPanelLayout: payload.editingPanelLayout } : {}),
     ...(Object.values(owner).some((designs) => designs.length > 0) ? { storyboardDesignsByDocumentId: owner } : {}),
   }

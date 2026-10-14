@@ -64,6 +64,8 @@ export type PendingSpendActionDeps = Readonly<{
   receipts: ApprovalReceiptAuthority;
   /** 当前提交面（渲染窗口）的身份。缺席 = 没有窗口可以代表真人，付费一律 fail-closed。 */
   rendererTarget: () => RendererGestureTarget | null;
+  /** HTTP host supplies only the verified server-issued surface/session and validated origin. */
+  webGestureTarget?: () => Readonly<{ surfaceId: string; clientSessionId: string; origin: string }> | null;
   /** 当前被提交的项目绑定（`canvasReadSurfaceRuntime.getCommittedProjectSelection`）。 */
   committedBinding: () => ProjectBinding | null;
   leaseFor: (binding: ProjectBinding) => Promise<ProjectLeaseV2>;
@@ -490,8 +492,9 @@ export function createPendingSpendActions(deps: PendingSpendActionDeps) {
     if (!shotId || !pending.shots.some((shot) => shot.shotId === shotId)) return failed(new Error("generation_scope_invalid"), false);
     noteReplacing(input.projectId, input.operationId, pending.quoteId);
     const multiShot = Boolean(deps.runs.read(input.projectId, input.operationId)?.generationPlan?.shots?.length);
+    const webTarget = deps.webGestureTarget?.();
     const target = deps.rendererTarget();
-    if (!target) return { ok: false, code: "unavailable" };
+    if (!target && !webTarget) return { ok: false, code: "unavailable" };
     try {
       const lease = await leased(input.projectId);
       assertBindingCurrent();
@@ -507,7 +510,7 @@ export function createPendingSpendActions(deps: PendingSpendActionDeps) {
           assertBindingCurrent();
           return deps.authorizeGeneration(request);
         }, planning: deps.planning, receipts: deps.receipts },
-        { operationId: input.operationId, lease, decision: { kind: "human-gesture", target }, actorId: "agent-panel", ...(multiShot ? { shotIds: [shotId] } : {}) },
+        { operationId: input.operationId, lease, decision: webTarget ? { kind: "web-session-gesture", target: webTarget } : { kind: "human-gesture", target: target! }, actorId: "agent-panel", ...(multiShot ? { shotIds: [shotId] } : {}) },
       );
       return { ok: true, code: "spend_confirmed" };
     } catch (error) {

@@ -1,5 +1,7 @@
 // 渲染层订阅：本层**零状态机**。所以这一族测试问的都是「它有没有偷偷记账」。
 import { describe, expect, it, vi } from 'vitest'
+const webSave = vi.hoisted(() => ({ persist: vi.fn() }))
+vi.mock('../../project/workbenchProjectSession', () => ({ persistActiveWorkbenchProjectNow: webSave.persist }))
 
 import type {
   LaneProjection, LaneWorkspaceProjection,
@@ -486,5 +488,37 @@ describe('C23 late history delivery', () => {
       await client.prompt('new B input')
       expect(sent.at(-1)).toMatchObject({ kind: 'prompt', expectedLane: 'research', expectedSessionId: 's-2' })
     } finally { client.dispose() }
+  })
+})
+
+
+describe('web creation admission reads persisted project state', () => {
+  it('waits for the original project save before sending a single-shot feature', async () => {
+    vi.stubGlobal('window', { nomiDesktop: { platform: 'web' } })
+    let finish: (value: unknown) => void = () => undefined
+    webSave.persist.mockReturnValue(new Promise(resolve => { finish = resolve }))
+    const f = fakeBridge()
+    const client = createLaneClient(f.bridge)
+    try {
+      const pending = client.singleShot({ projectId: 'project', requestId: 'request', featureKey: 'storyboard', prompt: 'Plan', context: { approvalPolicy: { mode: 'step', spend: 'confirm' } } })
+      await vi.waitFor(() => expect(webSave.persist).toHaveBeenCalledOnce())
+      expect(f.sent).toEqual([])
+      finish({ id: 'project' })
+      expect(await pending).toEqual({ ok: true })
+      expect(f.sent[0].kind).toBe('single-shot')
+    } finally { finish({ id: 'project' }); client.dispose(); vi.unstubAllGlobals(); webSave.persist.mockReset() }
+  })
+  it('does not admit a creation feature after a failed save or project cutover', async () => {
+    vi.stubGlobal('window', { nomiDesktop: { platform: 'web' } })
+    const f = fakeBridge()
+    const client = createLaneClient(f.bridge)
+    const request = { projectId: 'project', requestId: 'request', featureKey: 'storyboard', prompt: 'Plan', context: { approvalPolicy: { mode: 'step' as const, spend: 'confirm' as const } } }
+    try {
+      webSave.persist.mockRejectedValueOnce(new Error('Save failed'))
+      await expect(client.singleShot(request)).rejects.toThrow('Save failed')
+      webSave.persist.mockResolvedValueOnce({ id: 'other-project' })
+      expect((await client.singleShot(request)).ok).toBe(false)
+      expect(f.sent).toEqual([])
+    } finally { client.dispose(); vi.unstubAllGlobals(); webSave.persist.mockReset() }
   })
 })

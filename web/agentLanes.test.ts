@@ -10,25 +10,55 @@ import type { NativeAgentTurn } from './agentProcess'
 const mcp = vi.hoisted(() => ({ execute: undefined as undefined | ((tool: import('./agentTools').AgentTool, input: unknown) => Promise<unknown>) }))
 vi.mock('./agentMcp', () => ({ openAgentMcp: async (_tools: unknown, _signal: unknown, execute: typeof mcp.execute) => { mcp.execute = execute; return { url: 'http://localhost/mcp', token: 'test', close: async () => undefined } } }))
 import { WebAgentLanes } from './agentLanes'
-import type { WebGenerationJobs } from './generationJobs'
 async function fixture() {
   process.env.NOMI_WEB_OPENCODE_MODEL = 'opencode-go/installed-model'
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nomi-agent-lanes-'))
   let finish: () => void = () => undefined
   const run = vi.fn((_turn: NativeAgentTurn) => new Promise<void>(resolve => { finish = resolve }))
-  const lanes = new WebAgentLanes(root, {} as WebGenerationJobs, run)
+  const lanes = new WebAgentLanes(root, run, async () => ({ tools: [], dispose: () => undefined }))
   const project = createProject({ name: 'Agent lane identity' })
   const surface = createSurface('http://localhost')
   const suspension = surface.suspend({ surfaceInstanceId: crypto.randomUUID() }).value.suspension
-  await surface.commit({ projectId: project.id, suspension })
+  const surfaceBinding = (await surface.commit({ projectId: project.id, suspension })).value.binding
   const selected = surface.registry.getCommittedProjectSelection()!
   const binding = { projectId: selected.projectId, immutableProjectUuid: selected.immutableProjectUuid, projectGeneration: selected.projectGeneration }
   let projection: LaneWorkspaceProjection | undefined
   const listener = (event: { payload: LaneWorkspaceProjection; targetSurfaceId?: number }) => { if (event.targetSurfaceId === surface.id) projection = JSON.parse(JSON.stringify(event.payload)) }
   hostEvents.on('message', listener)
-  return { lanes, surface, binding, root, run, finish: () => finish(), projection: () => projection!, dispose: () => hostEvents.off('message', listener) }
+  return { lanes, surface, surfaceBinding, binding, root, run, finish: () => finish(), projection: () => projection!, dispose: () => hostEvents.off('message', listener) }
 }
 describe('native web lanes keep execution separate from browser subscriptions', () => {
+  it('executes creation planners in an isolated tool-free request without opening or borrowing a lane', async () => {
+    const f = await fixture()
+    try {
+      const result = f.lanes.send(f.surface, { kind: 'single-shot', requestId: 'single-shot-plan-1', projectId: f.binding.projectId, featureKey: 'storyboard', prompt: 'Return a two-shot plan', context: { approvalPolicy: { mode: 'step', spend: 'confirm' }, systemPrompt: 'Return only storyboard JSON' } })
+      await vi.waitFor(() => expect(f.run).toHaveBeenCalledOnce())
+      const turn = f.run.mock.calls[0][0]
+      expect(turn.mcpUrl).toBe('http://localhost/mcp')
+      expect(turn.sessionId).toBeUndefined()
+      expect(turn.prompt).toContain('Return only storyboard JSON')
+      turn.onEvent({ kind: 'text', id: 'actual-provider-part', text: '{"shots":[1,2]}' })
+      f.finish()
+      await expect(result).resolves.toMatchObject({ ok: true, singleShot: { running: false, parts: [{ kind: 'assistant-text', text: '{"shots":[1,2]}' }] } })
+      expect(f.projection()).toBeUndefined()
+    } finally { f.finish(); f.dispose() }
+  })
+  it('rejects a creation request addressed to another project before executing', async () => {
+    const f = await fixture()
+    try {
+      expect((await f.lanes.send(f.surface, { kind: 'single-shot', requestId: 'single-shot-plan-2', projectId: 'wrong-project', featureKey: 'direction', prompt: 'Draft', context: { approvalPolicy: { mode: 'step', spend: 'confirm' } } })).ok).toBe(false)
+      expect(f.run).not.toHaveBeenCalled()
+    } finally { f.dispose() }
+  })
+  it('releases its subscription after project authority was released by the home action', async () => {
+    const f = await fixture()
+    try {
+      const opened = await f.lanes.send(f.surface, { kind: 'workspace-open', binding: f.binding })
+      if (!opened.ok) throw new Error('Workspace not opened')
+      f.surface.release({ authority: f.surfaceBinding })
+      expect(await f.lanes.send(f.surface, { kind: 'workspace-close', workspaceId: opened.workspaceId })).toEqual({ ok: true })
+    } finally { f.dispose() }
+  })
   it.each(['openai', 'custom-relay'])('uses the saved OpenCode favorite for %s without forcing a provider', async providerID => {
     const f = await fixture()
     const home = path.join(f.root, 'native-home')
@@ -54,9 +84,22 @@ describe('native web lanes keep execution separate from browser subscriptions', 
       expect(f.projection().active).toMatchObject({ running: true, parts: [{ kind: 'user', text: 'Read my project' }] })
       f.finish()
       await vi.waitFor(() => expect(f.projection().active.running).toBe(false))
-      const restored = new WebAgentLanes(f.root, {} as WebGenerationJobs, f.run)
+      const restored = new WebAgentLanes(f.root, f.run)
       await restored.send(f.surface, { kind: 'workspace-open', binding })
       expect(f.projection().active.parts[0]).toMatchObject({ kind: 'user', text: 'Read my project' })
+    } finally { f.finish(); f.dispose() }
+  })
+  it('closes only its captured view after the project surface has been released, without stopping execution', async () => {
+    const f = await fixture()
+    try {
+      const opened = await f.lanes.send(f.surface, { kind: 'workspace-open', binding: f.binding })
+      const workspaceId = opened.ok ? opened.workspaceId : undefined
+      await f.lanes.send(f.surface, { kind: 'prompt', text: 'Keep accepted work running', workspaceId })
+      await vi.waitFor(() => expect(f.run).toHaveBeenCalledOnce())
+      const unselected = { ...f.surface, registry: { getCommittedProjectSelection: () => undefined } } as typeof f.surface
+      expect((await f.lanes.send({ ...unselected, id: f.surface.id + 1 }, { kind: 'workspace-close', workspaceId })).ok).toBe(false)
+      expect(await f.lanes.send(unselected, { kind: 'workspace-close', workspaceId })).toEqual({ ok: true })
+      expect(f.run.mock.calls[0][0].signal.aborted).toBe(false)
     } finally { f.finish(); f.dispose() }
   })
   it('rejects a replacement browser or stale conversation selector before invoking either engine', async () => {
@@ -76,7 +119,7 @@ describe('native web lanes keep execution separate from browser subscriptions', 
       const workspaceId = opened.ok ? opened.workspaceId : undefined
       await f.lanes.send(f.surface, { kind: 'prompt', text: 'Generate requested shots', workspaceId })
       await vi.waitFor(() => expect(f.run).toHaveBeenCalledOnce())
-      const tool = (name: string) => ({ name, effect: 'paid', schema: { parse: (input: unknown) => input }, run: async () => ({ taskId: name }) })
+      const tool = (name: string) => ({ name, approvalSubject: { effect: 'paid', effectClass: 'spend', requiresPlanReview: false, destructiveHint: true }, schema: { parse: (input: unknown) => input }, run: async () => ({ taskId: name }) })
       const first = mcp.execute!(tool('first'), {})
       await vi.waitFor(() => expect(f.projection().active.pending?.toolName).toBe('first'))
       const firstId = f.projection().active.pending!.toolCallId
@@ -90,4 +133,26 @@ describe('native web lanes keep execution separate from browser subscriptions', 
       await expect(second).resolves.toEqual({ taskId: 'second' })
     } finally { f.finish(); f.dispose() }
   })
+  it('never offers a reusable grant for irreversible tools and excludes user approval time from the native deadline', async () => {
+    const f = await fixture()
+    try {
+      const opened = await f.lanes.send(f.surface, { kind: 'workspace-open', binding: f.binding })
+      const workspaceId = opened.ok ? opened.workspaceId : undefined
+      await f.lanes.send(f.surface, { kind: 'prompt', text: 'Cancel this job', workspaceId, context: { approvalPolicy: { mode: 'safe-auto', spend: 'confirm' } } })
+      await vi.waitFor(() => expect(f.run).toHaveBeenCalledOnce())
+      const tool = { name: 'cancel_job', approvalSubject: { effect: 'reversible_write' as const, effectClass: 'irreversible' as const, destructiveHint: true, requiresPlanReview: false }, schema: { parse: (input: unknown) => input }, run: async () => ({ cancelled: true }) }
+      const execution = mcp.execute!(tool as unknown as import('./agentTools').AgentTool, {})
+      await vi.waitFor(() => expect(f.projection().active.pending?.toolName).toBe('cancel_job'))
+      expect(f.projection().active.pending?.grantable).toBe(false)
+      vi.useFakeTimers()
+      await vi.advanceTimersByTimeAsync(31 * 60 * 1000)
+      expect(f.run.mock.calls[0][0].signal.aborted).toBe(false)
+      vi.useRealTimers()
+      const toolCallId = f.projection().active.pending!.toolCallId
+      expect((await f.lanes.send(f.surface, { kind: 'approval', workspaceId, toolCallId, action: 'allow-session' })).ok).toBe(false)
+      await f.lanes.send(f.surface, { kind: 'approval', workspaceId, toolCallId, action: 'allow-once' })
+      await expect(execution).resolves.toEqual({ cancelled: true })
+    } finally { vi.useRealTimers(); f.finish(); f.dispose() }
+  })
+
 })

@@ -46,6 +46,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { spawn, spawnSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
+import { createRequire } from 'node:module'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const { readLabStates, readCalibration, baselineDirFor, pendingApprovalScreens, LAB_SCREEN_IDS, CALIBRATION_FILE } = await import(
@@ -302,13 +303,13 @@ if (portVerdict.status === 'unknown') {
 // 之前留下的差异图会让「这一趟有没有产出图」这个判据失真——先清干净，判据才成立。
 fs.rmSync(LAB_RESULTS_DIR, { recursive: true, force: true })
 
-const playwrightArgs = ['playwright', 'test', '-c', 'tests/ux/design-lab/playwright.config.mjs']
+const playwrightArgs = [createRequire(import.meta.url).resolve('@playwright/test/cli'), 'test', '-c', 'tests/ux/design-lab/playwright.config.mjs']
 // 输出既要**实时给人看**（跑十几分钟总得看见进度），又要留一份给分诊读，所以是 pipe + 转发，
 // 不是 stdio:'inherit'。inherit 时脚本自己看不见任何输出，于是只剩一个退出码可判——
 // 「所有失败都说成视觉基线不符」正是这么来的。
 const transcript = []
 const runStatus = await new Promise((resolve) => {
-  const child = spawn('npx', playwrightArgs, {
+  const child = spawn(process.execPath, playwrightArgs, {
     cwd: repoRoot,
     stdio: ['inherit', 'pipe', 'pipe'],
     env: { ...process.env, ...(UPDATE ? { NOMI_DESIGN_LAB_UPDATE: '1' } : {}) },

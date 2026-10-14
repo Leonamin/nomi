@@ -93,6 +93,8 @@ import type { GenerationAuthorizationPreparation, GenerationOperation, Generatio
 export type GenerationPlanningHandlerDependencies = {
   registry: Pick<ModuleRegistry, "resolve"> & Partial<Pick<ModuleRegistry, "snapshot">>;
   operations: GenerationOperationStore;
+  documentGenerationOwner?: "renderer" | "production-run";
+  assertDocumentOperation?: (projectId: string, operationId: string) => void;
   now?: () => string;
   resolveStoryboardReferenceUrl?: (projectId: string, reference: PlanCandidate["references"][number]) => string;
   requestRendererDecision?: (op: string, payload: unknown) => Promise<unknown>;
@@ -536,8 +538,10 @@ export function createGenerationPlanningHandler(deps: GenerationPlanningHandlerD
     });
     const current = normalizedDraft.operation as typeof stored;
     const storedLeftovers = normalizedDraft.clearedParameters;
+    if (current.sourceDocumentId && !["read", "events", "withdraw", "cancel"].includes(input.capability)) deps.assertDocumentOperation?.(input.lease.projectId, operationId);
+    const isRendererDocument = Boolean(current.sourceDocumentId && deps.documentGenerationOwner !== "production-run");
     if (input.capability === "present") {
-      if (current.sourceDocumentId) return presentStoryboardAuthoring(current,capturedProjectId,operationId,params.shotIds,deps.requestRendererDecision);
+      if (isRendererDocument) return presentStoryboardAuthoring(current,capturedProjectId,operationId,params.shotIds,deps.requestRendererDecision);
       // `generate` 动词：把草稿摆到用户面前。草稿一字不动，只让报价卡可投影；点头/花钱仍是用户在卡上的动作。
       // The durable owner validates lifecycle and preserves prior execution evidence.
       // 2026-09-22 上午这里有一条「被 × 过的 operationId 不许再 present」的拒绝。当天下午用户改窄了裁决 D：
@@ -550,7 +554,7 @@ export function createGenerationPlanningHandler(deps: GenerationPlanningHandlerD
       return { operation, taskRef: generationTaskReference(operation.operationId), shots, nextAction: "await_user" };
     }
     if (input.capability === "plan") {
-      if (current.sourceDocumentId) {
+      if (isRendererDocument) {
         await patchStoryboardAuthoring(current,params,capturedProjectId,operationId,resolvePatchReferences,deps.resolveStoryboardReferenceUrl,deps.requestRenderer);
         return {operation:current,taskRef:generationTaskReference(operationId),nextAction:'preview'};
       }
@@ -577,7 +581,7 @@ export function createGenerationPlanningHandler(deps: GenerationPlanningHandlerD
       return { operation, taskRef: generationTaskReference(operation.operationId), nextAction: "preview", ...(changeset ? { changeset } : {}) };
     }
     if (input.capability === "preview") {
-      if (current.sourceDocumentId) return { operation: current, taskRef: generationTaskReference(operationId), nextAction: "present" };
+      if (isRendererDocument) return { operation: current, taskRef: generationTaskReference(operationId), nextAction: "present" };
       const candidate = normalizeVideoCandidate(current.candidate, deps.videoModelCandidates);
       const contract = contractFor(candidate, input.lease.projectId);
       const readiness = resolveProviderReadiness(deps, candidate);
@@ -613,7 +617,7 @@ export function createGenerationPlanningHandler(deps: GenerationPlanningHandlerD
       };
     }
     if (input.capability === "gate_request") {
-      if (current.sourceDocumentId) refuseToModel(GENERATION_ARGUMENT_REFUSAL, "This draft came from a storyboard; use the original storyboard confirmation instead of requesting a gate here.");
+      if (isRendererDocument) refuseToModel(GENERATION_ARGUMENT_REFUSAL, "This draft came from a storyboard; use the original storyboard confirmation instead of requesting a gate here.");
       // 逐镜（2026-09-30）：这一次封哪几镜——卡上点到的那几镜；不点名 = 还没封过的全部。一次没点完、盖着别的镜的
       // 那份等人授权先撤掉（只解封它盖着的镜），再按这一次的范围封（`resolveGateScope`）。
       let base = current;
@@ -726,7 +730,7 @@ export function createGenerationPlanningHandler(deps: GenerationPlanningHandlerD
     }
     // 宿主内部用（不在任何模型可见的方法表里）：问这句话的那个回合没了 → 收回这一次出价，计划留着。
     if (input.capability === "withdraw") {
-      if (current.sourceDocumentId) return { operation: current, taskRef: generationTaskReference(operationId), nextAction: "present" };
+      if (isRendererDocument) return { operation: current, taskRef: generationTaskReference(operationId), nextAction: "present" };
       const reason = params.reason === "user_wrote" || params.reason === "stopped" ? params.reason : "user_closed";
       return { operation: await deps.operations.withdraw(input.lease.projectId, operationId, now(), reason), taskRef: generationTaskReference(operationId), nextAction: "present" };
     }

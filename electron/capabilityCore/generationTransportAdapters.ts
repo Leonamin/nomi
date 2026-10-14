@@ -1,3 +1,4 @@
+import { generateUserDecisionOf } from '../shared/agentLane/generateUserDecision';
 import type { GeneratePresentationOutcome } from "../shared/productionGenerationPresentation";
 import { resolveGenerationShotScope } from '../shared/agentCapabilities/generationShotScope';
 import { productionTaskAbsenceCode } from '../productionRun/productionRunErrors';
@@ -539,7 +540,7 @@ export function createPiGenerationTransportAdapter(
           // 卡本来就没藏着（`cardHidden` 不为 true：外部 MCP 宿主与面板自己的路径）。「全自动」档在这里替用户决门（见上）。
           const cardShown = capability === "present"
             || ((capability === "create" || capability === "plan") && !planCardHidden(result));
-          if (cardShown) {
+          if (cardShown && !generateUserDecisionOf(result)) {
             if (!releasePolicyClaim) releasePolicyClaim = claimPolicyDecision(draftedOperationIdOrNone(result, args));
             const decided = await decideByPolicyAfterDraft(args, result, currentLease, signal);
             if (decided) return { ok: true, result: decided };

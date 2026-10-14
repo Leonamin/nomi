@@ -1825,6 +1825,18 @@
       ],
       "reason": "任务状态四态的中立合同：主进程（responseParsing 重导出）与渲染层（taskApi 重导出）共用这一份，不再各自重复写在两个实现层。",
       "site": "electron/shared/taskStatus.ts::type:TaskStatus/type-union"
+    },
+    {
+      "members": [
+        "error",
+        "history",
+        "progress",
+        "result",
+        "runs",
+        "status"
+      ],
+      "site": "src/workbench/project/webCanvasProjection.ts::variable:outcomeKeys/set",
+      "reason": "Server-owned generation outcome fields are excluded together from authored field merges. This vocabulary is field names rather than task state values; the shared merge is the sole owner for save and browser projection."
     }
   ],
   "debt": [

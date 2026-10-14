@@ -181,7 +181,14 @@ export type DesktopBridge = DesktopMediaBridge &
   DesktopVideoDepthBridge & DesktopConnectorBridge & {
   platform: string
   web?: {
-    generationSnapshot: (projectId: string) => Promise<Array<{ key: string; isPending: boolean; node?: import('../workbench/generationCanvas/model/generationCanvasTypes').GenerationCanvasNode }>>
+    creationSnapshot: (projectId: string) => Promise<{ payload: import('../workbench/project/webCreationProjection').WebCreationPayload; knowledge: import('../workbench/project/webCreationProjection').WebCreationKnowledge }>
+    projectCreation: (local: import('../workbench/project/webCreationProjection').WebCreationPayload, server: import('../workbench/project/webCreationProjection').WebCreationPayload, known: import('../workbench/project/webCreationProjection').WebCreationKnowledge) => import('../workbench/project/webCreationProjection').WebCreationPayload
+    appliedCreationKnowledge: (projectId: string) => import('../workbench/project/webCreationProjection').WebCreationKnowledge
+    acknowledgeCreation: (projectId: string, knowledge: import('../workbench/project/webCreationProjection').WebCreationKnowledge) => void
+    generationSnapshot: (projectId: string) => Promise<import('../workbench/project/webCanvasProjection').WebGenerationSnapshot>
+    projectGenerationCanvas: (local: import('../workbench/project/webCanvasProjection').WebCanvasProjection, server: import('../workbench/project/webCanvasProjection').WebCanvasSource, known: import('../workbench/project/webCanvasProjection').WebCanvasKnowledge) => import('../workbench/project/webCanvasProjection').WebCanvasSource
+    appliedCanvasKnowledge: (projectId: string) => import('../workbench/project/webCanvasProjection').WebCanvasKnowledge
+    acknowledgeCanvas: (projectId: string, knowledge: import('../workbench/project/webCanvasProjection').WebCanvasKnowledge) => void
     acknowledgeAgentNodes: (projectId: string, ids: string[]) => Promise<void>
     appliedAgentNodeIds: (projectId: string) => readonly string[]
     agentSettings: (selection?: import('../../electron/shared/webAgentContracts').WebAgentEngine | import('../../electron/shared/webAgentContracts').WebAgentSelection) => Promise<import('../../electron/shared/webAgentContracts').WebAgentSettings>

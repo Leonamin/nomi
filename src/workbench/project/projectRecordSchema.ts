@@ -1,4 +1,6 @@
+import { webCanvasKnowledgeSchema, webManagedCanvasSchema, type WebCanvasKnowledge, type WebManagedCanvas } from './webCanvasProjection'
 import { z } from 'zod'
+import { webCreationKnowledgeSchema, webManagedCreationSchema, type WebCreationKnowledge, type WebManagedCreation } from './webCreationProjection'
 
 import { createDefaultTimeline } from '../timeline/timelineMath'
 import type { TimelineState } from '../timeline/timelineTypes'
@@ -65,6 +67,10 @@ export const workbenchProjectPayloadSchema = z.object({
   generationCanvasLastSeq: z.number().optional(),
   /** Browser-applied server additions, captured with this exact save snapshot. */
   webAgentSeenNodeIds: z.array(z.string()).max(10000).optional(),
+  webAgentSeenCanvas: webCanvasKnowledgeSchema.optional(),
+  webManagedCanvas: webManagedCanvasSchema.optional(),
+  webAgentSeenCreation: webCreationKnowledgeSchema.optional(),
+  webManagedCreation: webManagedCreationSchema.optional(),
   /** 每篇原稿的分镜设计（唯一持久化 owner）。 */
   storyboardDesignsByDocumentId: z.record(
     z.array(z.object({
@@ -141,6 +147,10 @@ export type WorkbenchProjectPayload = {
   /** S5-b-1:快照覆盖到日志的 seq(尾部重放游标);老项目无此字段则跳过重放。 */
   generationCanvasLastSeq?: number
   webAgentSeenNodeIds?: string[]
+  webAgentSeenCanvas?: WebCanvasKnowledge
+  webManagedCanvas?: WebManagedCanvas
+  webAgentSeenCreation?: WebCreationKnowledge
+  webManagedCreation?: WebManagedCreation
   storyboardDesignsByDocumentId?: Record<string, StoryboardDesign[]>
   /** Preview editing surface dimensions and visibility are project-local UI state. */
   editingPanelLayout?: EditingPanelLayout

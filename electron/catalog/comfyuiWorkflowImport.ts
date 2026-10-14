@@ -15,6 +15,7 @@ import type { ComfyComboValue, ComfyObjectInfoIndex } from "../comfyuiObjectInfo
 import { normalizeWorkflowBinding } from "./comfyuiWorkflowBindingNormalize";
 import { comfyOutputCandidates, resolveComfyWorkflowOutput, suggestedComfyOutput } from "./comfyuiWorkflowOutput";
 import { resolveComfyWorkflowTaskKind } from "./comfyuiWorkflowTaskContract";
+import { comfyWorkflowCapability } from './comfyuiWorkflowCapabilities';
 
 export { inputKeyOf, roleBoundInputKeys } from "./comfyuiWorkflowBindingNormalize";
 export { normalizeWorkflowBinding };
@@ -660,6 +661,7 @@ export function buildComfyImportModelMapping(
           ? { model_url: "model_url", error_message: "error" }
           : { image_url: "image_url", error_message: "error" },
   };
+  const capability = comfyWorkflowCapability(imported);
   return {
     model: {
       modelKey: opts.modelKey,
@@ -671,6 +673,7 @@ export function buildComfyImportModelMapping(
       enabled: false,
       meta: {
         parameters: imported.parameters,
+        ...(capability ? { customCapabilityContract: capability } : {}),
         ...(normalizedDraft ? { comfyWorkflowImport: normalizedDraft } : {}),
       },
     },
