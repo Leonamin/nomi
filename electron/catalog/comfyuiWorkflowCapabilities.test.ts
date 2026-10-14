@@ -50,3 +50,12 @@ describe('workflow capabilities have one bound-input declaration', () => {
     expect(migrateComfyWorkflowCapabilities(edited).models[0]).toBe(edited.models[0])
   })
 })
+
+it('retains owning frame roles but never guesses two generic image inputs are first/last', () => {
+  const graph = { '17': { class_type: 'LoadImage', inputs: { image: 'a.png' } }, '18': { class_type: 'LoadImage', inputs: { image: 'b.png' } }, '5': { class_type: 'AnyImageToVideo', inputs: { prompt: 'Lantern', first_frame: ['17', 0], last_frame: ['18', 0] } }, '14': { class_type: 'SaveVideo', inputs: { video: ['5', 0] } } }
+  const imported = buildImportedWorkflow(graph, { promptNodeId: '5', promptInputKey: 'prompt', outputNodeId: '14', outputKind: 'video', images: [{ nodeId: '17', inputKey: 'image', paramKey: 'first_frame_url', label: 'First', mediaKind: 'image' }, { nodeId: '18', inputKey: 'image', paramKey: 'last_frame_url', label: 'Last', mediaKind: 'image' }] })
+  expect(comfyWorkflowCapability(imported)?.modes[0]).toMatchObject({ intent: 'firstlast', slots: [{ kind: 'first_frame', inputKey: 'first_frame_url', min: 1, max: 1 }, { kind: 'last_frame', inputKey: 'last_frame_url', min: 1, max: 1 }] })
+  const generic = { ...imported, parameters: imported.parameters.map((control, index) => ({ ...control, key: `media-${index}` })) }
+  expect(comfyWorkflowCapability(generic)?.modes[0]).toMatchObject({ intent: 'single', slots: [{ kind: 'image_ref', min: 2, max: 2 }] })
+  expect(comfyWorkflowCapability({ ...generic, parameters: [...generic.parameters, { key: 'third', label: 'Third', type: 'image-url', mediaKind: 'image', default: '' }] })?.modes[0].slots).toMatchObject([{ kind: 'image_ref', min: 3, max: 3 }])
+})

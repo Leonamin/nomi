@@ -1,3 +1,4 @@
+import { LEGACY_IMAGE_ROLE_PARAM_KEYS } from '../shared/imageCapabilities/comfyWorkflowInputRoles';
 // 本地 ComfyUI「自定义 workflow 导入」后端（S3）。纯函数、零副作用、可单测。
 // plan: docs/plan/2026-07-15-comfyui-custom-workflow.md
 //
@@ -84,11 +85,7 @@ export type WorkflowBinding = {
 };
 
 /** 老角色 → 固定 paramKey。迁移与「新绑的图该叫什么」都从这里取，别在别处重打字面量。 */
-export const LEGACY_IMAGE_ROLE_PARAM_KEYS = {
-  firstFrame: "first_frame_url",
-  lastFrame: "last_frame_url",
-  sourceVideo: "source_video_url",
-} as const;
+export { LEGACY_IMAGE_ROLE_PARAM_KEYS } from '../shared/imageCapabilities/comfyWorkflowInputRoles';
 
 export type WorkflowAnalysis = {
   textInputs: NodeInputCandidate[];

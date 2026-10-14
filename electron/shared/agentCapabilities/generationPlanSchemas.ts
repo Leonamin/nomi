@@ -28,7 +28,7 @@ export type GenerationReference = z.infer<typeof generationReferenceSchema>;
  * 硬要整只 `candidate` 是同一类，解法也同一条：模型给语义（哪份素材、当什么用），身份由宿主按
  * 项目素材库补（`resolveProjectAssetReferenceIdentity`）。已经钉好的调用方照常直接给，逐字节不变。
  */
-const planReferenceInput = z.lazy(() => z.object({
+export const planReferenceInput = z.lazy(() => z.object({
   assetId: z.string().trim().min(1),
   contentHash: z.string().trim().min(1).optional(),
   version: z.number().int().min(1).optional(),

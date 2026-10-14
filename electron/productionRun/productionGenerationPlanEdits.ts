@@ -1,3 +1,4 @@
+import { generationCandidateOwnerShot } from '../shared/generationCandidateOwner';
 // 生成计划的**候选补丁**与**撤未点头的授权**（`generation.patch` / `generation.revise` /
 // `generation.trial_narrow` 三条命令共用的那一段写法）。
 //
@@ -110,7 +111,9 @@ export function applyGenerationCandidatePatch(
 ): ProductionGenerationPlan {
   const patch = record(command.payload, "patch") as Partial<ProductionGenerationShot["candidate"]>;
   const rawShotId = typeof command.payload.shotId === "string" ? command.payload.shotId.trim() : "";
-  const shotId = rawShotId || undefined;
+  const owner = generationCandidateOwnerShot(plan, rawShotId || undefined);
+  const mirror = generationCandidateOwnerShot(plan);
+  const shotId = owner?.shotId ?? (rawShotId || undefined);
   if (shotId) {
     const hasIncluded = typeof command.payload.included === "boolean";
     const shots = replaceShot(plan, shotId, (shot) => ({
@@ -125,7 +128,8 @@ export function applyGenerationCandidatePatch(
       ...(hasIncluded ? { included: command.payload.included as boolean } : {}),
       updatedAt: now,
     }));
-    return { ...plan, shots, updatedAt: now };
+    const updatedOwner = shots.find(shot => shot.shotId === shotId)!;
+    return { ...plan, shots, ...(mirror?.shotId === shotId ? { candidate: structuredClone(updatedOwner.candidate) } : {}), updatedAt: now };
   }
   const candidate = {
     ...plan.candidate,
@@ -258,8 +262,8 @@ export function applyGenerationRevise(current: ProductionRun, command: RunComman
   if (!currentPlan) throw new Error("Generation plan not found");
   if (currentPlan.state === "cancelled") throw new Error("A cancelled generation plan cannot be revised");
   const rawShotId = typeof command.payload.shotId === "string" ? command.payload.shotId.trim() : "";
-  const target = rawShotId || (currentPlan.shots?.length ? "" : currentPlan.candidate.candidateId);
-  if (!target && currentPlan.state !== "draft") throw new Error("A multi-shot revision must name its shot");
+  if (!rawShotId && currentPlan.shots?.length && currentPlan.state !== "draft") throw new Error("A multi-shot revision must name its shot");
+  const target = generationCandidateOwnerShot(currentPlan, rawShotId || undefined)?.shotId ?? (rawShotId || currentPlan.candidate.candidateId);
   if (target && approvedAuthorizationGatesForShot(current, target).length > 0) {
     throw new Error(`Shot ${target} is already generating or generated; it cannot be revised`);
   }

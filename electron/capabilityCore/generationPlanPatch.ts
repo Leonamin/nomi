@@ -1,3 +1,4 @@
+import { generationCandidateOwnerShot } from '../shared/generationCandidateOwner';
 // 改草稿那一刀的合并规则：把 patch 并进候选、清掉换模型带来的残留、把调用方这一次点名的
 // 参数当场判掉，并算出要报给调用方的 changeset。
 //
@@ -149,8 +150,9 @@ export async function normalizeStoredDraft(input: {
   if (operation.state !== "draft") return { operation, clearedParameters: [] };
   const cleared = new Set<string>();
   let current = operation;
-  // 顶层候选与每一镜是同一段逻辑，走同一个循环（`shotId` 缺省 = 顶层）。
-  const units = [{ candidate: operation.candidate, shotId: undefined as string | undefined }, ...(operation.shots ?? [])];
+  // Multi-shot top candidates are mirrors, not independent normalization units.
+  generationCandidateOwnerShot(operation);
+  const units = operation.shots?.length ? operation.shots : [{ candidate: operation.candidate, shotId: undefined as string | undefined }];
   for (const unit of units) {
     const stripped = stripParametersNotAccepted(unit.candidate, registry, videoModelCandidates);
     if (stripped.cleared.length === 0) continue;

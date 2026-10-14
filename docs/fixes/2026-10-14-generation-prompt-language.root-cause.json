@@ -1,0 +1,172 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-14-generation-prompt-language",
+  "problem_type": "Creator language incorrectly determines generation encoder input",
+  "symptom": "Korean lantern intent produces unrelated crowd images; Korean node translation reports no text.",
+  "direct_cause": "Agent schemas force user-language generation prompts while translator counts only Han/Latin.",
+  "class_root": "Generation encoder language and creator response language are conflated.",
+  "affected_population": [
+    "Korean and other non-Latin generation prompts",
+    "Desktop and native MCP draft_shots callers"
+  ],
+  "scope_paths": [
+    "electron/shared/agentCapabilities/generationPromptGuidance.ts",
+    "electron/shared/agentCapabilities/canvasWrite.ts",
+    "electron/shared/agentCapabilities/verbs/writeVerbs.ts",
+    "electron/harness/context/agentContext.ts",
+    "src/workbench/generationCanvas/nodes/promptTranslate.ts"
+  ],
+  "entry_points": [
+    "Canonical draft_shots tool prompt",
+    "Desktop language rule",
+    "Node prompt translator"
+  ],
+  "external_sources": [
+    {
+      "kind": "official-doc",
+      "url": "https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5",
+      "checked_at": "2026-10-14",
+      "purpose": "The affected SD1.5 model card identifies English language and weaker non-English prompt performance; use source-vs-English real GPU comparison."
+    }
+  ],
+  "invariants": [
+    "Creator titles, dialogue and source document remain verbatim.",
+    "Actual generation prompt is visible before approval; default encoder-facing language is English unless the selected model declares otherwise.",
+    "Hangul/Kana/Han text is translatable while asset URLs do not count as language."
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "electron/shared/agentCapabilities/verbs/writeVerbs.ts",
+      "symbol": "CANVAS_NODE_PROMPT_GUIDELINES"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/NodePromptTranslator.tsx",
+      "symbol": "detectTranslateDirection"
+    },
+    {
+      "kind": "write",
+      "path": "electron/agentLane/laneDesktopRuntime.ts",
+      "symbol": "buildLanguageRule"
+    },
+    {
+      "kind": "write",
+      "path": "electron/harness/context/agentContext.ts",
+      "symbol": "buildLanguageRule"
+    },
+    {
+      "kind": "read",
+      "path": "electron/harness/context/agentContext.ts",
+      "symbol": "GENERATION_PROMPT_LANGUAGE_GUIDELINE"
+    },
+    {
+      "kind": "read",
+      "path": "electron/shared/agentCapabilities/canvasWrite.ts",
+      "symbol": "GENERATION_PROMPT_LANGUAGE_GUIDELINE"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/nodes/promptTranslate.ts",
+      "symbol": "SOURCE_SCRIPT_RE"
+    }
+  ],
+  "door_reduction": {
+    "before": 4,
+    "after": 7,
+    "why_not": "Tool declaration, node translation, lane assembly and context assembly are distinct necessary consumers; instruction truth is centralized rather than deleting supported surfaces."
+  },
+  "generality_proof": "All canonical tools consume one language instruction; desktop response language no longer overrides it. Unicode script classes cover Hangul including decomposed Jamo, Kana and Han without model/vendor branches.",
+  "shared_boundaries": [
+    {
+      "path": "electron/shared/agentCapabilities/generationPromptGuidance.ts",
+      "symbol": "GENERATION_PROMPT_LANGUAGE_GUIDELINE",
+      "responsibility": "Separate model-facing prompt language from creator-facing titles and originals."
+    },
+    {
+      "path": "src/workbench/generationCanvas/nodes/promptTranslate.ts",
+      "symbol": "detectTranslateDirection",
+      "responsibility": "Determine target language from text scripts excluding reference tokens."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "electron/shared/agentCapabilities/verbs/writeVerbs.ts",
+      "entry_point": "writeVerbs",
+      "disposition": "enforced",
+      "evidence": "draft_shots publishes shared CANVAS_NODE_PROMPT_GUIDELINES to native web and desktop engines."
+    },
+    {
+      "path": "electron/harness/context/agentContext.ts",
+      "entry_point": "buildLanguageRule",
+      "disposition": "enforced",
+      "evidence": "All response locales consume the same generation-specific instruction."
+    },
+    {
+      "path": "src/workbench/generationCanvas/nodes/NodePromptTranslator.tsx",
+      "entry_point": "detectTranslateDirection",
+      "disposition": "enforced",
+      "evidence": "Existing selection-aware translator uses shared script detector."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every new Korean shot on English-oriented encoders repeats this instruction conflict.",
+    "same_class_scan": [
+      "rg SAME language / every prompt you write / detectTranslateDirection in src electron web",
+      "door-map CANVAS_NODE_PROMPT_GUIDELINES, buildLanguageRule, detectTranslateDirection --roots=src,electron,web"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "electron/shared/agentCapabilities/generationPromptGuidance.ts",
+    "invariant": "Generation instructions are independent of UI response locale.",
+    "failure_mode": "No hidden provider-time rewrite; original spend review shows exact submitted prompt.",
+    "exception_policy": "none",
+    "strategy": "Replace contradictory schema/system instructions with one shared generation-language rule and broaden the existing script detector.",
+    "artifacts": [
+      "electron/shared/agentCapabilities/generationPromptGuidance.ts",
+      "electron/shared/agentCapabilities/canvasWrite.ts",
+      "electron/shared/agentCapabilities/verbs/writeVerbs.ts",
+      "electron/harness/context/agentContext.ts",
+      "src/workbench/generationCanvas/nodes/promptTranslate.ts"
+    ]
+  },
+  "regression_tests": [
+    "electron/shared/agentCapabilities/generationPromptGuidance.test.ts",
+    "src/workbench/generationCanvas/nodes/promptTranslate.test.ts",
+    "electron/ai/composeAgentSystemPrompt.test.ts"
+  ],
+  "class_regression_tests": [
+    "electron/shared/agentCapabilities/generationPromptGuidance.test.ts",
+    "src/workbench/generationCanvas/nodes/promptTranslate.test.ts",
+    "electron/ai/composeAgentSystemPrompt.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "electron/harness/context/agentContext.ts",
+      "electron/shared/agentCapabilities/canvasWrite.ts",
+      "electron/shared/agentCapabilities/verbs/writeVerbs.ts"
+    ],
+    "rationale": "Remove forced user-language/Chinese generation instructions; preserve response-language policy."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "No runtime dependency owns this internal instruction conflict; use native agent translation and existing user-visible prompt review.",
+    "exit_criteria": []
+  },
+  "migration": "No stored prompt is rewritten. Existing drafts remain explicit; new drafts use corrected guidance and translator only acts on user request.",
+  "residual_risks": [
+    "Prompt guidance is probabilistic; actual GPU semantic comparison required.",
+    "English does not guarantee every model follows every scene correctly."
+  ],
+  "detected_by": "user",
+  "recurrence_check_on": "2027-01-14",
+  "invariant_owner_layer": {
+    "layer": "electron/shared/agentCapabilities",
+    "tests": [
+      "electron/shared/agentCapabilities/generationPromptGuidance.test.ts"
+    ]
+  }
+}

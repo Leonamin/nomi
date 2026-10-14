@@ -5,6 +5,7 @@
 // 宿主上真的存在」成了返回类型（取自宿主 schema）。编译期的东西没法在 vitest 里断言，所以这里留下的
 // 是**行为**那一半——它证明的是：换真相源之后，发出去的载荷与对照表时代逐字节相同。
 import { describe, expect, it } from "vitest";
+import { draftShotSchema } from "./writeVerbs";
 
 import { verbToTransportCall } from "../../../agentLane/laneVerbTransport";
 import { NOT_YET_DECLARED, PROVENANCE_UNVERIFIABLE, VERB_FIELD_PROVENANCE } from "./verbFieldProvenance";
@@ -77,3 +78,19 @@ describe("「模型从哪拿到这个值」那条轴（投影接不住它，所�
     expect([...Object.keys(VERB_FIELD_PROVENANCE), ...NOT_YET_DECLARED].sort().length).toBe(20);
   });
 });
+
+
+it.each(['flat', 'multi', 'patch'])('preserves first/last frame references at the one model boundary (%s)', shape => {
+  const references = [{ assetId: 'image-a', kind: 'image', role: 'first_frame' }, { assetId: 'image-b', kind: 'image', role: 'last_frame' }, 'legacy-image']
+  const shot = { prompt: 'A lantern', references }
+  const args = shape === 'patch' ? { operationId: 'existing', shots: [shot] } : shape === 'multi' ? { shots: [shot, { prompt: 'Other' }] } : { shots: [shot] }
+  const result = translate(args) as Record<string, unknown>
+  const target = shape === 'patch' ? result.patch : shape === 'multi' ? (result.shots as unknown[])[0] : result
+  expect(target).toMatchObject({ references: [{ assetId: 'image-a', kind: 'image', role: 'first_frame' }, { assetId: 'image-b', kind: 'image', role: 'last_frame' }, { assetId: 'legacy-image' }] })
+})
+
+it('model reference schema accepts roles without host identity and refuses invented fields', () => {
+  expect(draftShotSchema.parse({ prompt: 'Video', references: [{ assetId: 'a', kind: 'image', role: 'first_frame' }, 'b'] }).references).toHaveLength(2)
+  expect(() => draftShotSchema.parse({ references: [{ assetId: 'a', contentHash: 'invented' }] })).toThrow()
+  expect(() => draftShotSchema.parse({ references: [{ assetId: 'a', role: 'invented' }] })).toThrow()
+})

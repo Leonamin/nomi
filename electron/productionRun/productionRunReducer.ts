@@ -1,3 +1,4 @@
+import { assertSourceExecutionCandidateOwnership } from '../shared/storyboard/storyboardSubjectAdapter';
 import type { ArtifactReviewDecision } from "../shared/agentCapabilities/productionRun";
 import { transitionJob, transitionRun } from "./productionRunState";
 import { decideShotClaim } from "../shared/decideShotClaim";
@@ -199,6 +200,13 @@ export function applyProductionCommand(
   command: RunCommand,
   now: string,
 ): ProductionCommandEffect {
+  if (['generation.patch', 'generation.revise'].includes(command.type) && current.origin?.sourceDocument) {
+    if (current.generationPlan) {
+      assertSourceExecutionCandidateOwnership(current.generationPlan.candidate);
+      for (const shot of current.generationPlan.shots ?? []) assertSourceExecutionCandidateOwnership(shot.candidate);
+    }
+    assertSourceExecutionCandidateOwnership(record(command.payload, 'patch'));
+  }
   switch (command.type) {
     case "run.status":
       // 停下的原因在停的那一刻落成 run.stop（生命周期 owner：productionRunLifecycle）。
@@ -208,6 +216,13 @@ export function applyProductionCommand(
     case "run.stage": {
       const stageId = text(command.payload, "stageId");
       return { run: { ...current, stageId, updatedAt: now }, eventType: "run.stage.changed", message: stageId };
+    }
+    case "generation.source_storyboard.pin": {
+      const plan = current.generationPlan;
+      if (!current.origin.sourceDocument || !plan || plan.state !== "draft") throw new Error("storyboard_pin_requires_source_draft");
+      const contentHash = text(command.payload, "contentHash");
+      if (!/^[a-f0-9]{64}$/.test(contentHash)) throw new Error("storyboard_pin_invalid");
+      return { run: { ...current, generationPlan: { ...plan, sourceStoryboardHash: contentHash, updatedAt: now }, updatedAt: now }, eventType: "generation.source_storyboard.pinned", message: contentHash };
     }
     case "generation.patch": {
       const currentPlan = current.generationPlan;

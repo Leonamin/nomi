@@ -156,3 +156,41 @@ describe('native web lanes keep execution separate from browser subscriptions', 
   })
 
 })
+
+describe('native engine model identity', () => {
+  it('clears the selected model when switching engines and keeps same-engine selection', async () => {
+    const f=await fixture()
+    try {
+      expect(f.lanes.settings(f.surface,{model:'opencode-go/current'}).model).toBe('opencode-go/current')
+      expect(f.lanes.settings(f.surface,{engine:'opencode'}).model).toBe('opencode-go/current')
+      expect(f.lanes.settings(f.surface,{engine:'codex'}).model).not.toBe('opencode-go/current')
+      f.lanes.settings(f.surface,{model:'configured-codex'})
+      expect(f.lanes.settings(f.surface,{engine:'opencode'}).model).toBe('opencode-go/installed-model')
+    }finally{f.dispose()}
+  })
+})
+
+describe('explicit new conversation keeps legacy history intact', () => {
+  it('publishes a fresh session and resumes its own native session only after the first real turn', async () => {
+    const f=await fixture()
+    try {
+      const opened=await f.lanes.send(f.surface,{kind:'workspace-open',binding:f.binding})
+      const workspaceId=opened.ok?opened.workspaceId:undefined
+      await f.lanes.send(f.surface,{kind:'prompt',text:'Original history',workspaceId})
+      await vi.waitFor(()=>expect(f.run).toHaveBeenCalledOnce())
+      f.run.mock.calls[0][0].onEvent({kind:'session',id:'original-native-session'})
+      f.finish();await vi.waitFor(()=>expect(f.projection().active.running).toBe(false))
+      const original=f.projection().lanes.find(lane=>lane.laneName==='main')!.sessionId
+      expect(await f.lanes.send(f.surface,{kind:'lane-create',laneName:'fresh-qa',workspaceId})).toEqual({ok:true})
+      expect(f.projection().active.lane).toBe('fresh-qa');expect(f.projection().active.parts).toEqual([])
+      expect(f.projection().lanes.find(lane=>lane.laneName==='fresh-qa')!.sessionId).not.toBe(original)
+      await f.lanes.send(f.surface,{kind:'prompt',text:'Fresh tools',workspaceId})
+      await vi.waitFor(()=>expect(f.run).toHaveBeenCalledTimes(2))
+      expect(f.run.mock.calls[1][0].sessionId).toBeUndefined()
+      expect(f.run.mock.calls[1][0].toolNames).toEqual([])
+      f.finish();await vi.waitFor(()=>expect(f.projection().active.running).toBe(false))
+      await f.lanes.send(f.surface,{kind:'lane-select',laneName:'main',workspaceId})
+      expect(f.projection().active.parts[0]).toMatchObject({kind:'user',text:'Original history'})
+    }finally{f.finish();f.dispose()}
+  })
+})

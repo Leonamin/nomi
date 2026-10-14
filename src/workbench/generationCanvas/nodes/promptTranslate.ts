@@ -1,6 +1,6 @@
 /**
  * 节点提示词「翻译」的纯函数层（2026-09-21 用户拍板）：
- * - 方向自动判断：以中文为主 → 译成英文；以英文为主 → 译成中文；
+ * - 方向自动判断：以汉字 / 韩文 / 日文为主 → 译成英文；以英文为主 → 译成中文；
  * - @素材引用保护：`@[asset:…]` 标记换成 `⟦n⟧` 占位符送模型，回来原样还原；占位符多一个、少一个、
  *   重复一个都拒绝替换——宁可不翻，也不静默丢掉一张参考图；
  * - 指令构造：只要译文本身，保留占位符与换行。
@@ -11,9 +11,9 @@
 import i18n from '../../../i18n'
 import { encodeMention, parsePromptSegments } from '../../assets/promptMentions'
 
-export type TranslateDirection = 'zh-to-en' | 'en-to-zh'
+export type TranslateDirection = 'source-to-en' | 'en-to-zh'
 
-const CJK_RE = /[㐀-䶿一-鿿豈-﫿]/g
+const SOURCE_SCRIPT_RE = /[\p{Script=Han}\p{Script=Hangul}\p{Script=Hiragana}\p{Script=Katakana}]/gu
 const LATIN_WORD_RE = /[A-Za-z]+/g
 /** 一个英文单词约等于两个汉字的信息量——按「字数 vs 单词数×2」比，而不是逐字母比（逐字母会让中文里夹一个 cinematic 就翻转方向）。 */
 const LATIN_WORD_WEIGHT = 2
@@ -26,10 +26,10 @@ export function detectTranslateDirection(prompt: string): TranslateDirection | n
   const text = parsePromptSegments(prompt)
     .map((segment) => (segment.type === 'text' ? segment.value : ''))
     .join('')
-  const cjk = text.match(CJK_RE)?.length ?? 0
+  const sourceLetters = text.match(SOURCE_SCRIPT_RE)?.length ?? 0
   const latinWords = text.match(LATIN_WORD_RE)?.length ?? 0
-  if (cjk === 0 && latinWords === 0) return null
-  return cjk >= latinWords * LATIN_WORD_WEIGHT ? 'zh-to-en' : 'en-to-zh'
+  if (sourceLetters === 0 && latinWords === 0) return null
+  return sourceLetters >= latinWords * LATIN_WORD_WEIGHT ? 'source-to-en' : 'en-to-zh'
 }
 
 export type ProtectedPrompt = {
@@ -90,7 +90,7 @@ export function splitOuterWhitespace(text: string): { lead: string; core: string
 
 /** 组翻译指令。导出供单测——「保留占位符」这条要是没进 prompt，丢引用就只剩还原那一道拦。 */
 export function buildTranslatePrompt(text: string, direction: TranslateDirection, placeholderCount: number): string {
-  const target = i18n.t(direction === 'zh-to-en' ? 'generationCommon.translator.targetEnglish' : 'generationCommon.translator.targetChinese')
+  const target = i18n.t(direction === 'source-to-en' ? 'generationCommon.translator.targetEnglish' : 'generationCommon.translator.targetChinese')
   return [
     i18n.t('generationCommon.translator.intro', { target }),
     placeholderCount > 0 ? i18n.t('generationCommon.translator.placeholderRule', { example: placeholder(0) }) : '',

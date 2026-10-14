@@ -7,6 +7,8 @@ import { describe, expect, it } from "vitest";
 
 import { VERB_DECLARATIONS } from "../shared/agentCapabilities/verbDeclarations";
 import { gateRowsFor } from "./mcpGenerationTools";
+import { verbToTransportCall } from "../agentLane/laneVerbTransport";
+import { compileShotOutbound } from "../shared/storyboard/storyboardPromptCompiler";
 
 const draftShots = () => VERB_DECLARATIONS.find((declaration) => declaration.name === "draft_shots")!;
 
@@ -59,9 +61,16 @@ describe("报价卡上的行怎么选", () => {
 // `references` 的说明书曾经说这里也收镜头 id（`look_at_canvas` 给的那种），而解析这一头只认
 // 素材库里的 assetId——模型照着说明书做，run2 的 A1/A4 各被拒一次。说明书按真的那份写。
 describe("references 的说明书与解析这一头对得上", () => {
-  it("不再承诺镜头 id：跨镜复用点名 storyboard.anchorIds", () => {
-    const printed = JSON.stringify(draftShots().schema);
+  it("参考输入指向项目素材并保留首尾帧角色，不承诺镜头 id 或隐式锚引用", () => {
+    const schema = draftShots().schema;
+    const printed = JSON.stringify(schema);
     expect(printed).not.toContain("or shot ids");
-    expect(printed).toContain("storyboard.anchorIds");
+    expect(printed).toContain("Project asset");
+    const references = [{ assetId: "asset-image", kind: "image", role: "first_frame" }, { assetId: "asset-image", kind: "image", role: "last_frame" }];
+    const parsed = schema.parse({ shots: [{ prompt: "Lantern sways", references }] });
+    const projected = verbToTransportCall({ toolCallId: "typed-refs", toolName: "draft_shots", args: parsed })!;
+    expect(projected.call.args).toMatchObject({ references });
+    // Editorial anchor ids do not secretly become model reference inputs.
+    expect(compileShotOutbound({ index: 1, durationSec: 5, anchorIds: ["character-anchor"], prompt: "Lantern sways" }, "shot").referenceBindings).toEqual({});
   });
 });

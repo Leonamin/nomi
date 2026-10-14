@@ -198,7 +198,7 @@ export function discardPreparedPreview(prepared?: StoredAssetPreview): void {
   try { fs.rmSync(prepared.previewPath, { force: true }); } catch { /* non-fatal */ }
 }
 
-function withPreviewFields<T>(record: T, projectId: string, thumbnailRelativePath: string, width?: number, height?: number, durationSeconds?: number): WithStoredAssetPreview<T> {
+export function withPreviewFields<T>(record: T, projectId: string, thumbnailRelativePath: string, width?: number, height?: number, durationSeconds?: number): WithStoredAssetPreview<T> {
   const stored = record as StoredRecordLike;
   return {
     ...record,

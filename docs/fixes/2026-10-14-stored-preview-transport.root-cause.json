@@ -1,0 +1,114 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-14-stored-preview-transport",
+  "problem_type": "Persisted preview locator missing from transport DTO",
+  "symptom": "Generated video plays but its asset-library thumbnail fails to load in web",
+  "direct_cause": "List DTO spreads thumbnailRelativePath without thumbnailUrl; renderer derives nomi-local after HTTP transport translation",
+  "class_root": "Persisted local preview paths must become canonical preview URLs at the asset DTO owner before platform transport",
+  "affected_population": [
+    "Generated and imported image/video previews listed after persistence or restart"
+  ],
+  "scope_paths": [
+    "electron/assets/assetPreview.ts",
+    "electron/assets/projectAssetStore.ts"
+  ],
+  "entry_points": [
+    "Desktop asset list IPC",
+    "Web asset list RPC",
+    "Imported asset return DTO"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "Internal persisted sidecar and canonical media transport contract; no external dependency controls URL derivation",
+  "invariants": [
+    "Every listed stored preview has an owning canonical thumbnailUrl before platform translation",
+    "Listing reuses persisted preview metadata without encoding or rewriting source assets"
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "electron/assets/assetPreview.ts",
+      "symbol": "withPreviewFields"
+    },
+    {
+      "kind": "write",
+      "path": "electron/assets/projectAssetStore.ts",
+      "symbol": "withPreviewFields"
+    }
+  ],
+  "door_reduction": {
+    "before": 1,
+    "after": 2,
+    "why_not": "Existing import/cached preview DTO creation and persisted asset listing are separate lifecycle entrances; both now converge on one derivation owner. No caller-specific derivation remains in list output."
+  },
+  "generality_proof": "Import and asset listing reuse the same preview DTO derivation; existing recursive web media translation converts both primary and thumbnail URLs, including legacy sidecars that persist only a relative path",
+  "shared_boundaries": [
+    {
+      "path": "electron/assets/assetPreview.ts",
+      "symbol": "withPreviewFields",
+      "responsibility": "Derive canonical preview URL from project-owned persisted preview path"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "electron/assets/projectAssetStore.ts",
+      "entry_point": "listProjectAssets",
+      "disposition": "enforced",
+      "evidence": "Sidecar image/video records now reuse preview DTO owner before returning to desktop or web transport"
+    },
+    {
+      "path": "electron/assets/assetPreview.ts",
+      "entry_point": "attachStoredAssetPreview",
+      "disposition": "enforced",
+      "evidence": "Both newly generated and cached import previews already converge on withPreviewFields"
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every persisted sidecar with relative preview path but no transient URL reproduces this on web listing",
+    "same_class_scan": [
+      "door-map withPreviewFields found existing cached/new preview branches",
+      "door-map listProjectAssets found desktop IPC, spend references, asset identity and timeline readers; web/rpc.ts binds same owner",
+      "rg thumbnailRelativePath/thumbnailUrl traced useAllProjectAssets fallback after web/mediaUrls translation"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "electron/assets/assetPreview.ts",
+    "invariant": "Persisted preview metadata receives canonical URL before transport",
+    "failure_mode": "Absent preview remains absent; existing asset read/transport ownership and path guards remain unchanged",
+    "exception_policy": "none",
+    "strategy": "Reuse the existing DTO derivation for list output instead of creating a browser-specific preview fallback",
+    "artifacts": [
+      "electron/assets/assetPreview.ts",
+      "electron/assets/projectAssetStore.ts"
+    ]
+  },
+  "regression_tests": [
+    "electron/assets/assetPreview.test.ts"
+  ],
+  "class_regression_tests": [
+    "electron/assets/assetPreview.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "not-applicable",
+    "removed_paths": [],
+    "rationale": "Existing preview and media transport owners are reused; renderer fallback remains necessary for other non-stored asset DTOs"
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "Application-owned DTO derivation; encoding and browser transport libraries do not change",
+    "exit_criteria": []
+  },
+  "migration": "No disk migration: relative-path-only sidecars derive current project URLs on every list read",
+  "residual_risks": [
+    "Actual generated-video thumbnail browser verification belongs to coordinator"
+  ],
+  "detected_by": "review",
+  "recurrence_check_on": "2027-01-14",
+  "invariant_owner_layer": {
+    "layer": "electron/assets",
+    "tests": [
+      "electron/assets/assetPreview.test.ts"
+    ]
+  }
+}

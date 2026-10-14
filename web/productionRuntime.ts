@@ -1,3 +1,5 @@
+import { assertSourceExecutionCandidateOwnership, executionPatchAfterSourceSync } from '../electron/shared/storyboard/storyboardSubjectAdapter'
+import { generationCandidateOwnerShot } from '../electron/shared/generationCandidateOwner'
 import { createProductionRunRepository, type ProductionRunRepository } from '../electron/productionRun/productionRunRepository'
 import { createProductionRunService } from '../electron/productionRun/productionRunService'
 import { registerProductionRunService } from '../electron/productionRun/productionRunServiceRegistry'
@@ -27,8 +29,7 @@ import { deriveUsableVideoModelCandidates } from '../electron/capabilityCore/usa
 import { readGenerationDefaultModelResolver } from '../electron/capabilityCore/generationDefaultModelResolver'
 import { resolvePlanPatch } from '../electron/capabilityCore/generationPlanPatch'
 import { unknownSubmissionShotLabels } from '../electron/shared/productionShotPhase'
-import { resolveProductionReferenceUrls } from '../electron/capabilityCore/productionReferenceUrls'
-import { projectSpendReferenceAssets, resolveIndexedReferencePreview } from '../electron/capabilityCore/pendingSpendReferences'
+import { resolveIndexedReferencePreview } from '../electron/capabilityCore/pendingSpendReferences'
 import { resolveProjectAssetReferenceIdentity } from '../electron/assets/projectAssetStore'
 import { registerBatchSchedulerKicker } from '../electron/productionRun/batchSchedulerKick'
 import { readAgentApprovalPolicy } from '../electron/settings/agentApprovalPolicySettings'
@@ -45,6 +46,7 @@ export type WebGestureTarget = Readonly<{ surfaceId: string; clientSessionId: st
 export type WebProductionRuntimeDependencies = {
   requestRenderer: (op: string, payload: unknown, timeoutMs: number) => Promise<unknown>;
   assertDocumentOperation?: (projectId: string, operationId: string) => void;
+  pinDocumentOperation?: (projectId: string, operationId: string) => void;
   isProjectOpen: (projectId: string) => boolean;
   onRunChanged?: (run: ProductionRun) => void;
 }
@@ -66,20 +68,33 @@ export function createWebProductionRuntime(deps: WebProductionRuntimeDependencie
   const store = createProductionGenerationOperationStore(service, { onPlanChanged: landing.landDraftOnCanvas })
   const syncDocumentPatch = async (projectId: string, operationId: string, patch: Record<string, unknown>, shotId?: string, expectedRevision?: number) => {
     const run = repository.read(projectId, operationId), source = run?.origin.sourceDocument
-    if (!source || !run?.generationPlan) return
+    if (!source || !run?.generationPlan) return patch
+    assertSourceExecutionCandidateOwnership(run.generationPlan.candidate)
+    for (const shot of run.generationPlan.shots ?? []) assertSourceExecutionCandidateOwnership(shot.candidate)
     if (expectedRevision !== undefined && run.revision !== expectedRevision) throw new Error('storyboard_content_conflict')
     assertSource(projectId, operationId)
-    await patchStoryboardAuthoring({ sourceDocumentId: source.documentId }, { shotId: shotId ?? run.generationPlan.candidate.candidateId, patch }, projectId, operationId,
+    const owner = generationCandidateOwnerShot(run.generationPlan, shotId)
+    await patchStoryboardAuthoring({ sourceDocumentId: source.documentId }, { shotId: owner?.shotId ?? shotId ?? run.generationPlan.candidate.candidateId, patch }, projectId, operationId,
       (_id, value) => value as PlanCandidate['references'], resolveIndexedReferencePreview, deps.requestRenderer)
+    return executionPatchAfterSourceSync(patch)
+  }
+  const readAfterSourceWrite = async (projectId: string, operationId: string) => {
+    const operation = await store.read(projectId, operationId)
+    if (!operation) throw new Error('Production Run lost its generation plan')
+    return operation
   }
   const operations: typeof store = { ...store,
     patch: async (projectId, operationId, patch, now, shotId, target) => {
-      await syncDocumentPatch(projectId, operationId, patch as Record<string, unknown>, shotId)
-      return store.patch(projectId, operationId, patch, now, shotId, target)
+      const executionPatch = await syncDocumentPatch(projectId, operationId, patch as Record<string, unknown>, shotId)
+      await store.patch(projectId, operationId, executionPatch, now, shotId, target)
+      deps.pinDocumentOperation?.(projectId, operationId)
+      return readAfterSourceWrite(projectId, operationId)
     },
     revise: async (projectId, operationId, input, now) => {
-      await syncDocumentPatch(projectId, operationId, input.patch, input.shotId, input.expectedRevision)
-      return store.revise!(projectId, operationId, input, now)
+      const executionPatch = await syncDocumentPatch(projectId, operationId, input.patch, input.shotId, input.expectedRevision)
+      await store.revise!(projectId, operationId, { ...input, patch: executionPatch }, now)
+      deps.pinDocumentOperation?.(projectId, operationId)
+      return readAfterSourceWrite(projectId, operationId)
     },
   }
   const unboundProviders = () => createWebComfyuiProviderBootstrap({ projectId: '', runId: '', readRun: () => null })
@@ -125,7 +140,7 @@ export function createWebProductionRuntime(deps: WebProductionRuntimeDependencie
           assertSource(lease.projectId, operation.operationId)
           const current = readWorkspaceProject(lease.projectId, getWorkspaceRepositoryDeps()), currentRun = repository.read(lease.projectId, operation.operationId)
           if (!current || !current.immutableProjectUuid || typeof current.projectGeneration !== 'number' || !sameProjectAgentBinding({ projectId: current.id, immutableProjectUuid: current.immutableProjectUuid, projectGeneration: current.projectGeneration }, lease) || current.revision !== record.revision || currentRun?.revision !== run.revision) throw new Error('generation_reference_scope_changed')
-        } }, referenceInput => resolveProductionReferenceUrls(referenceInput, { assets: projectSpendReferenceAssets, localize: async (_providerId, urls) => urls }))
+        } })
     },
     start: async (operation, lease) => {
       const submission = buildSubmission(lease.projectId, operation.operationId)

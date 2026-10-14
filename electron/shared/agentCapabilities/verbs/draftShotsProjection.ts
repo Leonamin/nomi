@@ -11,11 +11,10 @@
 //   ② `candidate.{providerId,modelId}` → 顶层 `providerId` / `modelId`：**拍平嵌套**。宿主的逐镜
 //      `candidate` 是完整的内部候选（candidateId / revision / 传输接线），模型给不出；它给的两件按
 //      目录身份分别落位。平铺的 `modelId` 与 `candidate.modelId` 抢同一个落点，**逐镜点名的赢**。
-//   ③ `references: string[]` → `{assetId}[]`：形状变了，内容哈希与版本由宿主按项目素材库补
+//   ③ `references: (string | {assetId,kind?,role?})[]` → canonical reference objects：形状变了，内容哈希与版本由宿主按项目素材库补
 //      （`resolveProjectAssetReferenceIdentity`）。两个读动词都不返回那两件，模型根本拿不到它们——
 //      当年正是硬要它给，才让带参考图的分镜 100% 失败。
-//      （裁决 §4.5 提过另一条出路：宿主直接收 `string | {assetId,…}` 的 union。没走，因为那会把这次
-//      归一从**一处声明**推进到每一个下游消费点——正是 R5 那条规则在治的形状。）
+//      Legacy string IDs are normalized only here; explicit role/kind are retained. Host consumers never receive a union.
 //
 // 另外两件不是形状变化，是**这条路上没有它的位置**：改草稿递给宿主的是候选 patch（提示词/模型/参数/
 // 参考），镜头**信封**（`title` / `role`）不在那份形状里；单镜 create 把一镜摊成顶层参数，顶层同样没有
@@ -87,7 +86,7 @@ function semanticsOf(shot: DraftShot): CandidatePatch {
       : modelId !== undefined ? { modelId } : {}),
     ...(candidate?.providerId !== undefined ? { providerId: candidate.providerId } : {}),
     // ③ 身份由宿主补：模型只给「哪份素材」。
-    ...(references !== undefined ? { references: references.map((assetId) => ({ assetId })) } : {}),
+    ...(references !== undefined ? { references: references.map(reference => typeof reference === "string" ? { assetId: reference } : reference) } : {}),
   };
 }
 

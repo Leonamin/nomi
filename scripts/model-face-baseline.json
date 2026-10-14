@@ -483,7 +483,7 @@
       "aliasBoundInput": null,
       "alsoCovers": null,
       "contractId": "generation.plan",
-      "description": "Create or update image, video, audio or 3D shot drafts in the project; document plans are saved without automatic canvas placement. Whenever the user asks to make, draw, render, regenerate, restyle or re-time any media — including a single image — or to split text into shots, or to change a shot's prompt, model, parameters or references. Pass shotId to update an existing draft; omit it to create. New drafts do not request generation or show a spend card — call generate for that, unless the user said not to generate yet. Updating an already-presented draft retains its existing approval policy; use the returned result to determine whether that policy started generation. Not for links, groups or layout (arrange_canvas), not for hand-made artifacts (make_artifact), not for staging or camera references (stage_shot). shots[] each with prompt, optional title, taskKind, durationSec, modelId (or candidate with providerId + modelId, never both for one shot), modeId, parameters, references, role. For anchor role, include storyboard with kind (character/scene/prop/style) and carrier (visual/text); title names the anchor and prompt describes it. Original shot details (anchorIds, keyframe, referenceBindings) also go in storyboard. A top-level candidate or taskKind is the default for shots that omit their own. Model and parameter values come from list_models; reuse operationId and shotId from the current draft result. Two shapes: creating a shot needs prompt; revising one (operationId + shotId) carries only the fields you are changing — prompt, model, modeId, parameters, references — and leaves the rest out, including title and role, which are fixed when the shot is created. The host clamps values to the model's real limits and reports every clamp. The change lands in the project as a reversible local edit (in step-by-step approval mode the user confirms it first; otherwise it applies right away). This local edit grants no new spending permission; use the tool result for any generation status.",
+      "description": "Draft or revise media shots; source plans save to the document without automatic canvas placement. Make, regenerate or edit media, split text into shots, or revise prompt/model/parameters/references. Use shotId to revise; omit to create. New drafts need generate for approval; skip it when generation was not requested. Revisions retain prior approval policy; inspect result for execution. Layout uses arrange_canvas; hand-made artifacts make_artifact; staging/camera stage_shot. shots[]: prompt, title, taskKind, durationSec, modelId OR candidate {providerId,modelId}, modeId, parameters, references, role. Catalog values come from list_models; top-level candidate/taskKind defaults apply only when absent on the shot. Anchor role needs storyboard.kind and carrier; title names it, prompt describes it. Author details (anchorIds, keyframe, referenceBindings) belong in storyboard. Creating needs prompt; revising (operationId + shotId) sends only changed prompt/model/mode/parameters/references/durationSec; title and role stay fixed. The host reports clamps. For keyframe video, generate and review the image first, then use its project asset as references role first_frame before requesting video approval. The change lands in the project as a reversible local edit (in step-by-step approval mode the user confirms it first; otherwise it applies right away). This local edit grants no new spending permission; use the tool result for any generation status.",
       "effect": "reversible_local",
       "effectGroups": [
         "canvas-node-creation"
@@ -531,24 +531,25 @@
       ],
       "promptGuidelines": [
         "Read before you write: every id you pass to a write verb comes from a read in this conversation, never from memory or guesswork.",
-        "High-quality generation prompt, in the SAME language as the user (Chinese user → Chinese prompt). Write it as a STRUCTURED skeleton, not a run-on sentence:\n- character/scene reference card: stable appearance/environment description + unified style keywords (neutral full-body pose for a character, empty wide establishing shot for a scene; no plot action).\n- image / keyframe shot: scene·time·light → subject·action·expression → shot language (wide / close-up / low-angle…) → style keywords.\n- video shot: camera move (push / pull / pan / track…) → on-screen action progression → rhythm & duration feel; do NOT restate the static keyframe description.\nKeep the same subject's appearance description consistent across shots. agent-artifact nodes carry no prompt: send an empty string."
+        "Use English for model-facing generation prompts unless the selected profile declares another language. Preserve the original source document, titles, names, captions and dialogue in the user’s language. Translate subject, action, lighting, camera and style faithfully; add no subjects and keep quoted on-screen text unchanged. Explain adaptation in the user’s language; show the actual generation prompt before approval. Never silently rewrite saved prompts.",
+        "Write a high-quality generation prompt as a STRUCTURED skeleton, not a run-on sentence:\n- character/scene reference card: stable appearance/environment description + unified style keywords (neutral full-body pose for a character, empty wide establishing shot for a scene; no plot action).\n- image / keyframe shot: scene·time·light → subject·action·expression → shot language (wide / close-up / low-angle…) → style keywords.\n- video shot: camera move (push / pull / pan / track…) → on-screen action progression → rhythm & duration feel; do NOT restate the static keyframe description.\nKeep the same subject's appearance description consistent across shots. agent-artifact nodes carry no prompt: send an empty string."
       ],
-      "promptSnippet": "Create or update image, video, audio or 3D shot drafts in the project; document plans are saved without automatic canvas placement.",
+      "promptSnippet": "Draft or revise media shots; source plans save to the document without automatic canvas placement.",
       "publishedJsonSchema": {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "additionalProperties": false,
         "properties": {
           "candidate": {
             "additionalProperties": true,
-            "description": "Default catalog candidate for these shots.",
+            "description": "Default catalog identity.",
             "properties": {
               "modelId": {
-                "description": "Model id from list_models.",
+                "description": "list_models model.",
                 "minLength": 1,
                 "type": "string"
               },
               "providerId": {
-                "description": "Provider id from list_models.",
+                "description": "list_models provider.",
                 "minLength": 1,
                 "type": "string"
               }
@@ -560,7 +561,7 @@
             "type": "object"
           },
           "operationId": {
-            "description": "operationId from an earlier draft_shots call, to update it.",
+            "description": "Earlier draft_shots operationId to revise.",
             "maxLength": 160,
             "minLength": 1,
             "type": "string"
@@ -572,15 +573,15 @@
               "properties": {
                 "candidate": {
                   "additionalProperties": true,
-                  "description": "Catalog candidate identity when known.",
+                  "description": "Known catalog identity.",
                   "properties": {
                     "modelId": {
-                      "description": "Model id from list_models.",
+                      "description": "list_models model.",
                       "minLength": 1,
                       "type": "string"
                     },
                     "providerId": {
-                      "description": "Provider id from list_models.",
+                      "description": "list_models provider.",
                       "minLength": 1,
                       "type": "string"
                     }
@@ -592,18 +593,18 @@
                   "type": "object"
                 },
                 "durationSec": {
-                  "description": "Clip length in seconds; omit for stills. The only place for length, never parameters.",
+                  "description": "Seconds; omit for stills. Use here, never parameters.",
                   "exclusiveMinimum": 0,
                   "maximum": 600,
                   "type": "number"
                 },
                 "modeId": {
-                  "description": "Mode id from list_models; it decides taskKind.",
+                  "description": "list_models mode; decides taskKind.",
                   "minLength": 1,
                   "type": "string"
                 },
                 "modelId": {
-                  "description": "Catalog model id from list_models; omit for the user's default.",
+                  "description": "list_models id; omit for user's default.",
                   "minLength": 1,
                   "type": "string"
                 },
@@ -615,26 +616,64 @@
                       "boolean"
                     ]
                   },
-                  "description": "Values the model's profile declares, except length (use durationSec). The host clamps them and reports every clamp.",
+                  "description": "Profile values; length uses durationSec. Host reports clamps.",
                   "type": "object"
                 },
                 "prompt": {
-                  "description": "Prompt in the user's language. Required for a new shot; when revising (operationId + shotId) send it only to change it.",
+                  "description": "English unless profile says otherwise. Required for new shots; omit if unchanged.",
                   "maxLength": 8000,
                   "minLength": 1,
                   "type": "string"
                 },
                 "references": {
-                  "description": "Asset ids from look_at_media. To reuse another shot's look use storyboard.anchorIds, not a shot id.",
+                  "description": "Project asset ids or {assetId,kind,role}; frame roles first_frame/last_frame. No storyboard.referenceBindings.",
                   "items": {
-                    "minLength": 1,
-                    "type": "string"
+                    "anyOf": [
+                      {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "assetId": {
+                            "description": "Project asset id.",
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          "kind": {
+                            "description": "Media kind.",
+                            "enum": [
+                              "image",
+                              "video",
+                              "audio"
+                            ],
+                            "type": "string"
+                          },
+                          "role": {
+                            "description": "Reference slot.",
+                            "enum": [
+                              "character",
+                              "first_frame",
+                              "last_frame",
+                              "reference",
+                              "audio"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "assetId"
+                        ],
+                        "type": "object"
+                      }
+                    ]
                   },
                   "maxItems": 30,
                   "type": "array"
                 },
                 "role": {
-                  "description": "anchor = a character/scene/style reference card reused by other shots; shot (default) = a numbered shot.",
+                  "description": "anchor = reference card; shot = numbered shot (default).",
                   "enum": [
                     "anchor",
                     "shot"
@@ -642,7 +681,7 @@
                   "type": "string"
                 },
                 "shotId": {
-                  "description": "Existing shot id to update; omit to create one.",
+                  "description": "Shot id to revise; omit to create.",
                   "maxLength": 160,
                   "minLength": 1,
                   "type": "string"
@@ -899,7 +938,7 @@
                   "type": "object"
                 },
                 "taskKind": {
-                  "description": "What to make. Omit when modelId or modeId decides it; otherwise required.",
+                  "description": "Required unless modelId/modeId decides media kind.",
                   "enum": [
                     "text_to_image",
                     "image_edit",
@@ -909,7 +948,7 @@
                   "type": "string"
                 },
                 "title": {
-                  "description": "Short human title in the user's language, shown on the canvas node and spend card.",
+                  "description": "Short title in the user's language for node/card.",
                   "maxLength": 120,
                   "minLength": 1,
                   "type": "string"

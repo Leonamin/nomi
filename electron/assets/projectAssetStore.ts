@@ -14,7 +14,7 @@ import { ensureDir } from "../runtimePaths";
 import { broadcastAssetsUpdated } from "./assetEvents";
 import { readAssetSidecarMeta, writeAssetSidecarMeta } from "./assetSidecar";
 import { absolutePathFromLocalAssetUrl } from "./localAssetFile";
-import { attachStoredAssetPreview, isStoredAssetPreviewPath, type StoredAssetPreview } from "./assetPreview";
+import { attachStoredAssetPreview, isStoredAssetPreviewPath, withPreviewFields, type StoredAssetPreview } from "./assetPreview";
 import { copyFileWithProgress, type AssetCopyProgress } from "./assetImportProgress";
 import { renameSyncWithRetry, retryOnSharingViolation } from "../jsonFile";
 import { reapAbandonedUploadStaging, removeScratchAfterUse, removeScratchAfterUseSync, UPLOAD_STAGING_PREFIX } from "./scratchCleanup";
@@ -651,7 +651,7 @@ export function listProjectAssets(payload: unknown): { items: LocalAssetRecord[]
         const createdAt = new Date(stat.birthtimeMs || stat.mtimeMs).toISOString();
         const updatedAt = new Date(stat.mtimeMs).toISOString();
         return [
-          {
+          withPreviewFields({
             id: stableAssetId(projectId, relativePath),
             name: path.basename(absolutePath),
             userId: "local",
@@ -673,7 +673,7 @@ export function listProjectAssets(payload: unknown): { items: LocalAssetRecord[]
                     ? mediaKind
                     : undefined,
             },
-          },
+          }, projectId, typeof sidecarMeta.thumbnailRelativePath === "string" ? sidecarMeta.thumbnailRelativePath : ""),
         ];
       } catch {
         return [];

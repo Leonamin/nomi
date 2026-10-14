@@ -1,3 +1,6 @@
+import { spendReferenceKey } from '../electron/shared/contracts/pendingSpendConfirm'
+import * as catalogStore from '../electron/catalog/catalogStore'
+import { taskTemplateParams } from '../electron/catalog/taskParams'
 import { describe, it, expect, vi } from 'vitest'
 import { createComfyuiProductionProvider } from './comfyuiProductionProvider'
 import { productionGenerationPayloadHash } from '../electron/productionRun/productionGenerationAuthorization'
@@ -46,5 +49,37 @@ describe('ComfyUI canonical production provider', () => {
     expect(fetchTaskResult).toHaveBeenCalledWith(expect.objectContaining({ modelKey: 'real-model', taskKind: 'text_to_image', projectId: 'project', nodeId: 'node' }))
     await expect(provider.query!('foreign')).rejects.toThrow('belong')
     expect(fetchTaskResult).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('approved Comfy uploaded input snapshots', () => {
+  const base = 'http://127.0.0.1:19189/comfy'
+  function provider() {
+    vi.spyOn(catalogStore, 'readCatalog').mockReturnValue({ vendors: [{ key: 'comfyui:test', baseUrlHint: base }] } as ReturnType<typeof catalogStore.readCatalog>)
+    return createComfyuiProductionProvider('comfyui:test', { projectId: 'project', runId: 'run', readRun: () => null })
+  }
+  function frameInput(url: string): GenerationProviderRequestInputV1 {
+    const references = [{ assetId: 'image', contentHash: 'b'.repeat(64), version: 1, kind: 'image', role: 'first_frame' }, { assetId: 'image', contentHash: 'b'.repeat(64), version: 1, kind: 'image', role: 'last_frame' }] as GenerationProviderRequestInputV1['references']
+    return { ...input, mode: 'image_to_video', references, referenceUrls: Object.fromEntries(references.map(reference => [spendReferenceKey(reference), url])) }
+  }
+  it('renders both LoadImage slots as uploaded input names, while retaining the sealed snapshot outside the wire', () => {
+    const value = frameInput(base + '/view?filename=sealed.png&subfolder=nomi%2Fapproved&type=input')
+    const request = provider().buildRequest(value) as { extras: Record<string, unknown> }
+    expect(taskTemplateParams(request)).toMatchObject({ first_frame_url: 'nomi/approved/sealed.png', last_frame_url: 'nomi/approved/sealed.png' })
+    expect(value.referenceUrls?.[spendReferenceKey(value.references[0])]).toContain('/view?')
+  })
+  it('lowers generic image references through the same input receipt boundary', () => {
+    const reference = { assetId: 'image', contentHash: 'b'.repeat(64), version: 1, kind: 'image' as const }
+    const request = provider().buildRequest({ ...input, mode: 'image_edit', references: [reference], referenceUrls: { [spendReferenceKey(reference)]: base + '/view?filename=image..png&type=input' } }) as { extras: Record<string, unknown> }
+    expect(taskTemplateParams(request).reference_images).toEqual(['image..png'])
+  })
+  it.each([
+    'http://foreign.test/comfy/view?filename=x.png&type=input',
+    base + '/view?filename=x.png&type=output',
+    base + '/view?filename=..%2Fx.png&type=input',
+    base + '/view?filename=x.png&subfolder=..%2Fx&type=input',
+    base + '/view?filename=x.png&filename=y.png&type=input',
+  ])('rejects a snapshot outside the provider input receipt: %s', url => {
+    expect(() => provider().buildRequest(frameInput(url))).toThrow('generation_reference_comfy_input_invalid')
   })
 })

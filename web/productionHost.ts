@@ -1,4 +1,5 @@
 import { AsyncLocalStorage } from 'node:async_hooks'
+import { assertSourceStoryboardExecution, sourceStoryboardHash } from './sourceStoryboardExecution'
 import { assertDocumentWritePreconditions } from '../src/workbench/creation/documentWriteTarget'
 import { documentSessionState } from '../src/workbench/project/documentSessionCore'
 import { stableProjectAgentJson } from '../electron/shared/legacyAgentJson'
@@ -35,11 +36,21 @@ export function createWebProductionHost() {
   const admissions = new AsyncLocalStorage<{ surface: Surface; binding: ProjectBinding; signal: AbortSignal; onApprovalWaiting?: (isWaiting: boolean) => void; designs: Map<string, string | undefined> }>()
   const planOf = (projectId: string, documentId: string, designId: string) => { const record = readProject(projectId); return record ? projectCanvas(record).storyboardDesignsByDocumentId?.[documentId]?.find(design => design.id === designId)?.plan : undefined }
   const planHash = (plan: unknown) => plan === undefined ? undefined : stableProjectAgentJson(JSON.parse(JSON.stringify(plan)))
+  const pinDocumentOperation = (projectId: string, operationId: string) => {
+    const run = runtime.repository.read(projectId, operationId), source = run?.origin.sourceDocument
+    if (!source || !run.generationPlan) return
+    const plan = planOf(projectId, source.documentId, operationId)
+    if (!plan) throw new Error('storyboard_source_plan_unavailable')
+    const contentHash = sourceStoryboardHash(plan)
+    if (run.generationPlan.sourceStoryboardHash === contentHash) return
+    runtime.repository.execute(projectId, operationId, { commandId: `source-storyboard-pin:${operationId}:${run.revision}`, expectedRevision: run.revision,
+      type: 'generation.source_storyboard.pin', payload: { contentHash }, issuedAt: new Date().toISOString() })
+  }
   const notify = (projectId: string) => hostEvents.emit('message', { channel: 'nomi:web:production-changed', payload: { projectId } })
   const portFor = (binding: ProjectBinding, options: Parameters<typeof createWebProductionProjectPort>[1] = {}) => createWebProductionProjectPort(binding, {
     listModels: async () => usableModels().map(row => row.entry), orderedVendors: async () => readCatalog().vendors.filter(isComfyuiVendor).map(vendor => vendor.key), onChange: notify, ...options,
   })
-  const runtime = createWebProductionRuntime({ isProjectOpen: projectId => Boolean(projectDirById(projectId)),
+  const runtime = createWebProductionRuntime({ pinDocumentOperation, isProjectOpen: projectId => Boolean(projectDirById(projectId)),
     requestRenderer: async (operation, payload, timeoutMs) => {
       const projectId = payload && typeof payload === 'object' ? (payload as { projectId?: unknown }).projectId : undefined
       if (typeof projectId !== 'string') throw new Error('Project is required for production writes')
@@ -58,7 +69,9 @@ export function createWebProductionHost() {
         if (admission && typeof input.documentId === 'string' && typeof input.designId === 'string') admission.designs.set(`${input.documentId}/${input.designId}`, planHash(planOf(id, input.documentId, input.designId)))
         notify(id)
       } } : {}
-      return portFor(projectBinding(projectId), options).requestRenderer(operation, payload, timeoutMs)
+      const result = await portFor(projectBinding(projectId), options).requestRenderer(operation, payload, timeoutMs)
+      if (operation === 'storyboard.upsert-design') pinDocumentOperation(projectId, String(input.designId))
+      return result
     }, assertDocumentOperation: (projectId, operationId) => {
       const admission = admissions.getStore(), run = runtime.repository.read(projectId, operationId), source = run?.origin.sourceDocument
       if (!source || !run?.generationPlan) return
@@ -70,7 +83,10 @@ export function createWebProductionHost() {
       const expected = storyboardPlanFromDraftSubjects(subjects, projectId, resolveIndexedReferencePreview)
       const execution = (value: Record<string, unknown>) => Object.fromEntries(['id', 'shotId', 'prompt', 'description', 'shotKind', 'modelKey', 'modelVendor', 'modeId', 'params', 'durationSec', 'referenceBindings', 'anchorIds', 'keyframe', 'promptSegments'].map(key => [key, value[key] ?? (key === 'params' || key === 'referenceBindings' ? {} : null)]))
       const rows = (value: typeof plan) => [...value.anchors, ...value.shots].map(subject => execution(subject as unknown as Record<string, unknown>))
-      if (planHash(rows(plan)) !== planHash(rows(expected))) throw new Error('storyboard_execution_conflict')
+      if (generation.sourceStoryboardHash) {
+        if (sourceStoryboardHash(plan) !== generation.sourceStoryboardHash) throw new Error('storyboard_content_conflict')
+        assertSourceStoryboardExecution(plan, expected, subjects)
+      } else if (planHash(rows(plan)) !== planHash(rows(expected))) throw new Error('storyboard_execution_conflict')
     }, onRunChanged: run => { hostEvents.emit('message', { channel: 'nomi:production-runs:changed', payload: { projectId: run.projectId, runId: run.runId } }); notify(run.projectId) } })
   const scopes = new WeakMap<CurrentProjectSelection, ReturnType<typeof runtime.forSurface>>()
   function forSurface(surface: Surface) {

@@ -1,0 +1,140 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-14-engine-model-selection",
+  "problem_type": "Native engine model identity drift",
+  "symptom": "Switching OpenCode to Codex keeps the old OpenCode model selection and provider list in browser; selecting an unqualified Codex model empties the visible model list",
+  "direct_cause": "Server retains model across engine changes and UI neither reloads engine-specific discovery nor invalidates late list replies; provider grouping treats every unqualified model ID as its own namespace and then filters it away",
+  "class_root": "Engine identity must own both selected model and asynchronous model discovery",
+  "affected_population": [
+    "Browser users switching between native engines",
+    "Delayed model discovery or settings replies after engine/workspace replacement"
+  ],
+  "scope_paths": [
+    "web/agentLanes.ts",
+    "src/workbench/ai/v4/useAgentPanelV4Data.ts"
+  ],
+  "entry_points": [
+    "Native engine/model selection RPC",
+    "Browser settings and asynchronous model discovery"
+  ],
+  "external_sources": [],
+  "invariants": [
+    "Changing engine clears prior-engine explicit model selection",
+    "Every displayed model list belongs to current engine and workspace",
+    "Stale discovery and settings settlements never replace current engine state",
+    "Only explicitly namespaced model IDs participate in provider grouping; unqualified IDs remain visible direct model facts"
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "web/agentLanes.ts",
+      "symbol": "settings"
+    },
+    {
+      "kind": "write",
+      "path": "web/agentLanes.ts",
+      "symbol": "settings"
+    },
+    {
+      "kind": "write",
+      "path": "web/rpc.ts",
+      "symbol": "settings"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/ai/v4/useAgentPanelV4Data.ts",
+      "symbol": "applyWebAgentSelection"
+    }
+  ],
+  "door_reduction": {
+    "before": 4,
+    "after": 4,
+    "why_not": "Server reads and writes owning settings; RPC remains transport; browser selection owns only asynchronous projections."
+  },
+  "generality_proof": "Server clears cross-engine selection for every settings caller; browser requests carry current engine and a monotonic read identity including workspace lifetime",
+  "shared_boundaries": [
+    {
+      "path": "web/agentLanes.ts",
+      "symbol": "WebAgentLanes",
+      "responsibility": "Exported owning class; its settings method owns engine plus selected model identity for every RPC caller"
+    },
+    {
+      "path": "src/workbench/ai/v4/useAgentPanelV4Data.ts",
+      "symbol": "applyWebAgentSelection",
+      "responsibility": "Invalidate stale asynchronous selections and discovery"
+    },
+    {
+      "path": "src/workbench/ai/v4/useAgentPanelV4Data.ts",
+      "symbol": "useAgentPanelV4Data",
+      "responsibility": "Own current-engine projection and group only model IDs with declared provider namespaces"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "web/agentLanes.ts",
+      "entry_point": "settings",
+      "disposition": "enforced",
+      "evidence": "All engine selection passes owning settings method"
+    },
+    {
+      "path": "src/workbench/ai/v4/useAgentPanelV4Data.ts",
+      "entry_point": "applyWebAgentSelection",
+      "disposition": "enforced",
+      "evidence": "Provider/model projections must reload with returned engine and reject old read identities"
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Any engine switch or delayed model response reproduces identity drift",
+    "same_class_scan": [
+      "door-map settings roots=web",
+      "door-map applyWebAgentSelection roots=src",
+      "rg agentModels shows both initial and manual asynchronous callers"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "web/agentLanes.ts",
+    "invariant": "Selected model belongs to current engine and late browser reads cannot cross identities",
+    "failure_mode": "Old projection is cleared and stale replies discarded; server selection errors remain visible",
+    "exception_policy": "none",
+    "strategy": "Reset prior-engine selection at owner and use request identities at projection owner",
+    "artifacts": [
+      "web/agentLanes.ts",
+      "src/workbench/ai/v4/useAgentPanelV4Data.ts"
+    ]
+  },
+  "regression_tests": [
+    "web/agentLanes.test.ts",
+    "src/workbench/ai/v4/useAgentPanelWebSelection.test.ts"
+  ],
+  "class_regression_tests": [
+    "web/agentLanes.test.ts",
+    "src/workbench/ai/v4/useAgentPanelWebSelection.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "src/workbench/ai/v4/useAgentPanelV4Data.ts"
+    ],
+    "rationale": "Replace unscoped discovery and selection effect handlers in the same hook"
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "Application request identity invariant; no third-party upgrade needed",
+    "exit_criteria": []
+  },
+  "migration": "No persistent migration; engine switch resets explicit prior-engine model to the owning engine default",
+  "residual_risks": [
+    "Real browser engine switch verification pending coordinator"
+  ],
+  "detected_by": "review",
+  "recurrence_check_on": "2027-01-14",
+  "invariant_owner_layer": {
+    "layer": "web",
+    "tests": [
+      "web/agentLanes.test.ts"
+    ]
+  },
+  "internal_only_reason": "Application-owned engine selection and request lifecycle invariant; native model discovery uses existing owner API"
+}

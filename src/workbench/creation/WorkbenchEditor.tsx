@@ -9,6 +9,7 @@ import { TIPTAP_PLACEHOLDER_CLASSES } from '../assets/tiptapPlaceholderClasses'
 import { cn } from '../../utils/cn'
 import { useWorkbenchStore } from '../workbenchStore'
 import { normalizeWorkbenchContentJson } from '../workbenchTypes'
+import { applyEditorDocumentContentChange } from '../project/documentSessionCore'
 import { useTransientScrollingClass } from './useTransientScrollingClass'
 import { useNomiRichTextEditor, RICH_TEXT_FEATURE_EXTENSIONS } from '../common/useNomiRichTextEditor'
 import { buildRichTextActions, type RichTextAction } from '../common/richTextActions'
@@ -133,12 +134,9 @@ export default function WorkbenchEditor(): JSX.Element {
   const handleChange = React.useCallback(
     (contentJson: JSONContent) => {
       const currentDocument = workbenchDocumentRef.current
-      const currentContent = normalizeWorkbenchContentJson(currentDocument.contentJson)
-      // Tiptap can emit an initialization update even when its JSON is
-      // unchanged. Opening a draft must not mutate its source revision or mark
-      // every attached storyboard as needing synchronization.
-      if (JSON.stringify(currentContent) === JSON.stringify(contentJson)) return
-      setWorkbenchDocument({ ...currentDocument, contentJson, updatedAt: Date.now() })
+      const nextDocument = applyEditorDocumentContentChange(currentDocument, contentJson)
+      if (nextDocument === currentDocument) return
+      setWorkbenchDocument(nextDocument)
     },
     [setWorkbenchDocument],
   )

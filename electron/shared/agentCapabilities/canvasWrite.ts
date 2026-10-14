@@ -1,3 +1,4 @@
+import { GENERATION_PROMPT_LANGUAGE_GUIDELINE } from './generationPromptGuidance'
 import { z } from "zod";
 
 import type { CapabilityContract } from "./capabilityContract";
@@ -37,7 +38,7 @@ export const plannedNodeSchema = z
     prompt: z
       .string()
       .max(CANVAS_WRITE_MAX_PROMPT_CHARS)
-      .describe("Generation prompt in the user's language; empty for agent-artifact."),
+      .describe("English model prompt unless profile declares otherwise; empty for agent-artifact."),
     position: z.object({ x: z.number().finite().describe("Canvas x coordinate."), y: z.number().finite().describe("Canvas y coordinate.") }).describe("Optional canvas position.").optional(),
     categoryId: z.string().trim().min(1).describe("Optional canvas category id.").optional(),
     modelKey: z.string().trim().min(1).describe("Catalog model key from list_models.").optional(),
@@ -631,4 +632,4 @@ export const CANVAS_WRITE_CAPABILITY = {
 } as const satisfies CapabilityContract<CanvasWriteInput, CanvasWriteResult>;
 
 /** Node-authoring workflow, published once per active tool instead of in every node field. */
-export const CANVAS_NODE_PROMPT_GUIDELINES = Object.freeze(["High-quality generation prompt, in the SAME language as the user (Chinese user → Chinese prompt). Write it as a STRUCTURED skeleton, not a run-on sentence:\n- character/scene reference card: stable appearance/environment description + unified style keywords (neutral full-body pose for a character, empty wide establishing shot for a scene; no plot action).\n- image / keyframe shot: scene·time·light → subject·action·expression → shot language (wide / close-up / low-angle…) → style keywords.\n- video shot: camera move (push / pull / pan / track…) → on-screen action progression → rhythm & duration feel; do NOT restate the static keyframe description.\nKeep the same subject's appearance description consistent across shots. agent-artifact nodes carry no prompt: send an empty string."]);
+export const CANVAS_NODE_PROMPT_GUIDELINES = Object.freeze([GENERATION_PROMPT_LANGUAGE_GUIDELINE, "Write a high-quality generation prompt as a STRUCTURED skeleton, not a run-on sentence:\n- character/scene reference card: stable appearance/environment description + unified style keywords (neutral full-body pose for a character, empty wide establishing shot for a scene; no plot action).\n- image / keyframe shot: scene·time·light → subject·action·expression → shot language (wide / close-up / low-angle…) → style keywords.\n- video shot: camera move (push / pull / pan / track…) → on-screen action progression → rhythm & duration feel; do NOT restate the static keyframe description.\nKeep the same subject's appearance description consistent across shots. agent-artifact nodes carry no prompt: send an empty string."]);

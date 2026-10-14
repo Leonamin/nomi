@@ -4,7 +4,7 @@
 import { describe, expect, it } from "vitest";
 
 import type { PlanCandidate } from "./executionContract";
-import { resolvePlanPatch } from "./generationPlanPatch";
+import { resolvePlanPatch, normalizeStoredDraft } from "./generationPlanPatch";
 import { createModuleRegistry } from "./moduleRegistry";
 
 const capabilities = { submitIdempotency: true, query: true, reconcile: true, cancel: true };
@@ -67,3 +67,25 @@ describe("resolvePlanPatch · 种类跟着生成方式走", () => {
     expect(normalizedPatch).toMatchObject({ mode: "image-edit", modeId: "i2i" });
   });
 });
+
+
+it('normalizes each actual shot once and never patches its top alias separately', async () => {
+  const candidate = base({ parameters: { duration: 5.167, transportModelId: 'stale' }, references: [{ assetId: 'image', contentHash: 'hash', version: 1, kind: 'image', role: 'first_frame' }, { assetId: 'image', contentHash: 'hash', version: 1, kind: 'image', role: 'last_frame' }] })
+  const operation = { state: 'draft', candidate, shots: [{ shotId: 'authored-row', candidate }] }
+  const targets: Array<string | undefined> = []
+  const result = await normalizeStoredDraft({ operation, projectId: 'p', operationId: 'op', now: 'now', registry,
+    patch: (_project, _id, patch, _now, shotId) => {
+      targets.push(shotId)
+      const next = { ...candidate, ...patch }
+      return { ...operation, candidate: next, shots: [{ shotId: 'authored-row', candidate: next }] }
+    } })
+  expect(targets).toEqual(['authored-row'])
+  expect(result.operation.candidate).toEqual(result.operation.shots![0].candidate)
+  expect(result.operation.shots![0].candidate.references).toEqual(candidate.references)
+})
+
+it('refuses ambiguous top candidate ownership before any normalization mutation', async () => {
+  const candidate = base({ parameters: { duration: 5.167 } })
+  await expect(normalizeStoredDraft({ operation: { state: 'draft', candidate, shots: [{ shotId: 'a', candidate }, { shotId: 'b', candidate }] }, projectId: 'p', operationId: 'op', now: 'now', registry,
+    patch: () => { throw new Error('Mutation must not occur') } })).rejects.toThrow('generation_candidate_owner_ambiguous_or_missing')
+})

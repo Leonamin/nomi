@@ -1,4 +1,5 @@
 import StarterKit from '@tiptap/starter-kit'
+import { stableProjectAgentJson } from '../../../electron/shared/legacyAgentJson'
 import { generateText, type JSONContent } from '@tiptap/core'
 import type { DocumentAnchorRef, PreconditionSet, TargetRef } from '../../../electron/shared/capabilityTargeting'
 import { SurfacePortWireError } from '../../../electron/shared/surfacePortBinding'
@@ -33,6 +34,21 @@ export function workbenchDocumentPlainText(document: Pick<WorkbenchDocument, 'co
 
 export function documentSessionState(document: WorkbenchDocument, anchor: DocumentAnchorRef = WHOLE_DOCUMENT_ANCHOR): DocumentSessionState {
   return Object.freeze({ revision: document.updatedAt, contentHash: documentContentHash(workbenchDocumentPlainText(document)), anchor })
+}
+
+/** Only Tiptap node child serialization differs: attributes and marks remain untouched. */
+function editorNodeSerializationValue(value: unknown): unknown {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return value
+  const node = value as Record<string, unknown>
+  if (!Array.isArray(node.content)) return value
+  const { content, ...rest } = node
+  return content.length ? { ...rest, content: content.map(editorNodeSerializationValue) } : rest
+}
+
+/** Editor-only no-op policy; explicit document writes keep their own revision contract. */
+export function applyEditorDocumentContentChange(document: WorkbenchDocument, contentJson: unknown, now: () => number = Date.now): WorkbenchDocument {
+  if (stableProjectAgentJson(editorNodeSerializationValue(document.contentJson)) === stableProjectAgentJson(editorNodeSerializationValue(contentJson))) return document
+  return { ...document, contentJson, updatedAt: now() }
 }
 
 function unsupported(): never {

@@ -10,6 +10,7 @@ import { resolveFfmpegPath } from "../export/ffmpegRunner";
 import { probeMediaMetadata } from "../export/mediaProbe";
 import { attachStoredAssetPreview, createStoredAssetPreview, pixelFormatHasAlpha, PREVIEW_LONG_EDGE_PX } from "./assetPreview";
 import { readAssetSidecarMeta } from "./assetSidecar";
+import { translateMediaValues } from "../../web/mediaUrls";
 
 vi.mock("./assetEvents", () => ({ broadcastAssetsUpdated: vi.fn(), broadcastAssetLocalizationStarted: vi.fn() }));
 
@@ -175,5 +176,27 @@ describe("import boundaries derive the same preview", () => {
     const listed = listProjectAssets({ projectId: project.id }).items.map((item) => item.name);
     expect(listed.some((name) => name.includes(".preview."))).toBe(false);
     expect(listed).toEqual(expect.arrayContaining(["photo.png", "clip.mp4"]));
+  });
+});
+
+
+describe("persisted preview DTO transport", () => {
+  it.each([
+    ["photo.png", BIG_RGBA_PNG, "image/png"],
+    ["clip.mp4", CLIP_MP4, "video/mp4"],
+  ])("derives %s preview before browser translation without changing persisted sidecar", async (fileName, bytes, contentType) => {
+    const { createProject } = await import("../projects/repository");
+    const { importLocalFile } = await import("./localFileImport");
+    const { listProjectAssets } = await import("./projectAssetStore");
+    const project = createProject({ rootPath: makeTempDir("nomi-preview-transport-"), name: "Preview transport", payload: {} });
+    const imported = await importLocalFile({ projectId: project.id, bytes, fileName, contentType }) as { data: { absolutePath: string; thumbnailRelativePath: string } };
+    const metaBefore = fs.readFileSync(`${imported.data.absolutePath}.meta`, "utf8");
+    expect(JSON.parse(metaBefore).thumbnailUrl).toBeUndefined();
+    const listed = listProjectAssets({ projectId: project.id }).items.find(item => item.name === fileName)!;
+    expect(listed.data.thumbnailUrl).toBe(`nomi-local://asset/${project.id}/${imported.data.thumbnailRelativePath}`);
+    const browser = translateMediaValues(listed, "browser", "https://web.example.test") as { data: { url: string; thumbnailUrl: string } };
+    expect(browser.data.thumbnailUrl).toBe(`https://web.example.test/api/media/${project.id}/${imported.data.thumbnailRelativePath}`);
+    expect(browser.data.thumbnailUrl).not.toBe(browser.data.url);
+    expect(fs.readFileSync(`${imported.data.absolutePath}.meta`, "utf8")).toBe(metaBefore);
   });
 });

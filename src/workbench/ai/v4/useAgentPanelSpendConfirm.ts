@@ -203,7 +203,7 @@ export function useAgentPanelSpendConfirm(): AgentPanelSpendConfirm {
       const kinds = kindKey ? (kindKey.split(',') as NodeKind[]) : []
       if (kinds.length === 0) { if (!cancelled) setModelOptions([]); return }
       const loaded = await Promise.all(kinds.map(async (kind) => {
-        try { return await preloadModelOptions(kind) } catch { return [] as ModelOption[] }
+        try { return await preloadModelOptions(kind, 'any-published') } catch { return [] as ModelOption[] }
       }))
       if (!cancelled) setModelOptions(loaded.flat())
     }

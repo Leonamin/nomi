@@ -65,8 +65,9 @@ describe("一镜把同一件事写了两遍", () => {
   it("说明书自己也只承认一个家——否则模型读到的和宿主执行的不是一回事", () => {
     const spec = VERB_DECLARATIONS.find((declaration) => declaration.name === "draft_shots")!;
     const printed = JSON.stringify(spec.schema);
-    expect(printed).toContain("The only place for length, never parameters");
-    expect(printed).toContain("except length (use durationSec)");
+    expect(printed).toContain("Use here, never parameters");
+    expect(printed).toContain("length uses durationSec");
+    expect(() => prepare({ shots: [{ prompt: "A shot", durationSec: 8, parameters: { duration: 5 } }] })).toThrow(/durationSec=8 and parameters.duration=5/);
   });
 });
 
@@ -96,7 +97,11 @@ describe("draft_shots 的两种形状", () => {
 
   it("说明书自己承认这两种形状——schema 与描述不许各说各的", () => {
     const spec = VERB_DECLARATIONS.find((declaration) => declaration.name === "draft_shots")!;
-    expect(spec.describe.params).toMatch(/Two shapes/);
-    expect(JSON.stringify(spec.schema)).toContain("Required for a new shot");
+    expect(spec.describe.params).toMatch(/Creating needs prompt/);
+    expect(spec.describe.params).toMatch(/revising.*sends only changed/);
+    // These are different admissible operations, not just two phrases in a snapshot.
+    expect(spec.schema.safeParse({ shots: [{ prompt: "New shot" }] }).success).toBe(true);
+    expect(spec.schema.safeParse({ operationId: "op-1", shots: [{ shotId: "shot-1", parameters: { resolution: "1080p" } }] }).success).toBe(true);
+    expect(spec.schema.safeParse({ shots: [{ parameters: { resolution: "1080p" } }] }).success).toBe(false);
   });
 });

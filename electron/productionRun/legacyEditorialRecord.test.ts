@@ -6,6 +6,8 @@ import { afterEach, beforeEach, expect, it } from 'vitest'
 import crypto from 'node:crypto'
 
 import { createProductionRunRepository } from './productionRunRepository'
+import type { ProductionRun } from './productionRunTypes'
+import { applyProductionCommand } from './productionRunReducer'
 import { productionRunPaths } from './productionRunPaths'
 import { createCanvasLandingHost } from './canvasLandingHost'
 
@@ -72,4 +74,44 @@ it('a historical document-admitted record with bindings still reconciles onto th
   requested.length = 0
   expect(await host.landCanvasBestEffort('project-1', 'op-unplaced')).toBe(false)
   expect(requested, 'a document-admitted plan the user never placed must stay off the canvas').toEqual([])
+})
+
+it('rejects new duplicate author metadata in source-backed durable candidates', () => {
+  const runtimeCandidate = { ...candidate, storyboard: { anchorIds: [] } }
+  expect(() => repository().createGenerationDraft({ projectId: 'project-1', operationId: 'source-create',
+    origin: { host: 'nomi', sourceDocument: { documentId: 'doc', revision: 1, contentHash: 'hash' } },
+    candidate: runtimeCandidate,
+  })).toThrow('source_candidate_author_metadata_requires_project_owner')
+})
+it.each(['generation.patch', 'generation.revise'] as const)('guards direct durable %s entrances', type => {
+  const repo = repository()
+  const run = repo.createGenerationDraft({ projectId: 'project-1', operationId: 'source-patch', candidate,
+    origin: { host: 'nomi', sourceDocument: { documentId: 'doc', revision: 1, contentHash: 'hash' } } })
+  expect(() => repo.execute('project-1', run.runId, { commandId: type, expectedRevision: run.revision, type,
+    payload: { patch: { storyboard: { anchorIds: [] } } }, issuedAt: '2026-09-21T00:00:00.000Z' })).toThrow('source_candidate_author_metadata_requires_project_owner')
+  expect(repo.read('project-1', run.runId)!.generationPlan!.candidate).not.toHaveProperty('storyboard')
+})
+
+it('preserves legacy duplicated author metadata on read and refuses normalization edits without deleting meaning', () => {
+  const created = legacyRun()
+  const snapshot = productionRunPaths(root, created.runId).snapshot
+  const raw = JSON.parse(fs.readFileSync(snapshot, 'utf8'))
+  const author = { anchorIds: ['legacy-anchor'], promptSegments: [{ key: 'legacy', start: 0, end: 1 }] }
+  raw.run.generationPlan.candidate.storyboard = author
+  raw.run.generationPlan.shots[0].candidate.storyboard = author
+  const value = { schemaVersion: raw.schemaVersion, snapshotCursor: raw.snapshotCursor, run: raw.run }
+  fs.writeFileSync(snapshot, JSON.stringify({ ...value, checksum: crypto.createHash('sha256').update(JSON.stringify(value)).digest('hex') }))
+  const repo = repository(), run = repo.read('project-1', created.runId)!
+  expect(run.generationPlan!.candidate).toMatchObject({ storyboard: author })
+  expect(() => applyProductionCommand(run, { commandId: 'normalize-legacy', expectedRevision: run.revision,
+    type: 'generation.patch', payload: { patch: { parameters: {} } }, issuedAt: '2026-09-21T00:00:00.000Z' }, '2026-09-21T00:00:00.000Z')).toThrow('source_candidate_author_metadata_requires_project_owner')
+  expect(repo.read('project-1', created.runId)!.generationPlan!.candidate).toMatchObject({ storyboard: author })
+})
+
+it('retains non-source generation behavior for legacy records without origin metadata', () => {
+  const created = repository().createGenerationDraft({ projectId: 'project-1', operationId: 'legacy-without-origin', candidate, origin: { host: 'nomi' } })
+  const { origin: _origin, ...legacy } = created
+  const effect = applyProductionCommand(legacy as ProductionRun, { commandId: 'legacy-patch', expectedRevision: created.revision,
+    type: 'generation.patch', payload: { patch: { prompt: 'Updated legacy prompt' } }, issuedAt: '2026-09-21T00:00:00.000Z' }, '2026-09-21T00:00:00.000Z')
+  expect(effect.run.generationPlan!.candidate.prompt).toBe('Updated legacy prompt')
 })

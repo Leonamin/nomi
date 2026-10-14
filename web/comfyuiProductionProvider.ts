@@ -1,3 +1,5 @@
+import { comfyInputNameFromViewUrl } from '../electron/catalog/comfyuiLocal'
+import { rewriteVendorUrl } from '../electron/vendor/vendorBaseFallback'
 import fs from 'node:fs'
 import path from 'node:path'
 import { createHash } from 'node:crypto'
@@ -24,13 +26,16 @@ export type ComfyuiProductionProviderDependencies = {
 }
 
 /** Frozen semantic request; transient authorization grant is deliberately absent. */
-function requestFor(input: GenerationProviderRequestInputV1): TaskRequest {
+function requestFor(input: GenerationProviderRequestInputV1, providerId: string): TaskRequest {
   if (!['text_to_video', 'image_to_video', 'text_to_image', 'image_edit'].includes(input.mode)) throw new Error('Unsupported ComfyUI production mode')
   const extras: Record<string, unknown> = { ...structuredClone(input.parameters), modelKey: input.modelId,
     ...(input.modeId ? { modeId: input.modeId } : {}), idempotencyKey: input.idempotencyKey }
   for (const reference of input.references) {
-    const url = input.referenceUrls?.[spendReferenceKey(reference)]
-    if (!url) throw new Error('Approved reference URL is unavailable')
+    const snapshotUrl = input.referenceUrls?.[spendReferenceKey(reference)]
+    if (!snapshotUrl) throw new Error('Approved reference URL is unavailable')
+    const vendor = readCatalog().vendors.find(row => row.key === providerId)
+    if (!vendor?.baseUrlHint) throw new Error('generation_reference_provider_unavailable')
+    const url = comfyInputNameFromViewUrl(rewriteVendorUrl(vendor.baseUrlHint), snapshotUrl)
     // These standard reference names are consumed by the original ComfyUI media boundary.
     const key = reference.role === 'first_frame' ? 'firstFrameUrl' : reference.role === 'last_frame' ? 'lastFrameUrl'
       : reference.kind === 'video' ? 'sourceVideoUrl' : reference.kind === 'audio' ? 'sourceAudioUrl' : 'referenceImages'
@@ -67,7 +72,7 @@ export function createComfyuiProductionProvider(providerId: string, deps: Comfyu
   }
   return {
     providerId, capabilities: { submitIdempotency: false, query: true, reconcile: true, cancel: false, materialize: true },
-    buildRequest: requestFor, submit, query,
+    buildRequest: input => requestFor(input, providerId), submit, query,
     reconcile: async ({ providerTaskId }) => providerTaskId
       ? { disposition: 'found', providerTaskId, raw: await query(providerTaskId) }
       : { disposition: 'indeterminate' },

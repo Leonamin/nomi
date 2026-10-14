@@ -1,3 +1,4 @@
+import { GENERATION_ARGUMENT_REFUSAL, refuseToModel } from '../../capabilityCore/transportFailure'
 import type { StoryboardAuthorFields } from '../agentCapabilities/generationPlanSchemas'
 import { modelKindForTaskKind } from '../capabilityModeManifest'
 import type { PlanCandidate } from '../../capabilityCore/executionContract'
@@ -36,7 +37,7 @@ export function storyboardSubjectFromCandidate(input: {shotId: string; role?: 'a
     if (!url) throw new Error('storyboard_reference_preview_unavailable')
     ;(referenceBindings[storyboardReferenceSlot(reference)] ??= []).push({url})
   }
-  if (authored?.referenceBindings && candidate.references.length) throw new Error('storyboard_author_reference_fields_conflict')
+  if (authored?.referenceBindings && candidate.references.length) refuseToModel(GENERATION_ARGUMENT_REFUSAL, 'Use references with assetId, kind and role (first_frame/last_frame for frames). Remove storyboard.referenceBindings when references is supplied; the host creates those bindings from pinned project assets.')
   const common = {...fields,...(candidate.references.length ? {referenceBindings} : {})}
   if (input.role === 'anchor') {
     if (!authored?.kind || !authored.carrier) throw new Error('storyboard_anchor_editorial_required: provide storyboard.kind and storyboard.carrier')
@@ -81,4 +82,15 @@ export function storyboardReferenceSlot(reference: PlanCandidate['references'][n
       return reference.kind === 'video' ? 'video_ref' : reference.kind === 'audio' ? 'audio_ref' : 'image_ref'
     default: throw new Error('storyboard_reference_role_invalid')
   }
+}
+
+/** A source-backed execution candidate never owns the project's authoring body. */
+export function assertSourceExecutionCandidateOwnership(candidate: unknown): void {
+  if (candidate && typeof candidate === 'object' && 'storyboard' in candidate && candidate.storyboard !== undefined) throw new Error('source_candidate_author_metadata_requires_project_owner');
+}
+
+/** Called only after the canonical project author write has succeeded. */
+export function executionPatchAfterSourceSync<T extends { storyboard?: unknown }>(patch: T): Omit<T, 'storyboard'> {
+  const { storyboard: _projectOwned, ...execution } = patch;
+  return execution;
 }

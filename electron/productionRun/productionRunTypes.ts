@@ -283,6 +283,8 @@ export type GenerationPresentation = {
 };
 
 export type ProductionGenerationPlan = {
+  /** Derived pin of the project-owned source author body; never a second copy. */
+  sourceStoryboardHash?: string;
   operationId: string;
   state: "draft" | "sealed" | "cancelled" | "submitted";
   /**
