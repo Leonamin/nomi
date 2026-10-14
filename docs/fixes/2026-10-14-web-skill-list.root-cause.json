@@ -1,0 +1,162 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-14-web-skill-list",
+  "problem_type": "Host-by-host skill catalog exposure without a shared read boundary",
+  "symptom": "웹 빌드에서 에이전트 패널의 스킬 선택기와 스킬 라이브러리 목록이 조용히 빈다 — 웹 RPC에 nomi:skill:list가 없어 window.nomi.skills.list()가 실패하고 기존 UI가 오류를 빈 배열로 삼킨다. (2026-10-12 실사용 walkthrough에서 처음 확인됐고, 그 수정 브랜치가 main 반영 전 폐기되어 결손이 남았다.)",
+  "direct_cause": "web/rpc.ts 디스패치 표가 데스크톱 skillIpc가 등록하는 원본 목록 채널(nomi:skill:list)을 서빙하지 않는다. 웹 셰임(web/client.ts)은 같은 채널을 그대로 /api/rpc로 보내므로 웹에서만 라우트가 없는 상태였다.",
+  "class_root": "스킬 카탈로그 노출이 호스트마다 각자 구현됐다 — 데스크톱은 skillIpc.listSkillsForRenderer, 웹은 아무것도 없어서 두 번째 웹 카탈로그가 생길 수 있는 구조였고, 발견 읽기(네이티브 브리지)가 호스트마다 따로 열렸다.",
+  "affected_population": [
+    "웹 빌드에서 에이전트 패널 스킬 선택기/스킬 라이브러리를 여는 모든 사용자",
+    "엔진·프로젝트·설치 스킬 유무와 무관한 모든 열기 (선택기가 비는 것은 모든 세션에서 재현)"
+  ],
+  "scope_paths": [
+    "web/rpc.ts",
+    "web/creationContext.ts",
+    "web/nativeSkillLoader.ts"
+  ],
+  "entry_points": [
+    "에이전트 패널 스킬 선택기 — window.nomi.skills.list() (electron/preload/runtimeBridge.ts) → nomi:skill:list",
+    "스킬 라이브러리 패널 — src/workbench/skillLibrary/SkillLibraryPanel.tsx",
+    "제작 준비의 설치 스킬 해석 — web/agentLanes.ts → prepareWebCreationContext"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "RPC 라우트 누락과 설치 스킬 발견 루트/투영은 애플리케이션이 소유한 내부 불변량이며 외부 표준이 결정하지 않는다.",
+  "invariants": [
+    "웹 선택기 투영은 데스크톱과 같은 원본 projectSkillsForRenderer DTO를 쓴다 — 제2 웹 카탈로그를 만들지 않는다",
+    "선택기 투영과 제작 준비가 같은 네이티브 발견 읽기(readWebSkillRecords)를 공유한다",
+    "선택된 스킬은 원본 해시 권위(expectedSkillHash)로만 채택된다"
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "electron/harness/context/agentContext.ts",
+      "symbol": "findSkillRecord"
+    },
+    {
+      "kind": "read",
+      "path": "electron/skills/skillExecutionEvidence.ts",
+      "symbol": "findSkillRecord"
+    },
+    {
+      "kind": "read",
+      "path": "electron/skills/skillIpc.ts",
+      "symbol": "listSkillsForRenderer"
+    },
+    {
+      "kind": "read",
+      "path": "web/creationContext.ts",
+      "symbol": "findSkillRecord"
+    },
+    {
+      "kind": "read",
+      "path": "web/rpc.ts",
+      "symbol": "readWebSkillRecords"
+    },
+    {
+      "kind": "write",
+      "path": "electron/skills/skillIpc.ts",
+      "symbol": "projectSkillsForRenderer"
+    },
+    {
+      "kind": "write",
+      "path": "web/agentLanes.ts",
+      "symbol": "prepareWebCreationContext"
+    },
+    {
+      "kind": "write",
+      "path": "web/rpc.ts",
+      "symbol": "projectSkillsForRenderer"
+    }
+  ],
+  "door_reduction": {
+    "before": 6,
+    "after": 8,
+    "why_not": "데스크톱 skillIpc와 웹 rpc는 각 호스트의 유일한 RPC 경계로 남는다 — 발견 브리지의 기준 경로가 다르기 때문이다(데스크톱/아일랜드는 __filename 기준, 웹 번들은 cwd 기준). 새로 생긴 두 문은 같은 원본 발견과 같은 순수 투영을 공유한다: 웹 경계를 새로 만든 것이 아니라, 누락되어 있던 웹 경계를 원본 소유자에 연결한 것이다. agentContext/skillExecutionEvidence/agentLanes의 세 문은 선택기 노출과 무관한 기존 소비자라 그대로 둔다."
+  },
+  "generality_proof": "선택기 노출의 두 소비 경로(리스트 투영, 제작 준비)가 모두 같은 네이티브 발견 readWebSkillRecords로 수렴하고, 투영은 원본 projectSkillsForRenderer 하나만 쓴다. 따라서 다른 웹 소비자(새 UI·새 RPC)가 추가돼도 카탈로그 정의를 새로 만들 수 없다 — 테스트가 웹 응답과 데스크톱 listSkillsForRenderer의 DTO 동일성, 그리고 선택 항목이 제작 준비 해시 권위를 통과함을 함께 검증한다.",
+  "shared_boundaries": [
+    {
+      "path": "web/creationContext.ts",
+      "symbol": "readWebSkillRecords",
+      "responsibility": "웹 호스트의 유일한 설치 스킬 발견 읽기 — 선택기 투영과 제작 준비가 같은 결과를 쓴다."
+    },
+    {
+      "path": "web/rpc.ts",
+      "symbol": "dispatchWebRpc",
+      "responsibility": "인증된 웹 RPC로 원본 목록 투영을 노출한다(제2 카탈로그 금지)."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "electron/skills/skillIpc.ts",
+      "entry_point": "listSkillsForRenderer",
+      "disposition": "enforced",
+      "evidence": "데스크톱 nomi:skill:list가 같은 projectSkillsForRenderer 투영을 쓴다 — web/skillSurface.test.ts가 웹 응답과 DTO 동일성을 확인한다."
+    },
+    {
+      "path": "web/agentLanes.ts",
+      "entry_point": "prepareWebCreationContext",
+      "disposition": "enforced",
+      "evidence": "제작 준비가 같은 readWebSkillRecords 발견으로 skillKey→레코드를 해석한다 — 선택기에서 고른 스킬이 같은 해시 권위를 통과하는지 테스트가 확인한다."
+    },
+    {
+      "path": "web/rpc.ts",
+      "entry_point": "nomi:prompt-library:list",
+      "disposition": "not-affected",
+      "evidence": "프롬프트 라이브러리는 스킬 카탈로그와 다른 개념·다른 소유자(promptLibraryStore)이며 shouldIncludeSkillPrompts:false로 스킬 프롬프트를 의도적으로 제외한다 — 이 클래스의 영향을 받지 않는다."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "엔진·프로젝트·설치 스킬과 무관하게 웹에서 선택기를 여는 모든 세션·모든 사용자에게 같은 실패가 재현된다. 누락된 라우트는 데이터가 아니라 호스트 코드라서 다음 배포에도 그대로 남는다.",
+    "same_class_scan": [
+      "node scripts/door-map.mjs prepareWebCreationContext findSkillRecord projectSkillsForRenderer listSkillsForRenderer readWebSkillRecords --roots=web,electron → 수정 후 8문(수정 전 동일 심볼 집합 6문; 차이는 web/rpc.ts의 두 문)",
+      "git grep -n 'nomi:skill' → 원본 목록 노출처는 electron/skills/skillIpc.ts(데스크톱)와 web/rpc.ts(웹) 두 곳뿐임을 확인",
+      "프런트 소비처 전수: src/workbench/api/skillApi.ts(단일 진입) + electron/preload/runtimeBridge.ts skills.list → 채널 하나"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "web/creationContext.ts",
+    "invariant": "웹의 모든 스킬 읽기(선택기 투영·제작 준비)가 같은 네이티브 발견과 원본 투영을 공유한다.",
+    "failure_mode": "발견 실패·미설치·해시 불일치는 원본 준비 경계가 거부한다(agent_skill_unavailable / agent_skill_version_changed) — 성공으로 위장하지 않는다.",
+    "exception_policy": "none",
+    "strategy": "원본 순수 투영(projectSkillsForRenderer)을 재사용하고, 네이티브 발견 브리지를 seam 모듈 하나(web/nativeSkillLoader.ts)로 모아 라우트가 자기 카탈로그나 자기 발견을 새로 만들지 못하게 한다.",
+    "artifacts": [
+      "web/nativeSkillLoader.ts",
+      "web/creationContext.ts",
+      "web/rpc.ts"
+    ]
+  },
+  "regression_tests": [
+    "web/skillSurface.test.ts"
+  ],
+  "class_regression_tests": [
+    "web/skillSurface.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "web/creationContext.ts"
+    ],
+    "rationale": "웹 creationContext 안에 인라인으로 열던 CJS→아일랜드 로더를 공유 seam(nativeSkillLoader)으로 대체해, 같은 브리지를 여는 두 번째 정의를 없앴다. 웹에는 경쟁 카탈로그가 없어 삭제할 다른 옛 경로는 없다."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "누락된 호스트 라우트 문제로 서드파티 런타임 결정과 무관하다. 원본 pi 아일랜드와 네이티브 브리지(CJS→ESM) 구성은 그대로 유지한다.",
+    "exit_criteria": []
+  },
+  "migration": "읽기 전용 라우트라 데이터 마이그레이션이 없다. 배포는 기존과 같은 웹 재빌드+재시작이며, 발견 브리지(dist-electron/agentLane/laneNativeLoader.cjs)는 제작 준비가 이미 요구하던 기존 전제다.",
+  "residual_risks": [
+    "실 배포 웹 호스트에서의 선택기 표시는 이번 세션에 실자원이 없어 unverified — 라우트 단위 테스트와 웹 테스트 레인까지만 확인했다.",
+    "웹 배포 산출물이 dist-electron/agentLane/laneNativeLoader.cjs를 포함한다는 기존 전제에 의존한다(제작 준비와 동일 전제; 다르면 목록만 실패하고 준비 쪽도 함께 실패한다)."
+  ],
+  "detected_by": "review",
+  "recurrence_check_on": "2026-10-21",
+  "invariant_owner_layer": {
+    "layer": "web/creationContext.ts",
+    "tests": [
+      "web/skillSurface.test.ts"
+    ]
+  }
+}
