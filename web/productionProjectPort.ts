@@ -72,6 +72,13 @@ export function createWebProductionProjectPort(binding: ProjectBinding, options:
     const previous = (projectCanvas(current) as ReturnType<typeof projectCanvas> & { webManagedCreation?: { documents: Record<string, true>; designs: Record<string, true> } }).webManagedCreation
     const next = managed ? { ...payload, webManagedCreation: { documents: { ...previous?.documents, ...(managed.documentId ? { [managed.documentId]: true } : {}) }, designs: { ...previous?.designs, ...(managed.designId ? { [managed.designId]: true } : {}) } } } : payload
     await save(projectId, { ...current, expectedBinding: binding, payload: next })
+    if (managed?.documentId) {
+      const expected = next.workbenchDocuments?.find(value => value.id === managed.documentId)
+      const persisted = projectCanvas(record()).workbenchDocuments?.find(value => value.id === managed.documentId)
+      if (!expected || !persisted) throw new Error('agent_document_save_unverified')
+      const expectedState = documentSessionState(expected), persistedState = documentSessionState(persisted)
+      if (expectedState.revision !== persistedState.revision || expectedState.contentHash !== persistedState.contentHash) throw new Error('agent_document_save_unverified')
+    }
     options.onChange?.(projectId)
   }
   let expectedDocumentState = options.documentPreconditions ?? (admittedDocument ? documentSessionState(admittedDocument) : undefined)

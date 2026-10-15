@@ -20,7 +20,7 @@
 | AUTO | R3 | 决策自治：默认自主推进到底，不留遗留；只在产品方向 / 不可逆取舍 / 架构岔路 / 用户独有资源 / 样张里两条拍板自相矛盾时停下上报（不许自己挑一条实现），并给对比表与推荐项。 | 停下来问不该问的，或在该停的地方自己挑了一条 | manual | 执行点 manual，用户 2026-10-02 拍板常驻 | 用户 | 2026-12-01 | 用户另行决定 |
 | PAR | S-PAR H-PUSH | 并行纪律：独立 sibling worktree，先 delivery:preflight、先 pnpm install；不在共享主仓切分支 / 提交；推送前整合最新 origin/main（merge，不 reset 不压缩）；只推任务分支；不 force-push。 | 多会话踩同一工作树、推送丢提交 | gate:check:fresh-base；hook:pre-push-check；gate:check:push-bypass | pre-push 留痕 push-bypass.log（本机日志） | 协调会话 | 2026-12-01 | 不适用 |
 | COORD | S-MS | 多会话：同一时段只有一个协调会话，用户只和它说话；其他会话只开 PR 并发号，不自己合并，新问题和要拍板的问题发消息给协调会话（不建任务卡、不直接问用户）。 | 多会话各自合并、各自问用户 | coordinator-tool:scripts/merge-preflight.mjs | 编排手册 §19 的运作记录 | 协调会话 | 2026-12-01 | 不适用 |
-| R11 | R11.0 R11.1 R19 S-VIO | 交付与状态：按验证分层通过后自己 commit + push；状态词只有四档：已实现未推送 / 已推送待合入 / 已合入待验证 / 已解决（已解决需 merge SHA 上的 delivery:verify-merged 收据）。 | 把「写了」说成「解决了」 | hook:pre-push-check；gate:check:git-delivery；coordinator-tool:delivery:verify-merged | pre-push-check 留痕；git-delivery 在 contracts | 协调会话 | 2026-12-01 | 不适用 |
+| R11 | R11.0 R11.1 R19 S-VIO | 交付与状态：本地 CI 必过；GitHub CI 仅可经用户明确授权豁免并留证。状态四档：已实现未推送 / 已推送待合入 / 已合入待验证 / 已解决（merge SHA 验证回执；远端例外按交付文档留本地验收）。 | 把「写了」说成「解决了」 | hook:pre-push-check；gate:check:git-delivery；coordinator-tool:delivery:verify-merged | pre-push-check 留痕；git-delivery 在 contracts | 协调会话 | 2026-12-01 | 不适用 |
 
 ## 触发才查（11 条）
 
@@ -33,7 +33,7 @@
 | R9 | R12 | 模块化防巨壳：写码前想清楚分层；单文件不超过 800 行。 | 巨壳文件 | gate:check:filesize | check:filesize 红 21 次，真拦 15 次（例：拆 workbenchDocumentSlice） | 协调会话 | 2026-12-01 | 不适用 |
 | R15 |  | 所有用户可见文字走 i18n（zh-CN / en），两轨都要真截图。 | 硬编码中文或英文 | gate:check:i18n | check:i18n 红 9 次，真拦 5 次（含键引用解析 check-i18n-key-refs，挂在 check:i18n 链里） | 协调会话 | 2026-12-01 | 不适用 |
 | R17 | R17.0 R17.1 R17.2 R17.3 R18 R26 R28 | 防线建在最早能拦住的那层：能让编译器拦的别留给门岗，能让门岗拦的别留给人；棘轮基线只减不增，加规则先验它会红；门岗红了先读它红在哪条判据，别抬基线。含重活门岗（卡死一族）、测试等待、分层边界三族棘轮。 | 门岗被基线挤爆、规则只登记不执行 | gate:check:heavy-path；gate:check:test-waits；gate:check:boundaries；gate:check:vocabularies | check:vocabularies 红 9 次真拦 4 次；heavy-path / boundaries 在 contracts | 协调会话 | 2026-12-01 | 不适用 |
-| R22 |  | 验证分层与测试预算：contracts 常跑，其余维度按真实风险独立触发；认不出的路径默认跑全量；没有真实资源记 unverified。 | 测试预算与风险错配 | gate:scripts/validation-policy.mjs；gate:check:quality-gate-workflow | CI scope job；复盘里「认不出的路径」两条 | 协调会话 | 2026-12-01 | 不适用 |
+| R22 |  | 验证分层与测试预算：本地 CI 始终必需；contracts 常跑，其余按真实风险触发，未知路径全量；GitHub CI 仅用户明确授权可豁免；无真实资源记 unverified。 | 测试预算与风险错配 | gate:scripts/validation-policy.mjs；gate:check:quality-gate-workflow | CI scope job；复盘里「认不出的路径」两条 | 协调会话 | 2026-12-01 | 不适用 |
 | R27 | PB2 PB3 PB5 PB6 PB9 PB19 PB19.3a | 多智能体编排：任务书带开工三行头与概念占用；收货三查；一个概念一个 PR、按阶段攒（提交不压缩）；协调会话运作见编排手册。 | 派工混乱、合并失控 | coordinator-tool:scripts/merge-preflight.mjs | docs/engineering/agent-orchestration-playbook.md | 协调会话 | 2026-12-01 | 不适用 |
 | R33 | R33.2 R33.3 R33.4 R33.5 | 概念的 owner 先于目录：同一概念同一时段只归一条 lane；谁说了算在设计卡 ★2 格动手前回答；概念登记表 concept-owners.json 由门岗校验（警告档）。 | 同一概念出现第二个 owner | gate:check:concept-owners(警告)；template:docs/engineering/design-card.md | concept-owners 红 4 次全是登记没补 | 协调会话 | 2026-12-01 | 不适用 |
 | SECRET | H-SECRET | 禁 --no-verify、禁 git add -f，敏感数据不进 git；提交前敏感数据扫描不得绕过。 | 密钥与隐私数据进入仓库 | hook:secret-guard；hook:commit-bypass-check；gate:check:secrets | commit-bypass-check 有单测 | 协调会话 | 2026-12-01 | 不适用 |

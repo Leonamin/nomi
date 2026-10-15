@@ -272,7 +272,7 @@
         "R19",
         "S-VIO"
       ],
-      "rule": "交付与状态：按验证分层通过后自己 commit + push；状态词只有四档：已实现未推送 / 已推送待合入 / 已合入待验证 / 已解决（已解决需 merge SHA 上的 delivery:verify-merged 收据）。",
+      "rule": "交付与状态：本地 CI 必过；GitHub CI 仅可经用户明确授权豁免并留证。状态四档：已实现未推送 / 已推送待合入 / 已合入待验证 / 已解决（merge SHA 验证回执；远端例外按交付文档留本地验收）。",
       "disease": "把「写了」说成「解决了」",
       "enforcement": [
         "hook:pre-push-check",
@@ -442,7 +442,7 @@
     {
       "id": "R22",
       "aliases": [],
-      "rule": "验证分层与测试预算：contracts 常跑，其余维度按真实风险独立触发；认不出的路径默认跑全量；没有真实资源记 unverified。",
+      "rule": "验证分层与测试预算：本地 CI 始终必需；contracts 常跑，其余按真实风险触发，未知路径全量；GitHub CI 仅用户明确授权可豁免；无真实资源记 unverified。",
       "disease": "测试预算与风险错配",
       "enforcement": [
         "gate:scripts/validation-policy.mjs",

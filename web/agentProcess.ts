@@ -262,13 +262,17 @@ export async function runNativeAgent(turn: NativeAgentTurn): Promise<void> {
   else child.stdin.end()
   let diagnostic = ''
   let hasProviderError = false
+  const assistantText: Extract<NativeAgentEvent, { kind: 'text' | 'thinking' }>[] = []
   const lines = readline.createInterface({ input: child.stdout })
   lines.on('line', line => {
     try {
       const raw = JSON.parse(line)
       if (turn.engine === 'opencode' && typeof raw.sessionID === 'string') turn.onEvent({ kind: 'session', id: raw.sessionID })
       const event = parseNativeAgentEvent(turn.engine, raw)
-      if (event) { if (event.kind === 'error') hasProviderError = true; turn.onEvent(event) }
+      if (event) {
+        if (event.kind === 'text') assistantText.push(event)
+        else { if (event.kind === 'error') hasProviderError = true; turn.onEvent(event) }
+      }
     } catch { /* CLI progress text has no domain meaning. */ }
   })
   child.stderr.on('data', data => { diagnostic = (diagnostic + data.toString()).slice(-4000) })
@@ -280,5 +284,12 @@ export async function runNativeAgent(turn: NativeAgentTurn): Promise<void> {
       child.on('error', reject)
       child.on('close', code => code === 0 && !hasProviderError && !turn.signal.aborted ? resolve() : reject(new Error(turn.signal.aborted ? 'Agent stopped by the user' : hasProviderError ? 'Native provider reported an error' : diagnostic || `Native agent exited with ${code}`)))
     })
+    // Text is never a tool transport. Validate the completed response, including
+    // markers split across events, before publishing it as ordinary assistant prose.
+    const text = assistantText.map(event => event.text).join('')
+    if (/^\s*(?:<｜｜DSML｜｜\s*(?:calls|invoke)\b|<function_calls\b|<tool_call\b)/u.test(text)) {
+      throw new Error('agent_tool_call_not_executed')
+    }
+    for (const event of assistantText) turn.onEvent(event)
   } finally { turn.signal.removeEventListener('abort', stop); lines.close(); stop(); await privateServer?.dispose() }
 }

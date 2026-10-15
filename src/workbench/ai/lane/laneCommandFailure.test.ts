@@ -109,3 +109,11 @@ describe('服务商报文 → 面板红字（原始 JSON / 分类标记不进界
     expect(enAgentResident?.providerUnknownError ?? '').toBeTruthy()
   })
 })
+
+
+it.each([
+  ['agent_tool_call_not_executed', 'agentResident.toolCallNotExecuted'],
+  ['agent_document_save_unverified', 'agentResident.documentSaveUnverified'],
+])('shows actionable execution status for %s rather than an unknown provider error', (code, expected) => {
+  expect(providerFailureText(code, key)).toBe(expected)
+})

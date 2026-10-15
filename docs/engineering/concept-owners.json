@@ -3378,6 +3378,10 @@
         {
           "path": "web/productionProjectPort.ts",
           "symbol": "createWebProductionProjectPort"
+        },
+        {
+          "path": "web/productionProjectPort.ts",
+          "symbol": "persist"
         }
       ],
       "forbidden_derivations": [],
@@ -4116,6 +4120,10 @@
         {
           "path": "electron/capabilityCore/mcpGenerationTools.ts",
           "symbol": "saveDocumentPlan"
+        },
+        {
+          "path": "web/semanticAgentTools.ts",
+          "symbol": "createWebSemanticAgentTools"
         }
       ],
       "forbidden_derivations": [],
