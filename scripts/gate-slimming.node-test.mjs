@@ -18,7 +18,7 @@ const { gates, advisory } = parseGateArgs(pkg.scripts['gates:contracts'].split(/
 // 账本里「真问题」的门岗。check:test-types 现在由 typecheck 编排器并发带起（见 scripts/typecheck.node-test.mjs），
 // 所以在名单里以 typecheck 的身份出现。
 const REAL_PROBLEM_GATES = [
-  'typecheck', // 含 check:test-types（生产 tsc x3 + 测试类型棘轮）
+  'typecheck', // 含 check:test-types（生产 tsc x4 + 测试类型棘轮）
   'check:filesize',
   'check:walkthroughs',
   'check:design-lab',

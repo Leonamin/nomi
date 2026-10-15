@@ -1,0 +1,141 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-15-web-typecheck-coverage",
+  "problem_type": "Web TypeScript program omitted from root validation",
+  "symptom": "The merged PR #29 passed local root gates but clean postmerge predeployment Web typecheck failed at web/client.ts:92 (TS2790) and web/hostCapabilities.ts:45 (TS7022), preventing deployment.",
+  "direct_cause": "The Web client deletes a required DesktopBridge property and the host projection leaves an inferred local type circular; neither file was compiled by the four jobs in the root typecheck runner.",
+  "class_root": "The root typecheck job inventory does not enforce coverage of the existing Web tsconfig, so Web-only TypeScript errors can pass root gates whenever the separate Web workflow is unavailable.",
+  "affected_population": [
+    "Every Web release built from a commit accepted only by root gates; future Web-only source changes"
+  ],
+  "scope_paths": [
+    "scripts/typecheck.mjs",
+    "web/client.ts",
+    "web/hostCapabilities.ts"
+  ],
+  "entry_points": [
+    "pnpm run gates reaches pnpm run typecheck through gates:contracts",
+    "pnpm run typecheck invokes TYPECHECK_JOBS",
+    "Web release compiles tsconfig.web.json separately"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "The missing validation program and duplicate bridge deletion are internal repository wiring; installed TypeScript 5.9.3 already reports the exact errors without a dependency change.",
+  "invariants": [
+    "The root typecheck runner always executes tsconfig.web.json and propagates its failure to gates.",
+    "The Web host projection owns videoDepth removal; client composition does not repeat it."
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "scripts/typecheck.mjs",
+      "symbol": "TYPECHECK_JOBS"
+    },
+    {
+      "kind": "write",
+      "path": "web/client.ts",
+      "symbol": "projectWebHostCapabilities"
+    },
+    {
+      "kind": "read",
+      "path": "web/hostCapabilities.ts",
+      "symbol": "unsupportedWebHostMethods"
+    }
+  ],
+  "door_reduction": {
+    "before": 3,
+    "after": 3,
+    "why_not": "The central typecheck runner, Web bridge composer, and Web host projection have distinct required responsibilities; the redundant videoDepth deletion inside the composer is removed while its projection call remains."
+  },
+  "generality_proof": "Every root gates invocation reaches one TYPECHECK_JOBS inventory, now including the complete Web TS program. The job failure is propagated by the existing shared runner. videoDepth removal remains in the Web projection, and explicit typing keeps that traversal valid under strict TypeScript.",
+  "shared_boundaries": [
+    {
+      "path": "scripts/typecheck.mjs",
+      "symbol": "TYPECHECK_JOBS",
+      "responsibility": "Own all production TypeScript programs checked by root gates, including Web."
+    },
+    {
+      "path": "web/hostCapabilities.ts",
+      "symbol": "projectWebHostCapabilities",
+      "responsibility": "Own unsupported Web bridge method removal without relying on duplicate client deletion."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "scripts/typecheck.mjs",
+      "entry_point": "TYPECHECK_JOBS",
+      "disposition": "enforced",
+      "evidence": "package.json typecheck and gates:contracts reach this inventory."
+    },
+    {
+      "path": ".github/workflows/personal-web.yml",
+      "entry_point": "pnpm exec tsc -p tsconfig.web.json",
+      "disposition": "enforced",
+      "evidence": "The separate workflow already names the Web program; the root runner now checks the same program without depending on workflow admission."
+    },
+    {
+      "path": "web/client.ts",
+      "entry_point": "contextBridge.exposeInMainWorld",
+      "disposition": "enforced",
+      "evidence": "The Web TypeScript program includes this source and catches required-property delete errors."
+    },
+    {
+      "path": "web/hostCapabilities.ts",
+      "entry_point": "projectWebHostCapabilities",
+      "disposition": "enforced",
+      "evidence": "The same Web TypeScript program catches unsafe inferred locals in capability traversal."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Any future Web-only TypeScript edit can repeat the failure whenever only root gates run or hosted Web workflow is unavailable.",
+    "same_class_scan": [
+      "rg tsconfig.web.json package.json scripts .github/workflows found separate workflow but no root runner job.",
+      "rg TYPECHECK_JOBS scripts found one central inventory and its assertion test.",
+      "rg projectWebHostCapabilities web found the composer and owner; rg videoDepth web found the duplicate delete."
+    ]
+  },
+  "prevention": {
+    "kind": "static-gate",
+    "enforcement_path": "scripts/typecheck.mjs",
+    "invariant": "Root gates compile every production TS program, including Web, and fail for any Web diagnostic.",
+    "failure_mode": "A failing Web tsc job sets typecheck exit code 1 and blocks gates.",
+    "exception_policy": "none",
+    "strategy": "Extend the existing runner inventory and lock its Web job and failure propagation with tests; correct the two reported diagnostics at their source.",
+    "artifacts": [
+      "scripts/typecheck.mjs",
+      "web/client.ts",
+      "web/hostCapabilities.ts"
+    ]
+  },
+  "regression_tests": [
+    "scripts/typecheck.node-test.mjs"
+  ],
+  "class_regression_tests": [
+    "scripts/typecheck.node-test.mjs"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "web/client.ts"
+    ],
+    "rationale": "Remove the duplicate videoDepth deletion because the shared Web host projection already owns it."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "The installed TypeScript compiler detects both errors; no third-party version change is required.",
+    "exit_criteria": []
+  },
+  "migration": "No persisted data changes. The same Web tsconfig becomes a root gate job; existing client runtime behavior is preserved because the capability projection already removes videoDepth.",
+  "residual_risks": [
+    "A clean final commit must pass explicit Web tsc and full gates; hosted Actions may be unavailable, so local and hosted receipts remain distinct."
+  ],
+  "detected_by": "ci",
+  "recurrence_check_on": "2026-11-15",
+  "invariant_owner_layer": {
+    "layer": "scripts/typecheck.mjs",
+    "tests": [
+      "scripts/typecheck.node-test.mjs"
+    ],
+    "why": "The root typecheck runner owns the complete production TypeScript program list; its assertion test pins Web inclusion and failed-job propagation."
+  }
+}
