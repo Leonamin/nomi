@@ -3,7 +3,7 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 
-const captured = vi.hoisted(() => ({ args: [] as string[], env: {} as NodeJS.ProcessEnv, version: 'opencode v2.0.28', launches: 0, serverArgs: [] as string[], mcpProbes: 0, leasesClosed: 0, stderrDrains: 0, readiness: {data:[{name:'nomi',status:{status:'connected'}}]} as unknown }))
+const captured = vi.hoisted(() => ({ args: [] as string[], env: {} as NodeJS.ProcessEnv, version: 'opencode v2.0.28', launches: 0, serverArgs: [] as string[], mcpProbes: 0, leasesClosed: 0, stderrDrains: 0, output: [] as unknown[], readiness: {data:[{name:'nomi',status:{status:'connected'}}]} as unknown }))
 vi.mock('node:child_process', async () => {
   const { EventEmitter } = await import('node:events')
   const { PassThrough } = await import('node:stream')
@@ -16,7 +16,7 @@ vi.mock('node:child_process', async () => {
     captured.env = options.env
     if (args[0] === 'serve') captured.serverArgs = args
     else captured.launches += 1
-    const child = Object.assign(new EventEmitter(), { stdout: new PassThrough(), stderr: new PassThrough(), stdin: { on: () => undefined, end: () => { if (args[0] === 'serve') captured.leasesClosed++; queueMicrotask(() => child.emit('close', 0)) } } })
+    const child = Object.assign(new EventEmitter(), { stdout: new PassThrough(), stderr: new PassThrough(), stdin: { on: () => undefined, end: () => { if (args[0] === 'serve') captured.leasesClosed++; queueMicrotask(() => { if (args[0] !== 'serve') for (const event of captured.output) child.stdout.write(JSON.stringify(event)+'\n'); child.emit('close', 0) }) } } })
     if (args[0] === 'serve') { const resume=child.stderr.resume.bind(child.stderr); child.stderr.resume=()=>{ captured.stderrDrains++; return resume() } }
     if (args[0] === 'serve') queueMicrotask(() => child.stdout.write(JSON.stringify({url:'http://127.0.0.1:19111'})+'\n'))
     return child
@@ -101,4 +101,29 @@ describe('private discovery interruption and deadline', () => {
       expect(captured.launches).toBe(before);expect(captured.leasesClosed).toBe(closed+1)
     }finally{captured.readiness={data:[{name:'nomi',status:{status:'connected'}}]};fs.rmSync(directory,{recursive:true,force:true})}
   })
+})
+
+
+describe('native calls cannot masquerade as completed prose', () => {
+  it.each(['opencode', 'codex'].flatMap(engine => ['<｜｜DSML｜｜ calls> <｜｜DSML｜｜ invoke name="nomi_write_script">draft', '<function_calls><invoke name="write_script">draft', '<tool_call>{"name":"write_script"}'].map(text => ({engine:engine as 'opencode' | 'codex',text}))))('rejects protocol text split across $engine events without executing or displaying it', async ({engine,text}) => {
+    const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'nomi-protocol-text-'))
+    const events: unknown[] = []
+    const chunks = [text.slice(0, 6), text.slice(6)]
+    captured.output = chunks.map((text, i) => engine === 'opencode' ? {type:'text',part:{id:String(i),text}} : {type:'item.completed',item:{id:String(i),type:'agent_message',text}})
+    try {
+      await expect(runNativeAgent({engine, model:'provider/model', prompt:'Update document',directory,mcpUrl:'http://localhost/mcp',mcpToken:'test',toolNames:['write_script'],signal:new AbortController().signal,onEvent:event=>events.push(event)})).rejects.toThrow('agent_tool_call_not_executed')
+      expect(events).not.toEqual(expect.arrayContaining([expect.objectContaining({kind:'text'})]))
+    } finally { captured.output=[]; fs.rmSync(directory,{recursive:true,force:true}) }
+  })
+})
+
+
+it('preserves ordinary explanations quoting tool syntax and legitimate multi-part replies', async () => {
+  const directory=fs.mkdtempSync(path.join(os.tmpdir(),'nomi-prose-'))
+  captured.output=[{type:'text',part:{id:'one',text:'The literal `<tool_call>` in your message is text. '}},{type:'text',part:{id:'two',text:'No document was changed.'}}]
+  const events: unknown[]=[]
+  try {
+    await runNativeAgent({engine:'opencode',model:'provider/model',prompt:'Explain',directory,mcpUrl:'http://localhost/mcp',mcpToken:'test',toolNames:[],signal:new AbortController().signal,onEvent:e=>events.push(e)})
+    expect(events).toEqual([{kind:'text',id:'one',text:'The literal `<tool_call>` in your message is text. '},{kind:'text',id:'two',text:'No document was changed.'}])
+  }finally{captured.output=[];fs.rmSync(directory,{recursive:true,force:true})}
 })

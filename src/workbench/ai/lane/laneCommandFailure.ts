@@ -137,6 +137,8 @@ export function laneFailureText(error: unknown, t: Translate): string {
  */
 export function providerFailureText(raw: unknown, t: Translate): string {
   const text = asText(raw)
+  if (text === 'agent_tool_call_not_executed') return t('agentResident.toolCallNotExecuted')
+  if (text === 'agent_document_save_unverified') return t('agentResident.documentSaveUnverified')
   if (!text.trim()) return t('agentResident.providerUnknownError')
   return classifiedFailureText(text, t, 'agentResident.providerUnknownError', null)
 }

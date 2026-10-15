@@ -10,7 +10,7 @@ describe('native web semantic tool vocabulary', () => {
     const tools = create()
     expect(tools.map(tool => tool.name)).toEqual(expect.arrayContaining(['read_script', 'write_script', 'list_models', 'look_at_canvas', 'draft_shots', 'generate', 'check_job']))
     expect(tools.some(tool => tool.name === 'start_production_run' || tool.name === 'nomi_shot_generate')).toBe(false)
-    for (const tool of tools) expect(tool.schema).toBe(modelFacingToolSpecs('internal').find(spec => spec.name === tool.name)?.schema)
+    for (const tool of tools.filter(tool => tool.name !== 'write_script')) expect(tool.schema).toBe(modelFacingToolSpecs('internal').find(spec => spec.name === tool.name)?.schema)
   })
   it('preserves irreversible cancellation and the original generation confirmation owner', () => {
     const tools = create()
@@ -40,8 +40,24 @@ describe('native web semantic tool vocabulary', () => {
 
   it('rejects browser selection and cursor writes before they can become whole-document replacement', async () => {
     const write = create().find(tool => tool.name === 'write_script')!
-    expect(write.description).toContain('only where=end')
-    for (const where of ['cursor', 'selection']) await expect(write.run({ content: 'Partial edit', where })).rejects.toThrow('browser editor')
+    expect(write.description).toContain('whole-document')
+    for (const where of ['cursor', 'selection']) await expect(write.run({ content: 'Partial edit', where })).rejects.toThrow()
   })
 
+})
+
+
+describe('web document tool scope and receipts', () => {
+  it('advertises only supported scopes and requires a read before whole document replacement', async () => {
+    const read = vi.fn(async()=>({text:'original'})), write = vi.fn(async()=>({applied:true as const,revision:2,contentHash:'verified'}))
+    const tools=createWebSemanticAgentTools({binding:{projectId:'p',immutableProjectUuid:'u',projectGeneration:1},signal:new AbortController().signal,documentPort:{read,write},generation:{},listModels:()=>[],readCanvas:()=>({})} as unknown as WebSemanticAgentToolDependencies)
+    const edit=tools.find(t=>t.name==='write_script')!
+    expect(edit.schema.safeParse({where:'whole-document',content:'revised'}).success).toBe(true)
+    expect(edit.schema.safeParse({where:'selection',content:'revised'}).success).toBe(false)
+    await expect(edit.run({where:'whole-document',content:'revised'})).rejects.toThrow('read_script')
+    expect(write).not.toHaveBeenCalled()
+    await tools.find(t=>t.name==='read_script')!.run({scope:'full'})
+    await expect(edit.run({where:'whole-document',content:'revised'})).resolves.toMatchObject({ok:true,details:{applied:true,revision:2,contentHash:'verified'}})
+    expect(write).toHaveBeenCalledWith({operation:'replace',content:'revised'},expect.anything())
+  })
 })

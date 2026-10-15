@@ -169,3 +169,14 @@ it('exposes an isolated admitted document pin without refreshing unread human ed
   await test.port.documentPort.write({ operation: 'append', content: 'agent append' }, context())
   expect(test.port.readAdmittedDocumentState()).toEqual(test.port.readDocumentState())
 })
+
+
+describe('durable document receipt verification', () => {
+  it('refuses a success receipt when the storage owner silently preserves the old document', async () => {
+    const document = createDefaultWorkbenchDocument()
+    const current: ProjectRecord = {id:binding.projectId,name:'receipt',version:1,createdAt:1,updatedAt:1,payload:{workbenchDocuments:[document],activeDocumentId:document.id,generationCanvas:createDefaultGenerationCanvasSnapshot()}}
+    const port=createWebProductionProjectPort(binding,{readProject:()=>current,saveProject:async()=>current,assertBinding:()=>{}})
+    await expect(port.documentPort.write({operation:'replace',content:'must be durable'},context())).rejects.toThrow('agent_document_save_unverified')
+    await expect(port.requestRenderer('document.write',{projectId:binding.projectId,target:{kind:'document',documentId:document.id,anchor:{kind:'whole-document'}},preconditions:{document:port.readDocumentState()},operation:'replace',content:'also durable'})).rejects.toThrow('agent_document_save_unverified')
+  })
+})

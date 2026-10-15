@@ -1,3 +1,5 @@
+import { z } from 'zod'
+import { documentWriteResultSchema } from '../electron/shared/agentCapabilities/documentWrite'
 import { projectCanvasRead } from '../electron/shared/agentCapabilities/canvasRead'
 import { formatCanvasForAgent } from '../electron/shared/agentCapabilities/canvasReadCompact'
 import { randomUUID } from 'node:crypto'
@@ -28,23 +30,35 @@ export type WebSemanticAgentToolDependencies = {
 
 /** Native MCP receives the original model vocabulary/schema, not a second manually invented set. */
 export function createWebSemanticAgentTools(deps: WebSemanticAgentToolDependencies): WebSemanticAgentTool[] {
-  const documents = new Map(createDocumentLaneTools(deps.documentPort).map(tool => [tool.name, tool]))
+  const documents = new Map(createDocumentLaneTools(deps.documentPort).filter(tool => tool.name === 'read_script').map(tool => [tool.name, tool]))
+  let documentRead = false
   const names = new Set(['read_script', 'write_script', 'list_models', 'look_at_canvas', 'draft_shots', 'generate', 'check_job', 'cancel_job'])
   return modelFacingToolSpecs('internal').filter(spec => names.has(spec.name)).map(spec => {
     const contract = capabilityContractById(spec.contractId)
     if (!contract) throw new Error(`Unregistered semantic capability: ${spec.contractId}`)
     const facets = approvalFacetsOf(spec.effect)
+    const schema = spec.name === 'write_script'
+      ? (spec.schema as z.ZodObject<z.ZodRawShape>).extend({ where: z.enum(['end', 'whole-document']).describe('end appends; whole-document replaces the entire admitted document after read_script. Browser cursor/selection are unavailable.') })
+      : spec.schema
     return {
-    name: spec.name, description: spec.description + (spec.name === 'write_script' ? '\nWeb host: only where=end is available; cursor and selection belong to the browser editor and are unavailable to server tools.' : spec.name === 'read_script' ? '\nWeb host: only scope=full is available; browser selection is unavailable to server tools.' : ''), schema: spec.schema,
+    name: spec.name, description: spec.name === 'write_script'
+      ? 'Write finished prose into the creation document. Use where=end to append, or where=whole-document to replace the entire document. Before replacing, call read_script in this turn and preserve any user content that should remain. Never use browser cursor or selection. Only report completion after this tool returns ok=true and a verified revision/contentHash. Never write tool invocation syntax as chat text.'
+      : spec.description + (spec.name === 'read_script' ? '\nWeb host: only scope=full is available; browser selection is unavailable to server tools.' : ''), schema,
     approvalSubject: { ...facets, ...capabilityPlanReviewOf(contract), destructiveHint: mcpAnnotationsFor(contract)?.destructiveHint === true },
     hasDomainConfirmation: spec.name === 'generate',
     run: async raw => {
       if (deps.signal.aborted) throw new Error('Agent turn was stopped')
-      const args = spec.schema.parse(spec.prepareArguments ? spec.prepareArguments(raw) : raw)
-      if (spec.name === 'write_script' && (args as { where: string }).where !== 'end') throw new Error('Web document tools can only append with where=end; cursor and selection require the browser editor')
+      const args = schema.parse(spec.prepareArguments ? spec.prepareArguments(raw) : raw)
+      if (spec.name === 'write_script') {
+        const operation = (args as { where: string }).where === 'whole-document' ? 'replace' : 'append'
+        if (operation === 'replace' && !documentRead) throw new Error('Call read_script before replacing the whole document')
+        const receipt = documentWriteResultSchema.parse(await deps.documentPort.write({ operation, content: (args as { content: string }).content }, { toolCallId: randomUUID(), signal: deps.signal }))
+        deps.onDocumentExecuted?.()
+        return { ok: true, text: `Applied ${operation} to the document. Verified revision ${receipt.revision}.`, details: receipt }
+      }
       const toolCallId = randomUUID()
       const document = documents.get(spec.name)
-      if (document) { const result = await document.execute(args, { toolCallId, signal: deps.signal }); if (result.ok) deps.onDocumentExecuted?.(); return result }
+      if (document) { const result = await document.execute(args, { toolCallId, signal: deps.signal }); if (result.ok) documentRead = true; return result }
       if (spec.name === 'list_models') return deps.listModels()
       if (spec.name === 'look_at_canvas') {
         const canvas = projectCanvasRead(await deps.readCanvas())

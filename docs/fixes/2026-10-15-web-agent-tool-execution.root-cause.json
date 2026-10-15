@@ -1,0 +1,168 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-15-web-agent-tool-execution",
+  "problem_type": "Native tool protocol text mistaken for successful execution and unsupported document scope",
+  "symptom": "DSML write_script text appears in chat without changing the creation document",
+  "direct_cause": "The CLI emits assistant text rather than an MCP call; web document schema only supports cursor/selection/end while server accepts only append",
+  "class_root": "Native completion and web tool exposure lack a binding to executable document operations and verified durable receipts",
+  "affected_population": [
+    "OpenCode and Codex web turns",
+    "Existing and new creation documents"
+  ],
+  "scope_paths": [
+    "web/agentProcess.ts",
+    "web/semanticAgentTools.ts",
+    "web/productionProjectPort.ts",
+    "src/workbench/ai/lane/laneCommandFailure.ts",
+    "src/i18n/locales/agentResident.ts",
+    "src/i18n/locales/ko/agentResident.json"
+  ],
+  "entry_points": [
+    "runNativeAgent: OpenCode and Codex JSONL responses",
+    "createWebSemanticAgentTools: read_script/write_script",
+    "createWebProductionProjectPort: documentPort and document.write"
+  ],
+  "external_sources": [
+    {
+      "kind": "official-doc",
+      "url": "https://dev.opencode.ai/v2/docs/mcp-servers/",
+      "checked_at": "2026-10-15",
+      "purpose": "Native MCP remains the only executable tool transport; discovery is separate from model completion"
+    }
+  ],
+  "invariants": [
+    "Assistant text never executes tools and serialized call text cannot count as a successful native turn",
+    "Web document tool schema exposes only executable scopes; whole-document replacement requires a successful read",
+    "Write success contains a revision/hash verified against the persisted admitted document"
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "web/productionHost.ts",
+      "symbol": "createWebProductionProjectPort"
+    },
+    {
+      "kind": "write",
+      "path": "web/agentProcess.ts",
+      "symbol": "parseNativeAgentEvent"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionHost.ts",
+      "symbol": "createWebProductionProjectPort"
+    },
+    {
+      "kind": "write",
+      "path": "web/productionHost.ts",
+      "symbol": "createWebSemanticAgentTools"
+    }
+  ],
+  "door_reduction": {
+    "before": 4,
+    "after": 4,
+    "why_not": "ProductionHost must construct document ports and semantic tools separately; native events require their own CLI boundary. Read/type reference and construction are separate door-map entries."
+  },
+  "generality_proof": "Both native engines converge on runNativeAgent output validation. Both document write entries converge on persist and the admitted document identity; schema projection never fabricates browser selection.",
+  "shared_boundaries": [
+    {
+      "path": "web/agentProcess.ts",
+      "symbol": "runNativeAgent",
+      "responsibility": "Validate completed assistant text before publishing it"
+    },
+    {
+      "path": "web/semanticAgentTools.ts",
+      "symbol": "createWebSemanticAgentTools",
+      "responsibility": "Expose supported web document scopes and require read before replacement"
+    },
+    {
+      "path": "web/productionProjectPort.ts",
+      "symbol": "persist",
+      "responsibility": "Verify durable document revision/hash before write receipt"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "web/agentProcess.ts",
+      "entry_point": "OpenCode text events",
+      "disposition": "enforced",
+      "evidence": "Both engines buffer text and validate at process completion"
+    },
+    {
+      "path": "web/agentProcess.ts",
+      "entry_point": "Codex agent_message events",
+      "disposition": "enforced",
+      "evidence": "Same runNativeAgent text boundary"
+    },
+    {
+      "path": "web/productionProjectPort.ts",
+      "entry_point": "documentPort.write and requestRenderer document.write",
+      "disposition": "enforced",
+      "evidence": "Both persist via the same admitted document verification"
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Observed in two independent project transcripts; any model emitting textual call syntax reaches the same successful CLI exit path",
+    "same_class_scan": [
+      "node scripts/door-map.mjs parseNativeAgentEvent createWebSemanticAgentTools createWebProductionProjectPort --roots=web",
+      "rg write_script web electron/shared/agentCapabilities",
+      "Inspected OpenCode and Codex text parsing and both document write consumers"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "web/agentProcess.ts",
+    "invariant": "Only native MCP execution can change project state; textual invocation output fails the native turn",
+    "failure_mode": "Typed localized execution-incomplete error; no text parsing into side effects, no automatic retries",
+    "exception_policy": "none",
+    "strategy": "Validate completed native output, project web schemas to supported scopes, verify document save before returning success",
+    "artifacts": [
+      "web/agentProcess.ts",
+      "web/semanticAgentTools.ts",
+      "web/productionProjectPort.ts"
+    ]
+  },
+  "regression_tests": [
+    "web/agentProcessApproval.test.ts",
+    "web/semanticAgentTools.test.ts",
+    "web/productionProjectPort.test.ts",
+    "src/workbench/ai/lane/laneCommandFailure.test.ts"
+  ],
+  "class_regression_tests": [
+    "web/agentProcessApproval.test.ts",
+    "web/semanticAgentTools.test.ts",
+    "web/productionProjectPort.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "web/semanticAgentTools.ts",
+      "web/agentProcess.ts"
+    ],
+    "rationale": "Remove unsupported browser scope exposure and unconditional text-event publishing; no fallback executor"
+  },
+  "dependency_lifecycle": {
+    "decision": "retain-with-exit",
+    "current": "OpenCode 2.0.28, Codex CLI 0.162.1, MCP SDK 1.29.0",
+    "target": "Owner-supported runtime with successful real read/write/read acceptance on the deployed host",
+    "rationale": "No verified upstream fix for DSML text emission. Application validates outputs without vendor-specific execution fallbacks. Runtime updates alone cannot guarantee document persistence.",
+    "exit_criteria": [
+      "When a newer owner-supported engine is installed, run the same real document read/write/read acceptance before changing runtime selection",
+      "Retain output validation across runtime upgrades"
+    ]
+  },
+  "migration": "No transcript or document migration. Existing conversations remain; prior DSML messages are never executed.",
+  "residual_risks": [
+    "Underlying provider/native-runtime reason for textual DSML is not yet proven",
+    "Models may still decline or omit a tool without emitting protocol markers; prompts are not execution guarantees",
+    "Protocol-text detection intentionally covers responses starting with invocation markers; arbitrary natural-language claims or later quoted markup are not treated as executable intent."
+  ],
+  "detected_by": "user",
+  "recurrence_check_on": "2026-10-22",
+  "invariant_owner_layer": {
+    "layer": "web/agentProcess.ts",
+    "tests": [
+      "web/agentProcessApproval.test.ts"
+    ]
+  }
+}
