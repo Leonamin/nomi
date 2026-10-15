@@ -1,4 +1,6 @@
 import { buildGenerationNodeTimelineClip } from '../timeline/buildGenerationNodeTimelineClip'
+import { buildClipFromGenerationNode } from '../generationCanvas/model/buildClipFromGenerationNode'
+import { isProjectExecutionContextCurrent, withProjectAction } from '../project/projectCanvasReadSurface'
 import { findAppendFrame } from '../timeline/timelineMath'
 import { getTrackTypeForClipType } from '../timeline/timelineTypes'
 import type { GenerationCanvasNode } from '../generationCanvas/model/generationCanvasTypes'
@@ -30,6 +32,8 @@ export type AdoptGenerationNodePlacement =
 export type AdoptGenerationNodeOptions = {
   placement?: AdoptGenerationNodePlacement
   ports?: AdoptionApplyPorts
+  /** Test/integrator lifecycle guard; the default store also checks its issued project context. */
+  isCurrent?: () => boolean
 }
 
 export async function adoptGenerationNode(
@@ -38,28 +42,47 @@ export async function adoptGenerationNode(
 ): Promise<AdoptionOutcome> {
   const ports = options.ports || workbenchAdoptionPorts
   const placement = options.placement || { kind: 'append' }
+  // Fix the originating project before the first await; a later read would retarget an old adoption.
+  const project = options.ports ? undefined : withProjectAction((issued) => issued)
+  const isCurrent = (): boolean => (Boolean(options.ports) || isProjectExecutionContextCurrent(project)) && options.isCurrent?.() !== false
   const result = node.result
   if (!result || !result.url) {
     return { status: 'nothing_to_adopt', skipped: [{ nodeId: node.id, reason: 'no_result' }] }
+  }
+  if (!isCurrent()) {
+    return { status: 'nothing_to_adopt', skipped: [{ nodeId: node.id, reason: 'project_changed' }] }
   }
 
   const timeline = ports.readTimeline()
   // 先按 0 帧构建（拿 clip 的类型/时长），再据类型定轨、据轨定落点——
   // 落点依赖轨道，轨道依赖 clip 类型，顺序不能反。
   const probe = await buildGenerationNodeTimelineClip(node, { fps: timeline.fps, startFrame: 0 })
+  if (!isCurrent()) {
+    return { status: 'nothing_to_adopt', skipped: [{ nodeId: node.id, reason: 'project_changed' }] }
+  }
   if (!probe) {
     return { status: 'nothing_to_adopt', skipped: [{ nodeId: node.id, reason: 'clip_unavailable' }] }
   }
+  // Another edit may have arrived while media metadata was read. Place against the live
+  // timeline, but do not reuse a frame count calculated at a different frame rate.
+  const liveTimeline = ports.readTimeline()
+  if (liveTimeline.fps !== timeline.fps) {
+    return { status: 'nothing_to_adopt', skipped: [{ nodeId: node.id, reason: 'timeline_changed' }] }
+  }
   const trackType = getTrackTypeForClipType(probe.type)
-  const track = timeline.tracks.find((candidate) => candidate.type === trackType)
+  const track = liveTimeline.tracks.find((candidate) => candidate.type === trackType)
   const startFrame = placement.kind === 'append'
     ? (track ? findAppendFrame(track) : 0)
     : Math.max(0, Math.floor(placement.startFrame))
 
-  const clip = await buildGenerationNodeTimelineClip(node, { fps: timeline.fps, startFrame })
-  if (!clip) {
+  // The second construction is pure: preserve the measured media frame count while
+  // rebuilding the position-dependent clip ID. Do not decode the same source twice.
+  const placed = buildClipFromGenerationNode(node, { fps: liveTimeline.fps, startFrame })
+  if (!placed) {
     return { status: 'nothing_to_adopt', skipped: [{ nodeId: node.id, reason: 'clip_unavailable' }] }
   }
+
+  const clip = { ...placed, frameCount: probe.frameCount, endFrame: startFrame + probe.frameCount }
 
   const destination = destinationOf(
     placement.kind === 'append'
@@ -67,7 +90,7 @@ export async function adoptGenerationNode(
       : { kind: 'frame', trackType, startFrame },
   )
   // 键在**构建之后**才算：baseRevision 要读的是「真正准备写的那一刻」的轴。
-  const key = proposalKeyForNode(node, result, ports.readTimeline(), destination)
+  const key = proposalKeyForNode(node, result, liveTimeline, destination)
 
   // 贴尾连点两下的幂等：贴尾的落点会**随轴变长而变**，所以两次点击的 destination 天然不同，
   // 光靠全等键匹配不到。判据是「上一次采纳的成果原样还在、且轴自那以后没被动过」

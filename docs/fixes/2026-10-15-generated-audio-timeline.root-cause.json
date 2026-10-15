@@ -1,0 +1,226 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-15-generated-audio-timeline",
+  "problem_type": "Generated audio result classified and timed as a visual timeline clip",
+  "symptom": "In the real Web QA project, quick-add of generated audio node gen-v2-audio-mv9a7oe5-lpw5 landed on imageTrack as a 90-frame image despite an audio result and 3.244603-second metadata; timeline export omitted the voice.",
+  "direct_cause": "resolveClipType ignored result.type=audio and audio executionKind unless categoryId=audio; resolveFrameCount ignored node.meta.durationSec for audio.",
+  "class_root": "The shared generation-node-to-timeline builder treated audio as a category-only placeholder instead of a first-class result/execution kind, and lacked the audio duration evidence path already used for media assets. At the asynchronous adoption boundary, a single result was decoded twice while placement and project identity could become stale across the await.",
+  "affected_population": [
+    "Web and Electron generated audio nodes placed by quick-add or timeline drag, including categoryId=shots",
+    "Storyboard adoption of audio nodes and old projects with valid audio result metadata"
+  ],
+  "scope_paths": [
+    "src/workbench/generationCanvas/model/buildClipFromGenerationNode.ts",
+    "src/workbench/timeline/buildGenerationNodeTimelineClip.ts",
+    "src/workbench/adoption/adoptGenerationNode.ts",
+    "src/workbench/adoption/adoptionReceipt.ts"
+  ],
+  "entry_points": [
+    "BaseGenerationNode quick-add → adoptGenerationNode → buildGenerationNodeTimelineClip",
+    "TimelineTrack drag preview → buildClipFromGenerationNode",
+    "adoptStoryboardBatch → buildGenerationNodeTimelineClip"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "Result kind, node metadata, track placement, and duration precedence are internal repository contracts; the existing browser audio probe is reused without changing its media API behavior.",
+  "invariants": [
+    "An audio result, audio execution kind, or legacy categoryId=audio yields an audio clip and audio track while explicit visual result types retain their existing precedence.",
+    "Audio clip duration uses valid selected-result durationSeconds, then current-result meta.durationSec; if neither belongs to the selected result, the existing audio file probe supplies measured duration before adoption and a failed probe leaves the existing fallback.",
+    "A single-node adoption measures an unknown media duration once, keeps its original project lifetime, and computes append placement against the timeline current after the measurement; a changed frame rate cancels before applying."
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "src/workbench/timeline/buildGenerationNodeTimelineClip.ts",
+      "symbol": "buildClipFromGenerationNode"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/timeline/TimelineTrack.tsx",
+      "symbol": "buildClipFromGenerationNode"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/generationCanvas/model/buildClipFromGenerationNode.ts",
+      "symbol": "resolveClipType"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/adoption/adoptGenerationNode.ts",
+      "symbol": "buildGenerationNodeTimelineClip"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/adoption/adoptStoryboardBatch.ts",
+      "symbol": "buildGenerationNodeTimelineClip"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/agent/sendGenerationNodeToTimeline.ts",
+      "symbol": "adoptGenerationNode"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/useNodeDragResize.ts",
+      "symbol": "adoptGenerationNode"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/reactFlow/canvasDragWriteback.ts",
+      "symbol": "adoptGenerationNode"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/timeline/addNodeToTimelineEnd.ts",
+      "symbol": "adoptGenerationNode"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/timeline/TimelineTrack.tsx",
+      "symbol": "adoptGenerationNode"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/adoption/adoptionReceipt.ts",
+      "symbol": "reportAdoptionOutcome"
+    }
+  ],
+  "door_reduction": {
+    "before": 11,
+    "after": 11,
+    "why_not": "The five UI/agent actions and direct preview/batch consumers remain distinct entrances, but all single-node writes converge on adoptGenerationNode, which owns measured duration reuse, project lifetime, and current append placement; all classifications converge on buildClipFromGenerationNode."
+  },
+  "generality_proof": "The two direct consumers of buildClipFromGenerationNode and both adoption callers use its single media classification and known-duration rule. Metadata is admitted only for the current audio result, so historical result selection cannot inherit its duration. The shared async wrapper adds the existing audio probe only when no valid duration belongs to the selected result. No provider- or project-specific path is introduced. The five direct adoptGenerationNode entrances now share one async project-lifetime and single-probe guard; the append slot is recalculated after await, avoiding overlap with edits made during metadata decoding.",
+  "shared_boundaries": [
+    {
+      "path": "src/workbench/generationCanvas/model/buildClipFromGenerationNode.ts",
+      "symbol": "buildClipFromGenerationNode",
+      "responsibility": "Own generation media kind and known duration before any timeline track decision."
+    },
+    {
+      "path": "src/workbench/timeline/buildGenerationNodeTimelineClip.ts",
+      "symbol": "buildGenerationNodeTimelineClip",
+      "responsibility": "Complete missing audio duration from actual media before writing a clip."
+    },
+    {
+      "path": "src/workbench/adoption/adoptGenerationNode.ts",
+      "symbol": "adoptGenerationNode",
+      "responsibility": "Issue project lifetime before media await, measure once, place against live timeline, and cancel stale project or changed fps before write."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "src/workbench/adoption/adoptGenerationNode.ts",
+      "entry_point": "adoptGenerationNode",
+      "disposition": "enforced",
+      "evidence": "Quick-add builds one media-measured clip through buildGenerationNodeTimelineClip; adoptGenerationNode then uses the pure builder for its position-dependent clip ID and maps clip.type to the matching track."
+    },
+    {
+      "path": "src/workbench/timeline/TimelineTrack.tsx",
+      "entry_point": "resolveDropPreview",
+      "disposition": "enforced",
+      "evidence": "Drag preview calls buildClipFromGenerationNode directly and therefore gets the same audio classifier and known duration."
+    },
+    {
+      "path": "src/workbench/adoption/adoptStoryboardBatch.ts",
+      "entry_point": "adoptStoryboardBatch",
+      "disposition": "enforced",
+      "evidence": "Batch adoption calls buildGenerationNodeTimelineClip for each node."
+    },
+    {
+      "path": "src/workbench/timeline/addAssetToTimeline.ts",
+      "entry_point": "buildAssetTimelineClip",
+      "disposition": "not-affected",
+      "evidence": "AssetPicker already classifies AssetRef.kind=audio and probes actual file duration; the generated-node repair reuses its probe, not its distinct asset identity."
+    },
+    {
+      "path": "src/workbench/generationCanvas/model/buildClipFromGenerationNode.ts",
+      "entry_point": "resolveSelectedResult(resultId)",
+      "disposition": "enforced",
+      "evidence": "Historical audio results do not borrow node.meta.durationSec from the current result; direct drag uses fallback and async adoption probes the selected URL."
+    },
+    {
+      "path": "src/workbench/timeline/addNodeToTimelineEnd.ts",
+      "entry_point": "addGenerationNodeToTimelineEnd",
+      "disposition": "enforced",
+      "evidence": "The quick-add button calls adoptGenerationNode, which now checks the originating project context after the media await."
+    },
+    {
+      "path": "src/workbench/generationCanvas/reactFlow/canvasDragWriteback.ts",
+      "entry_point": "canvasDragWriteback",
+      "disposition": "enforced",
+      "evidence": "Canvas drag-to-timeline calls the same single-node adoption boundary; media probe and project freshness are shared."
+    },
+    {
+      "path": "src/workbench/generationCanvas/nodes/useNodeDragResize.ts",
+      "entry_point": "useNodeDragResize",
+      "disposition": "enforced",
+      "evidence": "Node drag/resize timeline drop calls the same single-node adoption boundary."
+    },
+    {
+      "path": "src/workbench/generationCanvas/agent/sendGenerationNodeToTimeline.ts",
+      "entry_point": "sendGenerationNodeToTimeline",
+      "disposition": "enforced",
+      "evidence": "Agent-requested single-node timeline placement also calls the same adoption boundary."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "All current and future generated audio results in a non-audio category hit the same fallback, across button and drag entry points.",
+    "same_class_scan": [
+      "node scripts/door-map.mjs buildClipFromGenerationNode enumerated buildGenerationNodeTimelineClip and TimelineTrack.",
+      "node scripts/door-map.mjs buildGenerationNodeTimelineClip enumerated adoptGenerationNode and adoptStoryboardBatch.",
+      "rg result.type/audio executionKind/durationSec across generation node model and timeline confirmed the missing classifier and established duration evidence.",
+      "node scripts/door-map.mjs adoptGenerationNode found five direct UI/agent entrances sharing the asynchronous adoption boundary.",
+      "node scripts/door-map.mjs reportAdoptionOutcome found five UI receipt callers; the receipt owner suppresses stale-project feedback for all of them."
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "src/workbench/adoption/adoptGenerationNode.ts",
+    "invariant": "Every generated audio clip has the right media kind and duration; asynchronous single-node admission decodes at most once and cannot write into a replacement project.",
+    "failure_mode": "No URL or active unresolved result remains ineligible; missing duration probe falls back to the existing non-image duration instead of converting audio into image. A project lifetime expiration returns silently without writing; an fps change returns a stale-timeline receipt.",
+    "exception_policy": "none",
+    "strategy": "Make audio a first-class case in the shared generation clip builder and reuse the existing audio media probe only for unknown duration at the async admission boundary. Single-node adoption reuses the measured clip frame count with a pure final position/ID rebuild and checks the initially issued project context before any store write.",
+    "artifacts": [
+      "src/workbench/generationCanvas/model/buildClipFromGenerationNode.ts",
+      "src/workbench/timeline/buildGenerationNodeTimelineClip.ts",
+      "src/workbench/adoption/adoptGenerationNode.ts",
+      "src/workbench/adoption/adoptionReceipt.ts"
+    ]
+  },
+  "regression_tests": [
+    "src/workbench/generationCanvas/model/buildClipFromGenerationNode.test.ts",
+    "src/workbench/timeline/buildGenerationNodeTimelineClip.test.ts",
+    "src/workbench/adoption/adoptionBridge.test.ts",
+    "src/workbench/adoption/adoptionReceipt.test.ts"
+  ],
+  "class_regression_tests": [
+    "src/workbench/generationCanvas/model/buildClipFromGenerationNode.test.ts",
+    "src/workbench/timeline/buildGenerationNodeTimelineClip.test.ts",
+    "src/workbench/adoption/adoptionBridge.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "not-applicable",
+    "removed_paths": [],
+    "rationale": "There is one shared clip builder. Already persisted image clips that may be authored cannot be silently reclassified; no migration is attempted."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "No third-party runtime is changed. Existing readAudioDurationSeconds already handles browser decoding and timeout for asset admission.",
+    "exit_criteria": []
+  },
+  "migration": "Only future adoption changes. Existing timeline clips remain as authored; users can remove a wrong clip and re-add the generated audio.",
+  "residual_risks": [
+    "The coordinator verified initial source in isolated Web preview: current generated audio quick-add persisted audioTrack 0–97 frames and a 7.5-second 225-frame MP4 was byte-identical to the known-good AssetPicker export. Final lifecycle changes still require a fresh build and repeat browser acceptance.",
+    "Unknown-duration source probe failure retains the existing 5-second non-image fallback, whose true duration remains unverified."
+  ],
+  "detected_by": "walkthrough",
+  "recurrence_check_on": "2026-11-15",
+  "invariant_owner_layer": {
+    "layer": "src/workbench/generationCanvas/model/buildClipFromGenerationNode.ts",
+    "tests": [
+      "src/workbench/generationCanvas/model/buildClipFromGenerationNode.test.ts"
+    ],
+    "why": "The builder is the single media kind and known-duration owner before track choice."
+  }
+}

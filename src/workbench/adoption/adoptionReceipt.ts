@@ -97,6 +97,11 @@ export function reportAdoptionOutcome(
       report(i18n.t('timelineEditor.adoption.needsRecovery'), 'error')
       return
     case 'nothing_to_adopt':
+      if (outcome.skipped.some((item) => item.reason === 'project_changed')) return
+      if (outcome.skipped.some((item) => item.reason === 'timeline_changed')) {
+        report(i18n.t('timelineEditor.adoption.stale'), 'info')
+        return
+      }
       report(i18n.t('generationCommon.node.generateFirst'), 'info')
       return
   }
