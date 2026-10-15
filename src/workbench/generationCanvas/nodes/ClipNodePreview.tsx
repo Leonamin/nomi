@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { IconPlayerPause, IconPlayerPlay, IconVolume, IconVolumeOff, IconX } from '@tabler/icons-react'
 import { WorkbenchIconButton } from '../../../design/actions'
 import { useVideoPlaybackHeal } from '../../../media/useVideoPlaybackHeal'
+import { resolveMediaDeliveryUrl } from '../../../media/assetDeliveryUrl'
 import { cn } from '../../../utils/cn'
 import { resolveActiveClipsAtFrame } from '../../timeline/timelineMath'
 import type { TimelineState } from '../../timeline/timelineTypes'
@@ -77,7 +78,7 @@ export default function ClipNodePreview({
             key={videoClip.id}
             ref={videoRef}
             src={heal.playbackUrl}
-            poster={videoClip.thumbnailUrl}
+            poster={resolveMediaDeliveryUrl(videoClip.thumbnailUrl || '')}
             muted={muted}
             playsInline
             preload="auto"
@@ -87,7 +88,7 @@ export default function ClipNodePreview({
             onLoadedMetadata={heal.onLoadedMetadata}
           />
         ) : activeClip?.type === 'image' && activeClip.url ? (
-          <img src={activeClip.thumbnailUrl || activeClip.url} alt="" className="block size-full object-contain" onClick={togglePlaying} />
+          <img src={resolveMediaDeliveryUrl(activeClip.thumbnailUrl || activeClip.url)} alt="" className="block size-full object-contain" onClick={togglePlaying} />
         ) : (
           <div className="size-full bg-nomi-ink" />
         )}

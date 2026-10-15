@@ -5,6 +5,7 @@ import { IconDownload, IconLoader2, IconX } from '@tabler/icons-react'
 import { NomiImage } from '../../design/media'
 import { cn } from '../../utils/cn'
 import { useVideoPlaybackHeal } from '../../media/useVideoPlaybackHeal'
+import { resolveMediaDeliveryUrl } from '../../media/assetDeliveryUrl'
 import { VideoPlaybackStatusOverlay } from '../../media/VideoPlaybackStatusOverlay'
 import type { AssetRef } from './assetTypes'
 import { getDesktopBridge } from '../../desktop/bridge'
@@ -235,7 +236,7 @@ export function AssetPreviewDialog({ asset, onClose, sequence, initialIndex = 0 
         >
           <div className="mb-3 max-w-[60vw] truncate text-body-sm font-medium text-nomi-ink">{title}</div>
           {sourceName ? <div className="mb-3 max-w-[60vw] truncate text-micro text-nomi-ink-60">{t('assetLibrary.previewSource', { name: sourceName })}</div> : null}
-          <audio src={current.renderUrl} controls autoPlay aria-label={title} style={{ width: 'min(60vw, 520px)' }} />
+          <audio src={resolveMediaDeliveryUrl(current.renderUrl)} controls autoPlay aria-label={title} style={{ width: 'min(60vw, 520px)' }} />
         </div>
       ) : currentPlayable ? (
         <NomiImage
@@ -250,7 +251,7 @@ export function AssetPreviewDialog({ asset, onClose, sequence, initialIndex = 0 
           {!sequence?.some((item) => item.playable) ? t('storyboardEditor.playback.allNotGenerated') : currentItem?.label || t('storyboardEditor.playback.notGenerated')}
         </div>
       )}
-      {currentAudio && currentPlayable ? <audio key={`${currentAudio.id}:${sequenceIndex}`} src={currentAudio.renderUrl} autoPlay aria-label={t('storyboardEditor.playback.audio')} /> : null}
+      {currentAudio && currentPlayable ? <audio key={`${currentAudio.id}:${sequenceIndex}`} src={resolveMediaDeliveryUrl(currentAudio.renderUrl)} autoPlay aria-label={t('storyboardEditor.playback.audio')} /> : null}
       {sequence && sequence.length > 0 ? (
         <div className="absolute bottom-5 left-1/2 flex w-[min(86vw,760px)] -translate-x-1/2 gap-1" data-storyboard-playback-progress="true" aria-label={t('storyboardEditor.playback.progressAria')}>
           {sequence.map((item, index) => (

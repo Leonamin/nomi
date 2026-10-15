@@ -28,7 +28,7 @@ export function AttentionSoundSection(): JSX.Element {
   React.useEffect(() => {
     mounted.current = true
     if (api) void api.get().then((value) => { if (mounted.current) setSettings(value) }).catch(() => setError('saveError'))
-    return () => { mounted.current = false; clearTimeout(timer.current); void api?.stop().catch(() => undefined) }
+    return () => { mounted.current = false; clearTimeout(timer.current); void api?.stop?.()?.catch(() => undefined) }
   }, [api])
   const perform = async (operation: () => Promise<AttentionSoundSettings>): Promise<void> => {
     setBusy(true); setError(null)
@@ -38,10 +38,10 @@ export function AttentionSoundSection(): JSX.Element {
   }
   const stop = async (): Promise<void> => {
     clearTimeout(timer.current); setPlaying(false)
-    await api?.stop().catch(() => undefined)
+    await api?.stop?.()?.catch(() => undefined)
   }
   const preview = async (): Promise<void> => {
-    if (!api) return
+    if (!api?.preview || !api?.stop) return
     if (playing) { await stop(); return }
     setError(null); setPlaying(true)
     try {
@@ -52,7 +52,7 @@ export function AttentionSoundSection(): JSX.Element {
     } catch { setPlaying(false); setError('previewError') }
   }
   const pick = async (): Promise<void> => {
-    if (!api) return
+    if (!api?.pick) return
     await stop(); setBusy(true); setError(null)
     try {
       const result = await api.pick()
@@ -70,7 +70,7 @@ export function AttentionSoundSection(): JSX.Element {
         <div className="text-body font-medium text-nomi-ink">{t('settings.sound.brand')}</div>
         <p className="mb-3 mt-1 text-caption leading-relaxed text-nomi-ink-60">{t('settings.sound.description')}</p>
         {settings?.custom ? <div className="mb-2 truncate text-caption text-nomi-ink-60" title={settings.custom.name}>{settings.custom.name} · {t('settings.sound.duration', { seconds: settings.custom.durationSeconds.toFixed(1) })}</div> : null}
-        <DesignButton variant="default" disabled={unavailable || busy} title={unavailable ? t('settings.sound.unavailable') : undefined} onClick={() => { void preview() }}
+        <DesignButton variant="default" disabled={unavailable || busy || !api?.preview || !api?.stop} title={unavailable ? t('settings.sound.unavailable') : undefined} onClick={() => { void preview() }}
           leftSection={playing ? <IconPlayerStop size={14} stroke={1.5} /> : <IconPlayerPlay size={14} stroke={1.5} />}>
           {t(playing ? 'settings.sound.stop' : 'settings.sound.preview')}
         </DesignButton>
@@ -91,8 +91,8 @@ export function AttentionSoundSection(): JSX.Element {
       <div className="flex flex-wrap items-center justify-between gap-2">
         <span className="text-body-sm text-nomi-ink">{t('settings.sound.custom')}</span>
         <div className="flex gap-1" title={unavailable ? t('settings.sound.unavailable') : undefined}>
-          <DesignButton variant="default" disabled={unavailable || busy} onClick={() => { void pick() }}>{t('settings.sound.replace')}</DesignButton>
-          {settings?.custom ? <DesignButton variant="subtle" disabled={busy} onClick={() => { void stop(); void perform(() => api!.reset()) }}>{t('settings.sound.reset')}</DesignButton> : null}
+          <DesignButton variant="default" disabled={unavailable || busy || !api?.pick} onClick={() => { void pick() }}>{t('settings.sound.replace')}</DesignButton>
+          {settings?.custom ? <DesignButton variant="subtle" disabled={busy || !api?.reset} onClick={() => { if (api?.reset) { void stop(); void perform(() => api.reset()) } }}>{t('settings.sound.reset')}</DesignButton> : null}
         </div>
       </div>
       <p className="mt-2 text-micro text-nomi-ink-40">{t('settings.sound.formats')}</p>

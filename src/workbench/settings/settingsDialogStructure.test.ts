@@ -56,7 +56,8 @@ const settingsDirectory = path.join(process.cwd(), 'src/workbench/settings')
 const APPROVED_NON_MODEL_SECTION_SHA256 = {
   // 2026-09-04：检查反馈 tone 改为从公共 toast 函数参数推导，避免重复词表 owner。
   // 2026-09-09：目录操作错误回现有status；保留共享tone类型，正向回归见下方local feedback。
-  'ProjectLocationSection.tsx': '8859c5bd425d82b8880c26d89218e36c274b1a7d6003b00a3e64de39bb535689',
+  // 2026-10-15: Web read-only project location keeps native folder controls disabled.
+  'ProjectLocationSection.tsx': 'd0fc6ba363670c3b2ad804b4d544193a457eaf322a33825b04219f02105dd761',
   // 2026-09-02: AiModelsSection 按渲染边界收口供应商/模型展示名（translateModelDisplayText）。
   // B4: user explicitly removed the global budget setting; the positive absence assertion is below.
   // 2026-09-14：删「默认模型策略」整栏（说明文字 + 161 个白名单复选框 + 深链聚焦）；已接入即放行。
@@ -65,7 +66,8 @@ const APPROVED_NON_MODEL_SECTION_SHA256 = {
   //             就是这么来的。正向断言见下方 keeps the last catalog when a read fails。
   // 2026-09-22（#831）：「已接入 Kie」的判据从 key 字面量改成经 builtinVendorIdentity 解析身份，
   //             这样兄弟连接（`kie--x`）也认得出。两刀都只改判据，布局与文案一个字没动。
-  'AiModelsSection.tsx': '97ebb8ee265bff40cdf8368c98dc056a2b08f6e3ed61ea697c0195d0bd44a54c',
+  // 2026-10-15: Web read-only automation policy disables only its two toggles.
+  'AiModelsSection.tsx': '3fc09ecc3a7d38b811019799d3069ae6edc16575dc230f32e355fd520025ba13',
   // 2026-09-03：toggleHost 参数类型从 SettingsHostKey（四值联合）泛化为 string（支持自定义 profile key）；
   // 新增 CustomMcpClientCard UI TODO 注释（底层能力已就绪，UI 面另排样张拍板）。
   // 2026-09-09：声音归通用设置的单一入口，移除这里的旧开关；下方断言保留系统通知策略。
@@ -151,7 +153,7 @@ describe('settings dialog structure', () => {
     expect(projectLocationSource).toContain('t(checkFeedback.messageKey)')
     expect(projectLocationSource).toContain('void checkDirectory()')
     for (const action of ['pick', 'reveal', 'reset']) expect(projectLocationSource).toContain(`void run(api.${action})`)
-    expect(projectLocationSource).toContain('disabled={unavailable || managed}')
+    expect(projectLocationSource).toContain('disabled={unavailable || managed || !api?.pick}')
     expect(projectLocationSource).toContain('if (!result.canceled) setLocation(result.location)')
   })
 

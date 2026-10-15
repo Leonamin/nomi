@@ -46,7 +46,7 @@ describe("技能盘变了的唯一信号来自写盘那一层（2026-09-11）", 
 
     // 主进程 → 渲染层的那一段线：频道名两头必须对得上，且渲染层只在这一个接线点转发。
     expect(preload).toContain(`ipcRenderer.on("${SKILL_LIBRARY_CHANGED_CHANNEL}", listener)`);
-    expect(router).toContain("getDesktopBridge()?.skill.onChanged?.(() => notifySkillLibraryChanged())");
+    expect(router).toContain("getDesktopBridge()?.skill?.onChanged?.(() => notifySkillLibraryChanged())");
     expect(workbenchSkills).not.toContain("notifySkillLibraryChanged");
   });
 });

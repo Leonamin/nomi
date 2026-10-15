@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { resolveFilmstripRequest } from './useFilmstrip'
 
 describe('resolveFilmstripRequest', () => {
@@ -13,6 +13,16 @@ describe('resolveFilmstripRequest', () => {
       projectId: 'project a',
       key: `project a::${videoUrl}`,
     })
+  })
+  it('keeps source-project ownership when Web transport delivered a same-origin media URL', () => {
+    vi.stubGlobal('location', { origin: 'https://nomi.example' })
+    try {
+      const videoUrl = 'https://nomi.example/api/media/project%20a/assets/generated/video.mp4'
+      expect(resolveFilmstripRequest(videoUrl, { activeProjectId: 'project-b' })).toMatchObject({ videoUrl, projectId: 'project a' })
+      expect(resolveFilmstripRequest('https://other.example/api/media/project%20a/assets/generated/video.mp4', { activeProjectId: 'project-b' })?.projectId).toBe('project-b')
+    } finally {
+      vi.unstubAllGlobals()
+    }
   })
 
   it('falls back from an explicit project to the active project for non-local URLs', () => {

@@ -1,0 +1,282 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-15-web-media-delivery",
+  "detected_by": "user",
+  "recurrence_check_on": "2026-11-15",
+  "problem_type": "Platform media URL delivery",
+  "symptom": "A production task image has naturalWidth 0 in Web while its /api/media URL returns 200 and decodes",
+  "direct_cause": "The renderer assembles nomi-local URLs after RPC translation and passes them directly to browser media sinks",
+  "class_root": "Platform delivery depends on an incidental transport path instead of a host-owned consumption contract",
+  "affected_population": [
+    "Web creators previewing production images, video posters, videos, audio, generated anchors or cached filmstrips",
+    "Web creators decoding project media in image, duration and export tools"
+  ],
+  "scope_paths": [
+    "src/design/media.tsx",
+    "src/media/assetDeliveryUrl.ts",
+    "src/media/audioDurationProbe.ts",
+    "src/media/useFilmstrip.ts",
+    "src/media/useVideoPlaybackHeal.ts",
+    "src/media/videoDurationProbe.ts",
+    "src/media/videoPlaybackDiagnostics.ts",
+    "src/media/videoPlaybackUrl.ts",
+    "src/workbench/assets/AssetPreviewDialog.tsx",
+    "src/workbench/assets/useLocalAssetPreview.ts",
+    "src/workbench/export/timelineWebmExport.ts",
+    "src/workbench/generationCanvas/nodes/ClipNodePreview.tsx",
+    "src/workbench/generationCanvas/nodes/ClipNodeTimeline.tsx",
+    "src/workbench/generationCanvas/nodes/NodeResultStack.tsx",
+    "src/workbench/generationCanvas/nodes/ProgressRevealCanvas.tsx",
+    "src/workbench/generationCanvas/nodes/buildContactSheetNode.ts",
+    "src/workbench/generationCanvas/nodes/render/AudioStripNode.tsx",
+    "src/workbench/generationCanvas/nodes/shotTable/ShotTableGrid.tsx",
+    "src/workbench/generationCanvas/nodes/useNodeImageEditing.ts",
+    "src/workbench/generationCanvas/nodes/whiteboard/whiteboardState.ts",
+    "src/workbench/generationCanvas/spend/anchorCheckpointView.ts",
+    "src/workbench/preview/TimelinePreview.tsx",
+    "src/workbench/production/ProductionRunTaskCard.tsx",
+    "src/workbench/timeline/agent/mediaToolCall.ts",
+    "web/mediaPathPolicy.ts",
+    "web/mediaUrls.ts",
+    "web/server.ts"
+  ],
+  "entry_points": [
+    "Renderer-built project media URLs",
+    "RPC/event project media URLs",
+    "Image/video/audio/poster and browser decoder sinks",
+    "Same-origin delivery URL ownership parsing"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "The custom protocol, project media route and bridge capability table are Nomi-owned application contracts; no external library determines their mapping",
+  "invariants": [
+    "Canonical project asset identity is stored as nomi-local://asset while Web consumption uses same-origin /api/media",
+    "Desktop consumption retains the custom protocol",
+    "Only project-owned media directories and file types can be served by the Web host"
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "src/design/media.tsx",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/media/audioDurationProbe.ts",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/media/useFilmstrip.ts",
+      "symbol": "canonicalMediaAssetUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/media/useVideoPlaybackHeal.ts",
+      "symbol": "buildVideoPlaybackUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/media/videoDurationProbe.ts",
+      "symbol": "buildVideoPlaybackUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/media/videoPlaybackDiagnostics.ts",
+      "symbol": "buildVideoPlaybackUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/media/videoPlaybackUrl.ts",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/assets/AssetPreviewDialog.tsx",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/assets/useLocalAssetPreview.ts",
+      "symbol": "canonicalMediaAssetUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/export/timelineWebmExport.ts",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/buildContactSheetNode.ts",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/ClipNodePreview.tsx",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/ClipNodeTimeline.tsx",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/NodeResultStack.tsx",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/ProgressRevealCanvas.tsx",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/render/AudioStripNode.tsx",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/shotTable/ShotTableGrid.tsx",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/useNodeImageEditing.ts",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/nodes/whiteboard/whiteboardState.ts",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/generationCanvas/spend/anchorCheckpointView.ts",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/preview/TimelinePreview.tsx",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/production/ProductionRunTaskCard.tsx",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/workbench/timeline/agent/mediaToolCall.ts",
+      "symbol": "resolveMediaDeliveryUrl"
+    },
+    {
+      "kind": "write",
+      "path": "src/media/assetDeliveryUrl.ts",
+      "symbol": "toWebMediaDeliveryUrl"
+    }
+  ],
+  "door_reduction": {
+    "before": 24,
+    "after": 24,
+    "why_not": "The distinct image, video, audio, browser decoder, owner parser and transport consumers remain separate presentation operations. All converge on the same mapping and reverse-identity owner; removing one would remove a distinct user workflow."
+  },
+  "generality_proof": "A single canonical-to-delivery mapper is shared by Web transport and renderer media consumers. It handles every project asset kind equally, preserves path/query bytes, and is idempotent for already translated RPC values. Unsupported custom schemes remain unsupported rather than being guessed as project files.",
+  "shared_boundaries": [
+    {
+      "path": "src/media/assetDeliveryUrl.ts",
+      "symbol": "resolveMediaDeliveryUrl",
+      "responsibility": "Select host-valid project media URL at browser consumption and recover same-origin canonical ownership"
+    },
+    {
+      "path": "web/mediaPathPolicy.ts",
+      "symbol": "projectMediaRelativePath",
+      "responsibility": "Permit only owned media paths at the Web HTTP read boundary"
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "src/workbench/production/ProductionRunTaskCard.tsx",
+      "entry_point": "ProductionRunTaskCard image/video/poster",
+      "disposition": "enforced",
+      "evidence": "Builds canonical URLs locally and passes them to DOM media sinks"
+    },
+    {
+      "path": "src/workbench/generationCanvas/spend/anchorCheckpointView.ts",
+      "entry_point": "buildAnchorCheckpointCard thumbnails",
+      "disposition": "enforced",
+      "evidence": "Builds canonical URLs from artifacts locally after RPC transport"
+    },
+    {
+      "path": "src/design/media.tsx",
+      "entry_point": "NomiImage",
+      "disposition": "enforced",
+      "evidence": "Shared image sink consumes RPC and renderer-generated URLs"
+    },
+    {
+      "path": "src/media/useFilmstrip.ts",
+      "entry_point": "resolveFilmstripRequest",
+      "disposition": "enforced",
+      "evidence": "Recovers project ownership from same-origin delivered Web URL for cross-project media"
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Any local URL built after RPC or future unsupported bridge method can repeat the defect",
+    "same_class_scan": [
+      "node scripts/door-map.mjs buildNomiLocalAssetUrl: two production writer doors",
+      "rg media DOM/decoder sinks across src/design, src/workbench, src/media",
+      "web bridge method comparison against web/rpc.ts command table"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "src/media/assetDeliveryUrl.ts",
+    "invariant": "Project media delivery URL is valid for the current host without altering stored identity",
+    "failure_mode": "Unsupported schemes are not mapped to project files; unauthorized media paths fail with 404",
+    "exception_policy": "none",
+    "strategy": "Central mapping reused by RPC transport and media sinks; reverse mapping preserves owner identity and Web read policy limits project paths",
+    "artifacts": [
+      "src/media/assetDeliveryUrl.ts",
+      "src/media/videoPlaybackUrl.ts",
+      "web/mediaUrls.ts",
+      "web/mediaPathPolicy.ts",
+      "web/server.ts"
+    ]
+  },
+  "regression_tests": [
+    "src/media/assetDeliveryUrl.test.ts",
+    "src/media/useFilmstrip.test.ts",
+    "src/workbench/production/ProductionRunTaskCard.test.ts",
+    "web/mediaUrls.test.ts",
+    "web/mediaPathPolicy.test.ts"
+  ],
+  "class_regression_tests": [
+    "src/media/assetDeliveryUrl.test.ts",
+    "src/media/useFilmstrip.test.ts",
+    "web/mediaPathPolicy.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "web/mediaUrls.ts"
+    ],
+    "rationale": "Remove the duplicate browser-direction URL construction and delegate it to the shared mapper"
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "Nomi owns the protocol, route and bridge API",
+    "exit_criteria": []
+  },
+  "migration": "Persisted canonical URLs stay canonical. Existing browser transport URLs remain valid and idempotent at sinks.",
+  "residual_risks": [
+    "Actual browser and desktop media playback requires validation",
+    "Legacy file:// and signed production-preview URLs have no Web project asset mapping"
+  ],
+  "invariant_owner_layer": {
+    "layer": "src/media/assetDeliveryUrl.ts",
+    "tests": [
+      "src/media/assetDeliveryUrl.test.ts"
+    ],
+    "why": "The shared resolver owns platform delivery mapping; host capability exposure remains in the Web bridge."
+  }
+}

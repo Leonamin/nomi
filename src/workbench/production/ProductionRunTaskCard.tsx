@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { NomiLoadingMark, WorkbenchButton } from '../../design'
 import { buildNomiLocalAssetUrl } from '../../media/nomiLocalAssetUrl'
+import { resolveMediaDeliveryUrl } from '../../media/assetDeliveryUrl'
 import { cn } from '../../utils/cn'
 import { ProductionDetails } from './ProductionDetails'
 import type { ProductionRunPrimaryAction, ProductionRunView } from './productionRunView'
@@ -111,8 +112,8 @@ export function ProductionRunTaskCard({
     preview?.thumbnailRelativePath ?? (preview?.kind === 'image' ? preview.projectRelativePath : undefined)
   const videoRelativePath =
     preview && ['video', 'export'].includes(preview.kind) ? preview.projectRelativePath : undefined
-  const previewUrl = imageRelativePath ? buildNomiLocalAssetUrl(projectId, imageRelativePath) : null
-  const videoUrl = videoRelativePath ? buildNomiLocalAssetUrl(projectId, videoRelativePath) : null
+  const previewUrl = imageRelativePath ? resolveMediaDeliveryUrl(buildNomiLocalAssetUrl(projectId, imageRelativePath)) : null
+  const videoUrl = videoRelativePath ? resolveMediaDeliveryUrl(buildNomiLocalAssetUrl(projectId, videoRelativePath)) : null
   React.useEffect(() => { setVideoLive(false) }, [videoUrl])
 
   const action = view.primaryAction

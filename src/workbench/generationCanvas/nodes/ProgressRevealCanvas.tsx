@@ -1,4 +1,5 @@
 import React, { type JSX } from 'react'
+import { resolveMediaDeliveryUrl } from '../../../media/assetDeliveryUrl'
 
 /**
  * 进度驱动的马赛克渐显。
@@ -95,7 +96,7 @@ export function ProgressRevealCanvas({ imageUrl, ratio }: { imageUrl?: string; r
       gridRef.current = { image, columns, drawn: 0, order: seededCellOrder(imageUrl, columns * rows), fit: containFit(element, image) }
       setTotal(columns * rows)
     }
-    image.src = imageUrl
+    image.src = resolveMediaDeliveryUrl(imageUrl)
     return () => { cancelled = true }
   }, [imageUrl])
 

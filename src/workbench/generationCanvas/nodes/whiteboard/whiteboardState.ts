@@ -1,6 +1,7 @@
 import type { GenerationCanvasNode } from '../../model/generationCanvasTypes'
 import type { WhiteboardState } from './whiteboardTypes'
 import { ASPECT_RATIOS, getCanvasDimensions, getDefaultLayers, type AspectRatioKey, type CanvasAsset } from './lib/canvas'
+import { resolveMediaDeliveryUrl } from '../../../../media/assetDeliveryUrl'
 
 export function createDefaultWhiteboardState(ratio: AspectRatioKey = '16:9'): WhiteboardState {
   return {
@@ -58,7 +59,7 @@ export async function loadImageSize(url: string): Promise<{ width: number; heigh
     }
     image.onload = () => finish({ width: image.naturalWidth || image.width, height: image.naturalHeight || image.height })
     image.onerror = () => finish(null)
-    image.src = url
+    image.src = resolveMediaDeliveryUrl(url)
   })
 }
 

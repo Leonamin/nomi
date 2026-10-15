@@ -14,6 +14,7 @@ import { withProjectAction } from '../project/projectCanvasReadSurface'
 import { useTranslation } from 'react-i18next'
 import { cn } from '../../utils/cn'
 import { DesignModal } from '../../design'
+import { getDesktopBridge } from '../../desktop/bridge'
 import { SystemPromptSection } from './systemPrompt/SystemPromptSection'
 import { STORYBOARD_PLANNER_SKILL } from '../generationCanvas/agent/storyboardLauncher'
 import { useWorkbenchStore } from '../workbenchStore'
@@ -485,7 +486,7 @@ export default function ProjectAgentResidentShell({ surface }: { surface: Reside
             }
             setPopover(null)
           }}
-          onManage={() => { window.dispatchEvent(new Event('nomi-focus-skill-library')); setPopover(null) }}
+          onManage={getDesktopBridge()?.skill?.list ? () => { window.dispatchEvent(new Event('nomi-focus-skill-library')); setPopover(null) } : undefined}
         />
       )
       : popover === 'permission'

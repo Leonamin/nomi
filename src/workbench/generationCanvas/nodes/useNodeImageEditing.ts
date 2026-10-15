@@ -12,6 +12,7 @@ import { withCanvasGestureContext } from '../events/canvasGestureContext'
 // 尺寸上下界与"卡片实际渲染多大"都从 nodeSizing 拿——这里再抄一份就是布局错位的温床。
 import { computeMediaMetaPatch, MAX_NODE_WIDTH, MIN_NODE_WIDTH, resolveNodeVisualSize } from './nodeSizing'
 import i18n from '../../../i18n'
+import { resolveMediaDeliveryUrl } from '../../../media/assetDeliveryUrl'
 
 // 裁切 / 旋转 / 网格切分统一产 PNG **Blob**，落盘换 nomi-local:// 之后才写 store。
 //
@@ -126,7 +127,7 @@ function loadImageForCanvas(url: string): Promise<HTMLImageElement> {
     if (!url.startsWith('data:') && !url.startsWith('blob:')) {
       image.crossOrigin = 'anonymous'
     }
-    image.src = url
+    image.src = resolveMediaDeliveryUrl(url)
   })
 }
 

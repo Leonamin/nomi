@@ -222,10 +222,11 @@ export function SettingsDialog({
 
   const updateAutomationPolicy = React.useCallback((patch: Partial<AutomationPolicySettings>): void => {
     if (!automationPolicyLoaded) return
+    const setPolicy = getDesktopBridge()?.settings?.automationPolicy?.set
+    if (!setPolicy) return
     setAutomationPolicy((current) => {
       const next = { ...current, ...patch }
-      void getDesktopBridge()
-        ?.settings?.automationPolicy?.set(next)
+      void setPolicy(next)
         .then((stored) => {
           if (stored) {
             setAutomationPolicy(stored)
@@ -328,6 +329,7 @@ export function SettingsDialog({
               >
                 <AiModelsSection
                   settings={automationPolicy}
+                  canChangePolicy={Boolean(getDesktopBridge()?.settings?.automationPolicy?.set)}
                   onChange={updateAutomationPolicy}
                   onOpenModelCatalog={(vendorKey) => {
                     selectTab('models')
@@ -341,7 +343,7 @@ export function SettingsDialog({
               </fieldset>
             ) : tab === 'automation' ? (
               <fieldset
-                disabled={!automationPolicyLoaded}
+                disabled={!automationPolicyLoaded || !getDesktopBridge()?.settings?.automationPolicy?.set}
                 aria-busy={!automationPolicyLoaded}
                 title={!automationPolicyLoaded ? t('settings.automation.loading') : undefined}
                 className="m-0 min-w-0 border-0 p-0"

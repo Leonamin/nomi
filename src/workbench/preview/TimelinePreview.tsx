@@ -19,6 +19,7 @@ import { exportTimelineToMp4, type ExportTimelineToMp4Options } from '../export/
 import { markChecklistStep } from '../onboarding/onboardingState'
 import { reportPreviewExportFailure } from './previewExportFeedback'
 import { useVideoPlaybackHeal } from '../../media/useVideoPlaybackHeal'
+import { resolveMediaDeliveryUrl } from '../../media/assetDeliveryUrl'
 import { computeTimelineDuration } from '../timeline/timelineMath'
 import { getDesktopBridge } from '../../desktop/bridge'
 import { isProjectOpen, withProjectAction } from '../project/projectCanvasReadSurface'
@@ -424,7 +425,7 @@ export default function TimelinePreview({ activeClips, aspectRatio, fps, playhea
             'workbench-preview-player__image',
             'absolute inset-0 z-[1] w-full h-full bg-transparent select-none will-change-transform',
             imageFitClass,
-          )} src={imageClip.url} alt={imageClip.label || ''} style={imageStyle} />
+          )} src={resolveMediaDeliveryUrl(imageClip.url)} alt={imageClip.label || ''} style={imageStyle} />
         ) : null}
         {imageTransition ? (
           <TimelineTransitionLayer
@@ -482,7 +483,7 @@ export default function TimelinePreview({ activeClips, aspectRatio, fps, playhea
         {audioUrl ? (
           <audio
             ref={audioRef}
-            src={audioUrl}
+            src={resolveMediaDeliveryUrl(audioUrl)}
             crossOrigin="use-credentials"
             preload="auto"
             className="hidden"

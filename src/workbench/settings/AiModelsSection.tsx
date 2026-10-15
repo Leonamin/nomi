@@ -24,6 +24,7 @@ import {
 type Props = {
   settings: AutomationPolicySettings
   onChange: (patch: Partial<AutomationPolicySettings>) => void
+  canChangePolicy: boolean
   /** 打开模型工作区；带 vendorKey 时直接落到那家的接入页（上传通道卡靠它一步到 KIE 的 Key 框）。 */
   onOpenModelCatalog?: (vendorKey?: string) => void
 }
@@ -49,6 +50,7 @@ function channelHostLabel(
 export function AiModelsSection({
   settings,
   onChange,
+  canChangePolicy,
   onOpenModelCatalog,
 }: Props): JSX.Element {
   const { t } = useTranslation()
@@ -195,6 +197,7 @@ export function AiModelsSection({
           </div>
           <DesignSwitch
             checked={settings.minimizeUploads}
+            disabled={!canChangePolicy}
             onChange={(event) => onChange({ minimizeUploads: event.currentTarget.checked })}
             aria-label={t('settings.ai.upload.minimize')}
           />
@@ -292,6 +295,7 @@ export function AiModelsSection({
             </div>
             <DesignSwitch
               checked={settings.anonymousAssetHosting === 'ask'}
+              disabled={!canChangePolicy}
               onChange={(event) => onChange({ anonymousAssetHosting: event.currentTarget.checked ? 'ask' : 'allow' })}
               aria-label={t('settings.ai.upload.anonymousPrompt')}
             />

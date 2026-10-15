@@ -71,12 +71,23 @@ export function mergeWebNodeOutcome(current: GenerationCanvasNode, incoming: Gen
   const hasStaleTerminalStatus = (current.status === 'error' || current.status === 'idle' || current.status === 'success') && (incoming.status === 'running' || incoming.status === 'queued' || incoming.status === 'recoverable') && isSameOrOlderRun
   const hasNewServerRun = Boolean(currentRun && (!incomingRun || currentRun.startedAt > incomingRun.startedAt))
   const hasNewCompletedResult = current.status === 'success' && !hasSeenCurrentResult
-  return {
+  const merged: GenerationCanvasNode = {
     ...incoming,
     history,
     meta: { ...incoming.meta, ...(current.meta?.isWebGenerationOwned ? { isWebGenerationOwned: true, webJobKey: current.meta.webJobKey } : {}) },
     ...(hasNewCompletedResult || hasStaleTerminalStatus || isServerPending || hasNewServerRun ? { result: hasResultEdit ? incoming.result : current.result, status: current.status, error: current.error, progress: current.progress, runs: current.runs } : {}),
   }
+  // A partial Web snapshot can carry the completed run and its history without
+  // the selected result. Recover only the result named by that run; history
+  // order is not a selection, and an explicit local edit still wins.
+  const completedResultId = merged.status === 'success' && merged.runs?.[0]?.status === 'success'
+    ? merged.runs[0].resultId
+    : undefined
+  if (!hasResultEdit && !merged.result && completedResultId) {
+    const selected = history.find(result => result.id === completedResultId)
+    if (selected) merged.result = selected
+  }
+  return merged
 }
 /** One domain merge for repository saves and live browser projection. */
 export function mergeWebCanvas(server: WebCanvasSource, local: WebCanvasProjection, observed: WebCanvasKnowledge = { nodes: {}, groups: {} }, shouldProtectNewerRun = false): WebCanvasSource {

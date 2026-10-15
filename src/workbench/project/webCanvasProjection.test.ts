@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { mergeWebCanvas, observeWebCanvas, projectWebCanvas } from './webCanvasProjection'
+import { mergeWebCanvas, mergeWebNodeOutcome, observeWebCanvas, projectWebCanvas } from './webCanvasProjection'
 import type { GenerationCanvasNode, NodeGroup } from '../generationCanvas/model/generationCanvasTypes'
 const old = { id: 'old', type: 'video' as const, url: 'old.mp4', createdAt: 1 }
 const fresh = { ...old, id: 'fresh', url: 'fresh.mp4', createdAt: 3 }
@@ -8,6 +8,16 @@ const group: NodeGroup = { id: 'group', name: 'Group', categoryId: 'shots', node
 const initial = { nodes: [shot], groups: [group], edges: [] }
 const server = { ...initial, nodes: [{ ...shot, prompt: 'New candidate', result: fresh, history: [fresh, old], meta: { ...shot.meta, modelKey: 'model-new' } }] }
 describe('canvas exact observation merge', () => {
+  it('recovers a completed current result from the matching run identity when transport omitted result', () => {
+    const completed = { ...shot, runs: [{ ...shot.runs![0], resultId: old.id }] }
+    const incoming = { ...completed, result: undefined, history: [old] }
+    expect(mergeWebNodeOutcome(completed, incoming).result).toEqual(old)
+  })
+  it('does not infer a current selection from unrelated history or override an explicit browser selection', () => {
+    const missing = { ...shot, result: undefined, history: [old], runs: [{ ...shot.runs![0], resultId: 'other' }] }
+    expect(mergeWebNodeOutcome({ ...shot, result: undefined }, missing).result).toBeUndefined()
+    expect(mergeWebNodeOutcome(shot, missing, true).result).toBeUndefined()
+  })
   it('projects a candidate revision with the same node/run key and its model/prompt', () => {
     expect(projectWebCanvas(initial, server, observeWebCanvas(initial)).nodes[0]).toMatchObject({ result: fresh, prompt: 'New candidate', meta: { modelKey: 'model-new' } })
   })

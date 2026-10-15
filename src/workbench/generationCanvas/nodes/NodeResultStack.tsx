@@ -23,6 +23,7 @@ import { NODE_SCROLL_REGION_CLASS_NAME } from './nodeScrollRegionClassName'
 import { useResultDownload } from './useResultDownload'
 import { isProjectExecutionContextCurrent, withProjectAction } from '../../project/projectCanvasReadSurface'
 import { getDesktopBridge } from '../../../desktop/bridge'
+import { resolveMediaDeliveryUrl } from '../../../media/assetDeliveryUrl'
 import { computeMediaMetaPatch } from './nodeSizing'
 import { findCanvasResultMediaDimensions } from '../../project/projectMediaMigration'
 import { historyVideoTimeFromPointer, nudgeHistoryVideoTime } from './historyVideoScrub'
@@ -113,7 +114,7 @@ function HistoryVideoThumb({
       >
         {videoMounted && result.url ? (
           <DeferredNodeVideo
-            src={result.url}
+            src={resolveMediaDeliveryUrl(result.url || '')}
             className={cn('h-full w-full object-cover', !active && 'hidden')}
             muted
             loop
@@ -129,7 +130,7 @@ function HistoryVideoThumb({
             onTimeUpdate={(event) => setCurrentTime(event.currentTarget.currentTime)}
           />
         ) : result.thumbnailUrl ? (
-          <img src={result.thumbnailUrl} alt="" draggable={false} className="h-full w-full object-cover" />
+          <img src={resolveMediaDeliveryUrl(result.thumbnailUrl)} alt="" draggable={false} className="h-full w-full object-cover" />
         ) : (
           <span className="grid h-full w-full place-items-center bg-nomi-ink-05 text-nomi-ink-40" aria-hidden="true">
             <IconMovie size={22} stroke={1.5} />
@@ -226,7 +227,7 @@ function ResultThumb({
   title: string
 }): JSX.Element {
   const thumbnail = result.thumbnailUrl || (result.type === 'image' ? result.url : '')
-  if (thumbnail) return <img src={thumbnail} alt={title} draggable={false} className="h-full w-full object-cover" />
+  if (thumbnail) return <img src={resolveMediaDeliveryUrl(thumbnail)} alt={title} draggable={false} className="h-full w-full object-cover" />
   return (
     <span className="grid h-full w-full place-items-center bg-nomi-ink-05 text-nomi-ink-40" aria-hidden="true">
       <IconMovie size={22} stroke={1.5} />

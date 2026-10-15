@@ -1,5 +1,6 @@
 import type { DesktopAssetDto } from '../../../desktop/bridge'
 import { getDesktopBridge } from '../../../desktop/bridge'
+import { resolveMediaDeliveryUrl } from '../../../media/assetDeliveryUrl'
 import { requireCapabilityProjectId } from '../../capability/capabilityProjectBinding'
 import { workbenchAdoptionPorts } from '../../adoption/adoptionStorePorts'
 import type { TimelineClip, TimelineState } from '../timelineTypes'
@@ -182,7 +183,7 @@ function loadElementMetadata(asset: ProjectMediaAsset): Promise<MediaTechnicalMe
       const timeout = window.setTimeout(() => finish(), 10_000)
       image.onload = () => finish({ width: image.naturalWidth, height: image.naturalHeight })
       image.onerror = () => finish()
-      image.src = asset.renderUrl
+      image.src = resolveMediaDeliveryUrl(asset.renderUrl)
     })
   }
   return new Promise((resolve) => {
@@ -203,7 +204,7 @@ function loadElementMetadata(asset: ProjectMediaAsset): Promise<MediaTechnicalMe
       ...(media instanceof HTMLVideoElement && media.videoWidth > 0 ? { width: media.videoWidth, height: media.videoHeight } : {}),
     })
     media.onerror = () => finish()
-    media.src = asset.renderUrl
+    media.src = resolveMediaDeliveryUrl(asset.renderUrl)
   })
 }
 
@@ -241,7 +242,7 @@ async function decodeWaveform(
   const fetchTimeout = globalThis.setTimeout(() => fetchController.abort(), 15_000)
   let bytes: ArrayBuffer
   try {
-    const response = await fetch(asset.renderUrl, { signal: fetchController.signal })
+    const response = await fetch(resolveMediaDeliveryUrl(asset.renderUrl), { signal: fetchController.signal })
     if (!response.ok) throw new Error(`Unable to read media for waveform (${response.status})`)
     const contentLength = finitePositive(response.headers.get('content-length')) ?? 0
     if (contentLength > 128 * 1024 * 1024) throw new Error('waveform_asset_too_large: assets over 128 MB require a proxy waveform')

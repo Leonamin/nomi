@@ -11,6 +11,7 @@ import { randomBytes } from 'node:crypto'
 import { hostEvents } from './runtimeHost'
 import { dispatchWebRpc, getWebSurface, acquireWebSurface, uploadWebAsset, initWebDomain } from './rpc'
 import { translateMediaValues } from './mediaUrls'
+import { projectMediaRelativePath } from './mediaPathPolicy'
 import { handleNomiLocalRequest } from '../electron/protocol/localProtocol'
 import { handleAgentMcp } from './agentMcp'
 
@@ -65,11 +66,14 @@ app.get('/api/events', context => streamSSE(context, async stream => {
   finally { hostEvents.off('message', forward); lease.release() }
 }))
 app.on(['GET', 'HEAD'], ['/api/media/*', '/api/download/*'], async context => {
-  const requestPath = new URL(context.req.url).pathname
+  const requestUrl = new URL(context.req.url)
+  const requestPath = requestUrl.pathname
   const isDownload = requestPath.startsWith('/api/download/')
   const mediaPath = requestPath.slice(isDownload ? '/api/download/'.length : '/api/media/'.length)
-  const relativePath = mediaPath.split('/').slice(1).map(decodeURIComponent).join('/')
-  if (!/^(?:assets\/|exports\/)/.test(relativePath) || !/\.(png|jpe?g|webp|gif|mp4|webm|mov|m4a|wav|mp3|ogg|flac)$/i.test(relativePath)) return context.notFound()
+  // Project cache buckets and production output are owned media, whereas the
+  // rest of .nomi stores private project state. Match desktop's query policy.
+  const relativePath = projectMediaRelativePath(mediaPath, requestUrl.search)
+  if (!relativePath) return context.notFound()
   const response = await handleNomiLocalRequest(new Request(`nomi-local://asset/${mediaPath}`, { headers: context.req.raw.headers, method: context.req.method }))
   if (isDownload) response.headers.set('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(path.basename(relativePath))}`)
   return response

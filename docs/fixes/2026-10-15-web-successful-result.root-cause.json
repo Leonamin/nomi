@@ -1,0 +1,33 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-15-web-successful-result",
+  "detected_by": "user",
+  "recurrence_check_on": "2026-11-15",
+  "problem_type": "Completed canvas result projection loses current selection",
+  "symptom": "A successful production shot card has history and resultId but no displayed result",
+  "direct_cause": "mergeWebNodeOutcome spreads an incoming node with no result over the current node when history already contains the output",
+  "class_root": "Web canvas outcome merge does not require a completed run's selected result identity to survive a partial snapshot",
+  "affected_population": ["Web projects with successful production shots or partial browser/server canvas snapshots"],
+  "scope_paths": ["src/workbench/project/webCanvasProjection.ts"],
+  "entry_points": ["Web project save merge", "Web generation snapshot projection", "Completed production shot hydration"],
+  "external_sources": [],
+  "internal_only_reason": "This is Nomi canvas outcome semantics and run identity, not a dependency behavior",
+  "invariants": ["A missing current result in a successful run is restored only when its resultId matches an existing history entry", "An explicit user selection and a newer manual run take precedence"],
+  "doors": [{"kind":"write","path":"src/workbench/project/webCanvasProjection.ts","symbol":"mergeWebNodeOutcome"}],
+  "door_reduction": {"before":1,"after":1},
+  "generality_proof": "The one merge boundary is called by both save and live projection; selecting by completed run resultId spans any result type and does not infer from arbitrary history order.",
+  "shared_boundaries": [{"path":"src/workbench/project/webCanvasProjection.ts","symbol":"mergeWebNodeOutcome","responsibility":"Preserve or recover the selected completed result across partial snapshots"}],
+  "same_class_entry_points": [
+    {"path":"src/workbench/project/webCanvasProjection.ts","entry_point":"mergeWebCanvas repository save","disposition":"enforced","evidence":"Calls mergeWebNodeOutcome for every matching canvas node"},
+    {"path":"web/client.ts","entry_point":"projectGenerationCanvas live projection","disposition":"enforced","evidence":"Calls projectWebCanvas, which converges on mergeWebNodeOutcome"}
+  ],
+  "recurrence": {"classification":"recurring","reason":"Every partial snapshot with history but no current result can erase a successful run selection","same_class_scan":["node scripts/door-map.mjs mergeWebNodeOutcome: one shared writer door","rg mergeWebNodeOutcome/projectWebCanvas/mergeWebCanvas and attachShotResult callers"]},
+  "prevention": {"kind":"centralized-boundary","enforcement_path":"src/workbench/project/webCanvasProjection.ts","invariant":"Successful run selection is derived only from its recorded resultId when incoming result is absent and no explicit edit exists","failure_mode":"No matching history result means no guessed selection","exception_policy":"none","strategy":"Recover at the shared outcome merge using run identity; retain explicit result edits and newer runs","artifacts":["src/workbench/project/webCanvasProjection.ts"]},
+  "regression_tests": ["src/workbench/project/webCanvasProjection.test.ts"],
+  "class_regression_tests": ["src/workbench/project/webCanvasProjection.test.ts"],
+  "legacy_paths": {"status":"not-applicable","removed_paths":[],"rationale":"No alternate outcome merge path remains"},
+  "dependency_lifecycle": {"decision":"not-applicable","rationale":"The canvas projection is Nomi-owned","exit_criteria":[]},
+  "migration": "The next Web projection or save recovers a missing current result only from matching run resultId; no project files are edited in-place.",
+  "residual_risks": ["Real reported project remains read-only until independent validation"],
+  "invariant_owner_layer": {"layer":"src/workbench/project/webCanvasProjection.ts","tests":["src/workbench/project/webCanvasProjection.test.ts"],"why":"All Web canvas save and live projection paths converge here."}
+}
