@@ -69,7 +69,7 @@
 
 ## R11 交付与状态（含旧 R19）
 
-**推送**：完成一个有意义、验证通过的改动就自己 commit + push，不等用户催。开始前在独立 sibling worktree 的任务分支跑 `pnpm run delivery:preflight`（一次有超时的非交互 fetch，拒绝受保护分支、脏工作树和未含最新远端基线的分支）。验证档位按 R22；连续小修先本地收敛，定向验证通过后只推一次。一个逻辑改动一个 commit，message 写做了什么 + 为什么 + 验证结果。例外先问：改动未验证、破坏性操作（删历史 / force push / 发版 tag）、用户说先别提交、混入多个不相关改动。
+**推送**：完成一个有意义、验证通过的改动就自己 commit + push，不等用户催。开始前在独立 sibling worktree 的任务分支跑 `pnpm run delivery:preflight`（一次有超时的非交互 fetch，拒绝受保护分支、脏工作树和未含最新远端基线的分支）。本地 CI 始终必需；GitHub CI 仅可经用户明确授权豁免，并在 PR 留下范围、原因和本地证据（详见 `engineering/delivery-and-review.md`）。验证档位按 R22；连续小修先本地收敛，定向验证通过后只推一次。一个逻辑改动一个 commit，message 写做了什么 + 为什么 + 验证结果。例外先问：改动未验证、破坏性操作（删历史 / force push / 发版 tag）、用户说先别提交、混入多个不相关改动。
 
 **状态词只有四档**（把侧分支里的实现状态误报成「用户拿得到的解决状态」是这条的起因）：
 
@@ -78,7 +78,7 @@
 3. **已合入、待验证**：目标分支包含提交，但目标分支门禁或真实用户任务未通过。只能称「已合入」。
 4. **已解决**：修复在用户指定的远端目标分支，且该分支上必需门禁与真实用户任务都通过。
 
-**机械证据**：报「已解决」前拿到 merge commit SHA，在该提交上跑 `pnpm run delivery:verify-merged -- --expected-sha <sha>`（要求 HEAD、远端目标分支、expected SHA 完全一致，记录 commit / tree 两种身份）。身份检查失败就降级状态；禁止用 REST compare、commit message 重放或低层 Git 对象合成伪造远端身份；未推送提交不得被引用为团队现状；删分支前逐提交审计；完成报告同时给目标分支、远端 commit、验证结果；用户要求验收后再合入的，只能报「待验收修复」。
+**机械证据**：正常路径报「已解决」前拿到 merge commit SHA，在该提交上跑 `pnpm run delivery:verify-merged -- --expected-sha <sha>`（要求 HEAD、远端目标分支、expected SHA 完全一致，记录 commit / tree 两种身份）。用户明确豁免 GitHub CI 时，仍须真实 merge 身份和必需本地 CI，通过 `engineering/delivery-and-review.md` 的本地验收记录，不能伪造远端回执。身份检查失败就降级状态；禁止用 REST compare、commit message 重放或低层 Git 对象合成伪造远端身份；未推送提交不得被引用为团队现状；删分支前逐提交审计；完成报告同时给目标分支、远端 commit、验证结果；用户要求验收后再合入的，只能报「待验收修复」。
 
 ## R13 完成标准（= P3 · 含旧 R16 / R30 / R32）
 
@@ -182,11 +182,11 @@ P3「全绿不等于完成」的量化门。三档触发：
 
 权威实现是 `scripts/validation-policy.mjs`（**认不出的路径默认跑全量**）；`scripts/select-quality-gate-profile.mjs` 只从 Git diff / 事件取输入，CI workflow 与本机 `pnpm run gates` 只消费输出。**必须保留的测试**：凭据不出主进程、SSRF / 重定向 / 私网边界、认证与发布状态机、幂等 / 并发 / 取消、崩溃恢复与升级持久化、迁移与 unknown reconcile、媒体验真、真实入口 round-trip、安装包身份与签名。可 focused 的是同目录 sibling test 与 import graph 的 related tests；可简化的是重复 fixture / helper，先证行为覆盖等价再合并，不用删测试换速度。没有真实资源记 `unverified`。一个逻辑批次完成后跑一次定向验证再统一推送，只有测试基础设施自身、删除 / 重命名、无法分类或手动 release 才跑显式全维度。
 
-**分支定性先算 merge-base**：评审、对账或打捞任何分支前先 `git merge-base origin/main <branch>`，真实 authored delta = `MB..branch`；两点视图里的大片删除第一假设是「main 在分支落后期间前进了」。最终交付在真实 merged-main SHA 上跑 `pnpm run delivery:verify-merged`，等待该 exact SHA 的 `Quality Gate` 与 `Mac Package` check run，不本地跑第三遍。
+**分支定性先算 merge-base**：评审、对账或打捞任何分支前先 `git merge-base origin/main <branch>`，真实 authored delta = `MB..branch`；两点视图里的大片删除第一假设是「main 在分支落后期间前进了」。最终交付在真实 merged-main SHA 上跑 `pnpm run delivery:verify-merged`，默认等待该 exact SHA 的 `Quality Gate` 与 `Mac Package` check run；用户明确豁免 GitHub CI 时按交付文档保留必需本地验证和真实 merge 身份。
 
 ## R27 多智能体编排
 
-任务书带开工三行头与概念占用；收货三查；一个概念一个 PR、按阶段攒（提交不压缩）；协调会话运作（状态落盘、工人不建卡不直接问用户、CI 绿 + 扫描干净才合、最多 3 个等收据）。正文：[`engineering/agent-orchestration-playbook.md`](engineering/agent-orchestration-playbook.md)。
+任务书带开工三行头与概念占用；收货三查；一个概念一个 PR、按阶段攒（提交不压缩）；协调会话运作（状态落盘、工人不建卡不直接问用户、本地 CI 必过，GitHub CI 通过或用户明确豁免且扫描干净才合、最多 3 个等收据）。正文：[`engineering/agent-orchestration-playbook.md`](engineering/agent-orchestration-playbook.md)。
 
 ## R33 概念的 owner 先于目录（含 R33.2 – R33.5）
 

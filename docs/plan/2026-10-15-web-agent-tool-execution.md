@@ -19,3 +19,8 @@
 
 ## 기존 자산 조사
 OpenCode 2 공식 MCP 문서 https://dev.opencode.ai/v2/docs/mcp-servers/ 및 SDK 기반 web/agentMcp.ts 재사용. 엔진 교체나 자체 프로토콜 파서 없이, 텍스트는 실행하지 않고 실패로 처리한다. 전체 문서 교체에는 먼저 read_script를 요구하며 기존 내용 충돌 검사를 유지한다.
+
+
+## 사용자 승인에 따른 원격 CI 예외
+
+2026-10-15 사용자가 이번 PR의 GitHub CI 요건을 명시적으로 면제했다. 로컬 CI는 항상 필수라는 지정을 반영한다. 규칙의 정본 CLAUDE.md와 rules.json, 관련 교부/병합 문서를 동기화하며 AGENTS/rules 뷰는 생성기로 갱신한다. GitHub 설정과 검증 스크립트를 변경하지 않고, 실제 merge 신원 및 로컬 검증·배포 근거를 기록한다. 이 규칙 변경은 별도 실행 경로나 원격 green check를 만들지 않는다.

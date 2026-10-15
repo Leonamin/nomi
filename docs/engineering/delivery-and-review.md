@@ -9,7 +9,16 @@ contracts 始终跑（一次跑完全部门岗再汇总，不再第一个红就�
 
 ## 交付身份只走统一命令（R11）
 
-任务开始先跑 `delivery:preflight`；PR 合并后**立即**在 Git fetch 得到的真实 merge SHA 上跑 `delivery:verify-merged`：非纯文档的 merge 必须看到该 SHA 上 `Core Flow Smoke (empty)` / `(used)` 都是 success 才发收据（skipped / 缺席一律拒绝）。**合并规矩（2026-10-01 用户拍板；只由协调会话做，其他会话开 PR 后把号发给它、不自己合）**：CI 绿 + 扫描干净就合；**最多 3 个合并在等收据**（`quality-gate.yml` 按 SHA 分组，每个合并提交各跑一套），任何一个收据红了**立刻停止再合**，交人定修还是回滚（冒烟红了不自动回滚）。任务 commit、PR head、merge commit 与 tree 分开报告；禁止用 REST compare 文件列表重建 Git tree/commit，禁止把 `same-tree-different-commit` 叫成代码不匹配。
+任务开始先跑 `delivery:preflight`；正常路径 PR 合并后**立即**在 Git fetch 得到的真实 merge SHA 上跑 `delivery:verify-merged`：非纯文档的 merge 必须看到该 SHA 上 `Core Flow Smoke (empty)` / `(used)` 都是 success 才发收据（skipped / 缺席一律拒绝）。**合并规矩（只由协调会话合并）**：本地 CI 必须通过，GitHub CI 通过且扫描干净就合；GitHub CI 仅可按下述用户明确授权豁免；**最多 3 个合并在等收据**（`quality-gate.yml` 按 SHA 分组，每个合并提交各跑一套），任何一个收据红了**立刻停止再合**，交人定修还是回滚（冒烟红了不自动回滚）。任务 commit、PR head、merge commit 与 tree 分开报告；禁止用 REST compare 文件列表重建 Git tree/commit，禁止把 `same-tree-different-commit` 叫成代码不匹配。
+
+## 用户明确授权的 GitHub CI 例外（2026-10-15）
+
+- **本地 CI 始终必需，不能豁免。** 按真实改动风险运行 `pnpm run gates`，以及受影响平台/产品的必要检查；网页改动还需 web 类型检查、`test:web`、`build:web`。失败必须修复，缺少真实环境如实标记 `unverified`。
+- 默认仍须 GitHub CI 成功才合并。只有用户明确允许时，可在授权范围内忽略 GitHub CI 缺席/不可用/未通过这一远端条件；不得自行把授权扩大到其他 PR，也不得把它当成本地检查失败的豁免。
+- PR 必须记录用户授权、适用 PR/提交、原因、本地命令与结果、未验证范围。授权不是允许修改仓库 Actions 权限、削弱分支保护或伪造绿色 check。
+- 合并后仍从 Git fetch 核对真实 main/HEAD/merge SHA 和 tree。正常路径继续使用 `delivery:verify-merged`；该命令要求远端 check，不因文档例外伪造结果。
+- 授权例外改用明确标为 `local-ci-user-authorized` 的本地验收记录：记录用户授权、PR、merge SHA/tree、匹配关系、运行过的命令/退出码与原测试 SHA/tree、部署 SHA/health、真实任务结果和未验证项。实现 tree 未变时可复用同 tree 的已通过测试，但须证明 tree；文档变化仅可复用排除文档后的实现内容完全相同的测试，另跑文档同步和相关规则检查。必要产品检查在真实 merge 上重新运行。
+- 本地验收与部署结果通过后可报告完成，但必须说明 GitHub CI 未验证和用户授权例外；本地记录不能冒充 `delivery:verify-merged` 的 GitHub 回执。若本地检查或部署验证失败，停止并修复，不沿用远端豁免绕过。
 
 ## 合并前检查：设计卡 + 独立验收（取代旧的交工前评审，R24 由 PR #223 保留）
 
