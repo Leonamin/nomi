@@ -49,14 +49,15 @@ describe('native web semantic tool vocabulary', () => {
 
 describe('web document tool scope and receipts', () => {
   it('advertises only supported scopes and requires a read before whole document replacement', async () => {
-    const read = vi.fn(async()=>({text:'original'})), write = vi.fn(async()=>({applied:true as const,revision:2,contentHash:'verified'}))
-    const tools=createWebSemanticAgentTools({binding:{projectId:'p',immutableProjectUuid:'u',projectGeneration:1},signal:new AbortController().signal,documentPort:{read,write},generation:{},listModels:()=>[],readCanvas:()=>({})} as unknown as WebSemanticAgentToolDependencies)
+    const onDocumentExecuted = vi.fn(), read = vi.fn(async()=>({text:'original'})), write = vi.fn(async()=>({applied:true as const,revision:2,contentHash:'verified'}))
+    const tools=createWebSemanticAgentTools({binding:{projectId:'p',immutableProjectUuid:'u',projectGeneration:1},signal:new AbortController().signal,onDocumentExecuted,documentPort:{read,write},generation:{},listModels:()=>[],readCanvas:()=>({})} as unknown as WebSemanticAgentToolDependencies)
     const edit=tools.find(t=>t.name==='write_script')!
     expect(edit.schema.safeParse({where:'whole-document',content:'revised'}).success).toBe(true)
     expect(edit.schema.safeParse({where:'selection',content:'revised'}).success).toBe(false)
     await expect(edit.run({where:'whole-document',content:'revised'})).rejects.toThrow('read_script')
     expect(write).not.toHaveBeenCalled()
     await tools.find(t=>t.name==='read_script')!.run({scope:'full'})
+    expect(onDocumentExecuted).toHaveBeenCalledOnce()
     await expect(edit.run({where:'whole-document',content:'revised'})).resolves.toMatchObject({ok:true,details:{applied:true,revision:2,contentHash:'verified'}})
     expect(write).toHaveBeenCalledWith({operation:'replace',content:'revised'},expect.anything())
   })

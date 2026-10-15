@@ -58,7 +58,7 @@ export function createWebSemanticAgentTools(deps: WebSemanticAgentToolDependenci
       }
       const toolCallId = randomUUID()
       const document = documents.get(spec.name)
-      if (document) { const result = await document.execute(args, { toolCallId, signal: deps.signal }); if (result.ok) documentRead = true; return result }
+      if (document) { const result = await document.execute(args, { toolCallId, signal: deps.signal }); if (result.ok) { documentRead = true; deps.onDocumentExecuted?.() }; return result }
       if (spec.name === 'list_models') return deps.listModels()
       if (spec.name === 'look_at_canvas') {
         const canvas = projectCanvasRead(await deps.readCanvas())
