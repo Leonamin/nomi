@@ -456,10 +456,10 @@ export function V4SkillPopover({
       searchLabel={t('agentPanelV4.skillSearch')}
       rowAttributes={row => ({ 'data-v4-command': row.id })}
       previewAttributes={row => ({ 'data-skill-hover': row.id })}
-      footer={<V4Row as="button" type="button" onClick={onManage}
+      footer={onManage ? <V4Row as="button" type="button" onClick={onManage}
         className="w-full border-t border-nomi-line-soft px-2.5 py-2 text-left text-caption text-nomi-ink-60 hover:bg-nomi-ink-05">
         <span>{t('agentPanelV4.skillExplore')}</span><IconPlus size={12} />{t('agentPanelV4.skillManage')}
-      </V4Row>} />
+      </V4Row> : null} />
   </div>
 }
 

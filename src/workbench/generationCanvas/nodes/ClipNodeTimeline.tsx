@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { IconPlus } from '@tabler/icons-react'
 import { WorkbenchIconButton } from '../../../design/actions'
 import { useFilmstrip } from '../../../media/useFilmstrip'
+import { resolveMediaDeliveryUrl } from '../../../media/assetDeliveryUrl'
 import { cn } from '../../../utils/cn'
 import { canvasDragExceededThreshold } from '../components/canvasPointerGestureModel'
 import type { TimelineClip, TimelineState } from '../../timeline/timelineTypes'
@@ -46,10 +47,10 @@ type ClipResizePreview = ClipNodeResizeTarget & {
 function ClipThumb({ clip, pxPerFrame }: { clip: TimelineClip; pxPerFrame: number }): JSX.Element {
   const filmstrip = useFilmstrip(clip.type === 'video' && !clip.thumbnailUrl ? clip.url : '')
   if (clip.type === 'image' && (clip.thumbnailUrl || clip.url)) {
-    return <img src={clip.thumbnailUrl || clip.url} alt="" className="absolute inset-0 size-full object-cover" draggable={false} />
+    return <img src={resolveMediaDeliveryUrl(clip.thumbnailUrl || clip.url || '')} alt="" className="absolute inset-0 size-full object-cover" draggable={false} />
   }
   if (clip.type === 'video' && clip.thumbnailUrl) {
-    return <img src={clip.thumbnailUrl} alt="" className="absolute inset-0 size-full object-cover" draggable={false} />
+    return <img src={resolveMediaDeliveryUrl(clip.thumbnailUrl)} alt="" className="absolute inset-0 size-full object-cover" draggable={false} />
   }
   if (clip.type === 'video' && filmstrip?.status === 'ready') {
     const filmstripStyle = resolveClipNodeFilmstripStyle(clip, pxPerFrame)

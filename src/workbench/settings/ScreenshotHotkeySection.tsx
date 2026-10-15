@@ -27,13 +27,15 @@ export function ScreenshotHotkeySection(): JSX.Element {
   const [busy, setBusy] = React.useState(false)
 
   React.useEffect(() => {
-    void getDesktopBridge()?.screenshot?.get?.().then((next) => setStatus(next ?? null)).catch(() => undefined)
+    const getStatus = getDesktopBridge()?.screenshot?.get
+    if (getStatus) void getStatus().then((next) => setStatus(next ?? null)).catch(() => undefined)
   }, [])
 
   const apply = React.useCallback((enabled: boolean, accelerator: string) => {
+    const setHotkey = getDesktopBridge()?.screenshot?.set
+    if (!setHotkey) return
     setBusy(true)
-    void getDesktopBridge()
-      ?.screenshot?.set?.({ enabled, accelerator })
+    void setHotkey({ enabled, accelerator })
       .then((next) => { if (next) setStatus(next) })
       .catch(() => undefined)
       .finally(() => setBusy(false))
@@ -50,7 +52,7 @@ export function ScreenshotHotkeySection(): JSX.Element {
         <span className="text-body-sm text-nomi-ink">{t('settings.general.screenshot')}</span>
         <DesignSwitch
           checked={enabled}
-          disabled={busy}
+          disabled={busy || !getDesktopBridge()?.screenshot?.set}
           onChange={(event) => apply(event.currentTarget.checked, accelerator)}
           aria-label={t('settings.general.screenshot')}
         />
@@ -103,7 +105,7 @@ export function ScreenshotHotkeySection(): JSX.Element {
           <button
             type="button"
             className="inline-flex w-fit items-center gap-1.5 rounded-nomi-sm border border-nomi-line bg-nomi-paper px-2.5 py-1.5 text-caption text-nomi-ink cursor-pointer hover:bg-nomi-ink-05"
-            onClick={() => void getDesktopBridge()?.screenshot?.openPermissionSettings?.().catch(() => undefined)}
+            onClick={() => void getDesktopBridge()?.screenshot?.openPermissionSettings?.()?.catch(() => undefined)}
           >
             <IconExternalLink size={13} stroke={1.7} aria-hidden /> {t('settings.general.screenshotOpenSettings')}
           </button>

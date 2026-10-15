@@ -12,6 +12,7 @@ import {
   IconTags,
 } from '@tabler/icons-react'
 import { cn } from '../../utils/cn'
+import { getDesktopBridge } from '../../desktop/bridge'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../design'
 import { type ProjectCategory } from '../project/projectCategories'
 import { useWorkbenchStore } from '../workbenchStore'
@@ -89,6 +90,7 @@ function isLibraryTab(tab: ProjectSidebarTab): boolean {
 
 export default function ProjectExplorerSidebar({ categories, projectId = null }: Props): JSX.Element {
   const { t } = useTranslation()
+  const hasSkillLibrary = Boolean(getDesktopBridge()?.skill?.list)
   const [tab, setTab] = React.useState<ProjectSidebarTab>('asset-library')
   const [createCategoryNonce, setCreateCategoryNonce] = React.useState(0)
   const collapsed = useWorkbenchStore((s) => s.sidebarCollapsed)
@@ -130,12 +132,13 @@ export default function ProjectExplorerSidebar({ categories, projectId = null }:
 
   React.useEffect(() => {
     const open = () => {
+      if (!hasSkillLibrary) return
       setTab('skill-library')
       setSidebarCollapsed(false)
     }
     window.addEventListener('nomi-open-skill-library', open)
     return () => window.removeEventListener('nomi-open-skill-library', open)
-  }, [setSidebarCollapsed])
+  }, [hasSkillLibrary, setSidebarCollapsed])
 
   const railItems = React.useMemo(
     () => [
@@ -163,12 +166,12 @@ export default function ProjectExplorerSidebar({ categories, projectId = null }:
         railLabel: t('sidebar.prompts'),
         icon: IconBulb,
       },
-      {
+      ...(hasSkillLibrary ? [{
         id: 'skill-library' as const,
         label: t('sidebar.skillLibrary'),
         railLabel: t('sidebar.skills'),
         icon: IconBooks,
-      },
+      }] : []),
       {
         id: 'workflow-library' as const,
         label: t('sidebar.workflowLibrary'),
@@ -176,7 +179,7 @@ export default function ProjectExplorerSidebar({ categories, projectId = null }:
         icon: IconRoute,
       },
     ],
-    [t],
+    [t, hasSkillLibrary],
   )
 
   const panelTitle = sidebarPanelTitle(tab, t)

@@ -1,0 +1,43 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-15-web-asset-drop",
+  "problem_type": "Browser File input discarded by a native-path-only asset library drop boundary",
+  "symptom": "Dragging an image, video, or audio file onto the Web asset library imports nothing and reports no images.",
+  "direct_cause": "The drop handler converts each File to an absolute native path; browser File has none, so it passes an empty path list to copyFiles.",
+  "class_root": "The shared drop boundary assumed every host represents a local File with a native filesystem path instead of dispatching by the host's supported import contract.",
+  "affected_population": ["Every ordinary browser File dropped on the Web asset library", "Any browser media type accepted by the existing upload endpoint"],
+  "scope_paths": ["src/workbench/assets/assetLibraryLocalImport.ts"],
+  "entry_points": ["AssetLibraryPanel onDrop dispatches files to useAssetLibraryLocalImport", "The same library's paste flow supplies Electron native paths"],
+  "external_sources": [],
+  "internal_only_reason": "The fix binds this repository's already implemented host bridges; no third-party package behavior determines the invariant.",
+  "invariants": ["Web drops send File bytes through assets.importNativeFile with their original project ID", "Electron drops and clipboard paths continue through assets.copyFiles", "A failed or malformed per-file import cannot be counted as created"],
+  "doors": [
+    { "kind": "read", "path": "src/workbench/assets/assetLibraryLocalImport.ts", "symbol": "copyFiles" },
+    { "kind": "write", "path": "src/workbench/assets/assetLibraryLocalImport.ts", "symbol": "copyFiles" }
+  ],
+  "door_reduction": { "before": 2, "after": 2, "why_not": "Both generated doors are read/write uses in the same asset-library import function; copyFiles must remain for Electron native-path imports." },
+  "generality_proof": "All library File drops converge on the hook's single drop dispatcher. The dispatcher chooses byte upload for Web before native-path extraction, regardless of file name, MIME type, count, or native path absence. Paste remains the separate native-path entrance.",
+  "shared_boundaries": [
+    { "path": "src/workbench/assets/assetLibraryLocalImport.ts", "symbol": "importDroppedFilesToLibrary", "responsibility": "Choose the supported host import operation for every dropped File and aggregate per-file results." }
+  ],
+  "same_class_entry_points": [
+    { "path": "src/workbench/assets/AssetLibraryPanel.tsx", "entry_point": "useAssetLibraryLocalImport", "disposition": "enforced", "evidence": "The panel installs the hook's onDrop handler on the asset library root." },
+    { "path": "src/workbench/assets/assetLibraryLocalImport.ts", "entry_point": "onPaste", "disposition": "not-affected", "evidence": "Clipboard paste reads native file paths and has no browser File bytes; it retains the Electron path contract." },
+    { "path": "src/workbench/assets/assetPickerUpload.ts", "entry_point": "droppedAssetFile", "disposition": "not-affected", "evidence": "Picker drops already preserve the File object for the existing upload API." }
+  ],
+  "recurrence": { "classification": "recurring", "reason": "Every browser File and every future drag repeats the pathless input mechanism.", "same_class_scan": ["rg 'importNativeFile|copyFiles|filePathsFromDrop' src electron web", "rg 'droppedAssetFile|onDrop' src/workbench/assets", "node scripts/door-map.mjs copyFiles"] },
+  "prevention": { "kind": "centralized-boundary", "enforcement_path": "src/workbench/assets/assetLibraryLocalImport.ts", "invariant": "Every browser drop is passed as File bytes to the existing Web bridge while every Electron drop keeps native path copying.", "failure_mode": "Unavailable bridge, rejected import, or malformed result increments failed count and never creates an asset.", "exception_policy": "none", "strategy": "Dispatch all dropped files at one host-aware import boundary and reuse the existing bridge methods.", "artifacts": ["src/workbench/assets/assetLibraryLocalImport.ts"] },
+  "regression_tests": ["src/workbench/assets/assetLibraryLocalImport.test.ts"],
+  "class_regression_tests": ["src/workbench/assets/assetLibraryLocalImport.test.ts"],
+  "legacy_paths": { "status": "removed", "removed_paths": ["src/workbench/assets/assetLibraryLocalImport.ts"], "rationale": "The drop handler's unconditional path-only dispatch is removed; native-path copy remains valid for Electron." },
+  "dependency_lifecycle": { "decision": "not-applicable", "rationale": "No third-party runtime is changed; existing Web and Electron bridge contracts own import semantics.", "exit_criteria": [] },
+  "migration": "No persisted data shape changes. Existing assets remain intact; new Web drops use the existing upload endpoint.",
+  "residual_risks": ["Live zh/en Web and Electron drag verification belongs to coordinator acceptance."],
+  "detected_by": "review",
+  "recurrence_check_on": "2026-11-14",
+  "invariant_owner_layer": {
+    "layer": "src/workbench/assets/assetLibraryLocalImport.ts",
+    "tests": ["src/workbench/assets/assetLibraryLocalImport.test.ts"],
+    "why": "The asset-library drop boundary dispatches every dropped File and owns the Web versus Electron import invariant."
+  }
+}

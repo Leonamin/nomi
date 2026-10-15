@@ -40,7 +40,7 @@ export default function NomiRouterApp(): JSX.Element {
     const unsubscribe = getDesktopBridge()?.modelCatalog.onChanged?.(() => window.dispatchEvent(new Event('nomi-model-catalog-changed')))
     // 技能盘同理：**唯一的派发点在主进程**（写盘那一层），渲染层只负责把它接进本地总线。
     // 这样三个写入者（面板导入、拖拽、Agent 的 author_skill）不必各自记得喊一声。
-    const unsubscribeSkills = getDesktopBridge()?.skill.onChanged?.(() => notifySkillLibraryChanged())
+    const unsubscribeSkills = getDesktopBridge()?.skill?.onChanged?.(() => notifySkillLibraryChanged())
     return () => {
       unsubscribe?.(); unsubscribeSkills?.()
       window.removeEventListener('nomi-model-catalog-changed', refresh)

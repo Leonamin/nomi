@@ -16,4 +16,10 @@ describe('canonical media transport', () => {
     expect(translateMediaValues(translateMediaValues(value, 'browser', origin), 'server', origin)).toEqual(value)
     expect(translateMediaValues('/api/media/project/assets/clip.mp4', 'server', origin)).toBe(canonical)
   })
+  it('preserves a canonical query and encoded path through the shared delivery mapping', () => {
+    const source = 'nomi-local://asset/project/assets/frame%20one.png?revision=2'
+    const delivered = translateMediaValues(source, 'browser', origin)
+    expect(delivered).toBe(`${origin}/api/media/project/assets/frame%20one.png?revision=2`)
+    expect(translateMediaValues(delivered, 'server', origin)).toBe(source)
+  })
 })

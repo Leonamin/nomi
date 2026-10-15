@@ -5,6 +5,7 @@ import { resolveVideoClipMediaTimeSeconds } from '../player/timelinePlayback'
 import { drawTextBox } from '../timeline/textOverlayCanvas'
 import { computeFramedRect, resolveClipFraming } from '../timeline/clipFraming'
 import i18n from '../../i18n'
+import { resolveMediaDeliveryUrl } from '../../media/assetDeliveryUrl'
 import { findTimelineTransitionForClipType, resolveTimelineTransitionsAtFrame } from '../timeline/timelineTransition'
 
 export type ExportStatus = 'idle' | 'preparing' | 'recording' | 'done' | 'error'
@@ -83,7 +84,7 @@ function loadImage(url: string): Promise<HTMLImageElement> {
     image.decoding = 'async'
     image.onload = () => resolve(image)
     image.onerror = () => reject(new Error(`无法加载导出图片素材：${url}`))
-    image.src = url
+    image.src = resolveMediaDeliveryUrl(url)
   })
 }
 
@@ -97,7 +98,7 @@ function loadVideo(url: string): Promise<HTMLVideoElement> {
     video.preload = 'auto'
     video.onloadedmetadata = () => resolve(video)
     video.onerror = () => reject(new Error(`无法加载导出视频素材：${url}`))
-    video.src = url
+    video.src = resolveMediaDeliveryUrl(url)
     video.load()
   })
 }

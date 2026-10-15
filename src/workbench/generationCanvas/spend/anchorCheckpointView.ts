@@ -1,5 +1,6 @@
 import i18n from '../../../i18n'
 import { buildNomiLocalAssetUrl } from '../../../media/nomiLocalAssetUrl'
+import { resolveMediaDeliveryUrl } from '../../../media/assetDeliveryUrl'
 import type {
   ProductionArtifact,
   ProductionGenerationShot,
@@ -131,7 +132,7 @@ function thumbnailForReference(run: ProductionRun, reference: { assetId: string;
     : artifact.projectRelativePath
   if (!rel) return null
   try {
-    return buildNomiLocalAssetUrl(run.projectId, rel)
+    return resolveMediaDeliveryUrl(buildNomiLocalAssetUrl(run.projectId, rel))
   } catch {
     return null
   }
@@ -154,7 +155,7 @@ function thumbnailFor(
     : artifact.projectRelativePath
   if (!rel) return null
   try {
-    return buildNomiLocalAssetUrl(run.projectId, rel)
+    return resolveMediaDeliveryUrl(buildNomiLocalAssetUrl(run.projectId, rel))
   } catch {
     return null
   }

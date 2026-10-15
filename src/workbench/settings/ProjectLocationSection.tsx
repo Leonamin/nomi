@@ -108,18 +108,18 @@ export function ProjectLocationSection(): JSX.Element {
           <DesignButton
             type="button"
             variant="filled"
-            disabled={unavailable || managed}
+            disabled={unavailable || managed || !api?.pick}
             leftSection={<IconSettings size={14} stroke={1.7} aria-hidden="true" />}
-            onClick={() => { if (api) void run(api.pick) }}
+            onClick={() => { if (api?.pick) void run(api.pick) }}
           >
             {t('settings.file.projectLocationChange')}
           </DesignButton>
           <DesignButton
             type="button"
             variant="default"
-            disabled={unavailable || !location}
+            disabled={unavailable || !location || !api?.reveal}
             leftSection={<IconFolderOpen size={14} stroke={1.7} aria-hidden="true" />}
-            onClick={() => { if (api) void run(api.reveal) }}
+            onClick={() => { if (api?.reveal) void run(api.reveal) }}
           >
             {t('settings.file.projectLocationReveal')}
           </DesignButton>
@@ -127,9 +127,9 @@ export function ProjectLocationSection(): JSX.Element {
             <DesignButton
               type="button"
               variant="subtle"
-              disabled={unavailable}
+              disabled={unavailable || !api?.reset}
               leftSection={<IconRefresh size={14} stroke={1.7} aria-hidden="true" />}
-              onClick={() => { if (api) void run(api.reset) }}
+              onClick={() => { if (api?.reset) void run(api.reset) }}
             >
               {t('settings.file.projectLocationReset')}
             </DesignButton>

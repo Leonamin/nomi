@@ -1,0 +1,202 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-15-web-host-capability",
+  "problem_type": "Electron bridge methods advertised without matching Web RPC implementation",
+  "symptom": "Web users see usable controls that fail, silently disappear, spin, or leave optimistic state after invoking desktop-only methods.",
+  "direct_cause": "The Web bridge inherits most preload methods and removes only a handful, while the Web RPC command table admits a narrower set.",
+  "class_root": "The Web host projection did not enforce that exposed methods have executable Web implementations before the UI uses method presence as capability evidence.",
+  "affected_population": [
+    "Web Skills, settings, workspace assets, clipboard paste, video analysis, mobile camera, connector and memory users"
+  ],
+  "scope_paths": [
+    "web/client.ts",
+    "web/hostCapabilities.ts",
+    "src/workbench/settings",
+    "src/workbench/skillLibrary",
+    "src/workbench/api/skillApi.ts",
+    "src/NomiRouterApp.tsx",
+    "src/workbench/settings/ProjectLocationSection.tsx",
+    "src/workbench/settings/AttentionSoundSection.tsx",
+    "src/workbench/settings/SettingsDialog.tsx",
+    "src/workbench/settings/ScreenshotHotkeySection.tsx",
+    "src/workbench/explorer/ProjectExplorerSidebar.tsx",
+    "src/workbench/ai/ProjectAgentResidentShell.tsx",
+    "src/workbench/ai/v4/AgentPanelV4Composer.tsx"
+  ],
+  "entry_points": [
+    "Web contextBridge.exposeInMainWorld",
+    "Settings dialog and asset library bridge readers",
+    "Canvas media actions and native feature guards"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "This mismatch is between this repository's own preload bridge, Web RPC admission table, and renderer callers.",
+  "invariants": [
+    "Every Web-exposed native operation has an admitted Web RPC route or a Web adapter",
+    "Unsupported native operations are absent before UI capability checks",
+    "Supported Web routes and adapters remain available"
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "electron/preload.ts",
+      "symbol": "exposeInMainWorld"
+    },
+    {
+      "kind": "read",
+      "path": "src/NomiRouterApp.tsx",
+      "symbol": "skill"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/ai/ProjectAgentResidentShell.tsx",
+      "symbol": "skill"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/ai/v4/AgentPanelV4Composer.tsx",
+      "symbol": "onManage"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/explorer/ProjectExplorerSidebar.tsx",
+      "symbol": "skill"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/settings/AttentionSoundSection.tsx",
+      "symbol": "attentionSound"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/settings/ProjectLocationSection.tsx",
+      "symbol": "projectLocation"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/settings/ScreenshotHotkeySection.tsx",
+      "symbol": "screenshot"
+    },
+    {
+      "kind": "read",
+      "path": "src/workbench/settings/SettingsDialog.tsx",
+      "symbol": "automationPolicy"
+    }
+  ],
+  "door_reduction": {
+    "before": 9,
+    "after": 9,
+    "why_not": "One host bridge exposure and distinct renderer consumers remain necessary for different settings and skill surfaces; they all inspect the same projected capability before use."
+  },
+  "generality_proof": "The projection runs once for the entire Web DesktopBridge. Every consumer sees the same pruned object and UI guards inspect the resulting method presence; the contract test compares the exclusion inventory to actual Web RPC route declarations.",
+  "shared_boundaries": [
+    {
+      "path": "web/hostCapabilities.ts",
+      "symbol": "projectWebHostCapabilities",
+      "responsibility": "Remove unsupported native methods while preserving admitted Web methods and adapters."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "src/workbench/settings/AiModelsSection.tsx",
+      "entry_point": "assetTransport.describeChannels",
+      "disposition": "enforced",
+      "evidence": "Settings reads Web projected bridge method presence before model initialization."
+    },
+    {
+      "path": "src/workbench/generationCanvas/videoDepth/startVideoDepthDerivation.ts",
+      "entry_point": "videoDepth",
+      "disposition": "enforced",
+      "evidence": "The canvas gates node creation on bridge presence."
+    },
+    {
+      "path": "src/workbench/assets/assetLibraryLocalImport.ts",
+      "entry_point": "clipboard.readFilePaths",
+      "disposition": "enforced",
+      "evidence": "Paste checks this method before requesting native paths."
+    },
+    {
+      "path": "src/workbench/workspace/useWorkspaceFiles.ts",
+      "entry_point": "workspace.listFiles",
+      "disposition": "enforced",
+      "evidence": "Asset pool skips workspace source when the projected method is absent."
+    },
+    {
+      "path": "src/workbench/settings/ScreenshotHotkeySection.tsx",
+      "entry_point": "screenshot.get/set",
+      "disposition": "enforced",
+      "evidence": "Web settings switch previously invoked absent screenshot RPC; projection removes capability and UI guards setter."
+    },
+    {
+      "path": "src/ui/browser/popover/useBrowserAssetActions.ts",
+      "entry_point": "browser asset popover importFile",
+      "disposition": "not-affected",
+      "evidence": "Normal Web entry points guard missing bridge.browser before opening BrowserAssetPopover; native overlay is Electron only."
+    },
+    {
+      "path": "src/workbench/explorer/ProjectExplorerSidebar.tsx",
+      "entry_point": "Skill library rail and open event",
+      "disposition": "enforced",
+      "evidence": "The rail and open event require projected skill.list, avoiding an empty Web skill library."
+    },
+    {
+      "path": "src/workbench/settings/AgentTraceSection.tsx",
+      "entry_point": "diagnostics.openTraceDirectory",
+      "disposition": "enforced",
+      "evidence": "The existing section uses hook availability from diagnostics API presence; projection removes unsupported API."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every Web session exposes the same unsupported methods, and new native bridge methods can repeat the mismatch.",
+    "same_class_scan": [
+      "rg 'nomi:(skill|memory|video-depth|workspace:list-files|settings:asset-relay)' electron/preload web/rpc.ts",
+      "rg 'getDesktopBridge|assetTransport|automationPolicy|attentionSound|projectLocation' src/workbench",
+      "node scripts/door-map.mjs exposeInMainWorld"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "web/hostCapabilities.ts",
+    "invariant": "Unsupported native capabilities are removed at the one Web bridge exposure boundary.",
+    "failure_mode": "Unavailable feature guards see absent methods and do not start actions.",
+    "exception_policy": "none",
+    "strategy": "Use one explicit projection inventory checked against Web RPC commands, plus guards for partial nested APIs.",
+    "artifacts": [
+      "web/hostCapabilities.ts",
+      "web/client.ts"
+    ]
+  },
+  "regression_tests": [
+    "web/hostCapabilities.test.ts",
+    "electron/skills/skillLibraryBroadcast.test.ts"
+  ],
+  "class_regression_tests": [
+    "web/hostCapabilities.test.ts",
+    "electron/skills/skillLibraryBroadcast.test.ts"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "web/client.ts"
+    ],
+    "rationale": "The previous scattered partial deletion of unsupported methods moves to a single projection."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "No third-party runtime determines this repository-owned bridge and RPC contract.",
+    "exit_criteria": []
+  },
+  "migration": "The bridge is reconstructed on page load; no persisted project data changes.",
+  "residual_risks": [
+    "Live zh/en Web and Electron UI walkthrough remains for coordinator acceptance."
+  ],
+  "detected_by": "review",
+  "recurrence_check_on": "2026-11-14",
+  "invariant_owner_layer": {
+    "layer": "web/hostCapabilities.ts",
+    "tests": [
+      "web/hostCapabilities.test.ts"
+    ],
+    "why": "The Web projection is the one owner of renderer-visible host capability evidence."
+  }
+}

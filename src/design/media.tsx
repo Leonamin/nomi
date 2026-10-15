@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { cn } from '../utils/cn'
 import { IconPhoto } from '../vendor/tablerIcons'
 import { logRendererWarn } from '../desktop/rendererLog'
+import { resolveMediaDeliveryUrl } from '../media/assetDeliveryUrl'
 
 /**
  * 统一图片基元。所有渲染图片的地方都该走它，而不是裸 <img>：
@@ -65,7 +66,7 @@ export function NomiImage({
   return (
     <img
       {...rest}
-      src={resolvedSrc}
+      src={resolveMediaDeliveryUrl(resolvedSrc)}
       alt={alt}
       draggable={draggable}
       loading={eager ? 'eager' : 'lazy'}

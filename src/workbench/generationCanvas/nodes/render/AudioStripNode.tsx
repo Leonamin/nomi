@@ -11,6 +11,7 @@ import React, { type JSX } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IconPlayerPlay, IconPlayerPause, IconWaveSine, IconFileText, IconCopy, IconBadgeCc } from '../../../../vendor/tablerIcons'
 import { cn } from '../../../../utils/cn'
+import { resolveMediaDeliveryUrl } from '../../../../media/assetDeliveryUrl'
 import { WorkbenchButton } from '../../../../design'
 import type { GenerationCanvasNode } from '../../model/generationCanvasTypes'
 import { readAudioMeta } from '../../model/nodeMetaFields'
@@ -257,7 +258,7 @@ function AudioStripNodeImpl({ node }: Props): JSX.Element {
       {hasAudio ? (
         <audio
           ref={audioRef}
-          src={result!.url!}
+          src={resolveMediaDeliveryUrl(result!.url!)}
           preload="metadata"
           onEnded={() => {
             setPlaying(false)

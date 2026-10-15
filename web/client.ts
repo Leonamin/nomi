@@ -1,5 +1,6 @@
 import { observeWebCanvas, projectWebCanvas, type WebCanvasKnowledge, type WebCanvasProjection, type WebCanvasSource } from '../src/workbench/project/webCanvasProjection'
 import type { DesktopBridge } from '../src/desktop/bridge'
+import { projectWebHostCapabilities } from './hostCapabilities'
 import { translateMediaValues } from './mediaUrls'
 import { observeWebCreation, projectWebCreation, type WebCreationPayload, type WebCreationKnowledge } from '../src/workbench/project/webCreationProjection'
 
@@ -88,6 +89,7 @@ export const contextBridge = {
       agentModels: engine => invoke('nomi:web:agent-models', engine) as ReturnType<NonNullable<DesktopBridge['web']>['agentModels']>,
     }
     delete bridge.browser
+    delete bridge.videoDepth
     if (bridge.capability) for (const key of Object.keys(bridge.capability)) if (key !== 'onApply') Reflect.deleteProperty(bridge.capability, key)
     if (bridge.onboarding) delete bridge.onboarding.integrationHandoffSubscribe
     delete bridge.feedback
@@ -96,6 +98,7 @@ export const contextBridge = {
     if (bridge.tasks) { delete bridge.tasks.comfyuiWatch; delete bridge.tasks.comfyuiUnwatch }
     if (bridge.i18n) bridge.i18n.getSystemLocale = () => navigator.language
     if (bridge.app) bridge.app.hardReloadWindow = () => location.reload()
+    projectWebHostCapabilities(bridge)
     bridge.assets.importNativeFile = async (file: File, payload: Record<string, unknown>) => {
       const form = new FormData()
       form.set('file', file); form.set('payload', JSON.stringify(payload))

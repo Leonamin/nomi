@@ -42,4 +42,17 @@ describe('production task feedback', () => {
   it('addresses itself by run identity', () => {
     expect(render(null)).toContain('data-production-run-id="run-1"')
   })
+  it('delivers renderer-built preview and video sources through the Web media route', () => {
+    vi.stubGlobal('window', { nomiDesktop: { platform: 'web' }, location: { origin: 'https://nomi.example' } })
+    try {
+      const previewView = { ...view, preview: { artifactId: 'artifact-1', kind: 'video' as const, projectRelativePath: 'assets/generated/clip.mp4', thumbnailRelativePath: 'assets/generated/poster.png' } }
+      const html = renderToStaticMarkup(React.createElement(MantineProvider, {
+        children: React.createElement(ProductionRunTaskCard, { projectId: 'project-1', view: previewView, actionError: null, onPrimaryAction: vi.fn(), onControl: vi.fn() }),
+      }))
+      expect(html).toContain('https://nomi.example/api/media/project-1/assets/generated/poster.png')
+      expect(html).not.toContain('nomi-local://')
+    } finally {
+      vi.unstubAllGlobals()
+    }
+  })
 })

@@ -2,6 +2,7 @@ import React from 'react'
 import { getDesktopBridge } from '../desktop/bridge'
 import { useOpenProjectId } from '../workbench/project/useOpenProjectId'
 import { parseNomiLocalAssetUrl } from './nomiLocalAssetUrl'
+import { canonicalMediaAssetUrl } from './assetDeliveryUrl'
 
 /**
  * 视频胶片条（16 帧横向拼图）懒加载，跨面共享的媒体基建。
@@ -80,7 +81,8 @@ export function resolveFilmstripRequest(
 ): FilmstripRequest | null {
   const url = typeof videoUrl === 'string' ? videoUrl.trim() : ''
   if (!url) return null
-  const urlProjectId = parseNomiLocalAssetUrl(url)?.projectId ?? ''
+  const canonicalUrl = canonicalMediaAssetUrl(url, typeof location === 'undefined' ? '' : location.origin)
+  const urlProjectId = parseNomiLocalAssetUrl(canonicalUrl)?.projectId ?? ''
   const explicitProjectId = typeof project.explicitProjectId === 'string' ? project.explicitProjectId.trim() : ''
   const activeProjectId = typeof project.activeProjectId === 'string' ? project.activeProjectId.trim() : ''
   const projectId = urlProjectId || explicitProjectId || activeProjectId

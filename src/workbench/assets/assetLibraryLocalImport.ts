@@ -5,6 +5,7 @@ import { notify } from '../../ui/notificationPolicy'
 import { mediaImportRejectionMessages } from './mediaImportMessage'
 import type { MediaImportRejection } from '../../../electron/shared/contracts/mediaImportPolicy'
 import { logRendererError } from '../../desktop/rendererLog'
+import { unwrapAssetImportResult } from '../../../electron/shared/contracts/assetImportResult'
 
 export type LocalImageImportResult = {
   created: DesktopAssetDto[]
@@ -53,6 +54,35 @@ export async function importLocalPathsToLibrary(projectId: string | null, paths:
   return copyFiles({ projectId: normalizedProjectId, paths })
 }
 
+/** Drop files keep their browser bytes; Electron retains its native-path batch copy. */
+export async function importDroppedFilesToLibrary(projectId: string | null, files: File[]): Promise<LocalImageImportResult> {
+  const normalizedProjectId = String(projectId || '').trim()
+  if (!normalizedProjectId) throw new Error('projectId is required for local media import')
+  const bridge = getDesktopBridge()
+  if (bridge?.platform !== 'web') {
+    return importLocalPathsToLibrary(normalizedProjectId, filePathsFromDrop(files, bridge?.clipboard?.getPathForFile))
+  }
+  const importNativeFile = bridge.assets?.importNativeFile
+  if (!importNativeFile) throw new Error('browser media import is unavailable')
+  const result: LocalImageImportResult = { created: [], rejected: [], failedCount: 0 }
+  for (const file of files) {
+    try {
+      const imported = await importNativeFile(file, {
+        projectId: normalizedProjectId,
+        fileName: file.name || 'asset',
+        contentType: file.type || 'application/octet-stream',
+        kind: 'upload',
+      })
+      if (!imported) throw new Error('asset import did not return a result')
+      result.created.push(unwrapAssetImportResult(imported))
+    } catch (error) {
+      logRendererError('asset-local-import-file-failed', error)
+      result.failedCount += 1
+    }
+  }
+  return result
+}
+
 function reportImport(result: LocalImageImportResult, report: (message: string) => void): void {
   for (const message of mediaImportRejectionMessages(result.rejected ?? [])) report(message)
   if (result.failedCount > 0) {
@@ -84,22 +114,22 @@ export function useAssetLibraryLocalImport({
     notify({ identity: `asset-import:${projectId ?? ''}`, reason: 'local-import', message, type, level: 'inline', present })
   }, [projectId, present])
 
-  const runImport = React.useCallback(async (paths: string[]) => {
+  const runImport = React.useCallback(async (count: number, importFiles: () => Promise<LocalImageImportResult>) => {
     present('')
-    if (paths.length === 0) {
+    if (count === 0) {
       report(i18n.t('assetLibrary.localImportNoImages'), 'warning')
       return
     }
     try {
-      const result = await importLocalPathsToLibrary(projectId, paths)
+      const result = await importFiles()
       refreshProjectAssets()
       refreshAllProjectAssets()
       reportImport(result, report)
     } catch (error) {
       logRendererError('asset-local-import-failed', error)
-      report(i18n.t('assetLibrary.localImportFailed', { count: paths.length }), 'error')
+      report(i18n.t('assetLibrary.localImportFailed', { count }), 'error')
     }
-  }, [projectId, refreshAllProjectAssets, refreshProjectAssets, present, report])
+  }, [refreshAllProjectAssets, refreshProjectAssets, present, report])
 
   const onDragOver = React.useCallback<React.DragEventHandler<HTMLDivElement>>((event) => {
     if (!Array.from(event.dataTransfer.types).includes('Files')) return
@@ -117,8 +147,13 @@ export function useAssetLibraryLocalImport({
     if (!Array.from(event.dataTransfer.types).includes('Files')) return
     event.preventDefault()
     setIsDragOver(false)
-    void runImport(filePathsFromDrop(event.dataTransfer.files, getDesktopBridge()?.clipboard?.getPathForFile))
-  }, [runImport])
+    const files = Array.from(event.dataTransfer.files)
+    const bridge = getDesktopBridge()
+    const count = bridge?.platform === 'web'
+      ? files.length
+      : filePathsFromDrop(files, bridge?.clipboard?.getPathForFile).length
+    void runImport(count, () => importDroppedFilesToLibrary(projectId, files))
+  }, [projectId, runImport])
 
   const onPaste = React.useCallback<React.ClipboardEventHandler<HTMLDivElement>>((event) => {
     if (isTextEditingTarget(event.target)) return
@@ -130,12 +165,12 @@ export function useAssetLibraryLocalImport({
       return
     }
     void readFilePaths()
-      .then((paths) => runImport(paths))
+      .then((paths) => runImport(paths.length, () => importLocalPathsToLibrary(projectId, paths)))
       .catch((error) => {
         logRendererError('asset-clipboard-read-failed', error)
         report(i18n.t('assetLibrary.localImportFailed', { count: 1 }), 'error')
       })
-  }, [runImport, present, report])
+  }, [projectId, runImport, present, report])
 
   return { isDragOver, onDragOver, onDragLeave, onDrop, onPaste }
 }

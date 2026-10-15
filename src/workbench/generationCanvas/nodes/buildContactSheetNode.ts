@@ -13,6 +13,7 @@ import { CONTACT_SHEET_DEFAULTS, computeContactSheetLayout, containRect } from '
 import { computeMediaMetaPatch } from './nodeSizing'
 import type { GenerationCanvasNode } from '../model/generationCanvasTypes'
 import i18n from '../../../i18n'
+import { resolveMediaDeliveryUrl } from '../../../media/assetDeliveryUrl'
 
 /** 联系表的候选：选中的节点里**已经出图**的那些，按画布上的选中顺序。 */
 export function contactSheetSources(
@@ -35,7 +36,7 @@ function loadImage(url: string): Promise<HTMLImageElement> {
     image.onload = () => resolve(image)
     image.onerror = () => reject(new Error('Unable to load image.'))
     if (!url.startsWith('data:') && !url.startsWith('blob:')) image.crossOrigin = 'anonymous'
-    image.src = url
+    image.src = resolveMediaDeliveryUrl(url)
   })
 }
 

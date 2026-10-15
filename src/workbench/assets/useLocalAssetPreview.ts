@@ -1,5 +1,7 @@
 import React from 'react'
 import { getDesktopBridge } from '../../desktop/bridge'
+import { canonicalMediaAssetUrl } from '../../media/assetDeliveryUrl'
+import { parseNomiLocalAssetUrl } from '../../media/nomiLocalAssetUrl'
 
 // 渲染层向「落盘边界预览」要一张封面（2026-09-25 画布跟手方案）：派生的唯一 owner 是主进程
 // electron/assets/assetPreview.ts（sidecar 有就给、没有就抽一帧写回）。这里只按 URL 记住结果，
@@ -22,7 +24,8 @@ export function useLocalAssetPreview(url: string): string {
   const [preview, setPreview] = React.useState('')
   React.useEffect(() => {
     setPreview('')
-    if (!url.startsWith('nomi-local://')) return undefined
+    const canonical = canonicalMediaAssetUrl(url, typeof location === 'undefined' ? '' : location.origin)
+    if (!parseNomiLocalAssetUrl(canonical)) return undefined
     let alive = true
     void requestPreview(url).then((next) => { if (alive) setPreview(next) })
     return () => { alive = false }

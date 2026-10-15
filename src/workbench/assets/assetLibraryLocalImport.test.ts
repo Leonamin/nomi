@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { getDesktopBridge } from "../../desktop/bridge";
 import {
   filePathsFromDrop,
+  importDroppedFilesToLibrary,
   importLocalPathsToLibrary,
   isTextEditingTarget,
 } from "./assetLibraryLocalImport";
@@ -51,5 +52,46 @@ describe("assetLibraryLocalImport", () => {
       failedCount: 0,
     });
     expect(copyFiles).toHaveBeenCalledWith({ projectId: "project-1", paths: ["/tmp/a.png"] });
+  });
+
+  it("imports a browser File without a native path through the existing byte bridge", async () => {
+    const file = new File(["image bytes"], "camera.png", { type: "image/png" });
+    const imported = { id: "asset-web" };
+    const importNativeFile = vi.fn(async () => ({ ok: true as const, asset: imported }));
+    const copyFiles = vi.fn();
+    mockedGetDesktopBridge.mockReturnValue({ platform: "web", assets: { importNativeFile, copyFiles } } as never);
+
+    await expect(importDroppedFilesToLibrary("project-web", [file])).resolves.toEqual({
+      created: [imported], rejected: [], failedCount: 0,
+    });
+    expect(importNativeFile).toHaveBeenCalledWith(file, {
+      projectId: "project-web", fileName: "camera.png", contentType: "image/png", kind: "upload",
+    });
+    expect(copyFiles).not.toHaveBeenCalled();
+  });
+
+  it("keeps multiple browser files in the original project and counts a failed import", async () => {
+    const files = [new File(["a"], "a.png"), new File(["b"], "b.wav")];
+    const importNativeFile = vi.fn()
+      .mockResolvedValueOnce({ ok: true, asset: { id: "a" } })
+      .mockResolvedValueOnce({ ok: false, failure: { code: "capability_execution_failed", reason: "import-failed" } });
+    mockedGetDesktopBridge.mockReturnValue({ platform: "web", assets: { importNativeFile } } as never);
+
+    await expect(importDroppedFilesToLibrary("project-a", files)).resolves.toEqual({
+      created: [{ id: "a" }], rejected: [], failedCount: 1,
+    });
+    expect(importNativeFile.mock.calls.map(([, payload]) => payload.projectId)).toEqual(["project-a", "project-a"]);
+  });
+
+  it("keeps Electron drops on native path batch copy", async () => {
+    const files = [{ name: "a.png", path: "/tmp/a.png" }, { name: "b.wav", path: "/tmp/b.wav" }] as unknown as File[];
+    const result = { created: [{ id: "a" }], rejected: [], failedCount: 0 };
+    const copyFiles = vi.fn(async () => result);
+    const importNativeFile = vi.fn();
+    mockedGetDesktopBridge.mockReturnValue({ platform: "electron", assets: { copyFiles, importNativeFile } } as never);
+
+    await expect(importDroppedFilesToLibrary("project-desktop", files)).resolves.toBe(result);
+    expect(copyFiles).toHaveBeenCalledWith({ projectId: "project-desktop", paths: ["/tmp/a.png", "/tmp/b.wav"] });
+    expect(importNativeFile).not.toHaveBeenCalled();
   });
 });
