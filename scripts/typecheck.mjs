@@ -1,18 +1,18 @@
 #!/usr/bin/env node
-// `pnpm run typecheck` 的执行体：把四份类型检查**并发**跑完再汇总。
+// `pnpm run typecheck` 的执行体：把五份类型检查**并发**跑完再汇总。
 //
 // 2026-10-01 用户按门岗账本（docs/audit/2026-10-01-gate-ledger.md）拍板「`check:test-types` 与 `typecheck`
 // 合成一次 tsc」。账本数据：这两项是 Contracts 里最贵的两项（55 秒 + 50 秒，各自串行，约占单次 394 秒的 27%），
 // 而且两个都在编译同一批 src 文件。
 //
-// 为什么合不成**一个 TS program**：app（Vite 打包面）、electron（CommonJS 主进程，`noEmit:false` 会产出
-// dist-electron）、pi（ESM / NodeNext）、测试（ESM + 顶层 await）四份 tsconfig 的 module / moduleResolution / types
+// 为什么合不成**一个 TS program**：app（Vite 打包面）、Web（浏览器桥接）、electron（CommonJS 主进程，`noEmit:false` 会产出
+// dist-electron）、pi（ESM / NodeNext）、测试（ESM + 顶层 await）五份 tsconfig 的 module / moduleResolution / types
 // 互不兼容——强合只会炸出一批纯配置形状错（tsconfig.test.json 抬头里记过 112 个）。
-// 所以「合成一次」做在**调度**这一层：只有一个入口、一次汇总，四份检查**并发**跑，墙钟取最慢的那份，
-// 而不是四份加起来。判据一份没动：同样的 tsconfig、同样的棘轮基线、同样的失败即红。
+// 所以「合成一次」做在**调度**这一层：只有一个入口、一次汇总，五份检查**并发**跑，墙钟取最慢的那份，
+// 而不是五份加起来。原有四份判据保留；2026-10-15 补进独立的 Web tsconfig，同样失败即红。
 //
 // check:test-types 仍可单独跑（`pnpm run check:test-types`），它自己也把两份测试工程并发；
-// 这里只是把它和三份生产类型检查一起拉起来，所以它不再单列进 gates:contracts。
+// 这里只是把它和四份生产类型检查一起拉起来，所以它不再单列进 gates:contracts。
 import { spawn } from 'node:child_process'
 import path from 'node:path'
 import { createRequire } from 'node:module'
@@ -21,9 +21,10 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const require = createRequire(import.meta.url)
 
-/** 四份检查。顺序只影响输出顺序；少一份就是静默少查一块，scripts/typecheck.node-test.mjs 钉死名单。 */
+/** 五份检查。顺序只影响输出顺序；少一份就是静默少查一块，scripts/typecheck.node-test.mjs 钉死名单。 */
 export const TYPECHECK_JOBS = Object.freeze([
   Object.freeze({ name: 'tsc app', kind: 'tsc', args: ['-p', 'tsconfig.app.json'] }),
+  Object.freeze({ name: 'tsc web', kind: 'tsc', args: ['-p', 'tsconfig.web.json'] }),
   Object.freeze({ name: 'tsc electron', kind: 'tsc', args: ['-p', 'electron/tsconfig.json'] }),
   Object.freeze({ name: 'tsc electron-pi', kind: 'tsc', args: ['-p', 'electron/tsconfig.pi.json', '--noEmit'] }),
   Object.freeze({ name: 'check:test-types', kind: 'script', script: 'scripts/check-test-types.mjs' }),

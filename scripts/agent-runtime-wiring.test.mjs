@@ -120,10 +120,11 @@ describe('private pi build and test wiring', () => {
   })
 
   test('production and zero-error native test types remain reachable from root gates', () => {
-    // 2026-10-01：typecheck 由编排器并发拉起四份检查（生产 tsc x3 + check:test-types），不再是一条 && 链。
+    // 2026-10-15：typecheck 由编排器并发拉起五份检查（生产 tsc x4 + check:test-types），不再是一条 && 链。
     expect(pkg.scripts.typecheck).toBe('node ./scripts/typecheck.mjs')
     const orchestrator = read('scripts/typecheck.mjs')
     expect(orchestrator).toContain("'electron/tsconfig.pi.json', '--noEmit'")
+    expect(orchestrator).toContain("'tsconfig.web.json'")
     expect(orchestrator).toContain('scripts/check-test-types.mjs')
     expect(reachable('gates').has('typecheck')).toBe(true)
     expect(pkg.scripts['check:test-types']).toContain('check-test-types.mjs')

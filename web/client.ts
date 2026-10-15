@@ -89,7 +89,6 @@ export const contextBridge = {
       agentModels: engine => invoke('nomi:web:agent-models', engine) as ReturnType<NonNullable<DesktopBridge['web']>['agentModels']>,
     }
     delete bridge.browser
-    delete bridge.videoDepth
     if (bridge.capability) for (const key of Object.keys(bridge.capability)) if (key !== 'onApply') Reflect.deleteProperty(bridge.capability, key)
     if (bridge.onboarding) delete bridge.onboarding.integrationHandoffSubscribe
     delete bridge.feedback

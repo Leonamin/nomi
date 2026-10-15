@@ -42,7 +42,7 @@ export function projectWebHostCapabilities(bridge: DesktopBridge): DesktopBridge
   for (const { path } of unsupportedWebHostMethods) {
     let parent: Record<string, unknown> | undefined = bridge as unknown as Record<string, unknown>
     for (const segment of path.slice(0, -1)) {
-      const next = parent?.[segment]
+      const next: unknown = parent?.[segment]
       parent = next && typeof next === 'object' ? next as Record<string, unknown> : undefined
     }
     if (parent) Reflect.deleteProperty(parent, path[path.length - 1])
