@@ -5,13 +5,20 @@
   "symptom": "Creation lab reserves no Agent column and its editor expands underneath the Agent panel; root readiness may be true while the lazy workspace still displays a loader.",
   "direct_cause": "CreationColumnsStage and ShellStage connected laneClient directly without exposing the fixture transport as nomiDesktop.agentLane; production WorkbenchShell now derives dock visibility from that capability.",
   "class_root": "The lab fixture host had separate owners for transport data and advertised capabilities, and screenshot readiness did not require nested workspace completion.",
-  "affected_population": ["creation-columns states", "agent-panel-v4 shell specimens and their walkthrough consumers"],
+  "affected_population": [
+    "creation-columns states",
+    "agent-panel-v4 shell specimens and their walkthrough consumers"
+  ],
   "scope_paths": [
     "src/devlab/designLab/v4/agentPanelV4LabHost.tsx",
     "src/devlab/designLab/creationColumns/CreationColumnsStage.tsx",
     "tests/ux/design-lab/design-lab.visual.spec.mjs"
   ],
-  "entry_points": ["CreationColumnsStage", "ShellStage", "Playwright visual specimen capture"],
+  "entry_points": [
+    "CreationColumnsStage",
+    "ShellStage",
+    "Playwright visual specimen capture"
+  ],
   "external_sources": [],
   "internal_only_reason": "This is an internal fixture ownership invariant. Product capability detection and third-party runtime behavior are unchanged.",
   "invariants": [
@@ -60,7 +67,7 @@
     },
     {
       "path": "tests/ux/design-lab/design-lab.visual.spec.mjs",
-      "symbol": "visual specimen assertions",
+      "symbol": "toHaveScreenshot",
       "responsibility": "Wait for nested real workspace and validate the Agent dock layout before screenshots."
     }
   ],
@@ -129,6 +136,8 @@
   "recurrence_check_on": "2026-10-23",
   "invariant_owner_layer": {
     "layer": "src/devlab/designLab/v4/agentPanelV4LabHost.tsx",
-    "tests": ["src/devlab/designLab/v4/agentPanelV4LabHost.test.ts"]
+    "tests": [
+      "src/devlab/designLab/v4/agentPanelV4LabHost.test.ts"
+    ]
   }
 }

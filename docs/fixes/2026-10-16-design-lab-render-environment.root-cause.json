@@ -5,7 +5,10 @@
   "symptom": "Unchanged button specimens and 152 baseline cases differ on the current Mac while structural checks pass.",
   "direct_cause": "Calibration only recorded darwin, viewport and color scheme, so it could not distinguish native rendering drift from product changes. Both Metal and default Chromium reproduce the small unchanged-button mismatch.",
   "class_root": "Approved pixels were not bound to the OS release, architecture and owning Playwright browser identity.",
-  "affected_population": ["Every calibrated design-lab state", "Direct Playwright and check-design-lab invocations"],
+  "affected_population": [
+    "Every calibrated design-lab state",
+    "Direct Playwright and check-design-lab invocations"
+  ],
   "scope_paths": [
     "tests/ux/design-lab/labStates.mjs",
     "tests/ux/design-lab/labStates.test.mjs",
@@ -13,7 +16,11 @@
     "tests/ux/design-lab/calibration.json",
     "scripts/check-design-lab.mjs"
   ],
-  "entry_points": ["Playwright globalSetup", "check-design-lab visual runner", "Direct snapshot update invocation"],
+  "entry_points": [
+    "Playwright globalSetup",
+    "check-design-lab visual runner",
+    "Direct snapshot update invocation"
+  ],
   "external_sources": [
     {
       "kind": "official-doc",
@@ -58,7 +65,7 @@
     },
     {
       "path": "scripts/check-design-lab.mjs",
-      "symbol": "assertRenderEnvironment invocation",
+      "symbol": "assertRenderEnvironment",
       "responsibility": "Classify OS/engine mismatch before starting the normal visual lane."
     }
   ],
@@ -92,13 +99,23 @@
     "failure_mode": "An identity mismatch throws before screenshots instead of being mislabeled a UI regression.",
     "exception_policy": "none",
     "strategy": "Read facts from node:os and the owning runner browser manifest; enforce them at shared global setup.",
-    "artifacts": ["tests/ux/design-lab/labStates.mjs", "tests/ux/design-lab/warmUp.mjs", "scripts/check-design-lab.mjs"]
+    "artifacts": [
+      "tests/ux/design-lab/labStates.mjs",
+      "tests/ux/design-lab/warmUp.mjs",
+      "scripts/check-design-lab.mjs"
+    ]
   },
-  "regression_tests": ["tests/ux/design-lab/labStates.test.mjs"],
-  "class_regression_tests": ["tests/ux/design-lab/labStates.test.mjs"],
+  "regression_tests": [
+    "tests/ux/design-lab/labStates.test.mjs"
+  ],
+  "class_regression_tests": [
+    "tests/ux/design-lab/labStates.test.mjs"
+  ],
   "legacy_paths": {
     "status": "removed",
-    "removed_paths": ["tests/ux/design-lab/warmUp.mjs"],
+    "removed_paths": [
+      "tests/ux/design-lab/warmUp.mjs"
+    ],
     "rationale": "Removed implicit acceptance of any OS release and engine sharing the darwin platform name."
   },
   "dependency_lifecycle": {
@@ -121,6 +138,8 @@
   "recurrence_check_on": "2026-10-23",
   "invariant_owner_layer": {
     "layer": "tests/ux/design-lab/labStates.mjs",
-    "tests": ["tests/ux/design-lab/labStates.test.mjs"]
+    "tests": [
+      "tests/ux/design-lab/labStates.test.mjs"
+    ]
   }
 }
