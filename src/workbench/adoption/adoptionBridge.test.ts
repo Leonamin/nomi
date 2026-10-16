@@ -1,4 +1,7 @@
-import { describe, expect, it, beforeEach } from 'vitest'
+import { describe, expect, it, beforeEach, vi } from 'vitest'
+import { readAudioDurationSeconds } from '../../media/audioDurationProbe'
+
+vi.mock('../../media/audioDurationProbe', () => ({ readAudioDurationSeconds: vi.fn() }))
 import { createDefaultTimeline } from '../timeline/timelineMath'
 import type { TimelineClip, TimelineState } from '../timeline/timelineTypes'
 import { applyAdoption, buildAdoptedTimeline } from './adoptionApply'
@@ -134,6 +137,122 @@ describe('P5 E1 adoption bridge', () => {
     const replay = await adoptGenerationNode(node, { placement: { kind: 'append' }, ports })
     expect(first.status).toBe('applied')
     expect(replay).toMatchObject({ status: 'applied', replayed: true })
+  })
+
+  it('adopts generated audio into audioTrack with its measured metadata duration', async () => {
+    let live = createDefaultTimeline()
+    const node = {
+      id: 'gen-v2-audio-mv9a7oe5-lpw5', kind: 'audio', categoryId: 'shots', title: 'Narration', status: 'success',
+      position: { x: 0, y: 0 }, result: { id: 'audio-result', type: 'audio', url: 'nomi-local://asset/project/voice.mp3', createdAt: 1 },
+      meta: { durationSec: 3.244603 },
+    } as never
+    const ports = {
+      readTimeline: () => live,
+      commitTimeline: (next: TimelineState) => { live = next },
+      restoreTimeline: (old: TimelineState) => { live = old; return true },
+    }
+    const outcome = await adoptGenerationNode(node, { placement: { kind: 'append' }, ports })
+    expect(outcome.status).toBe('applied')
+    expect(live.tracks.find((track) => track.type === 'image')?.clips).toHaveLength(0)
+    expect(live.tracks.find((track) => track.type === 'audio')?.clips).toMatchObject([
+      { type: 'audio', startFrame: 0, endFrame: 97, frameCount: 97 },
+    ])
+  })
+
+  it('probes unknown audio once and reuses the measured duration at its final append slot', async () => {
+    let live = createDefaultTimeline()
+    const audioProbe = vi.mocked(readAudioDurationSeconds)
+    audioProbe.mockResolvedValueOnce(4.1)
+    const node = {
+      id: 'unknown-audio', kind: 'audio', categoryId: 'shots', title: 'Voice', status: 'success',
+      position: { x: 0, y: 0 }, result: { id: 'unknown-result', type: 'audio', url: 'nomi-local://asset/project/unknown.mp3', createdAt: 1 },
+    } as never
+    const ports = {
+      readTimeline: () => live,
+      commitTimeline: (next: TimelineState) => { live = next },
+      restoreTimeline: (old: TimelineState) => { live = old; return true },
+    }
+    const outcome = await adoptGenerationNode(node, { placement: { kind: 'append' }, ports })
+    expect(outcome.status).toBe('applied')
+    expect(audioProbe).toHaveBeenCalledTimes(1)
+    expect(live.tracks.find((track) => track.type === 'audio')?.clips).toMatchObject([
+      { id: 'clip-unknown-audio-unknown-result-audio-0', frameCount: 123, endFrame: 123 },
+    ])
+    audioProbe.mockReset()
+  })
+
+  it('cancels an audio adoption when its original project lifetime ends during probing', async () => {
+    let live = createDefaultTimeline()
+    let finishProbe: (value: number | null) => void = () => undefined
+    const audioProbe = vi.mocked(readAudioDurationSeconds)
+    audioProbe.mockImplementationOnce(() => new Promise((resolve) => { finishProbe = resolve }))
+    const node = {
+      id: 'slow-audio', kind: 'audio', categoryId: 'shots', title: 'Voice', status: 'success',
+      position: { x: 0, y: 0 }, result: { id: 'slow-result', type: 'audio', url: 'nomi-local://asset/project/slow.mp3', createdAt: 1 },
+    } as never
+    const ports = {
+      readTimeline: () => live,
+      commitTimeline: (next: TimelineState) => { live = next },
+      restoreTimeline: (old: TimelineState) => { live = old; return true },
+    }
+    let isCurrent = true
+    const adoption = adoptGenerationNode(node, { placement: { kind: 'append' }, ports, isCurrent: () => isCurrent })
+    isCurrent = false
+    live = createDefaultTimeline()
+    finishProbe(4.1)
+    const outcome = await adoption
+    expect(outcome).toMatchObject({ status: 'nothing_to_adopt', skipped: [{ reason: 'project_changed' }] })
+    expect(live.tracks.find((track) => track.type === 'audio')?.clips).toHaveLength(0)
+    audioProbe.mockReset()
+  })
+
+  it("uses the live append slot after an audio probe while preserving the user's timeline edit", async () => {
+    let live = createDefaultTimeline()
+    let finishProbe: (value: number | null) => void = () => undefined
+    const audioProbe = vi.mocked(readAudioDurationSeconds)
+    audioProbe.mockImplementationOnce(() => new Promise((resolve) => { finishProbe = resolve }))
+    const node = {
+      id: 'append-audio', kind: 'audio', categoryId: 'shots', title: 'Voice', status: 'success',
+      position: { x: 0, y: 0 }, result: { id: 'append-result', type: 'audio', url: 'nomi-local://asset/project/append.mp3', createdAt: 1 },
+    } as never
+    const ports = {
+      readTimeline: () => live,
+      commitTimeline: (next: TimelineState) => { live = next },
+      restoreTimeline: (old: TimelineState) => { live = old; return true },
+    }
+    const adoption = adoptGenerationNode(node, { placement: { kind: 'append' }, ports })
+    const earlierAudio: TimelineClip = { ...clip('earlier', 0, 60), type: 'audio', url: 'https://example.test/earlier.mp3' }
+    live = { ...live, tracks: live.tracks.map((track) => track.type === 'audio' ? { ...track, clips: [earlierAudio] } : track) }
+    finishProbe(4.1)
+    const outcome = await adoption
+    expect(outcome.status).toBe('applied')
+    expect(live.tracks.find((track) => track.type === 'audio')?.clips).toMatchObject([
+      { id: 'earlier', startFrame: 0, endFrame: 60 },
+      { id: 'clip-append-audio-append-result-audio-60', startFrame: 60, endFrame: 183, frameCount: 123 },
+    ])
+    audioProbe.mockReset()
+  })
+
+  it('declines an audio clip measured at a previous timeline frame rate', async () => {
+    let live = createDefaultTimeline()
+    let finishProbe: (value: number | null) => void = () => undefined
+    const audioProbe = vi.mocked(readAudioDurationSeconds)
+    audioProbe.mockImplementationOnce(() => new Promise((resolve) => { finishProbe = resolve }))
+    const node = {
+      id: 'fps-audio', kind: 'audio', categoryId: 'shots', title: 'Voice', status: 'success',
+      position: { x: 0, y: 0 }, result: { id: 'fps-result', type: 'audio', url: 'nomi-local://asset/project/fps.mp3', createdAt: 1 },
+    } as never
+    const ports = {
+      readTimeline: () => live,
+      commitTimeline: (next: TimelineState) => { live = next },
+      restoreTimeline: (old: TimelineState) => { live = old; return true },
+    }
+    const adoption = adoptGenerationNode(node, { placement: { kind: 'append' }, ports })
+    live = { ...live, fps: 24 }
+    finishProbe(4.1)
+    expect(await adoption).toMatchObject({ status: 'nothing_to_adopt', skipped: [{ reason: 'timeline_changed' }] })
+    expect(live.tracks.find((track) => track.type === 'audio')?.clips).toHaveLength(0)
+    audioProbe.mockReset()
   })
 
   // 回归：贴尾采纳过一次、轴又被外部编辑之后，用户**再点一次**是一次全新的合法意图

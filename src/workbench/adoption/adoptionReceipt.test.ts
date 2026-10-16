@@ -96,6 +96,16 @@ describe('P5 E1 采纳回执', () => {
     expect(notificationsStore.getState().notifications).toHaveLength(0)
   })
 
+  it('does not show an old project adoption notification after switching projects', () => {
+    const present = vi.fn()
+    reportAdoptionOutcome(
+      { status: 'nothing_to_adopt', skipped: [{ nodeId: 'audio-node', reason: 'project_changed' }] },
+      { level: 'inline', present },
+    )
+    expect(present).not.toHaveBeenCalled()
+    expect(notificationsStore.getState().notifications).toHaveLength(0)
+  })
+
   it('keeps cross-surface information actionable by revealing the timeline', () => {
     useWorkbenchStore.setState({ timelinePanelCollapsed: true })
     reportAdoptionOutcome({ status: 'nothing_to_adopt', skipped: [] })

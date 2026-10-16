@@ -1,5 +1,6 @@
+import { readAudioDurationSeconds } from '../../media/audioDurationProbe'
 import { readVideoDurationSeconds } from '../../media/videoDurationProbe'
-import { buildClipFromGenerationNode } from '../generationCanvas/model/buildClipFromGenerationNode'
+import { buildClipFromGenerationNode, readKnownGenerationAudioDurationSeconds } from '../generationCanvas/model/buildClipFromGenerationNode'
 import type { GenerationCanvasNode } from '../generationCanvas/model/generationCanvasTypes'
 import type { TimelineClip } from './timelineTypes'
 
@@ -9,7 +10,7 @@ type BuildOptions = {
   resultId?: string
 }
 
-function withVideoDuration(clip: TimelineClip, durationSeconds: number, fps: number): TimelineClip {
+function withMeasuredDuration(clip: TimelineClip, durationSeconds: number, fps: number): TimelineClip {
   const frameCount = Math.max(1, Math.round(durationSeconds * Math.max(1, fps)))
   return {
     ...clip,
@@ -25,9 +26,15 @@ export async function buildGenerationNodeTimelineClip(
   options: BuildOptions = {},
 ): Promise<TimelineClip | null> {
   const clip = buildClipFromGenerationNode(node, options)
-  if (!clip || clip.type !== 'video' || !clip.url) return clip
+  if (!clip?.url) return clip
+  if (clip.type === 'audio') {
+    if (readKnownGenerationAudioDurationSeconds(node, options.resultId) !== null) return clip
+    const durationSeconds = await readAudioDurationSeconds(clip.url)
+    return durationSeconds ? withMeasuredDuration(clip, durationSeconds, options.fps || 30) : clip
+  }
+  if (clip.type !== 'video') return clip
 
   const durationSeconds = await readVideoDurationSeconds(clip.url)
   if (!durationSeconds) return clip
-  return withVideoDuration(clip, durationSeconds, options.fps || 30)
+  return withMeasuredDuration(clip, durationSeconds, options.fps || 30)
 }

@@ -49,29 +49,57 @@ function resolveSelectedResult(node: GenerationCanvasNode, resultId?: string): G
 function resolveClipType(node: GenerationCanvasNode, result: GenerationNodeResult | null): TimelineClipType {
   // v0.7.1: audio category 优先级最高（即使 kind 占位是 image）
   if (node.categoryId === 'audio') return 'audio'
-  if (result?.type === 'image' || result?.type === 'video') return result.type
+  if (result?.type === 'image' || result?.type === 'video' || result?.type === 'audio') return result.type
   const executionKind = getGenerationNodeExecutionKind(node.kind)
   if (executionKind === 'image') return 'image'
   if (executionKind === 'video') return 'video'
+  if (executionKind === 'audio') return 'audio'
   return 'image'
+}
+
+function durationMetaForSelectedResult(
+  node: GenerationCanvasNode,
+  result: GenerationNodeResult | null,
+  resultId: string | undefined,
+  type: TimelineClipType,
+): Record<string, unknown> | undefined {
+  // node.meta belongs to the current result; an explicitly selected older audio
+  // result must use its own duration or be measured from its own file.
+  if (type === 'audio' && readString(resultId) && result?.id !== node.result?.id) return undefined
+  return node.meta as Record<string, unknown> | undefined
+}
+
+function resolveKnownMediaDurationSeconds(
+  type: TimelineClipType,
+  result: GenerationNodeResult | null,
+  meta: Record<string, unknown> | undefined,
+): number | null {
+  return readPositiveNumber(result?.durationSeconds)
+    ?? readPositiveNumber(type === 'audio' ? meta?.durationSec : meta?.videoDuration)
+}
+
+/** The async timeline admission only probes audio files without a recorded positive duration. */
+export function readKnownGenerationAudioDurationSeconds(node: GenerationCanvasNode, resultId?: string): number | null {
+  const result = resolveSelectedResult(node, resultId)
+  return resolveKnownMediaDurationSeconds(
+    'audio',
+    result,
+    durationMetaForSelectedResult(node, result, resultId, 'audio'),
+  )
 }
 
 function resolveFrameCount(
   type: TimelineClipType,
-  result: GenerationNodeResult | null,
   fps: number,
-  metaDurationSeconds?: number | null,
+  knownDurationSeconds: number | null,
   imageDurationSeconds?: number | null,
 ): number {
   // 图片停留时长（分镜 v5）：镜行「时长」写进 node.meta.imageDurationSec，落轨/顺播同口径；
   // 无标记（画布手建图片节点等）回落 DEFAULT_IMAGE_SECONDS 单源默认。
   if (type === 'image') return Math.max(1, Math.round((imageDurationSeconds ?? DEFAULT_IMAGE_SECONDS) * fps))
-  // 时长真相序：生成参数 result.durationSeconds > 文件真实时长 meta.videoDuration（拖入/上传的视频
-  // 渲染/导入时离屏测得，见 readVideoDurationSeconds）> 默认 5 秒。修「拖入视频一律 5 秒」的根因。
-  const seconds = readPositiveNumber(result?.durationSeconds)
-    ?? readPositiveNumber(metaDurationSeconds)
-    ?? DEFAULT_VIDEO_SECONDS
-  return Math.max(1, Math.round(seconds * fps))
+  // 音频：result.durationSeconds > meta.durationSec；视频：result.durationSeconds > meta.videoDuration。
+  // 未知时长保持既有非图片默认 5 秒；异步入轨会先尝试探测音频文件的真实时长。
+  return Math.max(1, Math.round((knownDurationSeconds ?? DEFAULT_VIDEO_SECONDS) * fps))
 }
 
 function buildClipId(nodeId: string, type: TimelineClipType, startFrame: number, result: GenerationNodeResult | null): string {
@@ -102,9 +130,10 @@ export function buildClipFromGenerationNode(node: GenerationCanvasNode, options?
   if (!url) return null
 
   const meta = node.meta as Record<string, unknown> | undefined
-  const metaDurationSeconds = readPositiveNumber(meta?.videoDuration)
+  const durationMeta = durationMetaForSelectedResult(node, result, options?.resultId, type)
+  const knownDurationSeconds = resolveKnownMediaDurationSeconds(type, result, durationMeta)
   const imageDurationSeconds = readPositiveNumber(meta?.imageDurationSec)
-  const frameCount = resolveFrameCount(type, result, fps, metaDurationSeconds, imageDurationSeconds)
+  const frameCount = resolveFrameCount(type, fps, knownDurationSeconds, imageDurationSeconds)
 
   return {
     id: buildClipId(node.id, type, startFrame, result),
@@ -138,7 +167,7 @@ export function applyRegeneratedResultToClip(
   }
 
   const safeFps = readPositiveNumber(fps) || 30
-  const nextFrameCount = resolveFrameCount(clip.type, result, safeFps)
+  const nextFrameCount = resolveFrameCount(clip.type, safeFps, resolveKnownMediaDurationSeconds(clip.type, result, undefined))
   const offsetStartFrame = clip.offsetStartFrame
   const visible = clip.endFrame - clip.startFrame
   if (nextFrameCount < offsetStartFrame + visible) throw new Error('timeline_candidate_too_short')

@@ -70,6 +70,55 @@ describe('buildClipFromGenerationNode 视频时长真相序（修「拖入视频
   })
 })
 
+describe('generated audio clip identity and duration', () => {
+  const audioNode = (overrides: Partial<GenerationCanvasNode> = {}): GenerationCanvasNode => ({
+    id: 'gen-v2-audio-mv9a7oe5-lpw5',
+    kind: 'audio',
+    categoryId: 'shots',
+    title: 'Narration',
+    position: { x: 0, y: 0 },
+    status: 'success',
+    result: { id: 'audio-result', type: 'audio', url: 'nomi-local://asset/project/voice.mp3', createdAt: 1 },
+    meta: { durationSec: 3.244603 },
+    ...overrides,
+  })
+
+  it('places the reported audio result in the audio track for 97 frames, not image/90', () => {
+    expect(buildClipFromGenerationNode(audioNode(), { fps: 30 })).toMatchObject({
+      type: 'audio', sourceNodeId: 'gen-v2-audio-mv9a7oe5-lpw5', frameCount: 97, endFrame: 97,
+    })
+  })
+
+  it('keeps legacy audio category placeholders and chooses result duration before meta duration', () => {
+    const placeholder = audioNode({
+      kind: 'image', categoryId: 'audio',
+      result: { id: 'placeholder', type: 'image', url: 'nomi-local://asset/project/voice.mp3', createdAt: 1, durationSeconds: 2 },
+    })
+    expect(buildClipFromGenerationNode(placeholder, { fps: 30 })?.type).toBe('audio')
+    expect(buildClipFromGenerationNode(placeholder, { fps: 30 })?.frameCount).toBe(60)
+  })
+
+  it('recognizes an audio result independently of node category or execution kind', () => {
+    const clip = buildClipFromGenerationNode(audioNode({ kind: 'image', categoryId: 'shots' }), { fps: 25 })
+    expect(clip).toMatchObject({ type: 'audio', frameCount: 81 })
+  })
+
+  it('does not borrow current audio metadata for a selected historical result', () => {
+    const node = audioNode({
+      history: [{ id: 'older-audio', type: 'audio', url: 'nomi-local://asset/project/older.mp3', createdAt: 0 }],
+    })
+    const clip = buildClipFromGenerationNode(node, { fps: 30, resultId: 'older-audio' })
+    expect(clip).toMatchObject({ type: 'audio', url: 'nomi-local://asset/project/older.mp3', frameCount: 150 })
+  })
+
+  it('keeps an explicitly visual result on an audio execution node visual', () => {
+    const clip = buildClipFromGenerationNode(audioNode({
+      result: { id: 'image-result', type: 'image', url: 'nomi-local://asset/project/image.png', createdAt: 1 },
+    }), { fps: 30 })
+    expect(clip?.type).toBe('image')
+  })
+})
+
 describe('buildClipFromGenerationNode 图片停留时长（分镜 v5：meta.imageDurationSec 生效）', () => {
   it('分镜图片镜带 meta.imageDurationSec → 落轨按停留时长（不再钉死 3 秒）', () => {
     const node = { ...makeNode({ url: 'nomi-local://a.png' }), meta: { imageDurationSec: 7 } }
