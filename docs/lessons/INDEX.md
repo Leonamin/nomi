@@ -10,9 +10,9 @@
 
 - **真相源在这里**（2026-09-02 用户拍板）。本机 `.claude` 记忆里对应的文件已缩成一行指针，改教训**只改本目录**，不要在别处重写一份——本仓已因「两份手工维护」漂过 10 天（`CLAUDE.md` / `AGENTS.md` 双双取名 R17）。
 - **一条一个文件**，文件名 = kebab-case 结论式短句（`expect-absent-passes-too-early`），不带日期前缀——日期写在文件头，文件名要能被 grep 到。
-- **新增一条就在本索引挂一行**（格式：`- [标题](<slug>.md) — 触发场景钩子`，写成真链接）。索引是入口，孤儿文件等于不存在。
+- **新增一条就在本索引挂一行**（格式：`- [标题](%3Cslug%3E.md) — 触发场景钩子`，写成真链接）。索引是入口，孤儿文件等于不存在。
 - **过期了就标，不要静默留着**：结论被推翻 → 头部状态改 `⛔ 已反转`，正文保留「当初为什么误判」（误判过程本身是教训）；已被门岗/代码结构消化 → 标 `✅ 已固化`，写清由哪个门岗接管。**删除只在这条彻底不再可能发生时**。
-- **不进本目录的三类**：① 战况快照 / 路线图（几天就过期，属 `docs/plan` 或 `docs/DELIVERY-LEDGER.md`）；② 本机环境与个人账号偏好（属本机记忆）；③ 当前架构事实（属 [`../ARCHITECTURE-NOW.md`](../ARCHITECTURE-NOW.md)）。
+- **不进本目录的三类**：① 战况快照 / 路线图（几天就过期，属 `docs/plan` 或 `docs/DELIVERY-LEDGER.md`）；② 本机环境与个人账号偏好（属本机记忆）；③ 当前架构事实（属 [`../ARCHITECTURE-NOW.md`](../archive/guides/ARCHITECTURE-NOW.md)）。
 
 ## 规则编号映射
 
@@ -152,7 +152,7 @@
 - [全局 HID 不带目标应用：发 Cmd+Q 之前不确认前台是谁，你退掉的是自己的宿主](hid-global-input-must-verify-frontmost-app.md) — 准备用真鼠标真键盘驱动桌面 App（尤其 `Cmd+Q`/`Cmd+W`），或一批 agent 毫无征兆集体断线、用户看到某 App「闪退」时读；全局事件落在前台窗口不带目标应用，退出走 `osascript quit app`，能用 Playwright 页面级驱动就别用全局 HID
 
 - [平台门控必须在 UI 上说人话](platform-gates-must-explain-user-action.md) — Windows 等平台被拒绝却显示未检测或部分受限时
-- [Antigravity CLI Windows 修复计划](../plan/2026-09-08-antigravity-cli-windows.md) — 六条现场记录核实、回归与 RC 边界
+- [Antigravity CLI Windows 修复计划](../archive/plan/2026-09-08-antigravity-cli-windows.md) — 六条现场记录核实、回归与 RC 边界
 
 - [`ERR_INVALID_STATE` 其实是 `ReadableStream.from`](err-invalid-state-is-readablestreamfrom.md) — 栈里有 `undici:NNNN` 就别去升 Electron
 - [探测本机解析器要用真实 TLD，`.invalid` 探不到代理](reserved-tlds-cannot-probe-the-resolver.md) — 写「这台机器是不是被本地代理接管」的探针前必读：RFC 保留 TLD 被解析器就地答成 NXDOMAIN，查询根本不出门，真机上恒失效而单测全绿

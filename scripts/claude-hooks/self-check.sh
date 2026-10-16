@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # UserPromptSubmit hook —— 每条用户消息前注入「三闸自检」+「最近栽过的坑」。
-# 重构（2026-06-17，docs/plan/2026-06-17-discipline-system-overhaul.md）：从平铺 9 条 → 按「三个决策时刻」
+# 重构（2026-06-17，docs/archive/plan/2026-06-17-discipline-system-overhaul.md）：从平铺 9 条 → 按「三个决策时刻」
 # 组织(杠杆2)；顶部吐 violations.log→数据驱动、会变、针对真实毛病(杠杆3，抗横幅失明)。
-# 升级（2026-06-21，docs/plan/2026-06-21-context-handoff-and-self-iterating-control-files.md，S2）：
+# 升级（2026-06-21，docs/archive/plan/2026-06-21-context-handoff-and-self-iterating-control-files.md，S2）：
 # 改为按「踩坑次数 hits」排序取前 2——反复犯的优先顶眼前，不再单纯按时间。兼容旧平铺行。
 # 升级（2026-10-02，规则体系瘦身）：常驻只留约 0.7 KB，其余拆成关键词块；用户消息改从 stdin JSON 读（见下）。
 # 升级（2026-09-03）：新增设计流程关键词检测，命中时注入一行提示；注入正文按可机器化分诊瘦身（详见 docs/engineering/rule-enforcement-audit.md）。
@@ -47,7 +47,7 @@ fi
 # ── 关键词触发的块：只在用户这条消息命中时才注入（其余时候一个字都不占）─────────────────────────
 # 为什么拆出来：每轮常驻只留「删掉它 Claude 就会犯错」的一小段（调研报告 §一.1：规则越长越被无视）；
 # 其余按场景在命中时注入——这是确定性触发（UserPromptSubmit 的 stdout 进上下文），不靠 agent 自觉去翻 CLAUDE.md。
-# 搬走的每一段 → 由什么触发，对照表在 docs/plan/2026-10-01-rule-reminders-slimming.md。
+# 搬走的每一段 → 由什么触发，对照表在 docs/archive/plan/2026-10-01-rule-reminders-slimming.md。
 # 用户这条消息从哪来：官方 hooks 文档里 UserPromptSubmit 通过 stdin 的 JSON（`prompt` 字段）给；没有任何文档化的 CLAUDE_USER_PROMPT
 # 环境变量——旧版只读那个环境变量，关键词块很可能从来没命中过。所以先读 stdin，环境变量只当兜底（测试里用）。
 PROMPT="${CLAUDE_USER_PROMPT:-}"

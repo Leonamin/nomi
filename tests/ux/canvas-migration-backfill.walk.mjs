@@ -28,7 +28,7 @@ import { clickOrFail, expect, expectVisible, screenshotSettled } from './_assert
 import { findCanvasBlankPoint } from './_canvasHit.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
-const evidenceDir = path.join(repoRoot, 'docs/plan/2026-09-11-triage-board-evidence')
+const evidenceDir = path.join(repoRoot, 'docs/archive/plan/2026-09-11-triage-board-evidence')
 fs.mkdirSync(evidenceDir, { recursive: true })
 
 const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'nomi-migration-backfill-b-'))

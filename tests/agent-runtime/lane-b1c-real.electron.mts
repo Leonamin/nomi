@@ -121,7 +121,7 @@ async function main() {
     const metrics = { toolCorrect: toolResults.filter(part => !part.isError).length, toolTotal: toolResults.length,
       successfulTurns, totalTurns: turns.length, afterSwitch: requests.filter(record => record.afterSwitch),
       allPrefixesStable: requests.every(record => record.prefixStable) };
-    await writeFile('docs/plan/agent-lane-b1c-evidence/deepseek-sample.json', JSON.stringify({
+    await writeFile('docs/archive/plan/agent-lane-b1c-evidence/deepseek-sample.json', JSON.stringify({
       model: model.modelId, provider: model.providerId, metrics, turns, requests, totalSpentCny: reservedCny,
       limitation: 'Real model with isolated document/timeline domain; no paid media generation.',
     }, null, 2));

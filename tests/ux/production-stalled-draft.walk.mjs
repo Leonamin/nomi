@@ -1,4 +1,4 @@
-// 未实现 playbook 的坏 Run —— R13 走查（plan docs/plan/2026-08-18-production-playbook-registry.md）。
+// 未实现 playbook 的坏 Run —— R13 走查（plan docs/archive/plan/2026-08-18-production-playbook-registry.md）。
 // 用法: node tests/ux/production-stalled-draft.walk.mjs
 // 产出: tests/ux/shots/production-stalled-draft/*.png
 //

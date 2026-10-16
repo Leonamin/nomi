@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 能力核 · CLI 传输（见 docs/plan/2026-06-20-capability-core-headless-exposure.md §S5）。
+// 能力核 · CLI 传输（见 docs/archive/plan/2026-06-20-capability-core-headless-exposure.md §S5）。
 //
 // 纯 node 客户端。让外部 Claude Code / Codex 用 Bash 直接驱动 Nomi。传输逻辑在 scripts/lib/nomiClient.mjs
 // （与 MCP server 共用单一真相源）。

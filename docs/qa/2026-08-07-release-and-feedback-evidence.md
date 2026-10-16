@@ -37,7 +37,7 @@
 
 ChatGPT Pro 分为四个独立对话：官网发布链路、安装包体积/Windows 信任、Logo 资产审查、3D/交互反馈诊断。Pro 的建议均按本地源码、官方文档和真实测试复核；其中 Logo 与 3D 建议有部分与当前基线已存在实现重合，没有为已修复路径制造并行实现。
 
-对话链接已持久化在 [`docs/pro/2026-08-07-chatgpt-pro-task-briefs.md`](/Users/aoqimin/Desktop/Nomi/docs/pro/2026-08-07-chatgpt-pro-task-briefs.md)，分别对应 Task A/B/C/D；该文件同时记录上传包和脱敏边界。
+对话链接已持久化在 [`docs/pro/2026-08-07-chatgpt-pro-task-briefs.md`](../../Users/aoqimin/Desktop/Nomi/docs/pro/2026-08-07-chatgpt-pro-task-briefs.md)，分别对应 Task A/B/C/D；该文件同时记录上传包和脱敏边界。
 
 ## 未验证风险
 

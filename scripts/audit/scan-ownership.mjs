@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // 所有权 / 寿命普查（R14 周期审计，2026-09-17）。只读，可重跑。
 //
-// 五维（对应 docs/audit/2026-09-17-ownership-lifetime-census.md 的五张表）：
+// 五维（对应 docs/archive/audit/2026-09-17-ownership-lifetime-census.md 的五张表）：
 //   D1 状态 owner：渲染层 zustand store 的数据字段 × 项目会话释放点覆盖；主进程模块级可变单例 × 有没有释放函数
 //   D2 身份：identity 比对函数各比了哪些维度
 //   D3 写盘到项目外：命中 homedir/userData/宿主客户端配置的写入口（人核触发条件见文档）

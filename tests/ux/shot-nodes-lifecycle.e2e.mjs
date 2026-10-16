@@ -8,7 +8,7 @@ import { stationTimeout } from './_station-budget.mjs'
 import { createProcessFixture } from './process-feedback-real-fixture.mjs'
 
 const root = path.resolve('.')
-const out = path.join(root, 'docs/plan/shot-nodes-evidence')
+const out = path.join(root, 'docs/archive/plan/shot-nodes-evidence')
 await fs.mkdir(out, { recursive: true })
 const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'nomi-shot-nodes-'))
 const settingsDir = path.join(tempRoot, 'settings')

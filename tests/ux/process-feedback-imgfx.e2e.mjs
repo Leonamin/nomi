@@ -5,7 +5,7 @@ import { chromium } from 'playwright'
 import { expect, expectVisible, expectAbsent, proveProbe } from './_assert.mjs'
 import { assertLabPortOwnership, labOriginFor } from './design-lab/labServer.mjs'
 
-const evidence = path.resolve('docs/plan/process-feedback-evidence/imgfx/lab')
+const evidence = path.resolve('docs/archive/plan/process-feedback-evidence/imgfx/lab')
 await fs.mkdir(evidence, { recursive: true })
 const only = process.env.PF_FX_ONLY
 if (only !== 'probe') assertLabPortOwnership('visual')

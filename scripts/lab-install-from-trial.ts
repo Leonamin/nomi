@@ -12,7 +12,7 @@
  *
  * Usage:
  *   pnpm exec tsx scripts/lab-install-from-trial.ts \
- *     --trial docs/onboarding-trials/m5-install-kling3-... \
+ *     --trial docs/archive/onboarding-trials/m5-install-kling3-... \
  *     --key  @.secrets/target.key
  */
 import fs from "node:fs";

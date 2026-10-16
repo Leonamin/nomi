@@ -41,5 +41,5 @@ ComfyUI SSH 터널은 `NOMI_WEB_COMFYUI_SSH`가 설정된 경우에만 전용 un
 
 - 확인일: 2026-10-16
 - 코드: [`scripts/web/deploy.sh`](../../scripts/web/deploy.sh), [`scripts/web/deploy-web-host.mjs`](../../scripts/web/deploy-web-host.mjs)
-- 운영 설정과 한계: [`docs/personal-web.md`](../../docs/personal-web.md)
+- 운영 설정과 한계: [`docs/personal-web.md`](../../docs/archive/guides/personal-web.md)
 - 실제 검증 사례와 범위: [`docs/qa/2026-10-14-recovered-web-production.md`](../../docs/qa/2026-10-14-recovered-web-production.md), [`docs/qa/2026-10-15-web-platform-media-browser.md`](../../docs/qa/2026-10-15-web-platform-media-browser.md)

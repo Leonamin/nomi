@@ -15,7 +15,7 @@
  * Or set env vars:
  *   AGENT_BASE_URL, AGENT_API_KEY, AGENT_MODEL_ID, AGENT_PROVIDER_KIND
  *
- * Output goes to docs/onboarding-trials/<timestamp>-<slug>/
+ * Output goes to docs/archive/onboarding-trials/<timestamp>-<slug>/
  */
 import fs from "node:fs";
 import http from "node:http";

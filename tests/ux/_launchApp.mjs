@@ -1,4 +1,4 @@
-// tests/ux 与 evals 唯一的 Electron 启动器（2026-08-11 收敛，见 docs/plan/2026-08-11-e2e-launcher-convergence.md）。
+// tests/ux 与 evals 唯一的 Electron 启动器（2026-08-11 收敛，见 docs/archive/plan/2026-08-11-e2e-launcher-convergence.md）。
 //
 // 为什么必须收敛成一份：走查脚本手抄 launch 样板时抄漏 env，会**静默挂死**——一张截图不产、
 // 无任何提示，干等到超时，排查时看起来像脚本自己写错了。两条已知死法症状完全一样：

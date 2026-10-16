@@ -1,6 +1,6 @@
 // R13 真机走查：nomi-local 视频连续拖动进度条，主进程不得抛 ERR_INVALID_STATE。
 //
-// 闭合 docs/plan/2026-08-24-local-protocol-stream-ownership.md §1.6 那一环——
+// 闭合 docs/archive/plan/2026-08-24-local-protocol-stream-ownership.md §1.6 那一环——
 // 该缺陷的机制已在单测里证明（undici ReadableStreamFrom 的无保护延迟 close），
 // 但「我们这个 fs 流在**真 Electron 里**确实会触发」只能在这里验。
 //

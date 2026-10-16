@@ -8,7 +8,7 @@
  * schema 不可能再漂开；代价是**宿主那一侧的任何改动都会自动流到模型脸上**——上游给某个契约加一个
  * 必填字段，模型面就多一个模型可能根本填不出来的必填字段，而没有任何一层会说话。原型那次变异
  * （给 `cancel_job` 的宿主分支加一个必填 `requestedBy`）**全绿**，记在
- * `docs/plan/2026-09-18-tool-projection-cancel-job-prototype.md` 的那张表里；这道门就是补那一条。
+ * `docs/archive/plan/2026-09-18-tool-projection-cancel-job-prototype.md` 的那张表里；这道门就是补那一条。
  *
  * 它同时是那一刀的**验收尺**：换真相源不许改模型看到的任何一个字。
  *

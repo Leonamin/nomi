@@ -38,7 +38,7 @@ describe('real character reference at the shared storyboard write boundary', () 
   it('loopback: real catalog + one anchor saves 8/8 consuming modes and bound slots', async () => {
     const input = fixture()
     const plan = await write(input)
-    if (process.env.ANCHOR_REAL_CAPTURE) writeFileSync(`docs/plan/anchor-real-evidence/${process.env.ANCHOR_REAL_CAPTURE}.json`, JSON.stringify(plan, null, 2) + '\n')
+    if (process.env.ANCHOR_REAL_CAPTURE) writeFileSync(`docs/archive/plan/anchor-real-evidence/${process.env.ANCHOR_REAL_CAPTURE}.json`, JSON.stringify(plan, null, 2) + '\n')
     for (const shot of plan.shots) {
       const archetype = resolveArchetypeForModel({ modelKey: shot.modelKey!, vendorKey: shot.modelVendor })!
       const mode = archetype.modes.find(mode => mode.id === shot.modeId)!
@@ -118,7 +118,7 @@ describe('real character reference at the shared storyboard write boundary', () 
     expect(() => normalizeStoryboardAnchorDefaults(input, [firstLastOnly])).toThrow()
   })
   it('replays the unmodified official response with a proven anchor in an undeclared slot', async () => {
-    const raw = JSON.parse(readFileSync('docs/plan/anchor-real-evidence/official-raw-plan.json', 'utf8'))
+    const raw = JSON.parse(readFileSync('docs/archive/plan/anchor-real-evidence/official-raw-plan.json', 'utf8'))
     const plan = await write(raw)
     for (const shot of plan.shots) {
       expect(shot.modeId).toBe('ref')

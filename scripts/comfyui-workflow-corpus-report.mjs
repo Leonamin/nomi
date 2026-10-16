@@ -319,7 +319,7 @@ fs.writeFileSync('/tmp/comfy-corpus-rows.json', JSON.stringify({ analyzed, noPro
 // 复跑刷新数据不会抹掉人写的判断。首次运行若无标记则整篇写入数据段。
 const MARKER = '<!-- ===== AUTO-GENERATED DATA ABOVE · MANUAL ANALYSIS BELOW (preserved across re-runs) ===== -->'
 const md = out.join('\n')
-const reportPath = path.join(REPO, 'docs/research/2026-08-01-comfyui-workflow-corpus-report.md')
+const reportPath = path.join(REPO, 'docs/archive/research/2026-08-01-comfyui-workflow-corpus-report.md')
 let manualTail = ''
 if (fs.existsSync(reportPath)) {
   const prev = fs.readFileSync(reportPath, 'utf8')

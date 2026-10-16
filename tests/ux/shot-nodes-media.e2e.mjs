@@ -15,7 +15,7 @@ fs.mkdirSync(path.join(projectDir, 'assets/imported'), { recursive: true })
 fs.copyFileSync(path.join(repoRoot, 'tests/ux/fixtures/real-shot-640x360.mp4'), path.join(projectDir, 'assets/imported/shot.mp4'))
 const project = { id: projectId, name: '分镜媒体验证', version: 2, createdAt: 1, updatedAt: 1, savedAt: 1, revision: 1, lastKnownRootPath: projectDir, payload: { workbenchDocument: null, timeline: null, generationCanvas: { nodes: [], edges: [], selectedNodeIds: [], groups: [] } } }
 for (const file of ['project.json', '.nomi/project.json']) fs.writeFileSync(path.join(projectDir, file), JSON.stringify(project))
-const output = path.join(repoRoot, 'docs/plan/shot-nodes-evidence')
+const output = path.join(repoRoot, 'docs/archive/plan/shot-nodes-evidence')
 fs.mkdirSync(output, { recursive: true })
 const base = process.env.VITE_DEV_SERVER_URL || 'http://127.0.0.1:5199'
 const { app, win } = await launchNomiApp({ name: 'shot-nodes-media', tempRoot, projectsDir, settleMs: 0, env: { VITE_DEV_SERVER_URL: base, NOMI_E2E_SMOKE: '1' } })

@@ -270,7 +270,7 @@ export async function zoomOutTo(page, targetZoom) {
 }
 
 // ————————————————————————————————————————————————————————————————————————
-// 2026-09-12 规模调查补的三条场景（docs/research/2026-09-12-canvas-perf-at-scale/）。
+// 2026-09-12 规模调查补的三条场景（docs/archive/research/2026-09-12-canvas-perf-at-scale/）。
 //
 // 为什么非加不可：既有门岗的场景表里**没有任何一条**「全选后拖」或「拖组框」——
 // `grep -rn "nodesselection\|groupFrame\|group-frame\|frame-drag"` 在 2026-09-12 零命中。

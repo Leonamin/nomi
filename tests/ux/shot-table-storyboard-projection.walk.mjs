@@ -52,7 +52,7 @@ try {
   step = 'immediate-table'
   // ⚠️ 2026-09-18：这一步红是**产品真回归**，不是走查过期——方案已落盘（侧栏有行、project.json 里 designs 有内容），
   // 但 `payload.generationCanvas.nodes` 是空的：Agent 写方案没有建出 shot_table 节点。
-  // `ensureStoryboardShotTable.ts` 写着「Explicit design writes create one view」，`docs/audit/2026-09-10-shot-table-storyboard-walk.md`
+  // `ensureStoryboardShotTable.ts` 写着「Explicit design writes create one view」，`docs/archive/audit/2026-09-10-shot-table-storyboard-walk.md`
   // 记过「复验立即生成表节点成功」，所以是 09-10 之后退的。断言**刻意保持原样**（改绿=掩盖真 bug）。
   await clickOrFail(win.getByRole('button', { name: '生成', exact: true }).first(), '生成画布')
   await clickOrFail(win.getByRole('button', { name: '适应视图', exact: true }), '适应全部节点')

@@ -324,7 +324,7 @@ export function run({ repoRoot, sourceRef = null, conceptFilter = [], printMap =
   if (findings.length > 0) {
     error(`✖ 概念 owner 门岗失败（${findings.length} 处）——一个概念只能有一个主人（R33）：`)
     render(findings, error)
-    error('\n  判据与字段表：docs/engineering-rules.md R33.4；方案：docs/plan/2026-09-26-architecture-single-owner-governance.md「横切治理层 §1」。')
+    error('\n  判据与字段表：docs/engineering-rules.md R33.4；方案：docs/archive/plan/2026-09-26-architecture-single-owner-governance.md「横切治理层 §1」。')
     return 1
   }
   const pendingCount = selected.filter((concept) => concept.migration_status === 'pending').length

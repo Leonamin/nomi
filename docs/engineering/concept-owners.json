@@ -47,7 +47,7 @@
       "trust_domain": "shared",
       "fact_kind": "value-object",
       "migration_status": "pending",
-      "migration_strategy": "durable 身份的目标是 ProductionRun / ProductionGenerationPlan.operationId（projectId + operationId），quoteId 只作报价版本指纹。由 Phase 0 施工卡 P0-5（docs/audit/2026-09-26-phase-zero-construction-cards.md）收口；直接画布那条 nodeId + quoteId 的旧路随 Phase 2 的 direct canvas paid → ProductionRun 试点迁走。收口判据：PendingSpendConfirm 只剩 ProductionRun 投影这一个生产者，forbidden_derivations 里的四个报价 / 令牌函数不再有生产调用处。",
+      "migration_strategy": "durable 身份的目标是 ProductionRun / ProductionGenerationPlan.operationId（projectId + operationId），quoteId 只作报价版本指纹。由 Phase 0 施工卡 P0-5（docs/archive/audit/2026-09-26-phase-zero-construction-cards.md）收口；直接画布那条 nodeId + quoteId 的旧路随 Phase 2 的 direct canvas paid → ProductionRun 试点迁走。收口判据：PendingSpendConfirm 只剩 ProductionRun 投影这一个生产者，forbidden_derivations 里的四个报价 / 令牌函数不再有生产调用处。",
       "owner": {
         "path": "electron/shared/contracts/pendingSpendConfirm.ts",
         "symbol": "PendingSpendConfirm"
@@ -427,7 +427,7 @@
         "src/workbench/generationCanvas/reactFlow/useGenerationCanvasReactFlowPointer.ts"
       ],
       "since": "2026-09-25",
-      "notes": "React Flow 内核（d3-drag）自己也记着拖动状态，框架层删不掉；裁决是单向的——租约判定结束，内核照办：租约取消或松手丢失时经 reactFlow/canvasDragWriteback.ts 的 endKernelNodeDrag 走内核自己的 end 路径，内核不许反过来自行判定。方向键移动的授权是同一概念的键盘面：keyboardMoveScope（按下时选中的那批），不靠时间窗口。复核：docs/audit/2026-09-25-generation-canvas-ownership-review.md。"
+      "notes": "React Flow 内核（d3-drag）自己也记着拖动状态，框架层删不掉；裁决是单向的——租约判定结束，内核照办：租约取消或松手丢失时经 reactFlow/canvasDragWriteback.ts 的 endKernelNodeDrag 走内核自己的 end 路径，内核不许反过来自行判定。方向键移动的授权是同一概念的键盘面：keyboardMoveScope（按下时选中的那批），不靠时间窗口。复核：docs/archive/audit/2026-09-25-generation-canvas-ownership-review.md。"
     },
     {
       "name": "画布视频何时挂播放器、谁在播",
@@ -1746,7 +1746,7 @@
         "scripts/model-radar.ts"
       ],
       "since": "2026-09-28",
-      "notes": "PR #923（合同 docs/fixes/2026-09-28-apimart-result-shape-replay.root-cause.json，方案 docs/plan/2026-09-28-apimart-model-health.md）：体检名单从目录代码导出「模型 × 模式」与契约指纹，名单本身就是体检清单，不另维护一份；清单里不含任何价格与花费。"
+      "notes": "PR #923（合同 docs/fixes/2026-09-28-apimart-result-shape-replay.root-cause.json，方案 docs/archive/plan/2026-09-28-apimart-model-health.md）：体检名单从目录代码导出「模型 × 模式」与契约指纹，名单本身就是体检清单，不另维护一份；清单里不含任何价格与花费。"
     },
     {
       "name": "被动 MCP 请求会不会冷启动 Nomi",
@@ -1878,7 +1878,7 @@
         "src/workbench/ai/v4/spendCardReferences.ts"
       ],
       "since": "2026-09-28",
-      "notes": "PR #918（方案 docs/plan/2026-09-28-reference-default-mode.md，无根因合同）：用户要求连了参考图后默认是参考模式、不是首尾帧。当前模式接不住新连的图时，按档案声明的偏好顺序切（参考类工作流 → 其它图参考工作流 → 首帧工作流）；「连线类型」与「切模式」共用 preferredImageWorkflow 这一份顺序，只读 ModelArchetype.modes 的 intent 与 slots，不按模型名写死（P4）。"
+      "notes": "PR #918（方案 docs/archive/plan/2026-09-28-reference-default-mode.md，无根因合同）：用户要求连了参考图后默认是参考模式、不是首尾帧。当前模式接不住新连的图时，按档案声明的偏好顺序切（参考类工作流 → 其它图参考工作流 → 首帧工作流）；「连线类型」与「切模式」共用 preferredImageWorkflow 这一份顺序，只读 ModelArchetype.modes 的 intent 与 slots，不按模型名写死（P4）。"
     },
     {
       "name": "付费卡上这一镜摆着的那张框（宿主那一镜 ⊕ 画布连线带来的参考，再叠卡上的改动）",
@@ -2014,7 +2014,7 @@
         "src/workbench/project/projectCanvasReadSurface.ts"
       ],
       "since": "2026-09-18",
-      "notes": "原 check:identity-compare 的 owner 模块（C2，审计 docs/audit/2026-09-17-ownership-lifetime-census.md §2；合同 docs/fixes/2026-09-18-ownership-single-source.root-cause.json）。主进程登记表、preload、渲染层原来各比一份，维度 13 / 7 / 13，漏维的正好是 preload 那道信任边界（#802 的形状）。维度跟着类型 SurfacePortBindingWire 走；门岗逐字核这个函数比的身份维度等于 identity_fields（只算门岗认识的身份维度）。2026-09-29 随 check:identity-compare 并入 check:concept-owners 登记。"
+      "notes": "原 check:identity-compare 的 owner 模块（C2，审计 docs/archive/audit/2026-09-17-ownership-lifetime-census.md §2；合同 docs/fixes/2026-09-18-ownership-single-source.root-cause.json）。主进程登记表、preload、渲染层原来各比一份，维度 13 / 7 / 13，漏维的正好是 preload 那道信任边界（#802 的形状）。维度跟着类型 SurfacePortBindingWire 走；门岗逐字核这个函数比的身份维度等于 identity_fields（只算门岗认识的身份维度）。2026-09-29 随 check:identity-compare 并入 check:concept-owners 登记。"
     },
     {
       "name": "两条描述是不是同一个渲染帧",

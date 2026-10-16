@@ -1359,7 +1359,7 @@ const PERFORMANCE_BUDGETS = [
 // 2026-09-12 的规模调查量出「东西多少不是问题，同时在动多少才是」：同一手势从 60 到
 // 300 个节点，fps 从 96.5 塌到 12.4。一组固定的数既描述不了这条曲线，也锁不住它。
 // 下面这张表的每一个数字都逐行抄自
-// docs/research/2026-09-12-canvas-perf-at-scale/README.md §6（darwin 基准值）。
+// docs/archive/research/2026-09-12-canvas-perf-at-scale/README.md §6（darwin 基准值）。
 //
 // 两条口径，与报告一致、也与本文件既有做法一致：
 //   • 毫秒类一律经 timingBudget() 出口（非 darwin ×1.6 已在那里处理），**不另写一套平台分支**；

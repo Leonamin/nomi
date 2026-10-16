@@ -372,9 +372,26 @@ function readFromCommit(sha, file) {
   try { return execFileSync("git", ["-c", "core.quotePath=false", "show", `${sha}:${file}`], { encoding: "utf8", maxBuffer: 64 * 1024 * 1024, stdio: ["ignore", "pipe", "ignore"] }); } catch { return ""; }
 }
 
-function gitDiffAdded(args) {
+function gitDiffAdded(args, provenanceBase) {
   try {
-    return parseAddedLines(execFileSync("git", ["-c", "core.quotePath=false", "diff", "-U0", "--no-color", "--no-ext-diff", ...args], { encoding: "utf8", maxBuffer: 256 * 1024 * 1024 }));
+    const diff = execFileSync("git", ["-c", "core.quotePath=false", "diff", "-M", "-C", "-U0", "--no-color", "--no-ext-diff", ...args], { encoding: "utf8", maxBuffer: 256 * 1024 * 1024 });
+    const added = parseAddedLines(diff);
+    // Only Git's trusted source identity can establish inheritance. A manifest,
+    // destination folder or unchanged ID elsewhere in the repo grants nothing.
+    let source = null;
+    for (const line of diff.split("\n")) {
+      if (line.startsWith("diff --git ")) source = null;
+      if (/^(?:copy|rename) from /.test(line)) source = line.replace(/^(?:copy|rename) from /, "");
+      if (!source || !line.startsWith("+++ b/")) continue;
+      const target = line.slice(6).trim();
+      const inherited = new Set([...readFromCommit(provenanceBase, source).matchAll(PRIVATE_TODO_ID)].map((match) => match[0]));
+      if (!inherited.size || !added.has(target)) continue;
+      added.set(target, added.get(target).map((row) => ({
+        ...row,
+        text: row.text.replace(PRIVATE_TODO_ID, (id) => inherited.has(id) ? "" : id),
+      })));
+    }
+    return added;
   } catch {
     return null;
   }
@@ -391,14 +408,14 @@ function prDiffBase() {
 
 function privateTodoHits(mode, files) {
   if (mode === "staged") {
-    const added = gitDiffAdded(["--cached", "--diff-filter=AM"]) ?? new Map();
+    const added = gitDiffAdded(["--cached", "--diff-filter=ACMR"], "HEAD") ?? new Map();
     const other = mergeHeadSha();
     return scanPrivateTodoIds(other ? dropLinesInOtherParent(added, (file) => readFromCommit(other, file)) : added);
   }
   if (mode === "all") {
     const base = prDiffBase();
     if (!base) { console.error("  ⚠️ 私有待办编号：拿不到可信 base，本次不判 PR 差异（不拿算不出来当通过）"); return []; }
-    return scanPrivateTodoIds(gitDiffAdded([base, "HEAD", "--diff-filter=AM"]) ?? new Map());
+    return scanPrivateTodoIds(gitDiffAdded([base, "HEAD", "--diff-filter=ACMR"], base) ?? new Map());
   }
   // 显式文件：整份算新增
   const whole = new Map();

@@ -26,7 +26,7 @@ delivery_preflight: PASS
 |---|---|---|---|
 | [#456](https://github.com/aqm857886159/Nomi/pull/456) | `main` ← `codex/main-typecheck-repair-20260904` | fix(canvas): use hydrated metadata for provider switch notice | S1 审计 |
 | [#455](https://github.com/aqm857886159/Nomi/pull/455) | `main` ← `codex/ci-recovery-20260904` | test: repair MCP lease and canvas media fixtures | S1 审计 |
-| [#454](https://github.com/aqm857886159/Nomi/pull/454) | `main` ← `fix/storyboard-entry-and-vendor-identity-20260903` | 分镜表：Agent 工具面 + 模型身份修复 + 锚行样张（换人交接） | 部分完成；见 [#454 审计](./2026-09-04-pr454-storyboard-agent-audit.md) |
+| [#454](https://github.com/aqm857886159/Nomi/pull/454) | `main` ← `fix/storyboard-entry-and-vendor-identity-20260903` | 分镜表：Agent 工具面 + 模型身份修复 + 锚行样张（换人交接） | 部分完成；见 [#454 审计](2026-09-04-pr454-storyboard-agent-audit.md) |
 | [#453](https://github.com/aqm857886159/Nomi/pull/453) | `main` ← `codex/convergence-execution-plan-20260904` | docs: define main convergence and rebaseline execution plan | 当前方案 PR |
 | [#452](https://github.com/aqm857886159/Nomi/pull/452) | `main` ← `codex/agent-usage-ledger-followup-20260904` | feat(agent): persist resident turn usage in Host state | 待 receipt/Host 审计 |
 | [#435](https://github.com/aqm857886159/Nomi/pull/435) | `main` ← `codex/3d-research-workflow-20260903` | feat: 固化竞品与开源能力研究工作流 | S1 审计 |

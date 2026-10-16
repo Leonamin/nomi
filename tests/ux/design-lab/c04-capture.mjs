@@ -7,7 +7,7 @@ import { labPortFor, assertLabPortOwnership } from './labServer.mjs'
 import { withFreshLabPage } from './labPage.mjs'
 
 const root = process.cwd()
-const output = path.join(root, 'docs/plan/2026-09-09-storyboard-warning-aggregate-eta')
+const output = path.join(root, 'docs/archive/plan/2026-09-09-storyboard-warning-aggregate-eta')
 const sources = ['src/workbench/creation/storyboard/StoryboardPlanStrategyPanel.tsx', 'electron/capabilityCore/mcpGenerationTools.ts']
 const saved = new Map(sources.map(file => [file, fs.readFileSync(file)]))
 const entry = path.join(root, '.c04-evidence.html')

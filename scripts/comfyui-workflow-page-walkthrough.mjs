@@ -1,5 +1,5 @@
 // R13 真机走查：ComfyUI「工作流设置」整页（2026-08-12 用户拍板样张）。
-// plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+// plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
 //
 // 治的是 2026-08-11 那次反馈的体验根源：以前配一条工作流，是在 320px 窄栏里对着
 // 「#110 CLIPTextEncode」猜哪个是提示词。这条走查就是要**用眼睛确认**现在不用猜了。

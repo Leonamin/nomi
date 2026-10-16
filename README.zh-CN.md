@@ -121,17 +121,17 @@ xattr -dr com.apple.quarantine "/Applications/Nomi.app"
 
 ## 快速上手
 
-1. **接一个模型。** 选 APIMart 或 Kie.ai，贴一个 Key 就能用；也可以接你自己的中转站、OpenAI 兼容接口或本地 ComfyUI。懒得自己弄？把《[让你的 AI 帮你接入 Nomi](docs/integrate-with-your-agent.md)》丢给 Claude Code 或 Codex。
+1. **接一个模型。** 选 APIMart 或 Kie.ai，贴一个 Key 就能用；也可以接你自己的中转站、OpenAI 兼容接口或本地 ComfyUI。懒得自己弄？把《[让你的 AI 帮你接入 Nomi](docs/archive/guides/integrate-with-your-agent.md)》丢给 Claude Code 或 Codex。
 2. **说你想拍什么。** 直接在 Agent 面板里说，或者从分镜表里的一段故事开始。
 3. **挑片、排片、导出。** 留下满意的版本，排好时间轴，导出 MP4。
 
 > **说明：** APIMart 的链接带推荐码。你永远用自己的 Key、按供应商原价直接付钱；Nomi 不代理、不转售任何模型调用，每一家都能换成你自己的接口。
 
-更多：[快速上手](https://nomiaqm.com/quickstart) · [B 站视频教程](https://www.bilibili.com/video/BV1Lf8b6nEjf/) · [对话式接入模型](docs/guide/conversational-model-integration.md) · [用户指南](docs/user-guide.md) · [供应商](docs/provider-integration.md) · [CLI + MCP](docs/guide/capability-core-cli-mcp.md)
+更多：[快速上手](https://nomiaqm.com/quickstart) · [B 站视频教程](https://www.bilibili.com/video/BV1Lf8b6nEjf/) · [对话式接入模型](docs/guide/conversational-model-integration.md) · [用户指南](docs/archive/guides/user-guide.md) · [供应商](docs/archive/guides/provider-integration.md) · [CLI + MCP](docs/guide/capability-core-cli-mcp.md)
 
 ## 让你自己的 Agent 来用 Nomi
 
-Nomi 自带 MCP 服务（24 个 MCP 工具）：Claude Code、Codex、Cursor 都能直接驱动它生成、编排、剪辑，顺便用上你会员套餐里送的额度。见《[让你的 AI 帮你接入 Nomi](docs/integrate-with-your-agent.md)》。
+Nomi 自带 MCP 服务（24 个 MCP 工具）：Claude Code、Codex、Cursor 都能直接驱动它生成、编排、剪辑，顺便用上你会员套餐里送的额度。见《[让你的 AI 帮你接入 Nomi](docs/archive/guides/integrate-with-your-agent.md)》。
 
 ## 社区
 
@@ -147,7 +147,7 @@ Nomi 自带 MCP 服务（24 个 MCP 工具）：Claude Code、Codex、Cursor 都
 - 报 bug、提需求：[GitHub Issues](https://github.com/aqm857886159/Nomi/issues)
 - 更新和短演示：[B 站](https://www.bilibili.com/video/BV1Lf8b6nEjf/) · [X / Twitter](https://x.com/sdf297417627618)
 
-遇到 bug？代码是开源的——把报错和[这段修 bug 提示词](docs/guide/codex-issue-fix-prompt-en.md)发给 Claude Code 或 Codex，很多问题它能直接帮你改好。大家都会碰到的问题，告诉我们，会并进主线。
+遇到 bug？代码是开源的——把报错和[这段修 bug 提示词](docs/archive/guide/codex-issue-fix-prompt-en.md)发给 Claude Code 或 Codex，很多问题它能直接帮你改好。大家都会碰到的问题，告诉我们，会并进主线。
 
 ## 团队合作
 

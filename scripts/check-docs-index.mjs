@@ -48,7 +48,7 @@ function writeBaseline(paths) {
   const baseline = {
     _comment: [
       '文档索引棘轮基线：只减不增。',
-      '扫描 docs/plan/**/*.md、docs/superpowers/plans/**/*.md 与 docs/lessons/**/*.md。',
+      '扫描 docs/archive/plan/**/*.md、docs/archive/superpowers/plans/**/*.md 与 docs/lessons/**/*.md。',
       '身份使用仓库相对路径；新增未收录文档必须进索引，不能追加到本数组。',
     ],
     unindexedDocuments: paths,

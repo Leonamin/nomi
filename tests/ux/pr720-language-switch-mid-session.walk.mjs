@@ -1,7 +1,7 @@
 /**
  * R13/R16 走查 · PR #720 走查文档「后续」补齐项：会话中途切换语言（zh-CN ↔ en）。
  *
- * 来源：docs/research/2026-09-10-ux-feedback-fixes/walkthrough-pr720.md 的「顺带记下的两条观察」
+ * 来源：docs/archive/research/2026-09-10-ux-feedback-fixes/walkthrough-pr720.md 的「顺带记下的两条观察」
  * 之②记录了 2026-09-11 的修法——`openLane` 的 `systemPrompt` 从字符串快照放宽成
  * `string | (() => string)`，`laneHost` 每回合重新求值，已开着的 lane 下一回合就改口。
  * 那份文档本身只验了「两次界面语言各起一次 App」（冷启动），没有验「同一次会话中途切」。

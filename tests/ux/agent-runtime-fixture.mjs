@@ -386,7 +386,7 @@ export async function createAgentRuntimeFixture({ rootDir, settingsDir, generati
   // 宿主要把它下载、校验、落进项目素材库，再投成画布节点的 nomi-local:// 结果。
   // 只在真有人来取视频时才读（非视频走查不必把近 1MB 读进内存）。
   let videoBytes
-  const readVideoBytes = async () => (videoBytes ??= await readFile(path.join(rootDir, 'docs/audit/2026-08-20-l3-f1-full-journey/08-video-1787216968985.mp4')))
+  const readVideoBytes = async () => (videoBytes ??= await readFile(path.join(rootDir, 'docs/archive/audit/2026-08-20-l3-f1-full-journey/08-video-1787216968985.mp4')))
   /** apimart 是**异步**协议：create 回 task_id，query 轮询到 completed 才给出图的 URL。 */
   const tasks = new Map()
   let taskSequence = 0

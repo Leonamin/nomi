@@ -61,7 +61,7 @@ test('设计卡：「不适用：理由」算填了，「不适用」不带理�
 })
 
 test('设计卡只放链接 → 不判红，提示人工到链接里核对', () => {
-  const result = checkDesignCard('## 设计卡\ndocs/plan/2026-10-05-foo.md', { fourClass: true })
+  const result = checkDesignCard('## 设计卡\ndocs/archive/plan/2026-10-05-foo.md', { fourClass: true })
   assert.equal(result.ok, true)
   assert.match(result.lines.join('\n'), /人工到链接里核对/)
 })

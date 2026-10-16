@@ -1,0 +1,128 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-16-archival-copy-private-id-provenance",
+  "problem_type": "A provenance-sensitive new-identifier scan mistakes archival copies for newly authored private identifiers",
+  "symptom": "Archiving existing public reports while leaving a short old-address pointer is blocked even when it introduces no new private identifiers. Pure renames also skip authored new identifiers under the old AM-only filter.",
+  "direct_cause": "The shared diff query selected only added/modified files and did not request copy metadata, so moved full bodies with retained pointers appeared as entirely new files.",
+  "class_root": "New private-identifier decisions were bound to the destination filename rather than trusted Git document provenance.",
+  "affected_population": [
+    "staged archival copies with old-address pointers",
+    "CI/--all copied reports",
+    "renamed reports with newly added identifiers"
+  ],
+  "scope_paths": [
+    "scripts/check-no-secrets.mjs"
+  ],
+  "entry_points": [
+    "pre-commit staged scan",
+    "CI and gates --all scan",
+    "explicit-file scan remains whole-file and unchanged"
+  ],
+  "external_sources": [
+    {
+      "kind": "official-doc",
+      "url": "https://git-scm.com/docs/git-diff",
+      "checked_at": "2026-10-16",
+      "purpose": "Git -C/-M describe copy/rename provenance and corresponding patch headers."
+    }
+  ],
+  "invariants": [
+    "Credential detection scans full candidate files and does not inherit or allow any credential.",
+    "Only identifiers proven present in the trusted source of a Git-detected copy/rename are inherited.",
+    "New identifiers in copies/renames remain checked; ordinary additions and explicit-file scans retain their existing rules."
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "scripts/check-no-secrets.mjs",
+      "symbol": "gitDiffAdded"
+    }
+  ],
+  "door_reduction": {
+    "before": 1,
+    "after": 1
+  },
+  "generality_proof": "Both staged and committed-diff entrypoints converge on gitDiffAdded with their real trusted base. Git supplies copy/rename source identity; inheritance compares identifier values in that actual base source. Real CLI tests reproduce copied reports with stable pointers, reject fresh IDs in copies and renames, and keep credential blocking. No archive-name whitelist or caller-supplied manifest decides inheritance.",
+  "shared_boundaries": [
+    {
+      "path": "scripts/check-no-secrets.mjs",
+      "symbol": "gitDiffAdded",
+      "responsibility": "Return authored diff identifiers after verifying copy/rename provenance against the trusted base document."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "scripts/check-no-secrets.mjs",
+      "entry_point": "privateTodoHits staged branch",
+      "disposition": "enforced",
+      "evidence": "Runs the shared diff reader against HEAD plus staged changes."
+    },
+    {
+      "path": "scripts/check-no-secrets.mjs",
+      "entry_point": "privateTodoHits all branch",
+      "disposition": "enforced",
+      "evidence": "Runs the same reader against explicit trusted base or the PR merge-base and HEAD."
+    },
+    {
+      "path": "scripts/check-no-secrets.mjs",
+      "entry_point": "explicit files branch",
+      "disposition": "not-affected",
+      "evidence": "Explicit whole-file scans do not claim Git provenance and retain their strict whole-file behavior."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Any report copy or move with a stable old address can repeat the false positive, and AM-only filtering can miss new IDs in renames.",
+    "same_class_scan": [
+      "node scripts/door-map.mjs gitDiffAdded --roots=scripts --include-tests:494 files, one door at the shared reader, two caller branches.",
+      "Compared pre-commit staged, --all base..HEAD and explicit-files populations in check-no-secrets.mjs.",
+      "Real temporary Git fixtures fail before the repair:3 failing new cases with31 pre-existing cases passing."
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "scripts/check-no-secrets.mjs",
+    "invariant": "All staged and CI private-ID checks use actual copy/rename provenance before distinguishing inherited from authored IDs.",
+    "failure_mode": "Unproven source provenance inherits nothing. New identifiers remain violations and full-file credential rules are unchanged.",
+    "exception_policy": "none",
+    "strategy": "Request standard Git copy/rename patches; compare only their source identifiers from the trusted commit in the one shared diff reader; include copy/rename authored hunks in the checked statuses.",
+    "artifacts": [
+      "scripts/check-no-secrets.mjs"
+    ]
+  },
+  "regression_tests": [
+    "scripts/check-no-secrets.test.mjs"
+  ],
+  "class_regression_tests": [
+    "scripts/check-no-secrets.test.mjs"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "scripts/check-no-secrets.mjs"
+    ],
+    "rationale": "Replace AM-only/no-provenance classification in both staged and CI branches; do not add a parallel archive bypass."
+  },
+  "dependency_lifecycle": {
+    "decision": "retain-with-exit",
+    "current": "Git2.55.0 and existing Node child_process execution",
+    "target": "Retain the repository Git CLI with standard copy/rename patch metadata; no new dependency.",
+    "rationale": "Git already owns document provenance. Upgrade of the runtime is not required for these established flags.",
+    "exit_criteria": [
+      "Before a Git runtime upgrade, rerun real staged and --all copy/rename plus credential regressions in scripts/check-no-secrets.test.mjs.",
+      "If copy detection cannot establish provenance, inherit no identifiers and require a normal reviewed document change."
+    ]
+  },
+  "migration": "Preserve existing history and gate baselines. Only genuine trusted copy/rename inheritance changes classification; archive manifest does not grant scanning exemptions.",
+  "residual_risks": [
+    "Git similarity detection may decline to classify a heavily rewritten document as a copy; it then receives no inheritance and remains conservatively blocked."
+  ],
+  "detected_by": "review",
+  "recurrence_check_on": "2026-10-23",
+  "invariant_owner_layer": {
+    "layer": "scripts/check-no-secrets.mjs",
+    "tests": [
+      "scripts/check-no-secrets.test.mjs"
+    ]
+  }
+}

@@ -5,7 +5,7 @@
     "files": [
       "docs/engineering/concept-owners.json",
       "docs/fixes/2026-09-29-production-flow-stop-reason-and-lifecycle.root-cause.json",
-      "docs/plan/2026-09-29-production-flow-fixes.md",
+      "docs/archive/plan/2026-09-29-production-flow-fixes.md",
       "electron/agentLane/laneDesktopTasks.ts",
       "electron/capabilityCore/agentPanelSpendConfirmTestUtils.ts",
       "electron/capabilityCore/anchorCheckpointApproval.e2e.test.ts",
@@ -79,7 +79,7 @@
     "pr": 940,
     "why": "#940 每个制作镜头状态都有自己的标记",
     "files": [
-      "docs/audit/2026-09-30-shot-phase-marker-structure-review.md",
+      "docs/archive/audit/2026-09-30-shot-phase-marker-structure-review.md",
       "docs/engineering/concept-owners.json",
       "docs/fixes/2026-09-30-shot-phase-every-state-has-a-marker.root-cause.json",
       "electron/productionRun/batchScheduleDerivation.test.ts",
@@ -97,12 +97,12 @@
     "pr": 937,
     "why": "#937 附件/默认模型/分镜表自开各回到自己的主人",
     "files": [
-      "docs/audit/2026-09-30-agent-domain-owners-structure-review.md",
+      "docs/archive/audit/2026-09-30-agent-domain-owners-structure-review.md",
       "docs/engineering/concept-owners.json",
       "docs/fixes/2026-09-30-agent-declared-default-model.root-cause.json",
       "docs/fixes/2026-09-30-agent-user-message-attachment-shape.root-cause.json",
       "docs/fixes/2026-09-30-storyboard-open-is-a-user-action.root-cause.json",
-      "docs/plan/2026-09-30-agent-domain-owners.md",
+      "docs/archive/plan/2026-09-30-agent-domain-owners.md",
       "electron/agentLane/laneDesktopAttachments.ts",
       "electron/agentLane/laneDesktopInput.ts",
       "electron/agentLane/laneDesktopModelDefaults.test.ts",

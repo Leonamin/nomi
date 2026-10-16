@@ -5,7 +5,7 @@ import { launchNomiApp, currentCatalogVersion } from './_launchApp.mjs'
 import { stationTimeout } from './_station-budget.mjs'
 import { expect, screenshotSettled } from './_assert.mjs'
 const root = path.resolve('.')
-const out = path.join(root, 'docs/plan/b2c-form-evidence')
+const out = path.join(root, 'docs/archive/plan/b2c-form-evidence')
 await fs.mkdir(out, { recursive: true })
 const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'nomi-b2c-form-'))
 const settingsDir = path.join(tempRoot, 'settings')

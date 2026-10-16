@@ -15,4 +15,4 @@
 - 回归用可控 Promise 阻塞 close，验证完成前目录存在、完成后目录删除；另外启动真实 node:test 进程，故意让断言和清理同时失败，验证失败报告和进程退出。
 - 嵌套启动独立 node:test runner 时移除 NODE_TEST_CONTEXT，否则可能被当成父 runner 的 worker；必须断言子 runner 真正执行了预期失败测试。
 
-证据见 [修复计划](../plan/2026-09-08-agent-runtime-flakes.md) 和 [根因合同](../fixes/2026-09-08-agent-runtime-flakes.root-cause.json)。
+证据见 [修复计划](../archive/plan/2026-09-08-agent-runtime-flakes.md) 和 [根因合同](../fixes/2026-09-08-agent-runtime-flakes.root-cause.json)。

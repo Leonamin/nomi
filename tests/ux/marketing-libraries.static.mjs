@@ -7,7 +7,7 @@ import { libraryCopyByLocale } from '../../scripts/marketing/library/copy.mjs'
 // 官网三个库（模型库、提示词库、技能库）的静态合同：对样本页断言读者要看到的关键零件都在，中英两种语言各查一遍。
 // 全站每一页的链接、hreflang、结构化数据、描述长度、署名由 check-site-* 门岗按页扫；这里钉的是「样张里承诺的那几样东西」：
 // 模型库有卡片、模型页有档案卡、效果页有复制按钮、非 AGPL 条目带署名和许可证全文、面包屑、顶栏六项。
-// 方案：docs/plan/2026-09-28-site-libraries-seo.md §3、§5、§8；样张逐项对账见 PR 正文。
+// 方案：docs/archive/plan/2026-09-28-site-libraries-seo.md §3、§5、§8；样张逐项对账见 PR 正文。
 
 // `--root <目录>` 指向另一份官网副本（证明这份合同会红时用），默认是仓库根。
 const root = rootFromArgs()

@@ -219,9 +219,9 @@ test("match: a contract cannot claim an unchanged boundary or mark every entry u
 
 test("not_match: docs-only changes do not require a contract", () => {
   const result = validateRootCauseChange({
-    changedFiles: ["docs/plan/example.md"],
+    changedFiles: ["docs/archive/plan/example.md"],
     contracts: [],
-    existingFiles: new Set(["docs/plan/example.md"]),
+    existingFiles: new Set(["docs/archive/plan/example.md"]),
   });
   assert.deepEqual(result, { ok: true, errors: [], triggeredFiles: [] });
 });
@@ -483,7 +483,7 @@ test("high-risk matcher covers workflows, providers, media, network, IPC, and pe
   for (const file of [
     "electron/vendor/vendorHttp.test.ts",
     "scripts/check-root-cause-contracts.node-test.mjs",
-    "docs/plan/example.md",
+    "docs/archive/plan/example.md",
     "src/components/Button.tsx",
   ]) assert.equal(isHighRiskProductionFile(file), false, file);
 });
@@ -599,7 +599,7 @@ const datedFiles = new Set([
   DATED_FILE,
   "electron/catalog/assetLocalization.ts",
   "electron/catalog/assetLocalization.test.ts",
-  "docs/plan/2026-09-08-owner.md",
+  "docs/archive/plan/2026-09-08-owner.md",
 ]);
 
 function validateDated(ownerLayer) {
@@ -634,10 +634,10 @@ test("invariant_owner_layer: 填 none 或那层没测试，都必须附一份存
   const noTestsWithoutTicket = validateDated({ layer: "electron/catalog/assetLocalization.ts", tests: [] });
   assert.match(noTestsWithoutTicket.errors.join("\n"), /requires structural_ticket/);
 
-  const ghostTicket = validateDated({ layer: "none", tests: [], structural_ticket: "docs/plan/ghost.md" });
+  const ghostTicket = validateDated({ layer: "none", tests: [], structural_ticket: "docs/archive/plan/ghost.md" });
   assert.match(ghostTicket.errors.join("\n"), /structural_ticket does not exist/);
 
-  const good = validateDated({ layer: "none", tests: [], structural_ticket: "docs/plan/2026-09-08-owner.md" });
+  const good = validateDated({ layer: "none", tests: [], structural_ticket: "docs/archive/plan/2026-09-08-owner.md" });
   assert.equal(good.ok, true, good.errors.join("\n"));
 });
 

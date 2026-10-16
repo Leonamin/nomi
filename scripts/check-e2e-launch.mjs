@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 // 三片全守。`scripts/` 下那 56 个同病的一次性走查脚本已于 2026-08-11 第二批迁完
-//（见 docs/plan/2026-08-11-e2e-launcher-convergence.md），故这里加回 'scripts'——
+//（见 docs/archive/plan/2026-08-11-e2e-launcher-convergence.md），故这里加回 'scripts'——
 // 门岗范围与「已收敛的范围」对齐，不再留「扫不到的角落」。
 const SCAN_DIRS = ['tests', 'evals', 'scripts']
 /** 唯一允许调 electron.launch 的地方。 */

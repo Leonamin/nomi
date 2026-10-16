@@ -17,7 +17,7 @@ export const scriptRepo = path.resolve(here, '../../..')
 const requireHere = createRequire(import.meta.url)
 
 export const IDLE_NODE = 'gen-v2-video-idle'
-const AUDIT_IMAGES = 'docs/audit/2026-08-20-l3-f1-full-journey'
+const AUDIT_IMAGES = 'docs/archive/audit/2026-08-20-l3-f1-full-journey'
 
 export function ffmpegPath() {
   return requireHere('@ffmpeg-installer/ffmpeg').path

@@ -6,7 +6,7 @@ import { measureDisclosureHierarchy } from './_feel.mjs'
 import { FIXTURE_TEXT_MODEL_LABEL, flattenRequestText } from './agent-runtime-fixture.mjs'
 import { createRuntimeWalk, chooseAssistantModel, sendCreation, recorded, hasToolResult, waitForV4TurnIdle, CREATION_PANEL, DOCUMENT } from './agent-runtime-walk-support.mjs'
 
-const out = path.resolve('docs/plan/agent-process-tone-evidence')
+const out = path.resolve('docs/archive/plan/agent-process-tone-evidence')
 await fs.mkdir(out, { recursive: true })
 const walk = await createRuntimeWalk('agent-process-tone')
 let failure

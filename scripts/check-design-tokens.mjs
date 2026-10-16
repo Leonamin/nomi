@@ -154,7 +154,7 @@ if (transparentMixes.length > 0) {
 // CSS 自定义属性沿 **DOM 树**继承：--nomi-* / --workbench-* 的**定义**一旦写进 `.workbench-shell`
 // 之类的类作用域，portal 到 body / 挂在 app 根 / 库页的浮层就解析不到 → var() 静默失效退回继承色
 // （任务中心、库页确认卡勾勾两度实锤 rgb(201,201,201)），还会逼出「每个 portal 补挂作用域类」的桥。
-// 2026-08-24 已把两族全量收口到 :root（docs/plan/2026-08-24-workbench-token-root-scope.md）。
+// 2026-08-24 已把两族全量收口到 :root（docs/archive/plan/2026-08-24-workbench-token-root-scope.md）。
 // 本类拦回潮：只查真源层（src/electron 的 .css + tailwind.config.ts）；TSX 内联 style 是运行时
 // 参数化，放行。扫描器在 scripts/lib/scopedTokenScan.mjs，自证见 scripts/scopedTokenScan.test.mjs。
 const scopedDefs = scanScopedTokenDefinitions(

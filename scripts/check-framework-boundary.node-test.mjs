@@ -21,7 +21,7 @@ const registry = {
     id: 'demo',
     packages: ['@demo/sdk'],
     version: '1.0.0',
-    fourColumnTable: 'docs/plan/demo.md',
+    fourColumnTable: 'docs/archive/plan/demo.md',
     capabilities: [{
       id: 'session-persistence',
       provides: 'SessionManager 负责落盘',
@@ -33,7 +33,7 @@ const registry = {
 }
 
 const identity = 'demo/session-persistence/own-store::app/runtime/session.ts'
-const debtEntry = { identity, hits: 1, plan: 'docs/plan/demo.md', due: '2026-12-31' }
+const debtEntry = { identity, hits: 1, plan: 'docs/archive/plan/demo.md', due: '2026-12-31' }
 
 test('登记表缺 provides/evidence/四列表 就不合法', () => {
   assert.equal(validateRegistry(registry).length, 0)
@@ -72,14 +72,14 @@ test('已登记的债：未到期 → 绿；到期未清 → 红，并点名收�
   const expired = evaluate({ hits, baseline: { debt: [{ ...debtEntry, due: '2026-09-01' }] }, today: '2026-09-07' })
   assert.equal(expired.length, 1)
   assert.ok(expired[0].includes('已于 2026-09-01 到期'))
-  assert.ok(expired[0].includes('docs/plan/demo.md'))
+  assert.ok(expired[0].includes('docs/archive/plan/demo.md'))
 })
 
 test('债条目必须绑方案与到期日；缺一即红（登记是有时限的承诺，不是永久豁免）', () => {
   const hits = scanSources(new Map([['app/runtime/session.ts', 'writeOwnSessionFile(path)\n']]), registry)
   const noPlan = evaluate({ hits, baseline: { debt: [{ identity, hits: 1, due: '2026-12-31' }] }, today: '2026-09-07' })
   assert.ok(noPlan.some((error) => error.includes('plan 必须指向收敛方案文档')))
-  const noDue = evaluate({ hits, baseline: { debt: [{ identity, hits: 1, plan: 'docs/plan/demo.md' }] }, today: '2026-09-07' })
+  const noDue = evaluate({ hits, baseline: { debt: [{ identity, hits: 1, plan: 'docs/archive/plan/demo.md' }] }, today: '2026-09-07' })
   assert.ok(noDue.some((error) => error.includes('due 必须是 YYYY-MM-DD')))
 })
 
@@ -137,7 +137,7 @@ test('能力词启发式：词表为空时一句话都不说（不许靠空词�
 
 const conformanceRegistry = {
   capabilityInventory: { packages: ['@demo/sdk', '@other/ui'] },
-  frameworks: [{ id: 'demo', packages: ['@demo/sdk'], fourColumnTable: 'docs/plan/demo.md', capabilities: [] }],
+  frameworks: [{ id: 'demo', packages: ['@demo/sdk'], fourColumnTable: 'docs/archive/plan/demo.md', capabilities: [] }],
 }
 
 const goodDoc = ['## 参考实现逐层对照', ...REFERENCE_CONFORMANCE_LAYERS,
@@ -160,14 +160,14 @@ test('缺字段：登记框架没有 referenceConformance、在用的包没登�
 })
 
 test('登记成债：绑了 doc/why/未过期的 due → 绿；到期未交 → 红并点名落点', () => {
-  const owed = { id: 'demo', doc: 'docs/research/demo-conformance.md', due: '2026-12-31', why: '正在写' }
-  const other = { id: '@other/ui', doc: 'docs/research/ui.md', due: '2026-12-31', why: '排在后面' }
+  const owed = { id: 'demo', doc: 'docs/archive/research/demo-conformance.md', due: '2026-12-31', why: '正在写' }
+  const other = { id: '@other/ui', doc: 'docs/archive/research/ui.md', due: '2026-12-31', why: '排在后面' }
   const registry = { ...conformanceRegistry, referenceConformanceDebt: [owed, other] }
   assert.deepEqual(runConformance(registry).errors, [])
 
   const expired = runConformance({ ...registry, referenceConformanceDebt: [{ ...owed, due: '2026-09-01' }, other] })
   assert.ok(expired.errors.some((error) => error.includes('已于 2026-09-01 到期仍未交')
-    && error.includes('docs/research/demo-conformance.md')))
+    && error.includes('docs/archive/research/demo-conformance.md')))
 
   const noDue = runConformance({ ...registry, referenceConformanceDebt: [{ id: 'demo', doc: 'd.md', why: 'x' }, other] })
   assert.ok(noDue.errors.some((error) => error.includes('due 必须是 YYYY-MM-DD')))
@@ -176,14 +176,14 @@ test('登记成债：绑了 doc/why/未过期的 due → 绿；到期未交 → 
 test('文档路径不存在 → 红（指不到的文档等于没写）', () => {
   const registry = { ...conformanceRegistry, frameworks: [{
     ...conformanceRegistry.frameworks[0],
-    referenceConformance: { doc: 'docs/research/gone.md', verifiedAt: '2026-09-07', upstreamVersion: '1.0.0' },
+    referenceConformance: { doc: 'docs/archive/research/gone.md', verifiedAt: '2026-09-07', upstreamVersion: '1.0.0' },
   }], referenceConformanceDebt: [{ id: '@other/ui', doc: 'x.md', due: '2026-12-31', why: 'x' }] }
   const { errors } = runConformance(registry, { docExists: () => false })
-  assert.ok(errors.some((error) => error.includes('docs/research/gone.md 不存在')))
+  assert.ok(errors.some((error) => error.includes('docs/archive/research/gone.md 不存在')))
 })
 
 test('文档缺层或缺列 → 红；裁剪只能从九层里选，自造一层也红', () => {
-  const base = { doc: 'docs/research/demo.md', verifiedAt: '2026-09-07', upstreamVersion: '1.0.0' }
+  const base = { doc: 'docs/archive/research/demo.md', verifiedAt: '2026-09-07', upstreamVersion: '1.0.0' }
   const debt = [{ id: '@other/ui', doc: 'x.md', due: '2026-12-31', why: 'x' }]
   const withConformance = (referenceConformance) => ({
     ...conformanceRegistry,
@@ -209,10 +209,10 @@ test('两边同时登记 → 红（不许既欠着债又声称已交）', () => 
   const registry = {
     ...conformanceRegistry,
     frameworks: [{ ...conformanceRegistry.frameworks[0], referenceConformance: {
-      doc: 'docs/research/demo.md', verifiedAt: '2026-09-07', upstreamVersion: '1.0.0',
+      doc: 'docs/archive/research/demo.md', verifiedAt: '2026-09-07', upstreamVersion: '1.0.0',
     } }],
     referenceConformanceDebt: [
-      { id: 'demo', doc: 'docs/research/demo.md', due: '2026-12-31', why: 'x' },
+      { id: 'demo', doc: 'docs/archive/research/demo.md', due: '2026-12-31', why: 'x' },
       { id: '@other/ui', doc: 'x.md', due: '2026-12-31', why: 'x' },
     ],
   }
@@ -233,7 +233,7 @@ test('版本落后只出 warning，不进 errors —— advisory 若也算红，
   const registry = {
     ...conformanceRegistry,
     frameworks: [{ ...conformanceRegistry.frameworks[0], referenceConformance: {
-      doc: 'docs/research/demo.md', verifiedAt: '2026-09-07', upstreamVersion: '0.84.3',
+      doc: 'docs/archive/research/demo.md', verifiedAt: '2026-09-07', upstreamVersion: '0.84.3',
     } }],
     referenceConformanceDebt: [{ id: '@other/ui', doc: 'x.md', due: '2026-12-31', why: 'x' }],
   }

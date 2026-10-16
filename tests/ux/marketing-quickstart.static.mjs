@@ -39,7 +39,7 @@ const server = createServer((req, res) => {
 
 await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve))
 const { port } = server.address()
-// 2026-09-27 起快速上手由官网生成器出中英两页（docs/plan/2026-09-27-promo-0.22-site-readme.md）。
+// 2026-09-27 起快速上手由官网生成器出中英两页（docs/archive/plan/2026-09-27-promo-0.22-site-readme.md）。
 const pages = [
   { name: 'zh', url: `http://127.0.0.1:${port}/quickstart.html`, title: 'Nomi 快速上手', h1: '从下载， 到第一个镜头。' },
   { name: 'en', url: `http://127.0.0.1:${port}/en/quickstart.html`, title: 'Nomi quick start', h1: 'From download to your first shot.' },

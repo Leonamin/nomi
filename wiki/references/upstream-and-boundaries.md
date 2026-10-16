@@ -13,7 +13,7 @@ okf_version: "0.1"
 ## 무엇을 어디서 읽나
 
 - [저장소 문서 지도](../../docs/README.md)는 기존 문서의 주제별 진입점이다. TODO, 사용자 발화, 원시 조사 자료 일부는 유지자 전용 위치로 옮겨졌다고 명시하므로 저장소 안에 있다고 가정하지 않는다.
-- [이전 아키텍처 장부](../../docs/ARCHITECTURE-NOW.md)는 2026-09-26 기준의 상속 기록이다. 현재 웹 구조는 [웹 호스트 개념](../concepts/web-host.md)에서 시작한다. [용어집](../../docs/GLOSSARY.md)은 검사 도구가 읽는 규범 어휘의 원본이므로 경로를 유지한다.
+- [이전 아키텍처 장부](../../docs/archive/guides/ARCHITECTURE-NOW.md)는 2026-09-26 기준의 상속 기록이다. 현재 웹 구조는 [웹 호스트 개념](../concepts/web-host.md)에서 시작한다. [용어집](../../docs/GLOSSARY.md)은 검사 도구가 읽는 규범 어휘의 원본이므로 경로를 유지한다.
 - 위키의 [개념](../concepts/index.md)과 [가이드](../guides/index.md)는 검증된 현재 fork 사용 지식의 정본이다. 기존 docs 자료를 그대로 복사해 두 정본을 만들지 않는다.
 - `docs/engineering/`, `docs/fixes/`의 JSON·스키마·규칙 계약과 생성 파일은 도구가 읽는 원본이다. 수정이나 재배치 전에 소유 도구를 확인하고 경로와 형식을 보존한다.
 

@@ -243,7 +243,7 @@ for (let i = 0; i < SHOTS.length; i += 1) {
 }
 
 // ══ 幕 6：收产物 + 判据对账 ═════════════════════════════════════
-const outDir = path.join(repoRoot, 'docs/audit/2026-08-20-l3-f1-full-journey')
+const outDir = path.join(repoRoot, 'docs/archive/audit/2026-08-20-l3-f1-full-journey')
 fs.rmSync(outDir, { recursive: true, force: true })
 fs.mkdirSync(outDir, { recursive: true })
 const collected = []

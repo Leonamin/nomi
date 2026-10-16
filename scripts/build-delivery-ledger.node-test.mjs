@@ -23,7 +23,7 @@ import { fileURLToPath } from 'node:url'
 import { COMMITTED_ARTIFACTS, LOCAL_ARTIFACTS } from './build-delivery-ledger.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const PLAN_ROOTS = ['docs/plan', 'docs/superpowers/plans']
+const PLAN_ROOTS = ['docs/plan', 'docs/archive/superpowers/plans']
 
 const doc = (relativePath, title, status = '🚧') => ({ relativePath, status, title })
 

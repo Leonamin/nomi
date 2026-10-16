@@ -5,7 +5,7 @@
  * 硬零，不做棘轮：棘轮只管总数，管不住「删掉一个合法技能、加进一个非法技能」——
  * 这里要的是每个技能各自合规，是一一对应关系。
  *
- * 方案：docs/plan/2026-09-07-skill-format-convergence.md
+ * 方案：docs/archive/plan/2026-09-07-skill-format-convergence.md
  */
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -49,7 +49,7 @@ if (errors.length > 0) {
   for (const error of errors) {
     console.error(`  [${error.rule}] ${error.root}/${error.dirName}：${error.message}`)
   }
-  console.error('\n  格式规范见 docs/skill-pack-format.md；为什么收敛成一份见 docs/plan/2026-09-07-skill-format-convergence.md')
+  console.error('\n  格式规范见 docs/skill-pack-format.md；为什么收敛成一份见 docs/archive/plan/2026-09-07-skill-format-convergence.md')
   process.exit(1)
 }
 

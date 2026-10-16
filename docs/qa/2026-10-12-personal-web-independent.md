@@ -89,4 +89,4 @@
 - 상속된 design-lab 실패는 baseline/branch 각 152개, 동일 실패 이름 및 정적 diff 이미지 143개 동일의 기록이다. 승인된 advisory failure이며 green 검사로 바꾸지 않는다.
 - 기능·증거 인수 PASS와 CI/PR/merge receipt를 분리한다. 본 보고서 시점의 hosted CI 전체 성공과 병합은 독립 인수선에서 확인하지 않았다. 조정선이 exact head CI와 merge SHA 수령을 완료하기 전 저장소 규칙의 ‘已解决’ 상태로 확대하지 않는다.
 
-관련 문서: [설계·검증 계획](../plan/2026-10-12-personal-web.md), [구현선 실제 검증 기록](2026-10-12-personal-web.md).
+관련 문서: [설계·검증 계획](../archive/plan/2026-10-12-personal-web.md), [구현선 실제 검증 기록](2026-10-12-personal-web.md).

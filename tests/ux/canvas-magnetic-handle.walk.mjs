@@ -15,7 +15,7 @@ import { findCanvasBlankPoint, findEdgeHitPoint, findNodeHitPoint, readCanvasVie
 import { createCanvasPerformanceFixture } from './fixtures/canvas-performance-fixture.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
-const evidence = path.join(root, 'docs/plan/canvas-magnetic-handle-evidence')
+const evidence = path.join(root, 'docs/archive/plan/canvas-magnetic-handle-evidence')
 const phase = process.argv.includes('--red') ? 'red' : 'restored'
 const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'nomi-magnetic-'))
 const fixture = createCanvasPerformanceFixture({ projectsDir: path.join(temp, 'projects'), scale: 'S', projectName: '磁吸连线验收' })

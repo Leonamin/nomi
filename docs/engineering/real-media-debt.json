@@ -6,7 +6,7 @@
       "id": "import-real-media",
       "class": "import",
       "why": "导入链路今天一条自动化测试都没走过——夹具绕过导入直接写快照。用户 2026-09-14 撞到的第一件事（视频和图片导入不了画布）正落在这条路上",
-      "plan": "先按 P2 跑 node scripts/door-map.mjs 数清素材进画布的全部门（拖拽 / 文件选择 / 素材库 / Agent 工具 / MCP 导入），门表进根因合同的 doors；再建 tests/ux/real-media-import.walk.mjs 用真实 4K 素材走真实导入入口。2026-10-01 因 0.24 计划调整重新登记（登记日 09-14 → 10-01，到期 10-14 → 10-31，门岗上限 30 天不变）：绑 0.24 测试设施那一批（测试提速与真实任务测试集，docs/plan/2026-10-01-tech-stack-line-0.24.md 同期），到期若仍未建，再带理由重登记一次",
+      "plan": "先按 P2 跑 node scripts/door-map.mjs 数清素材进画布的全部门（拖拽 / 文件选择 / 素材库 / Agent 工具 / MCP 导入），门表进根因合同的 doors；再建 tests/ux/real-media-import.walk.mjs 用真实 4K 素材走真实导入入口。2026-10-01 因 0.24 计划调整重新登记（登记日 09-14 → 10-01，到期 10-14 → 10-31，门岗上限 30 天不变）：绑 0.24 测试设施那一批（测试提速与真实任务测试集，docs/archive/plan/2026-10-01-tech-stack-line-0.24.md 同期），到期若仍未建，再带理由重登记一次",
       "owner": "canvas-media-rework",
       "registeredAt": "2026-10-01",
       "due": "2026-10-31"

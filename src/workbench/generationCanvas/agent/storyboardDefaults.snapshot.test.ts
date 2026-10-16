@@ -21,9 +21,9 @@ describe('all archetype storyboard defaults', () => {
     }
     catalog.options = all
     snapshot.all = { image: await resolveStoryboardImageDefault(), video: await resolveStoryboardVideoDefault() }
-    const path = 'docs/plan/storyboard-anchor-policy-evidence/defaults-before.json'
+    const path = 'docs/archive/plan/storyboard-anchor-policy-evidence/defaults-before.json'
     if (process.env.ANCHOR_CAPTURE_DEFAULTS === '1') writeFileSync(path, JSON.stringify(snapshot, null, 2) + '\n')
     expect(snapshot).toEqual(JSON.parse(readFileSync(path, 'utf8')))
-    if (process.env.ANCHOR_CAPTURE_DEFAULTS === 'after') writeFileSync('docs/plan/storyboard-anchor-policy-evidence/defaults-after.json', JSON.stringify(snapshot, null, 2) + '\n')
+    if (process.env.ANCHOR_CAPTURE_DEFAULTS === 'after') writeFileSync('docs/archive/plan/storyboard-anchor-policy-evidence/defaults-after.json', JSON.stringify(snapshot, null, 2) + '\n')
   })
 })

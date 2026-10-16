@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 包体审计（2026-09-28，发版审计 A，docs/plan/2026-09-28-release-audit.md §3）。
+// 包体审计（2026-09-28，发版审计 A，docs/archive/plan/2026-09-28-release-audit.md §3）。
 //
 // 仓库里一百多道门岗看的都是源码；用户拿到的是安装包。0.22.4 Windows 版装完 1.2GB、app.asar 654MB，
 // 其中界面代码只有 30MB——没有任何一道检查看过「包里到底装了什么」。这个脚本看的就是那一份：
@@ -38,7 +38,7 @@ const TOP_PACKAGES = 30
 
 /**
  * 禁带文件的路径规则（原生二进制另按文件头判）。每条都对应 package.json build.files 里的一条排除，
- * 为什么能排除写在 docs/plan/2026-09-28-release-audit.md §8「查用途的结论」。
+ * 为什么能排除写在 docs/archive/plan/2026-09-28-release-audit.md §8「查用途的结论」。
  */
 export const FORBIDDEN_PATH_RULES = Object.freeze([
   // 运行时没有任何代码读 source map（没有 setSourceMapsEnabled / --enable-source-maps / source-map-support）。

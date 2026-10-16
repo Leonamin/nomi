@@ -180,7 +180,7 @@ try {
   await imageNode.click({ position: { x: 120, y: 120 } })
   await expect(imageNode.locator('.generation-canvas-v2-node__composer-card')).toBeVisible()
   // 2026-09-10 起浮框**刻意不再避让障碍**（自研的「最大空矩形避让搜索」已连同 composerObstaclePlacement.ts
-  // 一起删掉；出处见 docs/research/2026-09-10-node-composer-placement/prior-art.md）；2026-09-25 起连视口
+  // 一起删掉；出处见 docs/archive/research/2026-09-10-node-composer-placement/prior-art.md）；2026-09-25 起连视口
   // clamp / 翻转也删了，位置只是「节点尺寸 + 画布缩放」的函数。所以旧的「参数卡
   // 不得与任何非选中节点相交」描述的是已经删掉的那套行为，留着只会把「今天碰巧避开了」钉成不变量。
   // 换成守新形态下真正该成立的两条，两条都跟这一幕强相关（画布上正好摊着展开的雨夜参考组）：

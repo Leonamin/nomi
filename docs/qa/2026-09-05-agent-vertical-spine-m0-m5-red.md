@@ -106,4 +106,4 @@ This branch intentionally stops at the red contract. It is not a production comp
 
 ## Persistent status ledger
 
-The durable single source of milestone status is [`docs/plan/2026-09-05-m0-m5-vertical-spine-status.md`](../plan/2026-09-05-m0-m5-vertical-spine-status.md). It keeps the full goal intact—全量盘点与安全收敛、Agent 核心 M0-M5 真实 `patch_shots` 闭环、MCP/新版分镜表/画布证据保留、TikHub/视频后置—even though this branch only records the first red seam.
+The durable single source of milestone status is [`docs/plan/2026-09-05-m0-m5-vertical-spine-status.md`](../archive/plan/2026-09-05-m0-m5-vertical-spine-status.md). It keeps the full goal intact—全量盘点与安全收敛、Agent 核心 M0-M5 真实 `patch_shots` 闭环、MCP/新版分镜表/画布证据保留、TikHub/视频后置—even though this branch only records the first red seam.

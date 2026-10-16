@@ -18,7 +18,7 @@
  * 边界（诚实标注）：
  *   · 索引补齐把链接追加到一个显式的「🤖 自动收录（待人工归位）」区，不假装知道它属于哪个主题；
  *     人再把它挪到对的表里就行——只减不增的棘轮由 check:docs-index 继续守。
- *   · docs/superpowers/plans/ 的索引是 `build-delivery-ledger.mjs` 的生成物（禁止手改），
+ *   · docs/archive/superpowers/plans/ 的索引是 `build-delivery-ledger.mjs` 的生成物（禁止手改），
  *     所以那一族的补齐 = 重跑生成器，本脚本不去追加行。
  *   · 判定「哪些没收录 / 哪些没状态」全部复用门岗自己的库（docs-index-lib / doc-status-lib），
  *     不另写一份扫描——两份判据一旦漂移，会出现「补齐完门岗还红」的死循环。
@@ -53,6 +53,7 @@ function readBaselineList(repoRoot, file, keys) {
 /** 一篇未收录文档该由哪份索引收；生成物索引返回 null（它的补齐是重跑生成器）。 */
 export function indexOwnerFor(relativePath) {
   if (relativePath.startsWith('docs/plan/')) return 'docs/plan/INDEX.md'
+  if (relativePath.startsWith('docs/archive/plan/')) return 'docs/archive/plan/INDEX.md'
   if (relativePath.startsWith('docs/lessons/')) return 'docs/lessons/INDEX.md'
   return null
 }
@@ -149,7 +150,7 @@ function main() {
   for (const file of result.indexed) console.log(`  🔗 ${relative(file)}`)
   if (result.unrepairable.length > 0) {
     // fail-closed：补不了就必须有人看见，而不是让 main 上的验证步骤给出一句莫名其妙的红。
-    console.error(`✖ ${result.unrepairable.length} 篇文档需手工收录（自动补齐只写 docs/plan 与 docs/lessons；wiki 由直接父目录 index.md 管理）：`)
+    console.error(`✖ ${result.unrepairable.length} 篇文档需手工收录（自动补齐只写 live/archive plan 与 docs/lessons；wiki 由直接父目录 index.md 管理）：`)
     for (const file of result.unrepairable) console.error(`  ${relative(file)}`)
     console.error('  → 手动收录，或在 scripts/repair-doc-gates.mjs 的 indexOwnerFor 里补一条归属规则')
     process.exit(1)

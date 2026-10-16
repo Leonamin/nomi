@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // `pnpm run typecheck` 的执行体：把五份类型检查**并发**跑完再汇总。
 //
-// 2026-10-01 用户按门岗账本（docs/audit/2026-10-01-gate-ledger.md）拍板「`check:test-types` 与 `typecheck`
+// 2026-10-01 用户按门岗账本（docs/archive/audit/2026-10-01-gate-ledger.md）拍板「`check:test-types` 与 `typecheck`
 // 合成一次 tsc」。账本数据：这两项是 Contracts 里最贵的两项（55 秒 + 50 秒，各自串行，约占单次 394 秒的 27%），
 // 而且两个都在编译同一批 src 文件。
 //

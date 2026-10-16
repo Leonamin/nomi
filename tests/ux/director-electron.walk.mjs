@@ -1,4 +1,4 @@
-// 导演台切换门 · Electron 真机走查（docs/plan/2026-09-03-director-cutover-gate.md §7 C7）。
+// 导演台切换门 · Electron 真机走查（docs/archive/plan/2026-09-03-director-cutover-gate.md §7 C7）。
 // 用法: node tests/ux/director-electron.walk.mjs   （隔离 userData + 临时 projects；零额度，不碰任何生成 API）
 // 走的是真实用户任务，不是功能探索：
 //   ① 项目库「新建空白项目」→ 生成区 → 工具栏加 图片 / 视频 / 导演台 三个节点 → 「进入导演台」→ 全屏壳

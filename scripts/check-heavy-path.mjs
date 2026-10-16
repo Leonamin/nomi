@@ -134,7 +134,7 @@ const RULES = [
       // 「in-flight 的 pull 解析出 done → 延迟 close 打在已关闭的 controller 上」→ 从 microtask 抛出，
       // call site 的 try/catch 一律接不住。该缺陷在 undici 6.19.8 / 7.29.0 / 8.10.0 / main 中一致存在，
       // 升 Electron 修不掉——唯一的解是别把流交出去。详见
-      // docs/plan/2026-08-24-local-protocol-stream-ownership.md。
+      // docs/archive/plan/2026-08-24-local-protocol-stream-ownership.md。
       //
       // 同族的第二条路：`Readable.toWeb(fs.createReadStream(...))`。它绕开了 undici，
       // 却换成 Node 自己的适配器——nodejs/node#64529「toWeb(): 背压恢复期间被取消会抛

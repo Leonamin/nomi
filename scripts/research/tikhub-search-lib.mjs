@@ -14,7 +14,7 @@
  *
  * ── 契约来源（R5，2026-09-06 实读）──
  * `https://api.tikhub.io/openapi.json`（V5.3.2，spec 自述更新于 2026-06-22）。
- * 逐字段对账写在 `docs/research/tikhub-api-notes.md`；那份文档是本文件的上游，
+ * 逐字段对账写在 `docs/archive/research/tikhub-api-notes.md`；那份文档是本文件的上游，
  * 端点/参数改了先改文档再改这里。
  */
 

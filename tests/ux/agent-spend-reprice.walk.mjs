@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // 真实用户任务（R13/R16）：**在付费确认卡上改一个参数，到底发生了什么。**
 //
-// 2026-09-11（P1.1b）之前这一段有两个窟窿，都写在 docs/plan/2026-09-11 的「已知缺口」里：
+// 2026-09-11（P1.1b）之前这一段有两个窟窿，都写在 docs/archive/plan/2026-09-11 的「已知缺口」里：
 //   · 改完参数价格不动（用户按下去时按钮上印的还是旧的数）；
 //   · 卡体直接绑着画布上那个草稿节点，于是**还没答应花钱，画布已经被改了**。
 //
@@ -121,7 +121,7 @@ try {
   // （2026-09-11 真机探针实测）。`generationProviderBootstrap.ts` 只为 **`apimart` 这一个
   // vendorKey** 装配语义生成 provider，别的供应商一律 `providerReady:false`；本夹具的供应商叫
   // `agent-runtime-loopback`，所以它永远过不了那道门。**这是夹具的边界，不是本轮改动的回归**
-  // （`docs/plan/2026-09-11-permission-p1-implementation.md` 已知缺口 ⑥，那里记着完整现场）。
+  // （`docs/archive/plan/2026-09-11-permission-p1-implementation.md` 已知缺口 ⑥，那里记着完整现场）。
   //
   // 同一次探针还证实了本轮真正要证的那件事：主进程投影里这一镜的价就是 `0.5`
   // （`candidateRevision:2`、`parameters.size:"1536x1024"`），与卡上印的 `CNY 0.50` 分毫不差——

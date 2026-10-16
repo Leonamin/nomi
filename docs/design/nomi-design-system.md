@@ -207,7 +207,7 @@ Script → Generate → Edit → Preview → Export
 
 同类别变体超过 4 个时，默认仅显示「类别 · N 项 ▸」，展开才展示全部选择。卡片按类别成组，列表折叠为一行；≤4 项直接展示。数量来自当前筛选结果，搜索不能丢掉匹配项。原生 disclosure 支持键盘展开/收起，不把摘要做成无法点击的标签。
 
-类别来自条目已声明的 `curation.group` 或公开包 `sourceId/source`，不靠标题猜测、不将未分类的用户内容混成一包。共享规则与阈值唯一 owner：`src/workbench/library/libraryGroups.ts`；普通列表/卡片复用 `LibraryGroup.tsx`，虚拟列表和现有菜单同用分组投影。C20 在发现列表的这一表现与 [信息密度审计](../plan/2026-09-09-info-density-audit.md) 同属「同类条目收束」，不混用 Agent 事件协议。
+类别来自条目已声明的 `curation.group` 或公开包 `sourceId/source`，不靠标题猜测、不将未分类的用户内容混成一包。共享规则与阈值唯一 owner：`src/workbench/library/libraryGroups.ts`；普通列表/卡片复用 `LibraryGroup.tsx`，虚拟列表和现有菜单同用分组投影。C20 在发现列表的这一表现与 [信息密度审计](../archive/plan/2026-09-09-info-density-audit.md) 同属「同类条目收束」，不混用 Agent 事件协议。
 
 ## 1.6 控件交互契约（强制 · 有门岗）
 
@@ -861,7 +861,7 @@ mark 是 **28×28 viewBox 的圆角方块**：深色底（`oklch(0.22 0.01 80)` 
 
 ### 4.5 通知：原地 → 状态 → toast → 必须决定
 
-文件：`src/ui/notificationPolicy.ts`、`src/ui/toast.tsx`、`src/utils/showUndoToast.ts`。依据与全量清单：[通知策略](../plan/2026-09-09-notification-policy.md)。
+文件：`src/ui/notificationPolicy.ts`、`src/ui/toast.tsx`、`src/utils/showUndoToast.ts`。依据与全量清单：[通知策略](../archive/plan/2026-09-09-notification-policy.md)。
 
 **先问有没有行动价值，再问用户正在看哪里。**
 

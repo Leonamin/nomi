@@ -9,4 +9,4 @@
 
 **怎么用**：检查直接、prepared 两种入口；用注入平台测试未启动任何进程；错误码集中映射并检查中英文穷尽；不支持时不要显示已启用或未获取模型清单。恢复支持前必须验证真实 Windows 后代进程清理，模拟平台测试不能替代 RC。
 
-**出处**：[修复计划](../plan/2026-09-08-antigravity-cli-windows.md)、electron/ai/antigravityWindows.test.ts、src/ui/onboarding/AntigravityConnectionCard.test.ts。
+**出处**：[修复计划](../archive/plan/2026-09-08-antigravity-cli-windows.md)、electron/ai/antigravityWindows.test.ts、src/ui/onboarding/AntigravityConnectionCard.test.ts。

@@ -3,7 +3,7 @@
 //
 // 最要紧的一条是「没登记就列不出来」的红绿对照：用 laneContextFit 的真实场景——在 electron/agentLane/ 新建一个
 // 裁剪上下文的文件——证明清单里能看到 pi 的 context-compaction；把这条登记拿掉，清单里就没有了。
-// 补登记之前这条断言是红的，这就是它的价值（见 docs/research/2026-10-01-ai-collaboration-rules/report.md §3 缺的那张清单）。
+// 补登记之前这条断言是红的，这就是它的价值（见 docs/archive/research/2026-10-01-ai-collaboration-rules/report.md §3 缺的那张清单）。
 import assert from 'node:assert/strict'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'

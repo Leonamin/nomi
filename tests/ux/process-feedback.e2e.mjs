@@ -12,7 +12,7 @@ async function advance(page, stage) {
   }, stage)
 }
 
-const evidence = path.resolve('docs/plan/process-feedback-evidence/neighbor-placement/lab')
+const evidence = path.resolve('docs/archive/plan/process-feedback-evidence/neighbor-placement/lab')
 await fs.mkdir(evidence, { recursive: true })
 assertLabPortOwnership('visual')
 const origin = labOriginFor('visual')

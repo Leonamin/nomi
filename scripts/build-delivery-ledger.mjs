@@ -2,7 +2,7 @@
 /**
  * 交付账本：把「已拍板但没交付」变成一份看得见、且每天会顶到眼前的清单。
  *
- * 为什么要它：2026-08-27 实测，docs/plan/INDEX.md 里 30 篇 🚧 + 18 篇 📋 中，
+ * 为什么要它：2026-08-27 实测，docs/archive/plan/INDEX.md 里 30 篇 🚧 + 18 篇 📋 中，
  * 有 37 篇停滞超过 60 天、中位数 81 天。「方案合进主干就被忘掉」不是风险，是
  * 已经发生的事实。而当时的应对是「PR 先不合」——那只是把待办挪进一个更差的队列：
  * 不可搜索（本轮两次重复造轮子都由此而来）、会烂、方案之间无法互相引用。
@@ -26,7 +26,7 @@
  *
  * 产物分两类（同源同一次扫描，所以放一个脚本）：
  *   committed（进 git，受 check:ledger 逐字节把关，必须可合并）：
- *     docs/superpowers/plans/INDEX.md  —— 纯排序清单、无聚合量，两边各加一行合并后仍正确；
+ *     docs/archive/superpowers/plans/INDEX.md  —— 纯排序清单、无聚合量，两边各加一行合并后仍正确；
  *                                         且它是 check:docs-index 的索引源，载重不可删。
  *   local（不进 git，随手生成随手看）：
  *     docs/DELIVERY-LEDGER.md          —— 欠账账本，含聚合量，故不可 commit（见上）。
@@ -53,7 +53,7 @@ import {
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const OUTPUT = path.join(repoRoot, 'docs/DELIVERY-LEDGER.md')
-const PLANS_INDEX = path.join(repoRoot, 'docs/superpowers/plans/INDEX.md')
+const PLANS_INDEX = path.join(repoRoot, 'docs/archive/superpowers/plans/INDEX.md')
 const BRIEF_TOP_N = 3
 
 function readDocuments() {
@@ -96,13 +96,13 @@ function section(title, rows, emptyNote) {
 
 function renderPlansIndex(documents) {
   const rows = documents
-    .filter((doc) => doc.relativePath.startsWith('docs/superpowers/plans/'))
+    .filter((doc) => doc.relativePath.startsWith('docs/archive/superpowers/plans/'))
     .sort((a, b) => a.relativePath.localeCompare(b.relativePath))
   return [
-    '# docs/superpowers/plans 索引',
+    '# docs/archive/superpowers/plans 索引',
     '',
     '> **本文件由 `scripts/build-delivery-ledger.mjs` 生成，禁止手改**；加了文档就跑 `pnpm run gen:ledger`。',
-    '> 跨阶段总纲 / master plan 住这里；功能级方案在 [`docs/plan/`](../../plan/INDEX.md)。',
+    '> 跨阶段总纲 / master plan 住这里；功能级方案在 [`docs/archive/plan/`](../../plan/INDEX.md)。',
     '> **当前主文档**：[Nomi 统一 Agent 总体方案](2026-08-24-unified-agent-master-plan.md)（含 §5.1「AI 剪辑三步」E1/E2/E3）。',
     '> 「标题」取自各文件 H1，未二次概括；状态为「—」表示尚未登记。',
     '> 想看「已拍板但没交付」的全量欠账：跑 `pnpm run ledger:brief`（一行摘要）或 `pnpm run gen:ledger`',
@@ -180,13 +180,13 @@ function render(documents) {
       '</details>',
       '',
     ]),
-    `- 合计扫描：${documents.length} 篇方案文档（docs/plan/ 与 docs/superpowers/plans/，不含 INDEX.md）`,
+    `- 合计扫描：${documents.length} 篇方案文档（live docs/plan/、archive/plan/ 与 archive/superpowers/plans/，不含 INDEX.md）`,
     '',
     '---',
     '',
     '## 它怎么每天顶到眼前',
     '',
-    '账本躺着没人看就等于没有——`docs/plan/INDEX.md` 的状态列就是前车之鉴：数据一直都在，',
+    '账本躺着没人看就等于没有——`docs/archive/plan/INDEX.md` 的状态列就是前车之鉴：数据一直都在，',
     '37 篇停滞 60 天+ 照样发生。**salience 才是关键。**',
     '',
     '**已接**：L0 hook（`scripts/claude-hooks/self-check.sh`，每条用户消息自动注入）会跑 `--brief`，',
@@ -223,7 +223,7 @@ function brief(documents) {
  * renderer 一旦加进来，测试立刻翻红。理由见文件头设计要点 4。
  */
 export const COMMITTED_ARTIFACTS = [
-  { label: 'docs/superpowers/plans/INDEX.md', file: PLANS_INDEX, renderer: renderPlansIndex },
+  { label: 'docs/archive/superpowers/plans/INDEX.md', file: PLANS_INDEX, renderer: renderPlansIndex },
 ]
 
 /**

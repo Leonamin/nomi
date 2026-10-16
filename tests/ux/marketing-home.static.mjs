@@ -3,7 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 // 官网首页 + 快速上手 + README 的静态合同。
-// 2026-09-27 用户拍板 0.22 改版（docs/plan/2026-09-27-promo-0.22-site-readme.md）：主张换成「商业级体验，模型按原价」，
+// 2026-09-27 用户拍板 0.22 改版（docs/archive/plan/2026-09-27-promo-0.22-site-readme.md）：主张换成「商业级体验，模型按原价」，
 // 功能段播放宣传片对应的秒数，README 的微信二维码从头图之前挪到「社区」一节。
 // 下载直链、macOS 安全放行、无 JS 兜底、语言偏好、SEO、二维码与 README 同图这些功能/安全断言沿用旧版，不许放松。
 

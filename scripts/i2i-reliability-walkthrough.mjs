@@ -1,4 +1,4 @@
-// R13 真机走查：图生图可靠性三层修复（docs/plan/2026-07-06-i2i-reference-reliability.md）。
+// R13 真机走查：图生图可靠性三层修复（docs/archive/plan/2026-07-06-i2i-reference-reliability.md）。
 // A（存量自愈）：种一份 v4 catalog（老中转 image 条目：size/quality/n + 只有 t2i mapping）→ 启动
 //    → 断言磁盘 catalog 升到 v5 且补了 image_edit mapping + supportsReferenceImages + 比例/清晰度
 //    → UI 上该模型的参考槽 + 清晰度真的出现（此前根本不渲染）。

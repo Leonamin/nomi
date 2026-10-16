@@ -1,6 +1,6 @@
 # 计划卡与技能 chip 修复后的真机截图（2026-09-25，Windows 11，开发构建）
 
-对应方案 [2026-09-24-stale-tool-name-lists](../../plan/2026-09-24-stale-tool-name-lists.md)。
+对应方案 [2026-09-24-stale-tool-name-lists](../../archive/plan/2026-09-24-stale-tool-name-lists.md)。
 
 | 图 | 看什么 |
 |---|---|

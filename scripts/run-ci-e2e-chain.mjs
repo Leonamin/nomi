@@ -45,7 +45,7 @@ export const CI_E2E_CHAIN = Object.freeze([
 
 /**
  * 走查会把**已跟踪的证据文件**重写掉（canvas-critical 跑完 outputs/canvas-card-stack-20260827/*.png
- * 与 docs/plan/…-triage-board-evidence/*.png 会变，实测 677KB → 184KB）。
+ * 与 docs/archive/plan/…-triage-board-evidence/*.png 会变，实测 677KB → 184KB）。
  * 这堆脏东西很容易被顺手 `git add -A` 带进提交，而它和本次改动毫无关系。
  * 所以跑完点名说出来——由人决定是留证据还是 `git checkout --`。
  */

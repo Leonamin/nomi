@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import test from 'node:test'
 
 const cases = JSON.parse(readFileSync(new URL('./cases.json', import.meta.url), 'utf8'))
-const plan = readFileSync(new URL('../../../docs/plan/2026-09-08-g1-use-case-suite.md', import.meta.url), 'utf8')
+const plan = readFileSync(new URL('../../../docs/archive/plan/2026-09-08-g1-use-case-suite.md', import.meta.url), 'utf8')
 const fields = [
   'id', 'title', 'dimension', 'friction', 'user_quote', 'expected_experience',
   'surfaces', 'inputs', 'capabilities', 'status', 'status_reason', 'gaps', 'evidence', 'r30', 'budget_cny', 'emotion_log',

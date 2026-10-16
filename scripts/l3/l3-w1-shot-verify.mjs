@@ -164,7 +164,7 @@ if (vid) {
 } else { console.log('（无可用视频模型，视频镜跳过——如实记录）') }
 
 // ── 产物收集（供人眼 Read）────────────────────────────────────────
-const outDir = path.join(repoRoot, 'docs/audit/2026-08-19-l3-w1-shot-verify')
+const outDir = path.join(repoRoot, 'docs/archive/audit/2026-08-19-l3-w1-shot-verify')
 fs.mkdirSync(outDir, { recursive: true })
 const collected = []
 const walk = (d) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (/\.(png|jpg|jpeg|webp)$/i.test(e.name)) collected.push(p) } }

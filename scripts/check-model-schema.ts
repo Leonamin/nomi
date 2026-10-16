@@ -3,7 +3,7 @@
  *
  * **它在解决哪个真实摩擦**：模型给分镜表写 24 行，而它看到的 schema 只说
  * 「shots 是一个由任意对象组成的数组」——25 个字段名一个都没告诉它。真实成功率
- * **0/18**（`docs/audit/2026-09-06-agent-tool-layer-audit.md` §3.2）。今天没有任何机制
+ * **0/18**（`docs/archive/audit/2026-09-06-agent-tool-layer-audit.md` §3.2）。今天没有任何机制
  * 在「写下一个空 schema」的那一刻拦住它：`z.record(z.unknown())` 编译得过、
  * 单测过、MCP 广播得出去，只有真模型会在半年后用一次失败告诉你。
  *
@@ -17,7 +17,7 @@
  * 不弱于内部 agent：
  *   · `internal` —— Agent lane 的模型可见工具面（`electron/agentLane/laneToolCatalog.ts`，注册表派生）
  *   · `mcp`      —— 对外 `tools/list` 真正广播出去的那份（`MCP_TOOL_RESOLVER`）
- * （PR A 之前还有第三个 `internal`＝harness 清单；那扇门已删，见 `docs/plan/2026-09-11-agent-tool-face-implementation.md`。）
+ * （PR A 之前还有第三个 `internal`＝harness 清单；那扇门已删，见 `docs/archive/plan/2026-09-11-agent-tool-face-implementation.md`。）
  *
  * 用法：
  *   pnpm exec tsx scripts/check-model-schema.ts                    校验（棘轮）
@@ -508,7 +508,7 @@ async function main(): Promise<void> {
     for (const { rule, detail } of added) console.error(`   · [${rule}] ${detail}`);
     console.error("");
     console.error("  这一族的失败不会在本地出现：它编译得过、单测过、广播得出去，只有真模型会用一次失败告诉你。");
-    console.error("  修法见 docs/plan/2026-09-07-agent-runtime-rebuild.md §3.2 与 §8.2。");
+    console.error("  修法见 docs/archive/plan/2026-09-07-agent-runtime-rebuild.md §3.2 与 §8.2。");
     console.error("  绝不允许把新违规追加进 model-schema-baseline.json 抬高基线。");
     process.exitCode = 1;
     return;

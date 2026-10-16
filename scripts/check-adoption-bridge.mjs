@@ -25,7 +25,7 @@ const allowlist = new Map([
     'src/workbench/timeline/addAssetToTimeline.ts',
     // 素材库→时间轴。落的是**用户自己的素材**（AssetRef：project/canvas 下的文件），
     // 不是生成产物；它连 GenerationCanvasNode 都不碰。铁律管的是「生成模块不能绕过
-    // Proposal 落轴」，用户导入自己的文件不在其内（见 docs/plan/2026-08-25-p5-e1-adoption-bridge.md §2.2）。
+    // Proposal 落轴」，用户导入自己的文件不在其内（见 docs/archive/plan/2026-08-25-p5-e1-adoption-bridge.md §2.2）。
     2,
   ],
   [

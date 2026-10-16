@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # SessionStart hook —— 新会话/恢复时，若存在 24h 内的交接卡，注入回上下文。
 # stdout 在 SessionStart 会被 harness 注入。配 handoff-write.sh 形成「自动接力」。
-# 方案：docs/plan/2026-06-21-context-handoff-and-self-iterating-control-files.md（S1）
+# 方案：docs/archive/plan/2026-06-21-context-handoff-and-self-iterating-control-files.md（S1）
 set +e
 ROOT="${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null)}"
 [ -z "$ROOT" ] && exit 0

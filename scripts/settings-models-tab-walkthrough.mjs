@@ -1,5 +1,5 @@
 // R13 真机走查：设置新增「模型」tab（2026-08-12 用户拍板）。
-// plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+// plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
 //
 // 场景：① 项目库顶栏齿轮 → 设置，左侧六个 tab（文件与保存/模型/AI 策略/自动化与权限/通用/关于）；
 //       ② 点「模型」→ 里面就是完整的接入面（已接入 / 可接入 / ComfyUI），不再是只读列表；

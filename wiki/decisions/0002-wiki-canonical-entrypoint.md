@@ -26,6 +26,6 @@ status: "accepted"
 
 ## 근거
 
-- 사용자 승인 범위, 정본 위치, 보존 원칙과 형식: [2026-10-16 Korean fork wiki plan](../../docs/plan/2026-10-16-korean-fork-wiki.md)
+- 사용자 승인 범위, 정본 위치, 보존 원칙과 형식: [2026-10-16 Korean fork wiki plan](../../docs/archive/plan/2026-10-16-korean-fork-wiki.md)
 - 현 디렉터리 색인: [wiki/index.md](../index.md), [concepts/index.md](../concepts/index.md), [decisions/index.md](index.md)
 - 확인일: 2026-10-16

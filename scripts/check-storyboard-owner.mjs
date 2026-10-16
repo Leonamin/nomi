@@ -31,7 +31,7 @@ for (const file of files) {
 //   ① UI 能设   ② 方案 schema 留得住（zod 默认丢未知键 / 工具 envelope 是 .strict()）
 //   ③ 落地路径读的是 resolver 而不是裸 `shot.params`   ④ 供应商没有该控件时诚实缺席
 // 前两段可以机器验，第三段可以机器验（禁止裸铺），第四段由档案层保证（buildPlannedNodeMeta 丢未知键）。
-// 普查表与逐格证据：docs/plan/2026-09-12-storyboard-plan-defaults-passthrough.md
+// 普查表与逐格证据：docs/archive/plan/2026-09-12-storyboard-plan-defaults-passthrough.md
 const scopeOwner = path.join(root, 'electron', 'shared', 'storyboard', 'storyboardShotScope.ts')
 const scopeSource = fs.readFileSync(scopeOwner, 'utf8')
 

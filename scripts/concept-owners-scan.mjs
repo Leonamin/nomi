@@ -339,7 +339,7 @@ export function collectDoors({ files, read, symbols }) {
 
 /**
  * 已知的身份维度。**不是随便一个字段名**——这些是「认错了就会把另一个项目/窗口/会话当成自己」的那几个
- * （审计 docs/audit/2026-09-17-ownership-lifetime-census.md §2）。加维度要连同 owner 的比对函数一起加。
+ * （审计 docs/archive/audit/2026-09-17-ownership-lifetime-census.md §2）。加维度要连同 owner 的比对函数一起加。
  */
 export const IDENTITY_DIMENSIONS = new Set([
   'projectId', 'immutableProjectUuid', 'projectGeneration', 'canonicalRootDigest',

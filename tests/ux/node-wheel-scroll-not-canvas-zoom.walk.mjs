@@ -21,7 +21,7 @@ import path from 'node:path'
 import { DEFAULT_TIMEOUT_MS, screenshotSettled } from './_assert.mjs'
 
 const repoRoot = process.cwd()
-const shotsDir = path.join(repoRoot, 'docs/plan/2026-09-11-triage-board-evidence')
+const shotsDir = path.join(repoRoot, 'docs/archive/plan/2026-09-11-triage-board-evidence')
 fs.mkdirSync(shotsDir, { recursive: true })
 
 const userData = path.join(repoRoot, '.tmp', 'nomi-node-wheel-walk')

@@ -8,7 +8,7 @@ import { launchNomiApp } from './_launchApp.mjs'
 import { clickOrFail, expect, expectCount, expectText, expectVisible, screenshotSettled } from './_assert.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
-const outDir = path.join(repoRoot, 'docs/plan/storyboard-anchor-policy-evidence/screenshots')
+const outDir = path.join(repoRoot, 'docs/archive/plan/storyboard-anchor-policy-evidence/screenshots')
 const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'nomi-storyboard-anchor-policy-'))
 const settingsDir = path.join(tempRoot, 'settings')
 const projectsDir = path.join(tempRoot, 'projects')

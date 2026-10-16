@@ -2,7 +2,7 @@
 
 > 已于 2026-09-10 03:05 批准（PR #689）；03:10/04:32 裁决仅外框，发送按钮保持原位。生产实施证据见 [对账](creation-columns-evidence/implementation/README.md)。
 > 基线：`5c507a5cc3ee74f5fa25706165cb94cd3d2e8165`，包含 #646 pi lane 切换。
-> 方案：[2026-09-10-creation-columns](../plan/2026-09-10-creation-columns.md)。
+> 方案：[2026-09-10-creation-columns](../archive/plan/2026-09-10-creation-columns.md)。
 
 三栏同时服务于同一个创作任务，却像三个不同页面拼在一起。建议让三栏拥有相同的边框、圆角、顶部基线和标题带；正文仍按列表、文稿、对话各自的阅读密度排版。需要权衡的是：左栏由贴边导航变成独立面板，损失少量留白空间，换取一眼能看懂的三栏秩序。
 

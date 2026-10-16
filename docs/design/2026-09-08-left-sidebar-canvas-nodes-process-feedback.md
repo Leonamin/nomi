@@ -3,7 +3,7 @@
 > **状态**：✅ 设计已拍板；2026-09-10 完成离线画布成文与 14 张浏览器 PNG 导出。设计归档不等于全组已实施。
 > **本单实施范围**：B 组第一项 `shot_table`；A 左侧栏、B 节点菜单收束与框工具、C 过程反馈均不在本单实施。
 > **来源**：用户保存的 `~/Desktop/Nomi-handoff-20260909/design/left-sidebar-canvas-nodes-process-feedback.canvas.html` 与 `left-sidebar-extracted/*.dc.html`，共 14 画板。源板页头仍写 09-06，本文日期按用户 09-08 裁决，不篡改原图。
-> **上位约束**：[拆解表节点方案](../plan/2026-09-07-storyboard-table-node.md)、[表是节点的投影](../lessons/shot-table-is-a-projection-of-canvas-nodes.md)、[分镜表 v6 合同](2026-09-05-storyboard-table-v6-design-contract.md)、[设计系统](nomi-design-system.md)。
+> **上位约束**：[拆解表节点方案](../archive/plan/2026-09-07-storyboard-table-node.md)、[表是节点的投影](../lessons/shot-table-is-a-projection-of-canvas-nodes.md)、[分镜表 v6 合同](2026-09-05-storyboard-table-v6-design-contract.md)、[设计系统](nomi-design-system.md)。
 > **截图性质**：同名目录 PNG 是本地画板在 Chrome 中的真实渲染；其中嵌入的 Electron 截图是源画布保存的历史证据，不能冒充本次改前/改后产品走查。
 
 ## 来源、导出与裁决优先级

@@ -8,4 +8,4 @@
 
 [GitHub 官方触发规则](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/trigger-a-workflow#triggering-a-workflow-from-a-workflow)说明默认 token 的 push 不递归启动工作流；当前自动 PR 的 opened/synchronize/reopened 工作流可能需要维护者批准。防循环可以依赖这项 token 语义，但不能把它描述成无人值守 CI。修复 PR 全绿只证明修复分支的检查通过。
 
-验证分别确认：三门失败是否拦发布、固定分支是否唯一、提交是否无跳过标记、准确 head 的 required checks 与 mergeStateStatus 是否通过。具体范围与证据见 [执行方案](../plan/2026-09-08-docs-autosync-ci.md)。
+验证分别确认：三门失败是否拦发布、固定分支是否唯一、提交是否无跳过标记、准确 head 的 required checks 与 mergeStateStatus 是否通过。具体范围与证据见 [执行方案](../archive/plan/2026-09-08-docs-autosync-ci.md)。

@@ -1,4 +1,4 @@
-// 评测体系 S0.5:零额度运营报告(docs/plan/2026-06-11-eval-system-master-plan.md §4)。
+// 评测体系 S0.5:零额度运营报告(docs/archive/plan/2026-06-11-eval-system-master-plan.md §4)。
 // 从 EventLog(真实使用轨迹)直接统计——评测循环里最早产生行动价值的消费物:
 //   ① agent 轮次 / 错误率 / token 用量;② vendor 调用成功率 / P50·P90 时延(requested↔completed 按 runId 配对);
 //   ③ 按模型分解。成本字段等 harness S7(cost 写回)后自动出现。

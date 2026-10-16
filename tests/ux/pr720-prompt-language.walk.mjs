@@ -1,7 +1,7 @@
 /**
  * R13/R16 走查 · PR #720 反馈 #1「提示词出英文」逐条复验（真实文本模型，不生成图/视频）。
  *
- * 被验的修法（docs/plan/2026-09-10-ux-feedback-triage.md §6.3 / 本轮执行记录 B1）：
+ * 被验的修法（docs/archive/plan/2026-09-10-ux-feedback-triage.md §6.3 / 本轮执行记录 B1）：
  *   electron/harness/context/agentContext.ts buildLanguageRule 双语分支各加了一条
  *   「送进生成模型的提示词一律简体中文，与回复语言无关」，canvasSystemPrompt 同步。
  *   所以判据不是「助手说中文」，而是**两种界面语言下写出来的生成提示词都必须是中文**——

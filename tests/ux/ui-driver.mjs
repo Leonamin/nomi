@@ -67,7 +67,7 @@ function getWin() {
   return win;
 }
 // ── E5 体验探针（页面侧）：延迟 / 帧率 / 认知密度 / 对比度。注入式，不改产品行为。
-// 见 docs/plan/2026-06-20-experience-feel-audit.md §3。
+// 见 docs/archive/plan/2026-06-20-experience-feel-audit.md §3。
 const PROBE_SRC = `(() => {
   if (window.__nomiProbe) return 'exists';
   // 任意 CSS 颜色（含 oklch/hsl/var）→ 真实 RGBA：靠 canvas 渲染回读，不靠正则猜格式。

@@ -22,7 +22,7 @@ import { fileURLToPath } from 'node:url'
 import { resolveCacheDir } from './lib/intake-radar/store.mjs'
 
 const TRIAGE = '分诊只由协调会话做；其他会话看到不动手、不写待办。'
-const MODEL_TRIAGE_PLAN = 'docs/plan/2026-08-27-vendor-model-radar.md'
+const MODEL_TRIAGE_PLAN = 'docs/archive/plan/2026-08-27-vendor-model-radar.md'
 export const RADARS = [
   { key: 'intake', label: '用户反馈雷达', script: 'intake:radar', argv: ['scripts/intake-radar.mjs'], skill: 'nomi-intake-radar',
     next: (hasSkill) => (hasSkill
@@ -128,7 +128,7 @@ export async function runDailyRadar({ root, now = new Date(), run = defaultRun, 
     }
   }
 
-  if (hasSkill('nomi-competitive-radar')) lines.push('【三日竞品雷达】只由协调会话做：首轮检查到期 / 未完成周期（nomi-competitive-radar；入口 docs/research/competitive/README.md）；失败不能记「无更新」，研究建议不能自动变成开发或发布授权。')
+  if (hasSkill('nomi-competitive-radar')) lines.push('【三日竞品雷达】只由协调会话做：首轮检查到期 / 未完成周期（nomi-competitive-radar；入口 docs/archive/research/competitive/README.md）；失败不能记「无更新」，研究建议不能自动变成开发或发布授权。')
   else lines.push('【三日竞品雷达】技能 nomi-competitive-radar 在这台机器上没有，今天没查成（不是没有更新）；由协调会话处理。')
   return { text: lines.join('\n'), state: next }
 }

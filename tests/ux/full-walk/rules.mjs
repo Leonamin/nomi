@@ -11,7 +11,7 @@ export const DESIGN_ROOTS = Object.freeze({
 
 const rooted = (root, cluster) => Object.freeze({ root, cluster })
 /**
- * 每条规则归到哪个底层设计问题（A–D）与审计的哪个结构簇（docs/audit/2026-09-26-phase-zero-cluster-index.md）——
+ * 每条规则归到哪个底层设计问题（A–D）与审计的哪个结构簇（docs/archive/audit/2026-09-26-phase-zero-cluster-index.md）——
  * 全走查**唯一一份**：违反记录、「用户报的问题」那张表、报告里的归类都从这里取，调用 violate 的地方不再各写各的。
  * 这是监视器的初判，人复核后改这里，已跑的证据用 `run.mjs --report-only` 重出报告即可（归类不是观测，重出不用重跑）。
  * 新规则不登记，violate 当场抛错。

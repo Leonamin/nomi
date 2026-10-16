@@ -6,7 +6,7 @@
 // 起因（2026-09-07 真实事故）：`electron/agentLane/laneTools.mts:175` 对**所有**工具硬写
 // `executionMode: 'sequential'`，而 pi 的 `AgentHarnessTool.executionMode` 是逐工具可选的。
 // 同一个文件里 `replay` 已经改成从 `mutates` 派生了——**同一行的邻居做对了，这一行没有**。
-// 而我们那天早上刚交了一份「参考实现逐层对照」文档（docs/research/2026-09-07-pi-reference-
+// 而我们那天早上刚交了一份「参考实现逐层对照」文档（docs/archive/research/2026-09-07-pi-reference-
 // implementation-conformance.md），它一个字都没拦住：文档级的对照看的是**层**，看不见**字段**。
 //
 // 所以判据的粒度必须是字段，而且必须机器化——R28：能让门岗拦的别留给人。

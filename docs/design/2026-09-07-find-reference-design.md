@@ -2,7 +2,7 @@
 
 日期：2026-09-07 · 基线：`origin/main@4f55e2a36` · 状态：⬜ 待拍板（未写一行生产代码）
 样张：[`2026-09-07-find-reference-mockup.html`](2026-09-07-find-reference-mockup.html)
-调研：[`../research/2026-09-07-tiktok-creative-intelligence.md`](../research/2026-09-07-tiktok-creative-intelligence.md)
+调研：[`../research/2026-09-07-tiktok-creative-intelligence.md`](../archive/research/2026-09-07-tiktok-creative-intelligence.md)
 流程：本文是第一份按 [`page-design-process.md` §2.5](page-design-process.md)「新面三件产物」产出的设计
 
 ---

@@ -4,7 +4,7 @@
 // 会话在写坏之前一切正常；一次非原子的替换只在被中断的那一刻毁掉文件。所以这一族只能
 // 用断言证，不能用「跑一遍看着没事」证。
 //
-// 出处：`docs/research/2026-09-07-pi-reference-implementation-conformance.md` §3.2 / §9.5
+// 出处：`docs/archive/research/2026-09-07-pi-reference-implementation-conformance.md` §3.2 / §9.5
 // 与 CHANGELOG 坑 1（0.84.0 的 `FileSystem.renameFile` breaking change）。
 import assert from 'node:assert/strict';
 import { readdir, stat, writeFile } from 'node:fs/promises';
