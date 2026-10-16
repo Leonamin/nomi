@@ -1,8 +1,7 @@
 import React, { type JSX } from 'react'
 import WorkbenchShell from '../../../workbench/WorkbenchShell'
 import { useWorkbenchStore } from '../../../workbench/workbenchStore'
-import { laneClient } from '../../../workbench/ai/lane/laneClient'
-import { labAssistantItem, labHostState, labUserItem } from '../v4/agentPanelV4LabHost'
+import { useLabLane, labAssistantItem, labHostState, labUserItem } from '../v4/agentPanelV4LabHost'
 
 // Read-only lane transport; the real shell, resource tree and editor consume their usual stores.
 const snapshot = labHostState({ items: [
@@ -16,10 +15,8 @@ const snapshot = labHostState({ items: [
  */
 export function CreationColumnsStage({ specimen = false, mode = 'creation', treeCollapsed = null }: {
   specimen?: boolean; mode?: 'creation' | 'storyboard'; treeCollapsed?: boolean | null
-}): JSX.Element {
+}): JSX.Element | null {
   React.useMemo(() => {
-    laneClient.connect({ onProjection: listener => { listener(snapshot); return () => undefined },
-      send: async () => ({ ok: false as const, code: 'agent_lane_bridge_absent' as const, diagnostic: 'design lab host is read-only' }) })
     const current = useWorkbenchStore.getState()
     const first = current.workbenchDocuments[0]
     useWorkbenchStore.setState({
@@ -37,7 +34,8 @@ export function CreationColumnsStage({ specimen = false, mode = 'creation', tree
     })
     return null
   }, [])
-  React.useEffect(() => () => laneClient.connect(undefined), [])
+  const hasLabHost = useLabLane(snapshot)
+  if (!hasLabHost) return null
   return <div data-creation-columns={specimen ? 'specimen' : 'current'} data-creation-columns-mode={mode}
     style={{ width: 1440, height: 900 }}>
     <WorkbenchShell generation={null} projectName="雨夜来信" />

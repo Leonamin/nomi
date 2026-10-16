@@ -16,10 +16,12 @@
 import { chromium } from '@playwright/test'
 import { LAB_ORIGIN } from './playwright.config.mjs'
 import { assertLabPortOwnership } from './labServer.mjs'
+import { assertRenderEnvironment, readCalibration } from './labStates.mjs'
 
 export default async function warmUp() {
   // foreign 直接抛：在别人的服务器上截图 = 拿别的分支的 UI 当自己的基线。
   assertLabPortOwnership('visual')
+  assertRenderEnvironment(readCalibration().renderEnvironment)
 
   const browser = await chromium.launch()
   const page = await browser.newPage()

@@ -56,6 +56,18 @@ for (const screen of LAB_SCREEN_IDS) {
         }, { intervals: [32] }).toBe(true)
         const shot = page.locator(`[data-design-lab-shot="${state.id}"]`)
         await expect(shot).toBeVisible()
+        // The root ready flag can precede nested lazy workspaces. A stable loader is not a specimen.
+        await expect(shot.locator('.workbench-shell__loading:visible')).toHaveCount(0)
+        if (screen === 'creation-columns') {
+          const columns = page.locator('[data-creation-columns]')
+          const isCreation = await columns.getAttribute('data-creation-columns-mode') === 'creation'
+          if (isCreation) {
+            await expect(page.locator('.ProseMirror')).toBeVisible()
+            await expect.poll(() => page.locator('.workbench-creation').evaluate(element => {
+              return getComputedStyle(element).gridTemplateColumns.split(' ').length
+            })).toBe(2)
+          }
+        }
         if (screen === 'process-feedback') {
           await page.clock.runFor(state.id === 'pf-fx-final-reveal' ? 400 : state.id === 'pf-fx-done-clean' ? 3201 : 1000)
           // Cross-surface acceptance runs in the real App: process-feedback-electron.e2e.mjs.
@@ -72,5 +84,22 @@ for (const screen of LAB_SCREEN_IDS) {
         expect(errors, `渲染 ${state.id} 时页面抛错`).toEqual([])
       })
     }
+  })
+}
+
+for (const locale of ['zh-CN', 'en']) {
+  test(`desktop creation host contract · ${locale}`, async ({ page }, testInfo) => {
+    await page.addInitScript(value => localStorage.setItem('nomi:locale:v1', value), locale)
+    await page.goto('/design-lab.html?screen=creation-columns&frame=1&state=columns-current')
+    await expect(page.locator('.ProseMirror')).toBeVisible()
+    await expect(page.locator('.workbench-shell__loading:visible')).toHaveCount(0)
+    await expect.poll(() => page.locator('.workbench-creation').evaluate(element => {
+      return getComputedStyle(element).gridTemplateColumns.split(' ').length
+    })).toBe(2)
+    await expect.poll(() => page.evaluate(() => Boolean(window.nomiDesktop?.agentLane))).toBe(true)
+    await page.evaluate(() => document.fonts.ready)
+    await page.locator('[data-design-lab-shot="columns-current"]').screenshot({
+      path: testInfo.outputPath(`creation-host-${locale}.png`), animations: 'disabled',
+    })
   })
 }
