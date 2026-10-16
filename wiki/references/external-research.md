@@ -17,7 +17,7 @@ okf_version: "0.1"
 - 경쟁 제품 조사 진입점: [`docs/research/competitive/README.md`](../../docs/research/competitive/README.md)
 - 예시 연구 묶음: [`docs/research/2026-09-05-nomi-unified-agent-canvas-skill-solution/README.md`](../../docs/research/2026-09-05-nomi-unified-agent-canvas-skill-solution/README.md)
 
-`docs/README.md`와 각 하위 README를 먼저 보고, 누락 가능성이 표시된 인덱스에서 찾지 못하면 원본 폴더를 검색한다. 검색된 보고서가 말하는 구현 여부는 [현행 아키텍처 문서](../../docs/ARCHITECTURE-NOW.md)와 현재 코드에서 별도로 확인한다.
+`docs/README.md`와 각 하위 README를 먼저 보고, 누락 가능성이 표시된 인덱스에서 찾지 못하면 원본 폴더를 검색한다. 검색된 보고서가 말하는 구현 여부는 [현재 fork 개념](../concepts/index.md)과 연결된 코드·QA에서 별도로 확인한다. [이전 아키텍처 장부](../../docs/ARCHITECTURE-NOW.md)는 2026-09-26 기준의 상속 기록이다.
 
 ## 상태 구분
 
