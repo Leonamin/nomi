@@ -194,14 +194,14 @@ describe('技能在不在：不存在的技能不能叫人去跑；论文雷达�
   test('论文雷达那一行整个没有（按需，不再每日提醒）', async () => {
     const { text } = await runDailyRadar({ root: '/x', now: NOW, run, hasSkill: allSkills })
     assert.doesNotMatch(text, /论文雷达/)
-    assert.doesNotMatch(text, /docs\/research\/.*-radar\.md/)
+    assert.doesNotMatch(text, /docs\/(?:archive\/)?research\/.*-radar\.md/)
   })
 
   test('模型雷达：不按技能在不在分支，永远指向方案文档，分诊只由协调会话做', async () => {
     const present = await runDailyRadar({ root: '/x', now: NOW, run, hasSkill: allSkills })
     const missing = await runDailyRadar({ root: '/x', now: NOW, run, hasSkill: noSkills })
     for (const { text } of [present, missing]) {
-      assert.match(text, /docs\/plan\/2026-08-27-vendor-model-radar\.md 的分诊规则由协调会话处理/)
+      assert.match(text, /docs\/archive\/plan\/2026-08-27-vendor-model-radar\.md 的分诊规则由协调会话处理/)
     }
     const modelsLine = (text) => text.split('\n').find((line) => line.startsWith('→') && line.includes('vendor-model-radar'))
     assert.equal(modelsLine(present.text), modelsLine(missing.text), '有没有技能，模型雷达这句都一样')

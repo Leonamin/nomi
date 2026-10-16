@@ -129,7 +129,7 @@ describe('core smoke runner invariants', () => {
     expect(checkWorkingTreeUntouched({ before: '', after: '', ci: true })).toEqual([])
     expect(checkWorkingTreeUntouched({ before: ' M a.ts\n', after: ' M a.ts\n', ci: false })).toEqual([])
     const dirtied = checkWorkingTreeUntouched({ before: '', after: ' M docs/archive/plan/evidence.png\n', ci: false })
-    expect(dirtied.join('\n')).toMatch(/docs\/plan\/evidence\.png/)
+    expect(dirtied.join('\n')).toMatch(/docs\/archive\/plan\/evidence\.png/)
     expect(checkWorkingTreeUntouched({ before: ' M a.ts\n', after: ' M a.ts\n', ci: true }).join('\n')).toMatch(/CI 上/)
   })
 
