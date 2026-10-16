@@ -64,7 +64,8 @@ const VALIDATION_INFRASTRUCTURE_PATTERNS = [
 // 继续走 fail-safe 的常规判定，不在本条放宽范围内。
 // 根目录其余 .md（CHANGELOG / CLA / Design / CODEX-REPORT / MARKET-RESEARCH）性质相同但
 // 本次不放宽——漏判只是多跑一遍冒烟（安全方向），加进来才需要逐个论证没有门岗挂着它们。
-const DOCS_ONLY_PATTERN = /^(?:docs\/|marketing\/|README[^/]*$|AGENTS\.md$|CLAUDE\.md$)/
+// The fork wiki contains prose; executable or unknown wiki files remain fail-closed.
+const DOCS_ONLY_PATTERN = /^(?:docs\/|marketing\/|wiki\/.*\.md$|\.agents\/wiki-(?:path|structure\.md)$|README[^/]*$|AGENTS\.md$|CLAUDE\.md$)/
 
 // 认得出的路径（2026-10-02，复盘 fixes 行 52、133：新路径悄悄落进「孤立改动 → focused」而漏跑该跑的档）。
 // 默认值反过来：**认不出的路径一律跑全量**，再按事故顺序逐个加性质测试；认得出 = 下面这几类里的某一类。

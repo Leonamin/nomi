@@ -4,7 +4,7 @@
 #   scripts/web/deploy.sh --env /opt/nomi/deploy.env            # origin/main 최신
 #   scripts/web/deploy.sh --env /opt/nomi/deploy.env <40-hex>   # 정확한 커밋
 #
-# 경로·포트·호스트는 전부 환경변수에서 읽는다(docs/personal-web.md). --env 로 지정한 파일을
+# 경로·포트·호스트는 전부 환경변수에서 읽는다(wiki/guides/web-host-release.md). --env 로 지정한 파일을
 # 먼저 source 하므로 호스트 설정 파일 하나만 있으면 된다. 데이터 루트는 절대 건드리지 않는다.
 # 이전 release 산출물 정리는 `NOMI_WEB_KEEP_RELEASES`(deploy-web-host.mjs)가 맡는다.
 set -euo pipefail

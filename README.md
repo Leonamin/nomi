@@ -1,6 +1,6 @@
-> This fork adds a personal, real-browser host based on verified Nomi v0.23.1. See [personal web setup and behavior](docs/personal-web.md). The original Nomi copyright and AGPL-3.0 license remain in effect.
+> This fork adds a personal, real-browser host based on verified Nomi v0.23.1. See [the current Korean fork wiki](wiki/index.md). The original Nomi copyright and AGPL-3.0 license remain in effect.
 
-[한국어 사용 안내](docs/user-guide.ko.md)
+[한국어 위키](wiki/index.md) · [제작 안내](wiki/guides/creator-workflow.md)
 
 <p align="center">
   <a href="https://nomiaqm.com/en/">

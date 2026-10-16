@@ -1,5 +1,8 @@
 # Stored preview transport design card
 
+> 📎 참고 기록 · 현재 fork의 미완료 작업을 뜻하지 않습니다. 구현·검증·배포 범위는 본문과 해당 PR에서 확인합니다.
+
+
 Owner: OpenCode execution implementation line. Category: corrective DTO boundary.
 
 | Cell | Decision and evidence |

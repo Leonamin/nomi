@@ -1,3 +1,19 @@
+# 문서 안내 — 현재 fork와 보존 자료
+
+현재 제품·개발·운영 지식은 **[한국어 위키](../wiki/index.md)**에서 시작합니다.
+
+- [개념](../wiki/concepts/index.md): 현재 제품·웹 호스트·제작·디자인 구조
+- [가이드](../wiki/guides/index.md): 개발·배포·사용·검증 절차
+- [결정](../wiki/decisions/index.md): 승인 근거가 있는 ADR
+- [참고 자료와 이관 지도](../wiki/references/index.md): upstream·과거 문서·증거의 위치와 읽기 원칙
+
+`docs/`는 검사 도구의 원본과 과거 기록·검증 증거를 보존합니다. 계약·설정은 [engineering/](engineering/), 원인 계약은 [fixes/](fixes/), 증거는 [evidence/](evidence/)와 [qa/](qa/), 상세 디자인 규범과 시안은 [design/](design/)에서 유지합니다. 기존 경로는 도구와 과거 기록이 계속 참조하므로 일괄 이동하지 않습니다.
+
+아래는 2026-10-16 전환 전의 총목차입니다. 현재 fork의 TODO·구현·배포를 뜻하지 않습니다. 원문 탐색과 출처 보존을 위해 유지하며, 이전 시안 두 경로는 실제 통합 경로로 바로잡았습니다.
+
+<details>
+<summary>이전 문서 총목차와 색인 펼치기</summary>
+
 # docs 总地图 — 要找 X 去哪
 
 - [한국어 사용 안내](user-guide.ko.md)
@@ -48,7 +64,7 @@
 | **界面为什么越长越杂 · 减法设计（新面必出的三件产物 + 图标语义门岗）** | [`plan/2026-09-07-subtractive-design-process.md`](plan/2026-09-07-subtractive-design-process.md) → 诊断出的两个洞、四件落地、`check:icon-semantics` 判据与三条刻意排除 |
 | **按钮该说话还是该画图标（三档 + 文案硬约束 + 门岗）** | [`plan/2026-09-10-button-icon-rule-gate.md`](plan/2026-09-10-button-icon-rule-gate.md) → 规则落在设计系统 §1.8、动作规范词落在 [`GLOSSARY.md`](GLOSSARY.md)；一手规范摘录（Apple HIG / Material 3 / NN/g，含一处真实分歧）见 [`research/2026-09-10-button-icon-rule/prior-art.md`](research/2026-09-10-button-icon-rule/prior-art.md) |
 | **修之前先数门：一份状态到底有几个写/读入口** | [`plan/2026-09-11-door-map-rule.md`](plan/2026-09-11-door-map-rule.md) → 规则落在 R21.3（合同 `doors`/`door_reduction`）+ R27（派工两段式）；工具 `node scripts/door-map.mjs <符号或文件>`，门表校验在 `check:root-cause-contracts`（原 `check:door-map` 已并入）；全仓七个核心状态的门普查见 [`audit/2026-09-11-door-census.md`](audit/2026-09-11-door-census.md) |
-| **UI 样张（HTML mockup）** | [`mockups/`](mockups/) ｜ 旧版 [`ui-designs/`](ui-designs/) |
+| **UI 样张（HTML mockup）** | [`design/archive/`](design/archive/)（统一保存的历史样张） |
 | **代码健康 / 周期审计 / 问题分级** | [`audit/`](audit/) |
 | **某版本改了什么** | [`release-notes/`](release-notes/) |
 | **会话之间的交接（冷启动接手）** | [`handoff/`](handoff/) ｜ plan 里 `*-handoff.md` / `*-HANDOFF.md` 也是交接 |
@@ -77,14 +93,14 @@
 | `release-notes/` | 版本变更记录 |
 | `archive/` | 历史归档 |
 | `audit/` | 周期审计 + 诊断 |
-| `mockups/` | HTML 样张 |
+| `design/archive/` | 历史 HTML/PNG 样张 |
 | `qa/` | 测试记录 |
 | `research/` | 调研与论文雷达（**模板 `research/TEMPLATE.md`**；调研附件放 `research/<date>-<topic>/`）|
 | `workflow/` | 工作流方法论 |
 | `engineering/` | 工程手册（多智能体编排等，CLAUDE.md 规则索引的 L2 详解）|
 | `lessons/` | 教训库：踩过且还会再踩的坑，一条一个文件（**有 INDEX.md，新增必挂号**）|
 | `handoff/` | 会话交接 |
-| `architecture/` `marketing/` `media/` `product/` `ui-designs/` | 其它专题目录 |
+| `architecture/` `marketing/` `media/` `product/` | 其它专题目录 |
 
 ## 相关索引（非 docs/）
 
@@ -93,3 +109,5 @@
 - **工程纪律**：`../CLAUDE.md`（速览 + R1–R14）
 
 - [技能库样张 v2：真实 Markdown 与排版验收](plan/2026-09-09-skill-library-mockup-v2.md)
+
+</details>

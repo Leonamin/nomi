@@ -1,0 +1,11 @@
+---
+type: Index
+title: "위키 변경 이력"
+description: "위키 생성과 구조·내용 변경 기록을 최신순으로 안내"
+scope: "logs"
+okf_version: "0.1"
+---
+
+# 위키 변경 이력
+
+- [2026-10-16 · 현재 fork 한국어 위키 생성](2026-10-16-korean-fork-wiki.md)
