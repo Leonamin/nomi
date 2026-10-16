@@ -57,7 +57,7 @@ describe("明文凭证检测 — 必须拦住", () => {
     // SECURITY-AUDIT.md 放行了，而 scan() 里 `if (isAllowed(f)) continue` 是整体跳过。
     // 现在路径白名单只赦免「路径黑名单 + 微信类内容规则」，凭证规则对所有文件生效。
     const leak = `Target: kie.ai (\`${fixtureHex("allowlisted", 32)}\`)\n`;
-    for (const p of ["docs/security/feedback-data-safety.md", "docs/plan/2026-05-28-feedback-radar.md", "docs/安全说明.md"]) {
+    for (const p of ["docs/security/feedback-data-safety.md", "docs/archive/plan/2026-05-28-feedback-radar.md", "docs/安全说明.md"]) {
       const r = scanContent(p, leak);
       expect(r.code, `白名单路径 ${p} 必须仍拦住凭证`).toBe(1);
     }
@@ -293,6 +293,48 @@ describe("私有待办编号（只查新增行）", () => {
     expect(r.code).toBe(1);
     expect(r.out).toContain(FRESH);
     expect(r.out).toContain("私有待办编号不进公开仓库，改成写问题本身");
+  });
+
+  function makeArchiveRepo() {
+    const { root, git } = makeRepo();
+    const source = `# Historical document\n${Array.from({ length: 20 }, (_, i) => `Public paragraph ${i}`).join("\n")}\nHistorical ${OLD} [source](old.md)\n`;
+    fs.writeFileSync(path.join(root, "docs/old.md"), source);
+    git("add", "-A");
+    git("commit", "-q", "-m", "test(fixture): seed archive source");
+    const base = git("rev-parse", "HEAD");
+    fs.mkdirSync(path.join(root, "docs/archive"), { recursive: true });
+    fs.writeFileSync(path.join(root, "docs/archive/history.md"), source.replace("[source](old.md)", "[source](../old.md)"));
+    fs.writeFileSync(path.join(root, "docs/old.md"), "# Moved\nSee archive/history.md\n");
+    git("add", "-A");
+    return { root, git, base };
+  }
+
+  it("archive copy plus stable old address inherits existing IDs in staged and hosted diffs", () => {
+    const { root, git, base } = makeArchiveRepo();
+    expect(run(root).code).toBe(0);
+    git("commit", "-q", "-m", "refactor(fixture): archive source");
+    expect(run(root, ["--all"], { SECRET_SCAN_BASE_REF: base }).code).toBe(0);
+  });
+
+  it("an archival copy still rejects newly introduced IDs and credentials", () => {
+    const { root, git } = makeArchiveRepo();
+    fs.appendFileSync(path.join(root, "docs/archive/history.md"), `New ${FRESH}\n`);
+    git("add", "-A");
+    const result = run(root);
+    expect(result.code).toBe(1);
+    expect(result.out).toContain(FRESH);
+    expect(result.out).not.toContain(OLD);
+    fs.appendFileSync(path.join(root, "docs/archive/history.md"), `Target: kie.ai (${fixtureHex("archived-credential", 32)})\n`);
+    git("add", "-A");
+    expect(run(root).out).toContain("32 位 hex");
+  });
+
+  it("a renamed document cannot hide a newly introduced ID", () => {
+    const { root, git } = makeRepo();
+    fs.renameSync(path.join(root, "docs/old.md"), path.join(root, "docs/moved.md"));
+    fs.appendFileSync(path.join(root, "docs/moved.md"), `New ${FRESH}\n`);
+    git("add", "-A");
+    expect(run(root).code).toBe(1);
   });
 
   // 合并提交：main 自带的旧行相对第一个父提交也是「新增」，但不是这条线写的——只查相对两个父提交都新的行。

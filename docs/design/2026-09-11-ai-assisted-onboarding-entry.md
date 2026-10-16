@@ -1,7 +1,7 @@
 # 设计定稿 · 「用 AI 帮我接入」（模型设置页入口）
 
 > 2026-09-11 · 状态：✅ 已交付 · 用户 2026-09-11 拍板「按默认」。画布七板成文于此；实施见
-> [docs/plan/2026-09-11-ai-assisted-onboarding-entry.md](../plan/2026-09-11-ai-assisted-onboarding-entry.md)。
+> [docs/plan/2026-09-11-ai-assisted-onboarding-entry.md](../archive/plan/2026-09-11-ai-assisted-onboarding-entry.md)。
 > 本文是这张卡的**形态真相源**：实现与它对不上，改的是实现。
 
 ## 一句话

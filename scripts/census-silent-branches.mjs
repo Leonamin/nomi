@@ -8,7 +8,7 @@
 // 三处的共同形状是同一个：**失败没有回到调用方，于是界面上什么都不会响**。
 //
 // 本脚本只普查、不判罪。判罪（棘轮门岗 check:silent-branches）的设计写在
-// docs/audit/2026-09-11-silent-branch-census.md，按 R17「加规则先验它会红」的纪律，
+// docs/archive/audit/2026-09-11-silent-branch-census.md，按 R17「加规则先验它会红」的纪律，
 // 上面三处就是它的阳性对照。
 //
 // 解析方式与 check:vocabularies 同源：仓里已有的 `typescript` 编译器 API，不引新依赖。

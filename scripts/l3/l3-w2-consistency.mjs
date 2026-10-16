@@ -98,7 +98,7 @@ const projectId = proj.json?.id || proj.json?.projectId
 if (!projectId) { console.log('✗ 建项目失败'); cleanup(1) }
 
 // ── ③ M2 资产导入：拿仓库里一张真图当「本机素材」导入 ──────────────
-const localFile = path.join(repoRoot, 'docs/audit/2026-08-19-l3-w1-shot-verify/03-image-1787158633643.jpg')
+const localFile = path.join(repoRoot, 'docs/archive/audit/2026-08-19-l3-w1-shot-verify/03-image-1787158633643.jpg')
 let importedUrl = ''
 if (fs.existsSync(localFile)) {
   const imported = await callTool('nomi_import_asset', { projectId, path: localFile, title: '小周-导入锚' })
@@ -152,7 +152,7 @@ if (vid) {
   audit.push({ step: 'two-hop-video', status: g.json?.status, verify: g.outcome?.verify || null })
 }
 
-const outDir = path.join(repoRoot, 'docs/audit/2026-08-20-l3-w2-consistency')
+const outDir = path.join(repoRoot, 'docs/archive/audit/2026-08-20-l3-w2-consistency')
 fs.mkdirSync(outDir, { recursive: true })
 const collected = []
 const walk = (d) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (/\.(png|jpg|jpeg|webp)$/i.test(e.name)) collected.push(p) } }

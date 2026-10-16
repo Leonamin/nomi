@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// R1（docs/audit/2026-09-18-electron-unowned-state-structural-review.md §5）：
+// R1（docs/archive/audit/2026-09-18-electron-unowned-state-structural-review.md §5）：
 // 958 个声明过的 owner，过去只有合同校验器在立约那一刻看过一眼，之后没有任何门岗核过。
 // 本门岗每次跑都逐条核「这个主人今天是不是还在那儿」。
 //

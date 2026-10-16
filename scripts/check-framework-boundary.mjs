@@ -128,7 +128,7 @@ if (process.argv.includes('--update-baseline')) {
       identity: hit.identity,
       hits: hit.hits,
       note: `${hit.file}:${hit.line} — ${hit.why}`,
-      plan: 'docs/plan/2026-09-07-agent-runtime-rebuild.md',
+      plan: 'docs/archive/plan/2026-09-07-agent-runtime-rebuild.md',
       due: '2026-11-07',
     }))
   fs.writeFileSync(BASELINE_FILE, `${JSON.stringify({

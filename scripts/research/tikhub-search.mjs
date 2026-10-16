@@ -5,7 +5,7 @@
  * 用法：
  *   node scripts/research/tikhub-search.mjs --q "<关键词>" \
  *     [--platform douyin|xhs|bilibili|x|all] [--limit 20] [--since 2026-01-01] \
- *     --out docs/research/<date>-<topic>/tikhub/
+ *     --out docs/archive/research/<date>-<topic>/tikhub/
  *
  * 产出两份（同一份数据的两个面）：
  *   - `tikhub-search.json`：结构化，给下游脚本/对账用
@@ -15,7 +15,7 @@
  * key 只从环境变量 `TIKHUB_API_KEY` 读；不接受 `--key` 参数（命令行会进 shell 历史、
  * 进 CI 日志、进截图）。缺 key = 明报「今天没查成」并 exit 2，**绝不静默返回空结果**。
  *
- * 契约来源见 `docs/research/tikhub-api-notes.md`（R5，2026-09-06 实读 openapi.json）。
+ * 契约来源见 `docs/archive/research/tikhub-api-notes.md`（R5，2026-09-06 实读 openapi.json）。
  */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -38,7 +38,7 @@ const USAGE = `用法：node scripts/research/tikhub-search.mjs --q "<关键词>
   --platform     默认 all；可逗号分隔（douyin,xhs）
   --limit        每个平台最多几条，默认 20
   --since        只要这个日期之后发布的（YYYY-MM-DD）
-  --out          必填，产物目录；约定 docs/research/<date>-<topic>/tikhub/
+  --out          必填，产物目录；约定 docs/archive/research/<date>-<topic>/tikhub/
   --base-url     默认 ${DEFAULT_BASE_URL}（中国大陆用 https://api.tikhub.dev）
 
   密钥只从环境变量 TIKHUB_API_KEY 读，不接受命令行传入。`

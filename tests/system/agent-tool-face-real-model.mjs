@@ -19,7 +19,7 @@ const repoRoot = path.resolve(here, '..', '..')
 // 题库可换（`NOMI_R30_BANK`），结果写回题库自己那个目录。**一套 harness 两个题库**，不是两套 harness：
 // 动词面的 42 句和技能面的 22 句量的是同一件事（选对工具 / 入参写对 / 回合成功），
 // 分成两个脚本就等于两份判据，而判据一旦分叉，「修好了」在哪一份里成立都说不清。
-const bankPath = path.resolve(repoRoot, process.env.NOMI_R30_BANK || 'docs/plan/agent-tool-face-v2-evidence/r30-bank.json')
+const bankPath = path.resolve(repoRoot, process.env.NOMI_R30_BANK || 'docs/archive/plan/agent-tool-face-v2-evidence/r30-bank.json')
 const evidenceDir = path.dirname(bankPath)
 const outPrefix = path.basename(bankPath).replace(/bank\.json$/, '').replace(/[-_]$/, '') || 'r30'
 const bank = JSON.parse(fs.readFileSync(bankPath, 'utf8'))

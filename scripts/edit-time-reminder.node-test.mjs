@@ -31,7 +31,7 @@ describe('哪些文件归它管', () => {
   test('src/ 与 electron/ 的源码归它管；测试、生成物、文档、脚本不归', () => {
     assert.equal(isWatchedSource('electron/agentLane/laneHost.mts'), true)
     assert.equal(isWatchedSource('src/workbench/ai/Foo.tsx'), true)
-    for (const rel of ['electron/agentLane/laneHost.test.ts', 'src/a/b.node-test.mjs', 'electron/x.generated.ts', 'electron/types.d.ts', 'docs/plan/x.md', 'scripts/x.mjs', 'src/styles/a.css', 'docs/engineering/concept-owners.json']) {
+    for (const rel of ['electron/agentLane/laneHost.test.ts', 'src/a/b.node-test.mjs', 'electron/x.generated.ts', 'electron/types.d.ts', 'docs/archive/plan/x.md', 'scripts/x.mjs', 'src/styles/a.css', 'docs/engineering/concept-owners.json']) {
       assert.equal(isWatchedSource(rel), false, rel)
     }
   })
@@ -52,7 +52,7 @@ describe('(a) 新建文件', () => {
   })
 
   test('不归它管的路径、别的工具、路径在仓库外 → 不提醒', () => {
-    assert.equal(decideEditTimeReminder(write('docs/plan/new.md'), env()), null)
+    assert.equal(decideEditTimeReminder(write('docs/archive/plan/new.md'), env()), null)
     assert.equal(decideEditTimeReminder(write('electron/agentLane/laneNew.test.ts'), env()), null)
     assert.equal(decideEditTimeReminder({ tool_name: 'Bash', tool_input: { command: 'ls' } }, env()), null)
     assert.equal(decideEditTimeReminder({ tool_name: 'Write', tool_input: { file_path: path.join(os.tmpdir(), 'electron', 'x.ts') } }, env()), null)
@@ -122,7 +122,7 @@ describe('真跑 hook：输出必须是官方规定的形状', () => {
   })
 
   test('不相干的写入、坏载荷 → 静默放行（退出 0、什么也不吐）', () => {
-    const unrelated = run(write('docs/plan/probe.md'), `${session}-b`)
+    const unrelated = run(write('docs/archive/plan/probe.md'), `${session}-b`)
     assert.equal(unrelated.status, 0)
     assert.equal(unrelated.stdout, '')
     const broken = run('{not json', `${session}-c`)

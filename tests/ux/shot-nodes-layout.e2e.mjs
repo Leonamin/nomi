@@ -3,7 +3,7 @@ import path from 'node:path'
 import { launchNomiApp } from './_launchApp.mjs'
 import { expect, screenshotSettled } from './_assert.mjs'
 const origin = 'http://127.0.0.1:5199'
-const out = path.resolve('docs/plan/shot-nodes-evidence')
+const out = path.resolve('docs/archive/plan/shot-nodes-evidence')
 const app = await launchNomiApp({ name: 'shot-nodes-layout', settleMs: 0, env: { VITE_DEV_SERVER_URL: origin } })
 try {
   const page = app.win

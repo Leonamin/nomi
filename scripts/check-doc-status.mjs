@@ -15,7 +15,6 @@ import { statusOf, collectPlanDocuments, STATUS_HEAD_LINES } from './doc-status-
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const docsRoot = path.join(repoRoot, 'docs')
 const baselinePath = path.join(repoRoot, 'scripts', 'doc-status-baseline.json')
-const planRoots = [path.join(docsRoot, 'plan'), path.join(docsRoot, 'superpowers', 'plans')]
 const openingLineLimit = STATUS_HEAD_LINES
 
 function collectMarkdownFiles(root) {

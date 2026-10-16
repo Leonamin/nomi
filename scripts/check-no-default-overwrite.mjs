@@ -206,7 +206,7 @@ if (failures.length) {
   console.error('check:no-default-overwrite 失败：\n')
   for (const failure of failures) console.error(`  ✗ ${failure}`)
   console.error('\n为什么有这条门岗：scratchpad rootcause-config-loss-on-reinstall.md §3 / §6(a)'
-    + '\n方案：docs/plan/2026-09-21-config-never-silently-lost.md')
+    + '\n方案：docs/archive/plan/2026-09-21-config-never-silently-lost.md')
   process.exit(1)
 }
 console.log(`check:no-default-overwrite 通过（读失败写默认 ${found.length} 处，全部已登记）`)

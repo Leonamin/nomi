@@ -9,7 +9,7 @@
 // `executionMode: 'sequential'`，而 pi 的 `AgentHarnessTool.executionMode` 逐工具可选
 // （node_modules/@earendil-works/pi-agent-core/dist/types.d.ts:351-359）。同一个对象字面量里
 // `replay` 已经改成从 `mutates` 派生了——**做对的和做错的写在相邻两行**。当天早上刚交的
-// 「参考实现逐层对照」（docs/research/2026-09-07-pi-reference-implementation-conformance.md）
+// 「参考实现逐层对照」（docs/archive/research/2026-09-07-pi-reference-implementation-conformance.md）
 // 一个字都没拦住：文档级对照看的是**层**，看不见**字段**。这道门看的就是字段。
 //
 // **框架无关**（2026-09-07 用户原话：「我们之后可能不是 pi，那之后是其他怎么办？」）：

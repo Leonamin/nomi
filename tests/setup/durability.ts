@@ -5,7 +5,7 @@
  * fsync 在这里的价值恰好为零；成本却是套件的绝大部分耗时（本机实测 productionRun 子集
  * 98.7 s → 4.95 s）。更要命的是它让墙钟随磁盘队列深度漂移 —— 最重的几个 productionRun 测试
  * 因此贴在 Vitest 默认 5000 ms `testTimeout` 上间歇性红。完整根因见
- * `docs/plan/2026-08-25-production-run-test-flake-fsync.md`。
+ * `docs/archive/plan/2026-08-25-production-run-test-flake-fsync.md`。
  *
  * 开关放在 harness 层（而不是让每个测试自己传 `durability: 'ephemeral'`）是故意的：
  * 将来新写的测试自动就在 ephemeral 下跑，**不可能忘记**，flake 长不回来。

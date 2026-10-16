@@ -5,7 +5,7 @@
  * 规则：如果 commit message 包含形如 [E.2C-XX] 的 task id 引用，
  *      则必须在同一 commit 的暂存修改中，把 §10 进度表对应行更新为 ✓。
  *
- * 设计理由：见 docs/plans/2026-05-25-phase-e2-completion-and-tech-uplift.md §0。
+ * 设计理由：见 docs/archive/plan/2026-05-25-phase-e2-completion-and-tech-uplift.md §0。
  * 上一次 Phase E.2 spec 不被 executor 尊重的教训：progress 表全是 ⏸ 但代码已落地。
  *
  * 用法：作为 .git/hooks/commit-msg 的目标被调用，$1 = commit message file path。
@@ -15,7 +15,7 @@
 const fs = require('node:fs')
 const { execSync } = require('node:child_process')
 
-const PLAN_PATH = 'docs/plans/2026-05-25-phase-e2-completion-and-tech-uplift.md'
+const PLAN_PATH = 'docs/archive/plan/2026-05-25-phase-e2-completion-and-tech-uplift.md'
 const TASK_PATTERN = /\[E\.2C-[0-9A-Za-z]+\]/
 
 const msgFile = process.argv[2]
@@ -53,8 +53,8 @@ const addedLines = diff
   .split('\n')
   .filter((line) => line.startsWith('+') && !line.startsWith('+++'))
 
-const ok = addedLines.some((line) => line.includes(taskId) && line.includes('✓'))
-if (!ok) {
+const hasProgress = addedLines.some((line) => line.includes(taskId) && line.includes('✓'))
+if (!hasProgress) {
   console.error(`\nERROR: commit references ${taskId} but §10 progress table does not mark it ✓ in this commit.`)
   console.error(`Update the row for ${taskId} from ⏸ to ✓ in ${PLAN_PATH} §10.\n`)
   process.exit(1)

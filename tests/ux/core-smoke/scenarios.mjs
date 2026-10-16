@@ -1,4 +1,4 @@
-// 核心流程冒烟的**唯一清单**（2026-09-22 用户拍板，docs/plan/2026-09-22-core-flow-smoke-three-defenses.md）。
+// 核心流程冒烟的**唯一清单**（2026-09-22 用户拍板，docs/archive/plan/2026-09-22-core-flow-smoke-three-defenses.md）。
 //
 // 为什么要它：09-22 main 上 composer 消失 / 「2 版」托盘打不开 / 编组框删不掉，CI 全绿——
 // 那条走查写了却不在任何 CI 套件里，而画布套件只在改到 generationCanvas 时才跑。

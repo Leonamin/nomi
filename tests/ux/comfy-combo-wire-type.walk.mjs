@@ -6,14 +6,14 @@
 //
 // ⚠️ 走查跑的是 dist-electron/dist 编译产物：改完源码先 `pnpm run build`。
 // 用法: pnpm run build && node tests/ux/comfy-combo-wire-type.walk.mjs
-// 产出: docs/plan/2026-09-24-comfyui-combo-wire-type-evidence/{zh-CN,en}-{notice-area,analyzed,imported}.png
+// 产出: docs/archive/plan/2026-09-24-comfyui-combo-wire-type-evidence/{zh-CN,en}-{notice-area,analyzed,imported}.png
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { clickOrFail, expectAbsent, proveProbe, screenshotSettled, DEFAULT_TIMEOUT_MS } from './_assert.mjs'
 import { openComfyImportPanel, pasteAndAnalyze, startFakeComfy } from './_comfyImportPanel.mjs'
 
-const evidenceDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../docs/plan/2026-09-24-comfyui-combo-wire-type-evidence')
+const evidenceDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../docs/archive/plan/2026-09-24-comfyui-combo-wire-type-evidence')
 fs.mkdirSync(evidenceDir, { recursive: true })
 
 const graph = {

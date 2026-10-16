@@ -15,7 +15,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 /** 受索引纪律管辖的文档目录（相对仓库根）。新增一类要纳管就加在这里。 */
-export const INDEXED_DOC_ROOTS = ['docs/plan', 'docs/superpowers/plans', 'docs/lessons']
+export const INDEXED_DOC_ROOTS = ['docs/plan', 'docs/archive/plan', 'docs/archive/superpowers/plans', 'docs/lessons']
 
 /** 递归收集 markdown 文件（绝对路径）。 */
 export function collectMarkdownFiles(root) {

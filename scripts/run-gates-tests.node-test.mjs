@@ -13,7 +13,7 @@ const modify = (...paths) => paths.map((file) => ({ status: 'M', path: file }))
 
 test('普通隔离改动走 focused——这一档存在的全部理由', () => {
   assert.equal(tierOf(modify('src/workbench/settings/SettingsPanel.tsx')), 'focused')
-  assert.equal(tierOf(modify('docs/plan/2026-09-12-gates-risk-tier.md')), 'focused')
+  assert.equal(tierOf(modify('docs/archive/plan/2026-09-12-gates-risk-tier.md')), 'focused')
 })
 
 test('高风险面照旧全量：electron/、画布、打包配置', () => {

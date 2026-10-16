@@ -1,5 +1,5 @@
 // R13 真机走查（**真 ComfyUI，不是 mock**）：从接入到出图，把工作流设置整页的全流程走通一遍。
-// plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+// plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
 //
 // 与 comfyui-workflow-page-walkthrough.mjs（mock 版，CI 零依赖）的分工：
 //   mock 版证「界面逻辑对」，本脚本证「接到真机器上真能出图」。两者都要，缺一边都会漏东西——

@@ -8,4 +8,6 @@ okf_version: "0.1"
 
 # 위키 변경 이력
 
+- [2026-10-16 · docs 역사 자료의 실제 archive 이동](2026-10-16-docs-history-archive.md)
+
 - [2026-10-16 · 현재 fork 한국어 위키 생성](2026-10-16-korean-fork-wiki.md)

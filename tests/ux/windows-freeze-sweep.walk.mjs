@@ -6,7 +6,7 @@
 // 没有任何一道测试在 Windows 上量过「按下去界面还动不动」。根因合同：
 //   docs/fixes/2026-09-24-waiting-effect-shader-compile-freeze.root-cause.json
 //   docs/fixes/2026-09-24-manifest-lock-sharing-violation.root-cause.json
-// 结构评审：docs/audit/2026-09-24-electron-workspace-structure-review.md
+// 结构评审：docs/archive/audit/2026-09-24-electron-workspace-structure-review.md
 //
 // 做什么：在真 Electron 里像用户一样走一遍（新建 → 拖图 → 按钮导入 → 粘贴 → 拖视频 → 生图等待 →
 // 揭示 → 3D 导演台 → 回库 → 重开 → 失焦 → 切项目），每一步同时量三处：
@@ -15,7 +15,7 @@
 //   ③ GPU 进程：child-process-gone。
 // 判红：任一步帧间隔 > FREEZE_MS、GPU 进程退出、页面出现「失败」横幅、或步骤本身报错。
 //
-// 素材：仓库里已提交的真实生成图 / 视频（docs/audit/…），不用合成色块。生成走本地假供应商（零额度），
+// 素材：仓库里已提交的真实生成图 / 视频（docs/archive/audit/…），不用合成色块。生成走本地假供应商（零额度），
 // 只有供应商是假的，排队 / 等待动效 / 结果落盘全走生产代码（同 process-feedback-real-fixture）。
 //
 // 用法（先 pnpm build）：

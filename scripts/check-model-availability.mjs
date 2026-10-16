@@ -15,7 +15,7 @@
 // 这道门查两件事：
 //   ① **普查表**（下面的 READERS）里每个读者都还在消费 owner 的结论。谁哪天又自己拼一份，
 //      它就不再引用 owner 了 —— 当场红。普查表同时是文档：`--census` 直接吐出
-//      docs/plan/2026-09-12-model-availability-single-owner.md 里那张表。
+//      docs/archive/plan/2026-09-12-model-availability-single-owner.md 里那张表。
 //   ② **AST 棘轮**：全仓扫「凭据词 && 发布/启用词」这种形状的布尔表达式（第二份判据长这个样），
 //      新增的必须登记进 VENDOR_CONNECTION_PREDICATES 并写明「它答的是另一个问题」，
 //      否则红。基线只减不增。

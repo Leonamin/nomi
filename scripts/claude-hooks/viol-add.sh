@@ -11,7 +11,7 @@
 #   viol-add.sh "<一句话坑>" [--class <slug>]   新增 hits=1（自动分配下一个 id）
 #   viol-add.sh --bump <id>                      已有坑再犯一次：hits++ 且更新 last
 #   viol-add.sh --set <id> <key> <val>           设结构化尾字段（如 --set v03 status dead）
-# 方案：docs/plan/2026-06-27-self-improving-control-files-mechanism.md（S1）
+# 方案：docs/archive/plan/2026-06-27-self-improving-control-files-mechanism.md（S1）
 set +e
 ROOT="${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null)}"
 [ -z "$ROOT" ] && { echo "no project root"; exit 1; }

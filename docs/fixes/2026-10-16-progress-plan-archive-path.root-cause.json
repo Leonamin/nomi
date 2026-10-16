@@ -1,0 +1,108 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-16-progress-plan-archive-path",
+  "problem_type": "A task progress gate reads a retired document address instead of the canonical plan",
+  "symptom": "A tagged legacy phase commit cannot satisfy the staged progress check even when its matching row is completed in the actual plan.",
+  "direct_cause": "PLAN_PATH used docs/plans (already absent before this migration); the actual source is now docs/archive/plan/2026-05-25-phase-e2-completion-and-tech-uplift.md.",
+  "class_root": "The single commit-msg boundary was not aligned with the owned canonical progress-plan location.",
+  "affected_population": [
+    "E.2C task-tagged commits for any task row",
+    "Manual invocation of the progress checker over a staged change"
+  ],
+  "scope_paths": [
+    "scripts/check-progress-update.cjs"
+  ],
+  "entry_points": [
+    "installed commit-msg pipeline",
+    "direct checker invocation with a message file"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "This is a repository-owned document and Git hook path, decided by the tracked migration rather than external library behavior.",
+  "invariants": [
+    "Every E.2C task uses the same canonical plan staged diff.",
+    "Only a staged added completion for the exact tagged row satisfies the check."
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "scripts/check-progress-update.cjs",
+      "symbol": "PLAN_PATH"
+    }
+  ],
+  "door_reduction": {
+    "before": 1,
+    "after": 1
+  },
+  "generality_proof": "The one PLAN_PATH read boundary feeds the staged diff for every task ID. Real temporary Git repositories exercise two different admitted task IDs and reject a different row and unstaged completion. The test also requires the actual canonical source to exist.",
+  "shared_boundaries": [
+    {
+      "path": "scripts/check-progress-update.cjs",
+      "symbol": "PLAN_PATH",
+      "responsibility": "Select the single canonical progress document for all tagged invocations."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "scripts/install-git-hooks.cjs",
+      "entry_point": "commit-msg checker assembly",
+      "disposition": "enforced",
+      "evidence": "The installed pipeline invokes check-progress-update.cjs and passes the message filename."
+    },
+    {
+      "path": "scripts/check-progress-update.cjs",
+      "entry_point": "direct message-file CLI invocation",
+      "disposition": "enforced",
+      "evidence": "Tests invoke this same script with distinct tagged messages in real Git repositories."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every tagged row or subsequent commit can encounter the same retired path; observing it in an old phase does not make it one-off.",
+    "same_class_scan": [
+      "rg check-progress-update scripts: install-git-hooks.cjs is the sole installed entry and the CLI is separately callable.",
+      "node scripts/door-map.mjs PLAN_PATH --roots=scripts --include-tests: 493 files, one read door and three same-file uses.",
+      "Direct temporary-Git tests cover E.2C-01 and E.2C-02 and reject unstaged/different-row completion."
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "scripts/check-progress-update.cjs",
+    "invariant": "The one owned document constant selects the canonical archived plan for all matching commits.",
+    "failure_mode": "A missing or unmatched staged completion still exits 1; no old-path fallback or bypass is introduced.",
+    "exception_policy": "none",
+    "strategy": "Align the sole path boundary to the archived owner and characterize actual staged Git behavior across task rows.",
+    "artifacts": [
+      "scripts/check-progress-update.cjs"
+    ]
+  },
+  "regression_tests": [
+    "scripts/check-progress-update.node-test.mjs"
+  ],
+  "class_regression_tests": [
+    "scripts/check-progress-update.node-test.mjs"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "scripts/check-progress-update.cjs"
+    ],
+    "rationale": "Removed the retired docs/plans lookup from the script; the previously absent directory is not recreated."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "No dependency upgrade owns this repository filename; existing Node/Git invocation is retained.",
+    "exit_criteria": []
+  },
+  "migration": "Only the canonical lookup changes. Archived source content and prior progress states are preserved; no task is newly marked complete.",
+  "residual_risks": [
+    "This is the legacy E.2C task gate only; it does not prove current product or deployment behavior."
+  ],
+  "detected_by": "review",
+  "recurrence_check_on": "2026-10-23",
+  "invariant_owner_layer": {
+    "layer": "scripts/check-progress-update.cjs",
+    "tests": [
+      "scripts/check-progress-update.node-test.mjs"
+    ]
+  }
+}

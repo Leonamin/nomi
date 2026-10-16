@@ -1,6 +1,6 @@
 # 核心流程冒烟：阳性对照与稳定性实测（2026-09-22）
 
-方案：[`docs/plan/2026-09-22-core-flow-smoke-three-defenses.md`](../../plan/2026-09-22-core-flow-smoke-three-defenses.md) 验收门 1 与 3。
+方案：[`docs/plan/2026-09-22-core-flow-smoke-three-defenses.md`](../../archive/plan/2026-09-22-core-flow-smoke-three-defenses.md) 验收门 1 与 3。
 
 结论先写：**阳性对照通过**（回退 #836 的生产修复后，两种夹具都红，且红在用户报的那三件事上）。
 **但验收门 3 不成立**：修复在位时 `used` 夹具**不稳定**，同一份代码同一条命令连跑 5 次只有 1 次全绿。

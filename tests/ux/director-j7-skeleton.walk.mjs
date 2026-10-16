@@ -1,4 +1,4 @@
-// R16 旅程 J-D7「摆一个姿势」（导演台骨骼交互，见 docs/plan/2026-09-03-director-chrome-parity.md §5）。
+// R16 旅程 J-D7「摆一个姿势」（导演台骨骼交互，见 docs/archive/plan/2026-09-03-director-chrome-parity.md §5）。
 // 真实任务：放主角 → F 聚焦到人 → 骨骼页（默认选骨盆）→ 点右手把手选中、拖 gizmo 中心抬手 → 同法拖右肘向转肘 → 拖骨盆下蹲两脚钉住 →
 //           切 FK 点 3D 骨骼球选左大臂（滑条 ±180、五档快选）→ W / E 切 IK / FK。
 // 把手点一下只是选中，拖动只经 TransformControls（中心八面体 = 沿相机正对平面自由移动），工具条没选工具时不挂 gizmo。

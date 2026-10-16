@@ -3,7 +3,7 @@
 // 这道门的全部价值就是「变了会说话」，所以它坏掉的样子恰好是一句「✅ 逐字节相同」。这里不测被测对象，
 // 测尺子：把宿主 schema 与投影各变异一次，门必须红在**具名的那个工具**上；变异撤掉，门必须回绿。
 //
-// 第一条变异就是原型那次**全绿**的那条（`docs/plan/2026-09-18-tool-projection-cancel-job-prototype.md`
+// 第一条变异就是原型那次**全绿**的那条（`docs/archive/plan/2026-09-18-tool-projection-cancel-job-prototype.md`
 // 「两次变异」那张表的 ①：给宿主分支加一个必填字段，投影默认它是模型该填的，当时没有任何东西会红）。
 // 这道门存在的理由就是让它从今天起红。
 import assert from 'node:assert/strict'

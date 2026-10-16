@@ -1,5 +1,5 @@
 {
-  "_doc": "安装包身份与预算（docs/plan/2026-09-28-release-audit.md §3 A）。runtimeAllowlist 由 scripts/check-packaged-deps.mjs 读；excludedModules / platforms / history 由 scripts/audit-package.mjs 读写。platforms 只许用 `node scripts/audit-package.mjs … --update-baseline` 改写，不要手改；变大必须带 --allow-growth 理由，记进 history。",
+  "_doc": "安装包身份与预算（docs/archive/plan/2026-09-28-release-audit.md §3 A）。runtimeAllowlist 由 scripts/check-packaged-deps.mjs 读；excludedModules / platforms / history 由 scripts/audit-package.mjs 读写。platforms 只许用 `node scripts/audit-package.mjs … --update-baseline` 改写，不要手改；变大必须带 --allow-growth 理由，记进 history。",
   "headroomRatio": 0.05,
   "runtimeAllowlist": {
     "@anthropic-ai/sandbox-runtime": {

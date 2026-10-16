@@ -101,7 +101,7 @@
 - 新的 Process 聚合、失败卡外层、面板框与宽度演示仅在 devlab；全部标为 component-only，不冒充 ShellStage 已接线。
 - 现役面板头对照直接渲染 AgentPanelV4Panel；顶栏签名沿真实调用点使用 `<NomiBrand />` 默认参数；宽窄文稿由 workbenchDocuments 驱动真实 WorkbenchEditor，并按 WorkbenchShell 调用点加载同一 workbench.css；不手写文稿排版。
 - 真实调用点逐条登记在 `states/06-b2b-specimens.tsx` 的 mirrors。C34 提案没有声称现役已经能聚合；四面布局提案不声称真实宿主已统一。
-- 问题分类、跨面同类扫描与未来共享 owner 见 [任务计划](../plan/2026-09-09-b2b-specimens.md)。生产代码、冻结区、旧基线均未修改。
+- 问题分类、跨面同类扫描与未来共享 owner 见 [任务计划](../archive/plan/2026-09-09-b2b-specimens.md)。生产代码、冻结区、旧基线均未修改。
 
 ## 验证与复现
 

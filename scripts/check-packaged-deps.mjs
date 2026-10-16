@@ -7,7 +7,7 @@
 // ── 为什么要这道门 ──
 // electron-builder 把 `dependencies` 连同传递依赖整包装进 app.asar，`files` 怎么配都拦不住；
 // `devDependencies` 不装。界面用的库早被 Vite 打进 dist/assets，留在 dependencies 里就是原样多装一份：
-// 0.22.4 Windows 版 app.asar 654MB，界面代码本身只有 30MB（docs/plan/2026-09-28-release-audit.md §1）。
+// 0.22.4 Windows 版 app.asar 654MB，界面代码本身只有 30MB（docs/archive/plan/2026-09-28-release-audit.md §1）。
 //
 // ── 证据从哪来（三类，缺一类就会把运行时要的包判成多余）──
 // ① 主进程与 preload 的构建产物：用 build:electron 的同一组 tsconfig 在**内存里** emit（与 dist-electron

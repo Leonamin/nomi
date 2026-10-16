@@ -16,7 +16,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 /** 方案文档所在目录（相对仓库根）。新增 plan 根目录时改这里。 */
-export const PLAN_ROOTS = ['docs/plan', 'docs/superpowers/plans']
+export const PLAN_ROOTS = ['docs/plan', 'docs/archive/plan', 'docs/archive/superpowers/plans']
 
 export const STATUS_MARKERS = ['✅', '🚧', '⏳', '🧊', '📋', '⛔', '📎']
 

@@ -600,7 +600,7 @@
       "contract": "docs/fixes/2026-09-11-door-map-rule.root-cause.json",
       "path": "scripts/check-door-map.mjs",
       "symbol": "evaluatePullRequest",
-      "reason": "check:door-map 已于 2026-10-01 并入 check:root-cause-contracts（用户按门岗账本 docs/audit/2026-10-01-gate-ledger.md 拍板）：被删的只是「recurring 合同的 PR 正文必须引用那份合同」这一半（窗口里 5 次红全是补引用 / 补门表）；门表合法性（必填、path 存在、符号对得上、不许行号、不许重复）一直在 root-cause-contracts.mjs 的 validateDoorMap，不变量仍有主人。"
+      "reason": "check:door-map 已于 2026-10-01 并入 check:root-cause-contracts（用户按门岗账本 docs/archive/audit/2026-10-01-gate-ledger.md 拍板）：被删的只是「recurring 合同的 PR 正文必须引用那份合同」这一半（窗口里 5 次红全是补引用 / 补门表）；门表合法性（必填、path 存在、符号对得上、不许行号、不许重复）一直在 root-cause-contracts.mjs 的 validateDoorMap，不变量仍有主人。"
     },
     {
       "contract": "docs/fixes/2026-09-02-ponytail-staged-diff-enobufs.root-cause.json",
@@ -698,7 +698,7 @@
       "contract": "docs/fixes/2026-09-11-ponytail-timeout-starvation.root-cause.json",
       "path": "scripts/check-ponytail-deferred.mjs",
       "symbol": "module",
-      "note": "symbol 写的是 `module`（意指「整个文件」）而不是一个真实导出，机器无法核对；文件本身仍在、职责也仍成立，所以不是退役。正解是把 symbol 改写成具体导出名，但历史合同改不动（见 docs/audit/2026-09-18-…-structural-review.md §8.1），先记待查。"
+      "note": "symbol 写的是 `module`（意指「整个文件」）而不是一个真实导出，机器无法核对；文件本身仍在、职责也仍成立，所以不是退役。正解是把 symbol 改写成具体导出名，但历史合同改不动（见 docs/archive/audit/2026-09-18-…-structural-review.md §8.1），先记待查。"
     },
     {
       "contract": "docs/fixes/2026-09-11-ponytail-timeout-starvation.root-cause.json",

@@ -7,13 +7,13 @@ import { fileURLToPath } from 'node:url'
 import { scanDocumentIndex } from './docs-index-lib.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const planIndexPath = path.join(repoRoot, 'docs', 'plan', 'INDEX.md')
-const planFilePath = path.join(repoRoot, 'docs', 'plan', '2026-09-04-cross-device-min-energy-redesign.md')
+const planIndexPath = path.join(repoRoot, 'docs', 'archive', 'plan', 'INDEX.md')
+const planFilePath = path.join(repoRoot, 'docs', 'archive', 'plan', '2026-09-04-cross-device-min-energy-redesign.md')
 const planPath = '2026-09-04-cross-device-min-energy-redesign.md'
 
 test('indexes the cross-device minimum-energy redesign plan', () => {
   const index = fs.readFileSync(planIndexPath, 'utf8')
-  assert.ok(index.includes(`](${planPath})`), `docs/plan/INDEX.md must link ${planPath}`)
+  assert.ok(index.includes(`](${planPath})`), `docs/archive/plan/INDEX.md must link ${planPath}`)
 })
 
 test('marks the cross-device minimum-energy redesign plan with a status', () => {
@@ -66,4 +66,18 @@ test('missing wiki root or invalid config fails visibly; legacy repos need no wi
   }
   fs.rmSync(path.join(root, '.agents/wiki-path'))
   assert.deepEqual(scanDocumentIndex(root).documents, [])
+})
+
+test('archived plans remain governed alongside new live plans', (t) => {
+  const { root, write } = wikiFixture(t)
+  write('docs/plan/INDEX.md', '[New](new.md)\n')
+  write('docs/plan/new.md', '# New\n')
+  write('docs/archive/plan/INDEX.md', '[History](history.md)\n')
+  write('docs/archive/plan/history.md', '# History\n')
+  const scan = scanDocumentIndex(root)
+  assert.ok(scan.documents.includes('docs/plan/new.md'))
+  assert.ok(scan.documents.includes('docs/archive/plan/history.md'))
+  assert.deepEqual(scan.unindexed, [])
+  write('docs/archive/plan/INDEX.md', '# Lost registration\n')
+  assert.deepEqual(scanDocumentIndex(root).unindexed, ['docs/archive/plan/history.md'])
 })

@@ -1,4 +1,4 @@
-// 核心冒烟的夹具（2026-09-22，docs/plan/2026-09-22-core-flow-smoke-three-defenses.md）。
+// 核心冒烟的夹具（2026-09-22，docs/archive/plan/2026-09-22-core-flow-smoke-three-defenses.md）。
 //
 // 三种夹具：
 //   empty        空白起点：项目里只有场景自带的最少节点

@@ -82,7 +82,7 @@ console.log(`\n② image_edit + 本地参考图：${g2.json?.status || (g2.isErr
 console.log('   完整回执：')
 console.log(g2.text.split('\n').map((l) => '   ' + l).join('\n').slice(0, 1800))
 
-const out = path.join(repoRoot, 'docs/audit/2026-08-20-l3-f1b-reverify/probe')
+const out = path.join(repoRoot, 'docs/archive/audit/2026-08-20-l3-f1b-reverify/probe')
 fs.rmSync(out, { recursive: true, force: true })
 fs.mkdirSync(out, { recursive: true })
 const found = []

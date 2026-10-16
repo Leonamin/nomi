@@ -382,7 +382,7 @@ try {
   // 放在这里——app 仍活、表已渲染出全部行状态，几何与结构都是真值。
   //
   // ① 先收起常驻 Agent 面板：契约量的是分镜面**自己**的版面，而 1280 宽下面板展开时编辑器列只剩
-  //    ~570px（W-03，docs/audit/2026-09-17-post-804-walkthrough.md 记为仍在），量出来的是被挤压的形状。
+  //    ~570px（W-03，docs/archive/audit/2026-09-17-post-804-walkthrough.md 记为仍在），量出来的是被挤压的形状。
   //    收起走面板自己的收起钮（真人手势），不是改视口作弊。
   await clickOrFail(win.locator('[data-v4-control="collapse"]').first(), '收起常驻 Agent 面板（让分镜面拿回整列宽）')
   await expect(win.locator('[data-agent-resident="true"][data-agent-collapsed="true"]')).toBeVisible()

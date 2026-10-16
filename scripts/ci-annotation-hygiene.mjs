@@ -51,7 +51,7 @@ function delegatedOwner(annotation) {
   if (annotation.level === 'warning' && annotation.title === '疑似不稳定') {
     return 'vitest retry flaky hint'
   }
-  // 非阻断的核心冒烟格（2026-09-22 用户拍板，docs/plan/2026-09-22-core-flow-smoke-three-defenses.md）：
+  // 非阻断的核心冒烟格（2026-09-22 用户拍板，docs/archive/plan/2026-09-22-core-flow-smoke-three-defenses.md）：
   // 它红了 job 级 continue-on-error 只放过 needs.core-smoke.result，**注解还在**——
   // `##[error]Process completed with exit code 1.` 会以 failure 注解进到本环，
   // 于是 Quality Gate 汇总的第一行 `test ci-hygiene.outcome = success` 把它重新变回阻断门

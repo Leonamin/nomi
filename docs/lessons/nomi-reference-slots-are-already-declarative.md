@@ -3,7 +3,7 @@
 > 📎 教训 · 首次记录 2026-09-01 · 状态：现行
 > **触发场景**：要显示「这个模型最多能接几张参考」时；要根据「第 N 张参考图」推断它是角色还是风格时；准备让 Agent 修改**已建好**节点的模型 / 模式 / 参数 / 参考时。
 
-> 参考槽的**架构现状**（六种 slot kind、`ArchetypeMode.slots` 结构、`modeId` 决定显示、`AssetReference` 渲染器、`inputKey` → `archetypeInput` 映射链）以 [`../ARCHITECTURE-NOW.md`](../ARCHITECTURE-NOW.md) 的「模型参考槽」「参考槽渲染与请求体映射」两行为准——那些会随代码漂移，只在一处维护。本条只留**不随代码漂移的判断规则**。
+> 参考槽的**架构现状**（六种 slot kind、`ArchetypeMode.slots` 结构、`modeId` 决定显示、`AssetReference` 渲染器、`inputKey` → `archetypeInput` 映射链）以 [`../ARCHITECTURE-NOW.md`](../archive/guides/ARCHITECTURE-NOW.md) 的「模型参考槽」「参考槽渲染与请求体映射」两行为准——那些会随代码漂移，只在一处维护。本条只留**不随代码漂移的判断规则**。
 
 **结论**：这套数据已经是声明式的、渲染器也已拍板存在，**别新建抽象**（2026-09-01 做分镜表设计时差点重造一遍）。真正会反复咬人的是下面三条——它们不是「代码在哪」，是「读这份数据时容易读错什么」。
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Stop hook = 回合结束时的「报完成/交付前」闸（P3/R13 决策点）。保守触发 + fail-open，吵就删。
-# 设计见 docs/plan/2026-06-17-discipline-system-overhaul.md（杠杆 1）。
+# 设计见 docs/archive/plan/2026-06-17-discipline-system-overhaul.md（杠杆 1）。
 #
 # 2026-07-12 眼见链升级（素材盒事故复盘）：修在 win32 分支、mac 没生效；走查截图产出了
 # 但没 Read 就把沙盒递给用户——用户当场抓到「和原来一样」。暴露旧版两个洞：

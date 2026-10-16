@@ -7,7 +7,7 @@ import { launchNomiApp } from './_launchApp.mjs'
 import { clickOrFail, expectCount, expectVisible, screenshotSettled } from './_assert.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
-const outDir = path.join(repoRoot, 'docs/plan/anchor-real-evidence/screenshots')
+const outDir = path.join(repoRoot, 'docs/archive/plan/anchor-real-evidence/screenshots')
 const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'nomi-anchor-real-'))
 const settingsDir = path.join(tempRoot, 'settings')
 const projectsDir = path.join(tempRoot, 'projects')
@@ -29,7 +29,7 @@ fs.writeFileSync(path.join(settingsDir, 'model-catalog.json'), JSON.stringify({
 
 const phase = process.argv[2] || 'red'
 if (!['red', 'green', 'unsupported'].includes(phase)) throw new Error('Use red, green, or unsupported evidence')
-const plan = JSON.parse(fs.readFileSync(path.join(repoRoot, `docs/plan/anchor-real-evidence/${phase === 'unsupported' ? 'red' : phase}.json`), 'utf8'))
+const plan = JSON.parse(fs.readFileSync(path.join(repoRoot, `docs/archive/plan/anchor-real-evidence/${phase === 'unsupported' ? 'red' : phase}.json`), 'utf8'))
 plan.title = `角色参考 · ${phase === 'red' ? '修复前' : phase === 'unsupported' ? '模型不支持参考' : '修复后'}`
 const fixtureImage = path.join(projectRoot, 'assets', 'hero.png')
 fs.copyFileSync(path.join(repoRoot, 'docs/design/covers/anchors/anchor-1.png'), fixtureImage)

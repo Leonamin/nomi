@@ -241,7 +241,7 @@ export const BAD_SHOT_MARKER = '#BADSHOT'
  * context `nomi-mcp-client:v1:<client>`). Returns the env pair the startup gate
  * (mcpStdioProjectSessionBinding.ts:21-24, since M1 round-2 0b6441c6) requires — without it every
  * journey dies at initialize with "A verified MCP client connection is required" (audit E-02,
- * docs/research/2026-09-02-mcp-editing-chain-audit.md). Never overwrites an existing token, so
+ * docs/archive/research/2026-09-02-mcp-editing-chain-audit.md). Never overwrites an existing token, so
  * journeys sharing the capability dir with a live GUI instance keep the GUI-minted token.
  */
 export function seedMcpClientIdentityEnv(capabilityDir, client = 'claude') {

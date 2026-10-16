@@ -96,6 +96,6 @@ Never include API keys, phone numbers, private email addresses, or confidential 
 
 ## Want Codex to investigate a bug?
 
-If you can run Codex with a GitHub checkout, use the [copy-paste Codex issue-fix prompt](codex-issue-fix-prompt-en.md). It tells Codex how to clone the repository, inspect the provider contract, reproduce the request with a mock, protect secrets, and deliver a branch/PR instead of changing `main` directly.
+If you can run Codex with a GitHub checkout, use the [copy-paste Codex issue-fix prompt](../archive/guide/codex-issue-fix-prompt-en.md). It tells Codex how to clone the repository, inspect the provider contract, reproduce the request with a mock, protect secrets, and deliver a branch/PR instead of changing `main` directly.
 
-If you need to connect a provider urgently without opening a PR, use the [Codex / Claude Code provider-setup prompt](model-integration-prompt-en.md). It uses Nomi's `model-integration` Skill and MCP tools first; if the installed build lacks a provider-private upload route, it limits local source work to a documented Runway upload channel and does not add a Runway model adapter.
+If you need to connect a provider urgently without opening a PR, use the [Codex / Claude Code provider-setup prompt](../archive/guide/model-integration-prompt-en.md). It uses Nomi's `model-integration` Skill and MCP tools first; if the installed build lacks a provider-private upload route, it limits local source work to a documented Runway upload channel and does not add a Runway model adapter.

@@ -12,4 +12,4 @@
 - dist 与 dist:mac:dir 共用 verify；缺戳、坏戳、过期戳均退出并提示先 pnpm build；部分构建也作废旧戳。
 - Node 回归覆盖两份过期戳、HEAD/staged/unstaged/untracked 变化、失败和部分构建，纳入 check:git-delivery。
 
-**出处**：[方案与证据](../plan/2026-09-09-agent-lane-models-block.md)，package-stamp-{red,green}.log。
+**出处**：[方案与证据](../archive/plan/2026-09-09-agent-lane-models-block.md)，package-stamp-{red,green}.log。

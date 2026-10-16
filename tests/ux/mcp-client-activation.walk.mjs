@@ -5,7 +5,7 @@
 // Real check: `node tests/ux/mcp-client-activation.walk.mjs --real-connect`
 // verifies the real HOME's `nomi` entries in place (handshake + trust switch). It never writes host configs:
 // a walkthrough is an isolated instance (NOMI_E2E=1) and Nomi refuses to rewrite real host configs from one
-// (docs/plan/2026-09-14-mcp-connection-truthfulness.md) — reconnecting is a click in the installed Nomi.
+// (docs/archive/plan/2026-09-14-mcp-connection-truthfulness.md) — reconnecting is a click in the installed Nomi.
 import { launchNomiApp } from './_launchApp.mjs'
 import fs from 'node:fs'
 import os from 'node:os'

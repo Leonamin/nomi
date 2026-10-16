@@ -1,7 +1,7 @@
 /**
  * R13/R16 走查 · PR #720 反馈 #4「apimart 填 key 后模型全部消失」逐条复验。
  *
- * 被验的修法（docs/plan/2026-09-10-ux-feedback-triage.md §5 / 本轮执行记录 B2）：
+ * 被验的修法（docs/archive/plan/2026-09-10-ux-feedback-triage.md §5 / 本轮执行记录 B2）：
  *   direct-key 供应商（apimart）改用种子里代码拥有的 livenessProbe 验 key，验过就把凭据
  *   与 vendor 一起发布 → curated 模型必须**出现**在模型选择器与 agent 模型下拉里，
  *   不再需要走认证晋升。修之前：转圈 12s → 验证失败 → 模型从两处清单里全部消失。

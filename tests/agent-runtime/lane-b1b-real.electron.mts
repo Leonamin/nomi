@@ -168,7 +168,7 @@ async function main() {
     }
     const report = { model: model.modelId, totalSpentCny: reservedCny, turns, plans, requests, usage: lane.projection().usage,
       limitation: 'Real DeepSeek with isolated domain fixture; storyboard writes validated by production tools. Paid generation is draft-only, same B1/B4 boundary. No media request.' };
-    await writeFile('docs/plan/agent-lane-b1b-evidence/deepseek-sample.json', JSON.stringify(report, null, 2));
+    await writeFile('docs/archive/plan/agent-lane-b1b-evidence/deepseek-sample.json', JSON.stringify(report, null, 2));
     console.log(JSON.stringify({ model: model.modelId, totalSpentCny: reservedCny, requests: requests.length, plans: plans.map(p => p.length) }));
   } finally { unsubscribe(); await lane.close(); }
 }

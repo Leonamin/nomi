@@ -2,7 +2,7 @@
 /**
  * 「每个 store 数据字段都要声明寿命，project 级的必须被释放」门岗（C1，2026-09-18）。
  *
- * 为什么要它（审计 `docs/audit/2026-09-17-ownership-lifetime-census.md` §1.1）：
+ * 为什么要它（审计 `docs/archive/audit/2026-09-17-ownership-lifetime-census.md` §1.1）：
  * 14 个 zustand store 里只有 3 个被项目释放点碰到，而释放点本身是一份**手写清单**——
  * 它是 `0e1be560a`「reduce canvas memory usage」的副产品，不是「项目会话 owner」的设计。
  * 手写清单的问题不是漏了哪个字段，是**没有一处写着「这个字段归谁」**：加字段的人没有任何
@@ -246,7 +246,7 @@ for (const store of stores) {
 if (failures.length) {
   console.error('check:store-lifetime 失败：\n')
   for (const failure of failures) console.error(`  ✗ ${failure}`)
-  console.error('\n为什么有这条门岗：docs/audit/2026-09-17-ownership-lifetime-census.md §1.1 / §6 C1')
+  console.error('\n为什么有这条门岗：docs/archive/audit/2026-09-17-ownership-lifetime-census.md §1.1 / §6 C1')
   process.exit(1)
 }
 const projectFields = [...declarations.values()]

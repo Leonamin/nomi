@@ -8,7 +8,7 @@
 //   ③ 不 close 直接把进程杀掉 → 重开 `resume()`：是重跑，还是合成 `interruptedOutcome`——③ 红 = 恢复文案改。
 //   ⊕ 阳性对照：钩子抛异常 = block（`hooks.js:113-118`），工具没跑、reason 逐字到模型。
 //
-// 结果与裁决写在 `docs/research/2026-09-07-agent-lane-stage3-probes.md`。这里只钉「今天是什么」。
+// 结果与裁决写在 `docs/archive/research/2026-09-07-agent-lane-stage3-probes.md`。这里只钉「今天是什么」。
 import assert from 'node:assert/strict';
 import { spawnLaneCrashChild } from './laneCrashFixture.mjs';
 import { test } from 'node:test';

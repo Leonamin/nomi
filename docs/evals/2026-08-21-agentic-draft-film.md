@@ -4,8 +4,8 @@
 
 - 项目样例：`artifacts/nomi-agentic-draft-film-2026-08-21/`
 - Run：`run-agentic-draft-film-30s`
-- 导出：[nomi-agentic-draft-film-30s.mp4](/Users/aoqimin/Desktop/Nomi-production-pipeline/artifacts/nomi-agentic-draft-film-2026-08-21/exports/nomi-agentic-draft-film-30s.mp4)
-- 产物目录：[.nomi/runs/run-agentic-draft-film-30s](/Users/aoqimin/Desktop/Nomi-production-pipeline/artifacts/nomi-agentic-draft-film-2026-08-21/.nomi/runs/run-agentic-draft-film-30s)
+- 导出：[nomi-agentic-draft-film-30s.mp4](../../Users/aoqimin/Desktop/Nomi-production-pipeline/artifacts/nomi-agentic-draft-film-2026-08-21/exports/nomi-agentic-draft-film-30s.mp4)
+- 产物目录：[.nomi/runs/run-agentic-draft-film-30s](../../Users/aoqimin/Desktop/Nomi-production-pipeline/artifacts/nomi-agentic-draft-film-2026-08-21/.nomi/runs/run-agentic-draft-film-30s)
 
 ## 真实走查结果
 

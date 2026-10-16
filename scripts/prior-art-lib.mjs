@@ -9,7 +9,7 @@
 // 不许再长一份」做成了门岗；本门岗补的是它的上游：**决定要不要写之前的那次检索本身**。
 //
 // 判据形状（刻意可机读、不判内容质量）：
-//   ① 计划文档：docs/plan/<日期>-*.md 里**如果写了**「## 先查别人」一节，节内至少 3 条**带出处**
+//   ① 计划文档：live docs/plan/<日期>-*.md 里**如果写了**「## 先查别人」一节，节内至少 3 条**带出处**
 //      （URL 或 file:line）的条目。没有出处的条目 = 没查，只是写了句「查过了」。
 //   ② PR：只有 diff 新增 / 修改了「自写登记表」（`docs/engineering/self-written.json` 的 entries 或 domainRoots，
 //      也就是**引入了通用能力**）时，正文才必须引用一份带该节的方案，或自己带一节合格的「先查别人」。
@@ -28,7 +28,7 @@ const SECTION_HEADING = /^(#{2,3})\s*先查别人.*$/
  * 出处认三种，前两种是文本判据，第三种要真去看文件在不在：
  *   ① http(s) 链接；② file:line（带行号的仓库路径）；
  *   ③ 指向仓库里**真实存在**的文件的链接（相对方案文档解析）。
- * 第三种是 2026-09-07 第一次真跑时补的：一条指向 docs/audit/xxx.md 的链接当然是出处，
+ * 第三种是 2026-09-07 第一次真跑时补的：一条指向 docs/archive/audit/xxx.md 的链接当然是出处，
  * 而且它比「含冒号数字」更强——门岗能自己去确认那个文件在不在，指不到就不算数。
  */
 const SOURCE_URL = /https?:\/\/\S+/
@@ -63,7 +63,7 @@ function hasSource(planFile, line, fileExists) {
 }
 const BULLET = /^\s*(?:[-*+]\s+|\d+[.)]\s+)/
 const PLAN_DATE = /(?:^|\/)(\d{4}-\d{2}-\d{2})-/
-const PLAN_REFERENCE = /docs\/plan\/[\w./+-]+\.md/g
+const PLAN_REFERENCE = /docs\/(?:archive\/)?plan\/[\w./+-]+\.md/g
 
 /** 门岗上线日：这天（含）之后新建的计划文档才受本门岗管。 */
 export const PRIOR_ART_THRESHOLD_DATE = '2026-09-07'
@@ -180,7 +180,7 @@ export function evaluatePullRequest({ body, registryChanged = false, plans = new
   const referenced = referencedPlans(body)
   if (referenced.length === 0) {
     return ['这个 PR 新增 / 修改了自写登记表（docs/engineering/self-written.json），也就是引入了一项通用能力，'
-      + '但正文既没有引用任何 docs/plan/*.md、也没有自己带「## 先查别人」一节'
+      + '但正文既没有引用任何 live/archive plan/*.md、也没有自己带「## 先查别人」一节'
       + '\n      —— 自写通用能力必须指得到「别人有没有现成的、为什么不接入」的查证（P0）。']
   }
   const errors = []

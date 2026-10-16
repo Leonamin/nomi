@@ -12,7 +12,7 @@
 //
 // 素材不进仓库（1.38 GB）：路径走 env NOMI_REAL_MEDIA_DIR，登记表只记规格与来源。
 // 例外只有一类：`repoPath` 素材——早已在公开仓库里的真实镜头（不是合成色块），CI 上也在，
-// 所以每个 PR 都跑的核心冒烟能用它（2026-09-22，docs/plan/2026-09-22-core-flow-smoke-three-defenses.md）。
+// 所以每个 PR 都跑的核心冒烟能用它（2026-09-22，docs/archive/plan/2026-09-22-core-flow-smoke-three-defenses.md）。
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'

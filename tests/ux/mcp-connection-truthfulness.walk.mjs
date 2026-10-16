@@ -1,4 +1,4 @@
-// R13/R16 走查：MCP 连接状态必须说真话（docs/plan/2026-09-14-mcp-connection-truthfulness.md）。
+// R13/R16 走查：MCP 连接状态必须说真话（docs/archive/plan/2026-09-14-mcp-connection-truthfulness.md）。
 // 固定跑本分支开发构建；HOME 指向临时目录（宿主配置写在 HOME 下，绝不能碰真机）。
 //
 // 用户旅程，四件此前都在说谎的事：

@@ -127,7 +127,7 @@ test('G4 · a 429 is retried, the projection carries attempt/maxAttempts, and th
  * **真实样本语料**。每一条都从仓库里已经抓到过的原话来，标了出处——手编的报文只能证明
  * 「我写的正则和我写的例子一致」，而这一族要证的是「厂商真的会这么说，而我们判对了」。
  *
- * 派工书原本指向 `docs/audit/attachments/`；那份 jsonl 是 09-06 的工具探针（15 行、
+ * 派工书原本指向 `docs/archive/audit/attachments/`；那份 jsonl 是 09-06 的工具探针（15 行、
  * `failures: []`），**里面一条厂商错误报文都没有**。所以语料改从三处真实来源汇齐，
  * 出处逐条写在下面。
  */

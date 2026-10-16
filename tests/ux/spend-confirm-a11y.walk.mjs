@@ -1,5 +1,5 @@
 // B3 花钱确认弹层的键盘/无障碍保障 —— R13 零额度真机走查。
-// 方案：docs/plan/2026-09-07-design-system-optimization.md §1 B3。
+// 方案：docs/archive/plan/2026-09-07-design-system-optimization.md §1 B3。
 // 用法: node tests/ux/spend-confirm-a11y.walk.mjs
 // 产出: tests/ux/shots/spend-confirm-a11y/*.png（自己 Read 亲眼看）
 //

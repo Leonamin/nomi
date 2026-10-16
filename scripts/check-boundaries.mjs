@@ -231,7 +231,7 @@ async function main() {
     console.error('')
     console.error('  这类越界当场能编译、却把架构越拆越糊（渲染 bundle 打进主进程码 / 加载顺序炸弹）。')
     console.error('  修法：渲染层走 desktop bridge 或中立契约层 electron/shared/contracts/；')
-    console.error('        循环用依赖反转（引契约/事件）打断。参见 docs/architecture/module-ownership-map.md。')
+    console.error('        循环用依赖反转（引契约/事件）打断。参见 docs/archive/architecture/module-ownership-map.md。')
     console.error('  绝不允许把新违规追加进 boundaries-baseline.json 抬高基线。')
     process.exit(1)
   }

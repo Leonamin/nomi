@@ -3,7 +3,7 @@
 // 和 scripts/local-protocol-seek-walkthrough.mjs 的分工：
 //   走查 = 真实用户旅程（30 次 seek + 60 次 abort），负责证明「修复没把流式播放搞坏」；
 //   本脚本 = 仪器（数千次取消 + 时序扫描 + 阳性对照），负责回答「这条竞态在本平台上到底炸不炸」。
-// 走查在 macOS 上对照组也是绿的（见 docs/plan/2026-08-24-local-protocol-stream-ownership.md §7b），
+// 走查在 macOS 上对照组也是绿的（见 docs/archive/plan/2026-08-24-local-protocol-stream-ownership.md §7b），
 // 也就是**没有鉴别力**。没有鉴别力的绿灯什么都不证明，所以才有这个脚本。
 //
 // 三件事按顺序做，缺一不可：

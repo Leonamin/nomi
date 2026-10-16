@@ -192,3 +192,6 @@ CODEX-REPORT.md
 .camera-follow-lab/
 .ue-spike-walk/
 .superpowers/
+
+# Archived local outputs retain their original ignore boundaries
+docs/archive/onboarding-trials/20*/

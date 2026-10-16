@@ -2,7 +2,7 @@
 /**
  * 「读路径不许可达写盘门」门岗（C3，2026-09-18）。
  *
- * 为什么要它（审计 `docs/audit/2026-09-17-ownership-lifetime-census.md` §3 / §6 C3）：
+ * 为什么要它（审计 `docs/archive/audit/2026-09-17-ownership-lifetime-census.md` §3 / §6 C3）：
  * 19 处项目外写盘里有 2 处是**读路径顺手写的**——`resolveTikhubHost` /
  * `failoverTikhubHost` 在选路时把结果钉进用户的盘上偏好。用户把线路设成「自动」，
  * 某一刻主域恰好探不通，我们就悄悄替他改了偏好，而且主域恢复也不会变回来。
@@ -151,7 +151,7 @@ for (const site of registered.keys()) {
 if (failures.length) {
   console.error('check:read-path-writes 失败：\n')
   for (const failure of failures) console.error(`  ✗ ${failure}`)
-  console.error('\n为什么有这条门岗：docs/audit/2026-09-17-ownership-lifetime-census.md §3 / §6 C3'
+  console.error('\n为什么有这条门岗：docs/archive/audit/2026-09-17-ownership-lifetime-census.md §3 / §6 C3'
     + '\n同形状教训：docs/lessons/mcp-read-path-must-not-write-host-configs.md')
   process.exit(1)
 }

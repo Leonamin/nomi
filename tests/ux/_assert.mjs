@@ -1,6 +1,6 @@
 // 走查断言层（2026-08-18）。和 _launchApp.mjs 的关系：那个管「窗口起得来」，这个管「断言骗不了人」。
 //
-// 为什么需要它（全量扫 143 个走查后的结论，见 docs/plan/2026-08-18-walkthrough-harness-hardening.md）：
+// 为什么需要它（全量扫 143 个走查后的结论，见 docs/archive/plan/2026-08-18-walkthrough-harness-hardening.md）：
 //   · 0/143 使用 Playwright 的自动重试断言 —— 官方明确把 `expect(await x.isVisible()).toBe(true)`
 //     标为反模式，因为它**立即取样**；
 //   · 于是链条必然是：一次性 .count() 有竞态 → 拿 waitForTimeout 去糊（全仓 1136 处）
@@ -94,7 +94,7 @@ export async function proveProbe(locator, label, timeout = DEFAULT_TIMEOUT_MS) {
 /**
  * 「不存在」必须**持续成立多久**才算数。
  *
- * 为什么需要这个窗口（2026-08-25 事故，见 docs/plan/2026-08-26-walkthrough-framework-repair.md）：
+ * 为什么需要这个窗口（2026-08-25 事故，见 docs/archive/plan/2026-08-26-walkthrough-framework-repair.md）：
  * Playwright 的 web-first 断言是**重试到条件成立为止**。而 `toHaveCount(0)` 的期望值就是 0，
  * 现场此刻恰好也是 0 —— 于是它**第一次取样就通过**，那个 15 秒的 timeout 一秒都没用上。
  * 它证的是「此刻没有」，不是「一直没有」。任何 200ms 后才挂载的东西都能大摇大摆走过去。

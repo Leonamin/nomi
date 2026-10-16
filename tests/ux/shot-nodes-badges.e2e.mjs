@@ -6,7 +6,7 @@ import { expect, screenshotSettled } from './_assert.mjs'
 
 const phase = process.env.SHOT_NODES_PHASE || 'after'
 const origin = 'http://127.0.0.1:5199'
-const out = path.resolve('docs/plan/shot-nodes-evidence')
+const out = path.resolve('docs/archive/plan/shot-nodes-evidence')
 fs.mkdirSync(out, { recursive: true })
 const app = await launchNomiApp({ name: 'shot-nodes-badges', settleMs: 0, env: { VITE_DEV_SERVER_URL: origin } })
 try {

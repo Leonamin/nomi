@@ -66,10 +66,10 @@
 
 ## 主要来源
 
-- 主计划：[2026-09-04-main-convergence-and-rebaseline.md](../superpowers/plans/2026-09-04-main-convergence-and-rebaseline.md)
+- 主计划：[2026-09-04-main-convergence-and-rebaseline.md](../archive/superpowers/plans/2026-09-04-main-convergence-and-rebaseline.md)
 - Epic 重基线：[2026-09-04-epics-rebaseline-audit.md](2026-09-04-epics-rebaseline-audit.md)
 - MCP 审计：[2026-09-04-mcp-rebaseline-audit.md](2026-09-04-mcp-rebaseline-audit.md)
 - Storyboard/Agent 审计：[2026-09-04-pr454-storyboard-agent-audit.md](2026-09-04-pr454-storyboard-agent-audit.md)
 - M0 红灯：[2026-09-01-agent-m0-red-lights.md](2026-09-01-agent-m0-red-lights.md)
 - M5 清单：[2026-09-03-m5-graduation-checklist.md](2026-09-03-m5-graduation-checklist.md)
-- 跨设备计划：[2026-09-01-cross-device-project-continuation.md](../superpowers/plans/2026-09-01-cross-device-project-continuation.md)
+- 跨设备计划：[2026-09-01-cross-device-project-continuation.md](../archive/superpowers/plans/2026-09-01-cross-device-project-continuation.md)

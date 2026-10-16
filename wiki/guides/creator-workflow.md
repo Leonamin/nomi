@@ -31,7 +31,7 @@ okf_version: "0.1"
 ## 근거와 확인일
 
 - 확인일: 2026-10-16
-- 기존 사용자 안내: [`docs/user-guide.ko.md`](../../docs/user-guide.ko.md), [`docs/personal-web.md`](../../docs/personal-web.md)
+- 기존 사용자 안내: [`docs/user-guide.ko.md`](../../docs/archive/guides/user-guide.ko.md), [`docs/personal-web.md`](../../docs/archive/guides/personal-web.md)
 - 실제 제작·agent 증거: [`docs/qa/2026-10-14-recovered-web-production.md`](../../docs/qa/2026-10-14-recovered-web-production.md), [`docs/qa/2026-10-15-web-agent-tool-execution.md`](../../docs/qa/2026-10-15-web-agent-tool-execution.md)
 - 브라우저 미디어 검증과 한계: [`docs/qa/2026-10-15-web-platform-media-browser.md`](../../docs/qa/2026-10-15-web-platform-media-browser.md)
 - 웹 실행 구현: [`web/agentProcess.ts`](../../web/agentProcess.ts), [`web/agentTools.ts`](../../web/agentTools.ts), [`web/rpc.ts`](../../web/rpc.ts)

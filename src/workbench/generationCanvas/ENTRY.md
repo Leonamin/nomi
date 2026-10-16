@@ -40,4 +40,4 @@
 
 ## 相关方案文档
 
-画布/节点的设计与执行计划见 [`docs/plan/INDEX.md`](../../../docs/plan/INDEX.md) §「生成画布 / 节点系统」。
+画布/节点的设计与执行计划见 [`docs/plan/INDEX.md`](../../../docs/archive/plan/INDEX.md) §「生成画布 / 节点系统」。

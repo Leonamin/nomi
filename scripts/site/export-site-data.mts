@@ -3,7 +3,7 @@
 // 为什么要一份导出：官网生成器是 node .mjs，碰不到 App 的 TS 源；更重要的是官网不许自己再养一份
 // 「有哪些模型 / 技能 / 提示词」——模型身份取 App 模型下拉的同一套去重（dedupeModelOptions），
 // 能力取模型档案，技能取 App 的技能加载器，公开合集取 promptSources。官网只读这份 JSON。
-// 方案：docs/plan/2026-09-28-site-libraries-seo.md §6。
+// 方案：docs/archive/plan/2026-09-28-site-libraries-seo.md §6。
 //
 // 用法：tsx scripts/site/export-site-data.mts          写出 JSON 与派生图片
 //       tsx scripts/site/export-site-data.mts --check  只核对（JSON 逐字相同、派生图片与源文件哈希对得上）

@@ -7,7 +7,7 @@ import { findCanvasBlankPoint } from './_canvasHit.mjs'
 import { createProcessFixture } from './process-feedback-real-fixture.mjs'
 
 const root = path.resolve('.')
-const evidence = path.join(root, 'docs/plan/process-feedback-evidence/imgfx/real')
+const evidence = path.join(root, 'docs/archive/plan/process-feedback-evidence/imgfx/real')
 await fs.mkdir(evidence, { recursive: true })
 const tempRoot = await fs.mkdtemp(path.join(os.tmpdir(), 'nomi-imgfx-real-'))
 const settingsDir = path.join(tempRoot, 'settings')

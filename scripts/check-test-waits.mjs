@@ -410,7 +410,7 @@ export function main() {
     }
     if (hardHits.some((hit) => !['fs-read-spy-path-filter', 'async-waitforfunction-predicate', 'unowned-lane-directory-cleanup', 'built-artifact-test-import'].includes(hit.rule.id))) {
       console.log('  → 等后台编排链请 import electron/productionRun/productionRunTestHelpers 的 waitForProduction')
-      console.log('    （60s 安全网只拦真死锁/真回归，不给磁盘排队计时；来龙去脉见 docs/plan/2026-08-25-fix-flaky-production-run-tests.md）')
+      console.log('    （60s 安全网只拦真死锁/真回归，不给磁盘排队计时；来龙去脉见 docs/archive/plan/2026-08-25-fix-flaky-production-run-tests.md）')
     }
     if (hardHits.some((hit) => hit.rule.id === 'fs-read-spy-path-filter')) {
       console.log('  → fs-read-spy-path-filter：生产按 fd 读，按路径过滤读 spy 恒空、断言恒真（假绿）。')

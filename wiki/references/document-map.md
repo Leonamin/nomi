@@ -14,14 +14,16 @@ okf_version: "0.1"
 
 | 기존 문서·근거 | 현재 위키의 소유 문서 |
 | --- | --- |
-| [fork 경계](../../docs/fork-boundary.md), [초기 웹 계획](../../docs/plan/2026-10-12-personal-web.md), `web/` | [fork 범위](../concepts/fork-scope.md), [ADR 0001](../decisions/0001-web-first-fork.md) |
-| [개인용 웹 안내](../../docs/personal-web.md), `web/{server,rpc,hostCapabilities}.ts` | [웹 호스트](../concepts/web-host.md), [개발](../guides/local-development.md), [배포](../guides/web-host-release.md) |
-| [한국어 사용 안내](../../docs/user-guide.ko.md), 10월 QA, 실제 생성·타임라인 코드 | [제작 흐름](../guides/creator-workflow.md), [생성·음성 경계](../concepts/media-generation.md) |
+| [fork 경계](../../docs/archive/guides/fork-boundary.md), [초기 웹 계획](../../docs/archive/plan/2026-10-12-personal-web.md), `web/` | [fork 범위](../concepts/fork-scope.md), [ADR 0001](../decisions/0001-web-first-fork.md) |
+| [개인용 웹 안내](../../docs/archive/guides/personal-web.md), `web/{server,rpc,hostCapabilities}.ts` | [웹 호스트](../concepts/web-host.md), [개발](../guides/local-development.md), [배포](../guides/web-host-release.md) |
+| [한국어 사용 안내](../../docs/archive/guides/user-guide.ko.md), 10월 QA, 실제 생성·타임라인 코드 | [제작 흐름](../guides/creator-workflow.md), [생성·음성 경계](../concepts/media-generation.md) |
 | [상세 디자인 시스템](../../docs/design/nomi-design-system.md), `src/design/` | [디자인 체계](../concepts/design-system.md), [디자인 작업](../guides/ui-design-work.md). 토큰·규범 원본은 기존 경로 유지 |
 | [명령 표](../../docs/engineering/commands.md), [전달 규칙](../../docs/engineering/delivery-and-review.md), `package.json` | [개발](../guides/local-development.md), [전달과 검증](../guides/delivery-and-validation.md). 명령·규칙 원본은 기존 경로 유지 |
 | [이전 총목차](../../docs/README.md), 조사·계획·감사 색인 | [역사와 증거](history-and-evidence.md), [외부 조사](external-research.md) |
 
 ## 보존 경로와 용도
+
+2026-10-16 후속 정리에서 과거 파일 2,565개를 `docs/archive/` 아래로 실제 이동했다. 현재 경로는 [보관 색인](../../docs/archive/index.md)과 [이동표](../../docs/archive/2026-10-16-path-map.json)에서 확인한다. 비문서 산출물 1,056개는 내용 해시를 유지했다. 기계 계약과 기존 코드의 고정된 문서 주소는 짧은 원문 안내로 남긴다.
 
 폴더 이름만으로 문서의 유효성을 판정하지 않는다. 미래 문서도 기계 입력은 소유 경로에 유지하고, 위키의 current fact와 연결한다.
 
@@ -38,7 +40,7 @@ okf_version: "0.1"
 | `release-notes/`, `release/`, `roadmap/`, `archive/` | 릴리스·계획 포인터·역사 기록. 과거 릴리스와 현재 배포를 구분 |
 | `media/`, `feedback/`, `security/`, `stats/` | 첨부·설정 예시·정책·통계 도구 안내. 공개 예시와 실제 운영 비밀 값을 구분 |
 
-`plan/`에는 1,648개 파일(Markdown 866개), `fixes/` 1,123개, `evidence/` 637개가 있었다. 이 폴더를 통째로 이동하면 계약 안의 경로·검증 도구·과거 증거의 상대 링크가 함께 바뀐다. 이번 전환에서는 **현재 지식을 위키로 이관하고 원본 위치를 보존**한다. 이름을 바꾸기 위해 증거를 수정하거나 오래된 결정을 현재 승인처럼 다시 쓰지 않는다.
+`plan/`에는 1,648개 파일(Markdown 866개), `fixes/` 1,123개, `evidence/` 637개가 있었다. 이 폴더를 통째로 이동하면 계약 안의 경로·검증 도구·과거 증거의 상대 링크가 함께 바뀐다. 위키 전환 후의 물리적 보관에서는 역사 묶음을 archive로 이동하고 관련 도구·테스트의 경로를 맞췄다. 원인 계약·규범·현재 자동화 입력과 실행 문맥이 필요한 코드/HTML 증거 패키지는 원래 경로에 유지한다. 원본 로그·이미지·영상·실험 JSON의 내용과 당시 결정을 다시 쓰지 않는다.
 
 ## 이후 갱신
 

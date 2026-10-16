@@ -3,7 +3,7 @@
 // 扫盘、取 PR 正文、对比自写登记表的 base / head、报红。
 //
 // 两条判据（详见 lib 头部）：
-//   ① docs/plan/<日期>-*.md（日期 >= 2026-09-07）**如果写了**「## 先查别人」一节，节内 ≥3 条带出处的条目
+//   ① live docs/plan/<日期>-*.md（日期 >= 2026-09-07）**如果写了**「## 先查别人」一节，节内 ≥3 条带出处的条目
 //      （没写不红：领域方案没有现成的可查）；
 //   ② PR 新增 / 修改了自写登记表（docs/engineering/self-written.json 的 entries 或 domainRoots，
 //      也就是引入了通用能力）时，正文必须引用一份合格的方案、或自己带一节合格的「先查别人」。
@@ -49,6 +49,7 @@ function collectPlans() {
     }
   }
   walk(PLAN_DIR)
+  walk(path.join(repoRoot, 'docs/archive/plan'))
   return plans
 }
 
@@ -88,7 +89,7 @@ function registryChangedInDiff() {
 const plans = collectPlans()
 /** 第三种出处（链接指向仓库里真实存在的文件）要真去看一眼——指不到的链接不算出处。 */
 const fileExists = (candidate) => fs.existsSync(path.join(repoRoot, candidate))
-/** 本次改动动过的 docs/plan/*.md（含未跟踪）；算不出 base 返回 null。 */
+/** 本次改动动过的 live docs/plan/*.md（含未跟踪）；算不出 base 返回 null。 */
 function changedPlanFiles() {
   const base = resolveBase()
   if (!base) return null

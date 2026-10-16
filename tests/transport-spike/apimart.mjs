@@ -1,6 +1,6 @@
 // apimart 策展接入 verify-first：用真 key 端到端探一次完整回路，把精确请求/响应形状定透，
 // 再据此写生产 catalog（electron/catalog/apimart*.ts）。docs.apimart.ai 文档没给视频 item 字段，
-// 这个脚本就是来定型的（plan: docs/plan/2026-06-07-apimart-curated-onboarding.md §2 留的口子）。
+// 这个脚本就是来定型的（plan: docs/archive/plan/2026-06-07-apimart-curated-onboarding.md §2 留的口子）。
 //
 // key 从环境变量读，不写进文件、不回显明文：
 //   APIMART_KEY=sk-xxx node tests/transport-spike/apimart.mjs           # 默认：一张图（最省额度）

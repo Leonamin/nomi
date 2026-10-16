@@ -55,7 +55,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const matrix = JSON.parse(fs.readFileSync(matrixPath, "utf8"));
   const result = validateCapabilityMatrix(matrix, { root });
   if (process.argv.includes("--write")) {
-    const out = path.join(root, "docs/testing/capability-matrix.md");
+    const out = path.join(root, "docs/archive/testing/capability-matrix.md");
     fs.mkdirSync(path.dirname(out), { recursive: true });
     fs.writeFileSync(out, renderCapabilityMatrix(matrix, result));
     console.log(`wrote ${path.relative(root, out)}`);

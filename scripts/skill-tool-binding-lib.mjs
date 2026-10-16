@@ -48,7 +48,7 @@
  * 到期日 2026-12-18｜到期前替代品是运行时权威节（它不依赖任何措辞识别，所以模型这一层是兜住的，
  * 风险面只剩「我们自己仓库里一句英文复述能提交进来」）｜到期时怎么验它真能认英文：
  * 把下面三条阳性对照的事故文本逐句译成英文断言必红，再对 `skills/` 做一次英文变异要求 exit=1。
- * 全文见 `docs/plan/2026-09-18-portable-skill-tool-binding.md` §7.5.3。
+ * 全文见 `docs/archive/plan/2026-09-18-portable-skill-tool-binding.md` §7.5.3。
  * 现在不做的理由：88 个技能全中文，英文判据一条真实样本都没有，没样本就验不了它会不会红。
  */
 export const EFFECT_CLAIM_PATTERNS = Object.freeze([

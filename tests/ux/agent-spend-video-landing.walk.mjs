@@ -16,7 +16,7 @@
 //   ④ 英文界面 + 重开（reload）之后：节点上的片子还在（以前结果地址是 5 分钟过期的签名链）。
 //
 // 只有远端供应商是 loopback 夹具（零额度）；SDK、IPC、ProductionRun、渲染层、落盘全是真的。
-// 产物是一段真供应商出的 mp4（docs/audit/2026-08-20-l3-f1-full-journey），不是合成色块。
+// 产物是一段真供应商出的 mp4（docs/archive/audit/2026-08-20-l3-f1-full-journey），不是合成色块。
 import fs from 'node:fs'
 import path from 'node:path'
 

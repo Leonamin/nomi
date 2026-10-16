@@ -1,4 +1,4 @@
-// 走查：画布快捷键对齐 LibTV（2026-09-21，docs/plan/2026-09-21-canvas-shortcut-parity.md）。
+// 走查：画布快捷键对齐 LibTV（2026-09-21，docs/archive/plan/2026-09-21-canvas-shortcut-parity.md）。
 //
 // 用户拍板：「做对照，缺的都补上」。这条走查按真人的方式逐个按新键，断言**副作用**（节点数、连线数、
 // 位置、菜单、确认卡），不是断言键被监听了：

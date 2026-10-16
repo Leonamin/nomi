@@ -17,4 +17,4 @@ Luna 서브에이전트 세 개가 개념·결정, 사용·운영 가이드, 참
 기존 색인 검사는 `.agents/wiki-path`를 읽어 소문자 `index.md`와 각 디렉터리의 바로 아래 문서 등록을 확인하도록 확장한다. 위키를 기존 계획 상태·자동 TODO 생성 대상으로 편입하지 않는다.
 
 - [이관 범위·남겨 둔 경로](../references/document-map.md)
-- [설계 카드와 검증 범위](../../docs/plan/2026-10-16-korean-fork-wiki.md)
+- [설계 카드와 검증 범위](../../docs/archive/plan/2026-10-16-korean-fork-wiki.md)

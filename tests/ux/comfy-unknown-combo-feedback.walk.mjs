@@ -9,14 +9,14 @@
 // 必须先 `pnpm run build` 再跑这条，否则会打到旧构建，诊断条永远不出现却看不出是为什么。
 //
 // 用法: pnpm run build && node tests/ux/comfy-unknown-combo-feedback.walk.mjs
-// 产出: docs/plan/2026-09-11-triage-board-evidence/combo-unknown-shape.png
+// 产出: docs/archive/plan/2026-09-11-triage-board-evidence/combo-unknown-shape.png
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { expect, screenshotSettled, DEFAULT_TIMEOUT_MS } from './_assert.mjs'
 import { openComfyImportPanel, pasteAndAnalyze, startFakeComfy } from './_comfyImportPanel.mjs'
 
-const evidenceDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../docs/plan/2026-09-11-triage-board-evidence')
+const evidenceDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../docs/archive/plan/2026-09-11-triage-board-evidence')
 fs.mkdirSync(evidenceDir, { recursive: true })
 
 // 一台最小文生视频工作流：CLIPTextEncode 提示词 → KSampler → CreateVideo → SaveVideo。

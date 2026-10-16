@@ -15,7 +15,7 @@ if (!['free', 'ours'].includes(ownership.status)) throw new Error('Cannot prove 
 const server = ownership.status === 'free' ? spawn(process.execPath, ['node_modules/vite/bin/vite.js', '--host', '127.0.0.1', '--port', String(labPortFor(role)), '--strictPort'], { stdio: 'ignore' }) : null
 await expect.poll(async () => { try { return (await fetch(`${origin}/design-lab.html`)).ok } catch { return false } }, { timeout: stationTimeout({ operations: 4 }) }).toBe(true)
 if (assertLabPortOwnership(role).status !== 'ours') throw new Error('Lab server does not belong to this worktree')
-const out = path.resolve('docs/plan/2026-09-09-node-label-evidence')
+const out = path.resolve('docs/archive/plan/2026-09-09-node-label-evidence')
 fs.mkdirSync(out, { recursive: true })
 const { app, win } = await launchNomiApp({ name: 'node-label-outside', env: { VITE_DEV_SERVER_URL: origin } })
 try {

@@ -1,6 +1,6 @@
 // 语义 token 作用域扫描（check-design-tokens 第 6 类的实现，独立成库以便单测）。
 //
-// 为什么存在（docs/plan/2026-08-24-workbench-token-root-scope.md）：CSS 自定义属性沿 **DOM 树**继承。
+// 为什么存在（docs/archive/plan/2026-08-24-workbench-token-root-scope.md）：CSS 自定义属性沿 **DOM 树**继承。
 // 把 --nomi-* / --workbench-* 的**定义**写进 `.workbench-shell` 之类的类作用域，portal 到 body /
 // 挂在 app 根 / 库页的浮层就解析不到 → var() 静默失效退回继承色（任务中心、库页确认卡勾勾
 // 两度实锤 rgb(201,201,201)），并逼出「每个 portal 补挂作用域类」的桥。2026-08-24 已把两族全量

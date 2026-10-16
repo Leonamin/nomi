@@ -1,4 +1,4 @@
-// 门岗瘦身（2026-10-01，用户按 docs/audit/2026-10-01-gate-ledger.md 拍板）的回归钉：
+// 门岗瘦身（2026-10-01，用户按 docs/archive/audit/2026-10-01-gate-ledger.md 拍板）的回归钉：
 //   · 删 / 降 / 合并之后，账本里那 17 次「真问题」对应的门岗**照样在 PR 的 Contracts 里、照样阻断**；
 //   · 被删的不许悄悄回来，被降级的不许悄悄升回去（升回去要改这里并说明理由）。
 // 账本里 Contracts 的真问题：check:test-types 5、check:filesize 4、check:walkthroughs 3、

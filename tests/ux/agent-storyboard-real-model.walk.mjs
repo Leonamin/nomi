@@ -4,8 +4,8 @@
 // ── 它补的是哪一格 ──
 //
 // 2026-09-18 交接文档里有一张表：「调工具 18/23、落画布 14/23」。那次是真机跑出来的，但**剧本没进
-// 仓库**（`docs/plan/2026-09-18-tool-layer-findings-inventory.md` §4 只留了数字，
-// `docs/plan/agent-tool-face-v2-evidence/README.md` 明记「这一腿量不到『落到画布』」）。
+// 仓库**（`docs/archive/plan/2026-09-18-tool-layer-findings-inventory.md` §4 只留了数字，
+// `docs/archive/plan/agent-tool-face-v2-evidence/README.md` 明记「这一腿量不到『落到画布』」）。
 // 于是「落到画布」那一列在每一次工具层改动之后都得靠人重跑一遍手工操作，没有人这么干过第二次。
 // 这个文件把那次走查落成可重跑的脚本。
 //

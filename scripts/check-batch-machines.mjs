@@ -5,7 +5,7 @@
 //   ② brand.promo driveGeneration（legacy 顺序循环，逐 job production.generate-node）；
 //   ③ GUI 画布 runner runGenerationNodesByPlan/Batch（渲染层自有派发，无 Run/receipt/observe）。
 // S7a 的处置：#3 现役唯一 GUI 批量路径 → 显式冻结（不加新功能）；#2 冻结门判据先收敛、整体收编排 S7b；
-// #1 legacy MCP 路已 fail-closed。收敛计划见 docs/plan/2026-08-25-p4-s7-legacy-converge.md。
+// #1 legacy MCP 路已 fail-closed。收敛计划见 docs/archive/plan/2026-08-25-p4-s7-legacy-converge.md。
 //
 // 为什么值得一道门岗而不是写进文档（P2 通用性铁律）：「别再造第四台批量机器」「别给冻结的 legacy
 // 路加新功能」「别把冻结判据再抄第三遍」——这三条**靠自觉记不住**，下一个 agent 想给画布批量塞个
@@ -193,7 +193,7 @@ function main() {
 
   if (failed) {
     console.log('\n批量机器门岗未通过。批量生成只剩一台机器（语义调度器）——别再造第四台、别给冻结的 legacy 路加新功能。')
-    console.log('收敛纪律见 docs/plan/2026-08-25-p4-s7-legacy-converge.md。')
+    console.log('收敛纪律见 docs/archive/plan/2026-08-25-p4-s7-legacy-converge.md。')
     process.exit(1)
   }
   console.log(`✅ 批量机器门岗通过：${summary.join(' · ')}（棘轮只减不增）`)

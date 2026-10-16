@@ -1,5 +1,5 @@
 // 供应商模型雷达（apimart / kie）—— **发现层**：确定性脚本，不含判断。
-// 方案见 docs/plan/2026-08-27-vendor-model-radar.md。
+// 方案见 docs/archive/plan/2026-08-27-vendor-model-radar.md。
 //
 // 为什么是脚本不是 agent：「这家文档有没有多出一个模型」是**可判定的集合差**，不是判断题。
 // 用 LLM 比对两个字符串集合既贵又不可靠（会看漏/看错），而集合差是确定的、可测的、可回归的。
@@ -39,7 +39,7 @@ import { billingKindForTaskKind, type CatalogState, type Mapping } from "../elec
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 /** 基线快照（apimart.json / kie.json）：进仓库，只由 --update-baseline 写。 */
-const SNAPSHOT_DIR = path.join(ROOT, "docs/research/model-radar");
+const SNAPSHOT_DIR = path.join(ROOT, "docs/archive/research/model-radar");
 /**
  * 运行结果（latest.json / liveness.json）：**不进仓库**，和用户反馈雷达一样落在 intake 缓存目录（NOMI_INTAKE_CACHE 可改）。
  * 这是它们唯一的输出位置——写在工作树里，每个任务工作树每天都会被弄脏一次，容易被顺手提交进无关 PR，也让 preflight 报不干净。

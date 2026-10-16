@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // 接口级「已有能力清单」生成器：在 src/、electron/ 新建文件的那一刻，给 agent 看「这附近已经有什么」。
 //
-// 为什么存在：调研（docs/research/2026-10-01-ai-collaboration-rules/report.md）里 RepoReuse 的实验——
+// 为什么存在：调研（docs/archive/research/2026-10-01-ai-collaboration-rules/report.md）里 RepoReuse 的实验——
 // agent 在多轮任务里越来越少看仓库已有代码；给一份**接口级**（模块、一句话职责、入口）的简洁清单，复用率从
 // 30.0% 升到 67.8%，塞完整源码没有改善。今天的 laneContextFit 就是在「pi 已经有压缩」没人看的地方长出来的。
 //

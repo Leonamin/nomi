@@ -1,6 +1,6 @@
 // R16 真实用户任务：「我刚接了个文本模型，三个地方说的得是一回事」。
 //
-// 2026-09-12 真实付费验收 P0-10 的现场（docs/research/2026-09-12-real-onboarding-acceptance/README.md §6）：
+// 2026-09-12 真实付费验收 P0-10 的现场（docs/archive/research/2026-09-12-real-onboarding-acceptance/README.md §6）：
 // DeepSeek 的文本模型接进来、**重启之后**——
 //   · 设置 → 模型   说「1 个连接 · 2 个模型」「2 个可使用」
 //   · 项目库首页横幅 说「创作助手尚未连接模型」

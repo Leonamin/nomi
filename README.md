@@ -119,17 +119,17 @@ The installer has no Authenticode signature. In the SmartScreen prompt, choose *
 
 ## Quick start
 
-1. **Connect a model.** Pick APIMart or Kie.ai and paste one key — or add your own relay, OpenAI-compatible endpoint, or local ComfyUI. Rather not do it yourself? Hand [Let your AI connect Nomi](docs/integrate-with-your-agent-en.md) to Claude Code or Codex.
+1. **Connect a model.** Pick APIMart or Kie.ai and paste one key — or add your own relay, OpenAI-compatible endpoint, or local ComfyUI. Rather not do it yourself? Hand [Let your AI connect Nomi](docs/archive/guides/integrate-with-your-agent-en.md) to Claude Code or Codex.
 2. **Say what you want to make.** Type it into the agent panel, or start from a story in the storyboard.
 3. **Direct and export.** Keep the takes you like, arrange the timeline, export MP4.
 
 > **Disclosure:** the APIMart link carries a referral code. You always pay providers directly with your own key at their price. Nomi never proxies or resells inference, and every provider can be swapped for your own endpoint.
 
-More: [quick start](https://nomiaqm.com/en/quickstart) · [model connection](docs/guide/model-connection-en.md) · [user guide](docs/user-guide.md) · [providers](docs/provider-integration.md) · [CLI + MCP](docs/guide/capability-core-cli-mcp.md)
+More: [quick start](https://nomiaqm.com/en/quickstart) · [model connection](docs/guide/model-connection-en.md) · [user guide](docs/archive/guides/user-guide.md) · [providers](docs/archive/guides/provider-integration.md) · [CLI + MCP](docs/guide/capability-core-cli-mcp.md)
 
 ## Use Nomi from your own agent
 
-Nomi ships an MCP server with 24 MCP tools, so Claude Code, Codex, or Cursor can drive it — generate, arrange, and edit — while reusing the credits that come with your agent subscription. See [Let your AI connect Nomi](docs/integrate-with-your-agent-en.md).
+Nomi ships an MCP server with 24 MCP tools, so Claude Code, Codex, or Cursor can drive it — generate, arrange, and edit — while reusing the credits that come with your agent subscription. See [Let your AI connect Nomi](docs/archive/guides/integrate-with-your-agent-en.md).
 
 ## Community
 
@@ -145,7 +145,7 @@ WeChat users can scan to join the user group (left). If the group code has expir
   <a href="docs/media/qingyang-wechat.jpg"><img src="docs/media/qingyang-wechat.jpg" alt="Nomi maintainer WeChat QR" width="180" /></a>
 </p>
 
-Hit a bug? The code is open — send the error and the [issue-fix prompt](docs/guide/codex-issue-fix-prompt-en.md) to Claude Code or Codex, and it can often patch it for you. Anything everyone runs into, tell us and it goes into the mainline.
+Hit a bug? The code is open — send the error and the [issue-fix prompt](docs/archive/guide/codex-issue-fix-prompt-en.md) to Claude Code or Codex, and it can often patch it for you. Anything everyone runs into, tell us and it goes into the mainline.
 
 ## For Teams
 
@@ -171,7 +171,7 @@ skills/      Skill Pack v2; see docs/skill-pack-format.md
 
 Useful checks: `pnpm run test` · `pnpm run typecheck` · `pnpm run gates`
 
-Research tooling (searching what creators say on Douyin / Xiaohongshu / Bilibili / X) reads its key only from the `TIKHUB_API_KEY` environment variable — see [`docs/research/tikhub-api-notes.md`](docs/research/tikhub-api-notes.md).
+Research tooling (searching what creators say on Douyin / Xiaohongshu / Bilibili / X) reads its key only from the `TIKHUB_API_KEY` environment variable — see [`docs/research/tikhub-api-notes.md`](docs/archive/research/tikhub-api-notes.md).
 
 ## Contributing
 

@@ -93,7 +93,7 @@ test('不在 src/ 与 electron/ 下的新增不归这道门岗管；非代码文
   const added = [
     { path: 'scripts/new-tool.mjs', content: 'export const x = 1' },
     { path: 'electron/agentLane/data.json', content: '{}' },
-    { path: 'docs/plan/x.md', content: '# x' },
+    { path: 'docs/archive/plan/x.md', content: '# x' },
   ]
   assert.deepEqual(evaluateSelfWritten({ registry: registry(), added, today: '2026-10-20' }).violations, [])
 })
@@ -141,7 +141,7 @@ test('registryChanges：新增 / 修改 entry 或扩大 domainRoots 算「新增
 
 test('dueForReview：待替换、评估中 / 评估到期、复查日已到，列进周期审计', () => {
   const rows = dueForReview(registry({ entries: [
-    { ...ENTRY, id: 'a', status: 'to-replace', plan: 'docs/plan/x.md' },
+    { ...ENTRY, id: 'a', status: 'to-replace', plan: 'docs/archive/plan/x.md' },
     { ...ENTRY, id: 'b', status: 'under-review', reviewBy: '2026-10-05' },
     { ...ENTRY, id: 'c', revisitBy: '2026-10-01' },
     { ...ENTRY, id: 'd', revisitBy: '2027-01-01' },

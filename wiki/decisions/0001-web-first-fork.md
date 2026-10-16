@@ -26,7 +26,7 @@ status: "accepted"
 
 ## 근거
 
-- 사용자의 초기 기준 승인과 범위: [2026-10-12 개인용 웹 설계·실제 검증 계획](../../docs/plan/2026-10-12-personal-web.md)
-- 사용자 결정이라고 명시된 경계: [docs/fork-boundary.md](../../docs/fork-boundary.md)
+- 사용자의 초기 기준 승인과 범위: [2026-10-12 개인용 웹 설계·실제 검증 계획](../../docs/archive/plan/2026-10-12-personal-web.md)
+- 사용자 결정이라고 명시된 경계: [docs/fork-boundary.md](../../docs/archive/guides/fork-boundary.md)
 - 현재 구현 경계: [web/server.ts](../../web/server.ts), [web/rpc.ts](../../web/rpc.ts)
 - 확인일: 2026-10-16

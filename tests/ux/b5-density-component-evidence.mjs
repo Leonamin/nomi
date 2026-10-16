@@ -6,7 +6,7 @@ import { launchNomiApp, repoRoot } from './_launchApp.mjs'
 import { expect, expectAbsent, proveProbe } from './_assert.mjs'
 const origin = process.env.B5_COMPONENT_ORIGIN || 'http://127.0.0.1:5217'
 const baselineDir = path.join(repoRoot, 'tests/ux/fixtures/b5-density/.baseline')
-const outputDir = path.join(repoRoot, 'docs/plan/2026-09-10-b5-density-evidence/component-evidence')
+const outputDir = path.join(repoRoot, 'docs/archive/plan/2026-09-10-b5-density-evidence/component-evidence')
 const baselineRef = 'c6fe8c608'
 const sourcePaths = ['src/workbench/taskCenter/TaskCenterPanel.tsx', 'src/workbench/taskCenter/exportJobTaskCenter.ts', 'src/workbench/generationCanvas/nodes/useNodeModelAutoSelect.ts', 'src/i18n/resources.ts', 'src/workbench/creation/storyboard/StoryboardPlanStrategyPanel.tsx', 'src/i18n/locales/storyboardEditor.ts']
 fs.mkdirSync(baselineDir, { recursive: true }); fs.mkdirSync(outputDir, { recursive: true })

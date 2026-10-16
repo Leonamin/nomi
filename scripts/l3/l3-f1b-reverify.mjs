@@ -182,7 +182,7 @@ for (let i = PICK ?? 0; i < (PICK !== null ? PICK + 1 : Math.min(ONLY, SHOTS.len
   )
 }
 
-const outDir = path.join(repoRoot, 'docs/audit/2026-08-20-l3-f1b-reverify')
+const outDir = path.join(repoRoot, 'docs/archive/audit/2026-08-20-l3-f1b-reverify')
 // **不整目录 rm**：这里躺着人写的 report.md，删了就没了（本轮真删过一次）。
 // 只清上一轮的产物文件（编号前缀 + run.json），文档一律留着。
 fs.mkdirSync(outDir, { recursive: true })

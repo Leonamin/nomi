@@ -20,7 +20,7 @@ import { launchNomiApp, repoRoot } from '../tests/ux/_launchApp.mjs'
 import { screenshotSettled } from '../tests/ux/_assert.mjs'
 
 const BASE_URL = process.env.COMFY_BASE_URL || 'http://127.0.0.1:8188'
-const EVID = path.join(repoRoot, 'docs/plan/2026-09-11-comfyui-cert-evidence')
+const EVID = path.join(repoRoot, 'docs/archive/plan/2026-09-11-comfyui-cert-evidence')
 const WORKFLOW = path.join(EVID, 'sd15-txt2img-api.json')
 const NAME = '验收 文生图'
 const PROMPT = 'a red apple on a wooden table'

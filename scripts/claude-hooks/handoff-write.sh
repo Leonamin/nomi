@@ -6,7 +6,7 @@
 # ANTHROPIC_AUTH_TOKEN（会话级 scoped token），子进程 claude -p 用它打 API 会 401。
 # 故改为「确定性提取」——零认证零依赖、100% 可靠：抽「你最近提的几条 + 我上次停在哪」，
 # 这正是手动「吐 context」会吐的东西。不引入会写出错误内容的 LLM 路径（P1/P2）。
-# 方案：docs/plan/2026-06-21-context-handoff-and-self-iterating-control-files.md（S1）
+# 方案：docs/archive/plan/2026-06-21-context-handoff-and-self-iterating-control-files.md（S1）
 set +e
 ROOT="${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null)}"
 [ -z "$ROOT" ] && exit 0

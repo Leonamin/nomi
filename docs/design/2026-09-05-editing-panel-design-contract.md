@@ -1,7 +1,7 @@
 # 剪辑面设计合同 · 布局 C′ + 时间轴补齐 11 条（用户 2026-09-05 拍板）
 
 > 状态：⏳ 已拍板·未开工 · 日期：2026-09-05
-> 样张：在线画布 https://claude.ai/code/artifact/f33e5872-7c64-4e1d-9b8b-14874ddc7e03 ；离线留存 [`mockups/2026-09-05-editing-panel/`](mockups/2026-09-05-editing-panel/)（9 块画板 + 预览图 + 四布局线框）。
+> 样张：在线画布 https://claude.ai/code/artifact/f33e5872-7c64-4e1d-9b8b-14874ddc7e03 ；离线留存 [`mockups/2026-09-05-editing-panel/`](mockups/2026-09-05-editing-panel)（9 块画板 + 预览图 + 四布局线框）。
 > 表现层依据：`docs/research/2026-09-05-editing-surface-alignment.md`（分支 `codex/editing-surface-alignment-20260905`，OpenCut classic 源码实读 + ChatCut / CapCut / Descript / Resolve 官方文档）；资源库依据：`docs/research/2026-09-05-editing-library-and-ai-assets.md`（分支 `codex/editing-library-research-20260905`）。
 > 事实来源：剪辑面简报（scratchpad `editing-design-brief/brief.md`，真机截图 13 张、工具条 11 图标解剖、数据模型能力面）、`docs/research/2026-09-05-chatcut-conversational-editing-teardown.md`（分支 `codex/chatcut-editing-research-20260905`）、审计 `editing-tools-audit.md` §6/§7、用户 ChatCut 真机截图 5 张。
 > 拍板记录：本文 §0。实施若偏离本文，先回来改本文再动代码（R8 逐项对账）。
