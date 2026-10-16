@@ -185,3 +185,8 @@ CODEX-REPORT.md
 # 2026-09-27 修官网 Range 时被 git add -A 一起提进过树。infra/feedback-worker/.gitignore 同理。
 /.wrangler/
 /public/web-bridge.js
+
+# Local experimental screenshots and retired agent scratch output
+.camera-follow-lab/
+.ue-spike-walk/
+.superpowers/

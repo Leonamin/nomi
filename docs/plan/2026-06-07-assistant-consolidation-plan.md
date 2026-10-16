@@ -49,7 +49,7 @@
 - **验收**：用户能分清两种定妆；不再出现「点定妆却没参考我的图」的错配。
 
 ### 阶段 2 — 合并面板 + 空间行为（R8 样张已拍板）
-- **前置**：`docs/mockups/unified-assistant-panel.html` 已经用户拍板（v4：三工作区停靠 + 折叠；砍掉 S/M/L 只留拖宽手柄）。
+- **前置**：`docs/design/archive/unified-assistant-panel.html` 已经用户拍板（v4：三工作区停靠 + 折叠；砍掉 S/M/L 只留拖宽手柄）。
 - 合并两组件为单一上下文感知助手；工具域随活跃区（编辑器/画布/时间轴）切换；统一模式语义 + 模型选择器常驻。
 - **可用工具默认折叠**成「N 个工具 ⌄」一行（不做常驻大条）；工具调用指示统一横排一行、超长省略。
 - **空间行为**：折叠态 = 右下角带 Nomi 标 + ✦ 的小入口；展开态 = 右侧停靠 + 左缘拖宽手柄（无级调宽）+ `»` 折回。**明确不做自由浮窗**（避免窗口管理税 / 盖节点 / 飘出屏）。
@@ -71,7 +71,7 @@
 
 ## 6. 当前进度
 - [x] 阶段 0：审计 + 复核修正（audit §10）
-- [x] R8 样张：`docs/mockups/unified-assistant-panel.html` v4 已用户拍板
+- [x] R8 样张：`docs/design/archive/unified-assistant-panel.html` v4 已用户拍板
 - [x] 阶段 1a：抽共享执行层 applyCanvasToolCall
 - [x] 阶段 1c：定妆命名消歧义（立角色卡 / 基于此图定妆）
 - [×] 阶段 2：尝试过 app 级 dock（WorkbenchAssistantDock，step1 跟随上下文 / step2 整高

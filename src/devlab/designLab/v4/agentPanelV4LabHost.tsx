@@ -2,7 +2,7 @@
 import React, { type JSX } from 'react'
 import type { LanePart, LaneQueuedMessage, LaneWorkspaceProjection } from '../../../../electron/shared/agentLane/laneContracts'
 import { capabilityAliasesFor } from '../../../../electron/shared/agentCapabilities/registry'
-import { EMPTY_LANE_PROJECTION, laneClient } from '../../../workbench/ai/lane/laneClient'
+import { EMPTY_LANE_PROJECTION, laneClient, type LaneBridge } from '../../../workbench/ai/lane/laneClient'
 import { useWorkbenchStore } from '../../../workbench/workbenchStore'
 import ProjectAgentResidentShell from '../../../workbench/ai/ProjectAgentResidentShell'
 import type { ResidentSurface } from '../../../workbench/ai/resident/residentShellDisplay'
@@ -67,23 +67,50 @@ export function labHostState(input: {
   }
 }
 
+type LabLaneHost = { nomiDesktop?: { agentLane?: LaneBridge } }
+
+/** A desktop specimen must advertise exactly the transport it consumes. */
+export function installLabLane(snapshot: LaneWorkspaceProjection, host: LabLaneHost = globalThis as LabLaneHost): () => void {
+  const previous = host.nomiDesktop
+  const bridge: LaneBridge = {
+    onProjection: listener => { listener(snapshot); return () => undefined },
+    send: async () => ({ ok: false, code: 'agent_lane_bridge_absent', diagnostic: 'design lab host is read-only' }),
+  }
+  const desktop = { ...previous, agentLane: bridge }
+  host.nomiDesktop = desktop
+  laneClient.connect(bridge)
+  return () => {
+    if (host.nomiDesktop !== desktop) return
+    if (previous) host.nomiDesktop = previous
+    else delete host.nomiDesktop
+    laneClient.connect(previous?.agentLane)
+  }
+}
+
+export function useLabLane(snapshot: LaneWorkspaceProjection): boolean {
+  const [hasHost, setHasHost] = React.useState(false)
+  React.useLayoutEffect(() => {
+    const dispose = installLabLane(snapshot)
+    setHasHost(true)
+    return dispose
+  }, [snapshot])
+  return hasHost
+}
+
 export function ShellStage({ snapshot, surface = 'generation', draft = '', width = V4_PANEL_WIDTH, height = 620 }: {
   snapshot: LaneWorkspaceProjection
   surface?: ResidentSurface
   draft?: string
   width?: number
   height?: number
-}): JSX.Element {
+}): JSX.Element | null {
   React.useMemo(() => {
-    laneClient.connect({
-      onProjection: (listener) => { listener(snapshot); return () => undefined },
-      send: async () => ({ ok: false as const, code: 'agent_lane_bridge_absent' as const, diagnostic: 'design lab host is read-only' }),
-    })
     useWorkbenchStore.setState({ editingPanelLayout: { ...useWorkbenchStore.getState().editingPanelLayout, assistantWidth: width }, projectAgentDockCollapsed: false,
       projectAgentDraft: draft, projectAgentAttachments: [], creationActiveSkill: null })
     return null
   }, [draft, snapshot, width])
-  React.useEffect(() => () => laneClient.connect(undefined), [])
+  const hasLabHost = useLabLane(snapshot)
+  if (!hasLabHost) return null
   return (
     <div className="overflow-hidden rounded-nomi border border-nomi-line bg-nomi-bg"
       style={{ width, height }} data-design-lab-stage="shell">

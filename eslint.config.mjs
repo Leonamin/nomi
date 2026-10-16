@@ -16,9 +16,6 @@ export default tseslint.config(
       'public/web-bridge.js',
       'dist-electron/**',
       'release/**',
-      // R0 历史兼容探针产物保留；正式 pi 源码在 electron/harness/runtime/pi 参加 lint。
-      'experiments/pi-agent-runtime/dist/**',
-      'experiments/pi-agent-runtime/release/**',
       'node_modules/**',
       // Vite 预打包依赖缓存（vite.config cacheDir = .tmp/vite）——第三方 bundle，非源码，不 lint。
       '.tmp/**',

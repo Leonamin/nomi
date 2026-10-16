@@ -16,7 +16,7 @@ The website, README pair, and business form stay in one plan because they are on
 
 | Responsibility | Files |
 |---|---|
-| Approved sample | Create `docs/plan/mockups/2026-08-01-nomi-bilingual-homepage.html` |
+| Approved sample | Create `docs/design/archive/2026-08-01-nomi-bilingual-homepage.html` |
 | Generator source | Create `scripts/marketing/{content,metadata,styles,client,template,social-card}.mjs`, `scripts/build-marketing-site.mjs`, `scripts/render-marketing-social-previews.mjs` |
 | Generated pages | Replace `marketing/index.html`; create `marketing/en/index.html` |
 | Automated evidence | Create `tests/ux/marketing-home.static.mjs` and `tests/ux/marketing-home.visual.mjs` |
@@ -78,7 +78,7 @@ Expected: one-line commit, no website files included.
 
 **Files:**
 
-- Create: `docs/plan/mockups/2026-08-01-nomi-bilingual-homepage.html`
+- Create: `docs/design/archive/2026-08-01-nomi-bilingual-homepage.html`
 - Read: `docs/design/nomi-design-system.md`
 - Read: `docs/superpowers/specs/2026-08-01-nomi-bilingual-growth-destination-design.md`
 
@@ -136,8 +136,8 @@ python3 -m http.server 4179 --directory /Users/aoqimin/Desktop/Nomi-bilingual-gr
 Open and screenshot:
 
 ```text
-http://127.0.0.1:4179/docs/plan/mockups/2026-08-01-nomi-bilingual-homepage.html?lang=zh-CN
-http://127.0.0.1:4179/docs/plan/mockups/2026-08-01-nomi-bilingual-homepage.html?lang=en
+http://127.0.0.1:4179/docs/design/archive/2026-08-01-nomi-bilingual-homepage.html?lang=zh-CN
+http://127.0.0.1:4179/docs/design/archive/2026-08-01-nomi-bilingual-homepage.html?lang=en
 ```
 
 Capture full-page screenshots at 1440×900 and 390×844 into the ignored `tests/ux/_marketing/` directory.
@@ -160,7 +160,7 @@ Show both desktop and mobile screenshots. Do not begin Task 2 until the user exp
 - [x] **Step 5: Commit the approved sample**
 
 ```bash
-git add docs/plan/mockups/2026-08-01-nomi-bilingual-homepage.html
+git add docs/design/archive/2026-08-01-nomi-bilingual-homepage.html
 git commit -m "docs(marketing): approve bilingual homepage sample"
 ```
 

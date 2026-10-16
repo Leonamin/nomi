@@ -198,7 +198,7 @@ Nomi 不做一个把项目、提示词、技能、素材和工作流混成一张
 
 ## 11. 可点击样张
 
-样张文件：`docs/prototypes/library-discovery.html`（本地打开即可；当前通过 `http://127.0.0.1:8765/docs/prototypes/library-discovery.html` 查看）。它不是生产代码，只用来验证交互是否一眼可懂：
+样张文件：`docs/design/archive/library-discovery.html`（本地打开即可；当前通过 `http://127.0.0.1:8765/docs/design/archive/library-discovery.html` 查看）。它不是生产代码，只用来验证交互是否一眼可懂：
 
 - `?variant=0&library=workflow`：左侧栏库（推荐），库和画布同时可见；切换流程 / 提示词 / Skill / 素材后，每张卡只有一个主动作。素材库进一步收敛为“搜索 + 一个类型分类 + 真实比例媒体”，不在卡片上堆说明和按钮。这里刻意没有“概览”：它不是当前产品的真实入口。
 - `?variant=1&library=workflow`：独立资源页，用于一次整理或批量浏览。
@@ -213,7 +213,7 @@ Nomi 不做一个把项目、提示词、技能、素材和工作流混成一张
 | 交付物 | 要回答的问题 | 本轮对应内容 |
 | --- | --- | --- |
 | 方案 / ADR | 用户为什么需要、数据和所有权合同是什么、哪些事情明确不做 | `docs/superpowers/specs/2026-08-30-canvas-workflow-plugin-adr.md`、本文和代码盘点报告 |
-| 原型 | 用户能否看懂入口、搜索、预览、复制和编辑资料；布局是否符合设计系统 | `docs/prototypes/library-discovery.html`，只读、可点击、可切换三种布局 |
+| 原型 | 用户能否看懂入口、搜索、预览、复制和编辑资料；布局是否符合设计系统 | `docs/design/archive/library-discovery.html`，只读、可点击、可切换三种布局 |
 | 生产实现 | 真实数据是否经过现有 React Flow/store/bridge、能否保存恢复和撤销 | 第一阶段已开始：工作流库通过左侧侧栏接入，保存写入项目快照与 app-level 本地索引，复制调用统一 store action 并携带分组；素材 bundle 与其他库 adapter 尚未开始 |
 
 因此当前浏览器里看到的页面只证明交互方向。第一阶段生产切片已把工作流库接入真实左侧栏、全局本地索引、资料编辑和 React Flow 的分组/撤销复制；跨项目素材 bundle、其他资源库的统一索引和端到端真机旅程仍需按本文边界继续验收，不能提前宣称已完成。

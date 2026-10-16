@@ -246,7 +246,7 @@ export type EditProposal = {
 **Files:**
 - Create: `docs/superpowers/specs/agent-editor-contract.md`
 - Create: `docs/design/agent-editor-workbench.md`
-- Create: `docs/mockups/agent-editor-workbench.html`
+- Create: `docs/design/archive/agent-editor-workbench.html`
 - Test/inspect: current repository baseline
 
 - [ ] 在 sibling worktree 中基于 `origin/main` 建立干净基线，记录 `git branch --show-current`、HEAD、`git status --short`。

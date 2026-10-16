@@ -6,6 +6,9 @@
 // 这把正则的活性由走查兜底：`design-lab-<屏>.walk.mjs` 会拿活页面的
 // `window.__designLabStates` 和这里的解析结果逐项比对，对不上当场红。
 // 没有那道比对，一个解析漏项会静默地少截一张图、少比一条基线——典型的假绿。
+import assert from 'node:assert/strict'
+import os from 'node:os'
+import { createRequire } from 'node:module'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -228,4 +231,27 @@ export function readCalibration() {
  */
 export function pendingApprovalScreens() {
   return readCalibration().pendingApprovalScreens ?? {}
+}
+
+/** Snapshot calibration is bound to its actual OS and test-owned browser, not just "darwin". */
+export function readRenderEnvironment() {
+  const require = createRequire(import.meta.url)
+  const testRequire = createRequire(require.resolve('@playwright/test'))
+  const playwrightRequire = createRequire(testRequire.resolve('playwright/package.json'))
+  const coreRoot = path.dirname(playwrightRequire.resolve('playwright-core/package.json'))
+  const manifest = JSON.parse(fs.readFileSync(path.join(coreRoot, 'browsers.json'), 'utf8'))
+  const chromium = manifest.browsers.find(browser => browser.name === 'chromium')
+  assert.ok(chromium, 'The test-owned browser manifest must report Chromium')
+  return {
+    platform: process.platform,
+    architecture: process.arch,
+    osRelease: os.release(),
+    playwrightVersion: require('@playwright/test/package.json').version,
+    chromiumRevision: chromium.revision,
+  }
+}
+
+export function assertRenderEnvironment(expected, actual = readRenderEnvironment()) {
+  assert.deepStrictEqual(actual, expected,
+    'Visual render environment differs from the approved calibration; inspect the environment before refreshing any baseline')
 }

@@ -1,7 +1,7 @@
 # 资源库样张设计复审（设计视角 × 用户视角）
 
 日期：2026-08-30
-范围：`docs/prototypes/library-discovery.html`、Nomi 设计系统、真实素材库组件。
+范围：`docs/design/archive/library-discovery.html`、Nomi 设计系统、真实素材库组件。
 性质：只读评审；不修改生产代码，不把样张当成已实现功能。
 
 ## 结论先行
@@ -19,7 +19,7 @@
 - **层级正确**：左侧资源栏是 L1 入口；分类属于素材库内部的 L2/L3 发现控件；详情属于情境浮层，不应变成常驻右栏。设计系统要求每个面不超过约 5 个常驻功能簇，且“同一功能一个家”（`docs/design/nomi-design-system.md:100-139`）。
 - **素材应让内容占主角**：设计系统明确禁止动作压在图像/视频内容上（同文档 `:137-147`）。卡片右上收藏、卡片底部主按钮、`⋯` 菜单同时出现，会让素材变成按钮集合而不是可识别的媒体。
 - **中央详情的形态是对的**：弹窗应使用 `rounded-nomi-lg`、`bg-nomi-paper`、`shadow-nomi-lg` 等现有 modal token（同文档 `:338-357,443-447`），生产版优先复用 `DesignModal`/现有 `AssetPreviewDialog`，不要在各库另造抽屉。
-- **原型与生产视觉不能混用**：样张 CSS 使用了原始 hex 和任意尺寸（`docs/prototypes/library-discovery.html:12-17,39-53`），作为 throwaway 原型可以接受，但生产代码必须回到 `src/design` 和 `nomi-*` token（设计系统 `:31-35,381-399`）。
+- **原型与生产视觉不能混用**：样张 CSS 使用了原始 hex 和任意尺寸（`docs/design/archive/library-discovery.html:12-17,39-53`），作为 throwaway 原型可以接受，但生产代码必须回到 `src/design` 和 `nomi-*` token（设计系统 `:31-35,381-399`）。
 
 ### 用户视角
 
@@ -39,15 +39,15 @@
 
 | 编号 | 问题与证据 | 用户影响 | 可执行修改 |
 | --- | --- | --- | --- |
-| P1-1 | 样张的素材卡由 `card()` 统一渲染标题、meta、最多两个 tag、收藏、主动作和 `⋯`（`docs/prototypes/library-discovery.html:135`）。素材分支仍继承这些字段；与用户要求“不要增加字”冲突。 | 用户视线先扫按钮和小字，反而不容易比较真实媒体。 | 素材网格默认只显示：真实缩略图/首帧/波形、文件名、一个媒体类型图标/角标。移除卡片内描述、tag、状态、收藏和每张卡的导入按钮；拖拽/点击是主路径，导入/删除等动作放到选中后的单一情境工具条或 `⋯`。工作流/提示词/Skill 卡片可保留自己的主动作，不要把规则套到所有库。 |
-| P1-2 | 样张 `.asset-grid .thumb` 强制 `aspect-ratio: 4 / 3`，只有 audio 改为 `2.2 / 1`（`docs/prototypes/library-discovery.html:44`）；`thumb()` 也只画占位色块（`:134`），并没有证明真实比例。生产非 compact `AssetGridCell` 还使用 `aspect-square`（`src/workbench/assets/AssetLibraryPanelParts.tsx:354-375`），compact 图片虽 `h-auto`，视频仍固定高度 96px（`src/workbench/assets/AssetLibraryPanelParts.tsx:313-347`）。 | 竖图、横图、长图会被统一框裁切；用户可能认错素材。 | 资产内容区改为 intrinsic ratio：图片 `width:100%; height:auto; object-fit:contain`；视频 poster 使用实际宽高比，音频用固定高度的波形条。若要保持虚拟列表性能，先只改现有侧栏的 `compact` 分支，避免一次重写普通节点网格；所有比例异常素材都用 `object-contain`，不做中心裁剪。样张应至少放 2:3 竖图、16:9 视频、4:3 图和音频条验证。 |
-| P1-3 | 样张素材库同时平铺“全部/最近/收藏”、搜索、“分类”菜单、“类型”菜单和“排序·最近使用”（`docs/prototypes/library-discovery.html:138,145-153`）。已有真实组件还同时有来源 tab、上传、搜索、删除选区、新建文件夹、媒体类型筛选（`src/workbench/assets/AssetLibraryPanel.tsx:134-193,520-667`）。 | 在窄侧栏内用户不知道先点什么，分类和类型的心智重复。 | 资产库 L1 只保留“来源范围（全部项目/当前项目） + 搜索 + 分类 chips（全部/人物/场景/声音/其他）”。`最近/收藏/排序`先不做常驻；媒体类型用卡片角标识别，确有需要时从一个“更多筛选”进入，不再同时显示两个筛选按钮。文件夹是项目整理能力，继续在“当前项目”范围内生效，不和语义分类混成一套。 |
+| P1-1 | 样张的素材卡由 `card()` 统一渲染标题、meta、最多两个 tag、收藏、主动作和 `⋯`（`docs/design/archive/library-discovery.html:135`）。素材分支仍继承这些字段；与用户要求“不要增加字”冲突。 | 用户视线先扫按钮和小字，反而不容易比较真实媒体。 | 素材网格默认只显示：真实缩略图/首帧/波形、文件名、一个媒体类型图标/角标。移除卡片内描述、tag、状态、收藏和每张卡的导入按钮；拖拽/点击是主路径，导入/删除等动作放到选中后的单一情境工具条或 `⋯`。工作流/提示词/Skill 卡片可保留自己的主动作，不要把规则套到所有库。 |
+| P1-2 | 样张 `.asset-grid .thumb` 强制 `aspect-ratio: 4 / 3`，只有 audio 改为 `2.2 / 1`（`docs/design/archive/library-discovery.html:44`）；`thumb()` 也只画占位色块（`:134`），并没有证明真实比例。生产非 compact `AssetGridCell` 还使用 `aspect-square`（`src/workbench/assets/AssetLibraryPanelParts.tsx:354-375`），compact 图片虽 `h-auto`，视频仍固定高度 96px（`src/workbench/assets/AssetLibraryPanelParts.tsx:313-347`）。 | 竖图、横图、长图会被统一框裁切；用户可能认错素材。 | 资产内容区改为 intrinsic ratio：图片 `width:100%; height:auto; object-fit:contain`；视频 poster 使用实际宽高比，音频用固定高度的波形条。若要保持虚拟列表性能，先只改现有侧栏的 `compact` 分支，避免一次重写普通节点网格；所有比例异常素材都用 `object-contain`，不做中心裁剪。样张应至少放 2:3 竖图、16:9 视频、4:3 图和音频条验证。 |
+| P1-3 | 样张素材库同时平铺“全部/最近/收藏”、搜索、“分类”菜单、“类型”菜单和“排序·最近使用”（`docs/design/archive/library-discovery.html:138,145-153`）。已有真实组件还同时有来源 tab、上传、搜索、删除选区、新建文件夹、媒体类型筛选（`src/workbench/assets/AssetLibraryPanel.tsx:134-193,520-667`）。 | 在窄侧栏内用户不知道先点什么，分类和类型的心智重复。 | 资产库 L1 只保留“来源范围（全部项目/当前项目） + 搜索 + 分类 chips（全部/人物/场景/声音/其他）”。`最近/收藏/排序`先不做常驻；媒体类型用卡片角标识别，确有需要时从一个“更多筛选”进入，不再同时显示两个筛选按钮。文件夹是项目整理能力，继续在“当前项目”范围内生效，不和语义分类混成一套。 |
 
 ### P2：可随实现收口
 
 | 编号 | 问题与证据 | 用户影响 | 可执行修改 |
 | --- | --- | --- | --- |
-| P2-1 | 详情弹窗对所有资源都输出“复制时会带上/内容/素材/安全边界”明细（`docs/prototypes/library-discovery.html:142`）。这对工作流有用，对一张图片或一段音频是额外阅读。 | 点击预览后仍要读技术说明，打断“看一眼就拿走”。 | 详情按资源域分支：素材只显示大预览、文件名和一个上下文主动作；工作流再显示结构/素材/写入边界。生产统一使用 `AssetPreviewDialog`（`src/workbench/assets/AssetPreviewDialog.tsx:15-92`）或 `DesignModal`，不造第二套 overlay。 |
+| P2-1 | 详情弹窗对所有资源都输出“复制时会带上/内容/素材/安全边界”明细（`docs/design/archive/library-discovery.html:142`）。这对工作流有用，对一张图片或一段音频是额外阅读。 | 点击预览后仍要读技术说明，打断“看一眼就拿走”。 | 详情按资源域分支：素材只显示大预览、文件名和一个上下文主动作；工作流再显示结构/素材/写入边界。生产统一使用 `AssetPreviewDialog`（`src/workbench/assets/AssetPreviewDialog.tsx:15-92`）或 `DesignModal`，不造第二套 overlay。 |
 | P2-2 | 样张收藏和 `⋯` 都是卡片上的常驻动作（`:135,155-159`），素材实际组件还用 hover 才显示删除（`src/workbench/assets/AssetLibraryPanelParts.tsx:247-269`）。 | 触屏/键盘用户难以发现 hover 动作；常驻动作又增加噪声。 | 素材卡把“预览/使用”作为唯一默认动作；删除、改名、归档走选中后的 `⋯` 或明确工具条。任何禁用动作补 `title`/就近原因，遵守设计系统 C1/C4（`docs/design/nomi-design-system.md:154-170`）。 |
 | P2-3 | 非 compact 素材格使用 `aspect-square`，compact 使用 CSS 多列瀑布流，而虚拟列表的 `gridCols` 按 compact=2、普通=3 计算（`src/workbench/assets/AssetLibraryPanel.tsx:242-250`），compact 分支却直接写 `columnCount: 3`（`:727-744`）。两种路径的密度与顺序可能不同。 | 不同入口看到的素材形态不一致，筛选后滚动位置也可能跳动。 | 第一阶段只统一实际使用的 compact 侧栏路径；为瀑布流明确“内容顺序不保证行对齐”，筛选后回到顶部。若未来启用普通网格，再单独留下性能基线，不要为了视觉统一机械改虚拟化。 |
 

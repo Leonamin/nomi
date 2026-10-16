@@ -29,9 +29,9 @@
 
 跑法：`pnpm run build && node tests/ux/deconstruction-panel.walk.mjs`（无 `APIMART_API_KEY` = 注入确定性结果，不花钱）。本轮 2026-09-07 实跑，9 项断言全绿。
 
-![现役：拆解结果住在右侧窄栏，一镜一张竖排卡](mockups/2026-09-07-storyboard-table-node/now-01-right-rail-cards.png)
+![现役：拆解结果住在右侧窄栏，一镜一张竖排卡](../design/archive/2026-09-07-storyboard-table-node/now-01-right-rail-cards.png)
 
-![现役：落画布后只剩 4 张图节点，六个结构字段全部消失](mockups/2026-09-07-storyboard-table-node/now-02-landed-frames-lose-columns.png)
+![现役：落画布后只剩 4 张图节点，六个结构字段全部消失](../design/archive/2026-09-07-storyboard-table-node/now-02-landed-frames-lose-columns.png)
 
 ### 1.3 卡在哪（读这两张图读出来的，不是推测的）
 

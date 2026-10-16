@@ -65,7 +65,7 @@
 - Run: focused unit tests, `pnpm run check:design-lab`, `pnpm run typecheck`, `pnpm run lint:ci`, `pnpm run gates`。
 - Run: `pnpm run dev:renderer` + Playwright 对每个 v4 状态截图并用图片查看核对。
 - Commit/push: 合并最新 `origin/main` 后提交里程碑 ④并推送 `feat/agent-panel-v4-lab-20260906`；不创建 PR。
-- Create: `CODEX-REPORT.md`（≤15 行，列出路径、状态数、差异数、gates、push SHA、截图目录）。
+- Create: `docs/archive/2026-09-06-agent-panel-v4-report.md`（≤15 行，列出路径、状态数、差异数、gates、push SHA、截图目录）。
 
 ## 回滚与验收门
 

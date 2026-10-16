@@ -49,7 +49,7 @@ import { fileURLToPath } from 'node:url'
 import { createRequire } from 'node:module'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const { readLabStates, readCalibration, baselineDirFor, pendingApprovalScreens, LAB_SCREEN_IDS, CALIBRATION_FILE } = await import(
+const { assertRenderEnvironment, readLabStates, readCalibration, baselineDirFor, pendingApprovalScreens, LAB_SCREEN_IDS, CALIBRATION_FILE } = await import(
   path.join(repoRoot, 'tests/ux/design-lab/labStates.mjs')
 )
 
@@ -287,6 +287,14 @@ if (!UPDATE && process.platform !== calibration.calibratedPlatform) {
     `   要让本平台也拦视觉回归：在本平台重录一套基线并写进 ${path.relative(repoRoot, CALIBRATION_FILE)}。`,
   )
   process.exit(0)
+}
+
+// Environment mismatch is a calibration failure, not evidence of a product regression.
+try {
+  assertRenderEnvironment(readCalibration().renderEnvironment)
+} catch (error) {
+  console.error(`❌ Visual calibration: ${error.message}`)
+  process.exit(1)
 }
 
 // 起跑前先问端口归属：这一口要是被别的 worktree 占着，跑出来的每一张图都是别人分支的 UI。

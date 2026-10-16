@@ -1,0 +1,143 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-16-design-lab-host-capability",
+  "problem_type": "Desktop specimen transport and capability advertisement diverge",
+  "symptom": "Creation lab reserves no Agent column and its editor expands underneath the Agent panel; root readiness may be true while the lazy workspace still displays a loader.",
+  "direct_cause": "CreationColumnsStage and ShellStage connected laneClient directly without exposing the fixture transport as nomiDesktop.agentLane; production WorkbenchShell now derives dock visibility from that capability.",
+  "class_root": "The lab fixture host had separate owners for transport data and advertised capabilities, and screenshot readiness did not require nested workspace completion.",
+  "affected_population": [
+    "creation-columns states",
+    "agent-panel-v4 shell specimens and their walkthrough consumers"
+  ],
+  "scope_paths": [
+    "src/devlab/designLab/v4/agentPanelV4LabHost.tsx",
+    "src/devlab/designLab/creationColumns/CreationColumnsStage.tsx",
+    "tests/ux/design-lab/design-lab.visual.spec.mjs"
+  ],
+  "entry_points": [
+    "CreationColumnsStage",
+    "ShellStage",
+    "Playwright visual specimen capture"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "This is an internal fixture ownership invariant. Product capability detection and third-party runtime behavior are unchanged.",
+  "invariants": [
+    "The advertised Agent bridge is the exact read-only transport consumed by the specimen.",
+    "Fixture disposal restores prior host capabilities.",
+    "A visible lazy workspace loader cannot be accepted as a completed specimen."
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "src/devlab/designLab/creationColumns/CreationColumnsStage.tsx",
+      "symbol": "useLabLane"
+    },
+    {
+      "kind": "write",
+      "path": "src/devlab/designLab/v4/agentPanelV4LabHost.tsx",
+      "symbol": "useLabLane"
+    },
+    {
+      "kind": "read",
+      "path": "src/devlab/designLab/v4/agentPanelV4LabHost.test.ts",
+      "symbol": "installLabLane"
+    },
+    {
+      "kind": "write",
+      "path": "src/devlab/designLab/v4/agentPanelV4LabHost.test.ts",
+      "symbol": "installLabLane"
+    },
+    {
+      "kind": "write",
+      "path": "src/devlab/designLab/v4/agentPanelV4LabHost.tsx",
+      "symbol": "installLabLane"
+    }
+  ],
+  "door_reduction": {
+    "before": 5,
+    "after": 5,
+    "why_not": "Two domain specimen consumers use the shared lifecycle hook; the hook uses one installer. Tests separately read and exercise the installer. These are distinct responsibilities rather than duplicate transport owners."
+  },
+  "generality_proof": "Both shell specimen families install their transport and advertise it through installLabLane. Shared screenshot assertions reject workspace loading placeholders and enforce the creation dock grid before pixel comparison.",
+  "shared_boundaries": [
+    {
+      "path": "src/devlab/designLab/v4/agentPanelV4LabHost.tsx",
+      "symbol": "installLabLane",
+      "responsibility": "Own the read-only fixture bridge and host restoration."
+    },
+    {
+      "path": "tests/ux/design-lab/design-lab.visual.spec.mjs",
+      "symbol": "toHaveScreenshot",
+      "responsibility": "Wait for nested real workspace and validate the Agent dock layout before screenshots."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "src/devlab/designLab/creationColumns/CreationColumnsStage.tsx",
+      "entry_point": "CreationColumnsStage",
+      "disposition": "enforced",
+      "evidence": "Replaced direct laneClient.connect with shared host installation."
+    },
+    {
+      "path": "src/devlab/designLab/v4/agentPanelV4LabHost.tsx",
+      "entry_point": "ShellStage",
+      "disposition": "enforced",
+      "evidence": "Uses the same installer and cleanup boundary."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every fixture that connects only projection data can diverge from production capability guards after host-aware changes.",
+    "same_class_scan": [
+      "rg labHostState and laneClient.connect src/devlab tests/ux",
+      "door-map labHostState --roots=src,tests --include-tests",
+      "door-map installLabLane --roots=src,tests --include-tests"
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "src/devlab/designLab/v4/agentPanelV4LabHost.tsx",
+    "invariant": "Fixture capability identity and consumed lane transport have one owner.",
+    "failure_mode": "Commands reject without external effects; semantic browser assertions fail before screenshot comparison if the dock layout is missing.",
+    "exception_policy": "none",
+    "strategy": "Consolidate both fixture host families and assert actual workspace completion.",
+    "artifacts": [
+      "src/devlab/designLab/v4/agentPanelV4LabHost.tsx",
+      "src/devlab/designLab/creationColumns/CreationColumnsStage.tsx",
+      "tests/ux/design-lab/design-lab.visual.spec.mjs"
+    ]
+  },
+  "regression_tests": [
+    "src/devlab/designLab/v4/agentPanelV4LabHost.test.ts",
+    "tests/ux/design-lab/design-lab.visual.spec.mjs"
+  ],
+  "class_regression_tests": [
+    "src/devlab/designLab/v4/agentPanelV4LabHost.test.ts",
+    "tests/ux/design-lab/design-lab.visual.spec.mjs"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "src/devlab/designLab/creationColumns/CreationColumnsStage.tsx",
+      "src/devlab/designLab/v4/agentPanelV4LabHost.tsx"
+    ],
+    "rationale": "Removed duplicate laneClient.connect setup; both consumers use the shared installer."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "The repaired host invariant is internal. Playwright screenshot engine, pinned dependencies and tolerance remain unchanged.",
+    "exit_criteria": []
+  },
+  "migration": "No persisted product data or production host behavior changes. Existing browser lab specimens use the shared advertised fixture bridge.",
+  "residual_risks": [
+    "Native glyph raster differences remain against the previously approved darwin baselines; no baseline refresh is authorized by this contract."
+  ],
+  "detected_by": "ci",
+  "recurrence_check_on": "2026-10-23",
+  "invariant_owner_layer": {
+    "layer": "src/devlab/designLab/v4/agentPanelV4LabHost.tsx",
+    "tests": [
+      "src/devlab/designLab/v4/agentPanelV4LabHost.test.ts"
+    ]
+  }
+}

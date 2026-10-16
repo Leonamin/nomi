@@ -17,7 +17,7 @@
 
 独立项目库是 App 的顶层 `library` view，用来新建、打开、搜索和筛选项目，不是一个聚合提示词、Skill、素材和流程的“总览页”（`src/workbench/NomiStudioApp.tsx:48`, `src/workbench/NomiStudioApp.tsx:705-713`, `src/workbench/library/ProjectLibraryPage.tsx:241-269`, `src/workbench/library/ProjectLibraryPage.tsx:301-334`）。
 
-原型中的“概览”只存在于 `docs/prototypes/library-discovery.html:72,80`，而且原型逻辑会把 `overview` 强制改回 `workflow`（`docs/prototypes/library-discovery.html:117`）。它既不是现有功能，也没有独立用户任务。最终方案应直接删除，不为它创造新信息架构。
+原型中的“概览”只存在于 `docs/design/archive/library-discovery.html:72,80`，而且原型逻辑会把 `overview` 强制改回 `workflow`（`docs/design/archive/library-discovery.html:117`）。它既不是现有功能，也没有独立用户任务。最终方案应直接删除，不为它创造新信息架构。
 
 ### 1.2 画布分组不是装饰框，而是持久化的图语义
 

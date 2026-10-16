@@ -21,7 +21,7 @@
 - **未提交残留**：无（工作树干净）。`.claude/launch.json` 有个指向已删 worktree 的 `marketing` 配置（本地未跟踪、失效，可顺手修路径或忽略）。
 
 ## 2. 立即要做：C5 P1 Chunk 2 + 3（接入图已就位）
-> 方案/样张已评审确认（`docs/plan/c5-text-node.md` + `docs/mockups/c5-text-node.html`）。
+> 方案/样张已评审确认（`docs/plan/c5-text-node.md` + `docs/design/archive/c5-text-node.html`）。
 > 共享内核 `src/workbench/common/useNomiRichTextEditor.ts` 已就位（早于本段会话）。
 > **先按规则 5 用 Context7 查 Tiptap 官方**（`editor.setEditable`、`getJSON`、`insertContentAt`、`editorProps.handleKeyDown`），再动手。
 
@@ -47,7 +47,7 @@
 
 ## 4. 关键文件索引（单一树根 `/Users/aoqimin/Desktop/Nomi/`）
 - 规则：`CLAUDE.md`（总纲 + 1–10）｜设计：`Design.md`、`docs/design/`、`src/design/`
-- C5：`docs/plan/c5-text-node.md`、`docs/mockups/c5-text-node.html`；内核 `src/workbench/common/useNomiRichTextEditor.ts`、`richTextActions.tsx`；参考 `src/workbench/creation/WorkbenchEditor.tsx`
+- C5：`docs/plan/c5-text-node.md`、`docs/design/archive/c5-text-node.html`；内核 `src/workbench/common/useNomiRichTextEditor.ts`、`richTextActions.tsx`；参考 `src/workbench/creation/WorkbenchEditor.tsx`
 - 画布：`src/workbench/generationCanvas/`（`nodes/BaseGenerationNode.tsx`、`nodes/render/CharacterCardNode.tsx`(壳参考)、`nodes/registry.ts`、`nodes/NodeGenerationComposer.tsx`、`runner/generationNodeExecutor.ts`、`store/generationCanvasStore.ts`、`model/generationCanvasTypes.ts`+`generationCanvasSchema.ts`、`components/GenerationCanvas.tsx`）
 - 样式：`src/styles/index.css`（入口）、`globals.css`、`vendor-overrides.css`、`animations.css`、`src/theme/nomi-tokens.css`、`tailwind.config.ts`
 - 清理审计：`docs/audit/2026-06-03-dead-canvas-css.md`、`docs/plan/2026-06-03-styles-css-teardown.md`

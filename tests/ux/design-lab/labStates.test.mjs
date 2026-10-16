@@ -106,3 +106,25 @@ describe('注册表解析器', () => {
     expect(first.source).not.toBe('SOURCE')
     expect(first.source).toContain('一整组共用这一句')
   })})
+
+describe('approved visual render environment', () => {
+  it('records the owning test runner and Chromium revision instead of the unrelated top-level playwright', async () => {
+    const { readRenderEnvironment } = await import('./labStates.mjs')
+    const actual = readRenderEnvironment()
+    expect(actual.platform).toBe(process.platform)
+    expect(actual.architecture).toBe(process.arch)
+    expect(actual.osRelease).toBeTruthy()
+    expect(actual.playwrightVersion).toMatch(/^\d+\.\d+\.\d+/)
+    expect(actual.chromiumRevision).toMatch(/^\d+$/)
+  })
+
+  it('fails before pixel comparison when OS or engine identity differs from the approved calibration', async () => {
+    const { readRenderEnvironment, assertRenderEnvironment } = await import('./labStates.mjs')
+    const actual = readRenderEnvironment()
+    expect(() => assertRenderEnvironment(actual, actual)).not.toThrow()
+    for (const key of ['osRelease', 'architecture', 'playwrightVersion', 'chromiumRevision']) {
+      expect(() => assertRenderEnvironment({ ...actual, [key]: 'different' }, actual)).toThrow(/render environment/)
+    }
+    expect(() => assertRenderEnvironment(undefined, actual)).toThrow(/render environment/)
+  })
+})

@@ -1,0 +1,145 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-16-design-lab-render-environment",
+  "problem_type": "Unidentified screenshot rendering environment",
+  "symptom": "Unchanged button specimens and 152 baseline cases differ on the current Mac while structural checks pass.",
+  "direct_cause": "Calibration only recorded darwin, viewport and color scheme, so it could not distinguish native rendering drift from product changes. Both Metal and default Chromium reproduce the small unchanged-button mismatch.",
+  "class_root": "Approved pixels were not bound to the OS release, architecture and owning Playwright browser identity.",
+  "affected_population": [
+    "Every calibrated design-lab state",
+    "Direct Playwright and check-design-lab invocations"
+  ],
+  "scope_paths": [
+    "tests/ux/design-lab/labStates.mjs",
+    "tests/ux/design-lab/labStates.test.mjs",
+    "tests/ux/design-lab/warmUp.mjs",
+    "tests/ux/design-lab/calibration.json",
+    "scripts/check-design-lab.mjs"
+  ],
+  "entry_points": [
+    "Playwright globalSetup",
+    "check-design-lab visual runner",
+    "Direct snapshot update invocation"
+  ],
+  "external_sources": [
+    {
+      "kind": "official-doc",
+      "url": "https://playwright.dev/docs/test-snapshots",
+      "checked_at": "2026-10-16",
+      "purpose": "Playwright documents that OS version, fonts, browser and hardware can change rendered pixels; baseline generation and comparison require the same environment."
+    }
+  ],
+  "invariants": [
+    "Before comparing pixels, the current render environment must exactly match the recorded approved calibration.",
+    "Engine identity is read from the dependency owned by @playwright/test, not an independently upgraded top-level playwright.",
+    "Tolerance is not relaxed and baseline PNG replacement remains subject to user approval."
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "tests/ux/design-lab/labStates.mjs",
+      "symbol": "readRenderEnvironment"
+    },
+    {
+      "kind": "read",
+      "path": "tests/ux/design-lab/labStates.test.mjs",
+      "symbol": "readRenderEnvironment"
+    }
+  ],
+  "door_reduction": {
+    "before": 2,
+    "after": 2,
+    "why_not": "The shared assertion reads the real environment; its tests independently exercise the reader and mismatches."
+  },
+  "generality_proof": "Every visual execution and baseline-update entry uses the existing globalSetup. The guard compares the full recorded identity before launching the screenshot browser, so another supported entry cannot silently treat a different OS or engine as the approved one.",
+  "shared_boundaries": [
+    {
+      "path": "tests/ux/design-lab/labStates.mjs",
+      "symbol": "assertRenderEnvironment",
+      "responsibility": "Read owning engine/OS facts and reject a calibration mismatch."
+    },
+    {
+      "path": "tests/ux/design-lab/warmUp.mjs",
+      "symbol": "warmUp",
+      "responsibility": "Run the guard for every Playwright screenshot entry."
+    },
+    {
+      "path": "scripts/check-design-lab.mjs",
+      "symbol": "assertRenderEnvironment",
+      "responsibility": "Classify OS/engine mismatch before starting the normal visual lane."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "scripts/check-design-lab.mjs",
+      "entry_point": "normal visual runner",
+      "disposition": "enforced",
+      "evidence": "Invokes the Playwright config whose globalSetup runs assertRenderEnvironment."
+    },
+    {
+      "path": "tests/ux/design-lab/playwright.config.mjs",
+      "entry_point": "direct Playwright and snapshot update",
+      "disposition": "enforced",
+      "evidence": "Shares warmUp.mjs globalSetup; no second comparison path."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "An OS update or independent browser upgrade can affect every future run without any source change.",
+    "same_class_scan": [
+      "readCalibration callers in check-design-lab, visual spec and Playwright config",
+      "Direct CLI @playwright/test 1.60.0 vs top-level playwright 1.64.0 resolution",
+      "Metal/default and en-US/zh-CN/ko-KR controlled diagnostics"
+    ]
+  },
+  "prevention": {
+    "kind": "static-gate",
+    "enforcement_path": "scripts/check-design-lab.mjs",
+    "invariant": "Pixel comparisons require an exact recorded OS and engine calibration identity.",
+    "failure_mode": "An identity mismatch throws before screenshots instead of being mislabeled a UI regression.",
+    "exception_policy": "none",
+    "strategy": "Read facts from node:os and the owning runner browser manifest; enforce them at shared global setup.",
+    "artifacts": [
+      "tests/ux/design-lab/labStates.mjs",
+      "tests/ux/design-lab/warmUp.mjs",
+      "scripts/check-design-lab.mjs"
+    ]
+  },
+  "regression_tests": [
+    "tests/ux/design-lab/labStates.test.mjs"
+  ],
+  "class_regression_tests": [
+    "tests/ux/design-lab/labStates.test.mjs"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "tests/ux/design-lab/warmUp.mjs"
+    ],
+    "rationale": "Removed implicit acceptance of any OS release and engine sharing the darwin platform name."
+  },
+  "dependency_lifecycle": {
+    "decision": "retain-with-exit",
+    "rationale": "Keep the owning @playwright/test 1.60.0 engine and existing tolerance. Upgrading engines would itself require a reviewed calibration.",
+    "current": "@playwright/test 1.60.0 / Chromium revision 1223",
+    "target": "The next explicitly reviewed owning Playwright engine and calibration",
+    "exit_criteria": [
+      "Read the engine version/revision from its owning package",
+      "Review visual differences and obtain baseline approval",
+      "Record the new render environment and pass a full visual run"
+    ]
+  },
+  "migration": "The previously unidentified legacy baselines are reviewed against current renders before any PNG replacement. Candidate environment identity is recorded from this host; replacement requires explicit approval.",
+  "residual_risks": [
+    "The original upstream Mac OS build was not recorded, so native raster drift is an inference, not an exact identified historical font version.",
+    "Calibration does not prove identical GPU hardware or power settings; remaining differences still fail pixel comparison."
+  ],
+  "detected_by": "ci",
+  "recurrence_check_on": "2026-10-23",
+  "invariant_owner_layer": {
+    "layer": "tests/ux/design-lab/labStates.mjs",
+    "tests": [
+      "tests/ux/design-lab/labStates.test.mjs"
+    ]
+  }
+}
