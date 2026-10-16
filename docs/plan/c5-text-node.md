@@ -2,7 +2,7 @@
 
 > 裁决：已在现行 TextDocumentNode 与共享富文本内核中交付；证据：`src/workbench/generationCanvas/nodes/render/TextDocumentNode.tsx:1-21`、`src/workbench/common/useNomiRichTextEditor.ts:35-42`。
 
-> 用户已确认样张方向（`docs/mockups/c5-text-node.html` v2）。本文是经设计师 + 真实用户评审后的落地方案。复杂交互，分多轮。
+> 用户已确认样张方向（`docs/design/archive/c5-text-node.html` v2）。本文是经设计师 + 真实用户评审后的落地方案。复杂交互，分多轮。
 
 ## 关键事实（评审挖出，纠正既有认知）
 - **画布不是 React Flow**，是自研画布：`canvasZoom` 在 store，拖拽/缩放靠 `BaseGenerationNode` 的 pointer + rAF（8 向 `RESIZE_DIRECTIONS`、`MIN/MAX` 常量）。→ **不能引 React Flow NodeResizer**（规则 1），复用现成 resize-zone。

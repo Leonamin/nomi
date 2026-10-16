@@ -22,7 +22,7 @@
 - 回滚本分支提交即可；生产入口未引用设计实验室，删除新增组件/注册项与 i18n 即恢复现状。
 
 ## 验收门
-1. 设计实验室可打开 P-01 四态与每类 C-01 空态，pending 截图路径写入 `CODEX-REPORT.md`，由验收方人眼拍板。
+1. 设计实验室可打开 P-01 四态与每类 C-01 空态，pending 截图路径写入 `docs/archive/2026-09-06-agent-panel-v4-report.md`，由验收方人眼拍板。
 2. `pnpm run test -- ...` 通过，含更新弹层判定函数测试。
 3. `pnpm run check:i18n`、`pnpm run check:design-lab -- --structure-only`、`pnpm run gates` 全绿；不执行 `design-lab:update`。
 4. 真实组件使用共享空态，旧节点自有空态代码在同一提交删除；生成任务运行中更新只显示角标。

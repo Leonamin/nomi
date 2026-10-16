@@ -1,3 +1,5 @@
+> Archived during repository cleanup on 2026-10-16. Status, versions and verification below describe the original work, not the current release.
+
 # CODEX-HANDOFF：画布媒体自动比例留白
 
 ## 结论

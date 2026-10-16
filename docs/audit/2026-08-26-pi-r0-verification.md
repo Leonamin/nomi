@@ -62,4 +62,4 @@
 4. 工作快照不是项目文档、审批收据或生产账本；停止聊天不能撤销已受理媒体任务。宿主必须在副作用前检查取消和目标归属。
 5. 兼容实验默认关闭自动压缩并测试手动压缩。完整历史保留 PDF，压缩后上下文不承诺重新发送所有历史附件。
 
-实现和重跑说明见 [实验 README](../../experiments/pi-agent-runtime/README.md)；下一阶段见 [R1 实施卡](../plan/2026-08-26-pi-r1-runtime-cutover.md)。
+实现和重跑说明见 [实验 README](../archive/2026-08-26-pi-agent-runtime.md)；下一阶段见 [R1 实施卡](../plan/2026-08-26-pi-r1-runtime-cutover.md)。

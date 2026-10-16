@@ -1,3 +1,5 @@
+> Archived during repository cleanup on 2026-10-16. Status, versions and verification below describe the original work, not the current release.
+
 # pi AgentSession compatibility probe (R0): historical record
 
 The isolated R0 implementation and synthetic Electron probe are preserved in
@@ -7,7 +9,7 @@ They are no longer a second runnable implementation in the working tree.
 The verified adapters now live in the private production ESM island at
 [electron/harness/runtime/pi](../../electron/harness/runtime/pi/). The four
 original compatibility suites and their local HTTP fixture now live in
-[tests/agent-runtime](../../tests/agent-runtime/) and run from the repository
+[tests/agent-runtime](../../tests/agent-runtime) and run from the repository
 root:
 
 ```sh
@@ -21,7 +23,7 @@ HTTP/SSE with synthetic credentials, not paid providers or user projects.
 The root test, type and build gates include this private island. B0 only moves
 and wires the verified code; it does not switch the product Agent facade.
 
-See the [R0 verification report](../../docs/audit/2026-08-26-pi-r0-verification.md)
+See the [R0 verification report](../audit/2026-08-26-pi-r0-verification.md)
 for the historical 48-test, development-Electron and synthetic-ASAR evidence.
 Those probe results are **not** a formal Nomi application packaging check.
 Formal product/ASAR verification belongs to the later R1 cutover gate.
