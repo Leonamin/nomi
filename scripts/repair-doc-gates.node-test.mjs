@@ -104,3 +104,17 @@ test('没有 H1 的文档也能拿到状态标记，且落在生效窗口内', (
   assert.equal(documentStatus(patched).status, '📋')
   assert.ok(patched.split('\n').indexOf('正文第一行，没有标题。') > 0)
 })
+
+test('wiki documents keep their frontmatter and never receive plan status or auto-index edits', (t) => {
+  const root = fixture()
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }))
+  write(root, '.agents/wiki-path', './knowledge\n')
+  const source = '---\ntype: Concept\nokf_version: "0.1"\n---\n\n# Current knowledge\n'
+  write(root, 'knowledge/index.md', '# Wiki\n')
+  write(root, 'knowledge/domain.md', source)
+  const result = repairDocGates({ repoRoot: root, regenerateLedger: false })
+  assert.ok(result.unrepairable.includes('knowledge/domain.md'))
+  assert.ok(!result.statusMarked.includes('knowledge/domain.md'))
+  assert.equal(fs.readFileSync(path.join(root, 'knowledge/domain.md'), 'utf8'), source)
+  assert.equal(fs.readFileSync(path.join(root, 'knowledge/index.md'), 'utf8'), '# Wiki\n')
+})

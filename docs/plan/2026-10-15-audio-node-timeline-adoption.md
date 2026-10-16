@@ -1,5 +1,8 @@
 # Generated audio node → timeline adoption
 
+> 📎 참고 기록 · 현재 fork의 미완료 작업을 뜻하지 않습니다. 구현·검증·배포 범위는 본문과 해당 PR에서 확인합니다.
+
+
 改动名：生成音频入音轨与时长　线/负责人：sol_implementation　类别：[可打断]
 
 | 格 | 结论 | 证据 |

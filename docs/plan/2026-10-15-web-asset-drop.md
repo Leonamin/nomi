@@ -1,5 +1,8 @@
 # Browser asset-library drop design card
 
+> 📎 참고 기록 · 현재 fork의 미완료 작업을 뜻하지 않습니다. 구현·검증·배포 범위는 본문과 해당 PR에서 확인합니다.
+
+
 Change: import ordinary browser `File` drops into the project asset library. Owner: asset-library import. Category: long-running import.
 
 | Cell | Decision | Evidence |

@@ -41,6 +41,16 @@ test('documentation and isolated renderer changes pay only focused-unit cost', (
   assert.deepEqual(surfaces(classifyValidationPolicy(['src/workbench/timeline/TimelinePanel.tsx'])), focusedOnly)
 })
 
+test('fork wiki Markdown and its location/structure config are docs-only; runtime files are not', () => {
+  const paths = ['wiki/index.md', 'wiki/concepts/web-host.md', '.agents/wiki-path', '.agents/wiki-structure.md']
+  assert.deepEqual(surfaces(classifyValidationPolicy(paths)), docsOnly)
+  for (const file of ['wiki/render.mjs', 'wiki/runtime.json', 'web/server.ts', '.agents/skills/tool.mjs']) {
+    const result = classifyValidationPolicy([...paths, file])
+    assert.notEqual(result.reason, 'docs_only', file)
+    assert.equal(result.coreSmoke, true, file)
+  }
+})
+
 // 根目录的 Agent 说明文档（AGENTS.md / CLAUDE.md）算纯文档（2026-09-22 用户拍板）：
 // 此前只认 docs/|marketing/|README*，于是 #843 那种只改一份 Agent 说明的 PR 被判
 // isolated_change，两格核心冒烟在纯文档 diff 上白跑一遍。

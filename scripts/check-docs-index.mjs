@@ -86,13 +86,13 @@ if (updateBaseline) {
 }
 
 console.log(
-  `文档索引覆盖：${documents.length} 篇方案；${indexed.size} 篇已收录；${unindexed.length} 篇未收录（基线 ${allowedList.length}）`,
+  `文档索引覆盖（legacy docs + configured wiki）：${documents.length} 篇；${indexed.size} 篇已收录；${unindexed.length} 篇未收录（基线 ${allowedList.length}）`,
 )
 
 if (added.length > 0) {
   console.error(`✖ 文档索引回归：${added.length} 篇新增未收录方案`)
   for (const file of added) console.error(`  ${file}`)
-  console.error('  → 在 docs/README.md 或某个 docs/**/INDEX.md 中用 Markdown 链接收录，不能抬高 baseline')
+  console.error('  → docs 使用现有 README.md / INDEX.md；配置的 wiki 必须在直接父目录 index.md 收录。不能抬高 baseline')
   process.exit(1)
 }
 

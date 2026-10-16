@@ -149,7 +149,7 @@ function main() {
   for (const file of result.indexed) console.log(`  🔗 ${relative(file)}`)
   if (result.unrepairable.length > 0) {
     // fail-closed：补不了就必须有人看见，而不是让 main 上的验证步骤给出一句莫名其妙的红。
-    console.error(`✖ ${result.unrepairable.length} 篇文档不知道该收进哪份索引（本脚本只认 docs/plan 与 docs/lessons）：`)
+    console.error(`✖ ${result.unrepairable.length} 篇文档需手工收录（自动补齐只写 docs/plan 与 docs/lessons；wiki 由直接父目录 index.md 管理）：`)
     for (const file of result.unrepairable) console.error(`  ${relative(file)}`)
     console.error('  → 手动收录，或在 scripts/repair-doc-gates.mjs 的 indexOwnerFor 里补一条归属规则')
     process.exit(1)

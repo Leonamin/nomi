@@ -593,3 +593,24 @@
 - [2026-10-13-web-agent-model-selection](2026-10-13-web-agent-model-selection.md)
 - [2026-10-13-quality-gate-web-surface](2026-10-13-quality-gate-web-surface.md)
 - [2026-10-13-deletion-scope-same-surface](2026-10-13-deletion-scope-same-surface.md)
+
+## 개인용 fork의 최근 작업 기록
+
+> 참고 기록입니다. 과거 계획의 상태는 현재 fork의 미완료 작업이나 배포 상태를 뜻하지 않습니다. 현재 안내는 [한국어 위키](../../wiki/index.md)에서 시작합니다.
+
+- [2026-10-14-engine-model-selection](2026-10-14-engine-model-selection.md)
+- [2026-10-14-generation-prompt-language](2026-10-14-generation-prompt-language.md)
+- [2026-10-14-native-runtime-capabilities](2026-10-14-native-runtime-capabilities.md)
+- [2026-10-14-production-reference-http-snapshot](2026-10-14-production-reference-http-snapshot.md)
+- [2026-10-14-recovered-web-production](2026-10-14-recovered-web-production.md)
+- [2026-10-14-source-storyboard-execution](2026-10-14-source-storyboard-execution.md)
+- [2026-10-14-stored-preview-transport](2026-10-14-stored-preview-transport.md)
+- [2026-10-15-audio-node-timeline-adoption](2026-10-15-audio-node-timeline-adoption.md)
+- [2026-10-15-web-agent-tool-execution](2026-10-15-web-agent-tool-execution.md)
+- [2026-10-15-web-asset-drop](2026-10-15-web-asset-drop.md)
+- [2026-10-15-web-host-capability](2026-10-15-web-host-capability.md)
+- [2026-10-15-web-platform-media](2026-10-15-web-platform-media.md)
+- [2026-10-15-web-typecheck-coverage](2026-10-15-web-typecheck-coverage.md)
+- [2026-10-16-korean-fork-wiki](2026-10-16-korean-fork-wiki.md)
+- [2026-10-16-repository-cleanup](2026-10-16-repository-cleanup.md)
+- [2026-10-16-visual-validation-repair](2026-10-16-visual-validation-repair.md)

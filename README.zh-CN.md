@@ -1,3 +1,5 @@
+> 本 fork 的当前产品、开发与部署说明请从 [한국어 위키](wiki/index.md) 开始；下文保留 upstream 项目说明。
+
 <p align="center">
   <a href="https://nomiaqm.com/">
     <picture>

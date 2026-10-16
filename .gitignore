@@ -37,6 +37,8 @@ project-data/
 !.claude/settings.json
 !.agents/
 .agents/*
+!.agents/wiki-path
+!.agents/wiki-structure.md
 !.agents/skills/
 .agents/skills/*
 !.agents/skills/root-cause-remediation/

@@ -74,20 +74,51 @@ export function collectIndexFiles(repoRoot) {
   ].filter((file) => fs.existsSync(file))
 }
 
+/** The fork wiki location is owned by wiki-setup, rather than a second hardcoded root. */
+export function configuredWikiRoot(repoRoot) {
+  const config = path.join(repoRoot, '.agents', 'wiki-path')
+  if (!fs.existsSync(config)) return null
+  const relative = fs.readFileSync(config, 'utf8').trim()
+  const root = path.resolve(repoRoot, relative)
+  const isInsideRepo = relative && root.startsWith(`${path.resolve(repoRoot)}${path.sep}`)
+  if (!isInsideRepo || relative.includes('\n') || !fs.existsSync(path.join(root, 'index.md'))) {
+    throw new Error('.agents/wiki-path must name an existing in-repository wiki with index.md')
+  }
+  return root
+}
+
+/** Each wiki index owns only its immediate children, including subdirectory indexes. */
+function scanWikiIndex(repoRoot) {
+  const root = configuredWikiRoot(repoRoot)
+  if (!root) return { documents: [], indexFiles: [], indexed: [] }
+  const files = collectMarkdownFiles(root)
+  const indexFiles = files.filter((file) => path.basename(file) === 'index.md')
+  const documents = files.filter((file) => file !== path.join(root, 'index.md'))
+  const indexed = documents.filter((file) => {
+    const isIndex = path.basename(file) === 'index.md'
+    const owner = path.join(isIndex ? path.dirname(path.dirname(file)) : path.dirname(file), 'index.md')
+    return fs.existsSync(owner) && extractLinkTargets(repoRoot, owner).includes(toRepoRelative(repoRoot, file))
+  })
+  return { documents: documents.map((file) => toRepoRelative(repoRoot, file)), indexFiles, indexed: indexed.map((file) => toRepoRelative(repoRoot, file)) }
+}
+
 /**
  * 一次扫描给出全部事实：受管文档、索引文件、已收录集合、未收录清单。
  * INDEX.md 是索引本身，不是被审的方案文档；否则新建一个目录索引会把自己判成违规。
  */
 export function scanDocumentIndex(repoRoot) {
-  const documents = INDEXED_DOC_ROOTS
+  const wiki = scanWikiIndex(repoRoot)
+  const legacyDocuments = INDEXED_DOC_ROOTS
     .flatMap((root) => collectMarkdownFiles(path.join(repoRoot, root)))
     .filter((file) => path.basename(file) !== 'INDEX.md')
     .map((file) => toRepoRelative(repoRoot, file))
     .sort()
-  const documentSet = new Set(documents)
-  const indexFiles = collectIndexFiles(repoRoot)
+  const documentSet = new Set(legacyDocuments)
+  const legacyIndexes = collectIndexFiles(repoRoot)
   const indexed = new Set(
-    indexFiles.flatMap((file) => extractLinkTargets(repoRoot, file)).filter((target) => documentSet.has(target)),
+    [...legacyIndexes.flatMap((file) => extractLinkTargets(repoRoot, file)).filter((target) => documentSet.has(target)), ...wiki.indexed],
   )
+  const documents = [...legacyDocuments, ...wiki.documents].sort()
+  const indexFiles = [...legacyIndexes, ...wiki.indexFiles]
   return { documents, indexFiles, indexed, unindexed: documents.filter((file) => !indexed.has(file)) }
 }

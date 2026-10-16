@@ -1,3 +1,5 @@
+> **Fork 안내:** 이 문서는 상속된 데스크톱/원본 참고 자료입니다. 현재 fork의 안내는 [한국어 위키](../wiki/guides/local-development.md)에서 확인하세요. 아래 기록의 버전·플랫폼·확인 시점은 현재 웹 지원 및 배포와 구분합니다.
+
 # 快速启动
 
 > 官网图文版新手指南已上线到：<https://nomiaqm.com/quickstart.html>
