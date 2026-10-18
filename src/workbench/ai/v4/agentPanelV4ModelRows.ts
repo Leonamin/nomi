@@ -1,4 +1,5 @@
 import { orderByVendorPreference } from '../../../../electron/shared/contracts/vendorPreference'
+import { WEB_AGENT_ENGINE_LABEL, type WebAgentEngine } from '../../../../electron/shared/webAgentContracts'
 // composer 模型弹层的**行数据**。纯 derive，可单测。
 //
 // 2026-09-06 打包版实测：弹层里是 17 行，每一行的行首标签都写着「对话」，行尾一个下拉都没有。
@@ -80,9 +81,9 @@ export function buildV4ModelRows(data: Pick<AgentPanelV4Data, 'models' | 'vendor
     rows.push({
       slot: t('agentPanelV4.modelChat'),
       name: data.modelLabel,
-      options: agent.settings.engines.map(engine => ({ value: engine, label: engine === 'opencode' ? 'OpenCode' : 'Codex' })),
+      options: agent.settings.engines.map(engine => ({ value: engine, label: WEB_AGENT_ENGINE_LABEL[engine] })),
       selectedValue: agent.settings.engine,
-      onChange: value => agent.selectEngine(value as 'opencode' | 'codex'),
+      onChange: value => agent.selectEngine(value as WebAgentEngine),
     })
     // 모델이 수백 개라 제공자 단계로 먼저 좁힌다(실측 463). 제공자가 하나뿐이면 접는다.
     if (agent.providers.length > 1) rows.push({

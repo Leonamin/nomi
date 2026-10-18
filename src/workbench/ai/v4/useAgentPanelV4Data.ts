@@ -38,6 +38,7 @@ import { collapseV4Flow } from './agentPanelV4Collapse'
 import { useV4Labels } from './agentPanelV4Labels'
 import { replaceEqualDeep } from './shareEqualDeep'
 import type { ContextUsage, InterventionData, QueueRowData, V4Chip, V4FlowItem } from './agentPanelV4Types'
+import { WEB_AGENT_ENGINE_LABEL } from '../../../../electron/shared/webAgentContracts'
 
 type ToolDisplay = Readonly<{ label: string; summary: string | undefined }>
 
@@ -287,7 +288,7 @@ export function useAgentPanelV4Data(surface: ResidentSurface): AgentPanelV4Data 
     ?? models.find((model) => model.vendorKey === snapshot.active.model?.provider
       && (model.modelKey === snapshot.active.model.modelId || model.modelAlias === snapshot.active.model.modelId))
   const modelLabel = webAgentSettings
-    ? (webAgentSettings.engine === 'opencode' ? 'OpenCode' : 'Codex')
+    ? WEB_AGENT_ENGINE_LABEL[webAgentSettings.engine]
     : selectedModel
     ? labelForModel(selectedModel, [...models], vendors)
     // 没选模型时说实话。写一个型号名当占位是最糟的一种「默认」：用户以为已经在用它了。

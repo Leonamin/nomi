@@ -15,6 +15,7 @@ import { captureGenerationContext } from '../electron/shared/agentCapabilities/g
 import type { LaneComposerContext } from '../electron/shared/agentLane/laneDesktopContracts'
 import type { ProjectBinding } from '../electron/shared/projectBinding'
 import type { createWebProductionRuntime } from './productionRuntime'
+import { listProjectAssets } from '../electron/assets/projectAssetStore'
 
 export type WebSemanticAgentTool = import('./agentTools').AgentTool
 export type WebSemanticAgentToolDependencies = {
@@ -28,11 +29,42 @@ export type WebSemanticAgentToolDependencies = {
   listModels: () => unknown | Promise<unknown>;
 }
 
+type DraftShot = { role?: string; modelId?: string; candidate?: { providerId?: string; modelId?: string }; references?: unknown[]; storyboard?: { anchorIds?: string[] } }
+type ModelRow = { modelId: string; vendor: string | null; accepts?: { image?: boolean } }
+
+/**
+ * Character consistency is carried by explicit reference images (anchorIds alone sends nothing — see compileShotOutbound).
+ * A shot that needs a reference must name a model whose catalog row accepts images; never silently fall back to text-only.
+ */
+export function assertDraftReferencesDeliverable(args: { candidate?: DraftShot['candidate']; shots: DraftShot[] }, models: readonly ModelRow[]): void {
+  args.shots.forEach((shot, index) => {
+    const anchored = shot.role !== 'anchor' && (shot.storyboard?.anchorIds?.length ?? 0) > 0
+    const hasReferences = (shot.references?.length ?? 0) > 0
+    if (!anchored && !hasReferences) return
+    const label = `shots[${index}]`
+    if (anchored && !hasReferences) throw new Error(`${label} uses storyboard.anchorIds, which sends no image by itself. Add the anchor's generated image as references (asset id from look_at_media) with an image-capable model, or drop anchorIds.`)
+    const named = shot.candidate ?? args.candidate; const modelId = shot.modelId ?? named?.modelId
+    if (!modelId) throw new Error(`${label} has reference images but names no model. Choose a list_models entry whose accepts.image is true; the default model may ignore references.`)
+    const rows = models.filter(row => row.modelId === modelId && (!named?.providerId || row.vendor === named.providerId))
+    if (rows.length && !rows.some(row => row.accepts?.image)) throw new Error(`${label}: model ${modelId} cannot take a reference image (accepts.image is false), so the character would not carry over. Pick a list_models entry with accepts.image true.`)
+  })
+}
+
+/** Web has no renderer asset port: read the project asset index directly (newest first). */
+function lookAtMedia(projectId: string, args: { query?: string; kinds?: string[]; limit?: number; assetId?: string; startFrame?: number; endFrame?: number; waveform?: unknown }) {
+  if (args.startFrame !== undefined || args.endFrame !== undefined || args.waveform !== undefined) throw new Error('Frame-range and waveform reads are not available on the web host; search by query/kinds or read one assetId.')
+  const query = args.query?.trim().toLowerCase()
+  const items = listProjectAssets({ projectId, limit: 500 }).items.filter(asset => {
+    return (!args.assetId || asset.id === args.assetId) && (!args.kinds?.length || args.kinds.includes(String(asset.data.mediaType))) && (!query || `${asset.name} ${String(asset.data.relativePath)}`.toLowerCase().includes(query))
+  }).slice(0, args.limit ?? 20)
+  return { ok: true, assets: items.map(asset => ({ assetId: asset.id, name: asset.name, kind: asset.data.mediaType, relativePath: asset.data.relativePath, updatedAt: asset.updatedAt })) }
+}
+
 /** Native MCP receives the original model vocabulary/schema, not a second manually invented set. */
 export function createWebSemanticAgentTools(deps: WebSemanticAgentToolDependencies): WebSemanticAgentTool[] {
   const documents = new Map(createDocumentLaneTools(deps.documentPort).filter(tool => tool.name === 'read_script').map(tool => [tool.name, tool]))
   let documentRead = false
-  const names = new Set(['read_script', 'write_script', 'list_models', 'look_at_canvas', 'draft_shots', 'generate', 'check_job', 'cancel_job'])
+  const names = new Set(['read_script', 'write_script', 'list_models', 'look_at_canvas', 'draft_shots', 'generate', 'check_job', 'cancel_job', 'look_at_media'])
   return modelFacingToolSpecs('internal').filter(spec => names.has(spec.name)).map(spec => {
     const contract = capabilityContractById(spec.contractId)
     if (!contract) throw new Error(`Unregistered semantic capability: ${spec.contractId}`)
@@ -60,6 +92,8 @@ export function createWebSemanticAgentTools(deps: WebSemanticAgentToolDependenci
       const document = documents.get(spec.name)
       if (document) { const result = await document.execute(args, { toolCallId, signal: deps.signal }); if (result.ok) { documentRead = true; deps.onDocumentExecuted?.() }; return result }
       if (spec.name === 'list_models') return deps.listModels()
+      if (spec.name === 'look_at_media') return lookAtMedia(deps.binding.projectId, args as Parameters<typeof lookAtMedia>[1])
+      if (spec.name === 'draft_shots') assertDraftReferencesDeliverable(args as Parameters<typeof assertDraftReferencesDeliverable>[0], await deps.listModels() as ModelRow[])
       if (spec.name === 'look_at_canvas') {
         const canvas = projectCanvasRead(await deps.readCanvas())
         return { ok: true, text: formatCanvasForAgent(canvas), details: { nodeCount: canvas.nodes.length } }

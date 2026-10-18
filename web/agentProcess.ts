@@ -29,6 +29,18 @@ export function nativeAgentConfig(url: string, otherServers: Record<string, Disa
   }
 }
 
+/**
+ * Claude Code CLI: built-in tools off (`--tools ""`), only the admitted Nomi MCP tools allowed, settings files ignored.
+ * The bearer token never enters argv: the config references `${NOMI_WEB_AGENT_MCP_TOKEN}`, which the CLI expands from env.
+ */
+export function claudeAgentArgs(turn: Pick<NativeAgentTurn, 'model' | 'sessionId' | 'mcpUrl' | 'toolNames'>): string[] {
+  if (turn.toolNames.some(name => !/^[A-Za-z][A-Za-z0-9_]*$/.test(name))) throw new Error('Unsupported admitted Nomi tool name')
+  const mcp = { mcpServers: { nomi: { type: 'http', url: turn.mcpUrl, headers: { Authorization: 'Bearer ${NOMI_WEB_AGENT_MCP_TOKEN}' } } } }
+  return ['-p', '--output-format', 'stream-json', '--verbose', '--tools', '', '--setting-sources', '', '--permission-mode', 'dontAsk', '--strict-mcp-config', '--mcp-config', JSON.stringify(mcp),
+    ...(turn.toolNames.length ? ['--allowedTools', turn.toolNames.map(name => `mcp__nomi__${name}`).join(',')] : []),
+    ...(turn.sessionId ? ['--resume', turn.sessionId] : []), ...(turn.model ? ['--model', turn.model] : [])]
+}
+
 /** Installed CLIs emit JSONL; only provider facts cross into Nomi projections. */
 function record(value: unknown): Record<string, unknown> { return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {} }
 function count(value: unknown): number { return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : 0 }
@@ -38,6 +50,19 @@ export function parseNativeAgentEvent(engine: WebAgentEngine, value: unknown): N
   if (engine === 'opencode') {
     if ((raw.type === 'text' || raw.type === 'reasoning') && typeof part.id === 'string' && typeof part.text === 'string') return { kind: raw.type === 'text' ? 'text' : 'thinking', id: part.id, text: part.text }
     if (raw.type === 'step_finish' && part.tokens) { const tokens = record(part.tokens); return { kind: 'usage', input: count(tokens.input), output: count(tokens.output), cacheRead: count(record(tokens.cache).read) } }
+  } else if (engine === 'claude') {
+    if (raw.type === 'system' && raw.subtype === 'init' && typeof raw.session_id === 'string') return { kind: 'session', id: raw.session_id }
+    // One assistant event may carry several content blocks; the first usable block is the event's projection.
+    if (raw.type === 'assistant') {
+      const message = record(raw.message)
+      const blocks = Array.isArray(message.content) ? message.content.map(record) : []
+      const index = blocks.findIndex(block => (block.type === 'text' && typeof block.text === 'string' && block.text) || (block.type === 'thinking' && typeof block.thinking === 'string' && block.thinking))
+      if (index >= 0) { const block = blocks[index]; const id = `${String(raw.uuid ?? message.id ?? '')}:${index}`; return block.type === 'text' ? { kind: 'text', id, text: String(block.text) } : { kind: 'thinking', id, text: String(block.thinking) } }
+    }
+    if (raw.type === 'result') {
+      if (raw.is_error === true) return { kind: 'error', text: String(raw.result || raw.subtype || 'Claude turn failed') }
+      const usage = record(raw.usage); return { kind: 'usage', input: count(usage.input_tokens), output: count(usage.output_tokens), cacheRead: count(usage.cache_read_input_tokens) }
+    }
   } else {
     if (raw.type === 'thread.started' && typeof raw.thread_id === 'string') return { kind: 'session', id: raw.thread_id }
     if (raw.type === 'item.completed' && item.type === 'agent_message' && typeof item.id === 'string' && typeof item.text === 'string') return { kind: 'text', id: item.id, text: item.text }
@@ -48,7 +73,7 @@ export function parseNativeAgentEvent(engine: WebAgentEngine, value: unknown): N
 
 /** Installation ownership stays with PATH or an explicit runtime selection. */
 export function nativeAgentExecutable(engine: WebAgentEngine, env: NodeJS.ProcessEnv = process.env): string {
-  return (engine === 'opencode' ? env.NOMI_WEB_OPENCODE_BIN : env.NOMI_WEB_CODEX_BIN) || engine
+  return ({ opencode: env.NOMI_WEB_OPENCODE_BIN, codex: env.NOMI_WEB_CODEX_BIN, claude: env.NOMI_WEB_CLAUDE_BIN })[engine] || engine
 }
 
 /** Version and advertised CLI isolation must agree before a tool-bearing turn. */
@@ -199,8 +224,10 @@ export function parseCodexConfiguredModel(configText: string): string[] {
  * 엔진이 **실제로 아는** 모델 목록.
  * · OpenCode: `models` 서브커맨드가 인증된 provider를 모두 돌려준다.
  * · Codex: 목록 서브커맨드가 없어 설정의 `model` 한 줄만 정직하게 보고한다.
+ * · Claude: 목록 서브커맨드가 없다. 별칭(sonnet/opus/…)은 CLI가 해석하므로 비워 두면 CLI 기본값.
  */
 export async function listNativeAgentModels(engine: WebAgentEngine, signal: AbortSignal): Promise<string[]> {
+  if (engine === 'claude') return []
   if (engine !== 'opencode') {
     try {
       const home = process.env.CODEX_HOME || path.join(os.homedir(), '.codex')
@@ -253,12 +280,14 @@ export async function runNativeAgent(turn: NativeAgentTurn): Promise<void> {
     Object.assign(env, { OPENCODE_CONFIG_CONTENT: JSON.stringify(nativeAgentConfig(turn.mcpUrl, otherServers, turn.toolNames)) })
     privateServer = await startOpenCodeServer(executable, turn, env)
     args = ['run', '--server', privateServer.url, '--format', 'json', '--model', turn.model, ...(turn.sessionId ? ['--session', turn.sessionId] : []), turn.prompt]
+  } else if (turn.engine === 'claude') {
+    args = claudeAgentArgs(turn)
   } else {
     args = ['exec', ...(turn.sessionId ? ['resume', turn.sessionId] : []), '--json', '--ignore-user-config', '--ignore-rules', '--skip-git-repo-check', '--disable', 'shell_tool', '--disable', 'apps', '--disable', 'plugins', '--disable', 'hooks', '--disable', 'multi_agent', '-c', 'web_search="disabled"', '-c', 'sandbox_mode="read-only"', '-c', `mcp_servers.nomi.url=${JSON.stringify(turn.mcpUrl)}`, '-c', 'mcp_servers.nomi.bearer_token_env_var="NOMI_WEB_AGENT_MCP_TOKEN"', '-c', 'mcp_servers.nomi.tool_timeout_sec=1800', '-c', 'mcp_servers.nomi.default_tools_approval_mode="approve"', ...(turn.model ? ['--model', turn.model] : []), '-']
   }
   fs.mkdirSync(turn.directory, { recursive: true, mode: 0o700 })
   const child = spawn(executable, args, { cwd: turn.directory, env, detached: true, stdio: ['pipe', 'pipe', 'pipe'] })
-  if (turn.engine === 'codex') child.stdin.end(turn.prompt)
+  if (turn.engine !== 'opencode') child.stdin.end(turn.prompt)
   else child.stdin.end()
   let diagnostic = ''
   let hasProviderError = false

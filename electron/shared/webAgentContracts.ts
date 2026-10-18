@@ -1,5 +1,6 @@
 /** Native agent selection is independent from the generation model catalog. */
-export type WebAgentEngine = 'opencode' | 'codex'
+export type WebAgentEngine = 'opencode' | 'codex' | 'claude'
+export const WEB_AGENT_ENGINE_LABEL: Record<WebAgentEngine, string> = { opencode: 'OpenCode', codex: 'Codex', claude: 'Claude' }
 /** 프로젝트별 대화가 기억하는 선택. 비어 있으면 엔진의 저장된 기본값으로 되돌린다. */
 export type WebAgentSelection = { engine?: WebAgentEngine; model?: string }
 export type WebAgentSettings = {
