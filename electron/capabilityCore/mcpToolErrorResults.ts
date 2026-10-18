@@ -2,7 +2,7 @@ import { mcpLocaleText } from './mcpLocaleText'
 import type { ResultLocale } from './mcpToolResults'
 import { CAPABILITY_TRANSPORT_PUBLIC_ERROR_CODES } from '../shared/surfacePortBinding'
 import { INTEGRATION_ERROR_CODES } from '../shared/integrationContract'
-import { ADMISSION_REJECTION_HINTS } from '../shared/admissionRejectionHints'
+import { ADMISSION_REJECTION_HINTS } from '../shared/agentCapabilities/admissionRejectionHints'
 
 type Ctx = { locale: ResultLocale }
 const L = (ctx: Ctx, zh: string, en: string): string => (mcpLocaleText(ctx.locale, zh, en))
