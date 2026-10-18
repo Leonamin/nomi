@@ -1,6 +1,7 @@
 import { randomBytes, randomUUID } from 'node:crypto'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js'
+import { CallToolRequestSchema } from '@modelcontextprotocol/sdk/types.js'
 import type { AgentTool } from './agentTools'
 
 type Execute = (tool: AgentTool, input: unknown) => Promise<unknown>
@@ -16,12 +17,20 @@ const port = () => process.env.NOMI_WEB_PORT || 9031
  */
 function createServer(scope: TurnScope): McpServer {
   const server = new McpServer({ name: 'Nomi Web', version: '0.23.1' })
-  for (const tool of scope.tools) server.registerTool(tool.name, { description: tool.description, inputSchema: tool.schema, annotations: { readOnlyHint: tool.approvalSubject.effect === 'read', destructiveHint: tool.approvalSubject.destructiveHint } }, async (input: Record<string, unknown>) => {
+  const call = async (tool: AgentTool, input: unknown) => {
     try {
       scope.signal.throwIfAborted()
       const output = await scope.execute(tool, input)
       return { content: [{ type: 'text' as const, text: JSON.stringify(output).slice(0, 50000) }] }
     } catch (error) { return { isError: true, content: [{ type: 'text' as const, text: error instanceof Error ? error.message : String(error) }] } }
+  }
+  for (const tool of scope.tools) server.registerTool(tool.name, { description: tool.description, inputSchema: tool.schema, annotations: { readOnlyHint: tool.approvalSubject.effect === 'read', destructiveHint: tool.approvalSubject.destructiveHint } }, (input: Record<string, unknown>) => call(tool, input))
+  // The SDK validates tools/call against the advertised schema before any handler, so the shared
+  // prepareArguments (e.g. `shots` sent as a JSON string by Claude Code) never ran and draft_shots was
+  // rejected. tools/list keeps the real schema; tool.run prepares first, then validates (desktop prepareMcpArguments order).
+  server.server.setRequestHandler(CallToolRequestSchema, request => {
+    const tool = scope.tools.find(candidate => candidate.name === request.params.name)
+    return tool ? call(tool, request.params.arguments ?? {}) : { isError: true, content: [{ type: 'text' as const, text: `Unknown Nomi tool: ${request.params.name}` }] }
   })
   return server
 }
