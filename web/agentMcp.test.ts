@@ -20,12 +20,15 @@ describe('private per-turn MCP endpoint', () => {
   it('runs the tool with stringified arrays intact so prepareArguments, not the SDK, owns validation', async () => {
     const controller = new AbortController()
     const seen: unknown[] = []
-    const tool = { name: 'draft_shots', description: 'Draft', approvalSubject: { effect: 'write', effectClass: 'reversible_local', requiresPlanReview: false, destructiveHint: false }, schema: z.object({ shots: z.array(z.object({ title: z.string() })) }), run: async () => ({}) } as const
+    const tool = { name: 'draft_shots', description: 'Draft', approvalSubject: { effect: 'write', effectClass: 'reversible_local', requiresPlanReview: false, destructiveHint: false }, schema: z.object({ shots: z.array(z.object({ title: z.string() })) }).refine(() => true), run: async () => ({}) } as const
     const mcp = await openAgentMcp([tool as never], controller.signal, async (_tool, input) => { seen.push(input); return { ok: true } })
     const response = await handleAgentMcp(new Request(mcp.url, { method: 'POST', headers: { authorization: `Bearer ${mcp.token}`, 'content-type': 'application/json', accept: 'application/json, text/event-stream' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'draft_shots', arguments: { shots: '[{"title":"a"}]' } } }) }))
     const body = await response.json() as { result: { isError?: boolean } }
     expect(body.result.isError).toBeUndefined()
     expect(seen).toEqual([{ shots: '[{"title":"a"}]' }])
+    const listed = await handleAgentMcp(new Request(mcp.url, { method: 'POST', headers: { authorization: `Bearer ${mcp.token}`, 'content-type': 'application/json', accept: 'application/json, text/event-stream' }, body: JSON.stringify({ jsonrpc: '2.0', id: 2, method: 'tools/list', params: {} }) }))
+    const schema = (await listed.json() as { result: { tools: { inputSchema: { properties?: Record<string, { type?: string }> } }[] } }).result.tools[0].inputSchema
+    expect(schema.properties?.shots?.type).toBe('array')
     await mcp.close()
   })
 })

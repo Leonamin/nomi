@@ -248,7 +248,8 @@ export class WebAgentLanes {
         controller.signal.throwIfAborted()
         const directory = projectDirById(state.binding.projectId)
         if (!directory || !sameProjectAgentBinding(state.binding, await ensureWorkspaceProjectIdentity(directory))) throw new Error('Agent project identity changed')
-        text = JSON.stringify(await tool.run(tool.schema.parse(input)))
+        // tool.run owns argument preparation and validation; parsing here first rejected stringified arrays.
+        text = JSON.stringify(await tool.run(input))
       } catch (error) { isError = true; text = error instanceof Error ? error.message : String(error) }
       lane.parts[index] = { ...lane.parts[index], running: false } as LanePart
       this.part(lane, { kind: 'tool-result', toolCallId: callId, toolName: tool.name, text, isError })

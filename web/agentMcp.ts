@@ -1,7 +1,8 @@
 import { randomBytes, randomUUID } from 'node:crypto'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js'
-import { CallToolRequestSchema } from '@modelcontextprotocol/sdk/types.js'
+import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js'
+import { toPublishedJsonSchema } from '../electron/shared/agentCapabilities/modelVisibleJsonSchema'
 import type { AgentTool } from './agentTools'
 
 type Execute = (tool: AgentTool, input: unknown) => Promise<unknown>
@@ -25,9 +26,10 @@ function createServer(scope: TurnScope): McpServer {
     } catch (error) { return { isError: true, content: [{ type: 'text' as const, text: error instanceof Error ? error.message : String(error) }] } }
   }
   for (const tool of scope.tools) server.registerTool(tool.name, { description: tool.description, inputSchema: tool.schema, annotations: { readOnlyHint: tool.approvalSubject.effect === 'read', destructiveHint: tool.approvalSubject.destructiveHint } }, (input: Record<string, unknown>) => call(tool, input))
-  // The SDK validates tools/call against the advertised schema before any handler, so the shared
-  // prepareArguments (e.g. `shots` sent as a JSON string by Claude Code) never ran and draft_shots was
-  // rejected. tools/list keeps the real schema; tool.run prepares first, then validates (desktop prepareMcpArguments order).
+  // The SDK only understands plain object schemas: it advertised `{}` for refined ones (draft_shots), and it
+  // validated tools/call before the shared prepareArguments could run. Advertise the shared model-visible
+  // schema and let tool.run prepare first, then validate (desktop prepareMcpArguments order).
+  server.server.setRequestHandler(ListToolsRequestSchema, () => ({ tools: scope.tools.map(tool => ({ name: tool.name, description: tool.description, inputSchema: toPublishedJsonSchema(tool.schema) as { type: 'object' }, annotations: { readOnlyHint: tool.approvalSubject.effect === 'read', destructiveHint: tool.approvalSubject.destructiveHint } })) }))
   server.server.setRequestHandler(CallToolRequestSchema, request => {
     const tool = scope.tools.find(candidate => candidate.name === request.params.name)
     return tool ? call(tool, request.params.arguments ?? {}) : { isError: true, content: [{ type: 'text' as const, text: `Unknown Nomi tool: ${request.params.name}` }] }
