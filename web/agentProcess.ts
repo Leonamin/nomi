@@ -281,6 +281,8 @@ export async function runNativeAgent(turn: NativeAgentTurn): Promise<void> {
     privateServer = await startOpenCodeServer(executable, turn, env)
     args = ['run', '--server', privateServer.url, '--format', 'json', '--model', turn.model, ...(turn.sessionId ? ['--session', turn.sessionId] : []), turn.prompt]
   } else if (turn.engine === 'claude') {
+    // Generation approval can keep one tool call open for the whole turn; match OpenCode's 30-minute execution timeout.
+    Object.assign(env, { MCP_TOOL_TIMEOUT: '1800000' })
     args = claudeAgentArgs(turn)
   } else {
     args = ['exec', ...(turn.sessionId ? ['resume', turn.sessionId] : []), '--json', '--ignore-user-config', '--ignore-rules', '--skip-git-repo-check', '--disable', 'shell_tool', '--disable', 'apps', '--disable', 'plugins', '--disable', 'hooks', '--disable', 'multi_agent', '-c', 'web_search="disabled"', '-c', 'sandbox_mode="read-only"', '-c', `mcp_servers.nomi.url=${JSON.stringify(turn.mcpUrl)}`, '-c', 'mcp_servers.nomi.bearer_token_env_var="NOMI_WEB_AGENT_MCP_TOKEN"', '-c', 'mcp_servers.nomi.tool_timeout_sec=1800', '-c', 'mcp_servers.nomi.default_tools_approval_mode="approve"', ...(turn.model ? ['--model', turn.model] : []), '-']
