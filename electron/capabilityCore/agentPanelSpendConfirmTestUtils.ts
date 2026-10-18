@@ -249,6 +249,7 @@ function buildActions(base: ReturnType<typeof harness>, vendorOrigin: string, su
   const handler = createGenerationPlanningHandler({
     registry,
     operations,
+    ...(hooks.videoModelCandidates ? { videoModelCandidates: hooks.videoModelCandidates } : {}),
     resolveModelPricing: () => (hooks.unpriced ? undefined : PRICING),
     now,
     prepareAuthorization: ({ lease: projectLease, operation, contract, multiShot }) => prepareProductionGenerationAuthorization({

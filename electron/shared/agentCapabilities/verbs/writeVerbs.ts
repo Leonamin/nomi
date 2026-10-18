@@ -46,6 +46,8 @@ export const draftShotSchema = z.object({
   role: z.enum(["anchor", "shot"]).optional().describe("anchor = reference card; shot = numbered shot (default)."),
   durationSec: z.number().positive().max(600).optional().describe("Seconds; omit for stills. Use here, never parameters."),
   modelId: z.string().trim().min(1).optional().describe("list_models id; omit for user's default."),
+  // 2026-10-18：变体是身份的一部分（和 modelId 同级），不是参数；list_models 投出的 variants 在这里写。
+  variantId: z.string().trim().min(1).optional().describe("From list_models variants."),
   // 2026-09-22：`taskKind` 与 `modeId` 是同一件事实的两种写法。模式定了，种类就定了
   // （`transportTaskKindForModeId` 从档案扫出来），所以说明书直接告诉模型「写了模式就别再写种类」——
   // 两个都填正是它自己给自己造矛盾的地方（run2 A3/A6 三次）。
