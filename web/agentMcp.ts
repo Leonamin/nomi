@@ -2,6 +2,7 @@ import { randomBytes, randomUUID } from 'node:crypto'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js'
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js'
+import { createProgressReporter } from '../electron/capabilityCore/mcpProgress'
 import { toPublishedJsonSchema } from '../electron/shared/agentCapabilities/modelVisibleJsonSchema'
 import type { AgentTool } from './agentTools'
 
@@ -30,9 +31,13 @@ function createServer(scope: TurnScope): McpServer {
   // validated tools/call before the shared prepareArguments could run. Advertise the shared model-visible
   // schema and let tool.run prepare first, then validate (desktop prepareMcpArguments order).
   server.server.setRequestHandler(ListToolsRequestSchema, () => ({ tools: scope.tools.map(tool => ({ name: tool.name, description: tool.description, inputSchema: toPublishedJsonSchema(tool.schema) as { type: 'object' }, annotations: { readOnlyHint: tool.approvalSubject.effect === 'read', destructiveHint: tool.approvalSubject.destructiveHint } })) }))
-  server.server.setRequestHandler(CallToolRequestSchema, request => {
+  server.server.setRequestHandler(CallToolRequestSchema, async (request, extra) => {
     const tool = scope.tools.find(candidate => candidate.name === request.params.name)
-    return tool ? call(tool, request.params.arguments ?? {}) : { isError: true, content: [{ type: 'text' as const, text: `Unknown Nomi tool: ${request.params.name}` }] }
+    if (!tool) return { isError: true, content: [{ type: 'text' as const, text: `Unknown Nomi tool: ${request.params.name}` }] }
+    // A generate call waits on the user's approval card; heartbeat frames keep the SSE response alive past
+    // client idle timeouts (Claude Code dropped silent calls at 5 minutes), same bridge as desktop MCP.
+    const progress = createProgressReporter({ send: frame => void extra.sendNotification(frame as never).catch(() => undefined), progressToken: request.params._meta?.progressToken, locale: 'en' })
+    try { return await call(tool, request.params.arguments ?? {}) } finally { progress.stop() }
   })
   return server
 }
@@ -49,12 +54,13 @@ export async function handleAgentMcp(request: Request): Promise<Response> {
   const scope = scopes.get(url.pathname.split('/').at(-1) || '')
   if (!scope || scope.signal.aborted || request.headers.get('authorization') !== `Bearer ${scope.token}` || url.host !== `127.0.0.1:${port()}` || request.headers.has('origin')) return new Response('Unauthorized', { status: 403 })
   const server = createServer(scope)
-  const transport = new WebStandardStreamableHTTPServerTransport({ sessionIdGenerator: undefined, enableJsonResponse: true })
+  // SSE responses send headers at once, so a long tool call is not cut by the client's header timeout.
+  const transport = new WebStandardStreamableHTTPServerTransport({ sessionIdGenerator: undefined })
   await server.connect(transport)
   try {
     const response = await transport.handleRequest(request)
-    // GET 是长驻 SSE 流，不能立刻关掉；POST（JSON 响应）处理完即回收。
-    if (request.method !== 'GET') await server.close()
+    // SSE 流由 transport 在回完响应后自行关闭，这里不能提前关；只有无流的应答（202 等）即回收。
+    if (response.headers.get('content-type') !== 'text/event-stream') await server.close()
     return response
   } catch (error) {
     await server.close().catch(() => undefined)
