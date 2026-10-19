@@ -3,7 +3,7 @@
 // 关键约束（bug① spike）：agent 一旦写了 modelKey，useNodeModelAutoSelect 的 effect1（只在
 // modelKey 空时跑）就不会再自动补 vendor/label/默认参数——所以这里必须**自铺全**：
 // modelVendor / modelLabel / archetype.{id,modeId} / 该 mode 的默认参数，再用 agent 的合法参数覆盖。
-import type { AgentModelEntry } from "./availableModels";
+import { agentModelCatalogMeta, type AgentModelEntry } from "./availableModels";
 import { isParamValueAllowed } from "../../../../electron/shared/videoCapabilities/paramConstraints";
 import {
   canonicalArchetypeVariantId,
@@ -42,7 +42,7 @@ function entryArchetype(entry: AgentModelEntry): ModelArchetype | null {
     modelAlias: entry.modelAlias,
     vendorKey: entry.vendor,
     // catalogMeta 带着用户导入模型的能力合同；只给 archetypeId 解析不出 `custom-capability:*`。
-    meta: { ...entry.catalogMeta, archetypeId: entry.archetypeId },
+    meta: { ...agentModelCatalogMeta(entry), archetypeId: entry.archetypeId },
   });
 }
 
@@ -163,7 +163,7 @@ export function buildPlannedNodeMeta(
   // 与手选模型同口径（useNodeModelAutoSelect / buildNodeModelChangePatch）：能力合同 + 参考槽声明。
   // 少了它，ComfyUI 导入的 edit-only / i2v 模型会被 resolveTaskKind 判成文生，选不到模型、锚点参考丢失。
   // 先写 meta 再投影：投影靠 meta 里的 modelKey/vendor 认身份。
-  Object.assign(meta, projectParameterReferenceSlots(replaceCustomCapabilityContractMeta(meta, entry.catalogMeta), entry.catalogMeta));
+  Object.assign(meta, projectParameterReferenceSlots(replaceCustomCapabilityContractMeta(meta, agentModelCatalogMeta(entry)), agentModelCatalogMeta(entry)));
 
   // 1) 铺 mode 默认参数
   for (const control of mode.params) {
