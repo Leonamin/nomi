@@ -54,3 +54,18 @@ it('gives up after bounded attempts and never retries other failures', async () 
   await expect(retryOnReferenceScopeChange(changed)).rejects.toThrow('identity_changed');
   expect(changed).toHaveBeenCalledTimes(1);
 });
+it('survives writes during every upload (video rendering) by reusing the first upload on retry', async () => {
+  // Wan 렌더 중에는 Run 진행 쓰기가 매 업로드 창마다 들어온다：重试也重新上传的话三次全输（2026-10-19 实测）。
+  const state = { revision: 1 }, deps = fixture();
+  deps.localize.mockImplementation(async () => { state.revision += 1; return ['https://cdn.example/ref.png']; });
+  const attempt = async () => {
+    const snapshot = state.revision;
+    await resolveProductionReferenceUrls({ projectId: 'p', providerId: 'apimart', references: [reference], assertCurrent() { if (state.revision !== snapshot) throw new Error('generation_reference_scope_changed'); } }, deps);
+    return snapshot;
+  };
+  expect(await retryOnReferenceScopeChange(attempt)).toBe(2);
+  expect(deps.localize).toHaveBeenCalledTimes(1);
+  // 记忆只活在一次重试里：下一次独立授权照常重新上传。
+  await retryOnReferenceScopeChange(attempt).catch(() => undefined);
+  expect(deps.localize).toHaveBeenCalledTimes(2);
+});
