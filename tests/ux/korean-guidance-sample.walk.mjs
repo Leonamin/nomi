@@ -2,12 +2,12 @@
 import { chromium } from '@playwright/test'
 import { expectVisible, expectText, clickOrFail } from './_assert.mjs'
 import { assertMockupContract } from './_contract.mjs'
-import projectContract, { settingsContract, guideContract } from '../../docs/design/mockups/contracts/2026-10-12-korean-guidance.intent.mjs'
+import projectContract, { settingsContract, guideContract } from '../../docs/archive/design/mockups/contracts/2026-10-12-korean-guidance.intent.mjs'
 
 const browser = await chromium.launch({ headless: true })
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } })
-  await page.goto(process.env.NOMI_KOREAN_SAMPLE_URL || 'http://127.0.0.1:9133/docs/design/mockups/2026-10-12-korean-guidance/index.html')
+  await page.goto(process.env.NOMI_KOREAN_SAMPLE_URL || 'http://127.0.0.1:9133/docs/archive/design/mockups/2026-10-12-korean-guidance/index.html')
   await assertMockupContract(page, projectContract)
   await page.evaluate(() => window.openPanel('settings'))
   await assertMockupContract(page, settingsContract)

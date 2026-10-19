@@ -18,7 +18,7 @@ okf_version: "0.1"
 
 - 프로젝트 생성·저장·선택: [web/rpc.ts](../../web/rpc.ts), [web/projectState.ts](../../web/projectState.ts)
 - 생성 및 결과 수집: [web/generationJobs.ts](../../web/generationJobs.ts), [web/comfyuiProductionProvider.ts](../../web/comfyuiProductionProvider.ts)
-- 컷 후보와 교체 결정의 승인 기록: [docs/plan/2026-10-12-personal-web.md](../../docs/archive/plan/2026-10-12-personal-web.md)
+- 컷 후보와 교체 결정의 승인 기록: [docs/archive/plan/2026-10-12-personal-web.md](../../docs/archive/plan/2026-10-12-personal-web.md)
 - 내보내기 backend 경계: [web/rpc.ts](../../web/rpc.ts)
-- 최근 실제 웹 미디어 확인과 한계: [2026-10-15 Web platform/media QA](../../docs/qa/2026-10-15-web-platform-media-browser.md)
+- 최근 실제 웹 미디어 확인과 한계: [2026-10-15 Web platform/media QA](../../docs/archive/qa/2026-10-15-web-platform-media-browser.md)
 - 확인일: 2026-10-16. 프로젝트/생성·내보내기 경로 코드를 확인했다. 최근 QA는 생성 결과 복원과 asset 재생·업로드는 확인했으나 전체 타임라인 export는 확인하지 않았다.

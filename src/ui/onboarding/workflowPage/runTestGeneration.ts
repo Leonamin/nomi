@@ -1,5 +1,5 @@
 // 「运行测试」：把这条工作流**真提交给这台 ComfyUI**（后端零改动，走既有 tasks.run 通道）。
-// plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+// plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
 //
 // 为什么是真跑而不是假的「连通检查」：本地 ComfyUI 不花钱，真跑一次是唯一能回答
 // 「我这条绑定到底对不对」的东西。连通检查只能证明机器活着，证不了绑定对——

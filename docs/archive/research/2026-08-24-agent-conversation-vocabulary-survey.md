@@ -1,6 +1,6 @@
 # Agent 对话流「UI 词汇表」调研（2026-08-24）
 
-> 归档说明：Opus 子 agent 逐家啃官方一手资料（DramaClaw 飞书手册 CDP 全文、TapNow docs 逐页、LibTV 官方指南存档、小云雀教程、可灵/MiniMax/星流官方页），校准 Nomi agent 对话组件词汇表草案。官方资料未覆盖的项均明确标注、无脑补。校准结论已并入 `docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §4。
+> 归档说明：Opus 子 agent 逐家啃官方一手资料（DramaClaw 飞书手册 CDP 全文、TapNow docs 逐页、LibTV 官方指南存档、小云雀教程、可灵/MiniMax/星流官方页），校准 Nomi agent 对话组件词汇表草案。官方资料未覆盖的项均明确标注、无脑补。校准结论已并入 `docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §4。
 
 ## 各家要点
 

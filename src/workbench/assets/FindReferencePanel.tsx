@@ -1,7 +1,7 @@
 /**
  * 「找参考」面板：按平台搜正在跑的素材，挑一条落进项目素材库。
  *
- * 设计（已拍板 2026-09-07）：docs/design/2026-09-07-find-reference-design.md
+ * 设计（已拍板 2026-09-07）：docs/archive/design/2026-09-07-find-reference-design.md
  * 画布：https://claude.ai/code/artifact/309a8fc2-4599-4f63-8e5b-379e97768ccf
  *
  * 三条来自设计的硬约束，别在维护时改掉：

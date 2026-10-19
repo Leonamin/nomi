@@ -2,7 +2,7 @@
 
 > 状态：🚧 C1–C8 已在工作区执行，未提交。用户于 2026-09-03 拍板「切吧，修完了再列出测试列表」；实施与测试清单见 §8，下文取舍保留为当时的决策依据。
 > 前置：[2026-09-02-director-console-v2.md](2026-09-02-director-console-v2.md) §0.3 切换门 + §7 分期表（S0–S9 每期的落地与走查记录）。
-> 读之前先过 `docs/ARCHITECTURE-NOW.md`：现役入口是 `nodes/director/`（节点 `director`，已在画布上架）；旧 `scene3d` 经单向迁移进入 director，AI 工具通过 director 的常驻 Host 出图/出片。
+> 读之前先过 `docs/archive/guides/ARCHITECTURE-NOW.md`：现役入口是 `nodes/director/`（节点 `director`，已在画布上架）；旧 `scene3d` 经单向迁移进入 director，AI 工具通过 director 的常驻 Host 出图/出片。
 
 ## 1. 你要权衡的那一个东西
 

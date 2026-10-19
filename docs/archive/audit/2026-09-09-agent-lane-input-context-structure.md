@@ -1,6 +1,6 @@
 # Agent lane 动态输入结构评审
 
-状态：已评审；模型清单恢复已实现，完整 gates 待重跑，真实小样 2/3。覆盖 `electron/agentLane`，延续 `docs/audit/2026-09-08-agent-lane-cutover-structure.md`，不是新增运行时方案。
+状态：已评审；模型清单恢复已实现，完整 gates 待重跑，真实小样 2/3。覆盖 `electron/agentLane`，延续 `docs/archive/audit/2026-09-08-agent-lane-cutover-structure.md`，不是新增运行时方案。
 
 ## 聚类判断
 

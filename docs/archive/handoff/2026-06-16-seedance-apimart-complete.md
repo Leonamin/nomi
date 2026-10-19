@@ -52,10 +52,10 @@
 
 ### 2C. 参数补全
 - `seed`（number，可选，无默认）、`return_last_frame`（boolean，默 false）加进 `PARAMS`（seedanceApimart.ts）+ catalog 各 body。
-- `return_last_frame` 与未来「视频首尾帧接力」(B-full) 相关——它返回尾帧 URL，正好喂下一镜首帧，做完能顺带根治 storyboard 的视频接力（见 docs/plan/2026-06-16-storyboard-video-and-batch-fixes.md「视频帧接力 B-full」）。
+- `return_last_frame` 与未来「视频首尾帧接力」(B-full) 相关——它返回尾帧 URL，正好喂下一镜首帧，做完能顺带根治 storyboard 的视频接力（见 docs/archive/plan/2026-06-16-storyboard-video-and-batch-fixes.md「视频帧接力 B-full」）。
 
 ### 2D. 真实生成 E2E 验证（接入即验证铁律，**必须跑**）
-按 `docs/workflow/2026-06-06-real-generation-e2e-loop.md`：定义真实任务 → 隔离 electron 实例 + 主进程埋点（vendor HTTP 在主进程发，渲染层抓不到）→ 跑一条 apimart Seedance **全能参考** + 一条 **首尾帧** 真实生成 → 抓实际请求体确认字段名/结构对（image_urls vs image_with_roles、size vs aspect_ratio、generate_audio）→ 验视频结果回读 → 锁回归断言。烧额度，用户已授权"走真实额度"。
+按 `docs/archive/workflow/2026-06-06-real-generation-e2e-loop.md`：定义真实任务 → 隔离 electron 实例 + 主进程埋点（vendor HTTP 在主进程发，渲染层抓不到）→ 跑一条 apimart Seedance **全能参考** + 一条 **首尾帧** 真实生成 → 抓实际请求体确认字段名/结构对（image_urls vs image_with_roles、size vs aspect_ratio、generate_audio）→ 验视频结果回读 → 锁回归断言。烧额度，用户已授权"走真实额度"。
 
 ## 3. 传输管线全景（改之前先读懂）
 
@@ -72,7 +72,7 @@
 - 模板引擎：`electron/ai/requestPipeline.ts`（renderTemplateValue）
 - 互斥投影：`src/workbench/generationCanvas/runner/catalogTaskActions.ts`（resolveTaskKind + 非当前模式键投影）
 - 单测：`electron/catalog/seedBuiltins.test.ts`、`src/config/modelArchetypes/index.test.ts`、新增 seedanceApimart 专测
-- 方案/对账：`docs/plan/2026-06-16-seedance-apimart-completeness.md`
+- 方案/对账：`docs/archive/plan/2026-06-16-seedance-apimart-completeness.md`
 
 ## 5. 验收门（缺一不可）
 1. 五门：check:filesize → lint:ci → typecheck → test → build 全过。

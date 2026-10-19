@@ -109,8 +109,8 @@
 
 - 本轮合同：`docs/fixes/2026-09-15-integration-session-terminal-guarantee.root-cause.json`
 - 本轮方案（含门表、先查别人三池子、T-MO-07 接续路径）：
-  `docs/plan/2026-09-15-integration-session-terminal-guarantee.md`
+  `docs/archive/plan/2026-09-15-integration-session-terminal-guarantee.md`
 - 上一份结构评审（本文核的就是它的处方）：
-  `docs/audit/2026-09-12-integration-layer-structural-review.md`
-- 前情：run 层那一版 `docs/plan/2026-09-12-integration-run-failure-path.md`、
-  真机轨迹 `docs/plan/2026-09-11-mcp-integration-quality.md`
+  `docs/archive/audit/2026-09-12-integration-layer-structural-review.md`
+- 前情：run 层那一版 `docs/archive/plan/2026-09-12-integration-run-failure-path.md`、
+  真机轨迹 `docs/archive/plan/2026-09-11-mcp-integration-quality.md`

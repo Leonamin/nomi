@@ -1,5 +1,5 @@
-// 能力核 · 接入 MCP 客户端的配置读写（见 docs/plan/2026-06-22-multi-client-mcp-connect.md
-// + docs/plan/2026-06-24-packaged-mcp-stdio-server.md）。
+// 能力核 · 接入 MCP 客户端的配置读写（见 docs/archive/plan/2026-06-22-multi-client-mcp-connect.md
+// + docs/archive/plan/2026-06-24-packaged-mcp-stdio-server.md）。
 //
 // 「一键接入」就靠这一层：算出 nomi MCP server 启动条目 → 把 nomi 条目合并进各客户端的配置文件。
 // 启动条目 = **包内 Helper 的 Node 模式 + mcpNodeLauncher.js**。Helper 本身就是 Nomi 随包携带的

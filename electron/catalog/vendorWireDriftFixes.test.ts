@@ -1,5 +1,5 @@
 // Regression tests for three real vendor-wire drifts caught by the 2026-09-02 model
-// acceptance matrix pass (docs/research/2026-09-02-model-acceptance-matrix.md). Each was
+// acceptance matrix pass (docs/archive/research/2026-09-02-model-acceptance-matrix.md). Each was
 // a "本地看不出、线上才 4xx" class of bug: the mock/loopback path did not exercise the exact
 // live contract. These lock the fixes structurally so a future edit that regresses the wire
 // shape fails here instead of only in production.

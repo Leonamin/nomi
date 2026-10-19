@@ -1,6 +1,6 @@
 // 「域里那句可行动的话到底有没有到模型那里」——2026-09-21 真实模型轨迹的回归锁。
 //
-// 入参**逐字**取自 `docs/evidence/2026-09-21-askback-real-model/trajectories/A3.jsonl`（seq=25，
+// 入参**逐字**取自 `docs/archive/evidence/2026-09-21-askback-real-model/trajectories/A3.jsonl`（seq=25，
 // attempt=1）。那次模型收到的是：
 //   The generation action could not be completed; its submission outcome may be unknown.
 //   Next: Query the same domain-qualified task and reconcile its existing submission…

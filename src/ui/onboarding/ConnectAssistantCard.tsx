@@ -1,6 +1,6 @@
 /**
- * 接入 AI 编程助手卡（见 docs/plan/2026-06-22-multi-client-mcp-connect.md
- * + docs/plan/2026-09-14-mcp-connection-truthfulness.md）。
+ * 接入 AI 编程助手卡（见 docs/archive/plan/2026-06-22-multi-client-mcp-connect.md
+ * + docs/archive/plan/2026-09-14-mcp-connection-truthfulness.md）。
  *
  * 一键把 Nomi 接进本机**检测到**的助手（Claude Code / Claude Desktop / Codex / Cursor / WorkBuddy）的 MCP——
  * 用户不读配置、不找路径、不学命令。名单与检测由 electron/shared/mcpClientRegistry.ts 唯一 owner 派生，

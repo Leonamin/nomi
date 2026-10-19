@@ -12,7 +12,7 @@
   "scope_paths": [
     "electron/productionRun/productionRunDriverOps.ts",
     "electron/productionRun/productionRunDriver.test.ts",
-    "docs/qa/2026-09-01-agent-m0-red-lights.md"
+    "docs/archive/qa/2026-09-01-agent-m0-red-lights.md"
   ],
   "entry_points": [
     "driveGeneration legacy-playbook jobs",
@@ -74,7 +74,7 @@
     "strategy": "Keep route ownership at the shared driver and record retirement expectations separately as an M2 red light until the replacement is ready.",
     "artifacts": [
       "electron/productionRun/productionRunDriverOps.ts",
-      "docs/qa/2026-09-01-agent-m0-red-lights.md"
+      "docs/archive/qa/2026-09-01-agent-m0-red-lights.md"
     ]
   },
   "regression_tests": [

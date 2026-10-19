@@ -2,7 +2,7 @@
 
 > 📋 方案待拍板 · 状态由 docs-autosync 自动登记，作者请按实修改
 
-> 状态：已实施（2026-09-25，分支 `claude/agent-run-landing-state`）· 根因合同：`docs/fixes/2026-09-25-agent-run-node-state-single-owner.root-cause.json` · 结构评审：`docs/audit/2026-09-25-agent-run-canvas-projection-structure-review.md`
+> 状态：已实施（2026-09-25，分支 `claude/agent-run-landing-state`）· 根因合同：`docs/fixes/2026-09-25-agent-run-node-state-single-owner.root-cause.json` · 结构评审：`docs/archive/audit/2026-09-25-agent-run-canvas-projection-structure-review.md`
 
 ## 用户摩擦
 

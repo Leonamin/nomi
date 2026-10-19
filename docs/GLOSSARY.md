@@ -21,7 +21,7 @@
 
 | 你可能搜的词 | 规范名 | 去哪找 |
 |---|---|---|
-| 自动剪辑 · auto-edit · autoEdit · 一键成片 | **AI 剪辑**（三步：E1/E2/E3） | `docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §5.1 |
+| 自动剪辑 · auto-edit · autoEdit · 一键成片 | **AI 剪辑**（三步：E1/E2/E3） | `docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §5.1 |
 | 粗剪 · rough cut · roughcut | **E2 结构化粗剪**（≠ `2026-06-21-preview-rough-cut-overhaul.md`，那份讲的是**预览区手感**，不是自动剪辑） | 同上 |
 | EDL · edit decision list · 剪辑决策 | **EditPlan**（一组类型化时间轴操作，每条带影响范围） | 同上 |
 | 剪辑提案 · 提案卡 · propose_edit | **剪辑计划卡** | 同上 |
@@ -37,9 +37,9 @@
 | agent 引擎 · runAgentChatV2 · streamText 循环 | **pi runtime**（pi SDK 0.85.1）。`runAgentChatV2` 是**已被取代**的旧名 | `electron/harness/runtime/pi/` |
 | 工具组 · toolset · skillKey 选工具 | **内部 profile 全量 + 延迟组**（#646 后不再按 capability 裁剪；工具组按 `internalGroup` 延迟披露） | `electron/agentLane/laneToolCatalog.ts` |
 | 工具定义 · tool schema · descriptor · 说明书 | **动词声明 `VerbDeclaration`**（唯一 owner；`modelToolSurfaceManifest.ts` / `agentToolCatalog.ts` / `*ModelTools.ts` / 契约 `projections` 都是 2026-09-11 **已删**的旧名） | `electron/shared/agentCapabilities/verbDeclarations.ts` |
-| 统一 agent · 跨区 agent · 常驻助手 | **R2-U1 项目级统一 Agent**（未交付） | `docs/plan/2026-08-26-pi-agent-loop-file-migration.md` §7 |
+| 统一 agent · 跨区 agent · 常驻助手 | **R2-U1 项目级统一 Agent**（未交付） | `docs/archive/plan/2026-08-26-pi-agent-loop-file-migration.md` §7 |
 | 会话 · 线程 · session · thread | **`{sessionKey, threadId}` 二元组**；area 仅 `creation \| generation` | `src/workbench/ai/agentSessionKey.ts:3` |
-| 幻影工具 · phantom tool | 后端有 schema、前端未实现的工具（历史问题，已修） | `docs/plan/agent-merge-architecture.md`（⛔ 已过期） |
+| 幻影工具 · phantom tool | 后端有 schema、前端未实现的工具（历史问题，已修） | `docs/archive/plan/agent-merge-architecture.md`（⛔ 已过期） |
 
 ## 生成 / 画布
 
@@ -50,7 +50,7 @@
 | 拆镜头 · 分镜 · storyboard · 镜头表 | **分镜 / storyboard**；产物是 **StoryboardPlan** | `src/workbench/generationCanvas/agent/storyboardPlan.ts` |
 | 锚 · 参考图 · 角色圣经 · 定妆 | **视觉锚 anchor**（character/scene/prop/style），**冻结**=frozen | `electron/shared/agentCapabilities/canvasModelShapes.ts` storyboardAnchorSchema |
 | 镜号 · shot number · 顺序 | **`shotIndex`**（存储身份，拖动不变，排片唯一排序信号） | `src/workbench/generationCanvas/model/shotNumbering.ts` |
-| 手艺产物 · Agent 画的图 · Agent 做的表 | **agent-artifact 节点**（Agent 不调模型、用代码/标记语言直接做出来的表达物：SVG/HTML/Markdown/表格/3D） | `src/workbench/generationCanvas/nodes/artifact/`，方案 `docs/plan/2026-09-06-agent-artifact-node.md` |
+| 手艺产物 · Agent 画的图 · Agent 做的表 | **agent-artifact 节点**（Agent 不调模型、用代码/标记语言直接做出来的表达物：SVG/HTML/Markdown/表格/3D） | `src/workbench/generationCanvas/nodes/artifact/`，方案 `docs/archive/plan/2026-09-06-agent-artifact-node.md` |
 
 ## 生产 / 门禁
 
@@ -114,6 +114,6 @@
 | **粗剪 rough cut** | `2026-06-21-preview-rough-cut-overhaul.md` = **预览区手感**（音量/全屏/redo/trim 气泡） | E2 = **自动生成粗剪** |
 | **gate / 门** | `scripts/check-*.mjs` **代码门岗** | ProductionRun 的**审批闸** |
 | **metadata / meta** | planned node 上叫 `metadata` | 真实 canvas node 上叫 **`meta`**（`applyCanvasToolCall.ts:308` 做的转换） |
-| **transition** | `TimelineTransition` **数据**（已实现） | 转场**渲染效果**（**未实现**，见 `docs/ARCHITECTURE-NOW.md`） |
-| **plans 目录** | `docs/plan/`（397 篇，功能级方案） | `docs/superpowers/plans/`（35 篇，**跨阶段总纲住这**） |
+| **transition** | `TimelineTransition` **数据**（已实现） | 转场**渲染效果**（**未实现**，见 `docs/archive/guides/ARCHITECTURE-NOW.md`） |
+| **plans 目录** | `docs/archive/plan/`（397 篇，功能级方案） | `docs/archive/superpowers/plans/`（35 篇，**跨阶段总纲住这**） |
 | **表格 / table** | **产物表格** = `agent-artifact` 的一个 `fileType`（`ARTIFACT_FILE_TYPES` 里的 `'table'`）：Agent 手写的一段**静态只读 HTML 片段**，落盘成文件、只用来看，没有行模型、不可编辑、不投影任何东西 | **分镜表**（storyboard shot table）= 创作面的**可编辑行编辑器**，行是 StoryboardPlan 的镜头、每行绑模型与参考槽；方案是内容正本，节点派生并可逐字段覆写，行内采纳/丢弃覆写；执行状态从节点投影 |

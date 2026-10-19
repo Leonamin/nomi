@@ -6,7 +6,7 @@
  *   - production generation   (electron/runtime.ts :: buildProfileHttpRequest)
  *   - onboarding test-curl    (electron/ai/onboarding/tools.ts :: execute_test_curl)
  *
- * Why this module exists (Plan B, docs/plan/2026-05-31-unify-request-pipeline.md):
+ * Why this module exists (Plan B, docs/archive/plan/2026-05-31-unify-request-pipeline.md):
  * these two callers used to each carry their OWN template engine, auth-header
  * logic, URL joiner and task-id extractor. They drifted, so a mapping that
  * "passed the wizard test" could still 401/422 in production (the wizard built

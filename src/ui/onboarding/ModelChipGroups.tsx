@@ -1,6 +1,6 @@
 /**
  * 模型 chip 列表（按 kind 分组）。替代旧的「逐行 + 重复状态」清单（密度问题根因）。
- * 规范：docs/plan/2026-06-07-onboarding-panel-redesign.md §5.2
+ * 规范：docs/archive/plan/2026-06-07-onboarding-panel-redesign.md §5.2
  *
  * 2026-07-17 用户需求：chip 可选中/取消（= 模型 enabled 启停）。选中的模型进对应节点的
  * 模型切换列表（节点下拉只取 enabled + 已连通厂商，见 modelCatalogCache），取消的不显示。

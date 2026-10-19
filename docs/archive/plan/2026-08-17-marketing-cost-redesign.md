@@ -108,7 +108,7 @@ H1：`把 AI 视频的成本，打下来。`
 
 ## 实现范围
 
-- 保留 `docs/design/mockups/2026-08-17-nomi-cost-homepage.html` 作为已确认设计依据。
+- 保留 `docs/archive/design/mockups/2026-08-17-nomi-cost-homepage.html` 作为已确认设计依据。
 - 更新 `scripts/marketing/content.mjs`、`template.mjs`、`styles.mjs` 与 `client.mjs`，由现有构建脚本生成正式双语页面。
 - 使用 2026-08-17 从 `origin/main` 最新构建实拍的创作、生成、预览、3D 导演台与自动化设置截图；视频和 Logo 复用正式仓资产。
 - 用户群二维码替换为 2026-08-17 提供的新群码，并在用户群卡片内常驻展示；收尾 CTA 直接定位到群码。

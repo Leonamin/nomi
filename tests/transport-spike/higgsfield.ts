@@ -21,7 +21,7 @@ import { CURATED_ASSET_INGESTION } from "../../electron/catalog/assetIngestionRe
 const USD_CAP = Number(process.env.HIGGSFIELD_USD_CAP || "1.0");
 const KEY = process.env.HIGGSFIELD_API_KEY || "";
 if (!KEY) throw new Error("HIGGSFIELD_API_KEY 未设置");
-const OUT = `${__dirname}/../../docs/evidence/2026-09-17-higgsfield-contract/live/`;
+const OUT = `${__dirname}/../../docs/archive/evidence/2026-09-17-higgsfield-contract/live/`;
 mkdirSync(OUT, { recursive: true });
 
 const redact = (s: string) => s.split(KEY).join("<HIGGSFIELD_KEY>");

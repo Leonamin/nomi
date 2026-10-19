@@ -37,8 +37,8 @@
 
 - **docs 归档**：22 份已 ship 的 plan/audit（v0.7/v0.8/onboarding 系列）移入
   `docs/archive/{v0.7-shipped,v0.8-shipped,onboarding-2026-05}/`；过期 handoff 2 份归档。
-- **双 mockup 目录**：`docs/mockups/`(3) 并入 `docs/design/mockups/`（消除"双目录漂移"）。
-  2026-10-16 路径更新：散落的历史样张现已统一归入 [设计存档](../../design/archive)。
+- **双 mockup 目录**：`docs/mockups/`(3) 并入 `docs/archive/design/mockups/`（消除"双目录漂移"）。
+  2026-10-16 路径更新：散落的历史样张现已统一归入 [设计存档](../design/archive)。
 - **目录命名误导**：`generationCanvas/` → `generationCanvas/`（V1 已不存在，留 V2 后缀让人反复确认"是不是并行版"；改 ~30 import）。**需用户拍**（大范围、纯命名收益）。
 
 ### Tier 3 — 拆巨壳（架构重构，多会话，每项先写 plan 文档，规则 4/9）

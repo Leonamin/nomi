@@ -10,7 +10,7 @@
 | 问题 | 证据 | 结论 |
 |---|---|---|
 | 依赖里已有？ | `electron/productionRun/productionRunIntentLog.ts:1-260`、`electron/productionRun/submissionOutbox.ts:1-240` | 复用现有 intent/outbox/replay，不新造持久化框架 |
-| 仓库里已有？ | `electron/capabilityCore/executionContract.ts:1-120`、`electron/productionRun/productionRunRepository.ts:450-640`、[`docs/audit/2026-08-22-agent-runtime-source-review.md`](../audit/2026-08-22-agent-runtime-source-review.md) | 先盘点已有 owner 和恢复路径，再决定迁移 |
+| 仓库里已有？ | `electron/capabilityCore/executionContract.ts:1-120`、`electron/productionRun/productionRunRepository.ts:450-640`、[`docs/archive/audit/2026-08-22-agent-runtime-source-review.md`](../audit/2026-08-22-agent-runtime-source-review.md) | 先盘点已有 owner 和恢复路径，再决定迁移 |
 | 生态里已有？ | Automerge（https://automerge.org/docs/concepts/）、IETF Idempotency-Key（https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/）、Temporal replay（https://docs.temporal.io/workflows） | 采用稳定身份、幂等和可重放原则；不引入外部运行时服务 |
 | TikHub 自媒体怎么说？ | 这是内部代码、持久化和故障恢复审计，不是竞品或内容策略；本轮没有比源码、协议和故障探针更强的自媒体证据 | 不查，并记录理由，不把缺查伪装成结论 |
 | 结论 | 现有代码锚点和已审查 prior art 足够指导 Phase -1 | 先实扫、再定 owner、最后开工 |
@@ -229,6 +229,6 @@ pilot 通过后，才把同一条 seam 扩到 Agent、MCP、批量和其他模�
 ## 参考
 
 - [`2026-09-26-architecture-single-owner-governance.md`](2026-09-26-architecture-single-owner-governance.md)
-- [`docs/roadmap/TODO.md`](../roadmap/TODO.md) 中的 `T-AG-24` 制作流程 × 画布重复扣费
-- [`docs/audit/2026-09-25-agent-run-canvas-projection-structure-review.md`](../audit/2026-09-25-agent-run-canvas-projection-structure-review.md)
-- [`docs/audit/2026-09-26-generation-derived-facts-two-engines-structure-review.md`](../audit/2026-09-26-generation-derived-facts-two-engines-structure-review.md)
+- [`docs/archive/roadmap/TODO.md`](../roadmap/TODO.md) 中的 `T-AG-24` 制作流程 × 画布重复扣费
+- [`docs/archive/audit/2026-09-25-agent-run-canvas-projection-structure-review.md`](../audit/2026-09-25-agent-run-canvas-projection-structure-review.md)
+- [`docs/archive/audit/2026-09-26-generation-derived-facts-two-engines-structure-review.md`](../audit/2026-09-26-generation-derived-facts-two-engines-structure-review.md)

@@ -9,7 +9,7 @@
 
 ## 先查别人
 
-本方案先对照了仓库已有的批量门岗和分层规则，详见 [`docs/research/2026-09-24-release-efficiency/prior-art.md`](../research/2026-09-24-release-efficiency/prior-art.md)。结论是复用 `run-gates-contracts`、Quality Gate 的 `continue-on-error` + 末尾汇总、`validation-policy` 的风险分档和 workflow 结构门禁；只为桌面 RC 增加五条旅程的 timeout/summary/artifact 约束，不引入第二套编排器。外部 TikHub 未查，因为本次是内部 CI/发布流程问题，不是产品市场调研。
+本方案先对照了仓库已有的批量门岗和分层规则，详见 [`docs/archive/research/2026-09-24-release-efficiency/prior-art.md`](../research/2026-09-24-release-efficiency/prior-art.md)。结论是复用 `run-gates-contracts`、Quality Gate 的 `continue-on-error` + 末尾汇总、`validation-policy` 的风险分档和 workflow 结构门禁；只为桌面 RC 增加五条旅程的 timeout/summary/artifact 约束，不引入第二套编排器。外部 TikHub 未查，因为本次是内部 CI/发布流程问题，不是产品市场调研。
 
 - 仓库已有「全部跑完再汇总」实现：`scripts/run-gates-contracts.mjs:3-12,104-161`。
 - 仓库已有 workflow 的 `continue-on-error`、末尾 outcome 汇总和 fail-closed 判定：`.github/workflows/quality-gate.yml:171-220`。
@@ -60,7 +60,7 @@
 2. 合入后立即 `delivery:verify-merged -- --expected-sha <merge-sha>`，保存 exact SHA 收据。
 3. 以已确认的 `0.22.0` 为目标；在 PR #854 合入后的 exact SHA 上另开版本号与 release notes 变更，形成新的 release candidate source SHA。以该 SHA 运行 desktop RC，workflow `version` 使用 `0.22.0`；不跟随漂移的 `main`。新工作流必须先完成 Clip、Production MCP、MCP suite、elicitation、canvas performance 五条串行旅程，再由 summary 一次判定并上传证据；每条旅程必须有明确 timeout，防止 hang 阻塞后续证据。
 4. RC 全绿后，以 `rc_run_id` + `v0.22.0` tag dispatch desktop release；任一真实阻断则停在 RC，不发包。
-5. 发版后按 `docs/release-process.md` 做直链验收：latest tag、三个安装包直链、官网下载/app update URL、latest yml 必须返回非 HTML；同时保留打包 sandbox `active:true` 证据和 production-release reviewer/结果。
+5. 发版后按 `docs/archive/guides/release-process.md` 做直链验收：latest tag、三个安装包直链、官网下载/app update URL、latest yml 必须返回非 HTML；同时保留打包 sandbox `active:true` 证据和 production-release reviewer/结果。
 
 ## 核心取舍（需要确认）
 

@@ -34,7 +34,7 @@ export type { AgentModelEntry, AgentModelMode, AgentModelSlot } from "../../../.
  * **去重键是 `(vendor, modelKey)`，不是 modelKey**——模型身份的唯一键包含供应商。
  * 2026-08-18 曾按 modelKey 去重（「首家胜出」），后果是两家供应商提供同名模型时身份坍缩：
  * 用户选 APIMart 的 Qwen-Image，请求实际发去 code-newcli-com（2026-09-03 真实付费闭环走查
- * 实测 HTTP 400 阻断，见 docs/plan/2026-09-03-storyboard-entry-vendor-identity.md §1 Bug 3）。
+ * 实测 HTTP 400 阻断，见 docs/archive/plan/2026-09-03-storyboard-entry-vendor-identity.md §1 Bug 3）。
  * image/video 两边真正的重复由 `(vendor, modelKey, kind)` 之外的同源条目负责，不靠丢 vendor 实现。
  */
 export function buildAgentModelEntries(options: readonly ModelOption[]): AgentModelEntry[] {

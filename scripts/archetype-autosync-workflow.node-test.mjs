@@ -1,5 +1,5 @@
 // archetype-autosync 工作流的形状测试：原 check:archetype-defaults 改成自动重新生成后，这条流水线是唯一的补齐主体。
-// 钉的是它的写入面和发布方式（和 docs/fixes/docs-autosync.node-test.mjs 同一套纪律：固定分支、默认 token、不递归、不跳 CI），
+// 钉的是它的写入面和发布方式（和 docs/archive/fixes/docs-autosync.node-test.mjs 同一套纪律：固定分支、默认 token、不递归、不跳 CI），
 // 以及它真的会先重新生成再发布、写入范围只有生成文件。
 import assert from 'node:assert/strict'
 import fs from 'node:fs'

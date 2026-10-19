@@ -42,7 +42,7 @@
 
 - Git官方行为：本机 `git revert` 的 `--no-commit` / `--quit` 与 `git apply --reverse --index`；规范 https://git-scm.com/docs/git-revert 和 https://git-scm.com/docs/git-apply 。
 - 现有迁移owner：electron/agentLane/laneLegacyMigration.mts:20 保存hash、binding、来源和目标；electron/agentLane/laneLegacyFiles.ts:132 提供跨await锁，本次复用。
-- 已批准承接方案：docs/plan/2026-09-08-agent-lane-legacy-removal.md:1、docs/plan/2026-09-08-agent-lane-legacy-migration.md:1；用Git原生命令和原字节归档，不造另一个回滚状态机。
+- 已批准承接方案：docs/archive/plan/2026-09-08-agent-lane-legacy-removal.md:1、docs/archive/plan/2026-09-08-agent-lane-legacy-migration.md:1；用Git原生命令和原字节归档，不造另一个回滚状态机。
 
 ## 结果
 

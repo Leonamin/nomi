@@ -1,0 +1,116 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-19-archive-plans-current-debt",
+  "problem_type": "Archived plan status is mistaken for current fork work",
+  "symptom": "The local delivery ledger and message reminder count324 archived upstream plans as current debt even after physical archive migration.",
+  "direct_cause": "All collected plan roots feed open-status filtering without a current-versus-archive partition.",
+  "class_root": "Historical document status is used as current work identity without checking the owning plan namespace.",
+  "affected_population": [
+    "local ledger rendering",
+    "per-message brief reminders",
+    "generated/check command summaries"
+  ],
+  "scope_paths": [
+    "scripts/build-delivery-ledger.mjs"
+  ],
+  "entry_points": [
+    "LOCAL_ARTIFACTS ledger renderer",
+    "--brief message reminder",
+    "generation and --check summaries"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "This is a repository-owned document and Git hook path, decided by the tracked migration rather than external library behavior.",
+  "invariants": [
+    "Only documents in docs/plan may contribute current fork debt.",
+    "Archived documents remain scanned and indexed with their original status untouched."
+  ],
+  "doors": [
+    {
+      "kind": "read",
+      "path": "scripts/build-delivery-ledger.mjs",
+      "symbol": "OPEN_STATUSES"
+    }
+  ],
+  "door_reduction": {
+    "before": 1,
+    "after": 1
+  },
+  "generality_proof": "All three readers partition through currentPlanDocuments before counting or rendering current debt. A renderer regression mixes live and archived pending plans; CLI brief verifies the actual archive corpus contributes no current task.",
+  "shared_boundaries": [
+    {
+      "path": "scripts/build-delivery-ledger.mjs",
+      "symbol": "currentPlanDocuments",
+      "responsibility": "Partition current fork plan ownership before status-based current-debt decisions."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "scripts/build-delivery-ledger.mjs",
+      "entry_point": "render",
+      "disposition": "enforced",
+      "evidence": "Uses currentPlanDocuments before current debt selection."
+    },
+    {
+      "path": "scripts/build-delivery-ledger.mjs",
+      "entry_point": "brief",
+      "disposition": "enforced",
+      "evidence": "Uses currentPlanDocuments before current debt selection."
+    },
+    {
+      "path": "scripts/build-delivery-ledger.mjs",
+      "entry_point": "main",
+      "disposition": "enforced",
+      "evidence": "Uses currentPlanDocuments before current debt selection."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every archived pending plan can be miscounted by each status-only reader.",
+    "same_class_scan": [
+      "door-map OPEN_STATUSES --roots=scripts --include-tests:494files,one reader file,three status-debt decisions.",
+      "Inspected render,brief and CLI summary paths, as well as collectPlanDocuments historical roots.",
+      "RED regression mixes one current and two archived pending plans; old renderer reports three instead of one."
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "scripts/build-delivery-ledger.mjs",
+    "invariant": "Current debt always partitions by current plan ownership before reading pending statuses.",
+    "failure_mode": "Archive paths cannot enter current task tables or reminders even when their historical status says pending.",
+    "exception_policy": "none",
+    "strategy": "Route renderer,brief and command summaries through currentPlanDocuments; retain full archive corpus for historical indexes.",
+    "artifacts": [
+      "scripts/build-delivery-ledger.mjs"
+    ]
+  },
+  "regression_tests": [
+    "scripts/build-delivery-ledger.node-test.mjs"
+  ],
+  "class_regression_tests": [
+    "scripts/build-delivery-ledger.node-test.mjs"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "scripts/build-delivery-ledger.mjs"
+    ],
+    "rationale": "Replace unpartitioned status selection in each existing entry point with one current-plan partition."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "No dependency upgrade owns this repository filename; existing Node/Git invocation is retained.",
+    "exit_criteria": []
+  },
+  "migration": "Preserve raw archived statuses and indexes; only current work ownership changes. Rebuild the ignored local ledger and brief.",
+  "residual_risks": [
+    "An archived proposal must be explicitly moved back into the current plan namespace to become an active fork task."
+  ],
+  "detected_by": "review",
+  "recurrence_check_on": "2026-10-26",
+  "invariant_owner_layer": {
+    "layer": "scripts/build-delivery-ledger.mjs",
+    "tests": [
+      "scripts/build-delivery-ledger.node-test.mjs"
+    ]
+  }
+}

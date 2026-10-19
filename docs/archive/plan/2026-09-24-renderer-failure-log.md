@@ -75,7 +75,7 @@
 - 动：上表四个文件 + preload + `bridge.ts` 类型 + `crashLog.ts`（删旧注册、`logCrash` 可带字段）+ `main.ts` 一行 + `main.tsx` 装全局捕获 + 54 处迁移 + 相关测试 + eslint 规则 + `check-error-surface.mjs` 把新 owner 认作「诊断出口」+ 诊断包日志条目的说明文字 + `redact.ts` 带空格路径（见上）。
 - 不动：日志文件滚动/保留期、诊断包的收录范围、界面布局；界面文案只动「锁被占时」那一句（见上）。
 - 顺带：`scripts/door-map.mjs` 入口判断在 Windows 上恒不成立（静默零输出），本次要用它出门表，改成 `pathToFileURL`；同族另 7 个脚本已开独立任务。
-  两个错误边界各有一份一字不差的 `reloadRendererWindow`（都 cast window 绕过类型化的桥），合成一份放进 `src/desktop/bridge.ts`（症状簇触发的结构评审 `docs/audit/2026-09-24-src-desktop-ui-structure-review.md`）。
+  两个错误边界各有一份一字不差的 `reloadRendererWindow`（都 cast window 绕过类型化的桥），合成一份放进 `src/desktop/bridge.ts`（症状簇触发的结构评审 `docs/archive/audit/2026-09-24-src-desktop-ui-structure-review.md`）。
   `tests/ux/diagnostics-bundle.walk.mjs` 找的按钮文案「导出诊断包」早已改成「导出诊断」，这条走查一直是红的，顺手改对并实跑通过。
 
 ## 回滚

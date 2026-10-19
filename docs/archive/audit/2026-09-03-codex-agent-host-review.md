@@ -40,7 +40,7 @@ tokens used
 2. 我核对的 `origin/main` 并不能证明打包态 50/50：
 
    - `87bc55c9` 已经在 `origin/main` 的祖先链上。
-   - 但 `origin/main:docs/qa/2026-09-03-m5-graduation-checklist.md:3-18` 仍写着 `agentHostEnabled=false`、打包态 `15/50`，并明确标注 M1 Host 恢复和 M3 真实 Host 未覆盖。
+   - 但 `origin/main:docs/archive/qa/2026-09-03-m5-graduation-checklist.md:3-18` 仍写着 `agentHostEnabled=false`、打包态 `15/50`，并明确标注 M1 Host 恢复和 M3 真实 Host 未覆盖。
    - “复核后 50/50”的文档在分支 `m5/packaged-graduation-c-20260903` 的 `7b67877a`，并未合入当前 `origin/main`。
    - 当前 `check-transport-assembly.mjs` 虽然退出成功，但明确报告 `verifyClientGenerationConfirmation` 仍是 1 条登记欠账。
 
@@ -228,7 +228,7 @@ Nomi：本地优先 AI 视频创作桌面应用（Electron + React + Zustand + V
 
 ## 当前真实状态（2026-09-03，与早前一版评审稿不同，请以此为准）
 
-- **M1–M5 全部落地并合入 main**。可核实的实物：`electron/projectAgentHost/`、`electron/harness/context/promptPipe.ts`、`docs/qa/2026-09-03-m5-graduation-checklist.md`。
+- **M1–M5 全部落地并合入 main**。可核实的实物：`electron/projectAgentHost/`、`electron/harness/context/promptPipe.ts`、`docs/archive/qa/2026-09-03-m5-graduation-checklist.md`。
 - **五门全绿**。早前评审稿提到的三处红灯（约 24 个 `electron/productionRun/` 高风险文件缺根因合同、语义词表 16 条未登记、i18n 脆弱匹配门）**现在全绿**，可自行跑 `node scripts/check-root-cause-contracts.mjs` 等核实。
 - **打包态毕业考通过**：打包应用与开发态跑同一条 MCP L2 全链旅程，**各 50/50 断言通过**，parity 成立（基线 `87bc55c9`）。
 - **`agentHostEnabled` 仍为 false**。这一整套东西**至今没有被任何真实用户碰过**。

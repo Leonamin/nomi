@@ -1,6 +1,6 @@
 # 导演台运镜升级（对标 2026-07-02 推特 AI 导演控制器 demo）
 
-日期：2026-07-03 ｜ 样张：`docs/design/mockups/scene3d-camera-directing-upgrade.html`（已拍板：全都要，含场景模板）
+日期：2026-07-03 ｜ 样张：`docs/archive/design/mockups/scene3d-camera-directing-upgrade.html`（已拍板：全都要，含场景模板）
 
 ## 背后逻辑（D6）
 

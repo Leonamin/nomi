@@ -1,6 +1,6 @@
 /**
  * Nomi adaptation boundary for Vercel AI Elements (Apache-2.0).
- * Source anatomy: docs/research/2026-09-06-ai-elements-anatomy.md.
+ * Source anatomy: docs/archive/research/2026-09-06-ai-elements-anatomy.md.
  * We retain the presentational contracts only; React 18, Tailwind 3 and
  * Mantine stay authoritative in this repository.
  */

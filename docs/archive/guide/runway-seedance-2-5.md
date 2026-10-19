@@ -4,7 +4,7 @@
 > `codex/runway-seedance25-onboarding` 分支，该分支实测**只含文档、没有任何代码改动**且从未合并。
 > 截至打捞时 `electron/providerAdapter/` 与 `electron/vendor/` 下**没有 Runway 一手适配器**，
 > 所以下面描述的是**计划中的**连接，不是当前版本已具备的能力。配套方案见
-> [`docs/plan/2026-08-30-runway-seedance25-onboarding.md`](../plan/2026-08-30-runway-seedance25-onboarding.md)。
+> [`docs/archive/plan/2026-08-30-runway-seedance25-onboarding.md`](../plan/2026-08-30-runway-seedance25-onboarding.md)。
 > 真接入之后请删掉本横幅。
 
 This guide covers the native Runway Dev connection included in the next Nomi release. Nomi sends requests directly to Runway with the API key you enter locally; Nomi does not proxy or resell Runway generation.

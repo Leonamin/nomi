@@ -1,6 +1,6 @@
 # AdCraft vs Nomi 竞品差距分析
 
-> 日期：2026-09-09 · 对象：[GML-MMGroup/AdCraft](https://github.com/GML-MMGroup/AdCraft) · 依据：AdCraft README/仓库结构（2026-09 已开源，1629 commits）+ Nomi `docs/ARCHITECTURE-NOW.md`（2026-08-31 核对基线）
+> 日期：2026-09-09 · 对象：[GML-MMGroup/AdCraft](https://github.com/GML-MMGroup/AdCraft) · 依据：AdCraft README/仓库结构（2026-09 已开源，1629 commits）+ Nomi `docs/archive/guides/ARCHITECTURE-NOW.md`（2026-08-31 核对基线）
 
 ## 一句话定位
 

@@ -39,7 +39,7 @@ const ALLOWLIST = [
   /scripts\/check-no-secrets\.mjs$/, // 本扫描器（含正则定义）
   /scripts\/lib\/feedback\/dump_wechat_key\.py$/, // 取钥脚本（含正则模式，非真 hex）
   /scripts\/welive-setup-mac\.sh$/, // setup 脚本（含路径模式）
-  /docs\/plan\/.*(feedback|radar).*\.md$/i, // 方案文档（讲取钥，含占位示例）
+  /docs\/archive\/plan\/.*(feedback|radar).*\.md$/i, // 方案文档（讲取钥，含占位示例）
   /docs\/.*(security|安全).*\.md$/i, // 本安全系统文档
   /\.gitignore$/,
 ];
@@ -59,7 +59,7 @@ const SECRET_PATTERNS = [
 //
 // 为什么单独一组、且不受 ALLOWLIST 管：
 //   2026-08-25 复盘——一个真实可用的 kie.ai key 从 2026-05-28 起明文躺在
-//   docs/onboarding-trials/fixtures/SECURITY-AUDIT.md:5（本仓库是 PUBLIC 的），门岗两处漏：
+//   docs/archive/onboarding-trials/fixtures/SECURITY-AUDIT.md:5（本仓库是 PUBLIC 的），门岗两处漏：
 //     ① SECRET_PATTERNS 里根本没有 API key 模式（只认微信物）；
 //     ② 就算加了也没用——ALLOWLIST 的 /docs\/.*(security|安全).*\.md$/i 恰好把那份文件整份放行，
 //        而 scan() 里 `if (isAllowed(f)) continue` 是**整体跳过**，路径白名单顺带赦免了内容扫描。
@@ -390,6 +390,20 @@ function gitDiffAdded(args, provenanceBase) {
         ...row,
         text: row.text.replace(PRIVATE_TODO_ID, (id) => inherited.has(id) ? "" : id),
       })));
+    }
+    // A reference-only replacement of an exact trusted base line authors no new ID.
+    // Every other byte (including the ID and claim) must still match that old line.
+    for (const [file, rows] of added) {
+      if (!rows.some((row) => row.text.match(PRIVATE_TODO_ID))) continue;
+      const normalizeArchiveReferences = (line) => line
+        .replace(/docs\/archive\/guides\/(?=[A-Za-z0-9_.-]+\.md\b)/g, "docs/")
+        .replace(/docs\/archive\//g, "docs/");
+      const inheritedLines = new Set(readFromCommit(provenanceBase, file).split("\n")
+        .filter((line) => line.match(PRIVATE_TODO_ID))
+        .map(normalizeArchiveReferences));
+      added.set(file, rows.map((row) => row.text.includes("docs/archive/") && inheritedLines.has(normalizeArchiveReferences(row.text))
+        ? { ...row, text: row.text.replace(PRIVATE_TODO_ID, "") }
+        : row));
     }
     return added;
   } catch {

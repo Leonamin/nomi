@@ -202,7 +202,7 @@
 - [x] **Step 4: Commit the scoped implementation**
 
   ```bash
-  git add docs/superpowers/plans/2026-08-25-canvas-batch-model-picker.md \
+  git add docs/archive/superpowers/plans/2026-08-25-canvas-batch-model-picker.md \
     src/workbench/generationCanvas/components/canvasProductionScope.ts \
     src/workbench/generationCanvas/components/canvasProductionScope.test.ts \
     src/workbench/generationCanvas/components/useCanvasProductionActions.ts \

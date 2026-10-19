@@ -1,6 +1,6 @@
 # Nomi 统一创作运行时与 AI 剪辑工作台实施方案
 
-> 状态：实施基线（2026-08-22）。用户已确认推进；本文件是中文架构与阶段入口，具体逐文件执行步骤见 `docs/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`。本次只先落 P0–P3，后续阶段必须以 PhaseEvidence、六角色评审和对抗评审通过为前提。Codex/Pi 研究只作为 `External E0/E1` 适配附录，不产生第二执行计划或第二事实源。
+> 状态：实施基线（2026-08-22）。用户已确认推进；本文件是中文架构与阶段入口，具体逐文件执行步骤见 `docs/archive/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`。本次只先落 P0–P3，后续阶段必须以 PhaseEvidence、六角色评审和对抗评审通过为前提。Codex/Pi 研究只作为 `External E0/E1` 适配附录，不产生第二执行计划或第二事实源。
 
 ## 1. 目标与不做项
 
@@ -546,7 +546,7 @@ Canvas/Timeline 写入路径。
 ### 4.4 外部 Agent 控制面适配（External E0/E1）
 
 PR 中的 Codex/Pi 源码研究见
-`docs/audit/2026-08-22-agent-runtime-source-review.md`（研究提交
+`docs/archive/audit/2026-08-22-agent-runtime-source-review.md`（研究提交
 `5431c5ddf4d2dc5bdfeb0fc22c4b07f724f7a6fb`）。它只提供协议语义，不授权新增
 Session、Operation、Event 或 Task 数据库；实现时必须先把该提交固定到本地
 research/audit 记录，不能跟随 `main` 漂移。
@@ -920,9 +920,9 @@ type PhaseEvidence = {
 
 ### 保留为决策来源
 
-- `docs/superpowers/specs/2026-08-08-agentic-production-experience-design.md`：Nomi-authoritative、CAS、预算 ledger、outbox、submission_unknown、诚实进度和安全投影。
-- `docs/superpowers/plans/2026-08-20-storyboard-execution-contract-v2.md`：Storyboard IR、canonical hash、field ledger、reference roles、continuity checkpoint；改为通用 envelope 的 payload。
-- `docs/plan/2026-08-09-production-mcp-finalization.md` 与 MCP 对话原生计划：真实 stdio、GUI gate、progress、artifact、restart 和 zero-credit journey。
+- `docs/archive/superpowers/specs/2026-08-08-agentic-production-experience-design.md`：Nomi-authoritative、CAS、预算 ledger、outbox、submission_unknown、诚实进度和安全投影。
+- `docs/archive/superpowers/plans/2026-08-20-storyboard-execution-contract-v2.md`：Storyboard IR、canonical hash、field ledger、reference roles、continuity checkpoint；改为通用 envelope 的 payload。
+- `docs/archive/plan/2026-08-09-production-mcp-finalization.md` 与 MCP 对话原生计划：真实 stdio、GUI gate、progress、artifact、restart 和 zero-credit journey。
 
 ### 明确后置或拆分
 
@@ -935,7 +935,7 @@ type PhaseEvidence = {
 ## 9. 评审与交付流程
 
 1. 本实施基线已由用户确认；中文架构入口是本文件。
-2. 已使用 writing-plans skill 生成 `docs/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`；每个步骤都写精确文件、失败测试、命令、预期输出、commit 和回滚点。
+2. 已使用 writing-plans skill 生成 `docs/archive/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`；每个步骤都写精确文件、失败测试、命令、预期输出、commit 和回滚点。
 3. 实施计划按 P0→P3 先交付第一条闭环；P4–P7 只保留依赖和进入条件，不提前开工。
 4. 每批完成后保存 `PhaseEvidence`、六角色 verdict、对抗报告和截图/媒体证据，用户复核后才进入下一批。
 5. 最终发布前再做一次综合六角色评审、独立对抗评审、真实 MCP host 矩阵和完整 gates；没有证据的“完成”不成立。

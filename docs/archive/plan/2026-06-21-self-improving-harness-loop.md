@@ -85,13 +85,13 @@
 
 ## 2. 现状勘查（带 file:line；骨头已长一半）
 
-Nomi 已有正式 harness 框架 `H = (E, T, C, S, L, V) + Subagents + MCP`（`docs/plan/2026-06-11-nomi-harness-master-plan.md` §0）。本闭环复用其全部地基。
+Nomi 已有正式 harness 框架 `H = (E, T, C, S, L, V) + Subagents + MCP`（`docs/archive/plan/2026-06-11-nomi-harness-master-plan.md` §0）。本闭环复用其全部地基。
 
 ### 2.1 评测体系 = 本方案的雏形 ✅
 - `scripts/eval-run.mjs`：**隔离 Electron 实例跑真 agent** 做 storyboard 任务 → 画布终态落证 → `output.jsonl`（断点续跑）。= 「AI 跑测试」的雏形，**已在无头跑真实 agent**。
 - `scripts/eval-score.mjs`（免费段，可反复重评断言）+ `scripts/eval-diff.mjs`（回归门：pass@k 翻转 / 均分跌即非零退出）。
 - `scripts/eval-judge-calibrate.mjs`：**LLM-judge 必须 P/R≥80% 才采信**——这正是半客观层要用的校准门（§3.2）。
-- [eval-expansion-v2-plan](docs/plan/2026-06-14-eval-system-expansion.md)：四条 lane 已对标 τ-bench/WebArena/VBench/G-Eval。
+- [eval-expansion-v2-plan](docs/archive/plan/2026-06-14-eval-system-expansion.md)：四条 lane 已对标 τ-bench/WebArena/VBench/G-Eval。
 - 成本实账（eval-system-master-plan §0）：单 trial 26–50s / 1.6–2.8万 token；全量 15 case ≈$30–80/月。**→ 一扩量就烧额度，§3.3 必须分层省钱。**
 
 **含义**：本方案不是新造，是把「我手动跑几个 case」**扩成「AI 扮多人格 × 多场景自动跑 + 查/修分离 + 量化仪表盘」**（P1：扩现有，不立并行版）。

@@ -947,6 +947,6 @@
    "src/workbench/ai/v4/useAgentPanelV4Actions.test.ts",
    "src/workbench/ai/projectAgentAttachments.test.ts"
   ],
-  "structural_ticket": "docs/plan/2026-09-19-pi-history-read-side.md"
+  "structural_ticket": "docs/archive/plan/2026-09-19-pi-history-read-side.md"
  }
 }

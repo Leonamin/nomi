@@ -24,7 +24,7 @@
 - 仓库内唯一共享入口：`src/workbench/generationCanvas/nodes/GenerationWaitingSurface.tsx:48`，机器数门两个消费者 `NodeGeneratingOverlay` 与 `NodeImportingOverlay`，无需再造一套。
 - 已安装上游源码：`node_modules/img-fx/dist/index.es.js:1170` 每实例 shader 绘制后复制至 2D canvas；`:1209` 共用 renderer 循环；默认约 10fps。共享 renderer 并不等于多个实例免费，须实测。
 - 已安装上游 API：`node_modules/img-fx/dist/index.d.ts:593` 与 `index.es.js:1219`：没有无 WebGL 的静态格子快照入口，paused 仍需 WebGL 初始化；降级采用纯静态 CSS 纹理，不 fork shader。
-- 原方案：`docs/plan/2026-09-09-process-feedback-imgfx.md`，历史 120FPS 是四动画场景的 UI 帧率，不等于动画帧率，不能据此声称无限节点安全。
+- 原方案：`docs/archive/plan/2026-09-09-process-feedback-imgfx.md`，历史 120FPS 是四动画场景的 UI 帧率，不等于动画帧率，不能据此声称无限节点安全。
 
 ## 修改对应审计与验收
 
@@ -46,7 +46,7 @@
 
 固定4槽位已取消。M5/macOS/硬件Metal renderer，真实Electron画布8/16/32张卡各30秒：120/120/119.9 FPS，帧间隔P95 9.3/9.2/10.1ms，均0长任务；所有可见节点均有动画。四节点结束、离屏、全卸载均验证。每档仅一个样本，不外推低配设备/长期耗电。
 
-旧实现先红：八节点expected8、实际4；静态格子断言收到旧蓝条。修复后27项局部测试通过（后将一个浏览器测试移出unit，保持CI unit无Chromium依赖）；process-feedback视觉27态全部通过，无基线更新。真实队列走供应商loopback，真实图片预览、最终图揭示、zh/en、鼠标平移、动态减弱切换通过；最终遮罩1124.5ms移除。费用0，不冒称真实付费供应商试跑。详细逐改审计与原始证据：`docs/audit/2026-09-20-waiting-grid-review.md`。
+旧实现先红：八节点expected8、实际4；静态格子断言收到旧蓝条。修复后27项局部测试通过（后将一个浏览器测试移出unit，保持CI unit无Chromium依赖）；process-feedback视觉27态全部通过，无基线更新。真实队列走供应商loopback，真实图片预览、最终图揭示、zh/en、鼠标平移、动态减弱切换通过；最终遮罩1124.5ms移除。费用0，不冒称真实付费供应商试跑。详细逐改审计与原始证据：`docs/archive/audit/2026-09-20-waiting-grid-review.md`。
 
 
 ## 全量验收发现的连带修复

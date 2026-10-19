@@ -1,6 +1,6 @@
 /**
  * 只读节点图画布：SVG 连线层 + 绝对定位的节点卡 + 缩放/适应 + 拖动平移。
- * plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+ * plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
  *
  * 这是 onboarding 独立的只读工作流图，不复用生成画布的交互状态或渲染器；它使用 CSS
  * transform + 绝对定位 div + SVG 连线层保持静态拓扑和节点卡对齐：

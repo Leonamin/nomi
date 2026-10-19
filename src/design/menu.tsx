@@ -8,8 +8,8 @@ import { NOMI_OVERLAY_Z_INDEX } from './overlayLayers'
 /**
  * `WorkbenchMenu` —— 全站菜单的**行为内核**（刀 1，2026-09-08）。
  *
- * 为什么买不自研（论证在 `docs/plan/2026-09-07-design-system-component-authority.md` §3.1，
- * 现状清单在 `docs/plan/2026-09-08-menu-primitive-inventory.md`）：全仓 24 个手写菜单里
+ * 为什么买不自研（论证在 `docs/archive/plan/2026-09-07-design-system-component-authority.md` §3.1，
+ * 现状清单在 `docs/archive/plan/2026-09-08-menu-primitive-inventory.md`）：全仓 24 个手写菜单里
  * **处理方向键的是 0 个**、点外关闭缺 2 个、菜单该多高各写各的猜测有 6 处。菜单的难点
  * （roving tabindex / typeahead / 边缘避让 / 关闭时的焦点归还）没有一条和 AI 视频有关，
  * 不在护城河上；而外观必须是 Nomi 的，否则等于引进第二套设计语言。

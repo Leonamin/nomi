@@ -1,5 +1,5 @@
 // GPT Image 2 经 kie.ai 的 curated 传输契约（仿 kieSeedance.ts，单一真相源）。
-// 契约由 2026-06-06 直连实测确认（tests/ux/kie-direct-image2.mjs，docs/workflow/2026-06-06-real-generation-e2e-loop.md）：
+// 契约由 2026-06-06 直连实测确认（tests/ux/kie-direct-image2.mjs，docs/archive/workflow/2026-06-06-real-generation-e2e-loop.md）：
 //   POST /api/v1/jobs/createTask  body = { model, input: { prompt, input_urls?, aspect_ratio } }
 //   - 文生图 model = "gpt-image-2-text-to-image"，input 无 input_urls
 //   - 图生图 model = "gpt-image-2-image-to-image"，input.input_urls = [图 URL...]（**字段名是 input_urls，不是 image_urls**）

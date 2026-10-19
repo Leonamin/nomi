@@ -65,7 +65,7 @@ node scripts/door-map.mjs deconstructVideo --roots=electron,src
 
 ### 1.4 避让（#837 已合那一刀）
 
-先读了 `docs/plan/2026-09-22-shot-cut-truncation.md` 与
+先读了 `docs/archive/plan/2026-09-22-shot-cut-truncation.md` 与
 `docs/fixes/2026-09-22-shot-cut-truncation.root-cause.json`。那一刀的判据是
 **「这批结果给全了没有」必须有跨进程的 owner、且写侧必填」**（`shotCutCoverage`）。
 本次动 `electron/shared/canvas/shotTable.ts` 只加了 `status` 的两个成员，
@@ -103,7 +103,7 @@ footer 的重试钮只认 `failed` / `idle`（不会出现）。三者合起来 
 
 ## 先查别人（本方案第 3 节）
 
-> 完整报告：[`docs/research/2026-09-22-deconstruction-terminal-state/prior-art.md`](../research/2026-09-22-deconstruction-terminal-state/prior-art.md)（四问全查，出处均本次实读）
+> 完整报告：[`docs/archive/research/2026-09-22-deconstruction-terminal-state/prior-art.md`](../research/2026-09-22-deconstruction-terminal-state/prior-art.md)（四问全查，出处均本次实读）
 
 **一句话结论**：这个问题别人全都解过，答案惊人地一致——
 **「还在跑」这句话必须锚在一个「它死了你看得见」的东西上**。

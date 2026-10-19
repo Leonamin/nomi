@@ -7,7 +7,7 @@ import type { CapabilityContract } from "./capabilityContract";
  * file — SKILL.md, whose YAML frontmatter is the only manifest — so this wire
  * envelope carries the markdown and nothing else; the authoritative frontmatter
  * parser lives in electron/skills and is not imported here (that would create a
- * registry cycle).  See docs/plan/2026-09-07-skill-format-convergence.md.
+ * registry cycle).  See docs/archive/plan/2026-09-07-skill-format-convergence.md.
  */
 export const skillWriteSemanticInputSchema = z
   .object({

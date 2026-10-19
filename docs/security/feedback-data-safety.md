@@ -56,7 +56,7 @@ MP4 magic bytes、B站 WBI 测试向量），用两条结构判据分开，**没
 
 ## 如果**明文凭证**泄露了（API key / token）
 
-> 真实案例：一把可用的 kie.ai key 从 2026-05-28 起明文写在 `docs/onboarding-trials/fixtures/SECURITY-AUDIT.md:5`，
+> 真实案例：一把可用的 kie.ai key 从 2026-05-28 起明文写在 `docs/archive/onboarding-trials/fixtures/SECURITY-AUDIT.md:5`，
 > 本仓库是 **PUBLIC** 的，躺了约 3 个月才在 2026-08-25 被发现。当时门岗没拦住的两个原因：
 > ① 根本没有 API key 模式；② 就算有也没用——`ALLOWLIST` 的 `/docs\/.*(security|安全).*\.md$/i` 把整份文件放行了，
 > 而 `scan()` 里 `if (isAllowed(f)) continue` 是**整体跳过**，路径白名单顺带赦免了内容扫描。两处都已修。

@@ -1,5 +1,5 @@
 // ComfyUI 工作流「只读节点图」的视图模型（纯函数，可单测，不碰像素）。
-// plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+// plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
 //
 // 为什么自己算而不引图库：仓库零图库依赖（package.json 实查），生成画布本身就是
 // CSS transform + 绝对定位 div + SVG 连线层自研的；参考项目 Infinite-Canvas 那张图同样没用

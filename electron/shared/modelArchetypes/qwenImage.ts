@@ -1,7 +1,7 @@
 import type { ModelParameterControl } from "../videoCapabilities/types";
 import type { ModelArchetype } from "./types";
 
-// Qwen-Image 2.0（apimart 独占）图像档案。契约见 docs/plan/2026-06-07-apimart-curated-onboarding.md 附录 A。
+// Qwen-Image 2.0（apimart 独占）图像档案。契约见 docs/archive/plan/2026-06-07-apimart-curated-onboarding.md 附录 A。
 // 两模式：文生图 / 改图（image_urls）。params 键 = apimart 字段名（size/resolution）→ mapping body 直通。
 
 const opt = (values: string[]): ModelParameterControl["options"] => values.map((value) => ({ value, label: value }));

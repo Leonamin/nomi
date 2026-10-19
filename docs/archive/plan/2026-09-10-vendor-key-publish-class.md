@@ -9,7 +9,7 @@
 
 ## 先查别人
 
-完整报告：docs/research/2026-09-10-vendor-key-publish-class/prior-art.md（含第一步证据表与边界溯源表）。带出处条目：
+完整报告：docs/archive/research/2026-09-10-vendor-key-publish-class/prior-art.md（含第一步证据表与边界溯源表）。带出处条目：
 
 1. **curated 模型确实逐家验证过**：机器化认证账本 docs/integration-certification/model-certification-ledger.json（66 条 / 7 家，四项证据 static/loopback/failureMatrix/mcpDryRun），门岗 scripts/check-model-certification-coverage.mjs:1-8；早期几家在契约文件里带日期实测注释（electron/catalog/volcengineVendor.ts:2-6 真实 probe 2026-06-19；electron/catalog/modelscopeVendor.ts:3-12 真实 E2E 出图；electron/catalog/replicate.ts:9-14 真生成实测 2026-06-28）。账本里 66 条中 43 条的 `live.blocker` 逐字是「not selected for live canary under the minimum-spend budget」——**blocked = 我们没花钱跑付费 canary，不是契约没通过**。
 2. **`/v1/models` 不是 key 判据（两个方向的反例都在我们自己的证据里）**：假阴性 = apimart 对合法 key 恒 401（electron/vendor/vendorBaseFallback.ts:153 实测注释）；假阳性 = minimax `/v1/models` 回 HTTP 200 但同一 key 的最小生成 canary ECONNRESET（账本 blocker 原文）。生态共识是「列表 + 一次最小真实请求双通过」才算通：https://docs.aifast.hk/en/guides/openai-compatible-api 、https://wpnews.pro/news/openai-compatible-base-url-troubleshooting-7-checks-before-you-blame-the-sdk （均 2026-09-10 查）。对多数内置家「最小真实请求」= 一次付费生成，存 key 时不能替用户花钱 → 只能存 key 即发布 + 待首次使用验证。先例 docs/fixes/2026-09-07-relay-catalog-listing-is-not-liveness.root-cause.json 已判「列表 ≠ 可用」，但只落在雷达脚本，没落到凭据发布路径。
@@ -74,7 +74,7 @@ Settings 卡填 key
 
 任务书原拟「补 curated 行（模型 + mapping）」。对照 `electron/image/decomposeLayers.ts` 的真实调用后改了做法：
 拆解是**多输出**（一次返回 N 张图层 URL），`replicate.ts` 顶注与
-docs/plan/2026-06-28-element-decomposition-feature.md §3.1 都写明它**刻意不套单结果 runtime**，走独立 IPC。
+docs/archive/plan/2026-06-28-element-decomposition-feature.md §3.1 都写明它**刻意不套单结果 runtime**，走独立 IPC。
 编一条没人消费的 mapping 只会让 `qwen-image-layered` 出现在图片模型选择器里、点了就坏——那是拿假发布换体感。
 正解是让种子把这种形态**说出来**（`bespokeExecution: { capability, path }`），发布判据认它。
 这条声明目前只有 replicate 一例，但它是一类形态而非一家特例。

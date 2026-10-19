@@ -12,7 +12,7 @@ import type { ProductionGate, ProductionRun } from "./productionRunTypes";
  * images) but authorizes NO budget — the repository's budget-authorization branch is scoped to
  * `budget_envelope`, so an `anchor_checkpoint` decide never re-authorizes the ledger.
  *
- * ── 冻结/锚的两条轨（P4 S7 收敛注记，docs/plan/2026-08-25-p4-s7-legacy-converge.md §3.2）──
+ * ── 冻结/锚的两条轨（P4 S7 收敛注记，docs/archive/plan/2026-08-25-p4-s7-legacy-converge.md §3.2）──
  * 「形象定了没」在本仓有两条轨，判据同源（都读 anchorBible）、语义不同层：
  *   ① 语义 `anchor_checkpoint` gate（本模块）：Run/Job 概念——锚 **job 出图后** 开 gate，用户过目
  *      全部锚（新生成+复用）→ 决议放行镜头。事实在 Run gate 列表，崩溃/断客户端不丢。语义调度器用它。

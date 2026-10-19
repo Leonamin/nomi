@@ -3,7 +3,7 @@
 > 2026-08-04。用户拍板方向（方案 B + 三时刻呈现 + 试跑 + AI 帮写），授权「全部推进做完」。
 > 调研依据：`research/2026-08-03-custom-api-adapter-landscape.md`（声明式够不到异步视频被三家独立证伪；
 > 行业收敛=内置适配 80% + 代码级逃生口 20%；infinite-canvas 是唯一把口子给到用户的先例，无试跑无 AI 帮写）。
-> 样张：`docs/design/mockups/2026-08-04-custom-call-editor.html`（基于 .custom-call-recon 真机截图布局）。
+> 样张：`docs/archive/design/mockups/2026-08-04-custom-call-editor.html`（基于 .custom-call-recon 真机截图布局）。
 
 ## 0. 一句话
 

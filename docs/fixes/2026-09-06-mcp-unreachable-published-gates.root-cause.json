@@ -25,7 +25,7 @@
     "electron/capabilityCore/appIntegration.ts",
     "electron/capabilityCore/rpcServer.ts",
     "scripts/check-mcp-scope-reachable.mjs",
-    "docs/qa/2026-09-06-agent-mcp-restart-real-user-pass.md",
+    "docs/archive/qa/2026-09-06-agent-mcp-restart-real-user-pass.md",
     "docs/qa/evidence/2026-09-06-mcp-real-host/",
     "docs/fixes/2026-09-06-mcp-unreachable-published-gates.root-cause.json"
   ],
@@ -59,7 +59,7 @@
     "electron/capabilityCore/mcpConfig.test.ts"
   ],
   "residual_risks": [
-    "「真人在真宿主上点同意 → 时间轴改动落地 → 收据」这一段没有在真宿主上验过：`claude -p` 非交互模式下客户端一律回 cancel（trace 见 docs/qa/evidence/2026-09-06-mcp-real-host/claude-code-launcher-after-fix.jsonl）。accept 分支由 mcpTimelineConfirmation.test.ts 钉死，真机交互确认待补。",
+    "「真人在真宿主上点同意 → 时间轴改动落地 → 收据」这一段没有在真宿主上验过：`claude -p` 非交互模式下客户端一律回 cancel（trace 见 docs/archive/qa/evidence/2026-09-06-mcp-real-host/claude-code-launcher-after-fix.jsonl）。accept 分支由 mcpTimelineConfirmation.test.ts 钉死，真机交互确认待补。",
     "外部宿主仍然只能改「GUI 里正打开的那个项目」：src/workbench/timeline/agent/exportToolCall.ts:73 与 timelineCapabilityTarget.ts:221,318 读 getDesktopActiveProjectId() 而不是 lease 的 projectId。该文件族本轮由另一条并行任务持有，未改动，已在 QA 文档 §2.5 按 file:line 交出。",
     "Codex 自动拒 URL 模式是客户端行为（openai/codex#11816），Nomi 侧只能诚实兜底，无法从服务端修好。"
   ],

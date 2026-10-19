@@ -4,8 +4,8 @@
 
 ## 样张
 
-`docs/design/mockups/2026-06-12-project-card-folder-action-v2.html`
-`docs/design/mockups/2026-06-12-project-library-source-distinction.html`
+`docs/archive/design/mockups/2026-06-12-project-card-folder-action-v2.html`
+`docs/archive/design/mockups/2026-06-12-project-library-source-distinction.html`
 
 ## 范围
 

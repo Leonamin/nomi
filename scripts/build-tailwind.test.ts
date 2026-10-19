@@ -27,7 +27,7 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'
 /**
  * 哨兵类名：必须是**只在 `.ts` 里出现**的类。下面的 vacuity 守卫会强制这一点——
  * 一旦它也出现在某个 `.tsx`，本测试就会靠 `.tsx` 那条通过，从此永远绿、什么也测不到
- * （`docs/lessons/vacuous-probe-passes-forever.md`）。
+ * （`docs/archive/lessons/vacuous-probe-passes-forever.md`）。
  */
 const SENTINELS = [
   // src/workbench/generationCanvas/components/groupVisualContract.ts —— 分组框的半透明底

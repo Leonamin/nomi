@@ -2,7 +2,7 @@
 
 日期：2026-09-07 · 基线：`origin/main@6a7c81786`
 性质：**只调研不改码**——一行产品代码未动。含要用户拍板的 2 条（§7）。
-服务对象：[`docs/plan/2026-09-07-agent-runtime-rebuild.md`](../plan/2026-09-07-agent-runtime-rebuild.md)（Agent 运行时重做）与它的
+服务对象：[`docs/archive/plan/2026-09-07-agent-runtime-rebuild.md`](../plan/2026-09-07-agent-runtime-rebuild.md)（Agent 运行时重做）与它的
 [阶段 3–5 深化方案](../plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md) §4.2 验收矩阵。
 
 ---
@@ -290,7 +290,7 @@ temporal consistency / dynamic degree / text-to-video alignment / factual consis
 source ~/.zshenv                 # key 只从环境变量 TIKHUB_API_KEY 读，不进命令行、不写文件
 for slot in kw1 kw2 kw3 kw4; do
   node scripts/research/tikhub-search.mjs --q "<该组关键词>" --platform all --limit 15 \
-    --out docs/research/2026-09-07-agent-self-review-of-generated-shots/tikhub/$slot
+    --out docs/archive/research/2026-09-07-agent-self-review-of-generated-shots/tikhub/$slot
 done
 ```
 
@@ -471,7 +471,7 @@ revise_production_artifact / start_production_run / subscribe_production_run`
 > 取首/中/尾而不是均匀撒点：首帧定构图、尾帧看运动到哪、中帧兜住主体。
 > **两端各内缩 8%**，避开转场帧（切点处常是叠化/黑场，抽到就是一张糊的）。
 
-这条实测（源 `docs/plan/2026-08-13-video-deconstruction-storyboard-table.md`）**直接回答了任务里的第 3 问**：
+这条实测（源 `docs/archive/plan/2026-08-13-video-deconstruction-storyboard-table.md`）**直接回答了任务里的第 3 问**：
 首中尾 3 帧是当前已验证的性价比点，`sampleSecondsForShot(shot, frames = 3)` 就是那个函数，已在
 `electron/video/deconstructVideo.ts:232` 生产使用。
 

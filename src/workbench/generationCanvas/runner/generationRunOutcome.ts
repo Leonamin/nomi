@@ -13,7 +13,7 @@
 //   `generation_approval_unavailable`「this host did not wait for his answer」
 //   **错误形状**回给模型，并进熔断计数。
 //
-// run5 实测：A1 一次、A3 两次，与各自答框的次数**一一对应**（`docs/evidence/2026-09-22-askback-real-model-run5`）。
+// run5 实测：A1 一次、A3 两次，与各自答框的次数**一一对应**（`docs/archive/evidence/2026-09-22-askback-real-model-run5`）。
 // 与 2026-09-22 修掉的「答上了的 `ask_user` 被标成错误」是同一族——用户确实答了，只是
 // 他答的那张卡的结局没有人往回送。
 //

@@ -34,7 +34,7 @@
   ],
   "same_class_entry_points": [
     {
-      "path": "docs/audit/2026-09-06-agent-tool-layer-audit.md",
+      "path": "docs/archive/audit/2026-09-06-agent-tool-layer-audit.md",
       "entry_point": "modelToolSurfaceManifest excerpt",
       "disposition": "enforced",
       "evidence": "Restored ts fence scanned by scanFile -> scanSource; complete manifest signature selects Agent."
@@ -82,7 +82,7 @@
     "status": "removed",
     "removed_paths": [
       "scripts/check-mcp-tool-references-lib.mjs",
-      "docs/audit/2026-09-06-agent-tool-layer-audit.md"
+      "docs/archive/audit/2026-09-06-agent-tool-layer-audit.md"
     ],
     "rationale": "Remove isHostFixture bounded lookbehind and revert the text-fence workaround."
   },

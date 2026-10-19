@@ -80,7 +80,7 @@
 ## 6b. 连接思路最终拍板（2026-06-14 对话）
 - **D1 改判 → A 参考槽**：不跟跨画布连线较劲。镜头节点用既有「参考槽」（`NodeParameterControls.handleSlotAssignment`，可指任意节点、自动建边、显示在镜头上）。角色/场景卡留 cast/scene 库，引用长在镜头上、跨分类 picker 挑。撤 groupCategoryId stopgap（注意：已有平行会话把分类做成「单画布按 activeCategoryId 过滤」E3，需协调）。
 - **自动化（用户要）**：① 分镜方案落画布**自动把镜头的参考槽填上**对应锚（character→character_ref 槽、scene→style_ref 槽），用户不手连；② 生成走依赖序（参考先生成），单节点「生成」也respect（见下）；③ 参考卡生成完 → 依赖它的镜头标「参考就绪/已更新」。**不自动重生成视频**（耗用户额度，除非用户明确要）。
-- **边 bug 调查结论（只读代码）**：① 单节点 `canRunGenerationNode` 其实已对 video 节点要求「参考解析得到 URL 才可生成」(:383)，并非裸跑无门；② 投递路径 `character_ref→referenceImages 超集→buildArchetypeInputParams` 看起来通（:72-78）。⇒ 最可能真因 = **镜头所选视频模式没有 image_ref 槽**（换了模型/模式或默认解析失败），解析出的角色图无槽可投 → 静默丢。此点**读码无法确诊，需真实生成埋点**（vendor HTTP 在主进程，渲染层抓不到——`docs/workflow/2026-06-06-real-generation-e2e-loop.md`）。
+- **边 bug 调查结论（只读代码）**：① 单节点 `canRunGenerationNode` 其实已对 video 节点要求「参考解析得到 URL 才可生成」(:383)，并非裸跑无门；② 投递路径 `character_ref→referenceImages 超集→buildArchetypeInputParams` 看起来通（:72-78）。⇒ 最可能真因 = **镜头所选视频模式没有 image_ref 槽**（换了模型/模式或默认解析失败），解析出的角色图无槽可投 → 静默丢。此点**读码无法确诊，需真实生成埋点**（vendor HTTP 在主进程，渲染层抓不到——`docs/archive/workflow/2026-06-06-real-generation-e2e-loop.md`）。
 - **本轮做**：S2 参考槽自动填 + 就绪信号（安全、无 auto-spend）+ 真实生成埋点确诊投递。修到 file:line 后再补精确修复。
 
 ## 6. 分镜方案找回设计（D4，待样张细化）

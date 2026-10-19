@@ -20,7 +20,7 @@
 - 锁、事件日志、候选目录、备份文件都和用户素材放在同一个 `.nomi/` 里；
 - 保存是整份覆盖（最后写的赢），打开期间不回读磁盘。
 
-2026-09-02 上线的「换电脑继续」（`docs/superpowers/plans/2026-09-01-cross-device-project-continuation.md`）引导用户把项目文件夹放进坚果云、微力同步这类同步工具。这一步**改变了这一层所在的环境**：文件夹变成被第三方程序持续扫描、复制，跨主机共享。可这一层的假设没有随之重审。于是出现了两类问题：
+2026-09-02 上线的「换电脑继续」（`docs/archive/superpowers/plans/2026-09-01-cross-device-project-continuation.md`）引导用户把项目文件夹放进坚果云、微力同步这类同步工具。这一步**改变了这一层所在的环境**：文件夹变成被第三方程序持续扫描、复制，跨主机共享。可这一层的假设没有随之重审。于是出现了两类问题：
 
 1. **Windows 上的共享冲突**：同步工具或杀毒软件打开刚写出的文件，改名或删除就会失败（本次的锁问题）。
 2. **跨主机的状态被一起同步**：锁目录、候选目录、事件日志跟着同步到另一台电脑。另一台电脑看到「别的主机正持有」的锁，就会一直忙下去。缺素材的误判也属于这一类，引用关系被同步工具打乱。
@@ -76,5 +76,5 @@
 
 结构结论：
 
-- 平台这一类：修在最早边界（`createLaneFileSystem`）即可，不需要改 agentLane 的分层；需要补的是 Windows 验证链（`docs/release-process.md` §4 已加「Windows 上 Agent 真能说话」一项；agent-runtime 进 win-gate 等分诊结论）。教训见 `docs/lessons/mac-only-testing-ships-windows-blind.md`。
+- 平台这一类：修在最早边界（`createLaneFileSystem`）即可，不需要改 agentLane 的分层；需要补的是 Windows 验证链（`docs/archive/guides/release-process.md` §4 已加「Windows 上 Agent 真能说话」一项；agent-runtime 进 win-gate 等分诊结论）。教训见 `docs/archive/lessons/mac-only-testing-ships-windows-blind.md`。
 - 前三类：18 份里 17 份指向「重述与第二个家」，这是真正的结构问题，本评审**没有**逐份核对其修复是否已经把重述收成单一来源，也不在本 PR 处理。建议单独做一次 agentLane 结构评审：以 `docs/engineering/concept-owners.json` 为底，列出这一层每个概念的 owner 与所有重述点，看 18 份合同之后还剩几处手抄。

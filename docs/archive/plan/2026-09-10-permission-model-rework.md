@@ -7,11 +7,11 @@
 > ② **完全自主运行**：独立开关、用户自己打开、开启时有提醒；
 > ③ 现有权限模式要**真能对应权限切换**，不是摆设。
 > 参考：pi-permission-system（用户给）+ 顶尖产品调研（下）。
-> 现状审计见 docs/plan/2026-09-10-ux-feedback-triage.md「权限控制全链路审计」。
+> 现状审计见 docs/archive/plan/2026-09-10-ux-feedback-triage.md「权限控制全链路审计」。
 
 ## 先查别人
 
-> 报告全文：`docs/research/2026-09-10-permission-model-rework/prior-art.md`（本节是结论摘要）。
+> 报告全文：`docs/archive/research/2026-09-10-permission-model-rework/prior-art.md`（本节是结论摘要）。
 
 **① 依赖里已有？**
 - 本仓 embed 的 `@earendil-works/pi-agent-core@0.85.1`（`package.json`）**没有权限扩展点**：`node_modules/@earendil-works/pi-agent-core/dist/agent-loop.d.ts:12-21` 的 loop 入口只接 `AgentContext`/`AgentLoopConfig`/`streamFn`，`node_modules/@earendil-works/pi-agent-core/dist/types.d.ts:122` 起的 `AgentLoopConfig` 接口无 permission/approval 字段；对全部 7 个 `.d.ts` 声明文件 `grep -lni permission` 零命中。用户给的 pi-permission-system 是 pi 生态里更上层的**宿主/CLI 扩展**，不随这个库版本进来——判据层必须在我们自己的宿主边界（`laneHost`/`capabilityApprovalPolicy.ts`）自建，不是漏接了依赖自带的东西。
@@ -29,7 +29,7 @@
 - 结论：四家共同结构——规则宿主执行不靠模型自觉、危险/花钱类独立于档位的硬地板、自主/全放行是显式 opt-in。方案 §4.1 矩阵与 Claude Code/Cursor 同构，§4.2 自主开关对齐 Cline YOLO/Claude Code bypass 的「独立 opt-in」共识。
 
 **④ TikHub 自媒体里怎么说？**
-- 未检索。同日期目录 `docs/research/2026-09-10-ux-feedback-fixes/tikhub/tikhub-search.md` 是唯一现成检索产物，但关键词是「openai compatible api key 验证 401 models」（服务 B2 apimart 调研），与权限模型主题不相关，抽查其 80 条结果无一条涉及 agent 权限档位/审批流。本方案未另跑权限主题的 TikHub 检索，如实标注未检索。
+- 未检索。同日期目录 `docs/archive/research/2026-09-10-ux-feedback-fixes/tikhub/tikhub-search.md` 是唯一现成检索产物，但关键词是「openai compatible api key 验证 401 models」（服务 B2 apimart 调研），与权限模型主题不相关，抽查其 80 条结果无一条涉及 agent 权限档位/审批流。本方案未另跑权限主题的 TikHub 检索，如实标注未检索。
 
 **结论**：付费确认闸、判据 owner、UI 组件仓库里都已存在单点实现，方案不新增并行版，只在既有 owner 上升级判据矩阵（§4.1）与接入槽单轨化（§4.3）；自主开关（§4.2）是仓库新概念，但结构对齐 Cline YOLO / Claude Code bypass 两家生态先例；pi-agent-core 库本身不提供权限扩展点，判据层必须自建，这是宿主职责边界所在，不是遗漏。
 
@@ -205,7 +205,7 @@ P1 这一期按「先接进面板，再把改参数之后的行为修对」拆�
 | 段 | 做了什么 | 正本 |
 |---|---|---|
 | P1.1a | 付费确认卡接进 Agent 面板介入槽；**删干净倒计时与一切「空闲到点自动决定」**；confirm→production 端到端夹具 | 本文件下面那一节（P1.1a） |
-| P1.1b | **卡上改完参数之后的那四件事**：即时重报价（同一条算式搬进契约层、渲染层本地重算）、回写只发生在按下「生成」那一刻、全部/逐镜两层覆写、R30 两组数字 | [`docs/plan/2026-09-11-permission-p1-implementation.md` § P1.1b](2026-09-11-permission-p1-implementation.md) |
+| P1.1b | **卡上改完参数之后的那四件事**：即时重报价（同一条算式搬进契约层、渲染层本地重算）、回写只发生在按下「生成」那一刻、全部/逐镜两层覆写、R30 两组数字 | [`docs/archive/plan/2026-09-11-permission-p1-implementation.md` § P1.1b](2026-09-11-permission-p1-implementation.md) |
 
 P1.1b 的三条已知缺口（`×N` 在面板宿主里改不动东西 / 生产提交段那条走查跑不到底 / 正式报价与本地
 估算不一致时只原地换数不出声）记在实施文档的「已知缺口」里，不在这里另记一份。
@@ -262,7 +262,7 @@ P1.1b 的三条已知缺口（`×N` 在面板宿主里改不动东西 / 生产�
 ### P1.1a 已知缺口（实测发现，**本轮不修**，各自需要独立裁决）
 
 1. **非 apimart 的供应商，付费卡按下去必然失败。** `electron/capabilityCore/generationProviderBootstrap.ts` 只把 `apimart` 装成可提交的生成供应商，其余 vendor 一律 `providerReady:false` → 付费卡确认返回「供应商缺少必需能力：configured_provider」。这与「用户接官方端点 / 自建中转」的方向直接冲突，但改它是供应商装配层的结构裁决，不属于本轮两件确定项。走查因此只走到「按下去 → 宿主拒绝」，真正跑起来那一段由上面的 vitest 夹具覆盖（文件头写明了为什么，不假绿）。
-2. ~~**卡上换模型会被 Run 白名单挡下。**~~ **2026-09-12（#748）已修**，做法正是这里预告的那条：那条【已知缺口】测试**翻成了正向断言而不是删掉**（换模型 → 确认 → loopback 供应商收到的 `model` 就是换后那个）。根因不在白名单本身，而在「一道防 agent 偷换身份的闸被真人的选择撞上，判据里却没有『谁按的』这一维」：放行收在只有真人能到达的那条命令（`generation.revise`）上，边界是同一镜同一任务类别，跨类别与 agent 的 `generation.patch` 照旧 fail-closed。方案与验收见 [`docs/plan/2026-09-11-permission-p1-implementation.md` §「卡上换模型不再被冻结的白名单挡下」](2026-09-11-permission-p1-implementation.md)，合同 `docs/fixes/2026-09-12-spend-card-model-swap-blocked.root-cause.json`。
+2. ~~**卡上换模型会被 Run 白名单挡下。**~~ **2026-09-12（#748）已修**，做法正是这里预告的那条：那条【已知缺口】测试**翻成了正向断言而不是删掉**（换模型 → 确认 → loopback 供应商收到的 `model` 就是换后那个）。根因不在白名单本身，而在「一道防 agent 偷换身份的闸被真人的选择撞上，判据里却没有『谁按的』这一维」：放行收在只有真人能到达的那条命令（`generation.revise`）上，边界是同一镜同一任务类别，跨类别与 agent 的 `generation.patch` 照旧 fail-closed。方案与验收见 [`docs/archive/plan/2026-09-11-permission-p1-implementation.md` §「卡上换模型不再被冻结的白名单挡下」](2026-09-11-permission-p1-implementation.md)，合同 `docs/fixes/2026-09-12-spend-card-model-swap-blocked.root-cause.json`。
 
 ### 顺手修掉的一条（属于本轮卡的行为，非缺口）
 

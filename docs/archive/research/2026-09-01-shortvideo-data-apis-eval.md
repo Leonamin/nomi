@@ -108,7 +108,7 @@
 
 ### 4.1 该落成什么形态？→ **`ConnectorDefinition`（P1 复用合同，不新造）**
 
-一手：`docs/plan/2026-08-29-creative-capability-catalog-and-prompt-system.md`（#226，能力目录五合同之一）。其 §5.5 `ConnectorDefinition` 正是为"外部 API/MCP/素材源桥"设计，字段与这两个 API **天然咬合**：
+一手：`docs/archive/plan/2026-08-29-creative-capability-catalog-and-prompt-system.md`（#226，能力目录五合同之一）。其 §5.5 `ConnectorDefinition` 正是为"外部 API/MCP/素材源桥"设计，字段与这两个 API **天然咬合**：
 
 ```ts
 type ConnectorDefinition = CatalogItemSummary & {
@@ -128,7 +128,7 @@ type ConnectorDefinition = CatalogItemSummary & {
 
 ### 4.2 关于任务里点名的 `2026-08-31-agent-material-channels-and-local-endpoints.md`
 
-**该文件名在 origin/main（HEAD `5aab2376`）上不存在。** 最接近的是 `docs/plan/2026-08-31-asset-upload-routing.md`（"资产上传路由与公共中转"）。但**它讲的是"出站"**——把用户本地素材**上传成公网 URL 喂给模型供应商**（KIE/APIMart/fal/Replicate/Runway/RunningHub + 用户 Relay + Nomi 公共 Relay + 匿名链兜底）。**方向相反**：本评估的两家 API 是**入站数据摄取**，不是素材上传。所以**"三通道分工"合同管不到这两个 API**；正确的复用锚点是 §4.1 的 `ConnectorDefinition`。（此点提请复核：任务假设的那份"material-channels/local-endpoints"文档要么未合入、要么改名成了 asset-upload-routing。）
+**该文件名在 origin/main（HEAD `5aab2376`）上不存在。** 最接近的是 `docs/archive/plan/2026-08-31-asset-upload-routing.md`（"资产上传路由与公共中转"）。但**它讲的是"出站"**——把用户本地素材**上传成公网 URL 喂给模型供应商**（KIE/APIMart/fal/Replicate/Runway/RunningHub + 用户 Relay + Nomi 公共 Relay + 匿名链兜底）。**方向相反**：本评估的两家 API 是**入站数据摄取**，不是素材上传。所以**"三通道分工"合同管不到这两个 API**；正确的复用锚点是 §4.1 的 `ConnectorDefinition`。（此点提请复核：任务假设的那份"material-channels/local-endpoints"文档要么未合入、要么改名成了 asset-upload-routing。）
 
 ### 4.3 拆解链路接"链接解析"的最小改动面（一手：`electron/video/deconstructVideo.ts` + `electron/video/extractVideoFrame.ts:47`）
 
@@ -224,5 +224,5 @@ type ConnectorDefinition = CatalogItemSummary & {
 - 轻抖官网/工具页：`https://www.qingdou.vip/pctool/text-extract`（+ `/pctool/api-doc`、`/api` 均重定向登录）
 - 轻抖数据能力（第三方实读）：`https://zhuanlan.zhihu.com/p/340218470`
 - 抖音提文案机制（开源实现，证明 ASR 而非原生字幕）：`https://github.com/yzfly/douyin-mcp-server/blob/main/douyin-video/SKILL.md`
-- Nomi 咬合合同：`docs/plan/2026-08-29-creative-capability-catalog-and-prompt-system.md`（ConnectorDefinition/AssetSourceEvidence）
+- Nomi 咬合合同：`docs/archive/plan/2026-08-29-creative-capability-catalog-and-prompt-system.md`（ConnectorDefinition/AssetSourceEvidence）
 - Nomi 拆解入口：`electron/video/deconstructVideo.ts`、`electron/video/extractVideoFrame.ts:47`（resolveVideoLocalPath 已支持 http 直链）

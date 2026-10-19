@@ -1,7 +1,7 @@
 // Higgsfield（higgsfield.ai）供应商种子 —— 官方端点直连，不经中转。
 //
 // 契约**不是抄文档抄来的**，是 2026-09-17 从服务端校验器一手反推 + 字节级实测的，
-// 逐条证据在 docs/evidence/2026-09-17-higgsfield-contract/（含探针原文）。
+// 逐条证据在 docs/archive/evidence/2026-09-17-higgsfield-contract/（含探针原文）。
 // 反推法：生成端点是 FastAPI/Pydantic 且静默忽略未知字段，所以给字段塞一个类型/枚举
 // 一定错的值——报错=该字段存在且这是它的真实约束，不报错=该字段不存在。
 //

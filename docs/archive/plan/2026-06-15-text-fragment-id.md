@@ -1,8 +1,8 @@
 # 文本三真相源 · 片段 ID 绑定（交接任务② · 方案待拍板）
 
 > 状态：**方案 / 待用户拍板方向**（交接明确：本任务到「plan + 拍板」为止，不改实现）。
-> 出处：`docs/plan/2026-06-14-handoff-tails-popover-textsource.md` 任务②。
-> 前置已拍板：`docs/plan/2026-06-13-storyboard-plan-document-flow.md`（分镜方案 = 结构化字段视图、字段直绑 `StoryboardPlan`、**拒绝「文字→结构」重解析**）。
+> 出处：`docs/archive/plan/2026-06-14-handoff-tails-popover-textsource.md` 任务②。
+> 前置已拍板：`docs/archive/plan/2026-06-13-storyboard-plan-document-flow.md`（分镜方案 = 结构化字段视图、字段直绑 `StoryboardPlan`、**拒绝「文字→结构」重解析**）。
 
 ---
 

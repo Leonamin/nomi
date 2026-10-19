@@ -25,12 +25,12 @@
 - **依赖里已有？** 不适用——本方案不新增任何 npm/pip 依赖或运行时能力，纯技能内容（`skills/` 下的 Markdown），没有依赖面要查。
 - **仓库里已有？** 有，而且覆盖面很大：`skills/writer-novel-digester/SKILL.md:1-3`（原著拆解，分层读取）、`skills/drama-short/SKILL.md`（短剧全流程 stages 编排）、`skills/workbench-storyboard-planner/SKILL.md`（分镜规划师）、`skills/director-shot-translation/SKILL.md:1-3`（模型无关的运镜翻译）、`skills/director-consistency/SKILL.md:1-3`（五维一致性）、`skills/writer-review/SKILL.md:1-3`（导演视角审剧本）、`skills/writer-adaptation/SKILL.md:1-3`（改编策略五步）——§2.5 逐条对照后发现两个候选仓库 90% 的内容 Nomi 已有等价或更强的实现（画布原生 anchor 节点 vs 静态 JSON 文件）。
 - **生态里已有？** 有，`gh search repos`（`stars:">=300"`）交叉验证找到 8 个候选，详见下方 §1 候选表：[`eternityspring/shuohao-skills`](https://github.com/eternityspring/shuohao-skills)（Apache-2.0，3097★）、[`zenstory-ai/drama-skills`](https://github.com/zenstory-ai/drama-skills)（MIT，1654★）、[`calesthio/OpenMontage`](https://github.com/calesthio/OpenMontage)（AGPL-3.0，56493★，license 排除）、[`HKUDS/ViMax`](https://github.com/HKUDS/ViMax)（MIT，12286★，非技能格式，Nomi 已在用它的方法论——`src/workbench/generationCanvas/agent/storyboardPromptCompiler.ts:32-33`）、[`Vincentwei1021/video-shotcraft`](https://github.com/Vincentwei1021/video-shotcraft)（Apache-2.0，7669★，域不对）。官方规范逐条对照见 [`platform.claude.com/.../agent-skills/best-practices`](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)（2026-09-07 实抓，§4.1 表）。
-- **TikHub 自媒体里怎么说？** 192 条实抓（`docs/research/2026-09-07-builtin-skill-library/tikhub/kw1-shortdrama-skill/tikhub-search.md` 等 4 份），多条独立证实 `shuohao-skills` 是「AI 短剧剧本工作流」的主力选择——[X 帖「最近好多朋友问我 AI 短剧剧本的工作流用什么？统一回复：shuohao-skills……14 道质量门脚本自动检查」](https://x.com/servasyy_ai/status/2095764117433061460)，印证了 §0 的判断：卖点是脚本，不是文字。
+- **TikHub 自媒体里怎么说？** 192 条实抓（`docs/archive/research/2026-09-07-builtin-skill-library/tikhub/kw1-shortdrama-skill/tikhub-search.md` 等 4 份），多条独立证实 `shuohao-skills` 是「AI 短剧剧本工作流」的主力选择——[X 帖「最近好多朋友问我 AI 短剧剧本的工作流用什么？统一回复：shuohao-skills……14 道质量门脚本自动检查」](https://x.com/servasyy_ai/status/2095764117433061460)，印证了 §0 的判断：卖点是脚本，不是文字。
 - **结论**：不整体照搬（自研/沿用现有实现），只摘录改写两处真空白/补丁进现有技能库（§3）——理由见 §2.5 的重叠分析与 §0 的架构不兼容判断。
 
 ## 1. 候选表
 
-用 TikHub（48+48+48+48=192 条实抓，见 `docs/research/2026-09-07-builtin-skill-library/tikhub/`）+ `gh search repos`（`stars:">=300"`、近 60 天有提交）交叉找到的候选。**每个都实读了 SKILL.md 原文**（不采信 TikHub 帖子的二手转述，只用它来发现线索）。
+用 TikHub（48+48+48+48=192 条实抓，见 `docs/archive/research/2026-09-07-builtin-skill-library/tikhub/`）+ `gh search repos`（`stars:">=300"`、近 60 天有提交）交叉找到的候选。**每个都实读了 SKILL.md 原文**（不采信 TikHub 帖子的二手转述，只用它来发现线索）。
 
 | # | 仓库 | 许可证 | ★ | 最近提交 | 技能数 | 格式 | 判定 |
 |---|---|---|---|---|---|---|---|
@@ -65,7 +65,7 @@
 
 ### 2.2 MiniMax H3 提示词写法（#1 novel-storyboard/references/h3-prompt.md，51 行）——**这是本轮唯一确认的真空白**
 
-Nomi 已经真实接入 MiniMax H3（`electron/catalog/apimartVideos.ts:190`「`modelKey: "MiniMax-H3"`」，走 APIMart），用户自己拍板的真实环境验收剧本就是「MiniMax H3 1–2 分钟短片」（`docs/lessons/real-env-acceptance-minimax-h3-20260906.md`）。但搜遍 `skills/` `docs/` `src/` `electron/`（关键词 `integrated_multimodal_description`、`H3` 提示词结构）——**Nomi 自己的技能库里没有这份写法**。`director-shot-translation` 是模型无关的通用运镜翻译手册（`skills/director-shot-translation/SKILL.md:1-3`：「翻译成一段能写进 Nomi 视频 shot `prompt` 字段的文字，让 Seedance / 可灵在应用内生成时不跑偏」），没有 H3 专属的 I2VA 多图对齐结构。
+Nomi 已经真实接入 MiniMax H3（`electron/catalog/apimartVideos.ts:190`「`modelKey: "MiniMax-H3"`」，走 APIMart），用户自己拍板的真实环境验收剧本就是「MiniMax H3 1–2 分钟短片」（`docs/archive/lessons/real-env-acceptance-minimax-h3-20260906.md`）。但搜遍 `skills/` `docs/` `src/` `electron/`（关键词 `integrated_multimodal_description`、`H3` 提示词结构）——**Nomi 自己的技能库里没有这份写法**。`director-shot-translation` 是模型无关的通用运镜翻译手册（`skills/director-shot-translation/SKILL.md:1-3`：「翻译成一段能写进 Nomi 视频 shot `prompt` 字段的文字，让 Seedance / 可灵在应用内生成时不跑偏」），没有 H3 专属的 I2VA 多图对齐结构。
 
 h3-prompt.md 讲的是官方 MiniMax-H3 提示词指南的**内化版**（作者原话：「方法论学自 MiniMax-H3 官方提示词指南，内化成本 skill 自带文档」），核心结构：
 
@@ -107,7 +107,7 @@ Nomi 已有 `writer-review`（导演视角审剧本，六维度）。#2 多一�
 | novel-characters / short-drama-assets | `director-consistency`（角色锚点）+ Nomi 的 anchor 节点体系（`PlanAnchorKind = 'character'\|'scene'\|'prop'\|'style'`，`storyboardPlan.ts:22`） | 高——Nomi 的资产管理是**画布原生**的（锚生成参考图、`anchorIds` 引用），比两仓库的「Markdown 文件登记」更强 |
 | novel-art | 同上 | 高 |
 | novel-script | `writer-dialogue`（Mamet）+ `writer-screenwriter` | 中——Nomi 缺的是「按语速折算时长」这类量化方法，见 §2.3 |
-| novel-storyboard（结构部分） | `workbench-storyboard-planner` + `storyboardPlan.ts`/`storyboardPromptCompiler.ts` | 高——Nomi 分镜表本身就是画布节点的表格投影（`docs/lessons/shot-table-is-a-projection-of-canvas-nodes.md`），比两仓库的静态 JSON 更强（可编辑、可重生成、连真实模型） |
+| novel-storyboard（结构部分） | `workbench-storyboard-planner` + `storyboardPlan.ts`/`storyboardPromptCompiler.ts` | 高——Nomi 分镜表本身就是画布节点的表格投影（`docs/archive/lessons/shot-table-is-a-projection-of-canvas-nodes.md`），比两仓库的静态 JSON 更强（可编辑、可重生成、连真实模型） |
 | novel-storyboard（**H3 提示词写法**） | **无** | **零重叠——§2.2 是真空白** |
 | short-drama-novel-analyze（长篇价值快评） | `writer-novel-digester`（分层读取、偷技法） + `writer-adaptation`（改编策略五步：原著解析→戏剧点提炼→结构映射→人物迁移→改编策略） | 高——两个 Nomi 技能合起来已覆盖「怎么拆」+「值不值得拆、怎么改」 |
 | short-drama-review 的「审查独立」纪律 | `writer-review`（缺这条纪律） | 中——§2.4 |
@@ -160,7 +160,7 @@ Nomi 已有 `writer-review`（导演视角审剧本，六维度）。#2 多一�
 |---|---|---|
 | 许可证 | Apache-2.0/MIT 允许直接打包分发，只要保留 NOTICE/署名 | 同样允许，但「拉取」意味着运行时联网访问 GitHub，多一层可用性依赖 |
 | 更新 | 需要 Nomi 发版才能更新技能内容（技能本身是文本，更新成本等同于改一个 md 文件，走正常 PR） | 可以独立于 app 版本更新，但 Nomi 今天**没有任何「检查技能更新」的基础设施**（不像 `radar:models` 那样有确定性脚本） |
-| 离线可用 | ✅ 打包即用，符合 CLAUDE.md「本地优先」 | ❌ 首次启动需联网，且用户本来就可能在隔离环境工作（`docs/lessons/walkthrough-default-profile-is-isolated.md` 印证 Nomi 场景常有离线/隔离需求） |
+| 离线可用 | ✅ 打包即用，符合 CLAUDE.md「本地优先」 | ❌ 首次启动需联网，且用户本来就可能在隔离环境工作（`docs/archive/lessons/walkthrough-default-profile-is-isolated.md` 印证 Nomi 场景常有离线/隔离需求） |
 | 体积 | 本批 5 项：1 个新目录（预估 ≤10KB 纯文本）+ 4 处增强（各 ≤2KB 追加），总增量 <20KB——`du -sh` 实测两个源仓库整个 `skills/` 目录也只有 1.8MB/2.3MB（含截图 assets），纯文本部分更小 | 不适用（本批不需要） |
 | 工程量 | 零新增基础设施——直接进现有 `skills/` 目录，走现有 `getSkillsRoots()` 发现路径 | 需要新建：拉取 UI、版本对账、失败降级、签名校验（防止拉到篡改内容——技能正文会进系统提示词，等同注入风险） |
 
@@ -206,7 +206,7 @@ Nomi 已有 `writer-review`（导演视角审剧本，六维度）。#2 多一�
    - `director-prompt-h3` 是否在合适时机被 `load_skill` 调用（模型自己判断，不是硬编码触发）——这是 R30「工具写对率」的具体化：**第一次调用**是不是调对了技能（而不是调了 `director-shot-translation` 又发现不对再改调）。
    - 生成的视频节点 `prompt` 字段是否含 H3 结构的四段（对齐指令/`integrated_multimodal_description`/`overall_soundscape`/`non_diegetic_music`）——正则或 VLM 判断，不需要新脚本，复用现有 prompt 走查断言模式。
    - `director-shot-translation` 与 `director-prompt-h3` 没有被同时误触发（互斥描述生效的证据）。
-4. 情绪日志（`docs/lessons/experiential-qa-emotion-log.md` 方法论）：这条 H3 提示词模型第一次是不是真的写对了结构，而不是「看起来像但漏了某段」。
+4. 情绪日志（`docs/archive/lessons/experiential-qa-emotion-log.md` 方法论）：这条 H3 提示词模型第一次是不是真的写对了结构，而不是「看起来像但漏了某段」。
 
 ### 7.2 R30 数字口径
 
@@ -218,7 +218,7 @@ Nomi 已有 `writer-review`（导演视角审剧本，六维度）。#2 多一�
 
 ## 8. 与主线的关系
 
-本方案落在阶段3-5 §3.4（技能索引/自动触发机制已定型）**之后**——本批 5 项是往已经设计好的加载路径里加内容，不改机制本身，因此**不依赖**阶段3/4/5 切换完成，可以独立于 Agent 运行时重做主线随时排期，不占用「不抢主线」的并行上限（`docs/lessons/parallelism-cap-six.md`）。**不新增待删旧路**——本方案不涉及"碰不碰待删旧路"（不改 `agentContext.ts` 的 `buildSkillSystemPrompt` 等阶段3-5 正在处理的双语义问题）。
+本方案落在阶段3-5 §3.4（技能索引/自动触发机制已定型）**之后**——本批 5 项是往已经设计好的加载路径里加内容，不改机制本身，因此**不依赖**阶段3/4/5 切换完成，可以独立于 Agent 运行时重做主线随时排期，不占用「不抢主线」的并行上限（`docs/archive/lessons/parallelism-cap-six.md`）。**不新增待删旧路**——本方案不涉及"碰不碰待删旧路"（不改 `agentContext.ts` 的 `buildSkillSystemPrompt` 等阶段3-5 正在处理的双语义问题）。
 
 ---
 
@@ -231,7 +231,7 @@ Nomi 已有 `writer-review`（导演视角审剧本，六维度）。#2 多一�
 | **PM** | 通过，但范围要管住。用户看到的收益是「H3 短片的提示词质量变好、几个经验数字帮着不踩坑」，别在文案里暗示"内置了 shuohao 的全部能力"——90% 的内容我们已经有更强的实现（§2.5），过度宣传会让用户失望地去找"爽点表""质量门"这些没搬的东西。 | 文案禁止提及"质量门""脚本检查"这类没有落地的能力承诺。 |
 | **前端** | 通过。零渲染层改动——`ActiveSkillChip`/技能库面板代码不用碰，5 项都是纯 `SKILL.md` 内容变更。 | 无条件。 |
 | **后端** | 通过。`skillStore.ts`/`skillPackage.ts` 零改动，`check:skills-format` 门岗直接吃新内容（`name===dirName`、顶层键白名单）。 | 新建 `director-prompt-h3` 目录时跑一次 `node scripts/check-skills-format.mjs` 确认过 F1-F4/F6，不能假设"文本改动不会红"。 |
-| **真实用户** | 通过。「Nomi 现在知道怎么给 H3 写提示词了」是能感知的——前提是真的按 §7.1 走查验证过，不是"看起来该会了"。 | 走查必须用真实 H3 模型跑一次（付费验收，`docs/lessons/paid-smoke-apimart-only.md`：走 APIMart），不能只看静态 prompt 文本像不像。 |
+| **真实用户** | 通过。「Nomi 现在知道怎么给 H3 写提示词了」是能感知的——前提是真的按 §7.1 走查验证过，不是"看起来该会了"。 | 走查必须用真实 H3 模型跑一次（付费验收，`docs/archive/lessons/paid-smoke-apimart-only.md`：走 APIMart），不能只看静态 prompt 文本像不像。 |
 
 ---
 

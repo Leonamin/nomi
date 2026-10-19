@@ -243,7 +243,7 @@ export type AssetIngestion =
 
 /** 本地 ComfyUI **第一台**的固定 key（种子 + assetLocalization 识别它走自己的 /upload/image，单源防漂移）。 */
 export const COMFYUI_VENDOR_KEY = "comfyui-local";
-/** 第 2+ 台 ComfyUI 的 key 前缀（`comfyui-local-工作站` 等）。见 docs/plan/2026-08-01-comfyui-multi-instance.md。 */
+/** 第 2+ 台 ComfyUI 的 key 前缀（`comfyui-local-工作站` 等）。见 docs/archive/plan/2026-08-01-comfyui-multi-instance.md。 */
 export const COMFYUI_VENDOR_KEY_PREFIX = `${COMFYUI_VENDOR_KEY}-`;
 
 /**
@@ -686,10 +686,10 @@ export function billingKindForTaskKind(kind: ProfileKind): BillingModelKind {
  */
 /*  v4 给自建中转(relay)的旧图像/视频 op 补「中性参数→线缆字段」翻译表(paramMap)——存量用户已接入的
  *  OpenAI 兼容中转其 op 是迁移前持久化的(读 size 像素却无 paramMap)，档案中性化后比例/清晰度发不出去。
- *  见 docs/plan/2026-06-24-model-param-consistency-invariant.md。 */
+ *  见 docs/archive/plan/2026-06-24-model-param-consistency-invariant.md。 */
 /*  v5 给存量中转 image 条目补图生图能力(image_edit mapping + supportsReferenceImages + 老标准参数升级成
  *  比例/清晰度)。8c711f0c 起新接入才写这些字段，老条目此前只能「删了重加」——迁移根治，见
- *  docs/plan/2026-07-06-i2i-reference-reliability.md（L1）。只碰非内置 vendor + OpenAI 兼容形状。 */
+ *  docs/archive/plan/2026-07-06-i2i-reference-reliability.md（L1）。只碰非内置 vendor + OpenAI 兼容形状。 */
 /*  v6 把 image_edit 从 vendor 级单协议升级为 modelKey 精确协议：Grok Imagine 的 JSON /images/edits
  *  不再误走 Nano Banana 的 /chat/completions；存量目录自动补精确 mapping。 */
 /*  v7 重跑 v6 的协议分流（v6 那次跑在 gpt-image/dall-e-2 接上 multipart edits 之前，存量被留在

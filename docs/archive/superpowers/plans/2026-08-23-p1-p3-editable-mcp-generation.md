@@ -84,14 +84,14 @@ P1/P2/P3 的 fake-provider、零额度、崩溃恢复和真实 MCP/UI 旅程都�
 | `electron/productionRun/productionRun*test.ts` | 新增/修改：binding、WAL、outbox、resume、crash/restart、legacy isolation 测试 |
 | `tests/ux/mcp-generation-single-shot.e2e.mjs` | 新增/修改：真实 Electron stdio + 当前 MCP 客户端用户旅程 |
 | `tests/ux/mcp-generation-single-shot.real-provider.mjs` | 新增：显式 opt-in 的真实 provider smoke；绝不进入零额度 CI |
-| `docs/audit/2026-08-23-p1-p3-evidence.md` | 创建：每阶段用户价值、测试证据、真实旅程截图、决策门记录 |
+| `docs/archive/audit/2026-08-23-p1-p3-evidence.md` | 创建：每阶段用户价值、测试证据、真实旅程截图、决策门记录 |
 
 ## Task 0：基线锁定与计划自检
 
 **Files:**
-- Read: `docs/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md`
-- Read: `docs/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`
-- Create: `docs/superpowers/plans/2026-08-23-p1-p3-editable-mcp-generation.md`
+- Read: `docs/archive/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md`
+- Read: `docs/archive/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`
+- Create: `docs/archive/superpowers/plans/2026-08-23-p1-p3-editable-mcp-generation.md`
 
 - [x] **Step 1: 对账现有 P0 交付**
 
@@ -106,7 +106,7 @@ Expected: 当前为隔离分支 `codex/p0-runtime-foundation-20260822`，工作�
 - [x] **Step 2: 写入本计划并扫描占位词**
 
 ```bash
-rg -n 'T(BD|ODO)|implement[[:space:]]+later|fill[[:space:]]+in[[:space:]]+details|Similar[[:space:]]+to[[:space:]]+Task' docs/superpowers/plans/2026-08-23-p1-p3-editable-mcp-generation.md
+rg -n 'T(BD|ODO)|implement[[:space:]]+later|fill[[:space:]]+in[[:space:]]+details|Similar[[:space:]]+to[[:space:]]+Task' docs/archive/superpowers/plans/2026-08-23-p1-p3-editable-mcp-generation.md
 ```
 
 Expected: no matches。计划中的每个生产改动都有明确文件、失败测试、通过命令和 commit 门。
@@ -114,7 +114,7 @@ Expected: no matches。计划中的每个生产改动都有明确文件、失败
 - [x] **Step 3: 提交计划文档**
 
 ```bash
-git add docs/superpowers/plans/2026-08-23-p1-p3-editable-mcp-generation.md
+git add docs/archive/superpowers/plans/2026-08-23-p1-p3-editable-mcp-generation.md
 git commit -m "docs: plan editable generic MCP generation through P3"
 ```
 
@@ -339,8 +339,8 @@ git commit -m "feat: add durable single-shot runtime submission and recovery"
 **Files:**
 - Modify: `tests/ux/mcp-generation-single-shot.e2e.mjs`
 - Create: `tests/ux/mcp-generation-editability.e2e.mjs`
-- Create: `docs/audit/2026-08-23-p1-p3-evidence.md`
-- Reference: `docs/superpowers/specs/2026-08-23-mcp-client-first-authorization-design.md`
+- Create: `docs/archive/audit/2026-08-23-p1-p3-evidence.md`
+- Reference: `docs/archive/superpowers/specs/2026-08-23-mcp-client-first-authorization-design.md`
 
 - [x] **Step 1: 写可执行的真实用户任务矩阵**
 
@@ -378,15 +378,15 @@ pnpm run gates
 已通过：MCP zero-credit assertions 全绿；fake provider raw submit=1；全量 gates 通过；审计文档已写明测试数量、截图入口、provider/spend 计数、恢复矩阵与剩余决策门。
 
 ```bash
-git add tests/ux docs/audit/2026-08-23-p1-p3-evidence.md
+git add tests/ux docs/archive/audit/2026-08-23-p1-p3-evidence.md
 git commit -m "test: verify editable MCP generation user journeys"
 ```
 
 ## Task 6：阶段复盘、交付与唯一决策点
 
 **Files:**
-- Modify: `docs/audit/2026-08-23-p1-p3-evidence.md`
-- Reference: `docs/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md`
+- Modify: `docs/archive/audit/2026-08-23-p1-p3-evidence.md`
+- Reference: `docs/archive/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md`
 
 - [x] **Step 1: 生成可复核的阶段表**
 

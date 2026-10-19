@@ -49,7 +49,7 @@ export function ConfirmDialogHost(): JSX.Element {
   // （confirmDialog → 本 Host → DesignModal → Mantine Modal）取证「弹层是否真的可见、可点」。
   // 用途见 tests/ux/hosting-consent-dialog.walk.mjs：以素材托管确认卡的真 i18n 文案复现同一棵组件树，
   // 钉死「卡可见/居中/可点、取消后遮罩清干净」（F16 那次「零高不可见」实为量错节点的假警报，
-  // 详见 docs/plan/2026-08-25-f16-hosting-consent-dialog.md）。生产从不置该标志 → 永不暴露，非并行实现。
+  // 详见 docs/archive/plan/2026-08-25-f16-hosting-consent-dialog.md）。生产从不置该标志 → 永不暴露，非并行实现。
   React.useEffect(() => {
     try {
       if (typeof window !== 'undefined' && window.localStorage?.getItem('__nomiE2E') === '1') {

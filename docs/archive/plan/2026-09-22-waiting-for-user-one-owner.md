@@ -302,12 +302,12 @@ D5 真正补上的是**结局**那一格：渲染层此前对确认和取消一�
    看卡 >90 秒再确认仍成功 / 文稿方案 generate 端到端成功 / 待决时打字两种卡各一条）+ `mcp-l2-journeys` + `elicitation-first`；
    run4 = 同 18 句全量跑到、走查像真人一样答卡。
    **✅ 2026-09-22 记账**：spend 七条 + `mcp-l2-journeys` + `elicitation-first` 全绿
-   （证据 `docs/evidence/2026-09-22-spend-walkthrough-sweep-d4/`）；「× 后一整个回合节点数不变」与
+   （证据 `docs/archive/evidence/2026-09-22-spend-walkthrough-sweep-d4/`）；「× 后一整个回合节点数不变」与
    「同一份草稿重新出价」由 `agent-spend-card.walk.mjs` + 范围旅程钉住；「重启后出价作废、计划留着」与
    「同回合再 generate 不多扣」由 `agent-spend-waiting-owner.walk.mjs` 钉住；「待决时打字」由
    `agent-gate-typing-answers.walk.mjs` 钉住；**「文稿方案 generate 端到端成功」由 D5 新增的
    `agent-storyboard-generate-confirm.walk.mjs` 钉住**（取消 → 回包 declined、零供应商请求、节点一个不动；
    确认 → 回包 started、loopback 真的出了两张图、两次审片跟上）。run4 / run5 见
-   `docs/evidence/2026-09-22-askback-real-model-run{4,5}/`。
+   `docs/archive/evidence/2026-09-22-askback-real-model-run{4,5}/`。
 
 回滚：每步一个 commit；2 与 3 各自可独立 `git revert`（3 不依赖 2 的 waiter）。

@@ -2,7 +2,7 @@
  * [INPUT]: 无依赖（纯数据 + 纯函数）
  * [OUTPUT]: 对外提供 DirectorHotkeyId / DIRECTOR_HOTKEYS（默认键位单一真相）/ matchesHotkey / formatHotkey
  * [POS]: director/model 的快捷键表：视口、时间轴、全局三个作用域；帮助对话框、注册器、tooltip 都从这里读，
- *        键位固定（app 级自定义不在导演台页面范围内，见 docs/plan/2026-09-02-director-console-v2.md §0.1）。
+ *        键位固定（app 级自定义不在导演台页面范围内，见 docs/archive/plan/2026-09-02-director-console-v2.md §0.1）。
  *        「meta」在 macOS 是 ⌘、其它平台是 Ctrl；额外的另一平台修饰键不得命中无修饰动作。
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */

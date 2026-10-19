@@ -10,7 +10,7 @@
  *     于是 `{"duration": "5"}` 这一个输入在两条路径上得到两个不同的答案（一条静默回落默认、
  *     一条报 `param.value`）。
  *
- * 现在的分工（写清楚谁是 owner，见 `docs/plan/2026-09-07-generation-strategy-resolver.md`）：
+ * 现在的分工（写清楚谁是 owner，见 `docs/archive/plan/2026-09-07-generation-strategy-resolver.md`）：
  *   - **合法性判定**（值在不在允许集合内、范围内）只有这里一份 → `isParamValueAllowed`；
  *   - **不合法之后怎么办**是各调用方的策略，故意不同、各自注释：
  *       · `plannedNodeMeta` 丢弃并回落档案默认（落节点时不能把非法值写进持久化 meta）；

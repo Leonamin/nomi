@@ -1,4 +1,4 @@
-// 能力核 · 本地 RPC 传输（见 docs/plan/2026-06-20-capability-core-headless-exposure.md §S4）。
+// 能力核 · 本地 RPC 传输（见 docs/archive/plan/2026-06-20-capability-core-headless-exposure.md §S4）。
 //
 // 一个最小 JSON-over-HTTP server，只监听 127.0.0.1（绝不开公网，S6 安全门之一），token 鉴权
 // （Authorization: Bearer <token>，常数时间校验）。所有传输（CLI / MCP）都打它，路由到能力核。

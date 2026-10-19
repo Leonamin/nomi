@@ -1,6 +1,6 @@
 import { readAgentApprovalPolicy } from '../settings/agentApprovalPolicySettings'
 import { spendReferenceKey } from "../shared/contracts/pendingSpendConfirm";
-// 能力核 · app 集成（见 docs/plan/2026-06-20-capability-core-headless-exposure.md §S4）。
+// 能力核 · app 集成（见 docs/archive/plan/2026-06-20-capability-core-headless-exposure.md §S4）。
 //
 // 把 RPC server + token + 实例广告接到运行中的 Nomi app：启动时拉起 RPC（127.0.0.1）、ensureToken、
 // 写实例广告让外部 CLI/MCP 探测得到「app 开着」；退出时清广告 + 关 server。

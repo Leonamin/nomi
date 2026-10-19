@@ -45,7 +45,7 @@
 - R5.3 的三问，方向对。
 - R17：门岗红了不抬基线。
 - L0 hook 只在命中设计关键词时才注入。
-- 有教训记录（violations.log、docs/lessons）。
+- 有教训记录（violations.log、docs/archive/lessons）。
 
 **做反了或做过头的**：
 - CLAUDE.md 约 30 KB，远超官方建议的体量。只在特定场景才用到的内容很多：R5.4 / R5.5 的细节、控件层级、画新面三件产物、Ponytail 流程、命令大表、雷达、多会话统御。

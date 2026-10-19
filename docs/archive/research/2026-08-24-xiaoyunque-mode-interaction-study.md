@@ -1,6 +1,6 @@
 # 小云雀官方产品手册精读：模式 × 交互差异（2026-08-24）
 
-> 归档说明：用户提供一手文档（bytedance.larkoffice.com/wiki/PxZgwJwxti0dutk6WIdcwRA6nTd，2026-08-20 修改版）+ 其链出的 6 份子手册，Playwright 真实打开逐页抓全；按用户指令**未采信更新日志/公告**。校准结论已并入 `docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md`。
+> 归档说明：用户提供一手文档（bytedance.larkoffice.com/wiki/PxZgwJwxti0dutk6WIdcwRA6nTd，2026-08-20 修改版）+ 其链出的 6 份子手册，Playwright 真实打开逐页抓全；按用户指令**未采信更新日志/公告**。校准结论已并入 `docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md`。
 
 ## 模式清单与入口
 

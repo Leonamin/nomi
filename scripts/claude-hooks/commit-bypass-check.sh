@@ -8,7 +8,7 @@
 #     跳过它 = 敏感数据直接落进 git 历史，**永久**，push 之后就洗不掉了。
 #   · push 阶段有合法的并线场景（远落后分支的大 diff 与服务端并线），
 #     所以那边是 pre-push-check.sh 留痕 + check:push-bypass 审计，不是拒绝。
-#   详见 docs/lessons/commit-bypass-must-be-blocked-not-audited.md。
+#   详见 docs/archive/lessons/commit-bypass-must-be-blocked-not-audited.md。
 #
 # 起因（2026-09-06 实测）：同一天两个子 agent 各自「习惯性」写出
 # `git -c core.hooksPath=.git/hooks commit ...`——等于把版本化 pre-commit 换成了空目录。

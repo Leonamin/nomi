@@ -142,7 +142,7 @@ export function resolvePollBudget(kind: TaskKind, vendor: string): { softMs: num
  * 轮询**间隔**(ms)：慢道 3s、快道 1.5s。分档判据复用 isSlowLaneBackend，不另立第二套。
  *
  * 3s 不是拍脑袋：厂商文档明写「将任务查询间隔分散到 3 至 5 秒以上，避免所有任务在同一时刻轮询」
- * （2026-07-31 Seedance 2.0 交付文档 §5.1，见 docs/plan/2026-07-31-seedance-api-contract-reconciliation.md）。
+ * （2026-07-31 Seedance 2.0 交付文档 §5.1，见 docs/archive/plan/2026-07-31-seedance-api-contract-reconciliation.md）。
  * 只放慢慢道：视频/本地后端本身就是分钟级，1.5s→3s 用户零感知；云图像是秒级返回的，
  * 拉长立刻被察觉成「慢了」。对所有 vendor 生效——礼貌轮询不是给某一家开的小灶。
  *

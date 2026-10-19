@@ -2,7 +2,7 @@
 
 本目录收纳 2026 年 5 月期间产出、**对应工作已落地到 v0.4.x / v0.5.x** 的规划/调研/设计文档。
 
-原始文件保留不动，作为决策历史。如果以后再回头查"当初为什么这么做"，从这里翻 git blame 比从 `docs/product/` 翻活跃文档干净。
+原始文件保留不动，作为决策历史。如果以后再回头查"当初为什么这么做"，从这里翻 git blame 比从 `docs/archive/product/` 翻活跃文档干净。
 
 ---
 
@@ -39,6 +39,6 @@
 
 ## 仍在执行的活跃文档（不在此目录）
 
-- `docs/product/nomi-video-export-prd-2026-05-23.md`
+- `docs/archive/product/nomi-video-export-prd-2026-05-23.md`
 - `docs/architecture/nomi-production-video-export-architecture-2026-05-24.md`
-- `docs/plans/2026-05-24-production-video-export-execution-plan.md`
+- `docs/archive/plans/2026-05-24-production-video-export-execution-plan.md`

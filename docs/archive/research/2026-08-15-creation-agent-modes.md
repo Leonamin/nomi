@@ -38,7 +38,7 @@
 - `src/workbench/creation/CreationAiPanel.tsx:495`：顶部只渲染 `ActiveSkillChip`。
 - `src/workbench/creation/CreationAiPanel.tsx:718`：composer 注释明确写着内部模式不再占下拉。
 - `src/workbench/ai/ActiveSkillChip.tsx:95`：同一 popover 混合自动、素材规划、系统提示词、playbook 和技能作者。
-- `docs/superpowers/specs/2026-08-13-ux-clarity-and-discoverability-design.md:13`：上一次删除七项下拉的根因，是把系统提示词和任务伪装成模式。
+- `docs/archive/superpowers/specs/2026-08-13-ux-clarity-and-discoverability-design.md:13`：上一次删除七项下拉的根因，是把系统提示词和任务伪装成模式。
 
 因此这次不能简单把旧下拉加回来。要重新定义“什么才配叫模式”。
 
@@ -206,7 +206,7 @@ V1 的“剧本可拍性”也只能是规则化建议，不能冒充预算、�
 
 模式是 L1 发送状态，选择器始终显示当前值，顺序固定为“附件、模型、模式”。模式菜单向上展开，避免被窗口底部裁切。300px 下模型与模式使用短标签并各自截断，发送按钮始终保留。技能是 L3 二级入口，在 header 保留一个带 tooltip 的图标按钮；手动激活后用强调底色和状态区文字同时显示具体技能名，不能只靠颜色或一个不明亮点表达。
 
-交互样张：`docs/design/mockups/2026-08-15-creation-agent-modes.html`
+交互样张：`docs/archive/design/mockups/2026-08-15-creation-agent-modes.html`
 
 ## 7. Interaction contract
 

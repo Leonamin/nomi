@@ -1,4 +1,4 @@
-// 能力核 · 审片环编排（W1 · 方案 docs/plan/2026-08-19-w1-shot-verify-wiring.md §3/§6）。
+// 能力核 · 审片环编排（W1 · 方案 docs/archive/plan/2026-08-19-w1-shot-verify-wiring.md §3/§6）。
 //
 // 单镜生成成功后跑一次「审片环」：判分 → 不过 → 定向重试（复用首发 grantId + 同 nodeId，K≤2）→
 // 仍不过 → 红标交付。**纯编排、DI 可裸测**——judge / extractFrame / regenerate / visionAvailable 全注入，

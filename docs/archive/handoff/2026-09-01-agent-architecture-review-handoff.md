@@ -106,32 +106,32 @@ MCP / GUI / Renderer（只做 transport 和 projection）
 
 ### A. 现状与根因
 
-1. `docs/research/2026-09-01-pr223-agent-architecture-iteration.md`
-2. `docs/research/2026-09-01-pr223-tool-surface-design-audit.md`
-3. `docs/research/2026-09-01-agent-architecture-root-cause-synthesis.md`
-4. `docs/research/2026-09-01-agent-architecture-solution-and-execution-plan.md`
+1. `docs/archive/research/2026-09-01-pr223-agent-architecture-iteration.md`
+2. `docs/archive/research/2026-09-01-pr223-tool-surface-design-audit.md`
+3. `docs/archive/research/2026-09-01-agent-architecture-root-cause-synthesis.md`
+4. `docs/archive/research/2026-09-01-agent-architecture-solution-and-execution-plan.md`
 
 ### B. 最新外部研究
 
-5. `docs/research/2026-09-01-agent-evaluation-and-test-research.md`
+5. `docs/archive/research/2026-09-01-agent-evaluation-and-test-research.md`
 
 该报告包含截至 2026-09-01 的 Anthropic Claude Code/Tool Search/Context/Managed Agents、OpenAI Codex App Server/Agents SDK/Deployment Simulation、Pi、Hermes、OpenHands、LangGraph，以及近六个月的 context、compaction、planning、sandbox 和 trajectory safety 论文。外部数字只能作为设计启发，不能直接当 Nomi 验收值。
 
 ### C. 内部 canonical 文档
 
-6. `docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md`
-7. `docs/superpowers/specs/2026-08-22-unified-runtime-mcp-generation-design.md`
-8. `docs/superpowers/specs/2026-08-23-mcp-client-first-authorization-design.md`
+6. `docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md`
+7. `docs/archive/superpowers/specs/2026-08-22-unified-runtime-mcp-generation-design.md`
+8. `docs/archive/superpowers/specs/2026-08-23-mcp-client-first-authorization-design.md`
 9. `docs/handoff/2026-08-24-semantic-single-shot-p1-p3-handoff.md`
-10. `docs/research/2026-08-24-agent-harness-survey.md`
-11. `docs/research/2026-08-24-video-agent-architecture-survey.md`
+10. `docs/archive/research/2026-08-24-agent-harness-survey.md`
+11. `docs/archive/research/2026-08-24-video-agent-architecture-survey.md`
 12. `docs/guide/agent-runtime-source-reading-and-adaptation.md`
 
-这些文档包含已拍板边界：Transport/projection 不是事实源、MCP/GUI 共用同一合同、一次确认、预算/receipt/WAL/outbox/reconcile、Skill evidence、视频连续性和受控 Pi 迁移。若最新代码与旧方案冲突，以 `docs/ARCHITECTURE-NOW.md` 与当前代码为现状，以用户已拍板文档为方向，指出漂移而不是默默选择一方。
+这些文档包含已拍板边界：Transport/projection 不是事实源、MCP/GUI 共用同一合同、一次确认、预算/receipt/WAL/outbox/reconcile、Skill evidence、视频连续性和受控 Pi 迁移。若最新代码与旧方案冲突，以 `docs/archive/guides/ARCHITECTURE-NOW.md` 与当前代码为现状，以用户已拍板文档为方向，指出漂移而不是默默选择一方。
 
 ### D. 当前测试代码与基础设施
 
-13. `docs/superpowers/plans/2026-09-01-agent-architecture-test-system.md`
+13. `docs/archive/superpowers/plans/2026-09-01-agent-architecture-test-system.md`
 14. `tests/agent-system/schema.mts`
 15. `tests/agent-system/schema.node-test.mts`
 16. `tests/agent-runtime/*.test.mts`

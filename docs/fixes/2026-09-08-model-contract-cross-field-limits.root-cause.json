@@ -129,6 +129,6 @@
     "tests": [
       "electron/shared/videoCapabilities/crossFieldConstraints.test.ts"
     ],
-    "structural_ticket": "docs/plan/2026-09-08-model-contract-cross-field-limits.md"
+    "structural_ticket": "docs/archive/plan/2026-09-08-model-contract-cross-field-limits.md"
   }
 }

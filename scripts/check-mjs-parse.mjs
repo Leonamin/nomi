@@ -3,7 +3,7 @@
 //
 // 抓的是一类**零报错地合进 main** 的失效：这三片地**没有任何一道现有门看得见**——
 //   · `pnpm run typecheck` 只编 .ts（三份 tsconfig 都不含 .mjs/.cjs）；
-//   · `check:test-types` 走 tsconfig.test.json，同样只管 .ts（见 docs/lessons/tests-are-not-typechecked.md）；
+//   · `check:test-types` 走 tsconfig.test.json，同样只管 .ts（见 docs/archive/lessons/tests-are-not-typechecked.md）；
 //   · `eslint.config.mjs` 的 ignores 里明写着 'tests/ux/**'、'evals/**'、'scripts/**/*'
 //     （实测：`pnpm exec eslint tests/ux/mcp-l1-handshake.e2e.mjs` 回 "File ignored…"、exit 0）。
 // 于是一个 SyntaxError 能一路绿灯合进 main，直到有人**手动跑**那条走查才炸。

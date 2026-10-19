@@ -2,7 +2,7 @@
  * 数据 connector 桥口类型。只从中立契约层 electron/shared/contracts/ 取类型
  * （renderer+main 都可合法 import 的层，见 .dependency-cruiser.mjs 豁免；不碰 electron 实现目录）。
  * v1 只有 TikHub：分享链接 → 无水印直链 → 落项目素材/喂拆解。
- * 形态与语义见 docs/plan/2026-09-01-tikhub-connector-v1.md。
+ * 形态与语义见 docs/archive/plan/2026-09-01-tikhub-connector-v1.md。
  */
 import type { ApiKeyDecryptStatus } from '../../electron/shared/contracts/apiKeyStatus'
 import type { TikhubRouteMode } from '../../electron/shared/contracts/tikhubRoute'

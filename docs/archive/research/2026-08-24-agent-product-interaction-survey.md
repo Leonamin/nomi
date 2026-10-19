@@ -1,6 +1,6 @@
 # 产品侧 Agent 交互模式对标（2026-08-24）
 
-> 归档说明：为 Nomi 内部 agent 模式收集的产品交互对标（MiniMax/海螺、小云雀、TapNow、LibTV、可灵、星流/Lovart），WebSearch/WebFetch 官方页优先，口碑取自横评/评测/issues。采纳决定见 `docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md`。
+> 归档说明：为 Nomi 内部 agent 模式收集的产品交互对标（MiniMax/海螺、小云雀、TapNow、LibTV、可灵、星流/Lovart），WebSearch/WebFetch 官方页优先，口碑取自横评/评测/issues。采纳决定见 `docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md`。
 
 ## 1. MiniMax Agent + 海螺 Media Agent
 MiniMax Agent（agent.minimax.io，2.0 桌面端）：纯聊天流+独立产物空间（设计/网页落外链或工作区文件，**无统一画布**）；模式分档 Lightning 快答 vs Pro 深做 vs 专家模式（注入私有流程做垂类分身）；按任务事后扣积分，**无生成前逐项报价**。口碑：网页/PPT 强，视频链路弱。**海螺 Media Agent**（hailuoai.com/agent）：视频专用，官方明确「成片链路任一 Part 都可在**画布**中与 Agent 调整细节，对话即创作」——MiniMax 自己把视频 agent 收敛到对话+画布双面。

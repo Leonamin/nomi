@@ -5,7 +5,7 @@
 > 已如实记在「验收门」表一并转给 owner（S5 + 命令式位移）。
 
 > 上游调研（数字、根因、别人怎么做、验收预算都在那里）：
-> [docs/research/2026-09-12-canvas-perf-at-scale/README.md](../research/2026-09-12-canvas-perf-at-scale/README.md)
+> [docs/archive/research/2026-09-12-canvas-perf-at-scale/README.md](../research/2026-09-12-canvas-perf-at-scale/README.md)
 > 本文件只写「这一刀做什么、不做什么、怎么回滚、凭什么算做完」。
 
 ## 用户报的是什么
@@ -36,7 +36,7 @@
 - `src/workbench/generationCanvas/store/canvasNodeProjection.ts:1` —— **仓库里已经有**同形状的实现可以照抄，
   不用新发明：它就是「按 `state.nodes` 数组引用 memo 的模块级派生视图」，2026-09-01 那场性能战役为
   off-canvas 订阅建的。本刀的 `canvasNodeGenerationIndex.ts` 是同一个 idiom 的第二个消费者，不是第二套机制。
-- `docs/research/2026-09-12-canvas-perf-at-scale/README.md:517` —— 调研 §4 的完整对照表（另含 Konva 的
+- `docs/archive/research/2026-09-12-canvas-perf-at-scale/README.md:517` —— 调研 §4 的完整对照表（另含 Konva 的
   「拖动期换一层」、fabric.js 的 `ActiveSelection`、Figma 的自有场景图），四个生态收敛到同一条：
   多选拖动是一份草稿对着一个变换，没有一个把「每帧写 N 个权威位置」当可接受做法。
 
@@ -158,4 +158,4 @@ S6 是这一刀里**确实兑现的那一半**：三档最长帧全部达到或�
 ### 真机走查（R13/P3）
 
 150 节点画布、真按钮「适应视图」、`Cmd+A` 全选、真鼠标拖一次，截图留
-`docs/evidence/2026-09-12-canvas-perf-s3-s6/`，人眼看一遍（不是 `expect` 断言）。
+`docs/archive/evidence/2026-09-12-canvas-perf-s3-s6/`，人眼看一遍（不是 `expect` 断言）。

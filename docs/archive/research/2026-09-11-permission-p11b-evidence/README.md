@@ -1,7 +1,7 @@
 # P1.1b 证据包（2026-09-11）
 
 付费确认卡「改完参数之后的那四件事」这一轮的**原始证据**。方案与裁决理由在
-[`docs/plan/2026-09-11-permission-p1-implementation.md` § P1.1b](../../plan/2026-09-11-permission-p1-implementation.md)，
+[`docs/archive/plan/2026-09-11-permission-p1-implementation.md` § P1.1b](../../plan/2026-09-11-permission-p1-implementation.md)，
 这里只放跑出来的东西，方便下一个人不重跑就能对账。
 
 ## R13 走查 · 三个时刻（`tests/ux/agent-spend-reprice.walk.mjs`，零额度）

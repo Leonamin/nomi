@@ -4,8 +4,8 @@
 > 查现存技术债 + 想清楚之后的迭代方向"。
 > 方法：6 个专项 subagent 并行深审真实代码——技术栈 / 语言与类型 / Agent 系统 / 架构模块化 /
 > 测试质量基建 / 产品迭代方向。本文交叉汇总（多维独立命中 = 最强信号）。
-> 关联前序：`docs/audit/2026-06-04-full-codebase-review-6role.md`（6 角色）、
-> `docs/plan/2026-06-04-runtime-split-execution.md`（runtime 拆分）、`docs/qa/2026-06-04-ux-walkthrough.md`（走查）。
+> 关联前序：`docs/archive/audit/2026-06-04-full-codebase-review-6role.md`（6 角色）、
+> `docs/archive/plan/2026-06-04-runtime-split-execution.md`（runtime 拆分）、`docs/archive/qa/2026-06-04-ux-walkthrough.md`（走查）。
 
 ## 六维健康度评分
 

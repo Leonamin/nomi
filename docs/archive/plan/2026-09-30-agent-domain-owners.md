@@ -2,7 +2,7 @@
 
 > 📎 从 upstream v0.23.1（66d6eaf）继承的参考记录；原文的审批/交付状态不代表本 fork 的在办任务。
 
-> 状态：已实现（PR #937）。来源：铁律走查的三条规则 `attachment-gone-after-send`、`agent-ignores-declared-default`、`surface-creationSelection`；Agent 消息层对照报告 §5 判定这三条换框架消不掉（[`docs/research/2026-09-29-agent-message-layer-conformance/report.md`](../research/2026-09-29-agent-message-layer-conformance/report.md)）。
+> 状态：已实现（PR #937）。来源：铁律走查的三条规则 `attachment-gone-after-send`、`agent-ignores-declared-default`、`surface-creationSelection`；Agent 消息层对照报告 §5 判定这三条换框架消不掉（[`docs/archive/research/2026-09-29-agent-message-layer-conformance/report.md`](../research/2026-09-29-agent-message-layer-conformance/report.md)）。
 
 ## 改动说明
 

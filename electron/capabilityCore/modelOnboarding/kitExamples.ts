@@ -4,7 +4,7 @@
  *
  * ── 为什么是手写的字面量，不是从目录里现抓 ──────────────────────────────────────────
  * 内置目录里那些 mapping 行**没有 `sources`**（它们的出处写在代码注释与
- * `docs/evidence/2026-09-17-higgsfield-contract/` 里），而卡上每条 mode 的 `sourceUrls`
+ * `docs/archive/evidence/2026-09-17-higgsfield-contract/` 里），而卡上每条 mode 的 `sourceUrls`
  * 必须出现在 `sources[]` 中。现抓就得替它们编一个出处——那正是这张卡要杜绝的事。
  * 所以这里手写，内容一字一句来自仓库里**已经实测固化**的那两份契约
  * （`catalog/higgsfieldVendor.ts` / `higgsfieldModels.ts` / `assetIngestionRegistry.ts`）。

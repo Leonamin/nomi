@@ -46,13 +46,13 @@ Nomi TimelineState + EditPlan + Adoption/Undo（唯一事实源）
 
 ### PR #179：P5 E2 结构化粗剪
 
-PR 分支 `claude/stage-p5-e2` 的文档 `docs/plan/2026-08-26-p5-e2-structured-rough-cut.md` 做了当前时间轴事实盘点，并定义 8 个 EditPlan 操作：`arrangeStoryboard`、`placeAsset`、`trimClip`、`splitClip`、`setClipFraming`、`materializeCaptions`、`placeMusicBed`、`declareTransition`。其关键判断是：ripple/roll 不存在；转场仅 metadata；音频导出要实测；所有计划必须复用 Adoption/Proposal key/一次 Undo。
+PR 分支 `claude/stage-p5-e2` 的文档 `docs/archive/plan/2026-08-26-p5-e2-structured-rough-cut.md` 做了当前时间轴事实盘点，并定义 8 个 EditPlan 操作：`arrangeStoryboard`、`placeAsset`、`trimClip`、`splitClip`、`setClipFraming`、`materializeCaptions`、`placeMusicBed`、`declareTransition`。其关键判断是：ripple/roll 不存在；转场仅 metadata；音频导出要实测；所有计划必须复用 Adoption/Proposal key/一次 Undo。
 
 这份 PR 是正确的领域边界，但它不是现成剪辑引擎，也没有解决任意轨道、变速、效果、混音、视觉转场等能力。它应作为 Nomi 的 canonical contract，而不是被外部库的类型替换。
 
 ### PR #207：E2 Agent 接线与外部对标
 
-PR 分支 `feat/auto-edit-plan` 的 `docs/plan/2026-08-27-auto-edit-architecture.md` 补齐了 #179 没覆盖的接线：按 capability 而不是 skillKey 选工具；建议新增 `timeline-planner`（只读/产提案）与 `timeline-editor`（一次性 apply）；工具执行在 renderer，主进程只做解析/作用域；MCP 入口进顶层 catalog；目标需要冻结并用 revision 复验。
+PR 分支 `feat/auto-edit-plan` 的 `docs/archive/plan/2026-08-27-auto-edit-architecture.md` 补齐了 #179 没覆盖的接线：按 capability 而不是 skillKey 选工具；建议新增 `timeline-planner`（只读/产提案）与 `timeline-editor`（一次性 apply）；工具执行在 renderer，主进程只做解析/作用域；MCP 入口进顶层 catalog；目标需要冻结并用 revision 复验。
 
 PR 还发现 `propose_storyboard_plan` 的 schema 没声明 `subtitle/dialogue/transition`，导致 Agent 路径不能触发下游字幕/转场派生。该 PR 是方案，尚未在基线中提供 timeline capability 或完整工具执行器。任何实现都必须沿用这两个 PR 的 EditPlan、Adoption、revision 和一层 Undo，不能把 OpenCut store 直接接到 Agent。
 

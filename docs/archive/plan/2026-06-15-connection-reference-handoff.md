@@ -4,7 +4,7 @@
 作者：上一轮 AI（连续大会话）
 状态：连线/参考 5 切片已落 main；跨分类边只出样张未实现。
 
-> 冷启动先读：本文件 + `docs/plan/2026-06-14-connection-reference-capability-model.md`（方案 v2，含切片定义/对抗评审修正）+ memory `connection-reference-bugs-2026-06-14`（根因地图，真机钉死）+ `ultra-deep-audit-2026-06-14B`（🥇 跨分类边的来龙去脉）。
+> 冷启动先读：本文件 + `docs/archive/plan/2026-06-14-connection-reference-capability-model.md`（方案 v2，含切片定义/对抗评审修正）+ memory `connection-reference-bugs-2026-06-14`（根因地图，真机钉死）+ `ultra-deep-audit-2026-06-14B`（🥇 跨分类边的来龙去脉）。
 > 工作纪律以 `CLAUDE.md` 为最高真相源（P1–P5 / R1–R14）。用户拍板的核心原则：**所有决策按长期价值、不止血、不留并行版（P1）。**
 
 ---
@@ -67,7 +67,7 @@
 
 **背景**：画布节点按分类分子画布视图（镜头→shots/角色→cast/场景→scene）。角色定妆卡被某镜头引用时，那条参考边两端跨分类 → 当前渲染按「两端都可见才画」过滤（`GenerationCanvas.tsx:55` 附近）→ 任一视图都看不见，但生成照常生效。做多镜头角色一致性时用户误删/漏挂。新触发器：`reassignNodeCategory`(`canvasNodeActions.ts:266`) 改分类不动边。
 
-**已做**：3 个 token-only HTML 样张在 `docs/design/reviews/2026-06-14-cross-category-edge-{a-node-badge,b-reference-panel,c-cross-view-stub}.html`（commit `631caeb`）。设计师 agent 推 A、真实用户 agent 推 C。
+**已做**：3 个 token-only HTML 样张在 `docs/archive/design/reviews/2026-06-14-cross-category-edge-{a-node-badge,b-reference-panel,c-cross-view-stub}.html`（commit `631caeb`）。设计师 agent 推 A、真实用户 agent 推 C。
 
 **用户拍板**：
 - **可视化 = A 节点徽标**（卡角「用于 3 镜头」徽标，复用结构化 `useNodeUsageCount`；反向「引用了 X」需补 `edge.source===nodeId` 小遍历）。
@@ -75,7 +75,7 @@
 - **硬约束**：表面文案一律人话，**禁「跨分类/引用/存根」黑话**（违 R2）。
 - 落点：`BaseGenerationNode.tsx:593` header 区（注意与 §4.3 独立副本角标同抢右上角，设计师建议收口成统一 header 关系 rail）。
 
-**下一步**：按 R4 写 `docs/plan` 再实现（多文件）。memory `ultra-deep-audit-2026-06-14B` 有这件事全部来龙去脉。
+**下一步**：按 R4 写 `docs/archive/plan` 再实现（多文件）。memory `ultra-deep-audit-2026-06-14B` 有这件事全部来龙去脉。
 
 ---
 

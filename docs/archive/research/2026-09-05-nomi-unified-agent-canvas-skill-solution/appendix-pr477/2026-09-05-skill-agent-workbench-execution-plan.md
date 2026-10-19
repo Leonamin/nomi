@@ -14,11 +14,11 @@
 
 | 领域 | 已确认事实 | 证据定位 | 不能据此宣称 |
 |---|---|---|---|
-| Agent UI | 已合入 v3.1 正常态、P0 异常态和可计算合同；Resident Shell 通过 Portal 投射到现有工作区，Agent Host 默认闸门仍关闭 | `src/workbench/ai/ProjectAgentResidentShell.tsx:56,327-389,597-659,767-786`；`src/workbench/WorkbenchShell.tsx:153-168,341-377`；`docs/design/agent-ui-spec.generated.json` | 全屏统一 Agent 已完成 |
-| Agent 身份 | Host/bridge/client 已有 `ProjectAgentHostState`、revision、proposal receipt 接口；当前发送路径仍显式使用 ephemeral history，area/session 仍需按 #472 M1 收口 | `src/workbench/ai/projectAgentClient.ts:47-77`；`src/workbench/ai/agentSessionKey.ts:1-20`；`src/workbench/ai/ProjectAgentResidentShell.tsx:597-659`；`docs/ARCHITECTURE-NOW.md` | 跨创作/生成/预览已是一个 Thread |
+| Agent UI | 已合入 v3.1 正常态、P0 异常态和可计算合同；Resident Shell 通过 Portal 投射到现有工作区，Agent Host 默认闸门仍关闭 | `src/workbench/ai/ProjectAgentResidentShell.tsx:56,327-389,597-659,767-786`；`src/workbench/WorkbenchShell.tsx:153-168,341-377`；`docs/archive/design/agent-ui-spec.generated.json` | 全屏统一 Agent 已完成 |
+| Agent 身份 | Host/bridge/client 已有 `ProjectAgentHostState`、revision、proposal receipt 接口；当前发送路径仍显式使用 ephemeral history，area/session 仍需按 #472 M1 收口 | `src/workbench/ai/projectAgentClient.ts:47-77`；`src/workbench/ai/agentSessionKey.ts:1-20`；`src/workbench/ai/ProjectAgentResidentShell.tsx:597-659`；`docs/archive/guides/ARCHITECTURE-NOW.md` | 跨创作/生成/预览已是一个 Thread |
 | Skill runtime | `skill.json` 已支持版本、工具、provider、权限、inputs/examples、stages；`requestedCapabilities` 才是 Host 收窄依据 | `electron/skills/skillManifestSchema.ts:91-126`；`docs/skill-pack-format.md` | 外部 Skill 已具备版权/来源治理或聚合市场 |
 | Skill 入口 | Skill 列表在 composer 内，当前 `filteredSkills = skills`，Skill library 事件会切到 generation；尚无独立聚合区、真实搜索/版权/下架状态 | `src/workbench/ai/ProjectAgentResidentShell.tsx:665-680`；`src/workbench/WorkbenchShell.tsx:232-241` | Skill 发现/选择/下载/启动已闭环 |
-| 资源库 | 项目、提示词、技能、素材仍是分开的 store/API；统一发现适配器不保存外部正文，也不提供统一下载/举报入口 | `src/workbench/library/libraryDiscovery.ts`；`src/workbench/library/libraryAdapters.ts`；`docs/ARCHITECTURE-NOW.md` | Skill 聚合区已存在 |
+| 资源库 | 项目、提示词、技能、素材仍是分开的 store/API；统一发现适配器不保存外部正文，也不提供统一下载/举报入口 | `src/workbench/library/libraryDiscovery.ts`；`src/workbench/library/libraryAdapters.ts`；`docs/archive/guides/ARCHITECTURE-NOW.md` | Skill 聚合区已存在 |
 | 分镜 | 分镜表是画布节点的投影；已有表格编辑、Agent 规划和 canonical patch 结构，但 Agent surface 仍把 storyboard 归为 creation | `src/workbench/creation/storyboard/StoryboardShotTable.tsx`；`src/workbench/generationCanvas/agent/storyboardPlan.ts`；`src/workbench/WorkbenchShell.tsx:167`；`tests/ux/storyboard-agent-canonical-patch.e2e.mjs` | 视频理解表格已覆盖全部用户要求列 |
 | 视频拆解 | 有真实 Electron 入口和 gated E2E，已覆盖视频导入、拆镜、关键帧、画面/景别、对白等部分字段 | `tests/ux/video-deconstruct.e2e.mjs:42-125`；`docs/fixes/2026-09-01-video-deconstruction-engine.root-cause.json` | URL 转换、字幕、完整表格编辑/导出在所有环境已闭环 |
 | 设计链 | #315/#438/#445/#447/#471 已合入；#472 已合入 M0-M5 执行方案 | Git merge receipts：`18cca097`、`303bba3`、`4f012f9`、`ff50486`、`89dcd91`、`ac00ecdc` | open PR 标题等于完成 |

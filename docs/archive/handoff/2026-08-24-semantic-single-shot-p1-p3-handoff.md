@@ -16,8 +16,8 @@
 
 1. 本文件。
 2. `AGENTS.md`：项目纪律、P0 默认自主推进、用户价值优先、真实任务测试和五门验收。
-3. `docs/superpowers/plans/2026-08-23-p1-p3-editable-mcp-generation.md`：方案、范围、不动项和验收门。
-4. `docs/audit/2026-08-23-p1-p3-evidence.md`：实施证据和审计结论。
+3. `docs/archive/superpowers/plans/2026-08-23-p1-p3-editable-mcp-generation.md`：方案、范围、不动项和验收门。
+4. `docs/archive/audit/2026-08-23-p1-p3-evidence.md`：实施证据和审计结论。
 5. P0 防火墙/纯读相关提交及测试：
    - `0e6a323a`
    - `4694e88b`
@@ -426,7 +426,7 @@ pnpm run gates
 
 ### D. 开始 P4+ 前
 
-先新建 `docs/superpowers/plans/<date>-<scope>.md`，写清：
+先新建 `docs/archive/superpowers/plans/<date>-<scope>.md`，写清：
 
 - 用户任务和真实摩擦。
 - 不动项（semantic single-shot 与 ProductionRun owner）。

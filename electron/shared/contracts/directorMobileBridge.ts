@@ -1,6 +1,6 @@
 // 导演台手机虚拟相机桥的跨进程契约（零 Node 实现）：主进程服务、preload、渲染层 bridge 共用这一份。
 // 包是 8 个 Float32；设备态只有 connected / disconnected（hello / close），延迟由 ping/pong 填。
-// 安全面（2026-09-11，docs/plan/2026-09-11-director-lan-pairing-hardening.md）：
+// 安全面（2026-09-11，docs/archive/plan/2026-09-11-director-lan-pairing-hardening.md）：
 // 同意闸（没同意不 bind）、配对码一次性 + 有时效、自签证书指纹随状态出、入站帧上限。
 
 export type MobileBridgeDevice = { id: string; name: string; latencyMs: number | null; connectedAt: number }

@@ -1,7 +1,7 @@
 # 拆镜头：统一成视频 + AI 产/改配置（RC6 + P0-9 全量）
 
 > 2026-06-21。用户拍板：① RC6 统一成视频；③ P0-9 全量（AI 产模型/参数/负面词 + 迭代改现方案）。
-> 依据 `docs/audit/2026-06-20-two-agents-persona-ux-audit.md`。延续 `docs/plan/2026-06-20-two-agents-ux-fixes.md`。
+> 依据 `docs/archive/audit/2026-06-20-two-agents-persona-ux-audit.md`。延续 `docs/archive/plan/2026-06-20-two-agents-ux-fixes.md`。
 
 ## 协作 / push 边界
 - 并行会话在改记忆/spend-gate/capability-core；本单文件与之**不重叠**（RC6 动 `generationCanvasAgentClient.ts`，已 committed-clean；P0-9 动 `canvasTools.ts`/`storyboardPlan.ts`/`storyboardLauncher.ts`/`SKILL.md`/编辑器，均非其热区）。

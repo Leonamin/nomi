@@ -30,7 +30,7 @@ import { WorkbenchMenu, type WorkbenchMenuNode } from '../../../../design'
 import { PrimitiveStage, Specimen, Stateful } from '../../primitives/primitivesLabKit'
 import type { LabState } from '../../labScreen'
 
-const SOURCE_MENU = 'src/design/menu.tsx · docs/plan/2026-09-08-menu-primitive-inventory.md §3.1'
+const SOURCE_MENU = 'src/design/menu.tsx · docs/archive/plan/2026-09-08-menu-primitive-inventory.md §3.1'
 
 /**
  * 菜单钉在视口的这个点上（写死＝确定性；点位一随机，基线每次都不一样）。

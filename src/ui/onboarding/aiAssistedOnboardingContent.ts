@@ -1,7 +1,7 @@
 /**
  * 「用 AI 帮我接入」这张卡要交到用户手上的**东西本身**（不含界面）。
  *
- * 设计定稿：docs/design/2026-09-11-ai-assisted-onboarding-entry.md
+ * 设计定稿：docs/archive/design/2026-09-11-ai-assisted-onboarding-entry.md
  *
  * 为什么单独一个模块：这三段内容既要被卡渲染、被剪贴板复制，也要被走查逐字断言。
  * 放在组件里就只能靠截图证明「复制对了」，那证明不了内容。

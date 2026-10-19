@@ -2,7 +2,7 @@
 
 日期：2026-06-04
 状态：**方案定稿中（含需用户拍板的决策点 + 分步落地）**
-承接：`docs/plan/2026-06-03-timeline-interaction-rework.md`（P1 已 push，commit 35f089c）
+承接：`docs/archive/plan/2026-06-03-timeline-interaction-rework.md`（P1 已 push，commit 35f089c）
 
 > 遵守 CLAUDE.md：规则 3（决策对比表）、4（执行前文档）、5（Context7 查 ffmpeg，已做）、6（顶尖开源真实代码，已做）、7（6 角色，架构定稿前过）、8（用户可见 UI 先样张）、9（模块化/单一真相源）。
 

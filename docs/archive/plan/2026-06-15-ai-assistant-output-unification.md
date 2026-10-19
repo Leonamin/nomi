@@ -1,6 +1,6 @@
 # AI 助手输出一致性优化（实现计划）
 
-> 已拍板（2026-06-15）：样张 `docs/design/reviews/2026-06-15-ai-assistant-output.html`。
+> 已拍板（2026-06-15）：样张 `docs/archive/design/reviews/2026-06-15-ai-assistant-output.html`。
 > 用户反馈根因：两个助手「发言」两套设计（创作=气泡 / 画布=小点时间轴 + 纯文本露馅 markdown），不一致、不舒服。
 > 目标：两个助手的「助手发言」长得**完全一致**（同一共享组件，守 P1 删两份重复渲染）。
 

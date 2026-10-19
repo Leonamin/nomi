@@ -14,7 +14,7 @@
     "scripts/framework-boundary-lib.mjs",
     "scripts/check-framework-boundary.mjs",
     "docs/engineering/framework-boundaries.json",
-    "docs/research/TEMPLATE-reference-conformance.md",
+    "docs/archive/research/TEMPLATE-reference-conformance.md",
     "docs/engineering-rules.md",
     "docs/engineering/agent-orchestration-playbook.md",
     "scripts/claude-hooks/self-check.sh"
@@ -64,7 +64,7 @@
       "path": "docs/engineering/framework-boundaries.json",
       "entry_point": "frameworks[] (registered frameworks with a four-column table)",
       "disposition": "enforced",
-      "evidence": "pi is the only registered framework today and it has no reference conformance document, so it is registered as debt due 2026-09-14 bound to docs/research/2026-09-07-pi-reference-implementation-conformance.md, which is being written on branch docs/pi-reference-conformance-20260907. Before the debt was registered the gate exited 1 naming pi (R17 red proof)."
+      "evidence": "pi is the only registered framework today and it has no reference conformance document, so it is registered as debt due 2026-09-14 bound to docs/archive/research/2026-09-07-pi-reference-implementation-conformance.md, which is being written on branch docs/pi-reference-conformance-20260907. Before the debt was registered the gate exited 1 naming pi (R17 red proof)."
     },
     {
       "path": "docs/engineering/framework-boundaries.json",
@@ -100,7 +100,7 @@
       "Probed each remaining red on the real tree and restored: a settled entry alongside a debt entry (exclusivity red), a settled entry pointing at docs/research/TEMPLATE.md (missing section, eight missing layers, two missing columns), and a past due date (expired debt red, naming the agreed document path).",
       "Probed the one case that must NOT redden: the same settled entry recorded at 0.84.3 against installed 0.85.1 produced three ⚠️ upstream-alignment warnings and no error, confirming a dependency upgrade cannot be blocked by this advisory.",
       "Checked for a second owner of the version-drift signal before adding one: scripts/model-radar.ts fetches vendor model catalogues over the network and shares no structure with dependency version reading, and check:dependency-capabilities already watches installed versions, so no radar:frameworks script was added - the advisory in this gate is the single owner (P1).",
-      "Grepped the sibling class: docs/lessons/design-lab-baselines-green-does-not-mean-wirable.md records the same shape on the UI side (an artefact derived from the subject certifying the subject), which is why R30 exists; this contract records the framework-research side of it."
+      "Grepped the sibling class: docs/archive/lessons/design-lab-baselines-green-does-not-mean-wirable.md records the same shape on the UI side (an artefact derived from the subject certifying the subject), which is why R30 exists; this contract records the framework-research side of it."
     ]
   },
   "prevention": {
@@ -115,10 +115,10 @@
       "scripts/check-framework-boundary.mjs",
       "scripts/check-framework-boundary.node-test.mjs",
       "docs/engineering/framework-boundaries.json",
-      "docs/research/TEMPLATE-reference-conformance.md",
+      "docs/archive/research/TEMPLATE-reference-conformance.md",
       "docs/engineering-rules.md",
       "docs/engineering/agent-orchestration-playbook.md",
-      "docs/lessons/reference-implementation-not-dissected-is-not-research.md",
+      "docs/archive/lessons/reference-implementation-not-dissected-is-not-research.md",
       "scripts/claude-hooks/self-check.sh",
       "CLAUDE.md",
       "AGENTS.md"
@@ -147,12 +147,12 @@
     "current": "pi 0.85.1, @xyflow/react 12.11.5, ai 4.3.19 and @mantine/core 7.17.8 adopted, none of them compared layer by layer against its own reference implementation",
     "target": "Each of the four carries referenceConformance { doc, verifiedAt, upstreamVersion } pointing at a comparison whose 没想到 list is empty, and referenceConformanceDebt is an empty array",
     "exit_criteria": [
-      "docs/research/2026-09-07-pi-reference-implementation-conformance.md lands by 2026-09-14 and pi moves from debt to a settled referenceConformance",
+      "docs/archive/research/2026-09-07-pi-reference-implementation-conformance.md lands by 2026-09-14 and pi moves from debt to a settled referenceConformance",
       "@xyflow/react and ai land their comparisons by 2026-10-07 and @mantine/core by 2026-10-31",
       "Any framework that cannot make its date is re-registered with a fresh due date and a written reason, never silently extended; a cleared debt must be deleted from referenceConformanceDebt, which the unknown-id check forces"
     ]
   },
-  "migration": "No runtime migration; nothing in src/ or electron/ changes. The registry gains referenceConformanceAdvisory and referenceConformanceDebt with four entries, the gate gains one judgement pass, R29 gains a '第二份必交物' section plus the upstream-alignment rule, docs/research/TEMPLATE-reference-conformance.md is the artefact template, the self-check hook's gate 1 asks for both deliverables, and the orchestration playbook gains a brief slot (15.1) and an adversary checklist item (15.2, referenced from 16). Existing branches see the gate green unless they add a framework or a dependency to capabilityInventory.packages without registering it.",
+  "migration": "No runtime migration; nothing in src/ or electron/ changes. The registry gains referenceConformanceAdvisory and referenceConformanceDebt with four entries, the gate gains one judgement pass, R29 gains a '第二份必交物' section plus the upstream-alignment rule, docs/archive/research/TEMPLATE-reference-conformance.md is the artefact template, the self-check hook's gate 1 asks for both deliverables, and the orchestration playbook gains a brief slot (15.1) and an adversary checklist item (15.2, referenced from 16). Existing branches see the gate green unless they add a framework or a dependency to capabilityInventory.packages without registering it.",
   "residual_risks": [
     "The document check is structural, not semantic: a table with all nine layers and all four columns filled with 一致 passes the gate while proving nothing. This is deliberate - a gate cannot judge whether research was honest - which is why the rule text names the two failure shapes (all 一致 means we copied it, all 有意不同 means we never looked) and why the adversary-agent checklist keeps the two acceptance probes with a human. The gate guarantees the artefact exists and is shaped right; a person still has to open one cell.",
     "The 没想到 list being empty is not machine-checked, because 'this layer has been addressed' is a judgement about code that does not yet exist. It is enforced as a dispatch-time hard constraint in the playbook instead, which is weaker than a gate and is recorded here as such (R28: a reminder is not a defence).",

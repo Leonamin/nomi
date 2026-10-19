@@ -35,7 +35,7 @@ Context7 已 resolve/query `/earendil-works/pi`，命中 [Agent README](https://
 | toolCallId、effect intent、replay 恢复（同 `tools.js:314-357`） | `mutates` 派生 replay，写 never、读 safe（`laneTools.mts:217-225`） | 以 toolCallId join 审批注记（`laneHost.mts:273-285`）；领域幂等/撤销仍须真端口接通（§5） | 无第二份工具正文/执行日志；join 不等于 exactly-once |
 | source-order 结果归档（core `harness/runtime/drive/tool-placement.js:35-64,99-132`） | `laneViewModel.ts:265-284` 按 toolCallId 回填自己的工具行 | 不另写完成顺序排序器 | 执行完成顺序与转录位置有意分离；不能把 UI 顺序当出站顺序 |
 
-依赖里已有：core `node_modules/@earendil-works/pi-agent-core/dist/harness/runtime/drive/tools.js:392-447` 已有并行批次，保留它。仓库里已有：`electron/agentLane/laneApprovalGate.ts:111-277` 已有用户等待与取消，不另造审批系统。生态里已有：[Claude Code 官方执行循环](https://code.claude.com/docs/en/agent-sdk/agent-loop#parallel-tool-execution) 与下述 Codex 源码提供分类/互斥对照。TikHub 自媒体未查：本题要证明锁定 SDK 的内部调度，社媒转述不能替代源码或确定性复现；不声称做过真实用户调研。结论：用 pi 已有调度，只自研领域必需的 lane 写互斥；完整调研留本文，遵守本轮只写 docs/plan 的范围。
+依赖里已有：core `node_modules/@earendil-works/pi-agent-core/dist/harness/runtime/drive/tools.js:392-447` 已有并行批次，保留它。仓库里已有：`electron/agentLane/laneApprovalGate.ts:111-277` 已有用户等待与取消，不另造审批系统。生态里已有：[Claude Code 官方执行循环](https://code.claude.com/docs/en/agent-sdk/agent-loop#parallel-tool-execution) 与下述 Codex 源码提供分类/互斥对照。TikHub 自媒体未查：本题要证明锁定 SDK 的内部调度，社媒转述不能替代源码或确定性复现；不声称做过真实用户调研。结论：用 pi 已有调度，只自研领域必需的 lane 写互斥；完整调研留本文，遵守本轮只写 docs/archive/plan 的范围。
 
 ### 2.1 参考实现逐层对照（仅本层的九个切面）
 
@@ -163,7 +163,7 @@ pi 自带 coding agent：`node_modules/@earendil-works/pi-coding-agent/dist/core
 | G 生命周期/幂等 | schema 失败、领域 throw、重复答复、相同 id 重试/改参、超时但底层未结束、abort 后晚完成；写锁不提前释放，未确认结果不二次提交；另一 lane 不被本 lane 锁阻塞但同目标冲突仍被 CAS 拦住 |
 | H 消息与 R30 | 保留 lane-queue 的 `[0,1,2,3]`；旧行为与候选同任务同版本模型评测，两项 R30 数字均不降，并附原始 n/d、失败归因与真实花费 |
 
-R30 沿用 `docs/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md:230,373-374`：22 能力 loopback 首调写对率≥95%，真实 canvas 首调≥90%，5任务×3次回合成功率≥阶段2基线，加审批介入臂不得降，输出处理失败=0。实施前从切换 PR 的实际报告取基线 SHA/模型/分母，不把旧 document 8/8 当所有能力成绩；两版本同条件对比，缺报告则 R30 未通过。首调非错数/首调数、收尾文字且领域终态正确的成功回合/尝试回合，拒绝和取消单列但不得删失败样本，0 分母写 N/A。本次为 docs-only，不产生新的 R30 数字或模型费用。
+R30 沿用 `docs/archive/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md:230,373-374`：22 能力 loopback 首调写对率≥95%，真实 canvas 首调≥90%，5任务×3次回合成功率≥阶段2基线，加审批介入臂不得降，输出处理失败=0。实施前从切换 PR 的实际报告取基线 SHA/模型/分母，不把旧 document 8/8 当所有能力成绩；两版本同条件对比，缺报告则 R30 未通过。首调非错数/首调数、收尾文字且领域终态正确的成功回合/尝试回合，拒绝和取消单列但不得删失败样本，0 分母写 N/A。本次为 docs-only，不产生新的 R30 数字或模型费用。
 
 用户体验验收：在真实切换后的 Electron 中“同时了解文稿/画布/时间轴→改一处→撤销→重开”，独立读取无无谓排队，默认真可撤写零审批，付费/不可逆仍明确询问；执行后卡使用现有 v4 receipt 外壳，必须先看真实布局出最小样张并通过既有 P5/P3 门，不另画一套面板。`laneViewModel.ts:176-184,280-285` 当前仅组织工具结果，不能凭底层有 Undo 宣称 lane 卡已接通。
 

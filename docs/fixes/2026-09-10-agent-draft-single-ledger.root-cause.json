@@ -195,7 +195,7 @@
       "src/workbench/generationCanvas/agent/applyCanvasToolCall.test.ts",
       "src/workbench/capability/agentDraftSingleLedger.test.ts"
     ],
-    "structural_ticket": "docs/plan/2026-09-10-agent-draft-single-ledger.md"
+    "structural_ticket": "docs/archive/plan/2026-09-10-agent-draft-single-ledger.md"
   },
   "legacy_paths": {
     "status": "removed",

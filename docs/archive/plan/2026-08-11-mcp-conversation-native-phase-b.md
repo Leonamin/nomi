@@ -1,6 +1,6 @@
 # MCP 对话原生 · Phase B 实施 Plan（执行：Opus / 验收：Fable）
 
-> 依据：[P0 plan](2026-08-11-mcp-conversation-native-p0.md)（Phase A 已全部落 main `f6e0b88f`）+ [研究文档](../research/2026-08-11-mcp-experience-research.md) §7.5 五门模型 + **获批样张** [mockup](../../design/mockups/2026-08-11-mcp-conversation-native-experience.html)（六幕 × 终端/桌面双形态，2026-08-11 用户拍板）。
+> 依据：[P0 plan](2026-08-11-mcp-conversation-native-p0.md)（Phase A 已全部落 main `f6e0b88f`）+ [研究文档](../research/2026-08-11-mcp-experience-research.md) §7.5 五门模型 + **获批样张** [mockup](../design/mockups/2026-08-11-mcp-conversation-native-experience.html)（六幕 × 终端/桌面双形态，2026-08-11 用户拍板）。
 > 实现必须与样张贰幕（定方向）、肆幕（样片与汇报）、叁幕（信任档位行）逐项对账（R8）。
 > **执行纪律**：每个工单独立 commit + 全测绿再进下一个；单文件 ≤800 行（R9）；所有用户可见文字 zh-CN + en（R15）；**禁止 push**——完成后留在本 worktree 等验收（Fable 验收后统一落 main）。
 

@@ -19,7 +19,7 @@
 
 ## 先查别人
 
-完整报告：[docs/research/2026-09-10-mcp-receipt-fail-closed/prior-art.md](../research/2026-09-10-mcp-receipt-fail-closed/prior-art.md)
+完整报告：[docs/archive/research/2026-09-10-mcp-receipt-fail-closed/prior-art.md](../research/2026-09-10-mcp-receipt-fail-closed/prior-art.md)
 
 - **仓库里已有（决定性）** `electron/capabilityCore/approvalReceipt.ts:255` —— 单发路径的完整收据链已经在跑：HMAC-SHA256 签名 `approvalReceipt.ts:215`、TTL 到期 `approvalReceipt.ts:246`、一次性消费 `approvalReceipt.ts:537`，两种人证来源已建模（主进程手势 `approvalReceipt.ts:389`、MCP 客户端 elicitation `approvalReceipt.ts:419`）。缺的是装配，不是机制。
 - **装配姿势的参照** `electron/capabilityCore/generationTransportAdapters.ts:216` —— 单发路径把「缺收据权威 = 整条能力不可用」写成硬前置；收据 → `gate.decide` 的落库形状见 `electron/capabilityCore/runOwnedGenerationGateAuthority.ts:139`，批量侧不需要发明新字段。

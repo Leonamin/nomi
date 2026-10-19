@@ -17,7 +17,7 @@ import { RUNWAY_GENERATE_AUDIO_CONTROL, runwayRatioControl } from "./runwayWireF
 // **首/尾帧是裸字符串 URL**：文档 schema 标 "type: object" 是生成器产物，正文请求示例是字符串
 // （"first_frame_url": "https://..."），故槽不加 asArray（默认单串）。
 //
-// 本轮**不接**两个官方字段，理由见 docs/plan/2026-08-27-wan-3-0-integration.md：
+// 本轮**不接**两个官方字段，理由见 docs/archive/plan/2026-08-27-wan-3-0-integration.md：
 //   - reference_file_urls（文档参考）：本仓无「文档资产」槽类型，硬造 slot kind 会牵动整条资产管线。
 //   - reference_link_urls（网页参考）：wire 要数组，模板层 ["{{...}}"] 在参数为空串时会发出 [""]
 //     （已在 renderTemplateValue 上跑探针实测），做不到空安全 → 不做。

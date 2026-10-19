@@ -1,7 +1,7 @@
 // 内置「模型档案」的**传输塑形**那一半（评审 CTO/M1：单一真相源）。
 // 这是 Seedance 2.0 经 kie.ai 的 curated 接入定义 —— 不靠 onboarding 逐份解析文档，
 // 主流模型用我们精心写好的这份；长尾模型才回退 onboarding（见
-// docs/plan/2026-06-05-model-archetype-seedance-happyhorse.md，C1 薄垂直片）。
+// docs/archive/plan/2026-06-05-model-archetype-seedance-happyhorse.md，C1 薄垂直片）。
 //
 // 约定（关键，避开 joinUrl 的双前缀坑 —— 见 electron/ai/requestPipeline.ts joinUrl，
 // 以及该文件 .test.ts 的实际约定）：

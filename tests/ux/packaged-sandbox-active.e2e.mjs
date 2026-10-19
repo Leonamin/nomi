@@ -10,7 +10,7 @@
 // 所以它需要一条自己的证据线。
 //
 // 为什么不用 Playwright 的 `app.evaluate`：那里 `require` 与动态 `import()` 都不可用
-// （`ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING`，见 docs/lessons/walkthrough-default-profile-is-isolated.md）。
+// （`ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING`，见 docs/archive/lessons/walkthrough-default-profile-is-isolated.md）。
 // 这里走的是仓库里已有的另一条既定路子（`packaged-mcp-smoke.e2e.mjs`）：用打包好的 Electron
 // helper 以 `ELECTRON_RUN_AS_NODE=1` 起一个 node，**模块解析锚在打包产物自己的生产模块上**，
 // 于是解析链、asar 读写、vendor 落点全都是真实那一套。

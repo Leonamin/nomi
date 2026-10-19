@@ -716,7 +716,7 @@ Windsurf 四档自动执行：`Disabled` / `Allowlist Only` / `Auto`（模型自
 ## 5. 两份参照结构：Vercel AI SDK 6 的 `UIMessage.parts` 与 MCP 规范
 
 > 这两个不是产品，是**形状的工业标准**。前者回答「有序 parts 流长什么样」，后者回答「工具契约与审批该怎么表达」。
-> 组件层的对照另有一份同日调研：[`docs/research/2026-09-06-ai-elements-anatomy.md`](2026-09-06-ai-elements-anatomy.md)（读的是 `vercel/ai-elements@6a9d5b18`）。本节只讲**协议与类型**。
+> 组件层的对照另有一份同日调研：[`docs/archive/research/2026-09-06-ai-elements-anatomy.md`](2026-09-06-ai-elements-anatomy.md)（读的是 `vercel/ai-elements@6a9d5b18`）。本节只讲**协议与类型**。
 
 ### 5A. AI SDK 6 —— parts 数组本身就是持久化格式
 
@@ -858,7 +858,7 @@ stdio（Nomi 的场景）要点：newline 分隔，消息内 **MUST NOT** 含嵌
 
 ### 6.1 MiniMax Design（本机真实操作实测）
 
-> **引用自既有调研**，不重做：`docs/research/2026-09-06-minimax-design-agent-usage/README.md`（70 行，60 张截图在同目录 `shots/`）。这是三家里唯一有一手操作证据的——**不是文档转述，是 Computer Use 真机走完流程**。
+> **引用自既有调研**，不重做：`docs/archive/research/2026-09-06-minimax-design-agent-usage/README.md`（70 行，60 张截图在同目录 `shots/`）。这是三家里唯一有一手操作证据的——**不是文档转述，是 Computer Use 真机走完流程**。
 
 - **转录**：单条时间线「用户消息 → Agent 文字 → **任务卡** → 结果附件」。任务卡上钉着模型、参数、状态（`:13`「任务卡显示『生成 1 张图片』、GPT Image 2、16:9、2k」）。产出物**双落点**：既落画布，又以文件名回到对话。工具调用有前置状态文本（`:37`「先显示『读取了 1 个文件』『在画布上定位』，再生成」）。
 - **⚠️ 分镜只是对话里的 Markdown 文本，不是结构化实体**（`:9`「结果都在对话流，非结构化分镜实体」），卡点是「不能直接编辑分镜」。**这正好印证 Nomi 那条「分镜表 = 画布节点的表格表示版」的判断是对的方向。**
@@ -936,13 +936,13 @@ Figma 有**两条形态相反**的内嵌 Agent，对 Nomi 都有参照：
 
 ### 出处
 
-- **MiniMax Design**：`docs/research/2026-09-06-minimax-design-agent-usage/README.md`（行号如正文；截图 60 张在同目录 `shots/`）。该文件自述边界：`:5` 账户/额度区域已遮盖；`:51` 工作模式档位、hover 预览、语音输入均「未验证」。
+- **MiniMax Design**：`docs/archive/research/2026-09-06-minimax-design-agent-usage/README.md`（行号如正文；截图 60 张在同目录 `shots/`）。该文件自述边界：`:5` 账户/额度区域已遮盖；`:51` 工作模式档位、hover 预览、语音输入均「未验证」。
 - **Figma**：https://help.figma.com/hc/en-us/articles/31304412302231-Explore-Figma-Make · /31304485164695-Create-and-edit-a-Figma-Make-file · /37998629035799-Work-with-the-Figma-agent-in-design-files · /33459875669015-How-AI-credits-work · /31304610458647-Troubleshoot-in-Figma-Make · https://developers.figma.com/docs/code/intro-to-figma-make/ · https://www.figma.com/blog/the-figma-agent-is-here/ · https://www.figma.com/blog/agent-custom-tools-context-skills/
   - ⚠️ help.figma.com 页面**不显示发布日期**，时效性只能靠博客侧证。
 - **Adobe Firefly**：https://helpx.adobe.com/creative-cloud/apps/generative-ai/generative-credits-faq.html · https://helpx.adobe.com/firefly/web/get-started/learn-the-basics/generative-credits-overview.html · /firefly-ai-assistant/firefly-ai-assistant-overview.html · /firefly-ai-assistant/ai-assistant-faq.html · /create-mood-boards/firefly-boards/create-mood-boards.html · /generate-image-variations.html · /work-with-audio-and-video/work-with-video/about-generate-video.html · /access-your-files/view-generation-history.html
   - ⚠️ **未查到**：名为 "Project Moonlight" / "Photoshop AI Assistant" 的官方 help 页面（现役名是 Firefly AI Assistant (beta)）；进行中状态的具体视觉描述。
 - **ComfyUI**（master，2026-09-06）：https://raw.githubusercontent.com/comfyanonymous/ComfyUI/master/execution.py · /server.py · /comfy_execution/progress.py · https://docs.comfy.org/development/comfyui-server/comms_routes · https://docs.comfy.org/api-reference/cloud/job/manage-queue-operations
-- 旧调研（**标注为旧**，本次未复核）：`docs/research/2026-06-27-lovart-element-decomposition-research.md`
+- 旧调研（**标注为旧**，本次未复核）：`docs/archive/research/2026-06-27-lovart-element-decomposition-research.md`
 
 ---
 
@@ -992,7 +992,7 @@ Figma 有**两条形态相反**的内嵌 Agent，对 Nomi 都有参照：
 **⑥ UI 呈现：v4 已在生产，词表已经和行业标准对齐**
 
 - `src/workbench/ai/ProjectAgentResidentShell.tsx`（406 行）只做接线；v4 目录最大文件 `AgentPanelV4Composer.tsx`（471 行），**无巨壳**。
-- ⚑ `src/workbench/ai/v4/agentPanelV4Projection.ts:121-135` —— `toolStatusOf` 的七态是 `output-available` / `output-denied` / `output-error` / `approval-requested` / `approval-responded` / `input-available`，**与 Vercel AI SDK 6 的 `ToolPart["state"]` 逐字相同**（见 §5 与 `docs/research/2026-09-06-ai-elements-anatomy.md`）。注释还明写 `input-streaming` **刻意不用**，理由是「渲染一个永远不出现的状态等于在词表里留一个谎」。**这是本次对照里 Nomi 领先的一处。**
+- ⚑ `src/workbench/ai/v4/agentPanelV4Projection.ts:121-135` —— `toolStatusOf` 的七态是 `output-available` / `output-denied` / `output-error` / `approval-requested` / `approval-responded` / `input-available`，**与 Vercel AI SDK 6 的 `ToolPart["state"]` 逐字相同**（见 §5 与 `docs/archive/research/2026-09-06-ai-elements-anatomy.md`）。注释还明写 `input-streaming` **刻意不用**，理由是「渲染一个永远不出现的状态等于在词表里留一个谎」。**这是本次对照里 Nomi 领先的一处。**
 - `src/workbench/ai/v4/AgentPanelV4Receipt.tsx:31` / `:58-64` —— 工具收据折叠用原生 `<details>`，**没有正文就不画展开箭头**。失败留在原行不弹窗（`:6-7`、`:14-18`）；整回合级失败走独立错误条。
 - `src/workbench/ai/v4/agentPanelV4PendingTools.ts:1-14` —— 「活的工具调用」是渲染层第二真相（模块级 Map + `useSyncExternalStore`），因为宿主状态里没有运行中的工具记录。
 

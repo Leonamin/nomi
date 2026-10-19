@@ -1,6 +1,6 @@
 # P4 多镜连续性 · 验收门逐项打钩（2026-08-25 收官）
 
-> 验收门原文：`docs/superpowers/plans/2026-08-24-p4-multishot-continuity.md` §5。
+> 验收门原文：`docs/archive/superpowers/plans/2026-08-24-p4-multishot-continuity.md` §5。
 > 交付链：S1 #132 / S2 #138 / S3a #143 / S4 #148 / S5 #151 / S6 #153 / S6.5 #155（生产入口）/ 加固 #156+#158 / 修复 #154 #162 #163 / 锚复用 #161 / S7a #165 / 形象确认卡 #167 / 防误诊护栏 #168。全部在 `origin/main`。
 
 ## §5.1 E2E 变体（loopback 零额度）——✅ 5/5
@@ -33,7 +33,7 @@
 
 - #158 记账：3 轮真金（含内容审核挡 0 计费 ×2），**链路史上第一条真视频 submit→慢轮询→completed→materialize 全程落盘**，花销 ≈¥1.32。
 - S6.5 首轮：真入口→GUI 真卡→真收据→2 条 t2v 真提交（`provider_accepted`）。
-- 体验走查 J1 真金：锚图+镜头图真生成（`docs/audit/2026-08-25-experiential-walkthrough-j1.md`）。
+- 体验走查 J1 真金：锚图+镜头图真生成（`docs/archive/audit/2026-08-25-experiential-walkthrough-j1.md`）。
 
 ## §5.5 gates 全绿 · 样张对账 · 术语人话——✅（一项小残留入 backlog）
 

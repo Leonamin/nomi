@@ -358,7 +358,7 @@ git commit -m "feat: expose storyboard preview and harden MCP contracts"
 
 **Files:**
 - Test: existing Playwright journey files under `e2e/` plus the smallest new journey fixture under `e2e/production-run/`
-- Docs: `docs/research/2026-08-20-video-production-workflow-audit.md`
+- Docs: `docs/archive/research/2026-08-20-video-production-workflow-audit.md`
 
 - [ ] **Step 1: Run the scoped checks.**
 
@@ -375,7 +375,7 @@ Record which fields are preserved, defaulted, or blocked; record provider capabi
 - [ ] **Step 4: Commit the verification evidence.**
 
 ```bash
-git add docs/research/2026-08-20-video-production-workflow-audit.md e2e/production-run
+git add docs/archive/research/2026-08-20-video-production-workflow-audit.md e2e/production-run
 git commit -m "test: verify storyboard contract through production export journey"
 ```
 

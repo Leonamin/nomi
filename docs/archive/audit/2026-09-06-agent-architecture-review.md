@@ -2,7 +2,7 @@
 
 > 状态：📎 已收录 · **只读评审，一行产品代码未改** · 基线 `origin/main@d974e6a55`
 > 起因：2026-09-06 深夜用户原话——「因为我们接的是 pi，你要仔细看 pi。这次是我们没有从底层架构上研究整体方案才出这种问题。」
-> 配套方案：[`docs/plan/2026-09-06-agent-architecture-master-plan.md`](../plan/2026-09-06-agent-architecture-master-plan.md)
+> 配套方案：[`docs/archive/plan/2026-09-06-agent-architecture-master-plan.md`](../plan/2026-09-06-agent-architecture-master-plan.md)
 > 平行进行的工具层专项审计（含真实模型成功率测量）在分支 `docs/agent-tool-layer-audit-20260906`；它的结论出来后并进方案的 P1 段，本文不重复测。
 
 ---
@@ -127,7 +127,7 @@ pi 一路把「模型这一轮说了什么」表达成**有顺序的段落**（�
 | `src/config/models.ts:42-55`（12 个 LLM id） | — | 只有 `type` 被 import | 一份永远到不了用户的、写死的 LLM 名单 |
 | `tools.mts:47-49` 的 preprocess override | 3 行 | 零活跃用户 | 下一个写 `z.preprocess` 的人会拿到一个被静默抹成 `{}` 的 schema，而且没有任何测试会红 |
 
-### 2.4 `docs/ARCHITECTURE-NOW.md` 该更新的段落（草案）
+### 2.4 `docs/archive/guides/ARCHITECTURE-NOW.md` 该更新的段落（草案）
 
 在「子系统现状」表里，**改写一行、新增四行**：
 
@@ -158,7 +158,7 @@ pi 一路把「模型这一轮说了什么」表达成**有顺序的段落**（�
 | zod | `^3.25.76` | 4 | 62 文件；能力契约的 schema 真相源 |
 | Vitest / Playwright | `^4.1.8` / `1.60.0` | — | — |
 
-**#526（`docs/plan/2026-09-06-stack-upgrade-react19-aisdk-tailwind4.md`）的结论现在还成立吗？** 成立，而且本次评审给它补了一条**它自己没说的理由**：
+**#526（`docs/archive/plan/2026-09-06-stack-upgrade-react19-aisdk-tailwind4.md`）的结论现在还成立吗？** 成立，而且本次评审给它补了一条**它自己没说的理由**：
 
 > 该方案的第 7 节把唯一待拍板的问题定成「Agent 面板 v4 要不要长得像 AI Elements」，并倾向选 C（什么都不升）。**本次评审支持选 C，但理由不同**：v4 面板真正缺的不是 AI Elements 的组件长相，是**主进程到渲染层之间的一条有序 parts 通道**。升 React/AI SDK 一寸也不会让那条通道出现。栈升级应当降级成独立的版本债轨（Mantine 8 与 R3F 9 各自单做），**不占用 Agent 主线的任何一个 PR 位**。
 
@@ -244,7 +244,7 @@ pi 一路把「模型这一轮说了什么」表达成**有顺序的段落**（�
 **最刺眼的一条**：Agent 自己的脑子是全产品**唯一**没有自动新鲜度检查的模型类。
 
 - 唯一来源是 `electron/catalog/apimartTexts.ts:54-62`，注释自陈是 **2026-08-21 一次手动 `GET /v1/models` 探测**的结果。
-- `radar:models` 明写 `WATCHED = ["image","video","audio"]`、「不含 LLM」（`scripts/model-radar.ts:30-33`）；`grep -c deepseek docs/research/model-radar/apimart.json` = **0**。
+- `radar:models` 明写 `WATCHED = ["image","video","audio"]`、「不含 LLM」（`scripts/model-radar.ts:30-33`）；`grep -c deepseek docs/archive/research/model-radar/apimart.json` = **0**。
 - 而且雷达抓的是 **docs 页**（`llms.txt`），不是带鉴权的 `/v1/models`——文档页在 API 退役后还挂着，读起来就是「还活着」。
 - 退役检测 = 用户撞到 `Model is retired`（`executableModel.ts:30`）；修复 = 手改两个**必须互斥**的数组（`seedBuiltins.ts:322-332`）。
 

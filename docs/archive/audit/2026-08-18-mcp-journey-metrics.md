@@ -5,7 +5,7 @@ Harness：已退役的早期 MCP 旅程（+ 共享设施 `tests/ux/_mcpJourney.m
 指标产物（每步一行 JSONL）：`test-results/mcp-journey-metrics.jsonl`
 
 这份报告把 **J-MCP1 实测跑**（真进程、真 stdio、mock vendor 零额度）与 2026-08-17 那次真实拍片的
-基线（见 `docs/plan/2026-08-18-mcp-experience-overhaul.md` §一）逐环节对账，落实用户点名的三类可见性指标：
+基线（见 `docs/archive/plan/2026-08-18-mcp-experience-overhaul.md` §一）逐环节对账，落实用户点名的三类可见性指标：
 **每步 —— 有没有失败/报错/重试、耗了多久、用户在聊天里能看到什么**。
 
 ## 一、跑的是什么（真实任务的最小复刻）

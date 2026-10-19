@@ -25,8 +25,8 @@
     "electron/agentLane/laneIpc.test.ts",
     "src/workbench/project/projectAgentLaneOpen.test.ts",
     "tests/ux/quit-teardown-real.e2e.mjs",
-    "docs/evidence/2026-10-07-quit-teardown/agent-lane-open-failure-zh.png",
-    "docs/evidence/2026-10-07-quit-teardown/agent-lane-open-failure-en.png"
+    "docs/archive/evidence/2026-10-07-quit-teardown/agent-lane-open-failure-zh.png",
+    "docs/archive/evidence/2026-10-07-quit-teardown/agent-lane-open-failure-en.png"
   ],
   "completionCommits": [],
   "fixedInPr": 1067,

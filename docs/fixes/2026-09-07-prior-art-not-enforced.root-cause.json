@@ -83,7 +83,7 @@
   ],
   "same_class_entry_points": [
     {
-      "path": "docs/plan/2026-09-07-rules-round2-adversary-inventory.md",
+      "path": "docs/archive/plan/2026-09-07-rules-round2-adversary-inventory.md",
       "entry_point": "a newly written plan document (the dispatch-time entry)",
       "disposition": "enforced",
       "evidence": "This plan is the first document governed by the new rule: it carries a 先查别人 section with five sourced rows, including the one row that honestly reports 'not checked' for the self-media question rather than inventing coverage. Removing the section makes check:prior-art exit 1 naming the file (proven in scripts/check-prior-art.node-test.mjs and by an R17 probe on the real tree)."
@@ -156,7 +156,7 @@
       "scripts/install-claude-hooks.node-test.mjs",
       "scripts/dependency-capabilities.node-test.mjs"
     ],
-    "structural_ticket": "docs/plan/2026-09-07-rules-round2-adversary-inventory.md"
+    "structural_ticket": "docs/archive/plan/2026-09-07-rules-round2-adversary-inventory.md"
   },
   "regression_tests": [
     "scripts/check-prior-art.node-test.mjs",

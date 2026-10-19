@@ -3,7 +3,7 @@
 > 📋 方案待拍板 · 状态由 docs-autosync 自动登记，作者请按实修改
 
 > 2026-09-15 · 分支 `feat/agent-skill-real-run-principles-20260915` · 基线 `feat/agent-tool-face-20-verbs-v2-20260914`（PR #797）
-> 证据目录 [`docs/evidence/2026-09-15-skill-real-run/`](../../evidence/2026-09-15-skill-real-run/prompts.md)
+> 证据目录 [`docs/archive/evidence/2026-09-15-skill-real-run/`](../evidence/2026-09-15-skill-real-run/prompts.md)
 
 ## 用户的摩擦（D1，从他说的话起头）
 
@@ -135,7 +135,7 @@ systemPrompt: [next.systemPrompt, skill?.body].filter(Boolean).join('\n\n')
   期待一份完整的 SKILL.md（R31），在那里裁掉才是错的。
 - `<available_skills>` 索引那条路一个字不改。
 - 不改 Agent 面板 UI；不做技能触发机制重设计。
-- 「一次只能选一个技能」（T-AG-05）不在本次放开，理由见 `docs/evidence/2026-09-15-skill-real-run/README.md`。
+- 「一次只能选一个技能」（T-AG-05）不在本次放开，理由见 `docs/archive/evidence/2026-09-15-skill-real-run/README.md`。
 
 ## 验收门
 

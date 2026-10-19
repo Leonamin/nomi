@@ -1,5 +1,5 @@
 /**
- * 本地 ComfyUI「导入自定义工作流」面板（S4）。plan: docs/plan/2026-07-15-comfyui-custom-workflow.md
+ * 本地 ComfyUI「导入自定义工作流」面板（S4）。plan: docs/archive/plan/2026-07-15-comfyui-custom-workflow.md
  *
  * 用户可直接粘贴 ComfyUI 保存的 workflow.json，也可粘贴 Workflow → Export (API) 导出的 workflow_api.json。
  * 「分析」调后端 analyzeComfyWorkflow 自动识别可绑定节点（提示词/首帧/输出/数值），列出建议绑定供用户确认/微调，

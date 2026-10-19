@@ -3,7 +3,7 @@
 日期：2026-08-25
 分支：`claude/mcp-ipc-lifecycle-hardening`（worktree `/Users/aoqimin/Desktop/nomi-mcp-hardening`）
 基线：`origin/main` = `0227eb19`
-来源：PR #171 审计 `docs/audit/2026-08-25-app-wide-foundation-audit.md` §2「MCP 是真正的标准基础设施自研候选」
+来源：PR #171 审计 `docs/archive/audit/2026-08-25-app-wide-foundation-audit.md` §2「MCP 是真正的标准基础设施自研候选」
 
 ## 范围与不做项
 

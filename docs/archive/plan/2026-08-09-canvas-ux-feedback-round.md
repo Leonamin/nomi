@@ -161,7 +161,7 @@
 
 ### 本轮样张
 
-- `docs/design/mockups/2026-08-09-canvas-ux-feedback-round.html`
+- `docs/archive/design/mockups/2026-08-09-canvas-ux-feedback-round.html`
 - 包含 Before/After 切换、Windows 顶栏/任务面板锚定、图片更多菜单、视频取画面菜单、单条去重 Toast、固定标题生成记录弹窗。
 
 ### 用户拍板后才修改的正式文件

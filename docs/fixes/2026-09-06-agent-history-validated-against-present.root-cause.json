@@ -18,7 +18,7 @@
     "electron/projectAgentHost/projectAgentReducer.test.ts",
     "src/workbench/ai/projectAgentUiCommands.ts",
     "src/workbench/ai/ProjectAgentResidentShell.tsx",
-    "docs/qa/2026-09-06-agent-mcp-restart-real-user-pass.md",
+    "docs/archive/qa/2026-09-06-agent-mcp-restart-real-user-pass.md",
     "docs/fixes/2026-09-06-agent-history-validated-against-present.root-cause.json"
   ],
   "entry_points": [

@@ -253,7 +253,7 @@
       "tests/ux/agent-spend-full-auto.walk.mjs",
       "tests/ux/agent-spend-real-image.paid.mjs"
     ],
-    "structural_ticket": "docs/roadmap/TODO.md",
+    "structural_ticket": "docs/archive/roadmap/TODO.md",
     "note": "这两条真机走查（`agent-spend-full-auto.walk.mjs` / `agent-spend-real-image.paid.mjs`）是 94d0cf7ed 为**那一版**实现取的证：模型点名的模型真的到了供应商、全自动档真的不出卡。合并批次 4 时它们一个字没改，所以不再列进 `regression_tests`——那份名单的意思是「为这次改动背书的测试」，把没跑过这次改动的东西列进去是假话。它们仍在仓里、仍在 e2e 链上跑、仍守着同一条不变量，所以记在这里（这条不变量归哪层管、那层有哪些测试）。"
   }
 }

@@ -2,7 +2,7 @@
 
 > 状态：📎 交接/日志 —— **只调研不改码，一行产品代码未动。**
 > 日期：2026-09-07 · 基线：`origin/main@6a7c81786` · pi 锁定 `0.85.1` · 平台 darwin 25.5.0
-> 服务对象：[`docs/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md`](../plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md) §3.1（一个描述符两个 profile）与 §4.1（Anthropic 文档逐条对照）——「Agent 能不能上网」今天在两份方案里都没有落点。
+> 服务对象：[`docs/archive/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md`](../plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md) §3.1（一个描述符两个 profile）与 §4.1（Anthropic 文档逐条对照）——「Agent 能不能上网」今天在两份方案里都没有落点。
 > **谨慎档前提（用户 2026-09-07 拍板）**：Nomi 内置浏览器让 Agent 驱动**不是通用路径**（此前实测慢、抢主窗首帧），本篇只把它当**选项**记录，不当结论。
 > 引用格式：pi 侧相对 `node_modules/@earendil-works/`；仓库侧相对仓库根；外部一律给 URL。
 
@@ -99,12 +99,12 @@ nomi_read_web_page(url)
 ```bash
 source ~/.zshenv                 # TIKHUB_API_KEY 只从环境变量读，别写进任何文件
 node scripts/research/tikhub-search.mjs --q "AI视频 找参考 爆款拆解" \
-  --platform all --limit 8 --out docs/research/2026-09-07-agent-web-memory-longtask/tikhub/AI视频_找参考_爆款拆解/
+  --platform all --limit 8 --out docs/archive/research/2026-09-07-agent-web-memory-longtask/tikhub/AI视频_找参考_爆款拆解/
 node scripts/research/tikhub-search.mjs --q "Agent 浏览器 自动化" \
-  --platform all --limit 8 --out docs/research/2026-09-07-agent-web-memory-longtask/tikhub/Agent_浏览器_自动化/
+  --platform all --limit 8 --out docs/archive/research/2026-09-07-agent-web-memory-longtask/tikhub/Agent_浏览器_自动化/
 ```
 
-产物附件：`docs/research/2026-09-07-agent-web-memory-longtask/tikhub/AI视频_找参考_爆款拆解/tikhub-search.{json,md}` · `…/Agent_浏览器_自动化/tikhub-search.{json,md}`（各 32 条，四平台各 8）
+产物附件：`docs/archive/research/2026-09-07-agent-web-memory-longtask/tikhub/AI视频_找参考_爆款拆解/tikhub-search.{json,md}` · `…/Agent_浏览器_自动化/tikhub-search.{json,md}`（各 32 条，四平台各 8）
 
 | 平台 | 出处 URL | 作者 | 发布 | 摘要（原文，未改写） |
 |---|---|---|---|---|

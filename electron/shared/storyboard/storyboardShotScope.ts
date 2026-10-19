@@ -98,7 +98,7 @@ export function planDefaultAspect(plan: StoryboardPlan): string {
  * 今天只有画幅一条真的住在 plan 上。类型 / 模型 / 时长的"整片"入口是**批量编辑**
  * （`storyboardPlanEdits.apply*ToAll` 把值写进每一行），它们在数据上就是逐镜值、没有第二段作用域，
  * 因此不属于这张表——落画布时本来就随 `shot.*` 一起走。把它们塞进来等于再造一遍 v5 那个
- * "抄进每一行"的老问题。见 `docs/plan/2026-09-12-storyboard-plan-defaults-passthrough.md` 的普查表。
+ * "抄进每一行"的老问题。见 `docs/archive/plan/2026-09-12-storyboard-plan-defaults-passthrough.md` 的普查表。
  */
 const FILM_DEFAULTS: readonly FilmDefaultSpec[] = [
   { paramKey: 'aspect_ratio', planKey: 'aspectRatio', planValue: planDefaultAspect, shotOverride: shotAspectOverride },

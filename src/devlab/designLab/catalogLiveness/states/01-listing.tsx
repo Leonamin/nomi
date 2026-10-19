@@ -48,7 +48,7 @@ export const CATALOG_LIVENESS_STATES: readonly LabState[] = [
   {
     id: 'catalog-liveness-light',
     name: '未列出旁注与删除 · 明',
-    source: 'docs/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md §3.3 / §7 岔路 3',
+    source: 'docs/archive/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md §3.3 / §7 岔路 3',
     coverage: 'shell',
     capture: 'viewport',
     scheme: 'light',
@@ -57,7 +57,7 @@ export const CATALOG_LIVENESS_STATES: readonly LabState[] = [
   {
     id: 'catalog-liveness-dark',
     name: '未列出旁注与删除 · 暗',
-    source: 'docs/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md §3.3 / §7 岔路 3',
+    source: 'docs/archive/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md §3.3 / §7 岔路 3',
     coverage: 'shell',
     capture: 'viewport',
     scheme: 'dark',

@@ -1,6 +1,6 @@
 // 只读节点图的**像素几何**（纯函数，可单测）：把 buildWorkflowGraphView 给的 column/row
 // 翻成绝对坐标 + 贝塞尔路径 + 「适应」的缩放。
-// plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+// plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
 //
 // 这是 onboarding 独立的只读工作流图，不复用生成画布的交互状态或渲染器；它继续用
 // CSS transform + 绝对定位 div + SVG 连线层表达静态拓扑。起点在源节点右缘中点、

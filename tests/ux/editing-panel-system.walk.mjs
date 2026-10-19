@@ -1,4 +1,4 @@
-// R13/R16 走查：剪辑面板系统 C′（合同 docs/design/2026-09-05-editing-panel-design-contract.md §2.1–§2.3）。
+// R13/R16 走查：剪辑面板系统 C′（合同 docs/archive/design/2026-09-05-editing-panel-design-contract.md §2.1–§2.3）。
 //
 // 真实用户任务：把一条已经拼好的粗剪拿到剪辑面上——挑镜头、看画面、调这一段的参数、导出。
 // 这条走查验的是那张五块面板的表在真机上确实成立，而且是**上一版翻车的那几处**：

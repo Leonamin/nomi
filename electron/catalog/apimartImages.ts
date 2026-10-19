@@ -1,5 +1,5 @@
 // apimart 图片模型的 curated 传输配方（6 个高频图片模型，单源）。契约见
-// docs/plan/2026-06-07-apimart-curated-onboarding.md 附录 A（R5 已抓，Seedream 已真图验证）。
+// docs/archive/plan/2026-06-07-apimart-curated-onboarding.md 附录 A（R5 已抓，Seedream 已真图验证）。
 //
 // apimart 图片创建是**扁平 body**（不像 kie 嵌在 input 里）：
 //   POST /v1/images/generations  { model, prompt, size?, resolution?, image_urls? }

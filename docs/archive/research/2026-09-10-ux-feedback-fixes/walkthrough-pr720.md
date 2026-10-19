@@ -51,7 +51,7 @@
 ## 复验（2026-09-11，两条红修完后重跑）
 
 修法与根因见 `docs/fixes/2026-09-11-pr720-walkthrough-reds.root-cause.json` 与
-`docs/plan/2026-09-10-ux-feedback-triage.md` 的「B6」一节。同一台机器、同样的隔离 profile、
+`docs/archive/plan/2026-09-10-ux-feedback-triage.md` 的「B6」一节。同一台机器、同样的隔离 profile、
 同样的三条脚本重跑（截图已覆盖在 `tests/ux/shots/pr720-walkthrough/`）：
 
 | 脚本 | 结果 | 关键数字 |

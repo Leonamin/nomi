@@ -4,11 +4,11 @@
 
 ## 先查别人
 
-仓库既有 `docs/lessons/sandbox-runtime-not-unpacked-from-asar.md` 记录了 sandbox-runtime 的外部二进制、Java agent 与 Electron `app.asar` 路径陷阱；本次实现沿用其结论，先检查上游显式路径配置，再同时验证 `asarUnpack` 与运行时实际传入的解包路径。打包证据脚本 `tests/ux/packaged-sandbox-active.e2e.mjs` 覆盖 macOS seatbelt 的 `active:true`、解包资产存在及传给子进程的路径均位于 `app.asar.unpacked`。
+仓库既有 `docs/archive/lessons/sandbox-runtime-not-unpacked-from-asar.md` 记录了 sandbox-runtime 的外部二进制、Java agent 与 Electron `app.asar` 路径陷阱；本次实现沿用其结论，先检查上游显式路径配置，再同时验证 `asarUnpack` 与运行时实际传入的解包路径。打包证据脚本 `tests/ux/packaged-sandbox-active.e2e.mjs` 覆盖 macOS seatbelt 的 `active:true`、解包资产存在及传给子进程的路径均位于 `app.asar.unpacked`。
 
-- `docs/lessons/sandbox-runtime-not-unpacked-from-asar.md:8-15`：asarUnpack 与显式路径必须同时处理。
-- `docs/lessons/sandbox-runtime-not-unpacked-from-asar.md:24-37`：Electron `existsSync` 对归档路径的误导及 exec 失败证据。
-- `docs/lessons/sandbox-runtime-not-unpacked-from-asar.md:46-58`：macOS seatbelt 与 Windows/Linux/Java 影响面结论。
+- `docs/archive/lessons/sandbox-runtime-not-unpacked-from-asar.md:8-15`：asarUnpack 与显式路径必须同时处理。
+- `docs/archive/lessons/sandbox-runtime-not-unpacked-from-asar.md:24-37`：Electron `existsSync` 对归档路径的误导及 exec 失败证据。
+- `docs/archive/lessons/sandbox-runtime-not-unpacked-from-asar.md:46-58`：macOS seatbelt 与 Windows/Linux/Java 影响面结论。
 
 ## 方案与验收
 

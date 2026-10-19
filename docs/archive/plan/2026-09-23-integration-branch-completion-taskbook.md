@@ -39,7 +39,7 @@
 
 **要做的事**：
 1. **vo-11 视觉基线** — 运行 `pnpm run design-lab:update` 为新增的 `vo-11-picker-unlisted` 生成视觉基线截图
-2. **electron/ai 结构审计** — 写 `docs/audit/2026-09-23-electron-ai-structural-review.md`，解释该模块 7 天内累积 3 份根因合同的结构性原因
+2. **electron/ai 结构审计** — 写 `docs/archive/audit/2026-09-23-electron-ai-structural-review.md`，解释该模块 7 天内累积 3 份根因合同的结构性原因
 3. **Ponytail 评审** — 用户决定：
    - 等 runner 可用后补审，或
    - 用 `node ./scripts/check-ponytail-deferred.mjs --accept 46094f908` 接受 deferred 状态
@@ -137,7 +137,7 @@
 | 概念 | 唯一 owner（文件·符号） | 允许谁消费 |
 |---|---|---|
 | 设计实验室视觉基线 | `tests/design-lab/baselines/` + `scripts/design-lab.mjs` | design-lab 测试套件 |
-| 根因合同结构评审 | `docs/audit/*.md` + `scripts/check-symptom-cluster.mjs` | 审计流程、symptom-cluster 门岗 |
+| 根因合同结构评审 | `docs/archive/audit/*.md` + `scripts/check-symptom-cluster.mjs` | 审计流程、symptom-cluster 门岗 |
 | Ponytail 评审收据 | `.claude/ponytail-receipt.json` + `scripts/check-ponytail-deferred.mjs` | pre-push hook、check:ponytail-review 门岗 |
 
 ---

@@ -84,7 +84,7 @@ export type VendorSeed = {
    * 为什么需要它：`GET /v1/models` 既不充分也不必要，两个方向的反例都在我们自己的证据里——
    * apimart 对合法 key 恒 401（electron/vendor/vendorBaseFallback.ts 实测注释），minimax 回 200
    * 却连最小生成 canary 都跑不通（认证账本 blocker 原文）。详见
-   * docs/research/2026-09-10-vendor-key-publish-class/prior-art.md 第 ④ 节。
+   * docs/archive/research/2026-09-10-vendor-key-publish-class/prior-art.md 第 ④ 节。
    *
    *  · `model-list`    ：上游确有 OpenAI 兼容模型列表端点，且它对合法 key 会放行。
    *                      ⚠️ 现役无人声明这一档。第一个声明它的人请连带补上
@@ -104,7 +104,7 @@ export type VendorSeed = {
   /**
    * 代码拥有的执行契约**不走 mapping 运行时**、而住在主进程专用路径时，在这里指出去。
    * 现役唯一一例：Replicate 元素拆解是多输出（一次返回 N 张图层），刻意不套单结果 runtime
-   * （electron/catalog/replicate.ts 顶注、docs/plan/2026-06-28-element-decomposition-feature.md §3.1），
+   * （electron/catalog/replicate.ts 顶注、docs/archive/plan/2026-06-28-element-decomposition-feature.md §3.1），
    * 因此它没有 curated mapping —— 但它同样是「代码拥有、已真生成实测固化」的契约，发布判据必须认它，
    * 否则「元素拆解」永远点不亮。为它编一条没人消费的假 mapping 才是不诚实的那条路。
    */

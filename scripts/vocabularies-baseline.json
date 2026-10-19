@@ -1290,7 +1290,7 @@
         "proposal",
         "session"
       ],
-      "reason": "外部 Agent 接模型时，模型页给用户看的那五步的唯一 owner。它不是第二份生命周期词表——真相源仍是 electron/shared/integrationContract.ts 的 12 个 stage，本表只是它的**用户语言投影**，映射关系写死在同文件的 ASSISTED_PROGRESS_STAGES 里，并由 assistedProgressProjection.test.ts 断言「12 个 stage 一个不漏」。故意与 stage 名不同名：stage 是排错口径（灰字里原样显示），这五个是「到哪一步了」的口径。设计定稿 docs/design/2026-09-11-ai-assisted-onboarding-entry.md §Progress。",
+      "reason": "外部 Agent 接模型时，模型页给用户看的那五步的唯一 owner。它不是第二份生命周期词表——真相源仍是 electron/shared/integrationContract.ts 的 12 个 stage，本表只是它的**用户语言投影**，映射关系写死在同文件的 ASSISTED_PROGRESS_STAGES 里，并由 assistedProgressProjection.test.ts 断言「12 个 stage 一个不漏」。故意与 stage 名不同名：stage 是排错口径（灰字里原样显示），这五个是「到哪一步了」的口径。设计定稿 docs/archive/design/2026-09-11-ai-assisted-onboarding-entry.md §Progress。",
       "site": "src/ui/onboarding/assistedProgressProjection.ts::variable:ASSISTED_PROGRESS_STEPS/as-const"
     },
     {

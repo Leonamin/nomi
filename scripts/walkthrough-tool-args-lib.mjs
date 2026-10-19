@@ -12,7 +12,7 @@
 // 抄一份名单就是又造一份「不会随注册表更新的副本」，那正是这条门岗要防的病。
 //
 // 事故与它的形状（#814 改名、git 自动合并不报、5 处失配里 4 处在没人跑的走查里）写在
-// `docs/lessons/walkthrough-tool-args-are-a-compiler-blind-spot.md`，不在这里重述。
+// `docs/archive/lessons/walkthrough-tool-args-are-a-compiler-blind-spot.md`，不在这里重述。
 
 import ts from 'typescript'
 

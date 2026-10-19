@@ -6,7 +6,7 @@
 //
 // 补动词表只是止血。这里钉死的是根因侧的规则本身：不认得的动词**先容忍、后判死**，
 // 且判死必须同时满足「连续够多次」与「持续够久」，判死后错误信息要如实带上原始动词。
-// 见 docs/plan/2026-08-11-unrecognized-task-status-root-fix.md。
+// 见 docs/archive/plan/2026-08-11-unrecognized-task-status-root-fix.md。
 import { describe, expect, it } from "vitest";
 import { advanceUnrecognizedStatusStreak, unrecognizedStatusExhausted } from "./taskResultQuery";
 

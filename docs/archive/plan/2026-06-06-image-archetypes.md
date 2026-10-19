@@ -1,6 +1,6 @@
 # 执行文档：把图像模型接入「模型档案」体系（image archetypes）
 
-> 裁决：已被统一模型档案/能力目录取代；证据：`src/config/modelArchetypes/index.ts:63-75`、`electron/shared/videoCapabilities/registry.ts:42-45`、`docs/plan/2026-08-30-unified-model-integration-certification.md:31-40`。
+> 裁决：已被统一模型档案/能力目录取代；证据：`src/config/modelArchetypes/index.ts:63-75`、`electron/shared/videoCapabilities/registry.ts:42-45`、`docs/archive/plan/2026-08-30-unified-model-integration-certification.md:31-40`。
 
 > Rule 4 执行文档。自包含：读它 + CLAUDE.md（总纲/总纲之二/通用第一）+ 现有 `src/config/modelArchetypes/`
 > + `electron/catalog/kie*.ts` 即可接手。**用户已拍板**：调研 kie.ai 当前模型 → 把核心图像/最新视频模型做成档案；

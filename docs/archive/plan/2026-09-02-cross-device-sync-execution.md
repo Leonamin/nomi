@@ -2,13 +2,13 @@
 
 > 状态：✅ 已交付
 
-对应方案：[跨设备继续编辑实施计划](../../../Users/aoqimin/Desktop/Nomi/docs/superpowers/plans/2026-09-01-cross-device-project-continuation.md)
+对应方案：[跨设备继续编辑实施计划](../../../Users/aoqimin/Desktop/Nomi/docs/archive/superpowers/plans/2026-09-01-cross-device-project-continuation.md)
 
 ## 阶段一：方案与设计样张 — 已执行
 
 - 已核对项目路径、工作区清单、原子写入、备份、设置根目录、密钥安全存储和 IPC 入口。
 - 已确定第一版边界：单设备编辑后换机；不做同时编辑、不做实时协作、不做云厂商 SDK。
-- 已产出样张：[cross-device-sync-mockup.html](../../../Users/aoqimin/Desktop/Nomi-cross-device/docs/design/2026-09-02-cross-device-sync-mockup.html) 和 [cross-device-sync-mockup.png](../../../Users/aoqimin/Desktop/Nomi-cross-device/docs/design/2026-09-02-cross-device-sync-mockup.png)。
+- 已产出样张：[cross-device-sync-mockup.html](../../../Users/aoqimin/Desktop/Nomi-cross-device/docs/archive/design/2026-09-02-cross-device-sync-mockup.html) 和 [cross-device-sync-mockup.png](../../../Users/aoqimin/Desktop/Nomi-cross-device/docs/archive/design/2026-09-02-cross-device-sync-mockup.png)。
 - 样张遵循 Nomi 设计系统：文件与保存语境、密度优先、token 化颜色；目录配置只在“文件与保存”，项目库只保留状态入口，不增加顶栏常驻按钮。
 
 ## 阶段二：实现同步基础与用户界面 — 已执行

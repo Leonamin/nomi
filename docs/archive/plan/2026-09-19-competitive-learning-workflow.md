@@ -8,11 +8,11 @@
 
 用户 2026-09-19 明确要求先构建长期流程，全面学习页面、流程、用户引导、交互、功能、图标、社区、自媒体与视频营销。核心对标 LibTV 和 TapNow；扩展对标 Higgsfield、MiniMax Design、RunningHub。表情/姿势自定义编辑、插件/CLI/MCP 的产品呈现、Blender 和 Agent 是优先研究题。
 
-交付：仓内 `agent-skills/nomi-competitive-radar/SKILL.md` 与执行参考；`docs/research/competitive/` 来源登记、周期报告模板及入口；CLAUDE/AGENTS 触发指针；唯一 TODO 的关联项；沿用本机 Codex automation 的每三天配置。既有模型/论文雷达各自保留职责，竞品雷达负责产品与传播学习。
+交付：仓内 `agent-skills/nomi-competitive-radar/SKILL.md` 与执行参考；`docs/archive/research/competitive/` 来源登记、周期报告模板及入口；CLAUDE/AGENTS 触发指针；唯一 TODO 的关联项；沿用本机 Codex automation 的每三天配置。既有模型/论文雷达各自保留职责，竞品雷达负责产品与传播学习。
 
 ## 先查别人
 
-已检查现有 `scripts/research/tikhub-search.mjs`、`docs/research/tikhub-api-notes.md`、`scripts/feedback-radar.mjs`、本机两份 `automation.toml`、`docs/ARCHITECTURE-NOW.md`、TODO 与在飞 PR。复用检索和调度能力，不新增采集引擎。技能采用 [Agent Skills 规范](https://agentskills.io/specification) 的 SKILL.md + references 布局；沿用仓库 `agent-skills/` 与 `check:skills-format` 的既有落点，无自定义外部格式。官方规范本轮未联网重读，以现有仓库格式门岗和本机 skill-creator 为实施依据；没有变更技能解析协议。
+已检查现有 `scripts/research/tikhub-search.mjs`、`docs/archive/research/tikhub-api-notes.md`、`scripts/feedback-radar.mjs`、本机两份 `automation.toml`、`docs/archive/guides/ARCHITECTURE-NOW.md`、TODO 与在飞 PR。复用检索和调度能力，不新增采集引擎。技能采用 [Agent Skills 规范](https://agentskills.io/specification) 的 SKILL.md + references 布局；沿用仓库 `agent-skills/` 与 `check:skills-format` 的既有落点，无自定义外部格式。官方规范本轮未联网重读，以现有仓库格式门岗和本机 skill-creator 为实施依据；没有变更技能解析协议。
 
 - `scripts/research/tikhub-search.mjs:39` 已有查询/平台/时间窗/输出目录参数，`:135` 固定输出 JSON/Markdown；复用采集器，但每次查询与重试隔离目录，防止覆盖证据。
 - `scripts/feedback-radar.mjs:4` 已把确定性采集和技能分诊分开，`:60` 隔离单渠道失败；采用同样职责划分，竞品分析由技能完成。

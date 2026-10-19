@@ -17,7 +17,7 @@ async function snap(name) {
   await page.screenshot({ path: path.join(out, name + '.png'), fullPage: true })
 }
 try {
-  await page.goto(pathToFileURL(path.join(root, 'docs/design/mockups/2026-08-26-antigravity-cli.html')).href)
+  await page.goto(pathToFileURL(path.join(root, 'docs/archive/design/mockups/2026-08-26-antigravity-cli.html')).href)
   check(await page.locator('#status-label').textContent() === '待登录', 'default installed/login-required record')
   check(await page.locator('[data-capability-status]').allTextContents().then((values) => values.every((value) => value === '未验证')), 'all default capabilities unverified')
   check(await page.locator('[data-capability]').count() === 4, 'four independent capabilities only')

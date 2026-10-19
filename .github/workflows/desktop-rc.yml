@@ -135,7 +135,7 @@ jobs:
           node scripts/check-packaged-intake.mjs release/mac/Nomi.app
       - name: Verify packaged MCP on Apple Silicon
         run: node tests/ux/packaged-mcp-smoke.e2e.mjs release/mac-arm64/Nomi.app
-      # 包体审计（docs/plan/2026-09-28-release-audit.md §3 A）：大小超预算、多出一个 npm 包或语言包、
+      # 包体审计（docs/archive/plan/2026-09-28-release-audit.md §3 A）：大小超预算、多出一个 npm 包或语言包、
       # 禁带文件（source map / 测试夹具 / .env / 别的平台二进制）、运行时闭包断了（装机版 Cannot find module）、
       # ffmpeg/ffprobe 平台目标不对——任一条让本作业红（原 Verify packaged media targets 已并进来）。
       # 放在 MCP 冒烟之后，超预算时冒烟证据照样留下；两个架构都审完再定结论，报告总会上传。

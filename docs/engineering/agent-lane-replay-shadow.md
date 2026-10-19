@@ -1,6 +1,6 @@
 # L2 · 回放影子夜跑（怎么跑 / 报告在哪 / 7 天绿从哪天起算）
 
-> 方案：[`docs/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md`](../archive/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md) §2.3 第二行 + 「冷重启 200 个回放会话」那一行。
+> 方案：[`docs/archive/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md`](../archive/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md) §2.3 第二行 + 「冷重启 200 个回放会话」那一行。
 > 代码：`tests/agent-runtime/agent-lane-replay-shadow.mts`（入口）· `replayShadowSources.mts`（读数）· `replayShadowEngine.mts`（回放与比对）。
 
 ## 它回答哪个问题

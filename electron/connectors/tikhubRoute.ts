@@ -38,7 +38,7 @@ const PREF_KEY_MODE = "routeMode";
  * 某一刻 .io 恰好探不通，我们就**悄悄**把 .dev 钉进了他的盘上偏好，高级设置的「线路」
  * 从此显示 .dev，而且 .io 恢复了也不会变回来——他没做任何动作，偏好却被改了。
  *
- * 同形状的教训 09-14 已经有一条（`docs/lessons/mcp-read-path-must-not-write-host-configs.md`，
+ * 同形状的教训 09-14 已经有一条（`docs/archive/lessons/mcp-read-path-must-not-write-host-configs.md`，
  * 当时修在 `readMcpInfo`），只是那次没变成门岗，于是又在 connector 路由里长了一份。
  * 现在归位成**进程内缓存**：不再探两次的好处保住了（健康探测免费、不计费），
  * 而「盘上偏好」只由用户显式动作（`setTikhubRouteMode`）改。

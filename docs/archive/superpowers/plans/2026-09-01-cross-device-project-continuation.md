@@ -292,9 +292,9 @@ type PortableConfigBundleV1 = {
 **Files:**
 - Create: `docs/tutorials/cross-device-continuation.zh-CN.md`
 - Create: `docs/tutorials/cross-device-continuation.en.md`
-- Create: `docs/plan/2026-09-01-cross-device-sync-acceptance.md`
-- Modify: `docs/ARCHITECTURE-NOW.md`（实现完成后补现状，不提前写未来状态）
-- Modify: `docs/release-process.md`（增加跨设备测试证据要求）
+- Create: `docs/archive/plan/2026-09-01-cross-device-sync-acceptance.md`
+- Modify: `docs/archive/guides/ARCHITECTURE-NOW.md`（实现完成后补现状，不提前写未来状态）
+- Modify: `docs/archive/guides/release-process.md`（增加跨设备测试证据要求）
 
 文档必须用用户任务写法，不让用户理解 `.nomi` 内部结构。故障表至少包含：同步未完成、另一台设备有新版本、项目清单损坏、素材缺失、配置导入失败、密钥需要重填、磁盘空间不足、服务商客户端冲突副本。
 

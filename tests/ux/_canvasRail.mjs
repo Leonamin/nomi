@@ -4,7 +4,7 @@
 // （文字 / 3D 场景 / 3D 模型 / 全景图 / 画板）**菜单没展开时根本不在 DOM 里**。
 // 走查里那些 `if ((await x.count()) > 0) await x.click()` 的软守卫遇上这种情况不会红，
 // 只会静默地什么都不做，然后后面每一步都在一个空画布上「通过」——
-// 正是 docs/lessons/dead-selector-lies-both-ways 那一族的假绿。
+// 正是 docs/archive/lessons/dead-selector-lies-both-ways 那一族的假绿。
 //
 // 所以点左缘只准走这一个口：它自己判断该种在常驻还是在「更多」，找不到就**抛**，不返回 false。
 const RAIL = '.generation-canvas-v2-toolbar'

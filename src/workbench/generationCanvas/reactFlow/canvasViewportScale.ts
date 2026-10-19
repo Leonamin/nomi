@@ -12,7 +12,7 @@
  * 而是**认 React Flow 的 `transform` 为唯一真相**，读的人直接问它。
  * store 里那两个字段连同它们的 setter 已在同一提交删除。
  *
- * 订阅粒度（`docs/plan/2026-09-01-canvas-drag-perf-eval-v2.md` 的细粒度 selector 原则）：
+ * 订阅粒度（`docs/archive/plan/2026-09-01-canvas-drag-perf-eval-v2.md` 的细粒度 selector 原则）：
  * 只选 `transform[2]`（缩放）这一个标量——**平移不会改它**，所以拖画布时这些节点一帧都不重渲；
  * 只有真的缩放了才重渲，而那时它们本来就必须重算。需要连平移一起跟的消费者用框架自带的
  * `useViewport()`（它按 x/y/zoom 三个标量浅比较），别在这里再抄一份。

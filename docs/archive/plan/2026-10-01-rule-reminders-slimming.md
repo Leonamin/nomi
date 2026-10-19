@@ -1,7 +1,7 @@
 # 规则体系：动手那一刻的提醒 + 规则文件瘦身
 
 > 状态：🚧 进行中（第一段：提醒 hook，已推；第二段：瘦身 + 雷达 SessionStart + 重写判据并入 R21.2，本次推到同一个 PR）
-> 依据：`docs/research/2026-10-01-ai-collaboration-rules/report.md`（官方：规则文件要短、必须发生的事交给 hook；实证：接口级清单让复用率 30.0% → 67.8%）。
+> 依据：`docs/archive/research/2026-10-01-ai-collaboration-rules/report.md`（官方：规则文件要短、必须发生的事交给 hook；实证：接口级清单让复用率 30.0% → 67.8%）。
 
 ## 为什么
 
@@ -26,7 +26,7 @@
 - **官方 hooks**：PreToolUse 的 `hookSpecificOutput.additionalContext` 进上下文，位置在工具结果旁边；普通 stdout 只进调试日志，只有 `UserPromptSubmit` / `SessionStart` 等的普通 stdout 直接进上下文；UserPromptSubmit 的用户消息走 stdin JSON，没有文档化的 `CLAUDE_USER_PROMPT` 环境变量——https://code.claude.com/docs/en/hooks 。结论：PreToolUse 用 JSON 的 `additionalContext`；`self-check.sh` 改读 stdin。
 - **同类自家做法**：`scripts/claude-hooks/stack-currency-check.sh:7` 与 `scripts/claude-hooks/model-doc-check.sh:7` 已是同一形状（PreToolUse · Write|Edit · additionalContext · fail-open）。结论：沿用同一形状与注册方式，不另造机制；判断逻辑放进可被 node-test 直接测的 `.mjs`，`.sh` 只是薄壳（python3 在这台机器上是商店别名，不依赖它）。
 - **清单从哪来**：RepoReuse——接口级清单让复用率 30.0% → 67.8%、塞全源码无改善（29.2%）——https://arxiv.org/abs/2609.35357 ；所以只放「模块 — 一句话职责 — 入口」，来源是现有两张登记表（`docs/engineering/concept-owners.json:1`、`docs/engineering/framework-boundaries.json:1`），不另起第三份。
-- **重写判据**：Strangler Fig（一个模块、逐步替换）——https://martinfowler.com/bliki/StranglerFigApplication.html ；The Wrong Abstraction（参数加条件分支就是抽象错了）——https://sandimetz.com/blog/2016/1/20/the-wrong-abstraction ；反方 Spolsky（旧代码里埋着 bug 修复，所以先钉住旧行为）——https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/ ；调研全文 `docs/research/2026-10-01-ai-collaboration-rules/report.md:1`。阈值（14 天、第 3 次）没有权威数字，试用到 10-15 用我们自己的提交历史回测。
+- **重写判据**：Strangler Fig（一个模块、逐步替换）——https://martinfowler.com/bliki/StranglerFigApplication.html ；The Wrong Abstraction（参数加条件分支就是抽象错了）——https://sandimetz.com/blog/2016/1/20/the-wrong-abstraction ；反方 Spolsky（旧代码里埋着 bug 修复，所以先钉住旧行为）——https://www.joelonsoftware.com/2000/04/06/things-you-should-never-do-part-i/ ；调研全文 `docs/archive/research/2026-10-01-ai-collaboration-rules/report.md:1`。阈值（14 天、第 3 次）没有权威数字，试用到 10-15 用我们自己的提交历史回测。
 
 ## 自己写了什么、为什么必须自己写
 
@@ -65,10 +65,10 @@
 |---|---|---|
 | 常用命令大表（约 3.9 KB） | `docs/engineering/commands.md` | CLAUDE.md「常用命令」一节直接指向；`self-check.sh`【命令全表】块（消息含 gates / check: / 门岗 / 命令）；`package.json` 是真相源 |
 | push 前分层（R22）、交付身份（R11）、Ponytail（R25） | `docs/engineering/delivery-and-review.md` | `self-check.sh`【交付】块（消息含 合并 / merge / 收据 / verify-merged / preflight / 开 PR / 交工 / Ponytail / review:branch / 推送）；pre-push 闸门自己拦没过的、没收据的 |
-| 每日雷达（用户反馈、模型）+ 三日竞品雷达；论文雷达改为按需（2026-10-01 用户拍板）| `docs/engineering/daily-radars.md`；技能 `nomi-intake-radar` / `nomi-competitive-radar`；模型雷达分诊看 `docs/plan/2026-08-27-vendor-model-radar.md` | **SessionStart hook `daily-radar.sh` 直接跑脚本并注入结果**；失败明说「今天没查成」；**一台机器一天一次，标记与摘要在仓库外，后开的会话拿缓存摘要**；失败下次重试；两个雷达并行；hook 不动工作树、不发扣费请求（`--no-liveness`）；分诊只由协调会话做 |
+| 每日雷达（用户反馈、模型）+ 三日竞品雷达；论文雷达改为按需（2026-10-01 用户拍板）| `docs/engineering/daily-radars.md`；技能 `nomi-intake-radar` / `nomi-competitive-radar`；模型雷达分诊看 `docs/archive/plan/2026-08-27-vendor-model-radar.md` | **SessionStart hook `daily-radar.sh` 直接跑脚本并注入结果**；失败明说「今天没查成」；**一台机器一天一次，标记与摘要在仓库外，后开的会话拿缓存摘要**；失败下次重试；两个雷达并行；hook 不动工作树、不发扣费请求（`--no-liveness`）；分诊只由协调会话做 |
 | P2 / P3 / P5 全文 | `docs/engineering/principles-detail.md`；CLAUDE.md 各留一两行 | `self-check.sh`【修根因】【报完成前】【设计流程】块都带指针；P2 另有 `root-cause-remediation` 技能 |
 | 三闸段（CLAUDE.md） | 删（和 `self-check.sh` 逐句重复） | 常驻 640 字节仍在每轮注入三刻与贯穿原则 |
-| L0 ① 里的 R5.1 / R5.4 / R5.5 细节 | `self-check.sh`【先查别人 · R5】块；`stack-currency-check.sh`（PreToolUse · 写 docs/plan 或动 package.json）追加一句 R5.4 / R5.5 | 消息含 框架 / SDK / 依赖 / 协议 / 规范 / 格式 / 导入导出 / MCP / 技能包 等；或写方案文档 / 动 package.json 的那一刻 |
+| L0 ① 里的 R5.1 / R5.4 / R5.5 细节 | `self-check.sh`【先查别人 · R5】块；`stack-currency-check.sh`（PreToolUse · 写 docs/archive/plan 或动 package.json）追加一句 R5.4 / R5.5 | 消息含 框架 / SDK / 依赖 / 协议 / 规范 / 格式 / 导入导出 / MCP / 技能包 等；或写方案文档 / 动 package.json 的那一刻 |
 | 画新面三件产物、控件层级 §1.5、R8 | `self-check.sh`【画新面】【设计流程】块；`docs/design/nomi-design-system.md` | 消息含 设计 / 样张 / 界面 / 新页面 / 新面板 / 画新 等 |
 | 规则索引里各行的长解释 | `docs/engineering-rules.md`（原本就有详解，索引里是重复） | 索引一行一条，详解按需翻；R5 / R13 等关键块由上面几条 hook 注入 |
 | 多会话统御长段 | `docs/engineering/agent-orchestration-playbook.md` §19（原本就有）；CLAUDE.md 留 3 条硬规矩 | 协调 / 实施会话读 CLAUDE.md 时直接看到；细节指向 §19 |
@@ -78,7 +78,7 @@
 ### 重写判据并入 R21.2
 
 - L1 三行在 CLAUDE.md；L2 一节详解在 `docs/engineering-rules.md` R21.2（含「试用到 10-15，用我们自己的提交历史校准」）。
-- **和原 R21.2 合并，不并存**：原来「同一层 7 天第三份合同 → 交一份结构评审文档」改成「→ 簇里最新那份合同写 `rewrite_decision`: { decision: patch|rewrite|delete, characterization_test: <路径> }」。`check:symptom-cluster` 不再读 `docs/audit`（删了 `readAudits`）；`check:root-cause-contracts` 校验写了的字段：测试文件存在，**选 rewrite 时那份测试必须出现在本次 diff 里**。整簇在 2026-10-02 之后才受管，更早的聚簇已按旧规矩处理过，不追溯。
+- **和原 R21.2 合并，不并存**：原来「同一层 7 天第三份合同 → 交一份结构评审文档」改成「→ 簇里最新那份合同写 `rewrite_decision`: { decision: patch|rewrite|delete, characterization_test: <路径> }」。`check:symptom-cluster` 不再读 `docs/archive/audit`（删了 `readAudits`）；`check:root-cause-contracts` 校验写了的字段：测试文件存在，**选 rewrite 时那份测试必须出现在本次 diff 里**。整簇在 2026-10-02 之后才受管，更早的聚簇已按旧规矩处理过，不追溯。
 - 合同：`docs/fixes/2026-10-01-rewrite-decision-merges-r21-2.root-cause.json`。
 
 ### 两条新规矩

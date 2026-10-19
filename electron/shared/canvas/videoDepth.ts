@@ -40,7 +40,7 @@ export type VideoDepthDepthDirection = (typeof VIDEO_DEPTH_DEPTH_DIRECTIONS)[num
  * · `maxResolutionPx: 518` —— DA2 ViT-S 的原生训练输入（14×37）。比全分辨率快约 3 倍，
  *   而产物是给下游模型看的结构信号、不是给人看的成片。
  * · `processingFps: 30` —— 常见素材的原生帧率；再高只是把同一段动作切得更碎。
- * · `temporalSmoothing: 0.35` —— docs/research/2026-09-07-motion-ref-raw-vs-depth.md
+ * · `temporalSmoothing: 0.35` —— docs/archive/research/2026-09-07-motion-ref-raw-vs-depth.md
  *   那次真实 A/B 用的那一组，改动会让那份实测失去可比性。
  */
 export const VIDEO_DEPTH_RECIPE = {

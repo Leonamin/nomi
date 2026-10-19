@@ -1,7 +1,7 @@
 # Windows 上验证 nomi-local 协议流的 ERR_INVALID_STATE 竞态。
 #
 # 为什么要有这个 workflow：用户的崩溃报自 Windows，而开发机是 macOS。
-# docs/plan/2026-08-24-local-protocol-stream-ownership.md §7b 记着一条没闭合的环——
+# docs/archive/plan/2026-08-24-local-protocol-stream-ownership.md §7b 记着一条没闭合的环——
 # 走查在 macOS 上「修复前后都不复现」，也就是没有鉴别力。本仓没有 Windows 机器，
 # 但 GitHub Actions 的 windows-latest 就是真 Windows + 真 NTFS，够用来回答这个问题。
 #

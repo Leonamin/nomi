@@ -2,7 +2,7 @@
 
 > 📋 状态：草稿，待拍板  
 > 日期：2026-09-03  
-> 输入调研：`docs/research/2026-08-29-browser-assets-pi-ecosystem-research.md`  
+> 输入调研：`docs/archive/research/2026-08-29-browser-assets-pi-ecosystem-research.md`  
 > main 现状对账：截至 2026-09-03 origin/main（含 M0–M3，最新合入 #376 m3/context-factory-c）  
 > 本文件是 Plan 文档，不包含产品代码。
 
@@ -245,7 +245,7 @@ P0-1（来源记录）
 
 ### 5.1 M4 规划的 taint 系统
 
-M4（Effect/Trust）目标：`EffectEnvelope`、统一 output projection、MCP/Skill trust 边界。调研文档 `docs/research/2026-09-01-agent-architecture-solution-and-execution-plan.md`（L225、L260）明确：外部/用户内容标记 `tainted`，进模型前做 injection/provenance 检查。
+M4（Effect/Trust）目标：`EffectEnvelope`、统一 output projection、MCP/Skill trust 边界。调研文档 `docs/archive/research/2026-09-01-agent-architecture-solution-and-execution-plan.md`（L225、L260）明确：外部/用户内容标记 `tainted`，进模型前做 injection/provenance 检查。
 
 ### 5.2 素材来源元数据如何复用
 

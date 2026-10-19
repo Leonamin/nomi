@@ -1,6 +1,6 @@
 # Plan：模型档案层（Model Archetype）+ 模式原语 —— 接入 Seedance 2.0 / HappyHorse（kie.ai）
 
-> 裁决：已被统一模型档案/能力目录取代；证据：`src/config/modelArchetypes/index.ts:2-7`、`src/config/modelArchetypes/index.ts:63-75`、`docs/plan/2026-08-30-unified-model-integration-certification.md:31-40`。
+> 裁决：已被统一模型档案/能力目录取代；证据：`src/config/modelArchetypes/index.ts:2-7`、`src/config/modelArchetypes/index.ts:63-75`、`docs/archive/plan/2026-08-30-unified-model-integration-certification.md:31-40`。
 
 > 触发：用户要接 Seedance 2.0、HappyHorse（经 kie.ai），现有 UI 承接不了「生成方式/参考模式/多参考图」。
 > 用户已拍板三个方向（2026-06-05）：
@@ -8,9 +8,9 @@
 > 2. 模式建模 = **档案内 `modes[]`**，一个模型条目内多模式（Seedance 同 model 变 input；HappyHorse 4 端点合 1）。
 > 3. 本地文件/项目改造 **分开做**，本轮先把模型接入跑通。
 >
-> 关联：`docs/audit/2026-06-05-multidimensional-audit.md`（P0-3 catalog 类型单一真相源）、
-> `docs/onboarding-trials/m5-install-kling3…/final-mapping.json`（同契约已验证）。
-> 规则：本文是 Rule 4 执行文档；UI 走 Rule 8 样张（见 `docs/design/mockups/`）+ Rule 7 六角色评审（见文末）。
+> 关联：`docs/archive/audit/2026-06-05-multidimensional-audit.md`（P0-3 catalog 类型单一真相源）、
+> `docs/archive/onboarding-trials/m5-install-kling3…/final-mapping.json`（同契约已验证）。
+> 规则：本文是 Rule 4 执行文档；UI 走 Rule 8 样张（见 `docs/archive/design/mockups/`）+ Rule 7 六角色评审（见文末）。
 
 ---
 
@@ -24,7 +24,7 @@
 
 ## UI 定稿（2026-06-05，样张 v3 + 设计/用户 Agent 多轮评审后）
 
-样张：`docs/design/mockups/2026-06-05-model-composer-v3.html`（交互可点，含 Seedance/HappyHorse/未识别三态）。
+样张：`docs/archive/design/mockups/2026-06-05-model-composer-v3.html`（交互可点，含 Seedance/HappyHorse/未识别三态）。
 经设计 Agent + 真实用户 Agent 多轮评审，用户逐项拍板，最终结构定稿如下：
 
 1. **输出与参数框分离**：上面「要被生成的图片/视频」是独立节点（空态用斜纹占位 + 「等待生成」）；下面「参数框」把 **参考 + 描述 + 设置合一** 成一张卡。

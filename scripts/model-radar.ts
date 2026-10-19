@@ -336,7 +336,7 @@ export function resolveHiggsfieldApiKey(): string {
  * 把 Higgsfield 的 `GET /models` 解析成 RadarEntry。
  *
  * ⚠️ 这个目录**不是可调用性的权威源**：2026-09-17 实测 Soul Cinema 与 DoP 都不在这 76 条里，
- * 端点却是活的（见 docs/evidence/2026-09-17-higgsfield-contract）。所以这条车道只回答
+ * 端点却是活的（见 docs/archive/evidence/2026-09-17-higgsfield-contract）。所以这条车道只回答
  * 「目录上新了什么」，回答不了「这家还有什么能调」——别拿它的缺席当「该模型没了」。
  * 同理它也和账户额度无关：两把额度不同的 key 返回逐字节相同的 76 条。
  */

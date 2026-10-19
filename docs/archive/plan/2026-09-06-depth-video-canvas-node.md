@@ -33,7 +33,7 @@
 
 **Tech Stack:** Electron 43 + React 18 + Zustand/Immer + React Flow + `onnxruntime-web`（从传递依赖升为直接依赖）+ `@mediapipe/tasks-vision`（新增）+ 系统 ffmpeg。
 
-**Spec 来源：** depth.cards 实抓界面（Nyfantasy — Depth Maker）；技术验证 spike（2026-09-06，Electron 43.4.1 + WebGPU + DA2 small fp16，96 帧 720p 全部跑通，单帧中位 525ms，产物 `outputs/spike-depth/`）；相关同类计划 `docs/plan/2026-09-06-video-deconstruction-table-node.md`（拆解表节点，提供 kind/schema/写边界范式）。
+**Spec 来源：** depth.cards 实抓界面（Nyfantasy — Depth Maker）；技术验证 spike（2026-09-06，Electron 43.4.1 + WebGPU + DA2 small fp16，96 帧 720p 全部跑通，单帧中位 525ms，产物 `outputs/spike-depth/`）；相关同类计划 `docs/archive/plan/2026-09-06-video-deconstruction-table-node.md`（拆解表节点，提供 kind/schema/写边界范式）。
 
 ## Global Constraints
 
@@ -361,7 +361,7 @@ cancel(jobId) → 停止取批、杀 ffmpeg、清理 tmp、phase cancelled
 
 ## 12. 接手（2026-09-07）
 
-本节是**接手后的有效范围**，与上文冲突时以本节为准（上文保留作对齐参考，不删）。原实现（PR #572）在 [`docs/research/2026-09-07-motion-ref-raw-vs-depth.md`](../research/2026-09-07-motion-ref-raw-vs-depth.md) §5 被建议关掉；用户在读完该文与 [`docs/research/2026-09-07-depth-motion-ref-in-the-wild.md`](../research/2026-09-07-depth-motion-ref-in-the-wild.md) 之后仍拍板做，但**换了立项理由、收窄了范围**——两者都写在下面。
+本节是**接手后的有效范围**，与上文冲突时以本节为准（上文保留作对齐参考，不删）。原实现（PR #572）在 [`docs/archive/research/2026-09-07-motion-ref-raw-vs-depth.md`](../research/2026-09-07-motion-ref-raw-vs-depth.md) §5 被建议关掉；用户在读完该文与 [`docs/archive/research/2026-09-07-depth-motion-ref-in-the-wild.md`](../research/2026-09-07-depth-motion-ref-in-the-wild.md) 之后仍拍板做，但**换了立项理由、收窄了范围**——两者都写在下面。
 
 ### 12.1 用户价值（原话）
 
@@ -512,7 +512,7 @@ cancel(jobId) → 停止取批、杀 ffmpeg、清理 tmp、phase cancelled
   去掉任一半它都变红，2026-09-07 实验过），真机判据在走查第 ⑧ 步。
 - **`waitForFunction` 配 async 判据等于没等**。这是走查自己的 bug，但它伪装成产品 bug
   （下游一句 `Cannot read properties of null` 长得像「派生节点没建出来」）。
-  已单独成文：`docs/lessons/wait-for-function-with-async-predicate-never-waits.md`，
+  已单独成文：`docs/archive/lessons/wait-for-function-with-async-predicate-never-waits.md`，
   含阳性对照命令与 `tests/ux/` 里另外 6 处同样写法的清单。
 
 ### 先查别人（接手前的检索，R27）
@@ -523,6 +523,6 @@ cancel(jobId) → 停止取批、杀 ffmpeg、清理 tmp、phase cancelled
 | 生态里已有？（网页版同款产品） | depth.cards（Nyfantasy — Depth Maker）是这件事的现成网页版，其参数矩阵已在本计划 §1 逐项映射过。**抄**：参数命名与四种输出模式的心智。**没抄**：全量复刻（§12.3 砍到两档分辨率 + 单模型 + 灰度单一色彩映射）——它是通用工具，我们只要「结构参考产源」这一条用途 | <https://depth.cards/> |
 | 仓库里已有？ | 有，且直接沿用：`@imgly/background-removal` 抠图 worker 范式——`src/lib/removeBackground.ts:1` 负责串行队列与进度归属，`src/lib/removeBackground.worker.ts:1` 负责在渲染层 Web Worker 里跑按需下载的大模型。深度 worker **不新写一套**编排，照这条形状长（R29：框架/仓库已有的能力不许再长一份） | `src/lib/removeBackground.ts:1`、`src/lib/removeBackground.worker.ts:1` |
 | 依赖里已有？ | 下载与出站策略不自研：`electron/networkOutboundPolicy.ts:1` 已是唯一出站分类器，权重 URL 走它 + sha256 钉死。onnxruntime-web 提供 WebGPU EP，不自己写推理后端 | `electron/networkOutboundPolicy.ts:1` |
-| TikHub 自媒体里怎么说？ | 已单独成文，26 条在野记录 + 逐条出处见 [`docs/research/2026-09-07-depth-motion-ref-in-the-wild.md`](../research/2026-09-07-depth-motion-ref-in-the-wild.md) §3；结论与失效边界抄进 §12.4 | [`docs/research/2026-09-07-depth-motion-ref-in-the-wild.md`](../research/2026-09-07-depth-motion-ref-in-the-wild.md) |
+| TikHub 自媒体里怎么说？ | 已单独成文，26 条在野记录 + 逐条出处见 [`docs/archive/research/2026-09-07-depth-motion-ref-in-the-wild.md`](../research/2026-09-07-depth-motion-ref-in-the-wild.md) §3；结论与失效边界抄进 §12.4 | [`docs/archive/research/2026-09-07-depth-motion-ref-in-the-wild.md`](../research/2026-09-07-depth-motion-ref-in-the-wild.md) |
 
 **结论**：产物形态与下游接法自研（那是 Nomi 画布特有的，生态里没有对应物）；下载 / worker 编排 / 出站策略**全部用已有**，一行不新写。

@@ -2,7 +2,7 @@
 
 > 状态：📎 交接/日志 —— **只调研不改码，一行产品代码未动。**
 > 日期：2026-09-07 · 基线：`origin/main@6a7c81786` · pi 锁定 `0.85.1`（`package.json:202-204`）
-> 服务对象：[`docs/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md`](../plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md) §3.2（26 个宿主方法采纳判定）与 §3.4（技能注入路径）——「记忆」在母方案与深度方案里**都没有落点**，本篇补上它，并先回答「pi 是不是已经给了」。
+> 服务对象：[`docs/archive/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md`](../plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md) §3.2（26 个宿主方法采纳判定）与 §3.4（技能注入路径）——「记忆」在母方案与深度方案里**都没有落点**，本篇补上它，并先回答「pi 是不是已经给了」。
 > 引用格式：pi 侧相对 `node_modules/@earendil-works/`；仓库侧相对仓库根；外部给 URL。
 
 ---
@@ -68,12 +68,12 @@
 ```bash
 source ~/.zshenv                 # TIKHUB_API_KEY 只从环境变量读
 node scripts/research/tikhub-search.mjs --q "AI短剧 角色设定 一致" \
-  --platform all --limit 8 --out docs/research/2026-09-07-agent-web-memory-longtask/tikhub/AI短剧_角色设定_一致/
+  --platform all --limit 8 --out docs/archive/research/2026-09-07-agent-web-memory-longtask/tikhub/AI短剧_角色设定_一致/
 node scripts/research/tikhub-search.mjs --q "AI 记住我的风格" \
-  --platform all --limit 8 --out docs/research/2026-09-07-agent-web-memory-longtask/tikhub/AI_记住我的风格/
+  --platform all --limit 8 --out docs/archive/research/2026-09-07-agent-web-memory-longtask/tikhub/AI_记住我的风格/
 ```
 
-产物附件：`docs/research/2026-09-07-agent-web-memory-longtask/tikhub/AI短剧_角色设定_一致/tikhub-search.{json,md}` · `…/AI_记住我的风格/tikhub-search.{json,md}`（各 32 条）
+产物附件：`docs/archive/research/2026-09-07-agent-web-memory-longtask/tikhub/AI短剧_角色设定_一致/tikhub-search.{json,md}` · `…/AI_记住我的风格/tikhub-search.{json,md}`（各 32 条）
 
 | 平台 | 出处 URL | 作者 | 发布 | 摘要（原文，未改写） |
 |---|---|---|---|---|
@@ -114,7 +114,7 @@ node scripts/research/tikhub-search.mjs --q "AI 记住我的风格" \
 | **角色设定集**（脸型/发色/骨相/标志物、服装状态、冻结） | ❌ **已经是数据** | `electron/capabilityCore/anchorBible.ts:13-22` 的 `ANCHOR_META_KEYS`（`staticFeatures` / `dynamicFeatures` / `frozen`），落在锚节点 `meta` 上，GUI 与 headless 共读同一份 |
 | **参考槽 / 素材绑定** | ❌ **已经是声明式契约** | `electron/catalog/parameterReferenceContract.ts:4-23`（`parameterReferenceSlots` 声明键） |
 | **常用模型 / 供应商偏好** | ❌ **已经是 catalog + 已拍板的排序去重** | `electron/catalog/seedBuiltins.ts` 的 curated lifecycle；2026-09-06 拍板「供应商偏好=模型框排序去重」 |
-| **片种习惯**（这类片子的分镜模板） | ❌ **已经是片种模板** | 分镜表左半列由片种模板 derive（见 `docs/lessons/shot-table-is-a-projection-of-canvas-nodes.md`） |
+| **片种习惯**（这类片子的分镜模板） | ❌ **已经是片种模板** | 分镜表左半列由片种模板 derive（见 `docs/archive/lessons/shot-table-is-a-projection-of-canvas-nodes.md`） |
 | **画面风格口味**（冷调/高对比/长镜头/不要旁白） | ✅ **记** | 今天无 owner |
 | **对 Agent 的纠正**（"别每次问我转场"、"提示词写中文"、"先给我看分镜再生成"） | ✅ **记** | 今天无 owner；等价于 Claude Code 的 `feedback` 类 |
 | **在途上下文**（这个项目在做什么、卡在哪、上次停在哪一镜） | ⚠️ **项目层记，且只记推不出来的** | 大半可从 run/画布推出来；只记"用户说过但没落进任何节点"的那一点 |

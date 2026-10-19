@@ -1,6 +1,6 @@
 /**
  * 中转站模型「勾选启用/停用」编辑的纯逻辑（从 ModelEnableEditor.tsx 抽出以便 node 单测）。
- * 见 docs/plan/2026-07-04-relay-model-enable-editing.md。
+ * 见 docs/archive/plan/2026-07-04-relay-model-enable-editing.md。
  */
 import type { ChipModel } from './ModelChipGroups'
 

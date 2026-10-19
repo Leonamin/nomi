@@ -2,7 +2,7 @@ import React from 'react'
 import type { LabState } from '../../labScreen'
 import { FindReferenceStage } from '../findReferenceLabKit'
 
-const SOURCE = 'docs/plan/2026-09-10-pr619-finish.md · 四画板逐项对账'
+const SOURCE = 'docs/archive/plan/2026-09-10-pr619-finish.md · 四画板逐项对账'
 export const FIND_REFERENCE_STATES: readonly LabState[] = [
   {
     id: 'fr-main',

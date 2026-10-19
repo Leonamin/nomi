@@ -1,5 +1,5 @@
 // 客观打分器(脊梁层)—— 纯 JS .generateScore,机器可判定,零 LLM、零网络。
-// 这是「指标三层」里 AI 最可信的那层(见 docs/plan/2026-06-21-self-improving-harness-loop.md §3.2)。
+// 这是「指标三层」里 AI 最可信的那层(见 docs/archive/plan/2026-06-21-self-improving-harness-loop.md §3.2)。
 // 半客观层(独立批评 agent + 校准)见 semiObjective.mjs;主观层(创始人抽查)不自动化。
 import { createScorer } from "@mastra/core/evals";
 

@@ -26,7 +26,7 @@
 
 ## 先查别人
 
-完整报告：[docs/research/2026-09-10-integration-docs-to-compiler/prior-art.md](../research/2026-09-10-integration-docs-to-compiler/prior-art.md)。摘要（每条带出处）：
+完整报告：[docs/archive/research/2026-09-10-integration-docs-to-compiler/prior-art.md](../research/2026-09-10-integration-docs-to-compiler/prior-art.md)。摘要（每条带出处）：
 
 - **依赖里已有**：`zod-to-json-schema` 已在依赖中，仓库里已有两处成熟用法与 TS2589 规避写法——`electron/capabilityCore/mcpTransportSchemaFromZod.ts:15`、`electron/shared/agentCapabilities/modelVisibleJsonSchema.ts:22`。**用已有**：B 的目标 schema 与 C 的公开 schema 都从 zod 派生，不手抄第二份。
 - **依赖里已有（抓取）**：`electron/providerAdapter/docsDiscovery.ts:155` 已经在用 `hardenedFetchText`（SSRF/私网/大小/超时都在里面）。**用已有**：用户交进来的文档 URL 走同一条抓取，不为「用户给的链接」另开一条更松的路。

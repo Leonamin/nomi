@@ -1,8 +1,8 @@
 # 分镜「一镜发出去什么」收成唯一出口（2026-09-30）
 
 > 状态：✅ 已实施（PR #939）。根因合同：[`docs/fixes/2026-09-30-storyboard-outbound-owner.root-cause.json`](../../fixes/2026-09-30-storyboard-outbound-owner.root-cause.json)。
-> 结构评审：[`docs/audit/2026-09-30-storyboard-outbound-structure-review.md`](../audit/2026-09-30-storyboard-outbound-structure-review.md)。
-> 检索报告：[`docs/research/2026-09-30-storyboard-outbound-owner/prior-art.md`](../research/2026-09-30-storyboard-outbound-owner/prior-art.md)。
+> 结构评审：[`docs/archive/audit/2026-09-30-storyboard-outbound-structure-review.md`](../audit/2026-09-30-storyboard-outbound-structure-review.md)。
+> 检索报告：[`docs/archive/research/2026-09-30-storyboard-outbound-owner/prior-art.md`](../research/2026-09-30-storyboard-outbound-owner/prior-art.md)。
 
 ## 问题
 

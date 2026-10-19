@@ -1,4 +1,4 @@
-// 能力核 · 纯图操作领域层（见 docs/plan/2026-06-20-capability-core-headless-exposure.md）。
+// 能力核 · 纯图操作领域层（见 docs/archive/plan/2026-06-20-capability-core-headless-exposure.md）。
 //
 // 这是「外部 agent / CLI / MCP 驱动 Nomi 画布」的最底层：把对画布工程的语义操作
 // （建节点 / 连线 / 改提示词 / 删节点）实现成**纯函数**——输入一份

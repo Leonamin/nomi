@@ -28,7 +28,7 @@
 //   · `sanitizeRendererVendorApiKeyMutation`：渲染层给的 `enabled` 恒被改成 false
 //     （`manualCertificationBoundary.test.ts` 锁着；真实设置卡传的本来就是 `enabled:false`）。
 // 于是那家供应商从第一个阶段起就是 `vendor_disabled`，「没钥匙 ⇒ 0 个可用」**是对的答案配错的理由**
-// ——恒假实现能骗过的那种假绿（docs/lessons/assert-you-are-in-the-situation-you-claim.md）。
+// ——恒假实现能骗过的那种假绿（docs/archive/lessons/assert-you-are-in-the-situation-you-claim.md）。
 // 现在改成走产品自己的路：内置种子已经把「魔搭社区」和它的 10 个预置模型（含 3 个 Qwen3 文本大脑）
 // 播进目录，用户要做的**只有一件事**——在设置卡里粘一次 key。这正是「一把钥匙 → 能用」那条不变量。
 //
@@ -96,7 +96,7 @@ async function coldStart() {
 /**
  * 重启 = 关掉进程再起一次，**不是** `win.reload()`：原地刷新后活动项目恒 null，
  * 一堆面板会静默空掉，那是走查独有的路径不是用户路径
- * （docs/lessons/walkthrough-no-win-reload.md）。而这条走查要验的恰恰是「重启之后」。
+ * （docs/archive/lessons/walkthrough-no-win-reload.md）。而这条走查要验的恰恰是「重启之后」。
  */
 async function restart() {
   await closeApp().catch(() => {})
@@ -235,7 +235,7 @@ async function disconnectLikeAHuman() {
   await clickOrFail(getWin().locator('button', { hasText: /^断开$/ }).first(), '断开')
   // 确认卡的可量表面是 data-confirm-dialog-surface（落在可见 content 内）；
   // 拿卡片里那颗同名的「断开」会被 Mantine 的遮罩挡住点不到
-  // （docs/lessons/assert-you-are-in-the-situation-you-claim.md 的置顶模态那一条）。
+  // （docs/archive/lessons/assert-you-are-in-the-situation-you-claim.md 的置顶模态那一条）。
   await clickOrFail(getWin().locator('[data-confirm-dialog-confirm="true"]').first(), '确认卡上的「断开」')
   await getWin().waitForTimeout(900)
   passed += 1

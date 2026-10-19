@@ -2,7 +2,7 @@
 /**
  * Piece 1: Token injection — 让样张 HTML 引用真实 --nomi-* token，不再自己抄值。
  *
- * 问题：样张 `docs/design/mockups/2026-09-01-agent-ui-final-redesign.html` 在 :root 里
+ * 问题：样张 `docs/archive/design/mockups/2026-09-01-agent-ui-final-redesign.html` 在 :root 里
  * 用了本地别名 (--bg, --ink, --ac…)，值是手写 oklch() 字面量。
  * 真实 token 源在 `src/theme/nomi-tokens.css`（--nomi-bg, --nomi-ink…）。
  * 两份值各自漂移，互相对不上，正是"样张和实现不同步"的根因之一。
@@ -26,7 +26,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const MOCKUP_PATH = path.join(ROOT, 'docs/design/mockups/2026-09-01-agent-ui-final-redesign.html')
+const MOCKUP_PATH = path.join(ROOT, 'docs/archive/design/mockups/2026-09-01-agent-ui-final-redesign.html')
 const TOKENS_CSS_PATH = path.join(ROOT, 'src/theme/nomi-tokens.css')
 const TAILWIND_CONFIG_PATH = path.join(ROOT, 'tailwind.config.ts')
 

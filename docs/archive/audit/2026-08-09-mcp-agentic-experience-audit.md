@@ -116,7 +116,7 @@ OpenAI 的官方实现给了几条直接可抄的交互原则：
 - MCP Apps 官方规范与 quickstart：<https://modelcontextprotocol.io/extensions/apps/overview>
 - MCP Apps 官方 API/示例：<https://apps.extensions.modelcontextprotocol.io/>
 - OpenAI 组件、双向桥、inline/fullscreen/PiP、数据工具与渲染工具分离：<https://developers.openai.com/plugins/build/chatgpt-ui/>
-- Nomi 当前能力核与生产设计：`docs/superpowers/specs/2026-08-08-agentic-production-experience-design.md`
+- Nomi 当前能力核与生产设计：`docs/archive/superpowers/specs/2026-08-08-agentic-production-experience-design.md`
 - Nomi 当前恢复交接：`/Users/aoqimin/Desktop/Nomi-production-budget-ux/docs/handoff/2026-08-09-production-mcp-provider-recovery-handoff.md`
 
 本审计只修改了审计文档和 backlog，没有修改业务代码、没有提交、没有触发供应商调用。

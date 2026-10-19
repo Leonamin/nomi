@@ -1,6 +1,6 @@
 # Nomi App 内对话/助手面全景体检（2026-08-24）
 
-> 归档说明：统一 Agent 规划前的只读代码体检，验证用户判断「右侧 agent 各自为战」。结论：**后端 loop 已统一，配置层（会话键/提示词/工具/确认）各自为战**。总体方案见 `docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md`。
+> 归档说明：统一 Agent 规划前的只读代码体检，验证用户判断「右侧 agent 各自为战」。结论：**后端 loop 已统一，配置层（会话键/提示词/工具/确认）各自为战**。总体方案见 `docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md`。
 
 ## ① 入口清单表
 

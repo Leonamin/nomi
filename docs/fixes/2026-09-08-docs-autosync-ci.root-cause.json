@@ -75,7 +75,7 @@
     "classification": "recurring",
     "reason": "Every future main push or manual rerun can exercise a drifting publication contract; SHA-scoped publication previously produced seven blocked PRs.",
     "same_class_scan": [
-      "Inspected .github/workflows/docs-autosync.yml automatic push and manual dispatch entries, scripts/run-gates-contracts.node-test.mjs and docs/fixes/docs-autosync.node-test.mjs consumers.",
+      "Inspected .github/workflows/docs-autosync.yml automatic push and manual dispatch entries, scripts/run-gates-contracts.node-test.mjs and docs/archive/fixes/docs-autosync.node-test.mjs consumers.",
       "Searched .github/workflows for create-pull-request, DOCS_AUTOSYNC_TOKEN, gh pr create and CI skip markers; SEO Radar already uses v7 fixed branch; download-stats writes a non-PR data branch."
     ]
   },
@@ -92,17 +92,17 @@
   },
   "regression_tests": [
     "scripts/run-gates-contracts.node-test.mjs",
-    "docs/fixes/docs-autosync.node-test.mjs"
+    "docs/archive/fixes/docs-autosync.node-test.mjs"
   ],
   "class_regression_tests": [
     "scripts/run-gates-contracts.node-test.mjs",
-    "docs/fixes/docs-autosync.node-test.mjs"
+    "docs/archive/fixes/docs-autosync.node-test.mjs"
   ],
   "invariant_owner_layer": {
     "layer": ".github/workflows/docs-autosync.yml",
     "tests": [
       "scripts/run-gates-contracts.node-test.mjs",
-      "docs/fixes/docs-autosync.node-test.mjs"
+      "docs/archive/fixes/docs-autosync.node-test.mjs"
     ]
   },
   "legacy_paths": {

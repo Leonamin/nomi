@@ -267,7 +267,7 @@ Expected: PASS。
 **Files:**
 - Modify: `scripts/character-card-upload-walkthrough.mjs`（仅在选择器变化时）
 - Create: `tests/ux/feedback-batch-hardening.walk.mjs`
-- Update: `docs/plan/2026-08-06-feedback-batch-hardening.md`（勾选完成项）
+- Update: `docs/archive/plan/2026-08-06-feedback-batch-hardening.md`（勾选完成项）
 
 - [x] **Step 1: 编写真实旅程**
 

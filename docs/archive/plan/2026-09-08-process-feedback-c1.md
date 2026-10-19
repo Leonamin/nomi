@@ -33,7 +33,7 @@
 
 ## 验收门
 
-六条均保留变异先红后绿证据：穷举/文案来源；假 percent 与假位次；三处同句；排队到完成几何；reduced-motion；60% 可读。实验室截图先放 docs/plan/process-feedback-evidence，主会话查看后方可更新基线。zh-CN/en、词表、token、重活门岗不增，最终 pnpm run gates。提交/推送运行版本化 Ponytail hook。PF-LAST.md 不提交、最多 15 行。
+六条均保留变异先红后绿证据：穷举/文案来源；假 percent 与假位次；三处同句；排队到完成几何；reduced-motion；60% 可读。实验室截图先放 docs/archive/plan/process-feedback-evidence，主会话查看后方可更新基线。zh-CN/en、词表、token、重活门岗不增，最终 pnpm run gates。提交/推送运行版本化 Ponytail hook。PF-LAST.md 不提交、最多 15 行。
 
 ## 实施与对账收据
 

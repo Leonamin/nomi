@@ -2,7 +2,7 @@
 //
 // 这三屏（primitives-actions / primitives-forms / primitives-surfaces）和别的屏不同：
 // 别的屏画的是**某个功能界面**的形态，这三屏画的是 `src/design/` 那套**共用积木**本身。
-// 动机（docs/plan/2026-09-07-design-system-optimization.md「实验室：补 primitive 屏」）：
+// 动机（docs/archive/plan/2026-09-07-design-system-optimization.md「实验室：补 primitive 屏」）：
 // 在此之前 8 屏 134 张基线全是功能屏，primitive 层的漂移只有等它出现在某个功能屏上才被看见；
 // 一个组件要是全仓零调用（当时有约 10 个），它的漂移就**永远**没人看见。
 //

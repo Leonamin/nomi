@@ -8,7 +8,7 @@ Per the maintainer ruling, this branch is slimmed to **this report + a per-file 
 in git history and are retrievable via the manifest.
 
 **Why slim.** The *conclusions* these artifacts prove are already merged on `main`, twice over:
-the five `docs/audit/2026-08-2{6,7}-*.md` audit docs write up the findings, and the provider
+the five `docs/archive/audit/2026-08-2{6,7}-*.md` audit docs write up the findings, and the provider
 feature itself (`electron/ai/antigravity*`, `electron/catalog/agnes*` / `antigravity*`,
 `src/config/modelArchetypes/{agnesImage,agnesVideo,antigravityImage,geminiOmni11}.ts`,
 `src/ui/onboarding/Antigravity*`, `src/i18n/locales/antigravity.ts` and their tests) is shipped.

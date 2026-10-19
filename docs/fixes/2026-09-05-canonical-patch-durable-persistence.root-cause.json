@@ -14,7 +14,7 @@
     "src/workbench/capability/canonicalCanvasPlanPatch.test.ts",
     "src/workbench/project/workbenchProjectSession.ts",
     "src/workbench/project/workbenchProjectSession.persistence.test.ts",
-    "docs/plan/2026-09-05-m0-m5-vertical-spine-status.md"
+    "docs/archive/plan/2026-09-05-m0-m5-vertical-spine-status.md"
   ],
   "entry_points": [
     "Project Agent Host canvas.write dispatch for nomi_canvas_plan patch_shots",

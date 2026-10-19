@@ -2,7 +2,7 @@
 
 > 状态：✅ 结构评审已交付（`check:symptom-cluster` 触发：`.github/workflows` 在 2026-09-22 至 2026-09-28 的 7 天里收到第 5 份根因合同）
 > 本轮合同：[`2026-09-28-package-contents-unaudited`](../../fixes/2026-09-28-package-contents-unaudited.root-cause.json)
-> 方案：[`docs/plan/2026-09-28-release-audit.md`](../plan/2026-09-28-release-audit.md)
+> 方案：[`docs/archive/plan/2026-09-28-release-audit.md`](../plan/2026-09-28-release-audit.md)
 > 近邻评审：[`2026-09-24-release-critical-evidence-structure.md`](2026-09-24-release-critical-evidence-structure.md)、[`2026-09-22-quality-gate-workflow-structure.md`](2026-09-22-quality-gate-workflow-structure.md)、[`2026-09-23-ci-release-validation-structure-review.md`](2026-09-23-ci-release-validation-structure-review.md)
 
 ## 1. 这次新增的失败模式

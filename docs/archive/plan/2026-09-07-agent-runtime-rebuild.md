@@ -6,7 +6,7 @@
 > 上游输入（三份，全部吸收）：
 > - [#546 架构总评审](../audit/2026-09-06-agent-architecture-review.md) + [渐进方案](2026-09-06-agent-architecture-master-plan.md)（**它主张渐进修，用户已否决**；四列表 / 漏洞清单 / 三条岔路 / 合流顺序全部吸收）
 > - [#547 工具层审计](../audit/2026-09-06-agent-tool-layer-audit.md) + [根修方案](2026-09-06-agent-tool-layer-root-fix.md)（`canvas.write` 真实模型 **0/18**、读类 37/37、违反行业 10 条）
-> - [#549 成熟 Agent 产品调研](../research/2026-09-06-mature-agent-products.md)（**已并入 · 2026-09-07 随 PR #549 合入 main**，路径 `docs/research/2026-09-06-mature-agent-products.md`）——它的 §1.9 与本文 §0.2 是**两次相互独立的实核**：它实拉 `0.84.3` / `0.85.1` 两个 tarball，比 `dist/harness/agent-harness.js` 的字节数与 `HarnessNotImplemented` 计数，并读 `agent-harness.d.ts` 确认 `LaneSnapshot` 已带 `streamingMessage` 与 `runningTools`；结论与本文一致——**`AgentHarness` 在 0.85.1 是真实现，#546 §1.5「它是空壳」的判断只对 0.84.3 成立**。两条独立证据同向，是岔路 1 推荐 A 的依据。
+> - [#549 成熟 Agent 产品调研](../research/2026-09-06-mature-agent-products.md)（**已并入 · 2026-09-07 随 PR #549 合入 main**，路径 `docs/archive/research/2026-09-06-mature-agent-products.md`）——它的 §1.9 与本文 §0.2 是**两次相互独立的实核**：它实拉 `0.84.3` / `0.85.1` 两个 tarball，比 `dist/harness/agent-harness.js` 的字节数与 `HarnessNotImplemented` 计数，并读 `agent-harness.d.ts` 确认 `LaneSnapshot` 已带 `streamingMessage` 与 `runningTools`；结论与本文一致——**`AgentHarness` 在 0.85.1 是真实现，#546 §1.5「它是空壳」的判断只对 0.84.3 成立**。两条独立证据同向，是岔路 1 推荐 A 的依据。
 
 ---
 
@@ -18,9 +18,9 @@
 | 问 | 答 | 出处 |
 |---|---|---|
 | 依赖里已有？ | 有，而且比我们写的全。pi 已提供会话持久化（`SessionManager`）、有序转录（`AgentSessionEvent`）、重试（`RetryPolicy`）、steer/followUp、资源加载（`DefaultResourceLoader`）——我们各写了一份更差的，共 14 处已登记成债 | `@earendil-works/pi-coding-agent@0.84.3` dist/core/session-manager.d.ts:184、dist/core/agent-session.d.ts:377/385、dist/core/resource-loader.d.ts:120、dist/core/agent-session.d.ts:40；登记表 [`docs/engineering/framework-boundaries.json`](../../engineering/framework-boundaries.json)、债基线 `scripts/framework-boundary-baseline.json` |
-| 依赖的**新版**里已有？ | 有。0.85.1 的 `AgentHarness` 是真实现，不是 0.84.3 那个空壳——这条直接推翻了 #546 §1.5 的前提，决定了整份方案的形状 | 本文 §0.2 的双版本 tarball 逐字比对（`dist/harness/agent-harness.js` 7883B/5 次 `HarnessNotImplemented` → 558B/0 次）；独立第二次实核见 [`docs/research/2026-09-06-mature-agent-products.md`](../research/2026-09-06-mature-agent-products.md) §1.9 |
-| 仓库里已有？ | 有，且正是问题所在：`electron/harness/runtime/pi/`（session/snapshot/contextCodec/run/resources/nomiSkillResources）与 `electron/projectAgentHost/`（executionCoordinator/executionHelpers/turnExecution）就是那 14 处自研版本的所在地 | [`docs/audit/2026-09-06-agent-architecture-review.md`](../audit/2026-09-06-agent-architecture-review.md)、[`docs/audit/2026-09-06-agent-tool-layer-audit.md`](../audit/2026-09-06-agent-tool-layer-audit.md)（`canvas.write` 真实模型 0/18） |
-| 生态里已有？ | 有。成熟 Agent 产品的运行时分层、工具契约与容忍策略已成行业惯例，本方案的 §3 工具契约规范直接对着它们写 | [`docs/research/2026-09-06-mature-agent-products.md`](../research/2026-09-06-mature-agent-products.md)（PR #549 已合入 main） |
+| 依赖的**新版**里已有？ | 有。0.85.1 的 `AgentHarness` 是真实现，不是 0.84.3 那个空壳——这条直接推翻了 #546 §1.5 的前提，决定了整份方案的形状 | 本文 §0.2 的双版本 tarball 逐字比对（`dist/harness/agent-harness.js` 7883B/5 次 `HarnessNotImplemented` → 558B/0 次）；独立第二次实核见 [`docs/archive/research/2026-09-06-mature-agent-products.md`](../research/2026-09-06-mature-agent-products.md) §1.9 |
+| 仓库里已有？ | 有，且正是问题所在：`electron/harness/runtime/pi/`（session/snapshot/contextCodec/run/resources/nomiSkillResources）与 `electron/projectAgentHost/`（executionCoordinator/executionHelpers/turnExecution）就是那 14 处自研版本的所在地 | [`docs/archive/audit/2026-09-06-agent-architecture-review.md`](../audit/2026-09-06-agent-architecture-review.md)、[`docs/archive/audit/2026-09-06-agent-tool-layer-audit.md`](../audit/2026-09-06-agent-tool-layer-audit.md)（`canvas.write` 真实模型 0/18） |
+| 生态里已有？ | 有。成熟 Agent 产品的运行时分层、工具契约与容忍策略已成行业惯例，本方案的 §3 工具契约规范直接对着它们写 | [`docs/archive/research/2026-09-06-mature-agent-products.md`](../research/2026-09-06-mature-agent-products.md)（PR #549 已合入 main） |
 | TikHub 自媒体里怎么说？ | 本轮未查。这一层是运行时架构，不是面向用户的产品能力，自媒体侧没有可比的一手经验——**明着标出来，不冒充覆盖** | 无 |
 
 **结论**：用已有（换用 pi 0.85.1 的 `AgentHarness` 与它已提供的五项能力），自研只保留 Nomi 独有的那部分（工具契约、画布语义、投影层）。理由：14 处自研版本每一处都比上游的差，且升级 pi 时要我们自己跟——这笔成本是结构性的，不是一次性的。
@@ -141,7 +141,7 @@ interface LaneSnapshot {
 | **K3** | **MCP 对外 dispatcher** | `capabilityCore/dispatcher.ts`（800 行；可行动错误块 `:557-565`：未知 operation 抛 `RpcError` 带 `nextAction: Use one of: …`） | **#547 §2.2⑤ 说它已经做对了**：同一个仓库，外部 MCP 客户端拿到可行动错误，我们自己的 Agent 拿到一个错误码。保留它，并让**内部路径从同一个源派生**（§3）。⚠️ `mcpCapabilityProjection.ts:151-153`（511 行）的「刻意有损广播」注释要作为**债**登记：外部宿主看到的契约比实际执行的松 |
 | **K4** | **生产运行子系统** | `electron/productionRun/`（**58 个生产文件**）；owner 是工厂 `productionRunService.ts:81` `createProductionRunService()`（无 `class ProductionService`） | 与 Agent 运行时**正交**。它有自己的生命周期（跑几十分钟、跨重启、花真钱）。新转录**按 id 引用它，永不复制它的状态** |
 | **K5** | **时间轴操作** | 5 个生产文件散在 3 个目录：`capabilityCore/{mcpTimelineConfirmation,timelineTransportAdapters}.ts`、`shared/agentCapabilities/{timelineRead,timelineWrite}.ts`、`video/shotTimeline.ts` | 同 K4：领域实现，与运行时正交。**唯一要动的是它的工具分解**（16 个内部工具 vs MCP 1 个，§3） |
-| **K6** | **v4 面板组件 + 57 张视觉基线** | `src/workbench/ai/v4/*`；基线 `tests/ux/design-lab/__baselines__/agent-panel-v4/` **实核正好 57 个 PNG**；门岗 `check:design-lab` → `scripts/check-design-lab.mjs`（package.json:179） | 设计已拍板（`docs/design/2026-09-06-agent-panel-v4.md`，用户原话「画布的设计没有问题」）。**8 个积木一个都不改长相**——它们只是终于按发生顺序出现。57 张基线在重做期间**升格为回归网**（§4.3） |
+| **K6** | **v4 面板组件 + 57 张视觉基线** | `src/workbench/ai/v4/*`；基线 `tests/ux/design-lab/__baselines__/agent-panel-v4/` **实核正好 57 个 PNG**；门岗 `check:design-lab` → `scripts/check-design-lab.mjs`（package.json:179） | 设计已拍板（`docs/archive/design/2026-09-06-agent-panel-v4.md`，用户原话「画布的设计没有问题」）。**8 个积木一个都不改长相**——它们只是终于按发生顺序出现。57 张基线在重做期间**升格为回归网**（§4.3） |
 | **K7** | **模型目录领域** | `electron/catalog/`（254 文件）；Agent 文本模型清单 `apimartTexts.ts:54-62`（注释自陈来自 2026-08-21 一次手动探测） | 领域数据保留，但按用户已定的第①条**加两件**：带鉴权的 `/v1/models` 探测（不是抓 docs 页——文档页在 API 退役后还挂着，读起来就是「还活着」）、退役 id **直接下架**（不是只降 `legacy` 分层；今天 `seedBuiltins.ts:578-580` 已把三个 DeepSeek id 标 legacy，而 legacy **只改显示分层，不下架不禁用**） |
 
 ### 1.3 一条不对等，明确保留
@@ -450,7 +450,7 @@ toolProjection(registry, profile: "internal" | "mcp") → ModelFacingTool[]
 | `fix/agent-v4-real-use-20260906` | **ahead=6, behind=8**（6 个 commit，非任务书说的 A–H 八个） | **拆开处理**。可先合（重做后仍有效）：`9fed90d4f` 边界层解 JSON 字符串（**正是 §3.4 的正确落点**，重做时升级成 `prepareArguments`）· `b4c918b72` 同名连调折一行 · `425a29953` 模型弹层每类一行 · `e894d0d19` 分镜主语修正 · `a59cf7daa` 实验室加格。**不再叠**：`4bf23ecac`「上下文环补一手文档的窗口表」——它是 pi 免费给的东西（`Model.contextWindow` + `getContextUsage`）的手写替代品，重做后会**直接撞 `check:pi-boundary` 规则 O3**。但它里面「查不到就不画环、改说『已用 12.3k』」那条**产品规则是对的**（D4），单独保留 |
 | `feat/agent-panel-v4-logo-dock-20260906` | 本地分支存在，**未推 origin** | **可合**（纯外观，收起坞 logo 血统）。趁 Dock 文件还没被阶段 4 动 |
 | `fix/design-lab-wired-states-20260906` | **ahead=0, behind=4** —— 已合（PR #544） | 已在 main。它把 `sortedItems()` 第二键从 `itemId` 哈希改成宿主数组下标（`agentPanelV4Projection.ts:247-263`，方向正确）；**阶段 4 会把整个函数删掉**（顺序来自 transcript，不再排序）——PR 里要明写这是**净删**，免得下一个人以为排序键还在用 |
-| `docs/mature-agent-products-research-20260906`(#549) | **已合入 main（2026-09-07）** | **已并入**，路径 `docs/research/2026-09-06-mature-agent-products.md`。它的 §1.9（0.85.1 harness 实现）与本文 §0.2 是两次独立实核，结论一致 |
+| `docs/mature-agent-products-research-20260906`(#549) | **已合入 main（2026-09-07）** | **已并入**，路径 `docs/archive/research/2026-09-06-mature-agent-products.md`。它的 §1.9（0.85.1 harness 实现）与本文 §0.2 是两次独立实核，结论一致 |
 | `docs/agent-architecture-review-20260906`(#546) / `docs/agent-tool-layer-audit-20260906`(#547) | docs-only | 随时可合，不阻塞任何人。**它们的渐进方案（`master-plan` / `root-fix`）已于 2026-09-07 标 ⛔ 被本文取代**（含 `docs/plan/INDEX.md` 与 doc-status 标记），两份方案不再并存 |
 
 ---
@@ -549,7 +549,7 @@ toolProjection(registry, profile: "internal" | "mcp") → ModelFacingTool[]
 | **S9** | MCP 广播 schema 不得弱于执行 schema | 🔴 `references` 无 items（外部比内部还松） |
 
 - **基线**：`scripts/model-schema-baseline.json`，身份式（`{ruleId: ["toolName#fieldPath", …]}`）。
-- **附一条离线回归**（零额度）：把真机抓到的**真实错误参数**（`docs/audit/attachments/2026-09-06-tool-probe.jsonl` 里那些 `"nodes": "[...]"`）钉成 fixture，断言「归一化后应当通过」+「若仍不通过，错误必须带 `path`/`expected`/`nextAction`」。**这是把本次 bug 变成永久回归测试。**
+- **附一条离线回归**（零额度）：把真机抓到的**真实错误参数**（`docs/archive/audit/attachments/2026-09-06-tool-probe.jsonl` 里那些 `"nodes": "[...]"`）钉成 fixture，断言「归一化后应当通过」+「若仍不通过，错误必须带 `path`/`expected`/`nextAction`」。**这是把本次 bug 变成永久回归测试。**
 - **归零时点**：阶段 2 结束（G7）。
 
 ### 8.3 一条附带的评测卫生
@@ -596,7 +596,7 @@ toolProjection(registry, profile: "internal" | "mcp") → ModelFacingTool[]
 
 - 本轮**只产出本文档**（docs-only PR，不合并）。一行产品代码未改。
 - 拍板 §7 三条后，按 §6 阶段推进；**阶段 0 的探针结果回写进 §7 岔路 1**。
-- 本方案拍板后，`docs/plan/2026-09-06-agent-architecture-master-plan.md` 与 `docs/plan/2026-09-06-agent-tool-layer-root-fix.md` 应标 **⛔ 被本文取代**——两份渐进方案与一份重做方案并存，下一个读的人一定会走错。
+- 本方案拍板后，`docs/archive/plan/2026-09-06-agent-architecture-master-plan.md` 与 `docs/archive/plan/2026-09-06-agent-tool-layer-root-fix.md` 应标 **⛔ 被本文取代**——两份渐进方案与一份重做方案并存，下一个读的人一定会走错。
 - 远期项登记：**`skill.write`**（让 Agent 把学到的方法写成技能）。恢复它需要的不是把工具接回去，是先设计「Agent 写的技能怎么被用户看到、审批、撤销」——那是一件独立的活。
 
 ---
@@ -689,7 +689,7 @@ pi lane（AgentHarness + JsonlSessionRepo，落 <project>/.nomi/agent-sessions/�
 
 ### 11.7 参考实现一致性核对：阶段 1 逐条判定
 
-> 出处：[`docs/research/2026-09-07-pi-reference-implementation-conformance.md`](../research/2026-09-07-pi-reference-implementation-conformance.md)。
+> 出处：[`docs/archive/research/2026-09-07-pi-reference-implementation-conformance.md`](../research/2026-09-07-pi-reference-implementation-conformance.md)。
 > 那份核对给的是**方案级**的九层对照与 24 条「没想到」。这一节只回答一件事：**其中落在阶段 1 切片射程内的那几条，今天到底满足没有**，
 > 每条给 `file:line`。判定分三种：**已满足**（有断言钉住）· **本 PR 修**（原来不满足，这次改了）· **阶段 2 前债**（切片没触及，明着登记，不假装做过）。
 
@@ -822,7 +822,7 @@ schema 的示例比没有示例更糟，它主动教模型写错**，而编译�
 （上游为它单开过 [#7835](https://github.com/earendil-works/pi/issues/7835)）/ 字段名近义写错。
 **一处 owner**，挂在每个工具的 `prepareArguments` 上。
 
-**过渡补丁的处置**（`docs/plan/2026-09-06-agent-panel-v4-real-use-fixes.md` 的 T1/T2/T3）：
+**过渡补丁的处置**（`docs/archive/plan/2026-09-06-agent-panel-v4-real-use-fixes.md` 的 T1/T2/T3）：
 
 | 补丁 | 新通路上的处置 | 旧通路 |
 |---|---|---|

@@ -12,7 +12,7 @@ vi.mock("./capabilityCore/rendererBridge", () => ({
 }));
 
 /**
- * runTask 的 L3 诚实护栏（docs/plan/2026-07-06-i2i-reference-reliability.md）：
+ * runTask 的 L3 诚实护栏（docs/archive/plan/2026-07-06-i2i-reference-reliability.md）：
  *
  *  闸① kind=image_edit/image_to_video 而请求里一张参考图都没有 → 拒发人话错误。
  *     此前模板引擎丢空键 / fallback body 根本没图片位 → 静默退化纯文生，「图生图不按原图」体感根源。

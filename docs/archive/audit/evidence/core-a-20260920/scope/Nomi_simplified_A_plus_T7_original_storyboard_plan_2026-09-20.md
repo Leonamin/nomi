@@ -30,8 +30,8 @@
 | 指定 A 全文 | 已读取，346 行 | K0–K7、C01–C30、CJ1–CJ4 与权限边界 |
 | 指定 B 的 T7 | 已读取 | 完整参数条、异常手势及双宿主要求；不导入其他 T 任务 |
 | 固定基线 `dfca9990b89c9c401b8ac81ea9ce30ab032e1be4` 的原分镜源码 | 已读取下述相关范围 | 确认原入口、原动作和数据结构；不代表当前本地 dirty 实现 |
-| `docs/plan/2026-09-19-core-a-execution.md` | 未取得；现有文件检索未命中目标，GitHub 默认分支读取返回 404 | 不能引用其中未见内容为事实 |
-| `docs/audit/2026-09-19-core-a-structure-review.md` | 同上 | 不能把旧审查或摘要冒充本次结构审查 |
+| `docs/archive/plan/2026-09-19-core-a-execution.md` | 未取得；现有文件检索未命中目标，GitHub 默认分支读取返回 404 | 不能引用其中未见内容为事实 |
+| `docs/archive/audit/2026-09-19-core-a-structure-review.md` | 同上 | 不能把旧审查或摘要冒充本次结构审查 |
 | 当前 core-a 的已提交差异、staged/unstaged/untracked 内容 | 未取得 | 本轮新增实现的最终处置必须在本地补审 |
 
 不需要再次询问用户“是否复用原功能”“是否做 T7”“是否做 T3”；答案已给出。真正缺少的是代码证据，不是产品方向。

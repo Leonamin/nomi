@@ -1,7 +1,7 @@
 # opt-in 频率遥测方案（T-01/T-02）
 
 > 日期：2026-09-06 · 状态：🚧 实现中 · 独立实现轨：`codex/opt-in-frequency-telemetry-20260906`
-> 来源：`docs/plan/2026-09-05-gpt-discussion-consolidation.md` §1、现役代码盘点与 2026-09-06 Context7/官方文档检索。
+> 来源：`docs/archive/plan/2026-09-05-gpt-discussion-consolidation.md` §1、现役代码盘点与 2026-09-06 Context7/官方文档检索。
 
 ## 1. 先说用户要解决的摩擦（D6）
 

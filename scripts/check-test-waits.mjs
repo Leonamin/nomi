@@ -415,7 +415,7 @@ export function main() {
     if (hardHits.some((hit) => hit.rule.id === 'fs-read-spy-path-filter')) {
       console.log('  → fs-read-spy-path-filter：生产按 fd 读，按路径过滤读 spy 恒空、断言恒真（假绿）。')
       console.log('    改用生产侧计数器（__projectAgentCommandLedgerScanCountForTests 那一套），')
-      console.log('    并配一条阳性对照用例钉住「它真的会涨」——见 docs/lessons/vacuous-probe-passes-forever.md')
+      console.log('    并配一条阳性对照用例钉住「它真的会涨」——见 docs/archive/lessons/vacuous-probe-passes-forever.md')
     }
     if (hardHits.some((hit) => hit.rule.id === 'async-waitforfunction-predicate')) {
       console.log('  → async waitForFunction：改用 expect.poll(async () => page.evaluate(...), { timeout }).toBe(true)，真正等待异步读数。')

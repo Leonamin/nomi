@@ -14,7 +14,7 @@
 2. [50 项工具映射](../architecture/agent-m0-tool-mapping.md)：`keep / merge / host-only / delete` 去向、理由和 15 个语义目标对照；49 个当前 catalog descriptor 加 1 个 wire-level gate 计数差异显式标注。
 3. [旧路径清单](../architecture/agent-m0-legacy-paths.md)：按 M1–M5 里程碑列出删除时点和不得保留的 fallback。
 4. 四份 schema-v3 根因合同已在 M1 带回生产路径并正式启用：[RC-01](../../fixes/2026-09-01-rc-01-durable-owner.root-cause.json)、[RC-02](../../fixes/2026-09-01-rc-02-semantic-tool-surface.root-cause.json)、[RC-05](../../fixes/2026-09-01-rc-05-typed-output-projection.root-cause.json)、[RC-06](../../fixes/2026-09-01-rc-06-settlement-barrier.root-cause.json)。
-5. [M1 测试红灯清单](../../qa/2026-09-01-agent-m0-red-lights.md)：门编排 18 测、canvas snapshot 挂起、`deviated` 恒 false 均有复现命令/当前状态/验收断言。
+5. [M1 测试红灯清单](../qa/2026-09-01-agent-m0-red-lights.md)：门编排 18 测、canvas snapshot 挂起、`deviated` 恒 false 均有复现命令/当前状态/验收断言。
 6. [PR #223 切片方案](../architecture/agent-m0-pr-slices.md)：Host/runtime → semantic projection → context/compaction → UI/真实旅程。
 
 ## M0 停止条件

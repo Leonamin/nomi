@@ -1,10 +1,10 @@
 # AI 手艺产物节点（agent-artifact）：设计文档 v4（已拍板 · 实施中）
 
-> 状态：✅ 2026-09-06 用户拍板「设计完就去做，全部做完走独立分支 + PR」。本文 = 实施唯一依据；样张 `docs/design/mockups/2026-09-06-agent-artifact-node.html` 为拍板证据。UI 交付最终以设计实验室截图 + 视觉基线绿为准（2026-09-06 拍板口径）。
+> 状态：✅ 2026-09-06 用户拍板「设计完就去做，全部做完走独立分支 + PR」。本文 = 实施唯一依据；样张 `docs/archive/design/mockups/2026-09-06-agent-artifact-node.html` 为拍板证据。UI 交付最终以设计实验室截图 + 视觉基线绿为准（2026-09-06 拍板口径）。
 > v2 定位：**agent-artifact 不是"所有 Agent 产物都塞进去"的媒体筐**——调模型的生成照旧走现有生成节点与素材化通道；它只承载 **AI 不调模型、用代码/标记语言直接做出的"手艺产物"**。
 > v3 补充（2026-09-06 用户追问）：**手艺产物必须能被"下游使用"**——不只是给人看，还要能固化成下游可消费的形态（参考图 / 文件）。SVG 的典型用途是**参考图**（生图画复杂人物贵且不可控，画构图线稿反而精确）；3D 的典型用途是**摆位**（桌子、两人对坐等场景/站位），截图后挂进镜头当参考。
 > v4 数据模型收敛（实现前勘察实证，见 §4.1）：**不扩展 `GenerationResultType` 闭集**——`type` 是 zod 5 值 enum（`generationCanvasSchema.ts:43`）且被媒体白名单/下载扩展名链/生命周期密集消费，硬塞 svg/html/markdown/glb 会炸快照校验与媒体判定。改为：**agent-artifact 走 kind 专属渲染分支（BaseGenerationNode 内 scene3d/panorama 同级），产物元数据挂 `meta.artifact`**，渲染按 `meta.artifact.fileType` 分发子视图。
-> 配套样张：`docs/design/mockups/2026-09-06-agent-artifact-node.html`（自包含单文件）。
+> 配套样张：`docs/archive/design/mockups/2026-09-06-agent-artifact-node.html`（自包含单文件）。
 
 ## 1. 用户价值
 
@@ -21,7 +21,7 @@
 - 「HTML 讲故事、画流程图，放画布上。」→ 已实现（沙箱 srcdoc + 产物自带策略；CSS 动效可跑，内联 JS 见 §6.5 已知缺口）。
 - 「**一个节点通吃**，Agent 自己判断什么时候用哪种手艺。」→ 单 kind `agent-artifact` 已是这个形状（决策 1）；"何时用哪种手艺"目前只写在工具描述里（一句话选路），完整决策树 = 阶段 2，见 §11。
 
-## 先查别人（R27 · 报告全文见 [`docs/research/2026-09-07-agent-artifact-node/prior-art.md`](../research/2026-09-07-agent-artifact-node/prior-art.md)）
+## 先查别人（R27 · 报告全文见 [`docs/archive/research/2026-09-07-agent-artifact-node/prior-art.md`](../research/2026-09-07-agent-artifact-node/prior-art.md)）
 
 > 诚实前提：本方案在门岗上线日之前就已拍板实施，这份检索是**回溯补的**。它没改本轮任何决定，
 > 但改了**下一刀**的写法（下面标 ⚠️ 的两条）——这也正说明「先查」值得做在动手之前。

@@ -5,7 +5,7 @@
 > 驱动：Agent 面板 v4 在 vendor Vercel AI Elements（上游写在 React 19 + Tailwind 4 + shadcn + AI SDK 6 上）。
 > 主会话判断：升级另立项，先 React 19 + AI SDK，Tailwind 4 最后。本文是那个立项。
 > 事实基线：全部实查（npm registry / 官方迁移指南 / Context7 / 本机可编译探针），实查日期 2026-09-06，逐条带出处。
-> 关联：[Agent 面板 v4 lab](2026-09-05-agent-ui-a-composer.md) · AI Elements 源码解剖 `docs/research/2026-09-06-ai-elements-anatomy.md`（在 `feat/agent-panel-v4-lab-20260906` 分支）
+> 关联：[Agent 面板 v4 lab](2026-09-05-agent-ui-a-composer.md) · AI Elements 源码解剖 `docs/archive/research/2026-09-06-ai-elements-anatomy.md`（在 `feat/agent-panel-v4-lab-20260906` 分支）
 
 ---
 
@@ -83,7 +83,7 @@ npm dist-tags 实查（2026-09-06）：
 | Tailwind | latest `4.3.3`（`@tailwindcss/postcss` / `@tailwindcss/vite` / `@tailwindcss/cli` 同版） | npm registry |
 | Tailwind 4 破坏点 | 见 §5 | tailwindcss.com/docs/upgrade-guide |
 | Electron | `43.4.1` = Chromium **150** + Node **24.18.1** | releases.electronjs.org/release/v43.4.1 |
-| AI Elements 上游 | React `19.2.3` / `ai ^6.0.105` / `@ai-sdk/react ^3.0.41` / Tailwind 4 / Apache-2.0；`Response`·`Actions`·`MessageAvatar`·`PromptInputToolbar` 都已不存在 | 本仓 `docs/research/2026-09-06-ai-elements-anatomy.md`（读的是真源码） |
+| AI Elements 上游 | React `19.2.3` / `ai ^6.0.105` / `@ai-sdk/react ^3.0.41` / Tailwind 4 / Apache-2.0；`Response`·`Actions`·`MessageAvatar`·`PromptInputToolbar` 都已不存在 | 本仓 `docs/archive/research/2026-09-06-ai-elements-anatomy.md`（读的是真源码） |
 | **探针①** | `JSX.Element`（裸全局）在 `@types/react@19.2.18` + `typescript@5.6.3` 下报 **TS2503 Cannot find namespace 'JSX'** | 本机最小 tsx 探针，真跑 tsc |
 | **探针②** | `MutableRefObject` 在 19 类型里**仍然存在**，只是 `@deprecated Use RefObject instead`（`index.d.ts:1668-1670`）→ 不阻断编译 | 读 `@types/react@19.2.18` 源 d.ts |
 | **探针③** | 19 的 `useRef` 只有三个带参重载（`index.d.ts:1737/1749/1761`），**没有零参重载** | 同上 |
@@ -254,7 +254,7 @@ v4 的改动：
 - `scripts/check-dangling-tailwind.mjs:146` —— `fs.readFileSync('tailwind.config.ts')`，然后手写括号匹配去抠 `theme.extend` 的键名，双向校验「类名引用了不存在的 token 键」和「定义了 token 却没出口」。
 - `scripts/check-design-tokens.mjs:95/137` —— 把 `tailwind.config.ts` 和 `.css` 一起扫，做 `color-mix(in oklch)` 色相漂移检查和「语义 token 困在作用域里」检查。
 
-还有第三条，比门岗更硬：**`.ts` 扫描面这个不变量必须原样活过去。** 2026-09-06 刚发现 `content` 只列 `.tsx` 时，住在 `.ts` 里的类名会**完全静默地**不生成——全仓盘出 4 处一直失效的真样式（浮窗八个 resize 手柄的定位、画布分组的半透明底与拖放描边、生成钮禁用底色、预览控制条禁用态 hover），教训见 `docs/lessons/tailwind-content-ts-classnames-silently-dropped.md`。守它的是 `scripts/build-tailwind.test.ts`（真跑一次 Tailwind，断言只在 `.ts` 里出现的哨兵类进了 CSS，并带 vacuity 守卫）。**v4 换成自动检测后，这条测试必须继续绿**——它是判断「新扫描面有没有偷偷缩回去」的唯一信号，且这个坑没有别的信号。
+还有第三条，比门岗更硬：**`.ts` 扫描面这个不变量必须原样活过去。** 2026-09-06 刚发现 `content` 只列 `.tsx` 时，住在 `.ts` 里的类名会**完全静默地**不生成——全仓盘出 4 处一直失效的真样式（浮窗八个 resize 手柄的定位、画布分组的半透明底与拖放描边、生成钮禁用底色、预览控制条禁用态 hover），教训见 `docs/archive/lessons/tailwind-content-ts-classnames-silently-dropped.md`。守它的是 `scripts/build-tailwind.test.ts`（真跑一次 Tailwind，断言只在 `.ts` 里出现的哨兵类进了 CSS，并带 vacuity 守卫）。**v4 换成自动检测后，这条测试必须继续绿**——它是判断「新扫描面有没有偷偷缩回去」的唯一信号，且这个坑没有别的信号。
 
 把 token 搬进 `@theme` 会让前两个门岗**同时失明**。它们各自都是从真事故里长出来的（`text-nomi-ink-70` 静默失效、`--workbench-success-ink` 全 App 10 处绿字掉色、accent 色相被 oklch 插值拽成粉/橄榄绿）。所以顺序必须是：**先让 v4 在 JS 配置下跑绿 → 再单独立一项把配置搬进 CSS 并同步重写这两个门岗**。绝不能一步做完。
 

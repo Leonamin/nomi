@@ -9,7 +9,7 @@
 - [技能](../../../../agent-skills/nomi-competitive-radar/SKILL.md)：可说“按 nomi-competitive-radar 跑本轮三日雷达”或直接让执行者读此文件。
 - [执行规程](../../../../agent-skills/nomi-competitive-radar/references/protocol.md)：扫描、TikHub、真实鼠标/录屏、轮换与验收。
 - [来源登记](sources.md)：核心材料、身份核验与待补入口。
-- [报告模板](TEMPLATE.md)：每轮复制为 `docs/research/competitive/<cycle-id>/report.md`，逐卡保存，不等全做完才落盘。
+- [报告模板](TEMPLATE.md)：每轮复制为 `docs/archive/research/competitive/<cycle-id>/report.md`，逐卡保存，不等全做完才落盘。
 - [落地方案](../../plan/2026-09-19-competitive-learning-workflow.md)：本轮范围、验收与回滚。
 
 技能正本在仓库 `agent-skills/`，供研发/研究宿主使用，不装进 Nomi 面向创作者的技能库。支持链接的本机宿主可把这个目录链接到自己的 skills 目录；其它环境由 AGENTS 指针显式读取。不要维护第二份正文。

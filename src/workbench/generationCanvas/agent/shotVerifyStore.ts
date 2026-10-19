@@ -1,6 +1,6 @@
 import { declareStoreLifetime } from '../../project/storeLifetime'
 // 镜级 verify 的状态层 + 编排入口(渲染层单一真相源)。
-// 方案:docs/plan/2026-06-28-storyboard-closed-loop-verify.md（Stage 1 实时编排 + Stage 2 半自动封顶）。
+// 方案:docs/archive/plan/2026-06-28-storyboard-closed-loop-verify.md（Stage 1 实时编排 + Stage 2 半自动封顶）。
 //
 // 数据流:生成完成 → verifyShotsAndReport(读画布快照→gather→调模型)→ 写本 store →
 //   resident Agent 订阅 → 内容偏差卡 → 「让 AI 修」发 agent 消息（走现成付费确认闸，不另建付费 loop）。

@@ -4,7 +4,7 @@
 
 状态：已完成
 
-设计基线：`docs/design/mockups/2026-08-16-model-settings-home-information-architecture.html`
+设计基线：`docs/archive/design/mockups/2026-08-16-model-settings-home-information-architecture.html`
 
 ## 1. 交付结果
 

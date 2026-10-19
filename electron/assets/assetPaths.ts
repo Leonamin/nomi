@@ -1,5 +1,5 @@
 // 资产路径 / MIME 纯 helper —— 从 runtime.ts 拆出（见
-// docs/plan/2026-06-04-runtime-split-execution.md 第 3 步）。
+// docs/archive/plan/2026-06-04-runtime-split-execution.md 第 3 步）。
 // 全部为无副作用纯函数（只做字符串 / path / hash 运算，不碰 fs）。
 import crypto from "node:crypto";
 import path from "node:path";

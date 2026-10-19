@@ -125,7 +125,7 @@ reducer 的 `sealGenerationShots` 把绑定带过封存线。三条回归测试�
 
 ## 先查别人
 
-完整报告：[docs/research/2026-09-10-agent-draft-single-ledger/prior-art.md](../research/2026-09-10-agent-draft-single-ledger/prior-art.md)
+完整报告：[docs/archive/research/2026-09-10-agent-draft-single-ledger/prior-art.md](../research/2026-09-10-agent-draft-single-ledger/prior-art.md)
 
 - 仓库里已有（**用它**）：幂等落地链 `electron/productionRun/multiShotCanvasLanding.ts:147` `landCanvasForRun` + `electron/productionRun/multiShotCanvasLanding.ts:32` `canvasLandingOperationId`，渲染半 `src/workbench/capability/multiShotCanvasLanding.ts:59` `materializeShots`。建草稿即落复用同一条链和同一个 operationId，不新建第二条。
 - 仓库里已有（**用它**）：`plan.bind-shot-nodes` 的 shotId→nodeId 账本 `electron/productionRun/productionRunCanvasLandingReducer.ts:11` —— 对 plan.state 无闸，draft 态可直接绑定，不为草稿期另立字段。

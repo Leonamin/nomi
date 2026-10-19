@@ -1,6 +1,6 @@
 /* --workbench-* token 真源在 tailwind.config.ts addBase 的 :root（光/暗两块，与 --nomi-* 同机制）。
    曾住这里、限定 .workbench-shell 作用域 → portal/库页浮层解析不到 + 与 tailwind 副本漂移（208 vs 222），
-   2026-08-24 收口（docs/plan/2026-08-24-workbench-token-root-scope.md）。本文件只剩组件样式。 */
+   2026-08-24 收口（docs/archive/plan/2026-08-24-workbench-token-root-scope.md）。本文件只剩组件样式。 */
 
 /* Scroll affordances shared by the editor and resident composer.  These were
    previously bundled with the retired chat stylesheet; keep the live editor

@@ -2,7 +2,7 @@
 
 > 范围：只审与“外部 AI 软件调用 Nomi”有关的确认、连接、项目选择、重复授权和错误下一步；不是全 App 重跑。目标是把用户从“想生成一镜”到“继续等待结果”的可见动作降到最少，同时不削弱 P0 的项目隔离、真人审批、一次提交和恢复约束。
 >
-> 结论：采用“客户端优先、Nomi 兜底、一次组合确认”。本报告是诊断快照；活状态写入 [`docs/audit/redundancy-backlog.md`](redundancy-backlog.md)，实施入口仍是两份 2026-08-22 canonical plan。
+> 结论：采用“客户端优先、Nomi 兜底、一次组合确认”。本报告是诊断快照；活状态写入 [`docs/archive/audit/redundancy-backlog.md`](redundancy-backlog.md)，实施入口仍是两份 2026-08-22 canonical plan。
 
 ## 用户任务和动作预算
 

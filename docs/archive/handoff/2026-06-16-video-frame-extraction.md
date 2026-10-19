@@ -1,10 +1,10 @@
 # 交接：视频抽帧（首/尾帧）+ 重新支持镜头视频接力
 
 > 给接手 AI 的自包含上下文。用户拍板：shot→shot 自动链先删了（B-clean），**改成"从视频抽首/尾帧图"的能力**——这一块同时根治三件事，是核心基建。
-> 工作树 `/Users/aoqimin/Desktop/Nomi/` main 分支。先读 CLAUDE.md 纪律 + `docs/workflow/2026-06-06-real-generation-e2e-loop.md`（接入即验证）。
+> 工作树 `/Users/aoqimin/Desktop/Nomi/` main 分支。先读 CLAUDE.md 纪律 + `docs/archive/workflow/2026-06-06-real-generation-e2e-loop.md`（接入即验证）。
 
 ## 0. 这个能力一并解决三件事
-1. **批量生成那个潜伏 bug 的根治**：视频→视频 first_frame 边承诺"抽源视频尾帧当本镜首帧"，但抽帧步骤从未实现 → 多镜视频接力裸跑/失败（见 docs/audit/eval 与 bug① 分析）。
+1. **批量生成那个潜伏 bug 的根治**：视频→视频 first_frame 边承诺"抽源视频尾帧当本镜首帧"，但抽帧步骤从未实现 → 多镜视频接力裸跑/失败（见 docs/archive/audit/eval 与 bug① 分析）。
 2. **重新支持镜头视频接力**：B-clean 为了避开这个坑，去掉了 storyboard 的 shot→shot 链（`storyboardPlan.ts` 转换器）。抽帧做好后可**安全重新接上**（前一镜尾帧→后一镜首帧的连贯）。
 3. **Seedance 首尾帧 from 视频** + `return_last_frame` 链：见 `docs/handoff/2026-06-16-seedance-apimart-complete.md`。
 

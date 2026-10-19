@@ -70,7 +70,7 @@ export function adapterTerminalReasonCode(stage: ProviderAdapterRun["stage"]): s
  * 就地改写成新词表，读完盘上就不再有它们。
  *
  * 为什么是改写不是丢弃：停在 `needs_spend_confirmation` 的会话恰恰是被那条死路卡住的那些
- * （外部宿主永远走不出去，见 docs/research/2026-09-12-real-onboarding-acceptance §P0-1）。
+ * （外部宿主永远走不出去，见 docs/archive/research/2026-09-12-real-onboarding-acceptance §P0-1）。
  * 丢掉等于让用户重来一遍；改写成 `ready_to_certify` 等于把他直接放出来。
  */
 const RETIRED_SPEND_GATE_STAGES = new Set([

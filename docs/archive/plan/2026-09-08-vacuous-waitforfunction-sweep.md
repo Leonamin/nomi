@@ -22,7 +22,7 @@ R17 evidence: before migrating callers, node scripts/check-test-waits.mjs exited
 - 依赖已有：Playwright 1.60.0 `node_modules/playwright/lib/matchers/expect.js:12951` 用 `await actual()` 获取采样值；使用现成 expect.poll，无需自建轮询器。
 - 仓库已有：`tests/ux/agent-runtime-production.walk.mjs:54` 已用 expect.poll 等异步持久化读取；本次统一遵循它。
 - 生态已有：官方 [expect.poll 文档](https://github.com/microsoft/playwright/blob/main/docs/src/test-assertions-js.md) 明确支持 async 回调及 timeout，Context7 已查询。
-- 事故证据：[PR #602 教训](../../lessons/wait-for-function-with-async-predicate-never-waits.md) 记录不等待 async 判据；本次已用当前安装包做 Chromium 对照重现。
+- 事故证据：[PR #602 教训](../lessons/wait-for-function-with-async-predicate-never-waits.md) 记录不等待 async 判据；本次已用当前安装包做 Chromium 对照重现。
 - 自媒体：这是确定性框架 API 语义问题，源码与官方文档足够，未查 TikHub。
 - 结论：复用已有 expect.poll；门岗使用仓库已有 TypeScript 解析器，避免正则对跨行和文本样例产生漏报/误报。
 

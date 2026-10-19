@@ -4,7 +4,7 @@
 // 为什么要这条规则（2026-09-05）：`[aria-label="生成区 AI 助手"]` 的渲染者随 Agent Host cutover 被删
 // （d270d34ec），字面量却还留在两份走查里——一处断言它存在（假红），一处断言它不存在（恒真的假绿）。
 // 类名死锚点已有 dead-selector 规则在管，而**文案锚点**没人管：它还多一层脆弱——aria-label 多半来自
-// i18n，改文案/换语言就失效。见 docs/lessons/dead-selector-lies-both-ways.md。
+// i18n，改文案/换语言就失效。见 docs/archive/lessons/dead-selector-lies-both-ways.md。
 
 /** `aria-label=` / `aria-label*=` / `^=` / `$=` 里的字面量（含转义引号写法）。 */
 const ARIA_LABEL_RE = /aria-label(?:[*^$])?=\s*\\?["']([^"'\]\\]+)\\?["']/g

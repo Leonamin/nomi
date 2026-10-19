@@ -15,7 +15,7 @@
 //   · 第 1、2 镜是**标定靶**，不是偷懒——第 13 步要拿导出成品接缝处的像素证明「转场真的渲染
 //     进去了、而且是压暗不是闪一道绿光」，这条判据需要一个已知答案的靶，只有纯色给得出已知答案。
 //   两段真素材的那一头另有判据：导出成品在第 3 镜时刻必须有真实明暗跨度（不是纯色板）。
-// 隔离 profile（docs/lessons/walkthrough-default-profile-is-isolated.md）。
+// 隔离 profile（docs/archive/lessons/walkthrough-default-profile-is-isolated.md）。
 // Run: pnpm run build && node tests/ux/editing-real-user-pass.walk.mjs
 import fs from 'node:fs'
 import os from 'node:os'

@@ -4,7 +4,7 @@ name: Archetype Defaults Autosync
 # 用 --check 在 PR 上红灯拦「忘了重新生成」，2026-10-02 起改成自动重新生成（门岗账本：能自动修的不拦人）：
 # main 每前进一次就从档案重新生成一遍，有 diff 就更新同一条 bot PR；没有 diff 时 action 会关掉旧 PR。
 #
-# 为什么不并进 docs-autosync：那条流水线的不变量是「只写 docs/」（docs/fixes/docs-autosync.node-test.mjs 钉死），
+# 为什么不并进 docs-autosync：那条流水线的不变量是「只写 docs/」（docs/archive/fixes/docs-autosync.node-test.mjs 钉死），
 # 这里写的是生成的代码文件，写入面不同，所以单独一条、单独一个固定分支，写入范围只放那三类生成文件。
 # 不用 git push、不跳 CI：和 docs-autosync 一样靠默认 token 的事件语义避免递归，PR 的 CI 需要维护者批准后才跑。
 

@@ -4,7 +4,7 @@ import { launchNomiApp } from './_launchApp.mjs'
 import { expect, expectAbsent, proveProbe } from './_assert.mjs'
 import { stationTimeout } from './_station-budget.mjs'
 import { COMPOSER_SKILL, SKILL_POPOVER } from './agent-runtime-walk-support.mjs'
-const output = path.resolve('docs/design/verification/2026-09-09-skill-library')
+const output = path.resolve('docs/archive/design/verification/2026-09-09-skill-library')
 fs.mkdirSync(output, { recursive: true })
 const run = await launchNomiApp({ name: 'skill-library-cards', settleMs: 0,
   env: process.env.NOMI_SKILL_UI_DEV_URL ? { NOMI_RENDERER_URL: process.env.NOMI_SKILL_UI_DEV_URL, VITE_DEV_SERVER_URL: process.env.NOMI_SKILL_UI_DEV_URL } : {},

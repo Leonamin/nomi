@@ -26,7 +26,7 @@
 
 ## 先查别人
 
-完整报告：`docs/research/2026-09-10-agent-transcript-merge/prior-art.md`（每条带 URL / file:line）。三条要点：
+完整报告：`docs/archive/research/2026-09-10-agent-transcript-merge/prior-art.md`（每条带 URL / file:line）。三条要点：
 
 1. **仓库已有的折叠规则** — `src/workbench/ai/v4/agentPanelV4Collapse.ts:46-59, :104-111`：
    我们**已经**在折叠了，但只折工具与思考；`:111` 把一段工作里的助手文本原样一条条推到

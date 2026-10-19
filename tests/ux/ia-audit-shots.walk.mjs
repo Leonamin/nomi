@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url'
 import { expectCount, screenshotSettled } from './_assert.mjs'
 import { addCanvasNodeFromRail } from './_canvasRail.mjs'
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
-const outDir = path.join(repoRoot, 'docs/design/mockups/2026-08-02-real-ui')
+const outDir = path.join(repoRoot, 'docs/archive/design/mockups/2026-08-02-real-ui')
 fs.mkdirSync(outDir, { recursive: true })
 
 const WIN_W = 1680
@@ -321,7 +321,7 @@ try {
   await getWin().waitForTimeout(1200)
   await dismissTour() // ← 先在进全屏前把引导清掉（dismissTour 会点「关闭」，进全屏后再跑会关掉导演台）
   // 点法收口在 _canvasRail：导演台自 2026-09-06「第三档」起住在左缘的「更多」里，按 aria-label 直点左缘已点不到。
-  // 真断言：节点必须真的多出来一个（docs/lessons/dead-selector-lies-both-ways）。
+  // 真断言：节点必须真的多出来一个（docs/archive/lessons/dead-selector-lies-both-ways）。
   const nodeCountBefore = await getWin().locator('.generation-canvas-v2-node[data-node-id]').count()
   await addCanvasNodeFromRail(getWin(), 'director')
   await expectCount(

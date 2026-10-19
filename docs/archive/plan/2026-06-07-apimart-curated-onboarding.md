@@ -1,11 +1,11 @@
 # apimart 策展接入 + 战略转向「通用接入 → 策展两家」（R4 计划稿）
 
 > 2026-06-07。本文是多文件改动的执行前文档（R4）。决策表见 §6，请用户拍板后再细化落地。
-> 撤销声明：`docs/plan/2026-06-06-universal-model-onboarding.md` 描述的「描述符 + 通用解释器接长尾」方案**本轮撤销**（理由见 §1）。该文档保留为研究材料，不再演化为产品；`tests/transport-spike/*` 同样归档。
+> 撤销声明：`docs/archive/plan/2026-06-06-universal-model-onboarding.md` 描述的「描述符 + 通用解释器接长尾」方案**本轮撤销**（理由见 §1）。该文档保留为研究材料，不再演化为产品；`tests/transport-spike/*` 同样归档。
 
 ## 0. 一句话
 
-用户给一个 key，我们把 apimart（和已有的 kie）这两家中转站**预置好的全部图片/视频模型**一键接入。文本模型已处理完，不在本轮范围。Agent Harness 是独立轨道（见 `docs/plan/2026-06-07-agent-harness-hardening-plan.md`），不被本轮阻塞。
+用户给一个 key，我们把 apimart（和已有的 kie）这两家中转站**预置好的全部图片/视频模型**一键接入。文本模型已处理完，不在本轮范围。Agent Harness 是独立轨道（见 `docs/archive/plan/2026-06-07-agent-harness-hardening-plan.md`），不被本轮阻塞。
 
 ## 进度（2026-06-07 实时）
 
@@ -103,7 +103,7 @@ kie 的策展基建是教科书级模板，apimart 照搬：
 - **按 R8：先出 HTML 样张 → 用户拍板 → 才实现。本轮只出样张，不写前端代码。**
 
 ### C — Agent Harness 演进（独立轨道，不阻塞 A/B）
-归口 `docs/plan/2026-06-07-agent-harness-hardening-plan.md`，本文件不展开。
+归口 `docs/archive/plan/2026-06-07-agent-harness-hardening-plan.md`，本文件不展开。
 
 ## 6. 决策表（R3，请用户拍）
 

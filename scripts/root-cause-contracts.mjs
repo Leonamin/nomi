@@ -49,7 +49,7 @@ const HIGH_RISK_EXACT = new Set([
   // 收的是同一个风险形状：**静默失效**。它们坏掉时不会报错，只会安静地放行——
   // 一次没过门的 push、一份没扫过的凭据、一个压根没装上的钩子，和正常放行长得一模一样，
   // 只有事后在远端才看得见。当天实测：push 闸的戳只认「固定路径 + mtime」，主仓里一枚别处
-  // 盖的旧戳把 gates 实际 exit=1 的分支放上了远端（docs/lessons/gate-stamps-must-be-keyed-to-tree-and-head.md）。
+  // 盖的旧戳把 gates 实际 exit=1 的分支放上了远端（docs/archive/lessons/gate-stamps-must-be-keyed-to-tree-and-head.md）。
   // 进这张表 = 改它必须带根因合同 + 本次变化中的类级回归测试。
   //
   // 蓄意**不**收 self-check.sh / handoff-*.sh / model-doc-check.sh / stack-currency-check.sh：
@@ -64,6 +64,64 @@ const HIGH_RISK_EXACT = new Set([
 
 function normalized(file) {
   return String(file || "").replaceAll(path.sep, "/").replace(/^\.\//, "");
+}
+
+const DOCS_REFERENCE = /docs\/[A-Za-z0-9._/-]+/g;
+
+function archivedDocsPath(source) {
+  if (!source.startsWith("docs/") || source.startsWith("docs/archive/")) return null;
+  const relative = source.slice("docs/".length);
+  return relative.includes("/") ? `docs/archive/${relative}` : `docs/archive/guides/${relative}`;
+}
+
+/**
+ * Recognize a contract edit that only follows files moved by the documented docs archive migration.
+ * The trusted base inventory proves the old endpoint existed; the current inventory proves that
+ * endpoint was removed and the canonical archive destination exists.
+ */
+export function classifyReferenceOnlyContractRelocation(baseContract, currentContract, { baseFiles, currentFiles }) {
+  const relocatedReferences = [];
+  const errors = [];
+  const baseInventory = new Set([...baseFiles].map(normalized));
+  const currentInventory = new Set([...currentFiles].map(normalized));
+
+  function compare(baseValue, currentValue, location) {
+    if (baseValue === currentValue) return true;
+    if (typeof baseValue === "string" && typeof currentValue === "string") {
+      const references = [...baseValue.matchAll(DOCS_REFERENCE)].map((match) => {
+        let source = match[0];
+        while (source.endsWith(".")) source = source.slice(0, -1);
+        return { token: match[0], source };
+      });
+      if (references.length === 0) return false;
+      const mapped = baseValue.replace(DOCS_REFERENCE, (token) => {
+        let source = token;
+        while (source.endsWith(".")) source = source.slice(0, -1);
+        const target = archivedDocsPath(source);
+        if (!target || !pathExists(source, baseInventory) || pathExists(source, currentInventory) || !pathExists(target, currentInventory)) return token;
+        relocatedReferences.push({ source, target });
+        return `${target}${token.slice(source.length)}`;
+      });
+      return mapped === currentValue;
+    }
+    if (Array.isArray(baseValue) && Array.isArray(currentValue) && baseValue.length === currentValue.length) {
+      return baseValue.every((value, index) => compare(value, currentValue[index], `${location}[${index}]`));
+    }
+    if (record(baseValue) && record(currentValue)) {
+      const baseKeys = Object.keys(baseValue).sort();
+      const currentKeys = Object.keys(currentValue).sort();
+      if (baseKeys.length !== currentKeys.length || baseKeys.some((key, index) => key !== currentKeys[index])) return false;
+      return baseKeys.every((key) => compare(baseValue[key], currentValue[key], `${location}.${key}`));
+    }
+    return false;
+  }
+
+  // Hashes are loader metadata, not contract fields; content hashes necessarily change with references.
+  const baseData = Object.fromEntries(Object.entries(baseContract).filter(([key]) => key !== "__contentHash"));
+  const currentData = Object.fromEntries(Object.entries(currentContract).filter(([key]) => key !== "__contentHash"));
+  const isSameShapeWithRelocations = compare(baseData, currentData, "contract");
+  const isReferenceOnly = isSameShapeWithRelocations && relocatedReferences.length > 0 && errors.length === 0;
+  return { isReferenceOnly, relocatedReferences, errors };
 }
 
 function isTestFile(file) {
@@ -140,7 +198,7 @@ function hasNamedExport(source, name) {
   return false;
 }
 
-function validateStructuralContract(contract, changed, existingFiles, label, fileContents) {
+function validateStructuralContract(contract, changed, existingFiles, label, fileContents, isReferenceOnly = false) {
   const errors = [];
   const scopePaths = Array.isArray(contract?.scope_paths) ? contract.scope_paths : [];
   const regressionTests = Array.isArray(contract?.regression_tests) ? contract.regression_tests : [];
@@ -157,7 +215,7 @@ function validateStructuralContract(contract, changed, existingFiles, label, fil
     for (const affectedPath of evidence.affected_paths) {
       const clean = normalized(affectedPath);
       if (!fileExists(clean, existingFiles)) errors.push(`${label}: structural affected path does not exist: ${affectedPath}`);
-      if (!changed.has(clean)) errors.push(`${label}: structural affected path was not changed in this diff: ${affectedPath}`);
+      if (!isReferenceOnly && !changed.has(clean)) errors.push(`${label}: structural affected path was not changed in this diff: ${affectedPath}`);
       if (!pathIsInScope(clean, scopePaths)) errors.push(`${label}: structural affected path is not covered by scope_paths: ${affectedPath}`);
     }
   }
@@ -182,7 +240,7 @@ function validateStructuralContract(contract, changed, existingFiles, label, fil
         errors.push(`${label}: preserved export path does not exist: ${preserved.path}`);
         continue;
       }
-      if (!changed.has(cleanPath)) errors.push(`${label}: preserved export path was not changed in this diff: ${preserved.path}`);
+      if (!isReferenceOnly && !changed.has(cleanPath)) errors.push(`${label}: preserved export path was not changed in this diff: ${preserved.path}`);
       if (!pathIsInScope(cleanPath, scopePaths)) errors.push(`${label}: preserved export path is not covered by scope_paths: ${preserved.path}`);
       const source = fileContent(cleanPath, fileContents);
       if (typeof source !== "string") {
@@ -197,7 +255,7 @@ function validateStructuralContract(contract, changed, existingFiles, label, fil
     const clean = normalized(testFile);
     if (!isTestFile(clean)) errors.push(`${label}: regression_tests entry is not a test file: ${testFile}`);
     if (!existingFiles.has(clean)) errors.push(`${label}: regression test does not exist: ${testFile}`);
-    if (!changed.has(clean)) errors.push(`${label}: regression test was not changed in this diff: ${testFile}`);
+    if (!isReferenceOnly && !changed.has(clean)) errors.push(`${label}: regression test was not changed in this diff: ${testFile}`);
   }
   return errors;
 }
@@ -209,7 +267,7 @@ function isStructuralPreventionArtifact(file) {
     && !/^docs\/fixes\/.*\.root-cause\.json$/i.test(name);
 }
 
-function validateRecurringContract(contract, changed, existingFiles, label) {
+function validateRecurringContract(contract, changed, existingFiles, label, isReferenceOnly = false) {
   const errors = [];
   const scopePaths = Array.isArray(contract?.scope_paths) ? contract.scope_paths : [];
   const regressionTests = Array.isArray(contract?.regression_tests) ? contract.regression_tests : [];
@@ -263,7 +321,7 @@ function validateRecurringContract(contract, changed, existingFiles, label) {
     if (!pathExists(prevention.enforcement_path, existingFiles)) {
       errors.push(`${label}: prevention enforcement_path does not exist: ${prevention.enforcement_path}`);
     }
-    if (!changed.has(normalized(prevention.enforcement_path))) {
+    if (!isReferenceOnly && !changed.has(normalized(prevention.enforcement_path))) {
       errors.push(`${label}: prevention enforcement_path was not changed in this diff: ${prevention.enforcement_path}`);
     }
     if (!boundaries.some((boundary) => record(boundary) && normalized(boundary.path) === normalized(prevention.enforcement_path))) {
@@ -271,7 +329,8 @@ function validateRecurringContract(contract, changed, existingFiles, label) {
     }
     const artifacts = prevention.artifacts.map(normalized);
     for (const artifact of artifacts) {
-      if (!changed.has(artifact)) errors.push(`${label}: prevention artifact was not changed in this diff: ${artifact}`);
+      if (!pathExists(artifact, existingFiles)) errors.push(`${label}: prevention artifact does not exist: ${artifact}`);
+      if (!isReferenceOnly && !changed.has(artifact)) errors.push(`${label}: prevention artifact was not changed in this diff: ${artifact}`);
     }
     if (!artifacts.includes(normalized(prevention.enforcement_path))) {
       errors.push(`${label}: prevention artifacts must include enforcement_path`);
@@ -290,7 +349,7 @@ function validateRecurringContract(contract, changed, existingFiles, label) {
     if (!regressionTests.some((candidate) => normalized(candidate) === clean)) {
       errors.push(`${label}: class regression test is not listed in regression_tests: ${testFile}`);
     }
-    if (!changed.has(clean)) errors.push(`${label}: class regression test was not changed in this diff: ${testFile}`);
+    if (!isReferenceOnly && !changed.has(clean)) errors.push(`${label}: class regression test was not changed in this diff: ${testFile}`);
   }
 
   const legacy = contract?.legacy_paths;
@@ -300,7 +359,7 @@ function validateRecurringContract(contract, changed, existingFiles, label) {
   } else if (legacy.status === "removed") {
     if (!nonEmptyTextArray(legacy.removed_paths)) errors.push(`${label}: removed legacy paths must be listed`);
     for (const removedPath of legacy.removed_paths) {
-      if (!changed.has(normalized(removedPath))) errors.push(`${label}: removed legacy path was not changed in this diff: ${removedPath}`);
+      if (!isReferenceOnly && !changed.has(normalized(removedPath))) errors.push(`${label}: removed legacy path was not changed in this diff: ${removedPath}`);
     }
   } else if (legacy.removed_paths.length !== 0) {
     errors.push(`${label}: not-applicable legacy_paths must have an empty removed_paths array`);
@@ -466,12 +525,17 @@ const BLOCKING_PATTERNS = [
   /must be a non-empty string array/,
   /recurrence requires/,
   /detected_by|recurrence_check_on/,
-  /legacy/,
+  /(?:^|:\s*)(?:new legacy contract|legacy history|legacy_paths|removed legacy paths?|not-applicable legacy_paths)\b/,
 ];
 export function classifyFindings(errors) {
   const blocking = [];
   const warnings = [];
-  for (const error of errors) (BLOCKING_PATTERNS.some((pattern) => pattern.test(error)) ? blocking : warnings).push(error);
+  for (const error of errors) {
+    // Contract IDs and file names are labels, not finding types.
+    const separator = error.indexOf(": ");
+    const finding = separator < 0 ? error : error.slice(separator);
+    (BLOCKING_PATTERNS.some((pattern) => pattern.test(finding)) ? blocking : warnings).push(error);
+  }
   return { blocking, warnings };
 }
 
@@ -543,7 +607,7 @@ function doorIdentity(door) {
   return `${door.kind}|${normalized(door.path)}|${String(door.symbol).trim()}`;
 }
 
-function validateDoorMap(contract, changed, existingFiles, label, fileContents) {
+function validateDoorMap(contract, changed, existingFiles, label, fileContents, isReferenceOnly = false) {
   const errors = [];
   const scopePaths = Array.isArray(contract?.scope_paths) ? contract.scope_paths : [];
   const doors = contract?.doors;
@@ -607,7 +671,7 @@ function validateDoorMap(contract, changed, existingFiles, label, fileContents) 
   // 本次删掉的文件不可能再有门（门的 path 必须存在）；它只有在 legacy_paths.removed_paths 里明确声明
   // 「这是删掉的旧路径」才不算漏数。没声明的删除照样当门没数全。
   const declaredRemoved = new Set((Array.isArray(contract?.legacy_paths?.removed_paths) ? contract.legacy_paths.removed_paths : []).map(normalized));
-  const strays = [...changed]
+  const strays = isReferenceOnly ? [] : [...changed]
     .filter((file) => isDoorGovernedFile(file) && !isGeneratedDataFile(file, fileContents)
       && pathIsInScope(file, scopePaths) && !doorPaths.has(normalized(file)))
     .filter((file) => existingFiles.has(normalized(file)) || !declaredRemoved.has(normalized(file)))
@@ -619,7 +683,7 @@ function validateDoorMap(contract, changed, existingFiles, label, fileContents) 
   return errors;
 }
 
-function validateContract(contract, changed, existingFiles, index, fileContents) {
+function validateContract(contract, changed, existingFiles, index, fileContents, isReferenceOnly = false) {
   const label = nonEmptyText(contract?.id) ? contract.id : `contract #${index + 1}`;
   const errors = [];
   if (nonEmptyText(contract?.__file) && !changed.has(normalized(contract.__file))) {
@@ -642,7 +706,7 @@ function validateContract(contract, changed, existingFiles, index, fileContents)
     if (!nonEmptyTextArray(contract?.regression_tests)) {
       errors.push(`${label}: regression_tests must be a non-empty string array`);
     }
-    errors.push(...validateStructuralContract(contract, changed, existingFiles, label, fileContents));
+    errors.push(...validateStructuralContract(contract, changed, existingFiles, label, fileContents, isReferenceOnly));
     return errors;
   }
 
@@ -654,7 +718,7 @@ function validateContract(contract, changed, existingFiles, index, fileContents)
     errors.push(...validateInvariantOwnerLayer(contract, existingFiles, label));
   }
   if (fileDate && fileDate >= DOOR_MAP_SINCE) {
-    errors.push(...validateDoorMap(contract, changed, existingFiles, label, fileContents));
+    errors.push(...validateDoorMap(contract, changed, existingFiles, label, fileContents, isReferenceOnly));
   }
   if (fileDate && fileDate >= RECURRENCE_FIELDS_SINCE) {
     errors.push(...validateDetectionFields(contract, changed, label));
@@ -689,11 +753,11 @@ function validateContract(contract, changed, existingFiles, index, fileContents)
     const clean = normalized(testFile);
     if (!isTestFile(clean)) errors.push(`${label}: regression_tests entry is not a test file: ${testFile}`);
     if (!existingFiles.has(clean)) errors.push(`${label}: regression test does not exist: ${testFile}`);
-    if (!changed.has(clean)) errors.push(`${label}: regression test was not changed in this diff: ${testFile}`);
+    if (!isReferenceOnly && !changed.has(clean)) errors.push(`${label}: regression test was not changed in this diff: ${testFile}`);
   }
   if (contract?.schema_version === ROOT_CAUSE_CONTRACT_SCHEMA_VERSION) {
     if (recurrence?.classification === "recurring") {
-      errors.push(...validateRecurringContract(contract, changed, existingFiles, label));
+      errors.push(...validateRecurringContract(contract, changed, existingFiles, label, isReferenceOnly));
     } else if (recurrence?.classification === "one_off" && contract.prevention !== undefined) {
       errors.push(`${label}: proven one_off contracts must omit prevention rather than inventing a reusable boundary`);
     }
@@ -727,7 +791,7 @@ export function inheritLegacyContractHashes(legacyHashes, baseContracts) {
   return inherited;
 }
 
-export function validateRootCauseChange({ changedFiles, contracts, existingFiles, legacyHashes = new Map(), fileContents = new Map() }) {
+export function validateRootCauseChange({ changedFiles, contracts, existingFiles, baseContracts = [], baseFiles = new Set(), legacyHashes = new Map(), fileContents = new Map() }) {
   const changed = new Set(changedFiles.map(normalized));
   const existing = new Set([...existingFiles].map(normalized));
   const triggeredFiles = [...changed].filter(isHighRiskProductionFile).sort();
@@ -737,9 +801,16 @@ export function validateRootCauseChange({ changedFiles, contracts, existingFiles
     nonEmptyText(contract?.__file) && changed.has(normalized(contract.__file)));
   const changedCurrentContracts = changedContracts.filter((contract) =>
     contract?.schema_version === ROOT_CAUSE_CONTRACT_SCHEMA_VERSION);
+  const baseContractsByFile = new Map(baseContracts.map((contract) => [normalized(contract?.__file), contract]));
+  const referenceOnlyContracts = new Set();
   const errors = [];
   for (const [index, contract] of changedCurrentContracts.entries()) {
-    errors.push(...validateContract(contract, changed, existing, index, fileContents));
+    const baseContract = baseContractsByFile.get(normalized(contract?.__file));
+    if (baseContract) {
+      const relocation = classifyReferenceOnlyContractRelocation(baseContract, contract, { baseFiles, currentFiles: existing });
+      if (relocation.isReferenceOnly) referenceOnlyContracts.add(contract);
+    }
+    errors.push(...validateContract(contract, changed, existing, index, fileContents, referenceOnlyContracts.has(contract)));
   }
   if (triggeredFiles.length === 0) return { ok: errors.length === 0, errors, triggeredFiles: [] };
 
@@ -749,7 +820,8 @@ export function validateRootCauseChange({ changedFiles, contracts, existingFiles
     const trustedLegacy = Number.isInteger(contract?.schema_version)
       && contract.schema_version < ROOT_CAUSE_CONTRACT_SCHEMA_VERSION
       && legacyHashes.get(file) === contract?.__contentHash;
-    return (current || trustedLegacy) && Array.isArray(contract?.scope_paths) && triggeredFiles.some((file) =>
+    return (current || trustedLegacy) && !referenceOnlyContracts.has(contract)
+      && Array.isArray(contract?.scope_paths) && triggeredFiles.some((file) =>
       contract.scope_paths.some((scope) => scopeCovers(scope, file)));
   });
   for (const file of triggeredFiles) {

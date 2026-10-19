@@ -6,7 +6,7 @@
  * NodePromptOptimizer 三处。把外观抄三份就是三个平行版（P1），下一次调间距只会改中一份。
  * 这里只放**外观与分组**，一行业务逻辑都没有。
  *
- * 形制依据（docs/design/2026-09-10-node-composer-bar-v1.md §v1.1，2026-09-11 用户拍板）：
+ * 形制依据（docs/archive/design/2026-09-10-node-composer-bar-v1.md §v1.1，2026-09-11 用户拍板）：
  * - 尺寸取设计系统已有的小号档 `WorkbenchIconButton size="sm"`（28px），**没造新尺寸**；
  *   一行里「决策位」（带文字，30px）与「工具位」（无文字，28px）靠文字有无 + 尺寸差分层。
  * - 图标 16 / stroke 2（§6 工作区按钮档，由 WorkbenchIconButton 的 `[&>svg]` 统一给）。

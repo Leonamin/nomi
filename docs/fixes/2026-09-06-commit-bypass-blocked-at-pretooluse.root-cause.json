@@ -112,7 +112,7 @@
   "legacy_paths": {
     "status": "not-applicable",
     "removed_paths": [],
-    "rationale": "commit 阶段此前**没有任何**绕口防线，本次是净新增，没有并行实现可删。push 侧的留痕 + 审计不是本闸门的旧版本而是另一个断面（那里有合法绕口场景），刻意保留，理由写在 docs/lessons/commit-bypass-must-be-blocked-not-audited.md 的对照表里。"
+    "rationale": "commit 阶段此前**没有任何**绕口防线，本次是净新增，没有并行实现可删。push 侧的留痕 + 审计不是本闸门的旧版本而是另一个断面（那里有合法绕口场景），刻意保留，理由写在 docs/archive/lessons/commit-bypass-must-be-blocked-not-audited.md 的对照表里。"
   },
   "dependency_lifecycle": {
     "decision": "not-applicable",

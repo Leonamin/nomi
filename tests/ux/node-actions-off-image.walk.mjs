@@ -16,7 +16,7 @@ import path from 'node:path'
 import { screenshotSettled } from './_assert.mjs'
 
 const require = createRequire(import.meta.url)
-const outDir = path.join(repoRoot, 'docs/design/mockups/2026-08-04-node-after')
+const outDir = path.join(repoRoot, 'docs/archive/design/mockups/2026-08-04-node-after')
 fs.mkdirSync(outDir, { recursive: true })
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nomi-node-walk-'))

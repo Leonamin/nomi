@@ -163,7 +163,7 @@
         "video-canvas-follow-hand-1080p15"
       ],
       "status": "live",
-      "why": "画布跟手量具（docs/archive/plan/2026-09-25-canvas-follow-hand.md）：32 个真实 15 秒 1080p 视频节点 + docs/audit 里真实生成的图 + 文本，共 76 个节点、缩放到全部在屏上，真实鼠标键盘做九个动作。快速档（--structural）判计数不判毫秒：空闲 <video> = 0、同时在播 ≤ 1、悬停离开不留播放器、打字 / 新建节点别的节点重渲 0、叠放拖出不粘；每个非纯文档 PR 都在 Core Flow Smoke (empty) 那一格跑。素材从本登记表取，缺了即红。**旧基准 canvas-performance-benchmark.e2e.mjs 仍用合成夹具**（合成构造在 scripts/real-media-fixture-baseline.json 里冻结、只减不增），它不再承担这一类的真实素材覆盖"
+      "why": "画布跟手量具（docs/archive/plan/2026-09-25-canvas-follow-hand.md）：32 个真实 15 秒 1080p 视频节点 + docs/archive/audit 里真实生成的图 + 文本，共 76 个节点、缩放到全部在屏上，真实鼠标键盘做九个动作。快速档（--structural）判计数不判毫秒：空闲 <video> = 0、同时在播 ≤ 1、悬停离开不留播放器、打字 / 新建节点别的节点重渲 0、叠放拖出不粘；每个非纯文档 PR 都在 Core Flow Smoke (empty) 那一格跑。素材从本登记表取，缺了即红。**旧基准 canvas-performance-benchmark.e2e.mjs 仍用合成夹具**（合成构造在 scripts/real-media-fixture-baseline.json 里冻结、只减不增），它不再承担这一类的真实素材覆盖"
     },
     {
       "class": "import",

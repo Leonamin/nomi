@@ -1,6 +1,6 @@
 # 顶尖开源产品的 ComfyUI 接入模式（六仓实读 · 2026-08-01）
 
-> 读码对象（克隆 HEAD 日期）：ComfyUI 本体 2026-08-01 · SwarmUI 2026-08-01 · StabilityMatrix 2026-07-25 · krita-ai-diffusion 2026-06-30 · ViewComfy 2026-03-19 · comfyui-deploy 2025-11-12。file:line 均指当日 HEAD。服务 Nomi ComfyUI 迭代（Tier-1 已落：docs/plan/2026-08-01-comfyui-tier1-objectinfo-reconcile.md）。
+> 读码对象（克隆 HEAD 日期）：ComfyUI 本体 2026-08-01 · SwarmUI 2026-08-01 · StabilityMatrix 2026-07-25 · krita-ai-diffusion 2026-06-30 · ViewComfy 2026-03-19 · comfyui-deploy 2025-11-12。file:line 均指当日 HEAD。服务 Nomi ComfyUI 迭代（Tier-1 已落：docs/archive/plan/2026-08-01-comfyui-tier1-objectinfo-reconcile.md）。
 
 ## 参数化三流派（核心结论）
 

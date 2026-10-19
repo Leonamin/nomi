@@ -5,7 +5,7 @@
 // `app.getName()` 读的是 asar 内 package.json 的 `name`（= `nomi`），`build.productName` 不进 asar。
 // 于是 Preview 和稳定版**共用同一个 `%APPDATA%\nomi`**：装一次 Preview 就足以把目录升到新版本号，
 // 回到稳定版就直接进本次事故的状态（读得出来、改不了、界面空白）。
-// `docs/release-process.md` 里写的「Preview 使用 …… Nomi Preview Projects」其实从来没有实现过。
+// `docs/archive/guides/release-process.md` 里写的「Preview 使用 …… Nomi Preview Projects」其实从来没有实现过。
 //
 // 分家靠 electron-builder 的 `extraMetadata.name`（它把 name 写进 asar 内的 package.json，
 // 是这件事的框架自带做法，不需要在运行时 setName——运行时改名有 getPath 缓存/时机问题，

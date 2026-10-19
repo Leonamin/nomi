@@ -155,7 +155,7 @@ try {
   await screenshotSettled(dialog, { path: path.join(shots, '04b-apimart-connect-page.png') })
 
   // key 从不进入本脚本：这里只读**密文**，解密与写剪贴板都在主进程里做。
-  // （app.evaluate 里 require / 动态 import 都不可用，见 docs/lessons，所以文件在这一侧读。）
+  // （app.evaluate 里 require / 动态 import 都不可用，见 docs/archive/lessons，所以文件在这一侧读。）
   const realCatalog = realNomiProfile().catalogPath
   let cipher = null
   if (fs.existsSync(realCatalog)) {

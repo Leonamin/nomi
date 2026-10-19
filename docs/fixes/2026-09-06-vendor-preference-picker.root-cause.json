@@ -104,7 +104,7 @@
       "rg resolveBestProvider / vendorTier across src and electron: zero production callers remained after the first pass; deleted.",
       "rg preloadModelOptions / useModelOptionsState consumers: agent availableModels, useBatchPlanCost, resolveExecutableImageModel, storyboard and proposal editors all assumed 'listed means runnable'; the widened filter is now opt-in per call site.",
       "rg candidatesForArchetype: narrowed-mode guidance documented the old promise as a precondition; it now filters configured itself instead of trusting an upstream default.",
-      "Documented all current model picker entry points in docs/qa/2026-09-06-vendor-order-design-lab.md"
+      "Documented all current model picker entry points in docs/archive/qa/2026-09-06-vendor-order-design-lab.md"
     ]
   },
   "legacy_paths": {

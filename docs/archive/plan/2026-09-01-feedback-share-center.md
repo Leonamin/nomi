@@ -35,7 +35,7 @@
 
 真正的取舍是：**入口速度 vs. 立即展示全部治理细节**。本版选择入口速度，把数据范围、目的地和训练用途放到用户已经选择“报告问题”之后的渐进披露层。
 
-样张文件：`docs/design/mockups/2026-09-01-feedback-share-center.html`。仓库已有的 `2026-08-02-u2-after/03-settings-about.png` 仅用于核对外壳几何，是历史截图，不代表当前版本号或当前功能状态。
+样张文件：`docs/archive/design/mockups/2026-09-01-feedback-share-center.html`。仓库已有的 `2026-08-02-u2-after/03-settings-about.png` 仅用于核对外壳几何，是历史截图，不代表当前版本号或当前功能状态。
 
 ## 用户路径
 

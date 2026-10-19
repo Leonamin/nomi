@@ -1,15 +1,15 @@
 # 分镜表视图 + 片种模板（Genre Profile）
 
-状态：🚧 **v5 已拍板，分阶段实施中**（A 段已合 #330；样张=`docs/design/mockups/2026-09-01-storyboard-table-image-first.html` 已核准，模拟走查已跑）
+状态：🚧 **v5 已拍板，分阶段实施中**（A 段已合 #330；样张=`docs/archive/design/mockups/2026-09-01-storyboard-table-image-first.html` 已核准，模拟走查已跑）
 起因：调研 [HBAI-Ltd/Toonflow-app](https://github.com/HBAI-Ltd/Toonflow-app)（15k star，开源 AI 短剧工具），
 用户提问：「我们是通用平台，能不能往上容纳这类小白体验」。
 
-> ⚠️ 本文档是**方案**，不是现状。现状请看 `docs/ARCHITECTURE-NOW.md`。
+> ⚠️ 本文档是**方案**，不是现状。现状请看 `docs/archive/guides/ARCHITECTURE-NOW.md`。
 
 > ## ⚠️ v3 方向变更（2026-09-01 晚，当天讨论推进，§3.7/§4 尚未按此重写）
 >
 > 与用户往返后，方案在三个根本点上**超越了下文**（样张已改为
-> `docs/design/mockups/2026-09-01-storyboard-table-image-first.html`，待拍板）：
+> `docs/archive/design/mockups/2026-09-01-storyboard-table-image-first.html`，待拍板）：
 >
 > 1. **表住在分镜页（`StoryboardWorkspace`，1264px 居中列），且是执行面**：行内/批量直接生成，
 >    节点作为副作用同步长到画布（画布=旁路）。**「确认落画布」按钮删除**（P1）。§3.7「表格是
@@ -371,7 +371,7 @@ Agent 新工具（另轮）；预览区（顺播只是播放模式，不建第�
 ### 4.5 验收门（每阶段）
 
 1. 五门 `pnpm run gates` 全绿。
-2. 与 v5 样张（`docs/design/mockups/2026-09-01-storyboard-table-image-first.html`）逐项对账。
+2. 与 v5 样张（`docs/archive/design/mockups/2026-09-01-storyboard-table-image-first.html`）逐项对账。
 3. R13 真机走查截图人眼判断；参考区须在 零槽/单槽/首尾帧/数组/必填未给 真实模型下各走一次
    （⚠️ 先解 `catalog refusing to write: on-disk version 12 > app version 11` 只读锁环境问题
    —— task_40b7ac44 已登记 —— 否则切模型静默失效、走查假绿）。

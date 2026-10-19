@@ -2,7 +2,7 @@
 
 > 日期：2026-09-07 · 状态：📋 方案待拍板 · **仅方案，本分支不含任何生产代码**
 > 样张（用户 2026-09-06 已拍板）：设计画布 `B1 导入节点（参考片）` / `B2 分镜表节点`，源在会话 scratchpad 的 `LinkNode.body.html` / `TableNode.body.html`
-> 上位合同：[分镜表 v6 设计合同](../../design/2026-09-05-storyboard-table-v6-design-contract.md) · [视频拆解表节点重做](2026-09-06-video-deconstruction-table-node.md)（本方案**取代**其 §2.1 的「两个对象、单向拷贝」结论，理由见 §3.4）
+> 上位合同：[分镜表 v6 设计合同](../design/2026-09-05-storyboard-table-v6-design-contract.md) · [视频拆解表节点重做](2026-09-06-video-deconstruction-table-node.md)（本方案**取代**其 §2.1 的「两个对象、单向拷贝」结论，理由见 §3.4）
 
 ---
 
@@ -29,9 +29,9 @@
 
 跑法：`pnpm run build && node tests/ux/deconstruction-panel.walk.mjs`（无 `APIMART_API_KEY` = 注入确定性结果，不花钱）。本轮 2026-09-07 实跑，9 项断言全绿。
 
-![现役：拆解结果住在右侧窄栏，一镜一张竖排卡](../../design/archive/2026-09-07-storyboard-table-node/now-01-right-rail-cards.png)
+![现役：拆解结果住在右侧窄栏，一镜一张竖排卡](../design/archive/2026-09-07-storyboard-table-node/now-01-right-rail-cards.png)
 
-![现役：落画布后只剩 4 张图节点，六个结构字段全部消失](../../design/archive/2026-09-07-storyboard-table-node/now-02-landed-frames-lose-columns.png)
+![现役：落画布后只剩 4 张图节点，六个结构字段全部消失](../design/archive/2026-09-07-storyboard-table-node/now-02-landed-frames-lose-columns.png)
 
 ### 1.3 卡在哪（读这两张图读出来的，不是推测的）
 
@@ -76,7 +76,7 @@
 
 两组关键词、三平台，抓到 60 条；产物在会话 scratchpad（`tikhub-a/` = 「AI 分镜表」，`tikhub-b/` = 「漫剧 分镜 节奏」，小红书那组第二次 HTTP 400，明说没查成，不当成「没有」）。
 
-- **「AI 把每句话平均切一镜」是被反复点名的核心病，不是我们推测的。** 抖音 · 小陈AIGC（2026-07-21，https://www.douyin.com/video/7664920212981992739 ）：「AI最常犯的错误，就是把每句话平均切成一个镜头，结果整部片子**没有轻重、没有停顿、没有情绪爆点**……先拆剧情节拍，再按冲突、反转和情绪去设计镜头。」这条已被 [`docs/research/2026-09-07-radar.md:104-111`](../research/2026-09-07-radar.md) 收录，并与本轮两篇论文（KathaTrace「语义轨迹坍缩」、PersonaShot「情绪突变」）指向同一诊断。
+- **「AI 把每句话平均切一镜」是被反复点名的核心病，不是我们推测的。** 抖音 · 小陈AIGC（2026-07-21，https://www.douyin.com/video/7664920212981992739 ）：「AI最常犯的错误，就是把每句话平均切成一个镜头，结果整部片子**没有轻重、没有停顿、没有情绪爆点**……先拆剧情节拍，再按冲突、反转和情绪去设计镜头。」这条已被 [`docs/archive/research/2026-09-07-radar.md:104-111`](../research/2026-09-07-radar.md) 收录，并与本轮两篇论文（KathaTrace「语义轨迹坍缩」、PersonaShot「情绪突变」）指向同一诊断。
 - **「情绪」是他们已经在用的一列，而且是和景别联动的。** 抖音 · AIGC大马（2026-06-12，https://www.douyin.com/video/7650423851502849322 ）：「第二，**景别跟着情绪递进**，拒绝两极镜头。」小红书 · 晨楠（2026-07-02，https://www.xiaohongshu.com/explore/6a46802e000000000f006df9 ）贴的提示词模板逐字是：「【镜头类型】+【景别】+【场景】+【时间/光影】+【人物/主体】+【动作】+【情绪状态】」——**七个槽位，和我们样张的列几乎一一对应**，其中「情绪状态」是他们自己列进去的。
 - **表本身就是他们公认的解法。** 抖音 · 六万的旅行（2026-07-05，https://www.douyin.com/video/7658695151618952474 ）：「镜头、角色、场景、道具、台词、音效，这些东西如果还是分散着处理，后面很快就会拧在一起。Shot list（分镜表）……就是专门用来解决这个问题的工具。」——**「分散着处理」正是 §1.3 第 2 条**（结构落到画布上就散成了 N 张图节点）。
 

@@ -5,7 +5,7 @@
  * 所以这里只做一件事：把 `integrationContract.ts` 的 12 个真实 stage 投影成 5 段用户语言，
  * **不新造状态机**——真相源仍然是主进程那份会话，本模块是纯函数读者。
  *
- * 设计定稿：docs/design/2026-09-11-ai-assisted-onboarding-entry.md §Progress
+ * 设计定稿：docs/archive/design/2026-09-11-ai-assisted-onboarding-entry.md §Progress
  */
 import type { IntegrationStage } from '../../../electron/shared/integrationContract'
 

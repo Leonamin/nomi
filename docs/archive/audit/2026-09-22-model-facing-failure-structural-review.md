@@ -2,7 +2,7 @@
 
 - 触发：`check:symptom-cluster` —— `electron/capabilityCore` 在 2026-09-17 到 2026-09-22 的 7 天里收到 34 份根因合同，`electron/shared` 33 份。第三份合同是「这一层结构不对」最便宜的证据，不是再修一次的理由。
 - 范围：本文只评审**「一个抛出来的异常，怎么变成模型看得见的那句话」**这一条链，以及它的挑选规则。两个簇里其余合同（分镜账本、画布落地、目录与接入、MCP 投影…）不在本文证据范围内。
-- 证据来自 2026-09-21 真实模型 18 句实测（`docs/evidence/2026-09-21-askback-real-model/`，121 次调用全量 JSONL）与 2026-09-22 的复现（`electron/capabilityCore/generationDomainRefusalReachesModel.test.ts`，入参逐字取自 A3.jsonl seq=25），不是读码推断。
+- 证据来自 2026-09-21 真实模型 18 句实测（`docs/archive/evidence/2026-09-21-askback-real-model/`，121 次调用全量 JSONL）与 2026-09-22 的复现（`electron/capabilityCore/generationDomainRefusalReachesModel.test.ts`，入参逐字取自 A3.jsonl seq=25），不是读码推断。
 
 ## 一、这一层今天真正的形状
 

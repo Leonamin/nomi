@@ -10,7 +10,7 @@ The contract records a fixed 1440x900 viewport at DPR 1, source locator, state, 
 
 ## M0–M5 主轴边界
 
-本 PR 是横切的 Agent UI 设计→运行时可计算合同，不是 M0–M5 毕业 PR。现有主轴重基线以 `docs/qa/2026-09-04-epics-rebaseline-audit.md` 为准；#469 只覆盖 M0/M1 已验证的部分，不能外推为 M0–M5 全部完成。
+本 PR 是横切的 Agent UI 设计→运行时可计算合同，不是 M0–M5 毕业 PR。现有主轴重基线以 `docs/archive/qa/2026-09-04-epics-rebaseline-audit.md` 为准；#469 只覆盖 M0/M1 已验证的部分，不能外推为 M0–M5 全部完成。
 
 | 主轴 | 目标 | 现有证据与未完成证据 | 本 PR 的关系 |
 |---|---|---|---|
@@ -29,7 +29,7 @@ The contract records a fixed 1440x900 viewport at DPR 1, source locator, state, 
 
 ## Implementation boundary
 
-- Reuse and extend `scripts/extract-design-spec.mjs`, `docs/design/agent-ui-spec.generated.json`, the generated auto contract, and `tests/ux/agent-ui-conformance.walk.mjs`.
+- Reuse and extend `scripts/extract-design-spec.mjs`, `docs/archive/design/agent-ui-spec.generated.json`, the generated auto contract, and `tests/ux/agent-ui-conformance.walk.mjs`.
 - Add one shared measurement/reporting module for runtime DOM and computed-style observations.
 - Add the missing pinned result projection from the durable committed-proposal receipt; do not create another persistence truth source.
 - Mount the existing resident shell into Storyboard's right column and keep the same resident owner.

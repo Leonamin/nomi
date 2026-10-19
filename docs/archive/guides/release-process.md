@@ -111,7 +111,7 @@ RC 工作流会：
   新建项目后在生成面 Agent 面板里连发三句——打招呼、「加一个图片节点，提示词写…，先别生成」、「把它的提示词改成…」。
   三回合都要有回复、节点真的建出来并改掉，工具调用无错。原因：v0.22.0 在 Windows 上点发送**没有任何反应**
   （对话身份被补盘符，`docs/fixes/2026-09-24-lane-identity-host-path.root-cause.json`），Mac 上看不出来。
-  背景见 `docs/lessons/mac-only-testing-ships-windows-blind.md`。
+  背景见 `docs/archive/lessons/mac-only-testing-ships-windows-blind.md`。
 - **打包产物的命令沙箱 `active:true` 证据**：在打包好的 `.app` 上跑
   `node tests/ux/packaged-sandbox-active.e2e.mjs <打包产物路径>`，留下那一行
   `packaged sandbox active:true …`。沙箱没起来不会崩、不会红，症状只有

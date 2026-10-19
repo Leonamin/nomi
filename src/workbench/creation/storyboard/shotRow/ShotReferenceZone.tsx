@@ -35,7 +35,7 @@ import {
  *
  * 槽本身仍由**档案声明**驱动（`shotReferenceCells` 从 `ArchetypeMode.slots` derive，
  * 键用跨供应商稳定的 `slot.kind`），上传/素材库/引用四条入口仍复用现役 `AssetPicker`——
- * 参考槽的声明式数据与选择器都已存在，这里不新造（见 docs/lessons/nomi-reference-slots-are-already-declarative）。
+ * 参考槽的声明式数据与选择器都已存在，这里不新造（见 docs/archive/lessons/nomi-reference-slots-are-already-declarative）。
  * 新的只有**行内的排布方式**，那正是本合同要求与画布节点不同的地方。
  *
  * **窄档（2026-09-21 样张 v1）**：编辑器被左栏挤到 585px 时，这一列从「三格 211px」收成

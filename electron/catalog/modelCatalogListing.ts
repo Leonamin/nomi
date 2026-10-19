@@ -144,7 +144,7 @@ export function videoBodyKeysForModel(
  * 「带参考时该用哪个 taskKind 生成」——**derive 自该模型真实可带参考的模式**（与 list_models 的 referenceModes
  * 同一份判据，P1 单一真相），不再硬编码 image→image_edit / video→image_to_video。
  *
- * 根因（docs/plan/2026-08-20-w1d-reference-mode-alignment.md）：core.generateOnProject 此前硬编码
+ * 根因（docs/archive/plan/2026-08-20-w1d-reference-mode-alignment.md）：core.generateOnProject 此前硬编码
  * defaultKindForIntent(intent, hasReferences)——对多数模型恰好对（image_edit/image_to_video mapping 存在），
  * 但对「参考模式≠默认名」的模型会选错 kind、护栏按错 kind 判「发不出」。改为查真实模式：
  *   · 只看**匹配 intent 计费口径**的参考模式（image intent → 计费为 image 的模式如 image_edit；

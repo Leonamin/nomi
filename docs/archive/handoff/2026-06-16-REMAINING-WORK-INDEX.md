@@ -12,7 +12,7 @@
 ## 待做（按优先级/依赖）
 
 ### 1. 视频抽帧（首/尾帧）+ 镜头视频接力 ✅ 已完成（M-A，push b0df2a7）
-→ 实现见 [docs/plan/2026-06-16-video-frame-relay-and-roles.md](../plan/2026-06-16-video-frame-relay-and-roles.md)
+→ 实现见 [docs/archive/plan/2026-06-16-video-frame-relay-and-roles.md](../plan/2026-06-16-video-frame-relay-and-roles.md)
 通用三层正交：抽帧 IPC（`electron/video/extractVideoFrame.ts`）+ 接力帧解析器单一真相源
 （`runner/relayFrameResolver.ts`，唯一消费 relayFromVideoUrl）+ projectId getter。潜伏 batch bug 已根治。
 **注**：storyboard 自动重连 shot→shot **未做且按用户拍板不做**（「自动链删除→保留」，连贯靠共享定妆/场景卡）；
@@ -41,7 +41,7 @@ E2E 抓响应体拿字段名 → 解析存 lastFrameUrl → 喂 relayFrameResolv
 五门（filesize/lint/typecheck/test/build）+ **真实生成 E2E**（接入/生成类必跑，烧额度，用户已授权"走真实额度"）+ 用户可见改动过 R13 真机走查。
 
 ## 相关已有文档
-- `docs/plan/2026-06-16-storyboard-video-and-batch-fixes.md`（B-clean + 批量 + B-full 视频接力方案）
-- `docs/plan/2026-06-16-seedance-apimart-completeness.md`（Seedance 对账）
-- `docs/workflow/2026-06-06-real-generation-e2e-loop.md`（接入即验证回路）
+- `docs/archive/plan/2026-06-16-storyboard-video-and-batch-fixes.md`（B-clean + 批量 + B-full 视频接力方案）
+- `docs/archive/plan/2026-06-16-seedance-apimart-completeness.md`（Seedance 对账）
+- `docs/archive/workflow/2026-06-06-real-generation-e2e-loop.md`（接入即验证回路）
 - memory：`model-onboarding-must-cover-full-api-doc`、`ffprobe-exec-bit-packaging-trap`、`connection-reference-bugs-2026-06-14`

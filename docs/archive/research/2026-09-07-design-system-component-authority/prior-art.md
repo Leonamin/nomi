@@ -1,7 +1,7 @@
 # 「先查别人」报告：组件权威方案的四个「要不要自己造」（2026-09-07）
 
 > 状态：📎 长期参考（R27 §16 必交物，随对应方案结案）
-> 对应方案：[`docs/plan/2026-09-07-design-system-component-authority.md`](../../plan/2026-09-07-design-system-component-authority.md)
+> 对应方案：[`docs/archive/plan/2026-09-07-design-system-component-authority.md`](../../plan/2026-09-07-design-system-component-authority.md)
 > 分支 `claude/design-system-optimization-b44d66`。本报告只回答「别人做过没有」，不替方案做实施决定。
 > 依赖侧一律读 `node_modules` 实物（版本从 `pnpm-lock.yaml` 读，不读 `package.json` 的 `^` 范围）；仓库侧一律 `grep` 实扫。
 > 查不到的明写「查不到」——它和「别人没做过」是两件事。
@@ -40,7 +40,7 @@
 - **Radix Primitives DropdownMenu / ContextMenu**：`Sub/SubTrigger/SubContent` 是一等公民，`Item` 有 `textValue` 供 typeahead，定位走 `side/align/collisionPadding/avoidCollisions` 并暴露 `--radix-*` CSS 变量，零默认 CSS——<https://www.radix-ui.com/primitives/docs/components/dropdown-menu>、<https://www.radix-ui.com/primitives/docs/components/context-menu>。
 - **Mantine `Menu` 自己也不手写**：它是 `Popover`(Floating UI) + 一套键盘 hook 的组合——<https://mantine.dev/core/menu>。⇒ 连「带样式的组件库」这一派也把菜单当买来的东西，没人认为它值得自研。
 - **shadcn/ui 的构成本身就是答案**：它不是一个组件库，是「Radix 行为 + Tailwind 样式 + 代码进你自己的仓库」这一套配方的分发形式——<https://ui.shadcn.com/docs>。方案 §3.1 的「薄壳 40 行」正是这个配方，**不是我们发明的形状**。
-- 方案 §3.1.1 另实查过 Base UI 1.8.0 / Headless UI / Ark UI / React Aria 的 submenu+typeahead 支持面与版本日期（[`docs/plan/2026-09-07-design-system-component-authority.md`](../../plan/2026-09-07-design-system-component-authority.md) §3.1.1，附 npm / GitHub / shadcn changelog 四条 URL）。**本报告没有复跑 npm registry**，只核对了它的仓库侧前提（Radix 两个包确实在用、确实共内核），那一格算「转引」不算「实查」。
+- 方案 §3.1.1 另实查过 Base UI 1.8.0 / Headless UI / Ark UI / React Aria 的 submenu+typeahead 支持面与版本日期（[`docs/archive/plan/2026-09-07-design-system-component-authority.md`](../../plan/2026-09-07-design-system-component-authority.md) §3.1.1，附 npm / GitHub / shadcn changelog 四条 URL）。**本报告没有复跑 npm registry**，只核对了它的仓库侧前提（Radix 两个包确实在用、确实共内核），那一格算「转引」不算「实查」。
 
 ### TikHub 自媒体里怎么说？
 

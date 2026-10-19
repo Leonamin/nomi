@@ -1,6 +1,6 @@
 /**
  * 任务面板的分组——**唯一**一份，顺序即面板从上到下的顺序（样张
- * docs/design/mockups/2026-09-25-agent-panel-tidy/ D1-A 拍板：要你动手的排最上面，打开面板第一眼就是它）。
+ * docs/archive/design/mockups/2026-09-25-agent-panel-tidy/ D1-A 拍板：要你动手的排最上面，打开面板第一眼就是它）。
  *
  * - attention：卡在用户这儿——等确认 / 等处理 / 等重新拉取。它没结束，所以不进「已完成」；
  * - running：Nomi 这边还在推进（在跑、在轮询、在收尾），用户不用做什么；

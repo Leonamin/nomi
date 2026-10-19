@@ -3,7 +3,7 @@
 > 📋 方案待拍板 · 状态由 docs-autosync 自动登记，作者请按实修改
 
 - 状态：实施中（分支 `fix/skill-import-real-use-20260907`，PR #582）
-- 「先查别人」报告：[`docs/research/2026-09-07-skill-import-real-use/prior-art.md`](../research/2026-09-07-skill-import-real-use/prior-art.md)
+- 「先查别人」报告：[`docs/archive/research/2026-09-07-skill-import-real-use/prior-art.md`](../research/2026-09-07-skill-import-real-use/prior-art.md)
 
 ## 摩擦（真机实拍，不是推测）
 
@@ -22,7 +22,7 @@
 - **生态里已有？** 格式权威已经收敛且**不在我们手上**：Agent Skills 规范的必填面只有 frontmatter 的 `name` + `description`（[规范总览](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview)），pi / Claude Code / Codex 三家同格式，Nomi 是唯一多一份 `skill.json` 的人（逐项对照 [`2026-09-07-pi-package-ecosystem.md:168`](../research/2026-09-07-pi-package-ecosystem.md:168)）。`readEntries` 必须循环读到空是文档化行为（[MDN](https://developer.mozilla.org/docs/Web/API/FileSystemDirectoryReader/readEntries)），只读一次会静默丢文件。
 - **同类产品？** Skills Hub 做的是「装一次、同步到多个 CLI」（[x.com/TiedGST](https://x.com/TiedGST/status/2094309544713453755)，2026-08-31）——问题形状不同，**生态里没有现成的东西能替我们做这件事**。
 - **TikHub 自媒体怎么说？** 48 条实抓（[附件](../research/2026-09-07-skill-import-real-use/tikhub/tikhub-search.md)）里，技能一律是「群里转发 → 装上就用」的东西（[小红书「Hermes必装skillTOP10」](https://www.xiaohongshu.com/explore/6a4e594700000000150276aa?xsec_token=YBZhA9RHKtpEiKUe8cohlxtRDhZ1lKtrkgPlXZ-ZxCWfk%3D&xsec_source=pc_search)），用户心智里技能 = 一个 `SKILL.md`（[抖音「说说 Skills 的 SKILL.md 文件结构」](https://www.douyin.com/video/7674851329126732651)），**48 条里没有一条提到 `skill.json`**；而且用户会一路追到「到底有没有被加载」（[小红书「你装的skill是如何被识别加载的」](https://www.xiaohongshu.com/explore/6a30068a0000000006023fef?xsec_token=YBkl5ngX373QEsP9tLqH9FPaLjVo8SqsbdME8p9b7oSW0%3D&xsec_source=pc_search)）。
-- **本仓历史？** 上一轮修的是「进不进得来」（[`2026-09-01-skill-import-standard-formats.root-cause.json`](../../fixes/2026-09-01-skill-import-standard-formats.root-cause.json)、[`2026-08-27-skills-knowledge-distribution.md`](2026-08-27-skills-knowledge-distribution.md)），**本轮的 delta 是「进来之后用不用得上」**；教训已落 [`docs/lessons/imported-thing-invisible-to-the-second-reader.md`](../../lessons/imported-thing-invisible-to-the-second-reader.md)。
+- **本仓历史？** 上一轮修的是「进不进得来」（[`2026-09-01-skill-import-standard-formats.root-cause.json`](../../fixes/2026-09-01-skill-import-standard-formats.root-cause.json)、[`2026-08-27-skills-knowledge-distribution.md`](2026-08-27-skills-knowledge-distribution.md)），**本轮的 delta 是「进来之后用不用得上」**；教训已落 [`docs/archive/lessons/imported-thing-invisible-to-the-second-reader.md`](../lessons/imported-thing-invisible-to-the-second-reader.md)。
 
 ## 根因与修法
 

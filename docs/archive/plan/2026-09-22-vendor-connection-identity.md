@@ -26,7 +26,7 @@ Issue：https://github.com/aqm857886159/Nomi/issues/831
 
 Nomi 里**一条连接的身份就是它的域名**。`deriveVendorKeyFromBaseUrl`（[electron/catalog/catalogCommit.ts:400](../../../electron/catalog/catalogCommit.ts):400-420）只看 hostname；两条连接同一个 host，算出来就是同一个 `vendorKey`。而 `vendorKey` 是全系统的主键：模型挂在它下面、Key 存在 `apiKeysByVendor[vendorKey]`、报价和生成都按它路由。所以第二次保存不是「新增一行」，是「覆盖那一行」——`serviceCatalog.register`（[electron/providerAdapter/serviceCatalog.ts:106](../../../electron/providerAdapter/serviceCatalog.ts):106-157）拿同一个 key 做 `upsertVendor` + `upsertApiKey`，名字和 Key 一起被后来者顶掉。
 
-这个设计当初是刻意的：设计文档写得很清楚「同 host = 同 vendor，name 只作显示」（[docs/plan/onboarding-baseurl-entry.md:84](onboarding-baseurl-entry.md)、[docs/plan/2026-06-29-model-fetch-pick-confirm.md:54](2026-06-29-model-fetch-pick-confirm.md)）。它服务的是「同一个用户重复接同一家，别在目录里长出两个柜子」。代价当时没人付；中转站分组一来，代价全落在用户身上。
+这个设计当初是刻意的：设计文档写得很清楚「同 host = 同 vendor，name 只作显示」（[docs/archive/plan/onboarding-baseurl-entry.md:84](onboarding-baseurl-entry.md)、[docs/archive/plan/2026-06-29-model-fetch-pick-confirm.md:54](2026-06-29-model-fetch-pick-confirm.md)）。它服务的是「同一个用户重复接同一家，别在目录里长出两个柜子」。代价当时没人付；中转站分组一来，代价全落在用户身上。
 
 ### 真正要权衡的那一个点
 
@@ -127,7 +127,7 @@ Nomi 里**一条连接的身份就是它的域名**。`deriveVendorKeyFromBaseUr
 探针（改前必红，已在 2026-09-22 于 `origin/main` 实跑，**24 处命中**，其中 15 处是生产判据）：
 
 ```bash
-grep -rnE "(\.key|vendorKey|providerId|targetVendor|modelVendor)[[:space:]]*(===|!==)[[:space:]]*['\"](apimart%7Ckie%7Cvolcengine%7Cdreamina%7Cdreamina-member%7Ccodex-local%7Cantigravity-cli%7Creplicate%7Cminimax%7Chiggsfield)['\"]" \
+grep -rnE "(\.key|vendorKey|providerId|targetVendor|modelVendor)[[:space:]]*(===|!==)[[:space:]]*['\"](apimart|kie|volcengine|dreamina|dreamina-member|codex-local|antigravity-cli|replicate|minimax|higgsfield)['\"]" \
   electron src --include='*.ts' --include='*.tsx' | grep -vE '\.test\.|__tests__'
 ```
 
@@ -265,10 +265,10 @@ hostOf(draftBaseUrl) === hostOf(meta.baseUrl)  →  收集同域名的已有连�
 
 | | 路径 |
 |---|---|
-| zh 添加连接表单（空） | [assets/…/02-zh-add-connection-form-empty.png](../../plan/assets/2026-09-22-vendor-connection-identity/02-zh-add-connection-form-empty.png) |
-| zh 添加连接表单（填好） | [assets/…/03-zh-add-connection-form-filled.png](../../plan/assets/2026-09-22-vendor-connection-identity/03-zh-add-connection-form-filled.png) |
-| en 添加连接表单（空） | [assets/…/05-en-add-connection-form-empty.png](../../plan/assets/2026-09-22-vendor-connection-identity/05-en-add-connection-form-empty.png) |
-| en 添加连接表单（填好） | [assets/…/06-en-add-connection-form-filled.png](../../plan/assets/2026-09-22-vendor-connection-identity/06-en-add-connection-form-filled.png) |
+| zh 添加连接表单（空） | [assets/…/02-zh-add-connection-form-empty.png](assets/2026-09-22-vendor-connection-identity/02-zh-add-connection-form-empty.png) |
+| zh 添加连接表单（填好） | [assets/…/03-zh-add-connection-form-filled.png](assets/2026-09-22-vendor-connection-identity/03-zh-add-connection-form-filled.png) |
+| en 添加连接表单（空） | [assets/…/05-en-add-connection-form-empty.png](assets/2026-09-22-vendor-connection-identity/05-en-add-connection-form-empty.png) |
+| en 添加连接表单（填好） | [assets/…/06-en-add-connection-form-filled.png](assets/2026-09-22-vendor-connection-identity/06-en-add-connection-form-filled.png) |
 
 采集方式：真实 Electron 冷启动、隔离 profile、走真实用户路径（连接模型 → 本地运行时与即梦会员 → 自定义 API / 中转站），en 轨走设置 → 通用 → English 的真实切换（不是注入 locale；切不过去就抛错，不许把没切过去当切过去）。取证用的一次性探针在证据落盘后已删（Ponytail 建议）；同一条路径由带断言的验收走查 [tests/ux/vendor-connection-identity.walk.mjs](../../../tests/ux/vendor-connection-identity.walk.mjs) 长期覆盖。
 
@@ -276,8 +276,8 @@ hostOf(draftBaseUrl) === hostOf(meta.baseUrl)  →  收集同域名的已有连�
 
 | | 路径 |
 |---|---|
-| HTML 源 | [assets/…/mockup-duplicate-host-hint.html](../../plan/assets/2026-09-22-vendor-connection-identity/mockup-duplicate-host-hint.html) |
-| 渲染图（zh + en 并排） | [assets/…/07-mockup-duplicate-host-hint.png](../../plan/assets/2026-09-22-vendor-connection-identity/07-mockup-duplicate-host-hint.png) |
+| HTML 源 | [assets/…/mockup-duplicate-host-hint.html](assets/2026-09-22-vendor-connection-identity/mockup-duplicate-host-hint.html) |
+| 渲染图（zh + en 并排） | [assets/…/07-mockup-duplicate-host-hint.png](assets/2026-09-22-vendor-connection-identity/07-mockup-duplicate-host-hint.png) |
 
 token-only（值逐字抄自 `src/theme/nomi-tokens.css` 的暗色块），zh/en 两轨，英文那句约为中文 1.6 倍长、两行仍在同一块里收住。
 

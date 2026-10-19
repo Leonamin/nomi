@@ -1,6 +1,6 @@
 # Unified Runtime + Dynamic Modules + MCP Generation Design
 
-> 状态：实施基线（2026-08-22）。用户已确认推进；中文架构入口已归一到 `docs/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md`，逐文件执行步骤见 `docs/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`。本设计稿不再作为第二执行入口。
+> 状态：实施基线（2026-08-22）。用户已确认推进；中文架构入口已归一到 `docs/archive/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md`，逐文件执行步骤见 `docs/archive/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`。本设计稿不再作为第二执行入口。
 
 ## 1. 目标与不做项
 
@@ -546,7 +546,7 @@ the single-shot adapter.
 ### 4.4 External Agent control-plane adaptation (E0/E1)
 
 Codex/Pi research is recorded in
-`docs/audit/2026-08-22-agent-runtime-source-review.md`, sourced from the fixed
+`docs/archive/audit/2026-08-22-agent-runtime-source-review.md`, sourced from the fixed
 commit `5431c5ddf4d2dc5bdfeb0fc22c4b07f724f7a6fb`. It is a research appendix, not
 a second execution entry.
 
@@ -821,9 +821,9 @@ type PhaseEvidence = {
 
 ### 保留为决策来源
 
-- `docs/superpowers/specs/2026-08-08-agentic-production-experience-design.md`：Nomi-authoritative、CAS、预算 ledger、outbox、submission_unknown、诚实进度和安全投影。
-- `docs/superpowers/plans/2026-08-20-storyboard-execution-contract-v2.md`：Storyboard IR、canonical hash、field ledger、reference roles、continuity checkpoint；改为通用 envelope 的 payload。
-- `docs/plan/2026-08-09-production-mcp-finalization.md` 与 MCP 对话原生计划：真实 stdio、GUI gate、progress、artifact、restart 和 zero-credit journey。
+- `docs/archive/superpowers/specs/2026-08-08-agentic-production-experience-design.md`：Nomi-authoritative、CAS、预算 ledger、outbox、submission_unknown、诚实进度和安全投影。
+- `docs/archive/superpowers/plans/2026-08-20-storyboard-execution-contract-v2.md`：Storyboard IR、canonical hash、field ledger、reference roles、continuity checkpoint；改为通用 envelope 的 payload。
+- `docs/archive/plan/2026-08-09-production-mcp-finalization.md` 与 MCP 对话原生计划：真实 stdio、GUI gate、progress、artifact、restart 和 zero-credit journey。
 
 ### 明确后置或拆分
 
@@ -835,8 +835,8 @@ type PhaseEvidence = {
 
 ## 9. 评审与交付流程
 
-1. 本设计稿已由用户确认；中文执行入口是 `docs/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md`。
-2. 已使用 writing-plans skill 生成 `docs/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`，每个步骤都写精确文件、失败测试、命令、预期输出、commit 和回滚点。
+1. 本设计稿已由用户确认；中文执行入口是 `docs/archive/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md`。
+2. 已使用 writing-plans skill 生成 `docs/archive/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`，每个步骤都写精确文件、失败测试、命令、预期输出、commit 和回滚点。
 3. 实施计划按 P0→P3 先交付第一条闭环；P4–P7 只保留依赖和进入条件，不提前开工。
 4. 每批完成后保存 `PhaseEvidence`、六角色 verdict、对抗报告和截图/媒体证据，用户复核后才进入下一批。
 5. 最终发布前再做一次综合六角色评审、独立对抗评审、真实 MCP host 矩阵和完整 gates；没有证据的“完成”不成立。

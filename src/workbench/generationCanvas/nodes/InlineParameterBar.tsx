@@ -131,7 +131,7 @@ type InlineParameterBarProps = {
 //   summary（默认 · 画布节点）  [模型 ▾] [变体 ▾] [16:9 · 5s ▾]
 //     一颗摘要 pill 报当前配置，点开是**统一参数面板**：每个参数一组「小标题 + 分段选择器」，
 //     点即改、面板不关（可连改多项），比例那组每项带一个比例小图形。
-//     2026-07-17 用户拍板（样张 docs/design/mockups/node-param-panel.html）。
+//     2026-07-17 用户拍板（样张 docs/archive/design/mockups/node-param-panel.html）。
 //     2026-09-11 02:10 曾被逐参数 chip 换掉，同日 04:30 用户纠正：**节点退回原样**，chip 只给付费卡。
 //
 //   chips（付费确认卡）  [模型 ▾] [变体 ▾] [16:9 ▾] [5s ▾] [1080p ▾] [⚙]

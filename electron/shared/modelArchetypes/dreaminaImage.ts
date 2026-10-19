@@ -1,4 +1,4 @@
-// 即梦官方 dreamina CLI 的图片档案（文生图 + 改图）。SOURCE：docs/research/2026-09-01-dreamina-cli-v1417-matrix.md
+// 即梦官方 dreamina CLI 的图片档案（文生图 + 改图）。SOURCE：docs/archive/research/2026-09-01-dreamina-cli-v1417-matrix.md
 // （CLI v1.4.17，checkedAt 2026-09-01）。模型/参数 enum 以官方 `-h` 为准：
 //   text2image：model 3.0/3.1/4.0/4.1/4.5/4.6/4.7/5.0/5.0Pro；ratio 8 种；resolution_type **required**
 //     （v1.4.14 破坏性变更，本机 pre-auth 探针实测 `required flag(s) "resolution_type" not set`）：

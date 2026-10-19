@@ -1,6 +1,6 @@
 # 先查别人 —— 整片默认怎么到达逐镜请求参数
 
-> 2026-09-12 · 服务于 [docs/plan/2026-09-12-storyboard-plan-defaults-passthrough.md](../../plan/2026-09-12-storyboard-plan-defaults-passthrough.md)
+> 2026-09-12 · 服务于 [docs/archive/plan/2026-09-12-storyboard-plan-defaults-passthrough.md](../../plan/2026-09-12-storyboard-plan-defaults-passthrough.md)
 > 结论先说：**「两段作用域」这个模型仓库里早有，生态里也早有；本轮缺的不是模型而是它的第二个读者——
 > 给请求体用的 resolver。**所以修法是给现役 owner 补一个导出口（`storyboardAspectScope.ts` → `storyboardShotScope.ts`），
 > 不是新造一层「默认值合并器」（那是并行版，P1）。

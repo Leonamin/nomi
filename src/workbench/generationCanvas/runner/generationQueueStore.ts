@@ -1,5 +1,5 @@
 import { declareStoreLifetime } from '../../project/storeLifetime'
-// 生成任务队列（调度真相源）。方案：docs/plan/2026-08-02-task-center-queue.md
+// 生成任务队列（调度真相源）。方案：docs/archive/plan/2026-08-02-task-center-queue.md
 //
 // 存在的理由：在此之前「队列」只是 runGenerationNodesBatch 里的闭包变量（const queue + let cursor），
 // 跑完即蒸发 —— 于是「谁在排队」没有对象可读、「取消」没有对象可拦、后续波次的节点在 store 里还是 idle

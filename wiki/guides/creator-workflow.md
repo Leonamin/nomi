@@ -22,7 +22,7 @@ okf_version: "0.1"
 
 ## 지원 범위와 오래된 안내
 
-초기 `docs/personal-web.md`에는 TTS, agent 자동 제작·검수·재생성은 제공하지 않는다고 쓰여 있다. 2026-10-15 코드에는 웹 OpenCode/Codex agent 도구 실행, 승인된 생성 카드 제출 경로가 있고, 데스크톱 catalog에는 TTS 모델 선언도 있다. 따라서 그 문구를 현재 전체 Nomi의 기능 제한으로 그대로 읽으면 부정확하다.
+초기 `docs/archive/guides/personal-web.md`에는 TTS, agent 자동 제작·검수·재생성은 제공하지 않는다고 쓰여 있다. 2026-10-15 코드에는 웹 OpenCode/Codex agent 도구 실행, 승인된 생성 카드 제출 경로가 있고, 데스크톱 catalog에는 TTS 모델 선언도 있다. 따라서 그 문구를 현재 전체 Nomi의 기능 제한으로 그대로 읽으면 부정확하다.
 
 반대로, desktop TTS 선언만으로 개인용 웹의 TTS가 지원된다고 할 수도 없다. 이번 확인에서는 웹 RPC/provider 경로에서 `text_to_audio`를 생성하는 실제 사용자 흐름을 검증하지 않았다. **웹 TTS, 자동 검수·재생성, 결제 자동화, 다중 사용자 서비스는 이 가이드에서 지원됨으로 주장하지 않는다.** QA가 증명하는 것은 그 문서에 적힌 실제 agent tool execution 및 별도 승인 생성 사례뿐이다.
 
@@ -31,7 +31,7 @@ okf_version: "0.1"
 ## 근거와 확인일
 
 - 확인일: 2026-10-16
-- 기존 사용자 안내: [`docs/user-guide.ko.md`](../../docs/archive/guides/user-guide.ko.md), [`docs/personal-web.md`](../../docs/archive/guides/personal-web.md)
-- 실제 제작·agent 증거: [`docs/qa/2026-10-14-recovered-web-production.md`](../../docs/qa/2026-10-14-recovered-web-production.md), [`docs/qa/2026-10-15-web-agent-tool-execution.md`](../../docs/qa/2026-10-15-web-agent-tool-execution.md)
-- 브라우저 미디어 검증과 한계: [`docs/qa/2026-10-15-web-platform-media-browser.md`](../../docs/qa/2026-10-15-web-platform-media-browser.md)
+- 기존 사용자 안내: [`docs/archive/guides/user-guide.ko.md`](../../docs/archive/guides/user-guide.ko.md), [`docs/archive/guides/personal-web.md`](../../docs/archive/guides/personal-web.md)
+- 실제 제작·agent 증거: [`docs/archive/qa/2026-10-14-recovered-web-production.md`](../../docs/archive/qa/2026-10-14-recovered-web-production.md), [`docs/archive/qa/2026-10-15-web-agent-tool-execution.md`](../../docs/archive/qa/2026-10-15-web-agent-tool-execution.md)
+- 브라우저 미디어 검증과 한계: [`docs/archive/qa/2026-10-15-web-platform-media-browser.md`](../../docs/archive/qa/2026-10-15-web-platform-media-browser.md)
 - 웹 실행 구현: [`web/agentProcess.ts`](../../web/agentProcess.ts), [`web/agentTools.ts`](../../web/agentTools.ts), [`web/rpc.ts`](../../web/rpc.ts)

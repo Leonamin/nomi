@@ -2,8 +2,8 @@
 
 > 状态：🚧 进行中（2026-09-11 用户拍板「可以这样设计」，本分支 `feat/model-box-tidy-20260911` 已实现；合入 main 前只能称「已实现」，不能称「已解决」——R19）
 > 来源：2026-09-11 用户原话「① 设置里的供应商列表要全 ② 供应商可排序 ③ 每个模型可隐藏 ④ 切模型再切回记住手选的供应商」；用户明确要求通用（不许单拎某个供应商）。
-> 证据基础：真实截图（隔离 profile，同一批生产组件真实渲染，非手写 mockup）见 `docs/plan/2026-09-11-model-box-tidy-evidence/`；代码盘点见下方「现状」逐条 file:line。
-> 关联文档：`docs/plan/2026-09-11-triage-board-evidence/feedback-five-items.md`（第 3/4/5 条已单独盘点，本方案把它们收成一套统一数据模型）、`docs/plan/2026-09-06-vendor-preference-auto-fallback.md`（一期「阶段一只做排序去重，不做逐模型记忆」的原始决策——本方案是它明确留白的阶段二）。
+> 证据基础：真实截图（隔离 profile，同一批生产组件真实渲染，非手写 mockup）见 `docs/archive/plan/2026-09-11-model-box-tidy-evidence/`；代码盘点见下方「现状」逐条 file:line。
+> 关联文档：`docs/archive/plan/2026-09-11-triage-board-evidence/feedback-five-items.md`（第 3/4/5 条已单独盘点，本方案把它们收成一套统一数据模型）、`docs/archive/plan/2026-09-06-vendor-preference-auto-fallback.md`（一期「阶段一只做排序去重，不做逐模型记忆」的原始决策——本方案是它明确留白的阶段二）。
 > 实施说明：拍板后按本方案落地，样张（`Main.dc.html` / `PickerAfter.dc.html`）与实现逐项对账；
 > 唯一解析点落在 `src/config/modelBoxPreference.ts`，设置区与所有模型框读同一份结果。
 > 真机验收截图 `after-*.png` 与三张样张同住证据目录。
@@ -49,7 +49,7 @@
 |---|---|
 | 供应商顺序已有完整实现：schema、持久化、IPC、UI 四层齐全，`VendorPreferenceOrderSection.tsx` 就是②要新增的「模型排序」区可以照抄的骨架（上移/下移箭头、失败提示、`data-vendor-preference-row` 断言钩子）。 | `electron/shared/contracts/vendorPreference.ts`（schema）、`electron/settings/vendorPreferenceSettings.ts` + `vendorPreferenceIpc.ts`（持久化/IPC）、`src/workbench/common/useVendorPreference.ts`（hook）、`src/workbench/settings/VendorPreferenceOrderSection.tsx`（UI） |
 | 但**模型本身的顺序**（不分供应商，「常用模型排前面」）完全没有手动排序：模型下拉的排序只有一级判据——`catalogLifecycle`（flagship/value/companion/legacy 四档），同档内按 catalog 原始插入序，**没有任何用户可调的字段**。 | `src/config/modelIdentity.ts:63-73`（`sortModelsByCatalogLifecycle`，唯一排序函数，无手动序） |
-| 用户 09-11 说的「模型框排序」原话，结合 `feedback-five-items.md` 第 5 条独立发现的同一处代码，是指**这一级**（模型级，不是供应商级）——两个人各自发现了同一个缺口。 | `docs/plan/2026-09-11-triage-board-evidence/feedback-five-items.md` 第 5 行 |
+| 用户 09-11 说的「模型框排序」原话，结合 `feedback-five-items.md` 第 5 条独立发现的同一处代码，是指**这一级**（模型级，不是供应商级）——两个人各自发现了同一个缺口。 | `docs/archive/plan/2026-09-11-triage-board-evidence/feedback-five-items.md` 第 5 行 |
 
 ### 2.3 ③「每个模型可隐藏」——机制存在，覆盖不全（真通用问题，不是单一供应商）
 
@@ -65,7 +65,7 @@
 |---|---|
 | 供应商偏好目前是**全局单一顺序**，无逐模型维度：`VendorPreferenceSettings.orderedVendorKeys` 就是一份 `string[]`，没有 per-model 的位置。 | `electron/shared/contracts/vendorPreference.ts:4` |
 | 切模型再切回：只在**没有离开过当前 (value, vendor)** 时才保留供应商（`current` 命中直接返回）；一旦离开过，`pickHealthiestProvider` 按全局 `orderedVendorKeys` 重新选，不管用户上次在**这个模型**上手动点过哪家 chip。 | `src/workbench/common/useDedupedModelSelect.ts` 的 `onModelPick`（`current` 命中分支 → 否则调 `pickHealthiestProvider`） |
-| 09-06 的方案文档明确说这是**阶段一的有意留白**：「临时点另一家 chip 只对这次使用」；本方案就是它点名的「阶段二」。 | `docs/plan/2026-09-06-vendor-preference-auto-fallback.md` §1（"用户 2026-09-06 拍板覆盖了…"上一段） |
+| 09-06 的方案文档明确说这是**阶段一的有意留白**：「临时点另一家 chip 只对这次使用」；本方案就是它点名的「阶段二」。 | `docs/archive/plan/2026-09-06-vendor-preference-auto-fallback.md` §1（"用户 2026-09-06 拍板覆盖了…"上一段） |
 
 ---
 

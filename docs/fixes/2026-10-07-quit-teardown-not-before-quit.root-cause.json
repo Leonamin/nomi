@@ -184,7 +184,7 @@
       "electron/video/depthVideoIpc.ts",
       "src/workbench/project/projectAgentLaneOpen.ts",
       "tests/ux/quit-teardown-real.e2e.mjs",
-      "docs/evidence/2026-10-07-quit-teardown/README.md"
+      "docs/archive/evidence/2026-10-07-quit-teardown/README.md"
     ]
   },
   "regression_tests": [

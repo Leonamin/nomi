@@ -9,7 +9,7 @@
 - 本地素材读取失败、未知类型、伪装文本统一打 `asset-invalid`，渲染层按机器码归类并补 zh-CN/en 文案。
 - 补 C2PA `caBX`、PNG XMP、JPEG APP1 XMP 与文本反例测试。
 
-## 先查别人（R27；报告见 [`docs/research/2026-09-28-reference-image-markup/prior-art.md`](../research/2026-09-28-reference-image-markup/prior-art.md)）
+## 先查别人（R27；报告见 [`docs/archive/research/2026-09-28-reference-image-markup/prior-art.md`](../research/2026-09-28-reference-image-markup/prior-art.md)）
 
 - **依赖里已有？** Node 的 `TextDecoder` 已是运行时能力，仓库现有 `electron/assets/mediaTypes.ts:25` 也已经拥有字节魔数判定；本次复用它们，不新增依赖或第二套解码器。结论：用已有。
 - **仓库里已有？** `contentTypeFromMagicBytes`（`electron/assets/mediaTypes.ts:25`）和认证/落盘边界（`electron/providerAdapter/certificationMedia.ts:218`、`electron/catalog/assetLocalization.ts:180`）已经消费同一媒体类型表；本次把伪装文本判断收进同一 owner，沿用这些边界而不是在调用方复制正则。结论：收敛到已有 owner。

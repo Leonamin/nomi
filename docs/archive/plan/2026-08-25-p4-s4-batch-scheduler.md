@@ -1,6 +1,6 @@
 # P4 S4 — 派生批次调度器 + 预算 halt + 急停 + 锚检查点（执行计划）
 
-> 母计划：`docs/superpowers/plans/2026-08-24-p4-multishot-continuity.md`（§1 不动项 / §3.2 锚检查点 / §3.3 执行·预算·急停 / §4 语义表 / §5 验收 / §6 拍板）。
+> 母计划：`docs/archive/superpowers/plans/2026-08-24-p4-multishot-continuity.md`（§1 不动项 / §3.2 锚检查点 / §3.3 执行·预算·急停 / §4 语义表 / §5 验收 / §6 拍板）。
 > 本片是 P4 安全语义最重的一片。隔离 worktree `/Users/aoqimin/Desktop/Nomi-p4-s4-batch-scheduler`，分支 `claude/p4-s4-batch-scheduler`。
 
 ## 0. 范围与不动项

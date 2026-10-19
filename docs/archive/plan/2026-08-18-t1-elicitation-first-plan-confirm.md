@@ -1,6 +1,6 @@
 # T1 · elicitation-first 画布方案确认 + 会话级信任（P0-A）
 
-日期：2026-08-18 ｜ 母方案：`docs/plan/2026-08-18-mcp-experience-overhaul.md` 执行表 T1。
+日期：2026-08-18 ｜ 母方案：`docs/archive/plan/2026-08-18-mcp-experience-overhaul.md` 执行表 T1。
 
 ## 范围（只做这一件）
 

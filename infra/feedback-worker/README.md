@@ -4,7 +4,7 @@
 反馈那一条再返回一个用户能引用的编号。
 
 为什么自建而不是接 Sentry / PostHog / Aptabase：见
-[docs/plan/2026-09-15-feedback-loop.md](../../docs/archive/plan/2026-09-15-feedback-loop.md) 的「先查别人」节。
+[docs/archive/plan/2026-09-15-feedback-loop.md](../../docs/archive/plan/2026-09-15-feedback-loop.md) 的「先查别人」节。
 一句话——这一版开始收 Agent 轨迹了，「不收别的」从**肉眼可验**变成**只能靠承诺的一句话**，
 而一句只能靠承诺的话，不能让第三方进程替我们说。
 

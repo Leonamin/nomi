@@ -1,7 +1,7 @@
 # 模型接入（图片/视频/音频）最终方案 — 审计 + 设计 + 项目计划（R7 定稿）
 
 > 日期：2026-06-07 ｜ 状态：**6 角色评审(R7)已过、已据评审修订；待用户拍决策表**
-> 配套：`docs/design/2026-06-07-media-transport-descriptor.md`（~20 家 API + 开源对标 + spike 实测）。
+> 配套：`docs/archive/design/2026-06-07-media-transport-descriptor.md`（~20 家 API + 开源对标 + spike 实测）。
 > 北极星：**用户能极方便地用上他想要的模型**（注意：不是"接入任意中转站"——见 R7 修正）。
 
 ---

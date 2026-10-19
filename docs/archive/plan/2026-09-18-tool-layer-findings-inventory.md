@@ -9,7 +9,7 @@
 ## 先查别人
 
 本清单的 §5 是「这一问没做」，§6 是**做完之后回来的答案**。检索报告正本：
-`docs/plan/2026-09-18-tool-layer-prior-art-verdict.md`（六个面逐个对照，原文与出处都在它 §2）。
+`docs/archive/plan/2026-09-18-tool-layer-prior-art-verdict.md`（六个面逐个对照，原文与出处都在它 §2）。
 
 - **依赖里已有？** pi 一份 typebox 两用（`node_modules/@earendil-works/pi-agent-core/dist/index.d.ts`）；Vercel AI SDK `inputSchema` *"dual purpose"*（https://ai-sdk.dev/docs/reference/ai-sdk-core/tool ）。
 - **仓库里已有？** `electron/capabilityCore/mcpGenerationToolCatalog.ts:22` 已经是 `.omit().extend()` 投影；同文件 `:33-54` 却是第三份手抄翻译（本清单 §6「14 条都没覆盖的那一条」）。
@@ -114,7 +114,7 @@
 
 ## 6. §5 那一问的答案（2026-09-18 当日回来的）
 
-正本：`docs/plan/2026-09-18-tool-layer-prior-art-verdict.md`（分支 `research/tool-layer-prior-art-20260918` @ `0470dfc30`）。
+正本：`docs/archive/plan/2026-09-18-tool-layer-prior-art-verdict.md`（分支 `research/tool-layer-prior-art-20260918` @ `0470dfc30`）。
 查了六个面：MCP 2026-07-28 规范 + TS SDK、Claude Agent SDK、Messages API、pi、Codex、ChatCut。
 
 ### 裁决：**对了一半，错了关键的一半**

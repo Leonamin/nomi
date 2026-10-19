@@ -2,7 +2,7 @@
 // AI 改锁住节点由 gate deny(硬禁);对用户永远是一键软门。
 //
 // 家在**节点浮条**(FloatingToolbarShell),和「复制变体 / 生成记录」同一族——锁的作用对象是
-// **这个节点**,不是这一次生成(2026-09-10 样张拍板,见 docs/design/2026-09-10-node-composer-bar-v1.md
+// **这个节点**,不是这一次生成(2026-09-10 样张拍板,见 docs/archive/design/2026-09-10-node-composer-bar-v1.md
 // 的「反转『锁在底栏』那条决定的理由」)。生成浮框底栏那一份已同 commit 删除,不留并行版。
 // 外挂组件:BaseGenerationNode 是白名单巨壳(R12),不往里塞实现(同 TechnicalReviewBadge)。
 //

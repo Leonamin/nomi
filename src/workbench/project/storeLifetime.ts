@@ -1,7 +1,7 @@
 /**
  * 每个 store 数据字段的**寿命声明**（C1，2026-09-18）。
  *
- * 为什么要加这一个轴（审计 `docs/audit/2026-09-17-ownership-lifetime-census.md` §1.1 / §6 C1）：
+ * 为什么要加这一个轴（审计 `docs/archive/audit/2026-09-17-ownership-lifetime-census.md` §1.1 / §6 C1）：
  * 14 个 zustand store 里只有 3 个被项目释放点碰到，而释放点本身
  * （`releaseWorkbenchProjectSession.ts`，引入于 `0e1be560a`「reduce canvas memory usage」）
  * 是一份**手写清单**——它是「减内存」的副产品，不是「项目会话 owner」的设计。

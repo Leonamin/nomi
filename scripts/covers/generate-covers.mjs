@@ -17,12 +17,12 @@ const MAX_CALLS = 90
 const args = process.argv.slice(2)
 const value = (flag) => args.includes(flag) ? args[args.indexOf(flag) + 1] : undefined
 const dryRun = args.includes('--dry-run')
-const anchor = path.join(root, 'docs/design/covers/anchors/anchor-3.png')
+const anchor = path.join(root, 'docs/archive/design/covers/anchors/anchor-3.png')
 const anchorHash = createHash('sha256').update(fs.readFileSync(anchor)).digest('hex')
 const limit = Number(value('--limit') ?? 33)
 const rework = args.includes('--rework')
 const resume = args.includes('--resume')
-const outputRoot = path.join(root, 'docs/design/covers')
+const outputRoot = path.join(root, 'docs/archive/design/covers')
 const ledgerPath = path.join(outputRoot, 'generation-receipt.json')
 
 function saveLedger(ledger) {
@@ -53,7 +53,7 @@ function palette() {
   }).join(', ')
 }
 function metaphors() {
-  const rules = fs.readFileSync(path.join(root, 'docs/design/2026-09-08-cover-illustration-rules.md'), 'utf8')
+  const rules = fs.readFileSync(path.join(root, 'docs/archive/design/2026-09-08-cover-illustration-rules.md'), 'utf8')
   const rows = [...rules.matchAll(/^\| ([a-z0-9-]+) \| ([^|]+) \| ([^|]+) \|$/gm)]
   const result = new Map(rows.filter(row => /^(effect-|writer-|director-|workbench-|brand-promo$|creation-edit$|drama-short$|model-integration$|release-media-pack$|skill-author$)/.test(row[1])).map(row => [row[1], /^[12]$/.test(row[3].trim()) ? row[2].trim() : row[3].trim()]))
   if (result.size !== 73) throw new Error('Rules must define all 73 unique illustration metaphors')

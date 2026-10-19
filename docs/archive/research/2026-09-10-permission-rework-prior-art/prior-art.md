@@ -2,7 +2,7 @@
 
 > 只读调研，2026-09-10。仓库快照：`claude/permission-model-rework-1bad6b`。
 > 三个实施项：①付费确认卡进介入槽 ②卡上改参数 = `generation.revise` ③权限三档 step/自动/自主。
-> 落库位置：本文件（`docs/research/2026-09-10-permission-rework-prior-art/prior-art.md`）。
+> 落库位置：本文件（`docs/archive/research/2026-09-10-permission-rework-prior-art/prior-art.md`）。
 
 ---
 

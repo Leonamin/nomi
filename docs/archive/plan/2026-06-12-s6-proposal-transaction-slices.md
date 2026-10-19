@@ -1,6 +1,6 @@
 # S6 提议事务主体 —— 子切片施工文档（R4）
 
-> 上游唯一真相源：`docs/plan/2026-06-11-nomi-harness-master-plan.md` §6（L 模块）+ §8.1b（S6 不动项/回滚/验收）。
+> 上游唯一真相源：`docs/archive/plan/2026-06-11-nomi-harness-master-plan.md` §6（L 模块）+ §8.1b（S6 不动项/回滚/验收）。
 > 本文只做一件事：把 master plan 当整块（4.5-5.5d）的 S6 **拆成可独立 push 的子切片**，每片五门全过才 commit。
 > 现状盘点见本 session Explore 报告（已并入下方「根因坐标」）。
 

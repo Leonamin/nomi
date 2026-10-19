@@ -1,6 +1,6 @@
 # M1 round-2 Host/runtime delivery
 
-> 状态：🚧 进行中（Host/runtime 切片已移植进 M1 终装分支；红灯重验与全量 gates 见 docs/qa/2026-09-01-agent-m0-red-lights.md）
+> 状态：🚧 进行中（Host/runtime 切片已移植进 M1 终装分支；红灯重验与全量 gates 见 docs/archive/qa/2026-09-01-agent-m0-red-lights.md）
 
 ## Scope
 
@@ -8,7 +8,7 @@
   including the real project Host coordinator, repository/reducer, IPC, Pi runtime
   wiring, and the renderer-facing Host client seams required by those imports.
 - Preserve the exact reproduction commands in
-  `docs/qa/2026-09-01-agent-m0-red-lights.md`; repair the shared production
+  `docs/archive/qa/2026-09-01-agent-m0-red-lights.md`; repair the shared production
   boundaries exercised by those tests.
 - Replace the round-1 standalone lifecycle facade with the transplanted Host path
   in the same change.

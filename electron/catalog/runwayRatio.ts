@@ -10,7 +10,7 @@
  * （此前两处各有一份 = 一个事实两个作者，正是本轮合并要消掉的 P1 并行实现。）
  *
  * 图像侧的 `RUNWAY_IMAGE_RATIO_REMAP` / `runwayRatioOrientation` 与视频侧无重叠，继续住这里。
- * 字段对账见 docs/research/2026-09-02-docaudit-fal-runway-etc.md。
+ * 字段对账见 docs/archive/research/2026-09-02-docaudit-fal-runway-etc.md。
  */
 import { runwayVideoRatioEnumForModel } from "../shared/videoCapabilities/runwayWireFacts";
 

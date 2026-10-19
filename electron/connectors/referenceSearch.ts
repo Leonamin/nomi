@@ -8,7 +8,7 @@
 // 上游不给统一形状，归一就只能我们做；做完之后 UI 只认识 ReferenceItem，不认识任何平台字段。
 //
 // 契约（平台词表 / ReferenceItem / 证据格）住在中立层 electron/shared/contracts/referenceSearch.ts。
-// 方案与实调记录：docs/plan/2026-09-07-find-reference-connector.md
+// 方案与实调记录：docs/archive/plan/2026-09-07-find-reference-connector.md
 import { isJsonRecord, firstString, trim, type JsonRecord } from "../jsonUtils";
 import {
   REFERENCE_PLATFORM_FACTS,

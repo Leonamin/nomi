@@ -1,6 +1,6 @@
 # 2026-09-10 内置供应商「填 key 不解锁模型」类根因 · 先查别人报告
 
-> 方案：docs/plan/2026-09-10-vendor-key-publish-class.md
+> 方案：docs/archive/plan/2026-09-10-vendor-key-publish-class.md
 > 用户反馈：「apimart 写入 key 没有和以前一样一次性打开所有模型」，追问后确认**其它内置供应商也一样**。
 > 用户拍板（2026-09-10）：「这部分模型我们以前是做过探测、测通了才加入的……如果已经确定通了，其实可以直接可以选、可以用。」
 > 本报告先回答「以前到底测过没有、证据在哪」，再回答「别人怎么做」。
@@ -9,18 +9,18 @@
 
 **机器化的认证账本**：`docs/integration-certification/model-certification-ledger.json`（66 条 / 7 家），
 门岗 `scripts/check-model-certification-coverage.mjs:1-8`（零额度静态门，只核对证据引用与身份，不打供应商），
-方案 docs/plan/2026-08-30-unified-model-integration-certification.md、交接 docs/handoff/2026-08-30-provider-model-expansion-unified-certification-handoff.md。
+方案 docs/archive/plan/2026-08-30-unified-model-integration-certification.md、交接 docs/handoff/2026-08-30-provider-model-expansion-unified-certification-handoff.md。
 
 | vendorKey | 证据 | 出处 |
 |---|---|---|
-| apimart | 真 key 端到端核验（tests/transport-spike/apimart.mjs），12 模型精确契约附录 A | electron/catalog/apimartVendor.ts:1-14；docs/plan/2026-06-07-apimart-curated-onboarding.md |
+| apimart | 真 key 端到端核验（tests/transport-spike/apimart.mjs），12 模型精确契约附录 A | electron/catalog/apimartVendor.ts:1-14；docs/archive/plan/2026-06-07-apimart-curated-onboarding.md |
 | kie | 直连实测确认的契约（GPT Image 2 文生图）+ 账本 8 条（2 条 live-certified） | electron/catalog/kieSeedance.ts:1-15；electron/catalog/kieGptImage2.ts:1-6 |
-| volcengine | 真实 probe 验证 2026-06-19（用户 key，逐端点形状） | electron/catalog/volcengineVendor.ts:2-6；docs/plan/2026-06-19-modelscope-volcengine-onboarding.md |
-| volcengine-speech | 实查 openspeech 官方文档 + 接入手册 2026-06-24（三头鉴权逐项） | electron/catalog/volcengineVendor.ts:22-28；docs/plan/2026-06-24-volcengine-seedance-video.md |
+| volcengine | 真实 probe 验证 2026-06-19（用户 key，逐端点形状） | electron/catalog/volcengineVendor.ts:2-6；docs/archive/plan/2026-06-19-modelscope-volcengine-onboarding.md |
+| volcengine-speech | 实查 openspeech 官方文档 + 接入手册 2026-06-24（三头鉴权逐项） | electron/catalog/volcengineVendor.ts:22-28；docs/archive/plan/2026-06-24-volcengine-seedance-video.md |
 | modelscope | 真实 E2E 2026-06-19（用户 key，Z-Image-Turbo / Qwen-Image-2512 出图） | electron/catalog/modelscopeVendor.ts:3-12 |
-| runninghub | 实查官方文档 + 开源插件源码 HM-RunningHub/ComfyUI_RH_OpenAPI core/task.py | electron/catalog/runninghub3d.ts:5-9；docs/plan/2026-06-27-runninghub-aggregator-onboarding.md |
-| replicate | 实查 + **真生成实测固化 2026-06-28**（Prefer:wait 同步 9-13s 出图） | electron/catalog/replicate.ts:9-14；docs/plan/2026-06-28-element-decomposition-feature.md |
-| agnes | 官方文档逐条对账（2026-08-26 checkedAt），两个 quirk 照搬 | electron/catalog/agnesImages.ts:1-8；docs/plan/2026-06-30-agnes-ai-onboarding.md |
+| runninghub | 实查官方文档 + 开源插件源码 HM-RunningHub/ComfyUI_RH_OpenAPI core/task.py | electron/catalog/runninghub3d.ts:5-9；docs/archive/plan/2026-06-27-runninghub-aggregator-onboarding.md |
+| replicate | 实查 + **真生成实测固化 2026-06-28**（Prefer:wait 同步 9-13s 出图） | electron/catalog/replicate.ts:9-14；docs/archive/plan/2026-06-28-element-decomposition-feature.md |
+| agnes | 官方文档逐条对账（2026-08-26 checkedAt），两个 quirk 照搬 | electron/catalog/agnesImages.ts:1-8；docs/archive/plan/2026-06-30-agnes-ai-onboarding.md |
 | minimax / elevenlabs / meshy / fal / runway | 账本四项证据 `static`/`loopback`/`failureMatrix`/`mcpDryRun` 全 `passed`，每条带官方 URL + checkedAt | docs/integration-certification/model-certification-ledger.json |
 | dreamina | 本地 CLI 登录态，非 HTTP key（不在本轮发布判据内） | electron/catalog/dreaminaVendor.ts:1-6 |
 
@@ -89,7 +89,7 @@
 
 ## ⑤ TikHub 自媒体
 
-沿用 2026-09-10 同日已跑的检索结论（docs/research/2026-09-10-ux-feedback-fixes/prior-art.md「④」节：
+沿用 2026-09-10 同日已跑的检索结论（docs/archive/research/2026-09-10-ux-feedback-fixes/prior-art.md「④」节：
 `openai compatible api key 验证 401 models`，80 条，**有效信号 0 条**）。同一议题同一天，不重复烧检索额度；
 自媒体对这类基础设施议题只有官方排查教程的二手转载，不改变 ④ 的结论。
 

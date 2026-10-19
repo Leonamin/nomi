@@ -1,10 +1,10 @@
 # Agent 架构总体方案：把 pi 真的当运行时用（2026-09-06）
 
-> ⛔ **2026-09-07 被 [`docs/plan/2026-09-07-agent-runtime-rebuild.md`](2026-09-07-agent-runtime-rebuild.md) 取代（用户改判重做）。**
+> ⛔ **2026-09-07 被 [`docs/archive/plan/2026-09-07-agent-runtime-rebuild.md`](2026-09-07-agent-runtime-rebuild.md) 取代（用户改判重做）。**
 > 本文的渐进修方向已不再采用，保留只为追溯证据与被吸收的结论。
 
 > 状态：⛔ 已废弃（2026-09-07 被重做方案取代）—— 原状态是「方案待拍板，含必须先拍板的 3 条（§6）」。
-> 上游评审：[`docs/audit/2026-09-06-agent-architecture-review.md`](../audit/2026-09-06-agent-architecture-review.md)（含全部 `file:line` 证据）
+> 上游评审：[`docs/archive/audit/2026-09-06-agent-architecture-review.md`](../audit/2026-09-06-agent-architecture-review.md)（含全部 `file:line` 证据）
 > 基线：`origin/main@d974e6a55`
 
 ---
@@ -143,7 +143,7 @@
 
 | 关掉的 | 现状锚点 | 建议 |
 |---|---|---|
-| **重试** | `session.mts:32` + `run.mts:165` | **打开**，用 pi 的 `RetryPolicy` + `auto_retry_*` 事件。理由：一次 429 整轮失败是今天最高频的可见故障，而 pi 的实现是现成的、经过 0.80–0.83 连续五个版本修过的（`docs/research/2026-09-01-agent-evaluation-and-test-research.md` 已记）。**面板上要能看到「正在重试 2/3」**，否则用户只感觉「卡住了」 |
+| **重试** | `session.mts:32` + `run.mts:165` | **打开**，用 pi 的 `RetryPolicy` + `auto_retry_*` 事件。理由：一次 429 整轮失败是今天最高频的可见故障，而 pi 的实现是现成的、经过 0.80–0.83 连续五个版本修过的（`docs/archive/research/2026-09-01-agent-evaluation-and-test-research.md` 已记）。**面板上要能看到「正在重试 2/3」**，否则用户只感觉「卡住了」 |
 | **思考** | `session.mts:37` + `model.mts:71` | **需要拍板**（§6 Q2）。要么打开（多花 reasoning token，换来「思考行」名副其实 + `reasoningTokens` 能填）；要么判死并把面板上的「思考」改名成「等待模型」、删掉推理那一行 |
 | **价格** | `model.mts:72` 写死 `{0,0,0,0}` | **打开**：Nomi catalog 的 `Model.pricing` 已有，填进 pi 的 `Model.cost`，让 `calculateCost` 真的算。同时 `contextWindow` 随 turn usage 过 IPC（G4）。这两条一起，v4 的上下文环和花费行才第一次有真数字 |
 
@@ -166,7 +166,7 @@
 
 ### P3 · 升级（降级成独立版本债轨）
 
-`docs/plan/2026-09-06-stack-upgrade-react19-aisdk-tailwind4.md` 的结论仍然成立，本方案给它补一条**它自己没说的理由**：
+`docs/archive/plan/2026-09-06-stack-upgrade-react19-aisdk-tailwind4.md` 的结论仍然成立，本方案给它补一条**它自己没说的理由**：
 
 > v4 面板真正缺的不是 AI Elements 的组件长相，是 **P1-A 那条有序 parts 通道**。升 React 或 AI SDK 一寸也不会让那条通道出现。
 
@@ -300,12 +300,12 @@
 
 - **摩擦**：`author_skill` 工具在 `documentDescriptors.ts` 里，而那个文件已死；`agentChatPolicy.ts:85-86` 那条找它的分支恒空。净效果：**`skill.write` 能力从任何入口都够不着**，`creation-chat` 实际只有一个只读工具。
 - **要权衡的**：「让 Agent 把这次学到的方法写成一个技能」是经验沉淀闭环的一环（`ARCHITECTURE-NOW` 里有整段设计），但它今天没有 UI、没有审批卡、也没有任何人用过。
-- **推荐**：**先删**（连同死文件一起，P1），把它记进 `docs/plan` 的远期项。理由：一条够不着的能力不是能力，是一条会让下一个读代码的人误判现状的假线索。要恢复它需要的不是把工具接回去，是先设计「Agent 写的技能怎么被用户看到、审批、撤销」——那是一件独立的活。
+- **推荐**：**先删**（连同死文件一起，P1），把它记进 `docs/archive/plan` 的远期项。理由：一条够不着的能力不是能力，是一条会让下一个读代码的人误判现状的假线索。要恢复它需要的不是把工具接回去，是先设计「Agent 写的技能怎么被用户看到、审批、撤销」——那是一件独立的活。
 
 ---
 
 ## 7. commit 分段（本轮只做到第 1 段）
 
-1. `docs(audit+plan)`：本文 + `docs/audit/2026-09-06-agent-architecture-review.md` ← **本轮只做到这里**
+1. `docs(audit+plan)`：本文 + `docs/archive/audit/2026-09-06-agent-architecture-review.md` ← **本轮只做到这里**
 2. `docs(architecture-now)`：把审计 §2.4 的五行更新写进 `ARCHITECTURE-NOW.md`（含「`AgentHarness` 在 0.84.3 是空壳」这条常见误解）
 3. 之后按 §5 的顺序，每条一个分支一个 PR

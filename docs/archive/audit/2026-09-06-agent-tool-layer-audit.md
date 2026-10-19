@@ -1,6 +1,6 @@
 # Agent 工具层 · 第一性原理评审（2026-09-06）
 
-状态：📎 已结案（只审不改）——本文只给证据与判断；根修方案在 `docs/plan/2026-09-06-agent-tool-layer-root-fix.md`。
+状态：📎 已结案（只审不改）——本文只给证据与判断；根修方案在 `docs/archive/plan/2026-09-06-agent-tool-layer-root-fix.md`。
 
 > **缘起**：2026-09-06 晚，用户在打包版真实使用后说：「工具显示排序不对，文字竟然在工具上面；工具本身有问题；
 > 这可能是通用的根因问题，要从第一性原理、根节点上解决。」现场：让 DeepSeek 在分镜表里「从原稿重拆 10 镜」，
@@ -87,7 +87,7 @@ function sortedItems(items) {
 
 ### 1.3 wiring plan 的 G6 仍然成立，而且比计划里写的更严重
 
-`docs/plan/2026-09-06-agent-panel-v4-wiring.md:114-121` 已经实查记下：
+`docs/archive/plan/2026-09-06-agent-panel-v4-wiring.md:114-121` 已经实查记下：
 「`ProjectAgentToolItem` **只在回合结束时**一次性从 `response.toolCalls` 生成……跑的过程中，状态里**一条 tool 记录都没有**。」
 今天核对：**仍然成立**（`projectAgentTurnExecution.ts:616-618` 未变）。
 
@@ -224,7 +224,7 @@ type ProjectAgentItemBase = ProjectAgentRecordBase & Readonly<{
 
 #### ③ **错误信息把 9 个分支的报错平铺，不标是哪个分支** —— 这是「六次写不对」的**直接**原因
 
-真机实测抓到的、**模型真正收到的那段文本**（原文见 `docs/audit/attachments/2026-09-06-tool-probe.jsonl`）：
+真机实测抓到的、**模型真正收到的那段文本**（原文见 `docs/archive/audit/attachments/2026-09-06-tool-probe.jsonl`）：
 
 ```
 Validation failed for tool "nomi_canvas_plan":
@@ -381,7 +381,7 @@ export const storyboardPlanSchema = z.object({
 - **只读**：介入槽出现即拒绝，**不落画布、不生成、不花生成额度**；只花文本 token。
 - **数据**：每回合从宿主落盘快照读 `items`，记录每条 tool item 的 `capability` / `status` / `error` / `createdAt`。
 - **脚本**：`scratch/realModelToolProbe.mjs`（未提交，方法写在本节）；原始数据
-  `docs/audit/attachments/2026-09-06-tool-probe.jsonl`（已脱敏：不含 key，不含用户真实项目内容，故事正文是本次自造）。
+  `docs/archive/audit/attachments/2026-09-06-tool-probe.jsonl`（已脱敏：不含 key，不含用户真实项目内容，故事正文是本次自造）。
 
 ### 3.2 结果（5 任务 × 3 次 = 15 回合）
 
@@ -453,7 +453,7 @@ export const storyboardPlanSchema = z.object({
 **顺带一条 CI 卫生问题**：`tests/ux/_agentProbe.mjs` 依赖的 `window.nomiDesktop.agents` 桥
 **在当前代码里已经不存在**（全仓 grep `cancelChatV2` 只剩测试文件自己），
 所以 `apimart-text-brain.e2e.mjs` / `staging-reference.e2e.mjs` 这些付费 e2e **已经是死的**。
-这正是 `docs/lessons/dead-selector-lies-both-ways.md` 那一族。根修方案 §3 的评测要接**现役** `projectAgent` 通道，别复活它。
+这正是 `docs/archive/lessons/dead-selector-lies-both-ways.md` 那一族。根修方案 §3 的评测要接**现役** `projectAgent` 通道，别复活它。
 
 ---
 
@@ -495,6 +495,6 @@ export const storyboardPlanSchema = z.object({
 
 ## 6. 附件
 
-- `docs/audit/attachments/2026-09-06-tool-probe.jsonl` —— 真实模型探针原始记录
+- `docs/archive/audit/attachments/2026-09-06-tool-probe.jsonl` —— 真实模型探针原始记录
   （每行一轮：任务 / 次数 / 每条 tool item 的 capability·status·完整错误文本·时间戳 / 助手条目长度与时间戳）。
   已脱敏：不含 API key、不含用户真实项目内容；故事正文为本次审计自造。

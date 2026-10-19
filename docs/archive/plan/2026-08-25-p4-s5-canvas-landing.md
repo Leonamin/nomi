@@ -1,8 +1,8 @@
 # P4 S5 — 多镜产物画布落地（best-effort + 补齐 + 整批一撤 + 三态占位 + reconcile）
 
 > 切片 S5，纪律同 S3a。前置：S1 #132 / S2 #138 / S3a #143 / S4 #148 全链在 origin/main。
-> 计划真相源：`docs/superpowers/plans/2026-08-24-p4-multishot-continuity.md` §3.4 / §4 / §6 T2；
-> `docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §4.3 词汇表。
+> 计划真相源：`docs/archive/superpowers/plans/2026-08-24-p4-multishot-continuity.md` §3.4 / §4 / §6 T2；
+> `docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §4.3 词汇表。
 > 开关：`NOMI_MCP_GENERATION_MULTISHOT_V1`（在 `SINGLE_SHOT_V1`+`E1_V1` 之上），默认关。
 
 ## 0. 一句话

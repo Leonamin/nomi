@@ -1,7 +1,7 @@
 /**
  * 「用 AI 帮我接入」——设置 →「模型」页顶部那张卡。
  *
- * 治的摩擦（设计定稿 docs/design/2026-09-11-ai-assisted-onboarding-entry.md §Before）：
+ * 治的摩擦（设计定稿 docs/archive/design/2026-09-11-ai-assisted-onboarding-entry.md §Before）：
  * 用户想接一个新模型时人在「模型」这一屏，而这屏上**没有任何地方**告诉他「可以让你已经在用的
  * AI 助手替你接」——能接的那条路（MCP）住在另一个 tab 的二级页，文案还只说「建项目、出图」。
  *

@@ -1,8 +1,8 @@
 # P4 S6 — 返工/插镜/版本切换 UI 接线 + halt 续拍 + APIMart 真付费验收
 
 > 切片 S6（P4 最后一个实施切片），纪律同 S5。前置：S1 #132 / S2 #138 / S3a #143 / S4 #148 / S5 #151 全链在 origin/main。
-> 计划真相源：`docs/superpowers/plans/2026-08-24-p4-multishot-continuity.md` §3.5 / §4 / §5 / §6；
-> `docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §4.3 词汇表（多候选=折叠组并排挑可指定生效版本；写入回执）。
+> 计划真相源：`docs/archive/superpowers/plans/2026-08-24-p4-multishot-continuity.md` §3.5 / §4 / §5 / §6；
+> `docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §4.3 词汇表（多候选=折叠组并排挑可指定生效版本；写入回执）。
 > 开关：`NOMI_MCP_GENERATION_MULTISHOT_V1`（在 `SINGLE_SHOT_V1`+`E1_V1` 之上），默认关。
 
 ## 0. 一句话

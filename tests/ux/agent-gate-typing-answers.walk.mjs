@@ -4,7 +4,7 @@
 // ── 它补的是哪一格 ──
 //
 // 2026-09-22 真实模型 run3：A3 留下一张没人答的提问卡，之后 **15 句话连着没有任何反应**
-// （`docs/evidence/2026-09-22-askback-real-model-run3/README.md`）。用户 09-21 拍板的是
+// （`docs/archive/evidence/2026-09-22-askback-real-model-run3/README.md`）。用户 09-21 拍板的是
 // 「有问题待答时 composer 降一档，仍可用（先回答上面的问题，或继续说别的）」。
 // 这条走查把那一刻钉成可重跑的零额度剧本：loopback 供应商必然出卡，UI 动作全真。
 //

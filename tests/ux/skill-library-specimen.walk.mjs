@@ -4,11 +4,11 @@ import { expect, expectVisible, clickOrFail } from './_assert.mjs'
 
 // Start Vite separately; the specimen reads the real Electron host, not fabricated DTOs.
 const base = process.env.NOMI_SKILL_UI_DEV_URL || 'http://127.0.0.1:5297'
-const output = path.resolve('docs/design/verification/2026-09-09-skill-library')
+const output = path.resolve('docs/archive/design/verification/2026-09-09-skill-library')
 const run = await launchNomiApp({ name: 'skill-library-specimen', settleMs: 0, env: { NOMI_RENDERER_URL: base, VITE_DEV_SERVER_URL: base } })
 try {
   await expectVisible(run.win.getByRole('button', { name: '新建空白项目', exact: false }).first(), '真实 Electron 宿主已就绪')
-  await run.win.goto(`${base}/docs/design/verification/2026-09-09-skill-library/specimen.html`)
+  await run.win.goto(`${base}/docs/archive/design/verification/2026-09-09-skill-library/specimen.html`)
   const window = await run.app.browserWindow(run.win)
   await window.evaluate(w => w.setBounds({ x: 0, y: 0, width: 1440, height: 900 }))
   const card = run.win.locator('[data-skill-card="skill:curated-multi-view"]')

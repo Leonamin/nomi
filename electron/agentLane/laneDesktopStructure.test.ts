@@ -73,7 +73,7 @@ describe("Agent lane production cutover structure", () => {
   // NodeDeconstructionPanel / CollapsedAiChip，主线 #293/#295）依赖为活功能——CollapsedAiChip 读
   // generationAiCollapsed + generationAiMessages.length，拆解面板与 AI 栏过渡期互斥（R-C-1）同占右槽。
   // 编排者裁决「功能连续性优先」：M1 保留 generationAi* 与旧面板共存，cutover 的这三条删除断言迁为开闸条件。
-  // 开闸通过条件见 docs/qa/2026-09-01-agent-m0-red-lights.md 的 C9 节：删旧 composer 态 / CreationAiPanel、
+  // 开闸通过条件见 docs/archive/qa/2026-09-01-agent-m0-red-lights.md 的 C9 节：删旧 composer 态 / CreationAiPanel、
   // 拆解 handoff 改接 Host 投影 draft 后，这三条断言转绿即可解除 skip。
   it.skip("[C9 gate] removes generationAi* canvas transcript owners after deconstruction handoff to Host projection", () => {
     const canvasStore = source("src/workbench/generationCanvas/store/generationCanvasStore.ts");

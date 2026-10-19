@@ -79,9 +79,9 @@ OpenAI 对 GPT-5.4 的说明也把 tool search 描述为“工具很多时减少
 
 ## 3. 当前设计的底层问题：把三种接口混成了一个接口
 
-这里有一个很重要的“设计意图与实现落差”：Nomi 已批准的统一运行时规格已经写对了抽象。`docs/superpowers/specs/2026-08-22-unified-runtime-mcp-generation-design.md:90-101` 明确把 MCP/UI/Canvas 定义为 transport 或 projection 而非事实源，并要求 stage-aware tool exposure 与 typed output；总方案也把目标定为 12 个语义工具。问题不是原则不存在，而是 `agentToolCatalog` 仍把大量 alias/operation alias 原样提升为 model-facing tool，导致模型面再次变成内部工具箱。
+这里有一个很重要的“设计意图与实现落差”：Nomi 已批准的统一运行时规格已经写对了抽象。`docs/archive/superpowers/specs/2026-08-22-unified-runtime-mcp-generation-design.md:90-101` 明确把 MCP/UI/Canvas 定义为 transport 或 projection 而非事实源，并要求 stage-aware tool exposure 与 typed output；总方案也把目标定为 12 个语义工具。问题不是原则不存在，而是 `agentToolCatalog` 仍把大量 alias/operation alias 原样提升为 model-facing tool，导致模型面再次变成内部工具箱。
 
-更早的总计划甚至已经把 L2 写成“12 语义工具”（`docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md:14-24`）。所以本轮不是重新发明“少工具”方向，而是要把已拍板的语义工具边界从文档落回真正的 Pi projection；当前约 50 个 descriptor 是这条边界在实现层发生漂移的证据。
+更早的总计划甚至已经把 L2 写成“12 语义工具”（`docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md:14-24`）。所以本轮不是重新发明“少工具”方向，而是要把已拍板的语义工具边界从文档落回真正的 Pi projection；当前约 50 个 descriptor 是这条边界在实现层发生漂移的证据。
 
 ### 3.1 领域 capability ≠ 模型 tool
 

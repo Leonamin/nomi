@@ -134,7 +134,7 @@
 - 新增单一 `NodeImageLightbox`：从画布图片节点打开原图，portal 到应用 body；背景点击 / Esc / 关闭按钮均可退出，关闭后恢复触发按钮焦点。
 - 每张有结果的图片节点右上角常显“放大预览”按钮，和既有生成记录按钮共用一行；不把整张图变成按钮，以免破坏节点拖拽、框选和连线。
 - 非卡片图片节点在图内左下显示标题胶囊：未选中时 hover 浮现、选中时常显，点击即复用 `EditableNodeTitle` 写回同一个 `updateNode` 真相源。角色/场景/道具继续使用既有标题，不重复显示。
-- 样张：`docs/design/mockups/canvas-image-preview-and-rename.html`。实现前先用真实画布密度核对按钮、标题与分镜角标不互相遮挡。
+- 样张：`docs/archive/design/mockups/canvas-image-preview-and-rename.html`。实现前先用真实画布密度核对按钮、标题与分镜角标不互相遮挡。
 
 **P3-1 验收：**
 
@@ -162,7 +162,7 @@
 - 修改：`src/workbench/generationCanvas/nodes/Scene3DEditor.test.ts`
 - 修改：`tests/ux/scene3d-take-record.walk.mjs`
 - 修改：`tests/ux/scene3d-reference-pack.walk.mjs`
-- 新增样张：`docs/design/mockups/scene3d-reference-video-preview.html`
+- 新增样张：`docs/archive/design/mockups/scene3d-reference-video-preview.html`
 
 - [x] **步骤 1：为预览优先级写红测**
 

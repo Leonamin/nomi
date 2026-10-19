@@ -6,7 +6,7 @@
 // 控制 flag（空值自动丢，避开子命令 flag 差异）。multiframe2video（多帧/transition）留下一切片。
 //
 // 模型 = 一条 catalog 行 + 档案 6 变体（model_version：seedance2.0fast/2.0/_vip/fast_vip/mini/2.5，见 dreaminaSeedance 档案；
-// SOURCE：docs/research/2026-09-01-dreamina-cli-v1417-matrix.md），用户经 VariantBar 切换；args 的 --model_version 取
+// SOURCE：docs/archive/research/2026-09-01-dreamina-cli-v1417-matrix.md），用户经 VariantBar 切换；args 的 --model_version 取
 // {{request.params.model}}（= 当前变体 modelKey）。video_resolution/duration 必填且严格校验（v1.4.14）——由档案默认写入 request.params。
 // 输入图/视频/音频经 fileParams 物化成本地路径（dreamina 收 --image=<本地路径>，见 dreaminaInputFiles.ts）。
 

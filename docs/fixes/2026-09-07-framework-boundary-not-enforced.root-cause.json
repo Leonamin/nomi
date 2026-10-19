@@ -83,7 +83,7 @@
       "Ran the new gate against origin/main with an empty baseline: 14 hits across 5 capabilities and 9 files, matching the review's findings one for one and adding contextCodec.mts, which the review had not listed.",
       "Probed the new-violation direction on the real tree: added electron/harness/runtime/pi/__r17probe.mts calling SessionManager.inMemory, gate exited 1 naming the probe file, removed it, gate returned to green (R17: prove a new rule reddens before trusting it).",
       "Checked the other direction for noise: electron/providerAdapter/compiler.ts:225 also writes maxRetries: 0 and is correctly not reported, because retry-policy scope is limited to electron/harness/runtime/pi/.",
-      "Grepped for the sibling class - acceptance signals that only measure appearance - and found it already documented for the design lab in docs/lessons/design-lab-baselines-green-does-not-mean-wirable.md; R30 generalises it to agent/tool changes and names the two numbers that replace it."
+      "Grepped for the sibling class - acceptance signals that only measure appearance - and found it already documented for the design lab in docs/archive/lessons/design-lab-baselines-green-does-not-mean-wirable.md; R30 generalises it to agent/tool changes and names the two numbers that replace it."
     ]
   },
   "prevention": {

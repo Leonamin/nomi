@@ -4,7 +4,7 @@
 // 契约来源：官方 dreamina CLI 的 `-h` + SKILL.md + 真机 user_credit/错误信封（2026-06-24 首建；2026-09-01
 // 于 CLI v1.4.17 复核输出解析仍成立——stdout 形状与版本无关），以及参考实现 Infinite-Canvas(hero8152) main.py
 // 的实战解析逻辑——仅借「dreamina 输出长什么样」这层**事实性契约知识**（字段名/结构不受版权保护），全部 TS 重写，
-// 不抄其代码（该项目禁止商用）。命令参数矩阵见 docs/research/2026-09-01-dreamina-cli-v1417-matrix.md。
+// 不抄其代码（该项目禁止商用）。命令参数矩阵见 docs/archive/research/2026-09-01-dreamina-cli-v1417-matrix.md。
 //
 // dreamina 输出的两个坑（都来自实战契约）：
 //  ① 输出常是「人类可读文本 + JSON」混合，不是干净 JSON → 要从文本里抠出最像结果的那个 JSON 对象。

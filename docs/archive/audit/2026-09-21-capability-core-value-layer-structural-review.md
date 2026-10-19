@@ -51,7 +51,7 @@ schema 有主人（`generationPlanInputSchema` 一族）、路由有主人（`di
 
 1. **这一层有两个面，形状共用、值不共用。** 内部 lane 与外部 MCP 共用同一批
    schema 与契约（这是 09-18 那一刀的成果，是对的），但**值层的判据各自为政**：
-   翻译层里的逻辑外部面天然没有（`docs/plan/2026-09-18-tool-layer-prior-art-verdict.md` §1 已记），
+   翻译层里的逻辑外部面天然没有（`docs/archive/plan/2026-09-18-tool-layer-prior-art-verdict.md` §1 已记），
    而本刀查到的是它的对偶——准入层的判据两面都有、但**它判的那份 schema 有三个来源**
    （渲染层 curated 档案 / 目录 onboarding 派生 / video 档案投影），没有任何东西比对它们。
 
@@ -112,7 +112,7 @@ schema 有主人（`generationPlanInputSchema` 一族）、路由有主人（`di
 「目录行（身份 + 可用性）」与「档案（能力 + 参数）」显式 join 成一个对象——
 这是让两份知识**在一处相遇**，不是又加一份。
 
-**实测支持这个判断**（数字见 `docs/plan/2026-09-21-model-spec-parity.md` §A-3）：
+**实测支持这个判断**（数字见 `docs/archive/plan/2026-09-21-model-spec-parity.md` §A-3）：
 全目录 **0 个**模型带 `onboarding.fields`；`parameterSchema` 非空的 6 个**全部**来自
 `mapping.create.defaultParams`。也就是说 `electron/catalog` 这一层里「模型参数」这份知识
 今天几乎是空的——它一直由档案承担，只是主进程够不着。**搬家消除的正是这条缝，不是掩盖它。**

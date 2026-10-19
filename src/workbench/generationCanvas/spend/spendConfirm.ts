@@ -54,7 +54,7 @@ export type HostingDisclosure = {
 }
 
 // 付费生成确认 + 铸令牌（渲染层单一收口）。
-// 方案：docs/plan/2026-06-21-spend-confirmation-gate.md（所有付费入口使用本次报价确认）。
+// 方案：docs/archive/plan/2026-06-21-spend-confirmation-gate.md（所有付费入口使用本次报价确认）。
 //
 // 铸令牌只发生在真人动作之后：要么是这张卡上的「确认」，要么是用户自己按下的 ↑（单个、不贵、非 Agent，
 // 见 spendConfirmationRequirement——2026-09-25 用户拍板单个节点生成不弹窗）。两条都先向主进程要报价、

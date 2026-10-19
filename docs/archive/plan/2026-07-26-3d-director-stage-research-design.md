@@ -55,8 +55,8 @@
 
 ## 结果回填
 
-- 最终报告：`docs/research/2026-07-26-3d-director-stage-research-and-design.md`
-- 真实截图目录：`docs/research/2026-07-26-3d-director-stage/screenshots/`
+- 最终报告：`docs/archive/research/2026-07-26-3d-director-stage-research-and-design.md`
+- 真实截图目录：`docs/archive/research/2026-07-26-3d-director-stage/screenshots/`
 - 入选开源项目：Storyboarder、Blockout、Kunpeng Director、Storytools、3D OpenPose Editor、mannequin.js
 - 六角色评审：CTO / 后端 / 产品 / 设计 / 前端 / 真实非 3D 用户均完成独立反驳，结论已回填报告第 13 节
 - 推荐方案：Nomi 定位为“镜头参考编译器”；先修 ReferencePack 终态、最终机位所有权、多段 MotionTrack 和单一录制状态机，再把首屏改成“镜头意图 → 试一版”，中央只保留“摆场面 / 看成片”两种视图

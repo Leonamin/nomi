@@ -1,6 +1,6 @@
 # 常用命令与门岗（L2）
 
-> 从 CLAUDE.md 搬来（规则体系瘦身，docs/plan/2026-10-01-rule-reminders-slimming.md）。CLAUDE.md 只留最常用的 7 条；这里是全表。
+> 从 CLAUDE.md 搬来（规则体系瘦身，docs/archive/plan/2026-10-01-rule-reminders-slimming.md）。CLAUDE.md 只留最常用的 7 条；这里是全表。
 > **用到时怎么保证看到**：`self-check.sh` 在用户消息含「gates / check: / 门岗 / 命令」时注入指向本文件的【命令全表】块；CLAUDE.md 的「常用命令」一节也直接指向它；`package.json` 是真相源。
 
 | 命令 | 用途 |

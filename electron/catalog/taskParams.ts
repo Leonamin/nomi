@@ -547,7 +547,7 @@ function archetypeReferenceUrlsByFamily(extras: JsonRecord): Record<ReferenceFam
 
 /**
  * **headless/MCP 参考键形态投影**（纯函数，W1d 根因修复，见
- * docs/plan/2026-08-20-w1d-reference-mode-alignment.md）：把携带的参考投影到**这条 body 真实读的参考键**上。
+ * docs/archive/plan/2026-08-20-w1d-reference-mode-alignment.md）：把携带的参考投影到**这条 body 真实读的参考键**上。
  *
  * 根因：渲染层用 buildArchetypeInputParams 把参考按档案 slot inputKey 投影成 body 读的键（image_urls /
  * first_frame_image …），headless 没有这一步——参考只落在标准键 reference_images，body 读的却是 image_urls
@@ -681,7 +681,7 @@ export const NO_MAPPING_FALLBACK_BODY = {
  * L3 诚实护栏（runTask 前置闸，纯函数）：图生图/图生视频「参考图缺失」或「无传输 mapping」→ 返回
  * 人话错误（调用方在付费守卫/vendor 调用之前拒发，零扣费）；其余情况 null。此前会静默退化成纯文生
  * ——模板引擎丢空键 / fallback body 根本没有图片位——生成成功、扣费成功、和原图毫无关系，
- * 正是「图生图不按原图」的用户体感（docs/plan/2026-07-06-i2i-reference-reliability.md）。
+ * 正是「图生图不按原图」的用户体感（docs/archive/plan/2026-07-06-i2i-reference-reliability.md）。
  *
  * modeBodies（可选）：这个模型**所有模式**的 create body。给了则第三闸拒发时多附一句"可走的路"（交付4，
  * reachableModeSuggestion），点名哪个模式带得动携带的参考；不给则维持原拒发文案（语义/零扣费保证不变）。

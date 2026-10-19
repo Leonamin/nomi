@@ -2,7 +2,7 @@
 
 > 日期：2026-09-09 · 前置文档：[AdCraft 竞品差距分析](2026-09-09-adcraft-competitor-gap-analysis.md)（本篇是其完整版，含在飞 PR 综合考量）
 > 对象：[GML-MMGroup/AdCraft](https://github.com/GML-MMGroup/AdCraft)（2026-07 开源，1629 commits，广告垂直 Agentic 视频平台）
-> 我方现状依据：`docs/ARCHITECTURE-NOW.md`（2026-08-31 基线）+ 逐文件实核 + **8 个在飞 PR 全文读取**（#646 / #658 / #659 / #656 / #619 / #662 / #664 / #643）
+> 我方现状依据：`docs/archive/guides/ARCHITECTURE-NOW.md`（2026-08-31 基线）+ 逐文件实核 + **8 个在飞 PR 全文读取**（#646 / #658 / #659 / #656 / #619 / #662 / #664 / #643）
 > ⚠️ 本文档所有「现状」均带锚点；与旧文档冲突处以锚点为准（ARCHITECTURE-NOW 关于 assemble 的描述已过期，见 §3-G1）。
 
 ---
@@ -26,8 +26,8 @@
 | **Agent 分工叙事** | 9 个具名 agent（创意总监/编剧/产品视觉/角色/场景/分镜/导演/声音/合成） | capability 工具组（`electron/harness/agentChatPolicy.ts:35`），架构更通用但无角色感知 | 感知差距（P2，方案 C 附带包装） |
 | **对话控制创作** | 改什么/怎么改、生成候选、适时请求确认 | 阶段 4 切换 PR #646 在飞：真实 C0 暴露**首调 schema 错、媒体档位遗漏 8/8、中文漂移、审批卡需逐个展开、思考文本挤占阅读区**（6 类摩擦） | **差距（P0，方案 A）** |
 | **真实进度状态** | 排队/生成/待确认/失败/跳过，多阶段并行可见 | #658（C-1 诚实过程反馈）在飞：十执行阶段→五段语汇，统一状态胶囊；幽灵片段留 C-2 | 接近持平（#658 合并后） |
-| **生产级角色资产** | 三视图转面+面部+服装结构+配饰+色板 | 角色/场景固定已有（`docs/design/2026-06-06-character-scene-fixation-design.md`）；声明式参考槽一等数据（`electron/shared/videoCapabilities/types.ts:31`，六种 kind） | **差距（P1，方案 D）** |
-| **生产级场景资产** | 定场/远中近景/多机位/过渡镜头世界观板 | 多镜头连续性方案在飞过 P4-S5（`docs/superpowers/plans/2026-08-24-p4-multishot-continuity.md`） | 差距（P1，方案 D） |
+| **生产级角色资产** | 三视图转面+面部+服装结构+配饰+色板 | 角色/场景固定已有（`docs/archive/design/2026-06-06-character-scene-fixation-design.md`）；声明式参考槽一等数据（`electron/shared/videoCapabilities/types.ts:31`，六种 kind） | **差距（P1，方案 D）** |
+| **生产级场景资产** | 定场/远中近景/多机位/过渡镜头世界观板 | 多镜头连续性方案在飞过 P4-S5（`docs/archive/superpowers/plans/2026-08-24-p4-multishot-continuity.md`） | 差距（P1，方案 D） |
 | **找对标素材** | ❌ 无（直接上传参考） | **#619 在飞**：TikHub 抖音/小红书/TikTok 广告库搜「正在跑的素材」，平台级设定+evidence[] 渲染 | **Nomi 领先** |
 | **拉片（视频拆解）** | ✅ 招牌功能：拆镜头语言/节奏/字幕音效同步→转可编辑工作流 | 引擎九成熟（`electron/video/deconstructVideo.ts`，#259：本地 ffmpeg 切点+一镜多帧+whisper 转写归属）；面板 v1 方案已按 2026-09-05 拍板改道；**未接线交付** | **差距（P0，方案 B）** |
 | **视频复刻（换素材重制）** | ✅ 结构相似但全新 | #232 已设计（复刻 5 秒→一句话改→候选替换→RecreationApprovalEnvelope），**押 M 线后未开工** | **差距（P1，方案 B-P2）** |
@@ -102,7 +102,7 @@
 
 **分三步**：
 - **B1（P0）拆解面板重立方案并交付**：按 2026-09-05 consolidation §3 的拍板结论写新方案文档（替代 ⛔ 废弃的 2026-09-01 版），样张先拍板。引擎契约已定（`DeconstructVideoPayload/Result`，`visionFailed`/`carriedOver` 诚实标记），面板只消费。验收门沿用废弃方案 §3.4 的五条（契约对账/真实任务 E2E/诚实态走查/控件契约/五门绿），E2E 旅程改为：#619 搜到对标 → 落进项目 → 拆解 → 勾镜落画布 → 起稿。
-- **B2（P1）拆解结果→可编辑工作流**：镜头结构表一键转「分镜表节点」（`docs/plan/2026-09-07-storyboard-table-node.md` 的节点形态），每镜提示词可改、可整组喂参考重生成——这一步完成「拉片→我的版本」的 AdCraft 等价物。
+- **B2（P1）拆解结果→可编辑工作流**：镜头结构表一键转「分镜表节点」（`docs/archive/plan/2026-09-07-storyboard-table-node.md` 的节点形态），每镜提示词可改、可整组喂参考重生成——这一步完成「拉片→我的版本」的 AdCraft 等价物。
 - **B3（P2）局部复刻**：#232 的复刻 5 秒/候选替换/RecreationApprovalEnvelope 接入 M 线（=#646 后的 lane）审批/预算/撤销链。**不提前做**，等 A 方案把管线动词打通。
 
 ### 方案 C【P0→P1】productionRun 管线动词暴露为 agent 工具
@@ -247,6 +247,6 @@
 ### 附一：其余证据来源
 
 - AdCraft：README（2026-09 版）、仓库提交记录（"run Pi agent runtime"、里程碑时间线）
-- Nomi 现状：`docs/ARCHITECTURE-NOW.md` + `electron/productionRun/productionPlaybooks.ts:30` + `electron/productionRun/productionRunDriverOps.ts:625-638` + `electron/shared/videoCapabilities/types.ts:31` + `src/workbench/timeline/clipAudio.ts` + `electron/video/deconstructVideo.ts`（#259）
+- Nomi 现状：`docs/archive/guides/ARCHITECTURE-NOW.md` + `electron/productionRun/productionPlaybooks.ts:30` + `electron/productionRun/productionRunDriverOps.ts:625-638` + `electron/shared/videoCapabilities/types.ts:31` + `src/workbench/timeline/clipAudio.ts` + `electron/video/deconstructVideo.ts`（#259）
 - 在飞 PR（2026-09-09 全文读取）：#646（阶段4切换+三轮 C0 失败实录）、#658（C-1 过程反馈）、#659（C0 预算）、#656（磁吸连线）、#619（TikHub 找参考）、#662（体感回归）、#664（体验量表）
-- 历史方案：`docs/plan/2026-09-07-agent-runtime-rebuild.md`（§3 工具契约 / §6 阶段）、`docs/plan/2026-09-01-video-deconstruction-v1.md`（⛔ 废弃，改道依据 2026-09-05 consolidation）、#232 视频复刻设计
+- 历史方案：`docs/archive/plan/2026-09-07-agent-runtime-rebuild.md`（§3 工具契约 / §6 阶段）、`docs/archive/plan/2026-09-01-video-deconstruction-v1.md`（⛔ 废弃，改道依据 2026-09-05 consolidation）、#232 视频复刻设计

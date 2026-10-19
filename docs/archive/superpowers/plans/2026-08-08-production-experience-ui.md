@@ -226,7 +226,7 @@ git commit -m "feat(run-ui): surface production tasks and notifications"
 
 **Files:**
 - Create: `tests/e2e/production-experience.spec.ts`
-- Create: `docs/design/mockups/2026-08-08-agentic-production/implementation-checklist.md`
+- Create: `docs/archive/design/mockups/2026-08-08-agentic-production/implementation-checklist.md`
 
 - [ ] **Step 1: Add deterministic fixture IPC data**
 
@@ -246,6 +246,6 @@ Compare hierarchy, text wrapping, thumbnail visibility, one-action rule, modal s
 Run: `pnpm run gates`
 
 ```bash
-git add tests/e2e/production-experience.spec.ts docs/design/mockups/2026-08-08-agentic-production/implementation-checklist.md
+git add tests/e2e/production-experience.spec.ts docs/archive/design/mockups/2026-08-08-agentic-production/implementation-checklist.md
 git commit -m "test(run-ui): verify approved production experience"
 ```

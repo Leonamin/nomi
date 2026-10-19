@@ -5,8 +5,8 @@
 - 日期：2026-09-21 ｜ 分支 `integration/core-a-salvage-20260921`（批次 A · Pass 3a）
 - 用户拍板：`scratchpad/user-decisions.md`「未知价不能挡生成」「未知价 × 全自动 = 直接跑」「开闸范围 = 全部路径」
 - 数门正本：`scratchpad/doormap-unknown-price.md`（18 扇）｜根因合同：`docs/fixes/2026-09-21-unknown-price-blocks-generation.root-cause.json`
-- 已拍板样张：`docs/design/2026-09-10-spend-card-node-params-and-full-auto.md`（§4 第 9 张图、§7 卡点④）
-- 关单：`docs/roadmap/TODO.md` T-MO-25
+- 已拍板样张：`docs/archive/design/2026-09-10-spend-card-node-params-and-full-auto.md`（§4 第 9 张图、§7 卡点④）
+- 关单：`docs/archive/roadmap/TODO.md` T-MO-25
 
 ## 1. 底层逻辑（为什么这么改）
 

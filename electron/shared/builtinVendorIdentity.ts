@@ -11,7 +11,7 @@
  * 而全仓有 16 处在用 `vendor.key === "apimart"` 这类**字面量**判断「这是不是某个内置家」——
  * 它们会集体认不出第二条连接。所以身份解析必须收进这一份，字面量比较一处不留（P1）。
  *
- * key 的形状（两档，刻意不对称，理由见 docs/plan/2026-09-22-vendor-connection-identity.md §4.1）：
+ * key 的形状（两档，刻意不对称，理由见 docs/archive/plan/2026-09-22-vendor-connection-identity.md §4.1）：
  *   · 第一条连接        `apimart` / `gw-example-com`      ← 与今天逐字相同，存量目录零迁移
  *   · 之后的兄弟连接    `apimart--mini`                    ← root + 分隔符 + 连接名 slug
  *   · 认证候选（既有）  `apimart--candidate-<16hex>`       ← stagedVendorKey，同一族形状

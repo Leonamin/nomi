@@ -6,8 +6,8 @@
 > 我们的工具层到底哪里错了、已经修到哪一步了、下一刀该切哪里。
 >
 > **正本关系**：本文件是**入口**。两份底稿是
-> `docs/plan/2026-09-18-tool-layer-findings-inventory.md`（14 条发现 + 我们自己的判断）和
-> `docs/plan/2026-09-18-tool-layer-prior-art-verdict.md`（对照六家之后的裁决）。
+> `docs/archive/plan/2026-09-18-tool-layer-findings-inventory.md`（14 条发现 + 我们自己的判断）和
+> `docs/archive/plan/2026-09-18-tool-layer-prior-art-verdict.md`（对照六家之后的裁决）。
 > 有冲突以裁决那份为准——它推翻过清单里的一部分。
 
 ---
@@ -15,13 +15,13 @@
 ## 先查别人
 
 这份交接文档不提新方案，它转述的裁决来自一份真做过的检索报告：
-`docs/plan/2026-09-18-tool-layer-prior-art-verdict.md`（六个面：MCP 规范 + TS SDK、Claude Agent SDK、
+`docs/archive/plan/2026-09-18-tool-layer-prior-art-verdict.md`（六个面：MCP 规范 + TS SDK、Claude Agent SDK、
 Messages API、OpenAI function calling / Agents SDK / Codex、pi、ChatCut）。本文 §4 是它的结论摘要。
 
-- **依赖里已有？** pi 的 `AgentHarnessTool<TContext, TParameters>` 一份 typebox 两用——`node_modules/@earendil-works/pi-agent-core/dist/index.d.ts` 本人直接读，逐条记在 `docs/plan/2026-09-18-tool-layer-prior-art-verdict.md:98`（§2.5）。
+- **依赖里已有？** pi 的 `AgentHarnessTool<TContext, TParameters>` 一份 typebox 两用——`node_modules/@earendil-works/pi-agent-core/dist/index.d.ts` 本人直接读，逐条记在 `docs/archive/plan/2026-09-18-tool-layer-prior-art-verdict.md:98`（§2.5）。
 - **仓库里已有？** 我们对外 MCP 面已经是投影：`electron/capabilityCore/mcpGenerationToolCatalog.ts:22`；同文件 `:33-54` 是要删的第三份手抄（本文 §5）。
 - **生态里已有？** Claude Agent SDK 一份 zod 派生模型面 + 执行前校验（https://code.claude.com/docs/en/agent-sdk/custom-tools ）；OpenAI「Avoid JSON schema divergence」（https://developers.openai.com/api/docs/guides/structured-outputs ）；Vercel AI SDK `inputSchema` *"dual purpose"*（https://ai-sdk.dev/docs/reference/ai-sdk-core/tool ）。
-- **反方证据？** 唯一的「两份手写」先例 Codex **已被量到漂移**（`timeout_ms` 宿主收、模型不知道），见 `docs/plan/2026-09-18-tool-layer-prior-art-verdict.md:90`——它是反例，不是支持。
+- **反方证据？** 唯一的「两份手写」先例 Codex **已被量到漂移**（`timeout_ms` 宿主收、模型不知道），见 `docs/archive/plan/2026-09-18-tool-layer-prior-art-verdict.md:90`——它是反例，不是支持。
 
 ## 0. 三十秒版
 
@@ -208,7 +208,7 @@ handler 及下游各处投影
 ## 8. 下一刀（建议顺序，未拍板）
 
 > **2026-09-18 晚更新：1-6 全部做完**（分支 `feat/tool-projection-rollout-20260918`，详见
-> `docs/plan/2026-09-18-tool-projection-rollout.md`）。逐条对账：
+> `docs/archive/plan/2026-09-18-tool-projection-rollout.md`）。逐条对账：
 > 1 ✅ 七条偏好 rename 在上一刀改成同名｜2 ✅ `changeId → undoToken` 同上｜3 ✅ `defaults` 随对照表一起删｜
 > 4 ✅ 整张表换成投影（`verbFieldMap.ts` 316 行 + `verbTransportRoutes.ts` 280 行删光）｜
 > 5 ✅ 先在 `cancel_job` 做了原型再铺开｜6 ✅ 外部 MCP 面那 22 行手抄删掉，门岗升级成「可填」。

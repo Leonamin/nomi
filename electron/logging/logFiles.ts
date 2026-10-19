@@ -5,7 +5,7 @@
 //   · 通用道 —— `logger.ts` 的 `nomi-YYYY-MM-DD.log`，按天一个文件、超限改名留一代、过期清理。
 //
 // 为什么不用 electron-log（R20 三问的落点，详见
-// docs/plan/2026-09-06-logging-and-diagnostics-bundle.md §3）：它的滚动模型只有
+// docs/archive/plan/2026-09-06-logging-and-diagnostics-bundle.md §3）：它的滚动模型只有
 // 「maxSize → .old.log」一种，按天与保留期照样得自己写；而崩溃面包屑必须
 // `appendFileSync` 且不依赖任何可能自己抛错的第三方（`crashLog.ts` 顶部注释里的那条约束），
 // 换不过去。引入它的净结果是仓库里两个文件写手 + 两套滚动策略 —— 正是 P1 要禁的并行版。

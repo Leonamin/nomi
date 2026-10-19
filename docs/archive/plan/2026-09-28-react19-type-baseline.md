@@ -8,15 +8,15 @@
 
 **Tech Stack:** React 19.3, TypeScript 5.6, Mantine 8.3, React Three Fiber 9.8, Drei 10.7, Vite 7, Vitest 4.
 
-**Spec:** `docs/plan/2026-09-06-stack-upgrade-react19-aisdk-tailwind4.md` §2 and §6 step ③, with the user's 2026-09 decision to start with React 19/type baseline.
+**Spec:** `docs/archive/plan/2026-09-06-stack-upgrade-react19-aisdk-tailwind4.md` §2 and §6 step ③, with the user's 2026-09 decision to start with React 19/type baseline.
 
 ## 先查别人（R27）
 
-本阶段沿用 [`docs/plan/2026-09-06-stack-upgrade-react19-aisdk-tailwind4.md`](2026-09-06-stack-upgrade-react19-aisdk-tailwind4.md) 的阶段顺序，并核对 [`docs/research/2026-09-08-mantine-8-upgrade-probe.md`](../research/2026-09-08-mantine-8-upgrade-probe.md) 中 React 19、Mantine 8 与 R3F 9 的兼容边界；AI SDK 与 Tailwind 留到后续阶段。
+本阶段沿用 [`docs/archive/plan/2026-09-06-stack-upgrade-react19-aisdk-tailwind4.md`](2026-09-06-stack-upgrade-react19-aisdk-tailwind4.md) 的阶段顺序，并核对 [`docs/archive/research/2026-09-08-mantine-8-upgrade-probe.md`](../research/2026-09-08-mantine-8-upgrade-probe.md) 中 React 19、Mantine 8 与 R3F 9 的兼容边界；AI SDK 与 Tailwind 留到后续阶段。
 
 - React 19 升级指南说明了 JSX namespace、ref 与类型兼容迁移：[React 19 Upgrade Guide](https://react.dev/blog/2024/04/25/react-19-upgrade-guide)。
 - R3F v9 的迁移边界以官方说明为准：[React Three Fiber v9 migration guide](https://r3f.docs.pmnd.rs/tutorials/v9-migration-guide)。
-- Mantine 8 的现有兼容探针与本仓约束记录在 [`docs/research/2026-09-08-mantine-8-upgrade-probe.md`](../research/2026-09-08-mantine-8-upgrade-probe.md)。
+- Mantine 8 的现有兼容探针与本仓约束记录在 [`docs/archive/research/2026-09-08-mantine-8-upgrade-probe.md`](../research/2026-09-08-mantine-8-upgrade-probe.md)。
 
 ## Global Constraints
 
@@ -37,7 +37,7 @@
 ### Task 1: Baseline and dependency contract
 
 **Files:**
-- Create: `docs/plan/2026-09-28-react19-type-baseline.md`
+- Create: `docs/archive/plan/2026-09-28-react19-type-baseline.md`
 - Modify: `package.json`, `pnpm-lock.yaml`
 - Test: dependency resolution and `pnpm run typecheck`
 

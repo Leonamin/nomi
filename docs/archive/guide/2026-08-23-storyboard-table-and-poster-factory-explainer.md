@@ -417,7 +417,7 @@ Nomi 的生成闸是按真人确认设计的，不应该为了营销批量绕过
 
 ## 相关历史位置
 
-- 视频分镜表方案：docs/plan/2026-08-13-video-deconstruction-storyboard-table.md
+- 视频分镜表方案：docs/archive/plan/2026-08-13-video-deconstruction-storyboard-table.md
 - 海报工厂方案：docs/marketing/2026-08-20-poster-factory.md
 - 海报输入：docs/marketing/poster-shotlist.json
 - 海报渲染器：scripts/render-marketing-posters.mjs

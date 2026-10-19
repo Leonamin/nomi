@@ -12,7 +12,7 @@
 |---|---|---|---|
 | 画布写入 | 生成画布节点 | `applyCanvasToolCall` 有 **6 个直接写入口**（`src/workbench/capability/capabilityApplyHandler.ts:625`、`src/workbench/capability/multiShotCanvasLanding.ts:230`、`src/workbench/creation/storyboard/exec/storyboardRowActions.ts:97`、`src/workbench/generationCanvas/agent/proposalTxn.ts:256`、`src/workbench/onboarding/journeyTourStore.ts:99` 与 `:132`），其中事务门 `executeCanvasWriteTarget` 还隔了一跳（`src/workbench/generationCanvas/agent/canvasWriteTarget.ts:266`/`:448` 经 `applyProposalBatch`） | 校验加在事务门上，直发那几条绕过去 |
 | 付费收据 | Run 的付费放行 | 签发方只有一个（`electron/productionRun/productionRunService.ts:120` 的 `createGateApprovalOwner`），核验回调却有**两个生产装配点**（`electron/capabilityCore/runOwnedGenerationGateAuthority.ts:74/134/173/210`、`electron/capabilityCore/productionTrustGrantChallenge.ts:46`） | 两处装配都没接回调，分开看都不像 bug，合起来把主确认面整个堵死 |
-| 技能事实 | `SkillRecord` | `readSkillRecords` / `discoverSkillRecordsFromRoots` 有 **8 个 store 之外的消费者模块**，每个自己决定投影带哪些字段、什么时候取（清单与实核见 [`docs/audit/2026-09-11-skill-fact-projections-structure.md`](../audit/2026-09-11-skill-fact-projections-structure.md)） | 5 份根因合同 = 5 个消费者各被单独修了一次 |
+| 技能事实 | `SkillRecord` | `readSkillRecords` / `discoverSkillRecordsFromRoots` 有 **8 个 store 之外的消费者模块**，每个自己决定投影带哪些字段、什么时候取（清单与实核见 [`docs/archive/audit/2026-09-11-skill-fact-projections-structure.md`](../audit/2026-09-11-skill-fact-projections-structure.md)） | 5 份根因合同 = 5 个消费者各被单独修了一次 |
 
 三次都被当成独立的一处 bug 修了一遍。**根因不在修的人身上，在派工上**：任务书写的是「这里坏了，修这里」，
 执行体被框在一个文件里——他看得见症状那扇门，看不见另外几扇，也没有动力去找跨结构的根因。
@@ -67,7 +67,7 @@
 `scripts/new-root-cause-contract.mjs`（骨架加两个字段）、新增 `scripts/door-map.mjs` / `door-map-lib.mjs` / `check-door-map.mjs` 与测试、
 `package.json`（`check:door-map` 进 contracts 组）、`.github/workflows/quality-gate.yml`（注入 `DOOR_MAP_PR_BODY`）、
 `docs/engineering-rules.md`（R21.3 / R27）、`CLAUDE.md`（P2 一句）、`AGENTS.md`（`gen:agents` 同步）、
-`.agents/skills/root-cause-remediation/SKILL.md`（流程加「数门」一步）、`docs/lessons/count-the-doors-before-fixing.md`。
+`.agents/skills/root-cause-remediation/SKILL.md`（流程加「数门」一步）、`docs/archive/lessons/count-the-doors-before-fixing.md`。
 
 **不动**：存量 400 份合同（日期棘轮，不追溯）、`check:symptom-cluster` 的判据（它管「第三份合同」这个信号，和门表正交）、
 生产代码（本次不改 `src/` 与 `electron/` 任何一行）。

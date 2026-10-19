@@ -11,7 +11,7 @@
 
 `SKILL.md` 开头是 YAML frontmatter（写给 runtime 的元数据），后面是 markdown 正文（写给模型的方法论）。这是 [Agent Skills 标准](https://agentskills.io/specification)的形状——pi、Claude Code、Codex 读的都是它，所以**别人的技能目录拖进 Nomi 能用，Nomi 的技能拖出去也能用**。
 
-> **v2 → v3 变了什么**：`skill.json` 删除，它承载的 Nomi 独有字段搬进 frontmatter 的 `metadata.nomi`。为什么这么做、逐字段怎么落，见 [`docs/plan/2026-09-07-skill-format-convergence.md`](archive/plan/2026-09-07-skill-format-convergence.md)。用户目录里的存量 `skill.json` 由加载器一次性迁移并留 `.bak` 备份。
+> **v2 → v3 变了什么**：`skill.json` 删除，它承载的 Nomi 独有字段搬进 frontmatter 的 `metadata.nomi`。为什么这么做、逐字段怎么落，见 [`docs/archive/plan/2026-09-07-skill-format-convergence.md`](archive/plan/2026-09-07-skill-format-convergence.md)。用户目录里的存量 `skill.json` 由加载器一次性迁移并留 `.bak` 备份。
 
 Runtime 加载技能时：
 

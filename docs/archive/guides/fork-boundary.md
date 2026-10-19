@@ -13,8 +13,8 @@ upstream에 없고 이 fork가 소유한다. 여기서는 fork 가정을 마음�
 | `web/` | 브라우저 호스트. Hono 서버·표면·RPC, 생성 작업, 외부 엔진 에이전트 lane과 MCP 브리지 |
 | `scripts/web/` | 웹 배포·설치 스크립트 |
 | `src/i18n/locales/ko/`, `electron/locales/` | 한국어 문구 (upstream은 zh-CN/en만) |
-| `docs/fork-boundary.md`, `docs/personal-web.md`, `docs/user-guide.ko.md` | 이 fork의 운영·사용자 안내 |
-| `docs/plan/2026-10-12-*.md`, `docs/qa/2026-10-12-*.md`, `docs/fixes/2026-10-12-web-*.root-cause.json` | 이 fork의 계획·검증·근본원인 기록 |
+| `docs/archive/guides/fork-boundary.md`, `docs/archive/guides/personal-web.md`, `docs/archive/guides/user-guide.ko.md` | 이 fork의 운영·사용자 안내 |
+| `docs/archive/plan/2026-10-12-*.md`, `docs/archive/qa/2026-10-12-*.md`, `docs/fixes/2026-10-12-web-*.root-cause.json` | 이 fork의 계획·검증·근본원인 기록 |
 | `tests/ux/`의 fork 전용 walk | 웹 실사용 검증 |
 
 ## 공유 경로 — upstream과 공통, 최소·일반적으로만

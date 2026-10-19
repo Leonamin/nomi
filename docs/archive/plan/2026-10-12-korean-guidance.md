@@ -45,7 +45,7 @@ Sepia `write` 사용. 일반 학생을 독자로 삼고, 기능의 실제 동작
 
 ## 샘플과 현재 확인
 
-- [체험 샘플](../../design/mockups/2026-10-12-korean-guidance/index.html): 프로젝트 시작, 언어 설정, 학생용 도움말. 실제 UI를 확인한 뒤 기존 배치와 토큰으로 작성한 문구 검토용 샘플이며 실제 생성 버튼이 아니다.
+- [체험 샘플](../design/mockups/2026-10-12-korean-guidance/index.html): 프로젝트 시작, 언어 설정, 학생용 도움말. 실제 UI를 확인한 뒤 기존 배치와 토큰으로 작성한 문구 검토용 샘플이며 실제 생성 버튼이 아니다.
 - [학생용 한국어 안내 초안](../guides/user-guide.ko.md).
 - `pnpm install`, `pnpm run delivery:preflight`, 기존 코드의 `pnpm run build:web` 성공. build의 기존 chunk/import.meta 경고는 남아 있다.
 - 격리된 로컬 웹 `9132`와 별도 임시 데이터로 영어 프로젝트·설정 화면 확인. 운영 데이터와 공유 작업 디렉터리는 변경하지 않았다.
@@ -56,8 +56,8 @@ Sepia `write` 사용. 일반 학생을 독자로 삼고, 기능의 실제 동작
 - 승인한 학생용 말투로 UI 6,048개 키를 추가했다. 앱 설정·언어 저장·OS 탐지·웹/데스크톱 안내·예제·서버 오류 문구를 연결했다.
 - 지원 언어와 정규화는 `electron/shared/contracts/locale.ts`가 소유한다. 렌더러와 호스트가 이 계약을 사용하며 호스트 언어 상태는 `desktopLocale.ts`에 유지한다.
 - 기존 영어·중국어 UI 값을 최초 원본과 깊은 비교하여 동일함을 확인했다. 두 사전에는 한국어 선택 버튼 이름만 추가했다.
-- [검증 기록](../../qa/2026-10-12-korean-guidance.md): 실제 ko/en/zh 화면과 언어 왕복·새로고침, 타입·키·빌드·테스트 결과 및 미검증 범위.
-- [독립 검수 B](../../qa/2026-10-12-korean-independent-b.md), [독립 검수 C](../../qa/2026-10-12-korean-independent-c.md): 구현선과 다른 검수선에서 의미·연결을 확인하고 발견한 오류를 수정했다.
+- [검증 기록](../qa/2026-10-12-korean-guidance.md): 실제 ko/en/zh 화면과 언어 왕복·새로고침, 타입·키·빌드·테스트 결과 및 미검증 범위.
+- [독립 검수 B](../qa/2026-10-12-korean-independent-b.md), [독립 검수 C](../qa/2026-10-12-korean-independent-c.md): 구현선과 다른 검수선에서 의미·연결을 확인하고 발견한 오류를 수정했다.
 - 실제 이미지/영상 생성과 MP4 결과 검증은 연결된 생성 자원이 없어 unverified. 전체 gates의 기존 화면 기준 불일치는 원본 브랜치와 비교해 기록하며 기준을 자동 갱신하지 않는다.
 
 검토용 Draft PR: https://github.com/Leonamin/nomi-web/pull/3

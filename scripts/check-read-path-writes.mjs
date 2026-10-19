@@ -7,7 +7,7 @@
  * `failoverTikhubHost` 在选路时把结果钉进用户的盘上偏好。用户把线路设成「自动」，
  * 某一刻主域恰好探不通，我们就悄悄替他改了偏好，而且主域恢复也不会变回来。
  *
- * 这个形状 09-14 已经有过一条教训（`docs/lessons/mcp-read-path-must-not-write-host-configs.md`，
+ * 这个形状 09-14 已经有过一条教训（`docs/archive/lessons/mcp-read-path-must-not-write-host-configs.md`，
  * 当时修在 `readMcpInfo`），但**教训没变成门岗**，于是同一个病在 connector 路由里又长了一份。
  * 这条门岗就是把那条教训变成机器判据——R17：能让门岗拦的别留给人。
  *
@@ -152,7 +152,7 @@ if (failures.length) {
   console.error('check:read-path-writes 失败：\n')
   for (const failure of failures) console.error(`  ✗ ${failure}`)
   console.error('\n为什么有这条门岗：docs/archive/audit/2026-09-17-ownership-lifetime-census.md §3 / §6 C3'
-    + '\n同形状教训：docs/lessons/mcp-read-path-must-not-write-host-configs.md')
+    + '\n同形状教训：docs/archive/lessons/mcp-read-path-must-not-write-host-configs.md')
   process.exit(1)
 }
 console.log(`check:read-path-writes 通过（读路径可达写盘门 ${found.length} 处，全部已登记并说明）`)

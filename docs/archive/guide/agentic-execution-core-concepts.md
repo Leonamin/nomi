@@ -877,5 +877,5 @@ MCP 接入卡的“成功”应基于真实启动和握手，而不是只检查�
 
 相关架构决策可以继续查看：
 
-- [`docs/superpowers/plans/2026-08-20-storyboard-execution-contract-v2.md`](../superpowers/plans/2026-08-20-storyboard-execution-contract-v2.md)
-- [`docs/superpowers/plans/2026-08-21-agent-editor-workbench.md`](../superpowers/plans/2026-08-21-agent-editor-workbench.md)
+- [`docs/archive/superpowers/plans/2026-08-20-storyboard-execution-contract-v2.md`](../superpowers/plans/2026-08-20-storyboard-execution-contract-v2.md)
+- [`docs/archive/superpowers/plans/2026-08-21-agent-editor-workbench.md`](../superpowers/plans/2026-08-21-agent-editor-workbench.md)

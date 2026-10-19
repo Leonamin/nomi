@@ -23,7 +23,7 @@ import type { ResultLocale } from './mcpToolResults'
 
 // The manual route names the button as it is actually labelled in the app (`modelSetup.addModel` /
 // `customApiTitle`). It used to say "添加连接" / "Add connection", which appears nowhere in the UI — an
-// escape hatch nobody can follow is not an escape hatch (cf. docs/lessons/vendor-manage-is-a-
+// escape hatch nobody can follow is not an escape hatch (cf. docs/archive/lessons/vendor-manage-is-a-
 // discoverability-problem.md). If those labels are renamed, this copy has to move with them.
 const POLL_INTERVAL_MS = 1000
 const DEFAULT_WAIT_MS = 5 * 60 * 1000

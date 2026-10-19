@@ -6,9 +6,9 @@
 ## 背景（怎么发现的）
 
 修一条 flaky 测试时顺出来的。完整机制见两条教训：
-[`compat-shim-keeps-command-text-changes-its-meaning`](../../lessons/compat-shim-keeps-command-text-changes-its-meaning.md)（主线）与
-[`complexity-invariants-need-counters-not-wall-clock`](../../lessons/complexity-invariants-need-counters-not-wall-clock.md)（同一次事故的另一面）。
-QA 侧追记见 [`2026-09-01-agent-m0-red-lights.md`](../../qa/2026-09-01-agent-m0-red-lights.md) 末节。
+[`compat-shim-keeps-command-text-changes-its-meaning`](../lessons/compat-shim-keeps-command-text-changes-its-meaning.md)（主线）与
+[`complexity-invariants-need-counters-not-wall-clock`](../lessons/complexity-invariants-need-counters-not-wall-clock.md)（同一次事故的另一面）。
+QA 侧追记见 [`2026-09-01-agent-m0-red-lights.md`](../qa/2026-09-01-agent-m0-red-lights.md) 末节。
 
 简述：commit `0b6441c6`（M1 round-2 transplant）删掉 `electron/projectAgentHost/hostLifecycle.ts` 及其 80 行 5 用例测试，原路径只留 3 行 `import './projectAgentHost.test'`。四份合同都把这个路径列为**唯一** `regression_tests`，`check:root-cause-contracts` 查的是 `pathExists`，壳在就一直绿。2026-09-03 壳已按 P1 删除。
 

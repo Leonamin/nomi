@@ -2,7 +2,7 @@
 
 日期：2026-08-27
 状态：✅ 已交付
-对应设计：`docs/superpowers/specs/2026-08-27-root-cause-remediation-governance-design.md`
+对应设计：`docs/archive/superpowers/specs/2026-08-27-root-cause-remediation-governance-design.md`
 
 ## 范围
 

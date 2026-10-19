@@ -29,13 +29,13 @@
 | **技能导入 IPC P0 回归** | 🔴 PR #380 OPEN，三个 handler 缺失 | PR #380；`electron/skills/skillIpc.ts` | 立即合入（P0） | S |
 | **i18n 死键归零 + 英文三处整片中文** | 🟡 PR #312 OPEN | PR #312；`scripts/check-i18n-dead-keys.mjs` | 合入 main | S |
 | **走查假绿修复 + CI 执行者** | 🟡 PR #314 OPEN | PR #314；`tests/ux/` | 合入 main | S |
-| **分镜表 v5 A-B 段** | 🟡 A 段已合（#330），B 段 PR #368 已合 | `docs/plan/2026-09-01-storyboard-table-genre-profile.md`；C/D 段待定 | C/D 段排期 | M |
-| **Runway 模型身份归一** | 🟡 已合 PR #310/#351/#371（runway 平台档案全删）| `docs/plan/2026-09-02-runway-model-identity-workflow.md` | 完成 ✅ | — |
+| **分镜表 v5 A-B 段** | 🟡 A 段已合（#330），B 段 PR #368 已合 | `docs/archive/plan/2026-09-01-storyboard-table-genre-profile.md`；C/D 段待定 | C/D 段排期 | M |
+| **Runway 模型身份归一** | 🟡 已合 PR #310/#351/#371（runway 平台档案全删）| `docs/archive/plan/2026-09-02-runway-model-identity-workflow.md` | 完成 ✅ | — |
 | **MCP 工具面收敛（#359）** | 🟡 已合 PR #359（42→23 工具）| main `5fb7bd07` | A 线 title+描述瘦身待做 | S |
 | **打包 smoke derive** | 🟡 PR #364 OPEN | PR #364；`tests/ux/smoke-packaged.e2e.mjs` | 合入 main | S |
 | **gates 本地 CI 对齐** | 🟡 PR #361 OPEN | PR #361；`scripts/check-quality-gate-workflow.node-test.mjs` | 合入 main | S |
-| **反馈分享中心** | 🟡 PR #271 已合 | `docs/plan/2026-09-01-feedback-share-center.md` | 完成 ✅ | — |
-| **创作资源链 epic（P0-1~4）** | 🟡 PR #379 OPEN（仅文档）| PR #379；`docs/plan/2026-09-03-creative-resource-chain-epic.md` | 拍板后实现 P0-1 | M |
+| **反馈分享中心** | 🟡 PR #271 已合 | `docs/archive/plan/2026-09-01-feedback-share-center.md` | 完成 ✅ | — |
+| **创作资源链 epic（P0-1~4）** | 🟡 PR #379 OPEN（仅文档）| PR #379；`docs/archive/plan/2026-09-03-creative-resource-chain-epic.md` | 拍板后实现 P0-1 | M |
 
 ---
 
@@ -45,23 +45,23 @@
 
 | 名称 | 方案位置 | 下一步 | 量级 |
 |---|---|---|---|
-| **架构三期：清硬环 + 建中立契约层** | `docs/audit/2026-08-31-architecture-coupling-audit.md`（分析二：37 个硬环，分析一 C1 簇，62 条 type-only 越界需要中立层） | 需等 M 线 M3 稳定后排期；先建 `electron/shared/contracts/` 中立层，再逐步解硬环 | XL |
-| **ProductionRun legacy-playbook 生成路裁决** | `docs/qa/2026-09-01-agent-m0-red-lights.md`（M1 修复班末段：两方案不可调和 fork）| **编排者裁决岔路**：退役 brand.promo legacy 生成 OR 保留现行 | — |
-| **M4：部署仿真 + 创作者旅程 J1-J5** | `docs/superpowers/plans/2026-09-01-agent-architecture-test-system.md` Task 5 | 等 M3 安全对抗组验收后开工 | L |
+| **架构三期：清硬环 + 建中立契约层** | `docs/archive/audit/2026-08-31-architecture-coupling-audit.md`（分析二：37 个硬环，分析一 C1 簇，62 条 type-only 越界需要中立层） | 需等 M 线 M3 稳定后排期；先建 `electron/shared/contracts/` 中立层，再逐步解硬环 | XL |
+| **ProductionRun legacy-playbook 生成路裁决** | `docs/archive/qa/2026-09-01-agent-m0-red-lights.md`（M1 修复班末段：两方案不可调和 fork）| **编排者裁决岔路**：退役 brand.promo legacy 生成 OR 保留现行 | — |
+| **M4：部署仿真 + 创作者旅程 J1-J5** | `docs/archive/superpowers/plans/2026-09-01-agent-architecture-test-system.md` Task 5 | 等 M3 安全对抗组验收后开工 | L |
 | **M5：受控 live canary** | 同上 Task 6 | 等 M4 全绿 + 用户拍板 allowlist 后 | M |
-| **MCP A 线：title + 描述瘦身（~23KB→≤10KB）** | `docs/research/2026-09-02-mcp-survey.md` §4.1 | 可独立于 M 线并行做，约 1-2 天 | S |
+| **MCP A 线：title + 描述瘦身（~23KB→≤10KB）** | `docs/archive/research/2026-09-02-mcp-survey.md` §4.1 | 可独立于 M 线并行做，约 1-2 天 | S |
 | **MCP B 线：J02/J04/J05/J06/J08/J12/J13 七洞** | 同上 §4.2 | J04/J08 碰确认卡 UI 要过样张门 | M-L |
-| **供应商验证死路（缺口①）** | `docs/qa/2026-09-02-journey-debt-product-gaps.md` 缺口① | 需样张拍板（加验证入口 UI）后实现 | S-M |
+| **供应商验证死路（缺口①）** | `docs/archive/qa/2026-09-02-journey-debt-product-gaps.md` 缺口① | 需样张拍板（加验证入口 UI）后实现 | S-M |
 | **3D 节点派发缺口（缺口②）** | 同上 缺口② | 补 `canRunGenerationNode` model3d 分支，可并行 | S |
-| **Asset 上传路由** | `docs/plan/2026-08-31-asset-upload-routing.md` | 依赖 M2 基础稳定后排期 | M |
-| **provider proxy + onboarding 加固** | `docs/plan/2026-09-01-provider-proxy-and-onboarding-hardening.md` | 已部分落地（#282），余项排期 | S |
-| **凭据 safeStorage 加密落盘** | `docs/plan/2026-09-01-credential-config-at-rest-encryption.md` | 独立可做 | M |
-| **TikHub connector v1** | `docs/plan/2026-09-01-tikhub-connector-v1.md` | 依赖创作资源链 epic P0-1 先落 | M |
-| **DOCAUDIT-B（fal/Runway/MiniMax 等合同）** | `docs/plan/2026-09-02-docaudit-b.md` | 可并行做文档侦察 | S |
-| **视频拆解 v1 面板** | `docs/plan/2026-09-01-video-deconstruction-v1.md` | 分镜表 v5 全段落地后排期 | L |
-| **模型接入「不留死路」总纲余项** | `docs/plan/2026-08-15-model-integration-no-dead-end-master-plan.md` | 随 M 线 + 供应商认证流程推进 | XL |
-| **走查旅程网（J1-J5，15 条覆盖）** | `docs/superpowers/plans/2026-09-01-agent-architecture-test-system.md` §1 | M4 阶段落地，当前 MCP 侧 C7-C12 已 green（PR #381）| L |
-| **画布拖动性能 S5/S6（click-select + 卫生批）** | `docs/plan/2026-09-01-canvas-drag-perf-eval-v2.md`；S4 已合（#346） | S6 提案待用户拍板 | S |
+| **Asset 上传路由** | `docs/archive/plan/2026-08-31-asset-upload-routing.md` | 依赖 M2 基础稳定后排期 | M |
+| **provider proxy + onboarding 加固** | `docs/archive/plan/2026-09-01-provider-proxy-and-onboarding-hardening.md` | 已部分落地（#282），余项排期 | S |
+| **凭据 safeStorage 加密落盘** | `docs/archive/plan/2026-09-01-credential-config-at-rest-encryption.md` | 独立可做 | M |
+| **TikHub connector v1** | `docs/archive/plan/2026-09-01-tikhub-connector-v1.md` | 依赖创作资源链 epic P0-1 先落 | M |
+| **DOCAUDIT-B（fal/Runway/MiniMax 等合同）** | `docs/archive/plan/2026-09-02-docaudit-b.md` | 可并行做文档侦察 | S |
+| **视频拆解 v1 面板** | `docs/archive/plan/2026-09-01-video-deconstruction-v1.md` | 分镜表 v5 全段落地后排期 | L |
+| **模型接入「不留死路」总纲余项** | `docs/archive/plan/2026-08-15-model-integration-no-dead-end-master-plan.md` | 随 M 线 + 供应商认证流程推进 | XL |
+| **走查旅程网（J1-J5，15 条覆盖）** | `docs/archive/superpowers/plans/2026-09-01-agent-architecture-test-system.md` §1 | M4 阶段落地，当前 MCP 侧 C7-C12 已 green（PR #381）| L |
+| **画布拖动性能 S5/S6（click-select + 卫生批）** | `docs/archive/plan/2026-09-01-canvas-drag-perf-eval-v2.md`；S4 已合（#346） | S6 提案待用户拍板 | S |
 | **通用 MCP 客户端（#298）** | PR #298 OPEN；贡献者三点返工要求待回复 | 先回 #298 不让贡献者晾着，再排改造 | M |
 | **跨设备续跑（#328）** | PR #328 OPEN，codex 提交 | 审查后决定合入/返工 | S |
 | **cross-device continuation** | PR #328 | 同上 | S |
@@ -71,7 +71,7 @@
 **① 共变审计识别了几个簇（不只 video 档案）？**
 
 共 8 个共变簇，最重要的是：
-- **C1（头号病灶）**：`electron/providerAdapter` + `electron/catalog` + `electron/integrationCertification` + `electron/shared/modelPublication` = 15 文件、支持度 151，远超第二名 3-4 倍。加一个模型/供应商这一圈全动。证据：`docs/audit/2026-08-31-architecture-coupling-audit.md` 分析一表格。
+- **C1（头号病灶）**：`electron/providerAdapter` + `electron/catalog` + `electron/integrationCertification` + `electron/shared/modelPublication` = 15 文件、支持度 151，远超第二名 3-4 倍。加一个模型/供应商这一圈全动。证据：`docs/archive/audit/2026-08-31-architecture-coupling-audit.md` 分析一表格。
 - **C2**：i18n locales × generationCanvas（加画布功能必改 i18n）
 - **C3**：capabilityCore/appIntegration × productionRun 链
 - **C4**：ai/antigravityTask × catalog/processOperation × runtime.ts
@@ -85,7 +85,7 @@ Video 档案只是 C1 的**一个子面**（33 个 re-export 壳）；已被二�
 
 **③ 有没有规划过三期？**
 
-**有规划但未立项执行**。架构耦合审计（`docs/audit/2026-08-31-architecture-coupling-audit.md`）分析五明确提出了三期目标：
+**有规划但未立项执行**。架构耦合审计（`docs/archive/audit/2026-08-31-architecture-coupling-audit.md`）分析五明确提出了三期目标：
 - 清 37 个硬环（主犯 `electron/runtime.ts` 参与 18 个）
 - 建中立契约层（`electron/shared/contracts/` 或 `electron/bridge/contracts/`），解决 62 条 `src→electron` type-only 越界和 51 条 value-import 越界
 - 一期（PR #273）只做门岗+基线，二期（PR #310）video 归一；三期是搬迁——清 29 个 re-export 壳（已随二期清完）、建中立层、解硬环
@@ -100,29 +100,29 @@ Video 档案只是 C1 的**一个子面**（33 个 re-export 壳）；已被二�
 
 | 名称 | 方案位置 | 僵尸判断 | 建议 | 量级 |
 |---|---|---|---|---|
-| `2026-05-25-phase-e2-completion-and-tech-uplift.md` | docs/plan/ | 5月方案，无后续 commit | **关**：功能早已超越此方案，内容已陈旧 | — |
-| `2026-05-30-onboarding-schema-first-extraction.md` | docs/plan/ | 5月方案 | **关**：被后续统一接入体系取代 | — |
-| `2026-05-31-workspace-folder-projects-implementation-plan.md` | docs/plan/ | 无后续 commit | **关**：workspace 已进化，方案陈旧 | — |
-| `2026-05-31-merge-workspace-feature.md` | docs/plan/ | 无后续 commit | **关**：workspace 功能已在 main | — |
-| `2026-05-31-library-search-cost-fixes.md` | docs/plan/ | 无后续 commit | **关或转标 ⏳**：体验问题仍存在，但无人在做 | S |
-| `2026-06-05-model-archetype-seedance-happyhorse.md` | docs/plan/ | 6月方案，模型档案体系已全面升级 | **关**：被档案体系二期取代 | — |
-| `2026-06-06-image-archetypes.md` | docs/plan/ | 同上 | **关**：图像档案已有统一处理 | — |
-| `2026-06-06-reference-at-and-sources.md` | docs/plan/ | 6月方案，@引用已于 #183 落地 | **关**：已交付 | — |
-| `2026-06-06-drop-and-wire-execution.md` | docs/plan/ | 6月方案，无近期 commit | **暂缓 🧊**：drop-and-wire 还有价值但无资源 | L |
-| `2026-06-07-p0-kie-video-execution.md` | docs/plan/ | 6月方案 | **关**：KIE 视频已正常接入 | — |
-| `2026-06-07-p1-async-task-foundation.md` | docs/plan/ | 被 M 线 ProductionRun 取代 | **关**：M 线是真相源 | — |
-| `2026-06-07-assistant-consolidation-plan.md` | docs/plan/ | 6月方案，Pi SDK 运行时已落 | **关**：#223 之后架构完全不同 | — |
-| `2026-06-07-assistant-mockup-implementation.md` | docs/plan/ | 同上 | **关** | — |
-| `2026-07-04-scene3d-reference-pack.md` | docs/plan/ | 7月方案，无近期推进 | **暂缓 🧊**：方向正确但无资源 | XL |
-| `2026-06-08-性能地基.md / perf` | docs/plan/ | 被具体 perf PR 分解处理 | **关**：当前按具体优化分别推进 | — |
-| `onboarding-form-*.md` 系列（4份）| docs/plan/ | 6月方案，无后续 commit | **关**：被统一认证流程取代 | — |
-| `2026-06-08-巨壳拆分-B-Scene3D-A-NodeParameterControls.md` | docs/plan/ | 无近期 commit | **暂缓 🧊**：巨壳仍存在（1696行），条件不成熟 | L |
-| `2026-05-24-production-video-export-execution-plan.md` | docs/plan/ | 5月方案，导出已有多个PR | **关**：已被后续导出方案覆盖 | — |
-| `marketing-gsap-seo.md` | docs/plan/ | 无日期，无近期 commit | **暂缓 🧊**：营销站不是当前优先级 | M |
-| `c5-text-node.md` | docs/plan/ | 无日期，无近期 commit | **暂缓 🧊**：文本节点有价值但无资源 | L |
-| `nomi-select-unify.md` | docs/plan/ | 无日期 | **暂缓 🧊** | S |
-| `2026-06-08-custom-categories-and-chat-polish.md` | docs/plan/ | 6月方案，部分功能已落 | **关或拆分**：分类已实现，聊天气泡还未做 | S |
-| `2026-05-31-three-canvas-bugs.md` | docs/plan/ | 5月方案，三个 bug 应已修 | **需核对**：grep 实查是否已修，若修了关档 | S |
+| `2026-05-25-phase-e2-completion-and-tech-uplift.md` | docs/archive/plan/ | 5月方案，无后续 commit | **关**：功能早已超越此方案，内容已陈旧 | — |
+| `2026-05-30-onboarding-schema-first-extraction.md` | docs/archive/plan/ | 5月方案 | **关**：被后续统一接入体系取代 | — |
+| `2026-05-31-workspace-folder-projects-implementation-plan.md` | docs/archive/plan/ | 无后续 commit | **关**：workspace 已进化，方案陈旧 | — |
+| `2026-05-31-merge-workspace-feature.md` | docs/archive/plan/ | 无后续 commit | **关**：workspace 功能已在 main | — |
+| `2026-05-31-library-search-cost-fixes.md` | docs/archive/plan/ | 无后续 commit | **关或转标 ⏳**：体验问题仍存在，但无人在做 | S |
+| `2026-06-05-model-archetype-seedance-happyhorse.md` | docs/archive/plan/ | 6月方案，模型档案体系已全面升级 | **关**：被档案体系二期取代 | — |
+| `2026-06-06-image-archetypes.md` | docs/archive/plan/ | 同上 | **关**：图像档案已有统一处理 | — |
+| `2026-06-06-reference-at-and-sources.md` | docs/archive/plan/ | 6月方案，@引用已于 #183 落地 | **关**：已交付 | — |
+| `2026-06-06-drop-and-wire-execution.md` | docs/archive/plan/ | 6月方案，无近期 commit | **暂缓 🧊**：drop-and-wire 还有价值但无资源 | L |
+| `2026-06-07-p0-kie-video-execution.md` | docs/archive/plan/ | 6月方案 | **关**：KIE 视频已正常接入 | — |
+| `2026-06-07-p1-async-task-foundation.md` | docs/archive/plan/ | 被 M 线 ProductionRun 取代 | **关**：M 线是真相源 | — |
+| `2026-06-07-assistant-consolidation-plan.md` | docs/archive/plan/ | 6月方案，Pi SDK 运行时已落 | **关**：#223 之后架构完全不同 | — |
+| `2026-06-07-assistant-mockup-implementation.md` | docs/archive/plan/ | 同上 | **关** | — |
+| `2026-07-04-scene3d-reference-pack.md` | docs/archive/plan/ | 7月方案，无近期推进 | **暂缓 🧊**：方向正确但无资源 | XL |
+| `2026-06-08-性能地基.md / perf` | docs/archive/plan/ | 被具体 perf PR 分解处理 | **关**：当前按具体优化分别推进 | — |
+| `onboarding-form-*.md` 系列（4份）| docs/archive/plan/ | 6月方案，无后续 commit | **关**：被统一认证流程取代 | — |
+| `2026-06-08-巨壳拆分-B-Scene3D-A-NodeParameterControls.md` | docs/archive/plan/ | 无近期 commit | **暂缓 🧊**：巨壳仍存在（1696行），条件不成熟 | L |
+| `2026-05-24-production-video-export-execution-plan.md` | docs/archive/plan/ | 5月方案，导出已有多个PR | **关**：已被后续导出方案覆盖 | — |
+| `marketing-gsap-seo.md` | docs/archive/plan/ | 无日期，无近期 commit | **暂缓 🧊**：营销站不是当前优先级 | M |
+| `c5-text-node.md` | docs/archive/plan/ | 无日期，无近期 commit | **暂缓 🧊**：文本节点有价值但无资源 | L |
+| `nomi-select-unify.md` | docs/archive/plan/ | 无日期 | **暂缓 🧊** | S |
+| `2026-06-08-custom-categories-and-chat-polish.md` | docs/archive/plan/ | 6月方案，部分功能已落 | **关或拆分**：分类已实现，聊天气泡还未做 | S |
+| `2026-05-31-three-canvas-bugs.md` | docs/archive/plan/ | 5月方案，三个 bug 应已修 | **需核对**：grep 实查是否已修，若修了关档 | S |
 
 **僵尸计划总计：约 23 份**（建议关：~15 份；建议暂缓：~8 份）
 
@@ -145,11 +145,11 @@ Video 档案只是 C1 的**一个子面**（33 个 re-export 壳）；已被二�
 | 技能导入渲染层（parseSkillImport）| PR #279 MERGED | 已完成（但 IPC handler 缺失→PR #380 P0 待合）|
 | 尾巴批（i18n 烧批/pre-push/check:handoff）| PR #309 MERGED | 已完成 |
 | 分镜表 v5 A段 + B段 | PR #330/#368 MERGED | C/D 段仍 🚧 |
-| 供应商验证死路探针记录 | `docs/qa/2026-09-02-journey-debt-product-gaps.md` 缺口① | 探针完成，修复未实现 |
+| 供应商验证死路探针记录 | `docs/archive/qa/2026-09-02-journey-debt-product-gaps.md` 缺口① | 探针完成，修复未实现 |
 | MCP J07（legacy generate 删除）| PR #301 MERGED `0b6441c6` | 已完成 |
 | MCP J11（导出 manifest 真实化）| 08-29 commit `8784ec77` | 已完成 |
 | MCP C7-C12 L2 旅程测试 | PR #381（待合）证据 42/42 断言绿 | 待合入 main 算完成 |
-| 遗留 PR 分诊裁决（#255/#249/#250/#298）| PR #377 MERGED `docs/qa/2026-09-03-legacy-pr-triage.md` | #255/249 关档，#250/#298 返工标准已定 |
+| 遗留 PR 分诊裁决（#255/#249/#250/#298）| PR #377 MERGED `docs/archive/qa/2026-09-03-legacy-pr-triage.md` | #255/249 关档，#250/#298 返工标准已定 |
 
 ---
 

@@ -1,6 +1,6 @@
 # 浏览器素材捕捞可信化 + 3D 产物完整性（2026-07-22）
 
-> 依据：`docs/audit/2026-07-22-browser-capture-and-3d-user-agent-study.md`（基线 origin/main@90e4ede6，动工时 origin/main 仍在同一提交，无并行改动）。
+> 依据：`docs/archive/audit/2026-07-22-browser-capture-and-3d-user-agent-study.md`（基线 origin/main@90e4ede6，动工时 origin/main 仍在同一提交，无并行改动）。
 > 施工树：`/Users/aoqimin/Desktop/Nomi-capture3d-20260722`（独立 sibling worktree 钉 origin/main）。
 > 三个连续提交：A 产物可信度 P0 → B 浏览器端到端闭环 → C 3D 交互重构（C 先出样张等拍板，不随本轮实现）。
 

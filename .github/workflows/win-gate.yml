@@ -1,4 +1,4 @@
-# Windows 侧的走查门岗——补 `docs/plan/2026-08-24-electron-31-to-43-upgrade.md` §6 验收门第 4 条。
+# Windows 侧的走查门岗——补 `docs/archive/plan/2026-08-24-electron-31-to-43-upgrade.md` §6 验收门第 4 条。
 #
 # 为什么要有这个 workflow：
 #   Electron 31 → 43 那轮升级（PR #135）在 mac 上验得很足，但 win32 一格没打勾，

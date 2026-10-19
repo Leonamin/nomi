@@ -3,7 +3,7 @@ import { cn } from '../../../../utils/cn'
 
 /**
  * Vercel AI Elements（Apache-2.0）**Message 一族**的 React 18 / Tailwind 3 改写。
- * 解剖出处：`docs/research/2026-09-06-ai-elements-anatomy.md`。
+ * 解剖出处：`docs/archive/research/2026-09-06-ai-elements-anatomy.md`。
  *
  * 只留我们真的用到的三件（Message / Response / Actions）。原本这里还平移了
  * Tool / Task / Confirmation / Plan / Queue / PromptInput / ModelSelector / Attachments 八件，

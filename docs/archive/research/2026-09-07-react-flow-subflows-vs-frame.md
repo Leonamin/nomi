@@ -138,7 +138,7 @@ React Flow 12 自带 sub-flows（`parentId` + `extent:'parent'` + `expandParent`
 ### 4.1 ✅ 成立（最硬）：`extent:'parent'` 与产品语义**正面相反**
 
 原生父子里，把子约束在父内的开关是 `extent:'parent'`（`@xyflow/system types/nodes.d.ts:52-56`）——它 **clamp 位置**，成员**拖不出去**。
-而 #550 这一档要修的 bug，修法恰恰是「**拖出去 = 退组**」（`useCanvasFrameMembership.ts` 头注释、`docs/plan/2026-09-06-canvas-frame-tool.md` §2.4）。
+而 #550 这一档要修的 bug，修法恰恰是「**拖出去 = 退组**」（`useCanvasFrameMembership.ts` 头注释、`docs/archive/plan/2026-09-06-canvas-frame-tool.md` §2.4）。
 不开 `extent` 呢？那 React Flow 只剩「拖父动子」一条能力，而那条我们已有更贴合的实现（`moveGroupNodes` 带**分类过滤**，`canvasGraphActions.ts:407`——原生父子不认识 Nomi 的分类）。
 
 ### 4.2 ✅ 成立：`expandParent` **就是**那条 bug
@@ -200,7 +200,7 @@ A 方案下，「成员节点的 `position`」会**改变含义**——同一个
   "id": "xyflow-react",
   "packages": ["@xyflow/react"],
   "version": "12.11.5",
-  "fourColumnTable": "docs/research/2026-09-07-react-flow-subflows-vs-frame.md",
+  "fourColumnTable": "docs/archive/research/2026-09-07-react-flow-subflows-vs-frame.md",
   "why": "2026-09-07 R29 边界检查：React Flow 12 的 sub-flows 我们一层都没接。两件核心语义（extent:'parent' 禁止成员出框、expandParent 父追着子长大）与 Nomi 的框语义正面相反，故不是重造而是刻意不用；但相交计算与手势归属两处绕开了内核公共 API，属真·自研债。",
   "capabilities": [
     {
@@ -305,6 +305,6 @@ A 方案下，「成员节点的 `position`」会**改变含义**——同一个
 
 ## 8. 这次检查本身的边界
 
-- 只审不改代码；`docs/plan/2026-09-06-canvas-frame-tool.md` 与 PR #550 的实现均通过 `git show origin/feat/canvas-frame-tool-20260906:<path>` 读取（merge-base `1365441db`）。
+- 只审不改代码；`docs/archive/plan/2026-09-06-canvas-frame-tool.md` 与 PR #550 的实现均通过 `git show origin/feat/canvas-frame-tool-20260906:<path>` 读取（merge-base `1365441db`）。
 - React Flow 事实全部取自本仓装的 `@xyflow/react@12.11.5` / `@xyflow/system@0.0.81` 的 `.d.ts`，以及 Context7 拉到的 reactflow.dev 文档；**没有凭记忆**。
 - 未做：真机走查、性能实测、§6.5 那条死路径的运行时证明。这三件属于实施轨。

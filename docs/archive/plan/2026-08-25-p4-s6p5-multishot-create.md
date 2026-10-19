@@ -1,7 +1,7 @@
 # P4 S6.5 — 语义多镜 create 双入口 + APIMart 真付费全链验收
 
 > 切片 S6.5（P4 收尾）。前置：S1-S6（PR #153 已 MERGED 进 origin/main）。纪律同 S1-S6。
-> 计划真相源：`docs/superpowers/plans/2026-08-24-p4-multishot-continuity.md` §3.1（create 双入口原文）/§4（失败语义）/§5（验收门）/§6（T1/T2/T3 拍板）。
+> 计划真相源：`docs/archive/superpowers/plans/2026-08-24-p4-multishot-continuity.md` §3.1（create 双入口原文）/§4（失败语义）/§5（验收门）/§6（T1/T2/T3 拍板）。
 > S6 plan §10 审查裁定（2026-08-25）：付费验收顺延到本切片走真入口执行。
 > 开关：沿用现有语义面 `NOMI_MCP_GENERATION_SINGLE_SHOT_V1`（E0：create/plan/preview）+ `..._E1_V1`（E1：gate/start）。**不新增 MULTISHOT_V1 标志**（见岔路裁定 §2.0）。
 

@@ -1,0 +1,128 @@
+{
+  "schema_version": 3,
+  "id": "2026-10-19-archive-reference-private-id-provenance",
+  "problem_type": "Existing identifiers on unchanged historical claims are mistaken for new identifiers when only a docs reference is relocated",
+  "symptom": "Archive path updates in existing reports, contracts and source comments trigger the private-ID guard for identifiers already in the trusted base line.",
+  "direct_cause": "Git diff marks a reference-only line replacement as an added line; copy/rename inheritance does not apply to same-file reference changes.",
+  "class_root": "Identifier authorship is classified by a line addition without checking an exact trusted-base claim whose only change is an archive path insertion.",
+  "affected_population": [
+    "existing Markdown claim reference edits",
+    "existing schema-v3 contract prose reference edits",
+    "source comment reference edits"
+  ],
+  "scope_paths": [
+    "scripts/check-no-secrets.mjs"
+  ],
+  "entry_points": [
+    "pre-commit staged scan",
+    "CI and gates --all scan",
+    "explicit-file scan remains whole-file and unchanged"
+  ],
+  "external_sources": [
+    {
+      "kind": "official-doc",
+      "url": "https://git-scm.com/docs/git-diff",
+      "checked_at": "2026-10-16",
+      "purpose": "Git -C/-M describe copy/rename provenance and corresponding patch headers."
+    }
+  ],
+  "invariants": [
+    "New identifiers and newly authored claims remain blocked.",
+    "Only a full existing base line whose sole change is a canonical docs/archive path insertion inherits its old identifier.",
+    "Whole-file credential scanning and explicit-file strictness remain unchanged."
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "scripts/check-no-secrets.mjs",
+      "symbol": "gitDiffAdded"
+    }
+  ],
+  "door_reduction": {
+    "before": 1,
+    "after": 1
+  },
+  "generality_proof": "Both staged and committed scans use gitDiffAdded. Only exact base lines transformed solely by canonical docs/archive insertion inherit their existing ID. Identifier changes, other claim edits and credentials remain violations. No archive directory or caller manifest exempts any file.",
+  "shared_boundaries": [
+    {
+      "path": "scripts/check-no-secrets.mjs",
+      "symbol": "gitDiffAdded",
+      "responsibility": "Return authored diff identifiers after verifying copy/rename provenance against the trusted base document."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "scripts/check-no-secrets.mjs",
+      "entry_point": "privateTodoHits staged branch",
+      "disposition": "enforced",
+      "evidence": "Runs the shared diff reader against HEAD plus staged changes."
+    },
+    {
+      "path": "scripts/check-no-secrets.mjs",
+      "entry_point": "privateTodoHits all branch",
+      "disposition": "enforced",
+      "evidence": "Runs the same reader against explicit trusted base or the PR merge-base and HEAD."
+    },
+    {
+      "path": "scripts/check-no-secrets.mjs",
+      "entry_point": "explicit files branch",
+      "disposition": "not-affected",
+      "evidence": "Explicit whole-file scans do not claim Git provenance and retain their strict whole-file behavior."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Every existing claim with an inherited identifier and a relocated reference can repeat the issue.",
+    "same_class_scan": [
+      "gitDiffAdded --roots=scripts --include-tests:494 files,one shared write door and both staged/all callers.",
+      "Existing archival reports,v3 contract prose and source comments reproduced the same diff-line false positive.",
+      "Real Git regression RED:1 failed and35 passed before extending same-file line provenance."
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "scripts/check-no-secrets.mjs",
+    "invariant": "All staged and CI private-ID checks use actual copy/rename provenance before distinguishing inherited from authored IDs.",
+    "failure_mode": "Unproven source provenance inherits nothing. New identifiers remain violations and full-file credential rules are unchanged.",
+    "exception_policy": "none",
+    "strategy": "Generate only canonical archive insertions from trusted same-file base lines; accept inheritance only on exact transformed line equality. ID and all other text must be identical.",
+    "artifacts": [
+      "scripts/check-no-secrets.mjs"
+    ]
+  },
+  "regression_tests": [
+    "scripts/check-no-secrets.test.mjs"
+  ],
+  "class_regression_tests": [
+    "scripts/check-no-secrets.test.mjs"
+  ],
+  "legacy_paths": {
+    "status": "removed",
+    "removed_paths": [
+      "scripts/check-no-secrets.mjs"
+    ],
+    "rationale": "Replace AM-only/no-provenance classification in both staged and CI branches; do not add a parallel archive bypass."
+  },
+  "dependency_lifecycle": {
+    "decision": "retain-with-exit",
+    "current": "Git2.55.0 and existing Node child_process execution",
+    "target": "Retain the repository Git CLI with standard copy/rename patch metadata; no new dependency.",
+    "rationale": "Git already owns document provenance. Upgrade of the runtime is not required for these established flags.",
+    "exit_criteria": [
+      "Before a Git runtime upgrade, rerun real staged and --all copy/rename plus credential regressions in scripts/check-no-secrets.test.mjs.",
+      "If copy detection cannot establish provenance, inherit no identifiers and require a normal reviewed document change."
+    ]
+  },
+  "migration": "Keep credential whole-file scanning and existing copy/rename behavior. Compare exact previous claim text after only canonical archive reference insertion; remove only the already-present IDs for that proven line.",
+  "residual_risks": [
+    "Noncanonical reference transformations receive no inheritance and remain conservatively blocked."
+  ],
+  "detected_by": "review",
+  "recurrence_check_on": "2026-10-26",
+  "invariant_owner_layer": {
+    "layer": "scripts/check-no-secrets.mjs",
+    "tests": [
+      "scripts/check-no-secrets.test.mjs"
+    ]
+  }
+}

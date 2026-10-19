@@ -6,7 +6,7 @@
 // 两家供应商各起一个 loopback 服务器，落在哪一个上是**不可辩驳**的判据。
 // 外部供应商只由隔离 loopback 代替；Electron、IPC、设置持久化、选择器、付费确认、生成走生产路径。
 //
-// 产出的截图直接落在方案的证据目录里（docs/plan/2026-09-11-model-box-tidy-evidence/after-*.png，
+// 产出的截图直接落在方案的证据目录里（docs/archive/plan/2026-09-11-model-box-tidy-evidence/after-*.png，
 //   含 after-settings-two-lists.png：两张表同屏，对应样张 Main.dc.html 的取景），
 // 与拍板样张 Main.dc.html / PickerAfter.dc.html 摆一起逐项对账。
 import fs from 'node:fs'
@@ -19,7 +19,7 @@ import { DEFAULT_TIMEOUT_MS, expectAbsent, proveProbe, screenshotSettled } from 
 import { stationTimeout } from './_station-budget.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
-const shotsDir = path.join(repoRoot, 'docs/plan/2026-09-11-model-box-tidy-evidence')
+const shotsDir = path.join(repoRoot, 'docs/archive/plan/2026-09-11-model-box-tidy-evidence')
 fs.mkdirSync(shotsDir, { recursive: true })
 const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'nomi-model-box-'))
 const userDataDir = path.join(tempRoot, 'user-data')

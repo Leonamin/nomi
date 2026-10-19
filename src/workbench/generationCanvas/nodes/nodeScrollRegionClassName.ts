@@ -11,7 +11,7 @@
  * 这一步。真正生效的机制是 React Flow 自己的 `noWheelClassName`（默认 class 名
  * `nowheel`）：d3-zoom 的监听器在处理 wheel 事件前，先对**事件真实 target**做
  * `closest('.nowheel')`，命中就直接跳过缩放——这一步不依赖冒泡顺序，在源头就短路。
- * （见 docs/plan/2026-09-11 node-wheel 调研；@xyflow/react 12.11.5 default:
+ * （见 docs/archive/plan/2026-09-11 node-wheel 调研；@xyflow/react 12.11.5 default:
  * noWheelClassName='nowheel', noDragClassName='nodrag'。）
  *
  * 三个 class 各管一件事，同时贴、不必单独判断要不要某一个：

@@ -1,7 +1,7 @@
 # 付费卡逐镜：点了的生成，去掉的不生成
 
 > 状态：🚧 进行中（2026-09-30：协调会话已拍板 Q1–Q9。2026-10-01：A1 已实现；A2（第 9–12 条）已实现；用户拍板加「生成剩下 N 张」，已按样张与随后的位置反馈实现；A3（第 13–14 条、删掉 Run 级预算停、合计行单位跟标题）已实现；2026-10-02：pb02 重跑抓到画布参考的三处（卡按画布规则切生成方式、卡那张框不再借占位节点的 id、卡的改稿走并入规则），已修；A1–A3 合成一个 PR #947，验收只在 A3 头上做一次）。
-> 质量体系按 `docs/plan/2026-09-29-quality-system.md`：测试表、真实路径测试、中英截图、验收页。
+> 质量体系按 `docs/archive/plan/2026-09-29-quality-system.md`：测试表、真实路径测试、中英截图、验收页。
 
 ## 用户那条路
 
@@ -68,7 +68,7 @@
 
 根因合同：`docs/fixes/2026-10-02-paid-card-canvas-reference-mode.root-cause.json`、`docs/fixes/2026-10-02-card-revise-merge-rule.root-cause.json`。新登记概念：`agent-panel.spend-card-shown-node`、`generation.candidate-patch-merge`。
 
-## 「生成剩下 N 张」（用户 2026-10-01 拍板，样张 `docs/design/mockups/2026-10-01-paid-card-generate-remaining/`）
+## 「生成剩下 N 张」（用户 2026-10-01 拍板，样张 `docs/archive/design/mockups/2026-10-01-paid-card-generate-remaining/`）
 
 - **行为**：等于把卡上还没决定的每一张各点一次「生成这张」——每张各记一笔授权，没有总价授权；去掉过的不在 N 里。点完卡和画布上每个节点的状态跟逐张点完全一致（同一份逐镜结局驱动）。宿主核两件事：点名的就是此刻卡上那一叠（报价指纹 + 镜号逐个对上），每一张开拍前它在卡上的样子没被别人改过。哪一张没成就停在那一张，它和后面的照旧在卡上；中途点 × 剩下的不再生成（× 不排队）。渲染层先把每一页卡上摆着的那一份落进候选（和逐张点同一段），再递「用户点的是这几张」。
 - **长相**：从第 1 页起就在、写明张数（「生成剩下 N 张 / 段」，en「Generate remaining N」）；张 / 段跟标题同一条规则（有视频就说段）；只剩 1 张时不画；报不出价时哪儿都不写数，报得出价时也不带合计。
@@ -128,7 +128,7 @@
 
 ## 先查别人
 
-- 仓库里已有：Agent 消息层研究（PR #930）`docs/research/2026-09-29-agent-message-layer-conformance/report.md` §4.3–4.5：一次批准是一个信号、不是一份内容；「只批这一镜」在框架里没有对应物，批准范围必须由 Run 宿主产出，同一个值决定卡标题、主按钮、派发和回执；回执是 Run 事实的纯函数。
+- 仓库里已有：Agent 消息层研究（PR #930）`docs/archive/research/2026-09-29-agent-message-layer-conformance/report.md` §4.3–4.5：一次批准是一个信号、不是一份内容；「只批这一镜」在框架里没有对应物，批准范围必须由 Run 宿主产出，同一个值决定卡标题、主按钮、派发和回执；回执是 Run 事实的纯函数。
 - 生态里已有：
   - Vercel AI SDK 的工具审批按「一次工具调用」二值批准（`needsApproval` → `approval-requested` → `addToolApprovalResponse({ id, approved })`），可带不参与判定的 `approvalDescriptor`（https://github.com/vercel/ai/blob/main/content/docs/04-ai-sdk-ui/03-chatbot-tool-usage.mdx）——所以逐镜范围必须我们自己建模，而且 B / C1 以后能把 `GenerateOutcome` 原样当工具输出。
   - Stripe 的授权与扣款分离：每一笔授权各自冻结、各自有有效期，过期即释放，要重新授权（https://docs.stripe.com/payments/place-a-hold-on-a-payment-method）——「每点一次一份授权、各自带时效」与 A3「过期如实停下、再确认」都照这个形状。
@@ -138,13 +138,13 @@
 
 ### 产品层：别人的确认卡怎么问、失败怎么交代钱（2026-10-01 补，A2 / A3 定界面之前）
 
-先读了仓库里的竞品资料（`docs/research/competitive/2026-09-25/report.md`、`libtv-design-notes.md`），再上网核对。能打开原文的直接引原文；打不开的写明只看到搜索摘录、算未核实。
+先读了仓库里的竞品资料（`docs/archive/research/competitive/2026-09-25/report.md`、`libtv-design-notes.md`），再上网核对。能打开原文的直接引原文；打不开的写明只看到搜索摘录、算未核实。
 
 | 产品 | 多张一起时怎么确认 | 确认时给不给看参考 / 模型 / 参数 | 失败时怎么交代钱 | 出处 |
 |---|---|---|---|---|
 | Runway Workflows（节点画布） | 两种都有：节点上「Run」只跑这一个节点；右上角「Run all」跑整条工作流。文档没写运行前有确认 | 参数在节点上（画布即所见） | 只有以生成错误结束的才自动退回：出错横幅出现后几分钟内积分回来，用量表里那一笔消失；生成完成但不满意不退 | https://help.runwayml.com/hc/en-us/articles/45763528999699-Introduction-to-Workflows 、https://help.runwayml.com/hc/en-us/articles/34266159290003-Can-I-have-credits-refunded |
 | Higgsfield Popcorn（分镜，最多 8 帧） | 一次 Generate 出一整组（帧之间要保持同一个人、同一束光，模型层面就是一组）；按钮上先写好积分再点 | 输入是提示词 + 最多 4 张参考图，提示词里按编号点名 | 生成块上直接写「Failed, Credits refunded」；排队中取消当场退；已经在后台跑的取消不了，失败自动退；例外（某模型一开始就扣）在帮助里点名 | https://higgsfield.ai/creator-hub/help-center/ai-models/how-do-i-use-popcorn 、https://higgsfield.ai/creator-hub/help-center/troubleshooting/generation-is-stuck-or-failed |
-| LibTV（我们 2026-09-25 实测，单张图） | Agent 有手动 / 自动两档：手动 = 每次生成前问，自动 = Agent 直接花积分；确认卡写「1 个图片提示词已预备」「预计消耗 15 积分」，按钮有自动确认 / 取消 / 确认生成；全局设置里有积分预算阈值。多张一起的卡**没实测过** | 卡上能点开看提示词；模型、参数、费用在节点上 | 余额不够直接拦下、不开跑；失败 / 退还**未验证** | `docs/research/competitive/2026-09-25/libtv-design-notes.md` §状态表、§7 |
+| LibTV（我们 2026-09-25 实测，单张图） | Agent 有手动 / 自动两档：手动 = 每次生成前问，自动 = Agent 直接花积分；确认卡写「1 个图片提示词已预备」「预计消耗 15 积分」，按钮有自动确认 / 取消 / 确认生成；全局设置里有积分预算阈值。多张一起的卡**没实测过** | 卡上能点开看提示词；模型、参数、费用在节点上 | 余额不够直接拦下、不开跑；失败 / 退还**未验证** | `docs/archive/research/competitive/2026-09-25/libtv-design-notes.md` §状态表、§7 |
 | TapNow | **未核实**：本机登录研究还没做（竞品周期里排着）；评测文章原文打不开，搜索摘录说它的 Agent 在方案确认后一次把图和视频全生成、用户抱怨积分一下子烧完 | 未核实 | 未核实 | 竞品 README 周期待办；摘录来自 view.inews.qq.com/a/20260401A06K4T00（打不开，不作证据） |
 | Claude Code（Agent 审批） | 每一次调用单独问：是 / 「是，并且不再问」/ 否；「不再问」存成按仓库 + 命令（或域名）的规则，改文件的只到这次会话结束。只有在**这一问能把它会放行的东西都摆出来**时才给更宽的选项，存下的规则只盖选项点名的那些 | 问的时候摆出完整命令 / 路径 | — | https://code.claude.com/docs/en/permissions （Permission system 表、「Sometimes a permission prompt offers only a one-time approval…」一段） |
 | Cursor（Agent 审批） | 三种运行档：Auto-review（白名单直接跑、能进沙箱的进沙箱、其余交分类器或问人）/ Allowlist / Run Everything（每次调用都自动跑）；白名单按命令前缀、MCP 工具写在 `permissions.json` 里，是一项设置，不是卡上的按钮。改代码是先落盘、再给 Keep All / Undo All（可撤回） | 问的时候摆出命令 | — | https://cursor.com/docs/agent/security/run-modes 、https://cursor.com/docs/reference/permissions |

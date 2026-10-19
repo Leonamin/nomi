@@ -90,7 +90,7 @@
   - worktree `git log -1 --format=%cr` 时间戳是否还在推进；
   - `gh pr list` 记分 / 评论区是否有变化。
 - 静默死亡的 agent 用 `TaskStop` 停不到（id 已不在）就**直接发接力班**。接力 brief 给足盘上现场：worktree 绝对路径、停在哪个分支、未 push 的 commit（`git log origin/main..HEAD`）、已完成 / 待办清单。
-- **一切交接强制走 git / PR / docs 外化**（不靠 agent 记忆、不靠转录）：分支 = 代码现场、PR 评论区 = 最新裁决、`docs/handoff` / `docs/plan` = 冷启动接手点。开局让接力体先 `gh pr view <n> --comments` 取最新状态。
+- **一切交接强制走 git / PR / docs 外化**（不靠 agent 记忆、不靠转录）：分支 = 代码现场、PR 评论区 = 最新裁决、`docs/handoff` / `docs/archive/plan` = 冷启动接手点。开局让接力体先 `gh pr view <n> --comments` 取最新状态。
 
 **反例**：一晚死六班；能救回来全靠「commit 已进分支、方案已进 docs」——凡只活在某个会话内存里的进度，随会话一起蒸发。
 
@@ -216,10 +216,10 @@
 5. **反方视角** —— 见 §15.2。
 6. **诚实记分** —— 真跑了的 / 只读没跑的 / 没覆盖到的，分开写。「没查成」必须说出口（§15.4）。
 7. **R5.4（原 R29）· 参考实现逐层对照的路径槽** —— 题目碰任何框架/SDK/运行时时，任务书必须写死那份对照文档的路径：
-   `docs/research/<date>-<框架>-reference-implementation-conformance.md`（模板 `docs/research/TEMPLATE-reference-conformance.md`）。
+   `docs/archive/research/<date>-<框架>-reference-implementation-conformance.md`（模板 `docs/archive/research/TEMPLATE-reference-conformance.md`）。
    **槽先写死再派工**：不写路径，班组交回来的就是一段散文；写死路径，收货时才有东西可以点开。
    已有的对照文档同样要在任务书里点名——不点名等于没有（§16 那条反例讲的就是这个）。
-8. **输出落 `docs/research/<date>-<topic>.md`**，模板 `docs/research/TEMPLATE.md`，附件放 `docs/research/<date>-<topic>/`。
+8. **输出落 `docs/archive/research/<date>-<topic>.md`**，模板 `docs/archive/research/TEMPLATE.md`，附件放 `docs/archive/research/<date>-<topic>/`。
 
 ### 15.2 反方 agent · 「先查别人」清单
 
@@ -247,7 +247,7 @@
       「桌面本地优先」「这是别人家的配置文件不能整份覆盖」是领域约束，「我们这样更简单」「当时就这么写的」是偏好，
       **偏好按「没查」处理**。收货时抽查一件：**有没有另起平行文件**。标准留了扩展点（如 frontmatter 自定义键）
       还另开一个文件，就是 2026-09-07 那条 `skill.json` 的重演。原来的 `check:standard-formats` 门岗零红，已于 2026-10-02 删除，这条降为建议档，靠收货抽查。
-- [ ] **本仓历史**：`docs/lessons/INDEX.md` + `docs/research/` 里同题旧文（防止重复调研已有结论）。
+- [ ] **本仓历史**：`docs/archive/lessons/INDEX.md` + `docs/archive/research/` 里同题旧文（防止重复调研已有结论）。
 
 **收货判据**：反方报告里每条「别人怎么做」都要指得到出处，且**至少一条出处来自自媒体**。全是论文和官方文档 = 只查到了「宣称」，没查到「实况」，退回补。
 
@@ -260,17 +260,17 @@ node scripts/research/tikhub-search.mjs \
   --platform all \                # 或 douyin / xhs / bilibili / x，可逗号分隔
   --limit 20 \
   --since <YYYY-MM-DD> \
-  --out docs/research/<date>-<topic>/tikhub/
+  --out docs/archive/research/<date>-<topic>/tikhub/
 ```
 
-**附件路径固定为 `docs/research/<date>-<topic>/tikhub/`**，产物两份：
+**附件路径固定为 `docs/archive/research/<date>-<topic>/tikhub/`**，产物两份：
 - `tikhub-search.json` —— 结构化，给下游脚本/对账用
 - `tikhub-search.md` —— 人读摘要，直接贴进调研文档的「自媒体来源」一节
 
 每条记录固定含：出处 URL / 平台 / 作者 / 发布时间 / 标题 / **观点摘要（原文前 300 字，不做 AI 改写）** / 提到的框架或工具名。
 摘要刻意不改写：在「先查别人」这个场景里，二手转述正是要防的东西（§1 那条「转述链确实滤掉了东西」的反例，在调研输入侧同样成立）。
 
-接口契约（端点 / 鉴权 / 分页 / 限流 / 返回字段逐项对账）见 `docs/research/tikhub-api-notes.md`。
+接口契约（端点 / 鉴权 / 分页 / 限流 / 返回字段逐项对账）见 `docs/archive/research/tikhub-api-notes.md`。
 
 ### 15.4 密钥与「没查成」的纪律
 
@@ -285,7 +285,7 @@ node scripts/research/tikhub-search.mjs \
 > 另一件事：**怎么保证这一步真的发生过**。清单解决「查什么」，本节解决「不查会怎样」。
 
 **原则**：实施派工前必须先有一份「先查别人」报告（按 §15.2 清单做，落
-`docs/research/<日期>-<主题>/prior-art.md`），结论抄进方案的 `## 先查别人` 一节，
+`docs/archive/research/<日期>-<主题>/prior-art.md`），结论抄进方案的 `## 先查别人` 一节，
 实施任务书**必须引用那份方案的路径**。没有它，任务书不发。
 
 **为什么光有清单不够（三条机制，都不是靠自觉能修的）**：
@@ -300,7 +300,7 @@ node scripts/research/tikhub-search.mjs \
 
 **机器强制（`pnpm run check:prior-art`）**：
 
-- `docs/plan/<日期>-*.md`（日期 ≥ 2026-09-07）**如果写了** `## 先查别人` 一节，节内必须 ≥3 条**带出处**的条目（没写不红：领域方案没有现成的可查，逼人写只会写出「查过了，没有」）。
+- `docs/archive/plan/<日期>-*.md`（日期 ≥ 2026-09-07）**如果写了** `## 先查别人` 一节，节内必须 ≥3 条**带出处**的条目（没写不红：领域方案没有现成的可查，逼人写只会写出「查过了，没有」）。
   出处认三种：URL、`file:line`、**指向仓库里真实存在的文件的链接**（门岗会去确认那个文件在不在，
   指不到就不算）。没有出处的条目等于只写了句「查过了」。
 - PR **新增或修改了自写登记表**（`docs/engineering/self-written.json` 的 entries，或扩大 domainRoots）= 引入了通用能力，正文必须引用一份合格的方案文档、或自带一节合格的「先查别人」（旧的「改 `src/` / `electron/` 超过 300 行」已删：按行数计费，领域工作被逼着写「查过了，没有」，真造了轮子的小 PR 反而漏过去）。这一条在 CI 的
@@ -318,7 +318,7 @@ node scripts/research/tikhub-search.mjs \
 所以派框架题时，反方清单里那条「参考实现对照是否已出、没想到清单是否清零」不是人肉抽查的加分项：
 **清单没清零 = 对应实施阶段不许开工**，这一条要当硬约束抄进任务书。
 
-**和 §15 的分工**：`docs/research/` 的调研文档有没有自媒体那一层是判断题，靠派工与收货纪律（无门岗）；`check:prior-art` 管 `docs/plan/` 的实施方案有没有做过检索（阻断，因为「有没有查过」不是判断题）。
+**和 §15 的分工**：`docs/archive/research/` 的调研文档有没有自媒体那一层是判断题，靠派工与收货纪律（无门岗）；`check:prior-art` 管 `docs/archive/plan/` 的实施方案有没有做过检索（阻断，因为「有没有查过」不是判断题）。
 
 **门岗判的是形式，不是内容**：三条出处 + 一句结论就能过，查得认不认真它不知道。所以反方那一步仍然是
 **人（编排者）的验收项**：收报告时至少抽一格点开出处，指不开 = 按没查处理（§14「班组报告是声明，不是证据」）。
@@ -337,7 +337,7 @@ node scripts/research/tikhub-search.mjs \
 
 **为什么必须拆成两段（根因在派工，不在修的人）**：2026-09-11 一天里连着三簇 bug 同一个形状——
 不变量只在一扇门上实现，另一个入口绕过去（画布 6 个写入口、付费收据 2 个装配点、`SkillRecord` 8 个消费者，
-证据见 [`docs/plan/2026-09-11-door-map-rule.md`](../archive/plan/2026-09-11-door-map-rule.md)）。
+证据见 [`docs/archive/plan/2026-09-11-door-map-rule.md`](../archive/plan/2026-09-11-door-map-rule.md)）。
 三次都被当成一处独立的 bug 修了一遍，因为**任务书把执行体框在一个文件里**：brief 写的是「这里坏了，修这里」，
 于是他看得见症状那扇门，看不见另外几扇，也没有动力去找跨结构的根因。让同一个人「顺便扫一下同类入口」
 在结构上就行不通——他的交付物是「修好这里」，扫出第七扇门只会让他的任务变大。
@@ -404,8 +404,8 @@ node scripts/research/tikhub-search.mjs \
 | 什么 | 放哪 | 何时更新 |
 |---|---|---|
 | 会话 ↔ 概念 lane、在途 PR、合并队列、发版清单、用户近期拍板 | 协调会话的私有总账（本机记忆，不进仓库） | 状态一变就写，别攒着 |
-| 待办 | `docs/roadmap/TODO.md`（唯一真相源） | 一有新发现就写进一行，并注明来源 |
-| 可复用的做法与踩坑 | 本手册与 `docs/lessons/` | 一个流程被证明有效或踩过坑，当天沉淀 |
+| 待办 | `docs/archive/roadmap/TODO.md`（唯一真相源） | 一有新发现就写进一行，并注明来源 |
+| 可复用的做法与踩坑 | 本手册与 `docs/archive/lessons/` | 一个流程被证明有效或踩过坑，当天沉淀 |
 
 **恢复例程**（上下文压缩、会话重启、额度恢复之后都照这个做）：读总账 → `list_sessions` 加 `ListAgents` → `gh pr list` → 三方对账 → 已经停掉的工人逐个唤醒，附上当前状态和下一步 → 重新挂上后台等待。
 
@@ -425,7 +425,7 @@ node scripts/research/tikhub-search.mjs \
 - **只由协调会话合并**（其他会话开 PR、把号发给它）。**本地 CI 必过，GitHub CI 通过且扫描干净就合**；用户明确豁免 GitHub CI 时按 [交付例外](delivery-and-review.md#用户明确授权的-github-ci-例外2026-10-15) 留存授权和本地验收，不能豁免本地 CI 或伪造远端 check。默认路径不再问用户（2026-10-01 用户拍板）。非豁免路径合完在真实的 merge SHA 上等 `Core Flow Smoke` 跑完，再拿 `delivery:verify-merged` 收据；**最多 3 个合并在等收据**（`quality-gate.yml` 按 SHA 分组，每个合并提交各跑一套，互不排队），任何一个收据红了**立刻停止再合**，交人定修还是回滚。收据要在干净的工作树里取，脏树会被拒。
 - 等待交给后台 shell 脚本：一个脚本「等 CI → 合并 → 等冒烟 → 取收据 → 写一个完成标记文件」，一个脚本「在等收据的不足 3 个时 → 处理下一批」。协调会话自己不轮询。标记文件落在盘上，所以脚本被重启杀掉后，可以从标记处接着排。
 - 外部 fork 的 PR（第一次贡献的人）要仓库主人点「批准运行」才会跑 CI。先把 diff 全部读一遍，并确认工作流是 `pull_request` 触发（拿不到仓库密钥），然后用 `gh api -X POST repos/<o>/<r>/actions/runs/<id>/approve` 批准。每批准一次，也要记一笔。
-- CI 红在你没碰过的文件上，先看 [CI 门岗拿两个时间点比较](../lessons/ci-gates-compare-two-points-in-time.md)。
+- CI 红在你没碰过的文件上，先看 [CI 门岗拿两个时间点比较](../archive/lessons/ci-gates-compare-two-points-in-time.md)。
 - 纯文档的合并，核心冒烟会被跳过，收据照常能取。
 
 ### 19.3a PR 切法：一个概念一个 PR，按阶段攒（2026-10-01 用户拍板，R27）
@@ -436,7 +436,7 @@ node scripts/research/tikhub-search.mjs \
 
 ### 19.4 收尾：已合并并拿到收据的会话直接归档
 
-归档会清理工作树。在 Windows 上，先确认它的 `node_modules` 不是指向别处的链接（见 [Windows 上删 worktree 会顺着 junction 删掉目标](../lessons/windows-worktree-remove-follows-junctions.md)），再归档。已合并、已拿收据的会话，协调会话**不再逐个问用户**（2026-09-26 授权）。
+归档会清理工作树。在 Windows 上，先确认它的 `node_modules` 不是指向别处的链接（见 [Windows 上删 worktree 会顺着 junction 删掉目标](../archive/lessons/windows-worktree-remove-follows-junctions.md)），再归档。已合并、已拿收据的会话，协调会话**不再逐个问用户**（2026-09-26 授权）。
 
 ### 19.5 额度：上限会让工人悄无声息地停下
 
@@ -447,7 +447,7 @@ node scripts/research/tikhub-search.mjs \
 
 1. 每个 PR 的 CI：按 R22 分档，依据是改动碰到的风险面，不是每次全量。
 2. RC 构建自带的完整门岗与旅程测试。
-3. Windows 必查（`docs/release-process.md` §4）：卡顿巡检跑两遍、Agent 三回合真对话、打包沙箱证据。
+3. Windows 必查（`docs/archive/guides/release-process.md` §4）：卡顿巡检跑两遍、Agent 三回合真对话、打包沙箱证据。
 4. **真实付费生产矩阵**（用户 2026-09-26 要求）：在 RC 安装包上，用真实供应商把这一版改过的每一处都跑一遍。规矩：
    - 只在真实用户资料的**拷贝**上跑（Windows 上连同 `Local State` 一起拷），跑完即删；前后都对原资料做指纹比对。
    - 用最便宜的模型，设一个花费上限，逐条记下提交给供应商的任务。

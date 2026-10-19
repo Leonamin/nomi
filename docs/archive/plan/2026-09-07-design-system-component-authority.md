@@ -9,7 +9,7 @@
 
 ## 先查别人
 
-> R27 必交物。完整报告：[`docs/research/2026-09-07-design-system-component-authority/prior-art.md`](../research/2026-09-07-design-system-component-authority/prior-art.md)（含 TikHub 两轮 96 条实抓附件与诚实记分）。
+> R27 必交物。完整报告：[`docs/archive/research/2026-09-07-design-system-component-authority/prior-art.md`](../research/2026-09-07-design-system-component-authority/prior-art.md)（含 TikHub 两轮 96 条实抓附件与诚实记分）。
 > 下面每条都带出处；**转引与实查分开标**——标「转引」的本节没有复跑。
 
 **依赖里已有？**
@@ -49,7 +49,7 @@
 
 ### 上游更正（本节落笔时 C 档已被调研推翻两条，本文受影响处随之更正）
 
-上游 [`docs/plan/2026-09-07-design-system-optimization.md`](2026-09-07-design-system-optimization.md) 的 C 档在 2026-09-07 被 [`prior-art.md`](../research/2026-09-07-design-system-optimization/prior-art.md) 改了两条，与本文 **刀 3** 咬合：
+上游 [`docs/archive/plan/2026-09-07-design-system-optimization.md`](2026-09-07-design-system-optimization.md) 的 C 档在 2026-09-07 被 [`prior-art.md`](../research/2026-09-07-design-system-optimization/prior-art.md) 改了两条，与本文 **刀 3** 咬合：
 
 - **C2 的阈值从 `N≥20` 改成 `N≥50`**：实扫 197 处 `z-[N]` 里 163 处是 `z-[1..20]` 的组件内局部序（生态共识里这类**就该**用小数字或 DOM order 解决），只有 34 处 ≥50 才与分层契约打架，其中 5 处压过 `confirmation=9300`——正是刀 3 要迁的那五个文件。
 - **C2 必须先补出口再上棘轮**：先把 `NOMI_OVERLAY_Z_INDEX` 镜像成 CSS 变量并接进 `tailwind.config.ts` 的 `theme.extend.zIndex`（Tailwind 默认 `zIndex` 只到 50，这一格是真缺口），让 `z-overlay-dialog` 这类说法在 className 侧存在，**然后**才加棘轮。不补出口的棘轮是给根因打补丁（P2）。

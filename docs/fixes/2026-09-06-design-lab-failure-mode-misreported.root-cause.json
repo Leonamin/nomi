@@ -139,6 +139,6 @@
   "residual_risks": [
     "归属断言依赖 lsof：拿不到 lsof 的机器上只能得出 unknown，门岗照跑并显式打印「这一趟没有归属证明」，不假装安全也不制造假红。视觉道只在 darwin 上执行（calibration.json），所以 CI 不受影响。",
     "端口按哈希派生仍可能与本机上别的程序撞口；撞上时 --strictPort 让 vite 绑失败，由归属断言与 port-taken 签名报成基础设施失败，而不是被误读成像素问题。",
-    "机器超载导致的用例超时无法被消除，只能被正确归类：门岗现在把 load 报出来并指向 docs/lessons/parallel-gates-thrash-the-machine.md，判断仍需人看。"
+    "机器超载导致的用例超时无法被消除，只能被正确归类：门岗现在把 load 报出来并指向 docs/archive/lessons/parallel-gates-thrash-the-machine.md，判断仍需人看。"
   ]
 }

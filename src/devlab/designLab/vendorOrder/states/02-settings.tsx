@@ -39,7 +39,7 @@ export const SETTINGS_STATES: readonly LabState[] = [
   {
     id: 'vo-10-settings-model-box',
     name: '模型框里显示哪些、排在哪 · 含「已隐藏 · 2」找回组',
-    source: 'docs/plan/2026-09-11-model-box-tidy.md §5 + 样张 Main.dc.html · 用户 2026-09-11 拍板',
+    source: 'docs/archive/plan/2026-09-11-model-box-tidy.md §5 + 样张 Main.dc.html · 用户 2026-09-11 拍板',
     coverage: 'shell',
     // 「已隐藏 · 2」这一组是整块设计里最容易被做丢的一半（藏了找不回来 = 隐藏等于删除），
     // 所以这一格刻意种了两个隐藏项，把它钉在基线里。

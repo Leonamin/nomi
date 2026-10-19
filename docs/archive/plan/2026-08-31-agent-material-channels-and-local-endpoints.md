@@ -4,18 +4,18 @@
 >
 > **⚠️ 2026-09-01 收编时的现状标注（读旧文先看这段，防过期前提）**：
 > - **P0 本地模型预设卡已落地**（PR #281 @2026-09-01：LocalModelCard + electron/localRuntime/，探测/一键连/能力预检全闭环）——§4 P0 一节已成历史记录。
-> - **「实施等 #223 phase1 收口」前提已作废**：#223 已冻结为 M 线病历本，被 M 计划（#272/#275 起）取代；后续 P1-P3 的运行时前提以 M 线现状为准（查 docs/ARCHITECTURE-NOW.md）。
+> - **「实施等 #223 phase1 收口」前提已作废**：#223 已冻结为 M 线病历本，被 M 计划（#272/#275 起）取代；后续 P1-P3 的运行时前提以 M 线现状为准（查 docs/archive/guides/ARCHITECTURE-NOW.md）。
 > - P1（Connector 素材轨）/P2（pi-web-access 查资料）/P3（人挑素材）仍未实施；P2 的 license 核实仍是阻断前置。
-> - 短视频数据源（TikHub connector，2026-09-01 批 v1）是本计划之外新增的数据摄取 connector，见 `docs/research/2026-09-01-shortvideo-data-apis-eval.md`。
+> - 短视频数据源（TikHub connector，2026-09-01 批 v1）是本计划之外新增的数据摄取 connector，见 `docs/archive/research/2026-09-01-shortvideo-data-apis-eval.md`。
 >
 > Rule 4 执行计划。承接 PR #223（`project-agent-host` 线，Pi Agent 落地 Nomi 项目）**下一阶段**的两个能力：
 > **A. 素材/参考获取**（三通道分工）与 **B. 本地文本模型接入**（通用端点，非 LocalAI 专项）。
 > 方向已由用户拍板（2026-08-31），本文只把「怎么落」写清；~~实施等 #223 phase1 收口~~（见上方现状标注）。
 >
 > **背景来源（承接，不重复调研）**：
-> - 素材/浏览器/pi 生态调研：`docs/research/2026-08-29-browser-assets-pi-ecosystem-research.md`（随 #226 合并入库）。
-> - Connector 合同与提示词系统：`docs/plan/2026-08-29-creative-capability-catalog-and-prompt-system.md`（随 #226 合并入库）。
-> - 运行时 owner 边界：`docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md`、`docs/specs/2026-08-22-runtime-ownership-adr.md`。
+> - 素材/浏览器/pi 生态调研：`docs/archive/research/2026-08-29-browser-assets-pi-ecosystem-research.md`（随 #226 合并入库）。
+> - Connector 合同与提示词系统：`docs/archive/plan/2026-08-29-creative-capability-catalog-and-prompt-system.md`（随 #226 合并入库）。
+> - 运行时 owner 边界：`docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md`、`docs/specs/2026-08-22-runtime-ownership-adr.md`。
 >
 > **验证时点**：本文所有代码坐标以 `origin/main` = `b71d3c88` 为准，2026-08-31 实查核实；标「随 #226 入库」的合同/文档为**前置依赖**，尚未在 main（见「依赖与顺序」）。
 

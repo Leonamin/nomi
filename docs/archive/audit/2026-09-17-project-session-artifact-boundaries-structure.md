@@ -110,7 +110,7 @@ B 删除了旧全局 recapture 和 renderer evidence 放宽特例，十个 invoc
 两个付费诊断脚本 `scripts/audio-ref-diag-probe.mjs` 与 `scripts/audio-ref-paid-smoke.mjs` 作为**消费者**同步解包（未运行付费 smoke）。
 它们与窗口内其余 11 份（door-map 规则、Ponytail 超时、gates 分档、分镜默认值等）没有共享状态、抽象或调用路径。
 
-结论沿用 `docs/audit/2026-09-15-scripts-layer-symptom-cluster-review.md`：`scripts/` 是扁平工具目录，两级模块键把互不相关的工具算成一层，
+结论沿用 `docs/archive/audit/2026-09-15-scripts-layer-symptom-cluster-review.md`：`scripts/` 是扁平工具目录，两级模块键把互不相关的工具算成一层，
 这 12 份是目录共处而不是同一层被反复修。本轮不据此给 `scripts` 再加任何修复，也不改聚类判据或阈值挤过门岗；
 该评审提出的判据修法（扁平目录按顶层脚本分键）仍是未派的后续项，登记为剩余风险。
 

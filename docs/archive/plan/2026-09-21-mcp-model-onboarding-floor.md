@@ -31,7 +31,7 @@
 | 登记门 | `electron/catalog/declaredProviderRegistration.ts`（新） | 声明卡 → vendor/model/mapping，走 `mutateCatalog` 同一扇事务门 |
 | 错误面 | `electron/capabilityCore/mcpToolErrorResults.ts` | `ERROR_HINT` 补 `feature_disabled` / `capability_input_invalid`（K5/K6） |
 | 门岗 | `scripts/check-credential-origin.ts` | 按新规则显式登记：`apiKey` 只许出现在 `set_key` 这一个动作上且必须走那扇门；声明卡里的 `provider` 块只在「该连接还没有绑定」时可用 |
-| 文档/界面 | `docs/integrate-with-your-agent.md`、`src/ui/onboarding/ConnectAssistantCard.tsx` + i18n | 新三步成为主线；卡片加「复制给你的 AI」按钮（zh/en） |
+| 文档/界面 | `docs/archive/guides/integrate-with-your-agent.md`、`src/ui/onboarding/ConnectAssistantCard.tsx` + i18n | 新三步成为主线；卡片加「复制给你的 AI」按钮（zh/en） |
 
 ## 4. 不动项（边界，碰到就停下上报）
 

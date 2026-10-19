@@ -79,7 +79,7 @@
 - 分类 recurring：测试运行环境的能力没有在收集边界声明；同类入口实扫 `_feel.test.mjs`、`_feel-observer.test.mjs` 与 design-lab `*.visual.spec.mjs`。前两份为唯一启动 Chromium 的 `tests/**/*.test.mjs`，后者已有独立 Playwright 车道。
 - 为什么本地绿 CI 红：本机有缓存的浏览器；Unit CI 不安装浏览器。沿用专用后缀分道：两份迁为 `*.browser.mjs`、node:test runner，`test:feel:browser` 显式执行；Linux desktop 安装 Chromium 并执行，Unit 不加安装步骤。
 - smoke 待核实：run 34275108604 的 linux-walkthrough-evidence 已下载，但旧上传清单漏掉 artifacts/feel，无法取到 13 条 DOM 发现。补上传证据；本地 smoke 正排队复现，不能把 macOS 参数模拟当成 Linux 执行。
-- 先查同类：`docs/lessons/canvas-perf-budget-calibrated-on-macos-fails-on-linux.md` 只允许延迟预算按平台校准，计数/正确性不能据此放宽；design-lab 视觉道明确校准平台。需看实测元素再决定 A/B。
+- 先查同类：`docs/archive/lessons/canvas-perf-budget-calibrated-on-macos-fails-on-linux.md` 只允许延迟预算按平台校准，计数/正确性不能据此放宽；design-lab 视觉道明确校准平台。需看实测元素再决定 A/B。
 - 范围仅测试、CI 接线与本计划；不改生产代码、依赖、.gitignore。回滚本次提交恢复旧机制；验收 browser 11/11、Unit 不收浏览器测试、本地 smoke、完整 gates、正常 hooks 推送原 PR。
 - **选择 B，排除 A**：macOS `pnpm run test:e2e` 同样在 `smoke:waitForFunction` 检出 font-size 13/0，故不是平台差异。13 个元素依次为 span「1/4」「素材库」「分组」「提示词」「技能」「流程」「镜头 1」「生成方式」、div「用即梦会员积分，纯文字生成图像」、span「D」「变体」「N」、summary「—」。CI 没上传 DOM JSON，不能声称逐元素验证了 Linux；本地同计数同阶段、CI 截图与日志是目前证据。
 - B 的登记边界：扫描器补 `fontSizes` 证据；豁免只匹配指定 checkpoint 下的 rule + tag/text/fontSizes，逐条消费（重复增加仍红）。记录全部原始发现，只有已登记发现免计；删除原有“整个 checkpoint 有豁免就不判红”的宽豁免。owner/reason 必填，merge-base 已有登记只减不增；首次登记允许本次用户明确授权的 B 校准。不改 baseline allowed，不关观察器。

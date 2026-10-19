@@ -1,8 +1,8 @@
 # Agent 工具面 v2 · 20 动词重切（取代 PR #777）
 
 > 状态：🚧 实施中（2026-09-14）· 分支 `feat/agent-tool-face-20-verbs-v2-20260914`（从 `origin/main` 155f660ce 重切）
-> 设计正本：`docs/design/2026-09-11-agent-tool-face-first-principles.md`（含 09-11 拍板记录：一个工具 = 状态×效果；同格合并 `action`；跨格必拆；不许兼容旧名）· 实施方案：`docs/plan/2026-09-11-agent-tool-face-implementation.md`（PR A 已合，本文档是 PR B）· 评审：PR #777 深度评审（scratchpad `review-777.md`，方案 B）· 根因合同：`docs/fixes/2026-09-11-agent-generation-second-door.root-cause.json`
-> 证据：`docs/plan/agent-tool-face-v2-evidence/`（R17 先验会红日志、R30 题库 42 句、真实模型结果与逐句表）
+> 设计正本：`docs/archive/design/2026-09-11-agent-tool-face-first-principles.md`（含 09-11 拍板记录：一个工具 = 状态×效果；同格合并 `action`；跨格必拆；不许兼容旧名）· 实施方案：`docs/archive/plan/2026-09-11-agent-tool-face-implementation.md`（PR A 已合，本文档是 PR B）· 评审：PR #777 深度评审（scratchpad `review-777.md`，方案 B）· 根因合同：`docs/fixes/2026-09-11-agent-generation-second-door.root-cause.json`
+> 证据：`docs/archive/plan/agent-tool-face-v2-evidence/`（R17 先验会红日志、R30 题库 42 句、真实模型结果与逐句表）
 
 ## 0. 一页读懂（D6）
 
@@ -12,9 +12,9 @@
 
 ## 先查别人
 
-1. **设计正本 §2「先查别人」**（[`docs/design/2026-09-11-agent-tool-face-first-principles.md`](../../design/2026-09-11-agent-tool-face-first-principles.md)）——逐条抄了 Anthropic define-tools / writing-tools-for-agents（[platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools](https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools)、[anthropic.com/engineering/writing-tools-for-agents](https://www.anthropic.com/engineering/writing-tools-for-agents)）、Claude Code `sdk-tools.d.ts`、pi SDK 0.85.1、Codex `codex-rs`、Cline、Cursor、Gemini CLI、MCP 2025-06-18；本文档不重新调研，直接沿用它的 20 动词与返回信封。
-2. **GitHub MCP `issue_write` 的「弹表单即 isError + STOP」**（[`docs/research/2026-09-11-agent-tool-face-prior-art/github.md`](../research/2026-09-11-agent-tool-face-prior-art/README.md)）——`generate` 的返回值照抄：`isError:true` + "STOP. Do not call any other tools and do not claim generation has started"，模型读到的是错误结果，所以它说不出「已经生成」。
-3. **达芬奇社区版 MCP 的 `SECURITY.md`**（[`docs/research/2026-09-11-agent-tool-face-prior-art/davinci-resolve.md:240-242`](../research/2026-09-11-agent-tool-face-prior-art/README.md)）——"Compound tools group multiple actions behind an `action` parameter, so their annotation is conservative when any action in the group can mutate state"：审批粒度是工具名，所以后果粒度也必须是工具名。这是拒绝第 21 个 `nomi_canvas_edit` 声明的依据。
+1. **设计正本 §2「先查别人」**（[`docs/archive/design/2026-09-11-agent-tool-face-first-principles.md`](../design/2026-09-11-agent-tool-face-first-principles.md)）——逐条抄了 Anthropic define-tools / writing-tools-for-agents（[platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools](https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools)、[anthropic.com/engineering/writing-tools-for-agents](https://www.anthropic.com/engineering/writing-tools-for-agents)）、Claude Code `sdk-tools.d.ts`、pi SDK 0.85.1、Codex `codex-rs`、Cline、Cursor、Gemini CLI、MCP 2025-06-18；本文档不重新调研，直接沿用它的 20 动词与返回信封。
+2. **GitHub MCP `issue_write` 的「弹表单即 isError + STOP」**（[`docs/archive/research/2026-09-11-agent-tool-face-prior-art/github.md`](../research/2026-09-11-agent-tool-face-prior-art/README.md)）——`generate` 的返回值照抄：`isError:true` + "STOP. Do not call any other tools and do not claim generation has started"，模型读到的是错误结果，所以它说不出「已经生成」。
+3. **达芬奇社区版 MCP 的 `SECURITY.md`**（[`docs/archive/research/2026-09-11-agent-tool-face-prior-art/davinci-resolve.md:240-242`](../research/2026-09-11-agent-tool-face-prior-art/README.md)）——"Compound tools group multiple actions behind an `action` parameter, so their annotation is conservative when any action in the group can mutate state"：审批粒度是工具名，所以后果粒度也必须是工具名。这是拒绝第 21 个 `nomi_canvas_edit` 声明的依据。
 4. **Codex `intercept_apply_patch`**（[github.com/openai/codex/blob/main/codex-rs/core/src/tools/handlers/apply_patch.rs#L499](https://github.com/openai/codex/blob/main/codex-rs/core/src/tools/handlers/apply_patch.rs#L499)）——第二扇门接回同一个处理器、同一份身份；本刀「方法名只在 `GENERATION_METHODS` 声明一次，三处派生」照它的形状。
 5. **pi SDK 工具注册**（`node_modules/@earendil-works/pi-coding-agent/dist/core/extensions/runner.ts:500-510`）——只有 first-registration-wins 的 Map，无效果去重、无冲突检测；所以「一个工具一种后果」的判据必须建在我们自己的注册表装配期（`assembleVerbDeclarations`），不改上游。
 
@@ -22,7 +22,7 @@
 
 `verbs/readVerbs.ts`、`verbs/writeVerbs.ts`（去掉第 21 个 `nomi_canvas_edit`）、`electron/shared/canvas/nodeExecutionKinds.ts` + 渲染层对账测试、`modelSetup.ts` + `mcpHostSurfaceOps.ts` 分支、`laneVerbTransport.ts`、契约别名 `pi → method` 搬迁（generation / export / productionRun / timelineWrite / documentWrite / assetRead / skillRead / skillWrite / canvasDelete）、`scripts/tool-face-baseline.json` 收缩、`tests/system/agent-tool-face-usecases.json`、根因合同正文、`verbDeclaration.ts` 的 `alsoCovers`（`check_job` / `cancel_job` 替导出契约说话）。
 
-**没带**：`artifacts/real-target-branch/`（`-f` 加进 gitignore 目录的截断 trace）、三份 09-13 合同（把本分支自己的中间态当根因）、`docs/audit/2026-09-13-…structure-review.md`、8 处兼容层（下 §3）。
+**没带**：`artifacts/real-target-branch/`（`-f` 加进 gitignore 目录的截断 trace）、三份 09-13 合同（把本分支自己的中间态当根因）、`docs/archive/audit/2026-09-13-…structure-review.md`、8 处兼容层（下 §3）。
 
 ## 2. 根因修法：方法名单一真相源（R28 三层）
 

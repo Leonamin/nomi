@@ -1,6 +1,6 @@
 # 创作 AI 流式 turn 控制器（相3 P1）
 
-**分支**：`fix/creation-streaming`　**关联**：`docs/audit/2026-06-14-ultra-deep-mechanism-audit.md` §2.6、`docs/plan/2026-06-14-ultra-audit-remediation.md` 相3 P1。
+**分支**：`fix/creation-streaming`　**关联**：`docs/archive/audit/2026-06-14-ultra-deep-mechanism-audit.md` §2.6、`docs/archive/plan/2026-06-14-ultra-audit-remediation.md` 相3 P1。
 
 ## 病根
 

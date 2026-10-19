@@ -506,6 +506,6 @@
       "electron/configFileStore.test.ts",
       "electron/catalog/catalogNeverOverwrites.test.ts"
     ],
-    "structural_ticket": "docs/plan/2026-09-21-config-never-silently-lost.md"
+    "structural_ticket": "docs/archive/plan/2026-09-21-config-never-silently-lost.md"
   }
 }

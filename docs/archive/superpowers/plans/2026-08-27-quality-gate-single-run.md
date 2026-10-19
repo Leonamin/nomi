@@ -155,7 +155,7 @@ Run:
 ```bash
 git diff --check origin/main...HEAD
 git diff --stat origin/main...HEAD
-git diff origin/main...HEAD -- .github/workflows/quality-gate.yml scripts/check-quality-gate-workflow.node-test.mjs package.json docs/superpowers/specs/2026-08-27-quality-gate-single-run-design.md docs/superpowers/plans/2026-08-27-quality-gate-single-run.md
+git diff origin/main...HEAD -- .github/workflows/quality-gate.yml scripts/check-quality-gate-workflow.node-test.mjs package.json docs/archive/superpowers/specs/2026-08-27-quality-gate-single-run-design.md docs/archive/superpowers/plans/2026-08-27-quality-gate-single-run.md
 ```
 
 Expected: only the approved spec, plan, workflow, contract test, and package script wiring differ.

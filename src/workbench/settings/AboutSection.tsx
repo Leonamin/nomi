@@ -58,7 +58,7 @@ function AboutActionRow({
 export function AboutSection({ onClose, onReplaySplash }: AboutSectionProps): JSX.Element {
   const { t } = useTranslation()
   const updater = useUpdater()
-  // 反馈与分享**内嵌**在「关于」区块里（获批样张：docs/design/mockups/2026-09-01-feedback-share-center*.png
+  // 反馈与分享**内嵌**在「关于」区块里（获批样张：docs/archive/design/mockups/2026-09-01-feedback-share-center*.png
   // 画的是它长在设置弹窗右栏、左侧 tab 始终在）。此前它 dispatch 全局事件 + 关掉设置，
   // 结果冒成一个脱离设置的独立浮层——那正是「反馈与分享点开变成独立框」这个反馈的根因。
   // 改法：在 About 区块内切视图（about ↔ feedback），复用 FeedbackShareContent，**不**再关设置。

@@ -9,7 +9,7 @@
 
 - 分支 `main`，工作树干净。`package.json` = **0.9.4**。
 - **本地 `/Applications/Nomi.app` = 0.9.4，但是旧的**：它在 commit `34082ec`（bump）之后立刻打包，**没含后面 3 个提交的修复**（见下「已完成」末 3 条，含一个 P0）。所以最后一步重打包必做。
-- 未跟踪：`docs/design/mockups/2026-06-07-asset-library.html`（素材库样张，已拍板）、两份 `docs/audit/2026-06-07-ux-walkthrough*.md`（早先走查记录）。
+- 未跟踪：`docs/archive/design/mockups/2026-06-07-asset-library.html`（素材库样张，已拍板）、两份 `docs/archive/audit/2026-06-07-ux-walkthrough*.md`（早先走查记录）。
 
 ## 1. 本会话已完成（已提交推送）
 
@@ -32,7 +32,7 @@
 > 建议顺序：先把要进 app 的功能都做完（#A #B），再统一验证/固化/打包（#C #D #E），避免重复打包。
 
 ### #A 素材库面板（真实库）— 样张已拍板
-- 样张：`docs/design/mockups/2026-06-07-asset-library.html`（右侧抽屉：头部 上传/✕ + 分段筛选 全部/图片/视频/音频 + 搜索 + 网格 + 空态）。
+- 样张：`docs/archive/design/mockups/2026-06-07-asset-library.html`（右侧抽屉：头部 上传/✕ + 分段筛选 全部/图片/视频/音频 + 搜索 + 网格 + 空态）。
 - **复用现成件**（不要从零造）：`src/workbench/assets/useAssetPool.ts`（画布节点+项目文件去重合流，单一真相源）、`AssetTile.tsx` 的 `AssetThumb`、`assetTypes.ts` 的 `filterAssets(assets,{query,accept})` + `AssetKind`。
 - 挂载仿 `src/ui/onboarding/OnboardingFloatingPanel.tsx`（Mantine `Portal` 固定面板 + Escape/点外关闭），挂进 `src/workbench/NomiStudioApp.tsx`（参照 `OnboardingFloatingPanel` 那套：lazy + state + CustomEvent `nomi-open-asset-library`）。
 - AppBar：`src/ui/app-shell/NomiAppBar.tsx` 的「素材库」按钮（约 192 行）**从 `assetInputRef.click()` 改为 dispatch 开面板事件**；上传移进面板（复用 `importImageFilesToGenerationCanvas`，见 NomiAppBar `handleAssetFilesSelected`）。

@@ -22,11 +22,11 @@
 - 当前工作树是 detached HEAD `7b70993bb`，是 `origin/main@5730b957` 的父提交；不能把它称为最新 main。
 - PR #223 head 为 `origin/pr-223-head@48c019da`；PR 相对 `origin/main` 的变化约 767 个文件，不能作为一个不可拆的实现批次直接推进。
 - 本轮已有四份研究/根因/方案文档：
-  - `docs/research/2026-09-01-pr223-agent-architecture-iteration.md`
-  - `docs/research/2026-09-01-pr223-tool-surface-design-audit.md`
-  - `docs/research/2026-09-01-agent-architecture-root-cause-synthesis.md`
-  - `docs/research/2026-09-01-agent-architecture-solution-and-execution-plan.md`
-  - 最新评测研究：`docs/research/2026-09-01-agent-evaluation-and-test-research.md`
+  - `docs/archive/research/2026-09-01-pr223-agent-architecture-iteration.md`
+  - `docs/archive/research/2026-09-01-pr223-tool-surface-design-audit.md`
+  - `docs/archive/research/2026-09-01-agent-architecture-root-cause-synthesis.md`
+  - `docs/archive/research/2026-09-01-agent-architecture-solution-and-execution-plan.md`
+  - 最新评测研究：`docs/archive/research/2026-09-01-agent-evaluation-and-test-research.md`
 
 ### Existing infrastructure to reuse
 
@@ -488,7 +488,7 @@ contracts 永远先跑；unit/desktop/journey/canvas/performance/package 仍按�
 ### Task 1 — M0: Freeze contract and test charter
 
 1. 在 `tests/agent-system/schema.mts` 固化 case/trace/evidence/verdict schema 和版本策略。
-2. 将本地现状映射表与 `docs/ARCHITECTURE-NOW.md` 对齐，确认每个 authority/adapter 的 owner。
+2. 将本地现状映射表与 `docs/archive/guides/ARCHITECTURE-NOW.md` 对齐，确认每个 authority/adapter 的 owner。
 3. 固化 J1-J5 初始任务、rubric、预算/turn/token 上限和禁止 effect。
 4. 新增一份无业务逻辑的 self-test，证明 harness 能检测“预期 Item 未消费”和“effect 次数错误”。
 

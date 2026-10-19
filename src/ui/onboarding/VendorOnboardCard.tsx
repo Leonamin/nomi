@@ -6,7 +6,7 @@
  * - 已连通：默认折叠；展开后 key 区显「已保存 · 更换/断开」，模型 chip 点亮。
  * 填 key → upsertVendorApiKey（后端零改动，模型已 seed）。模型清单从 catalog 派生。
  * 接入地址可就地编辑 → upsertVendor 只改 baseUrlHint（seed 存在即跳过，用户改动不被启动刷回）。
- * 样张：docs/design/mockups/onboarding-panel-A.html
+ * 样张：docs/archive/design/mockups/onboarding-panel-A.html
  */
 import React, { type JSX } from 'react'
 import { MODEL_ACCESS_ENTRY } from '../../../electron/shared/contracts/modelAccessCapabilities'

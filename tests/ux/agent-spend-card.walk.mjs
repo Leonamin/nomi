@@ -149,7 +149,7 @@ try {
   const cardShotNodeIds = (await readProject(win, projectId)).payload.generationCanvas.nodes.map(entry => entry.id).sort()
   // × 是**一下**：2026-09-22 之前这里先摊开一句「你在卡上改的内容会一起丢掉」再要第二下确认，
   // 而那句话已经不为真（裁决 D + 草稿锚 operationId：× 什么都不丢），文案与它那一支渐进披露同刀删。
-  // 死锚点两头骗人（docs/lessons/dead-selector-lies-both-ways.md），所以这里钉它**确实不在**，
+  // 死锚点两头骗人（docs/archive/lessons/dead-selector-lies-both-ways.md），所以这里钉它**确实不在**，
   // 不留一个 `isVisible().catch(false)` 的软分支替它遮。
   const rejectNote = card.locator('[data-v4-control="reject-confirm-note"]')
   await clickOrFail(card.locator(INTERVENTION_REJECT), '收回这次出价（一下就撤，没有第二问）')

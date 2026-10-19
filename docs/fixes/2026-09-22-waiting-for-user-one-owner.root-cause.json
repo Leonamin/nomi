@@ -47,7 +47,7 @@
     "Agent 面板提问卡上的选项 / 自由输入（`ask_user`、缺参数、熔断转提问三个生产者共用的那张卡）"
   ],
   "external_sources": [],
-  "internal_only_reason": "只动本仓的 Run 账本状态机与 lane 宿主的输入分派；没有新增或改动任何对外 wire 契约（`discardSpend` 的 IPC 名与入参不变，`check:model-face-frozen` 零字节变化）。方案与对外规范的对照（MCP elicitation 三态）写在 docs/plan/2026-09-22-waiting-for-user-one-owner.md 的「先查别人」与 §5b。",
+  "internal_only_reason": "只动本仓的 Run 账本状态机与 lane 宿主的输入分派；没有新增或改动任何对外 wire 契约（`discardSpend` 的 IPC 名与入参不变，`check:model-face-frozen` 零字节变化）。方案与对外规范的对照（MCP elicitation 三态）写在 docs/archive/plan/2026-09-22-waiting-for-user-one-owner.md 的「先查别人」与 §5b。",
   "invariants": [
     "× = 收回**这一次出价**，不是对这份计划说「不」：计划退回 `draft` / 未 present（`cardHidden`），镜头、参数、锚点一个字不丢，**画布占位节点一个不删**（2026-09-22 下午用户拍板）",
     "对同一个 operationId 再 `generate` = 重新出价，同一份草稿再出一张卡（新的 planVersion / quoteId）",

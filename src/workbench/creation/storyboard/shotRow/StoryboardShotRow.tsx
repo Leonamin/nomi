@@ -39,7 +39,7 @@ import type { ShotVariant } from './shotVariants'
 
 /**
  * 分镜表 v6 的一行：`[grip 14 | 画面格 136 | 参考列 200 | 提示词块 1fr]`（设计合同
- * `docs/design/2026-09-05-storyboard-table-v6-design-contract.md`，用户逐条拍板）。
+ * `docs/archive/design/2026-09-05-storyboard-table-v6-design-contract.md`，用户逐条拍板）。
  *
  * 与 v5 的四处结构性差异（其余语义原样保留）：
  *   ① 画面格列宽固定 136，媒体框按画幅缩放 → 横版镜头第一次有真实身材，混排仍左对齐（§2.4）；

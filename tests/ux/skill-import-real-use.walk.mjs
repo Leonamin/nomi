@@ -3,7 +3,7 @@
 //
 // 与既有 `skill-import-formats.walk.mjs` 的分工：那条只验「文件落不落得了盘」。
 // 这条验的是用户真正在乎的那件事——**导进来之后用得上吗**。两者的差别不是学术的：
-// 2026-09-07 真机探针实拍到这一幕（`docs/lessons` 未收，见本 PR 正文）：
+// 2026-09-07 真机探针实拍到这一幕（`docs/archive/lessons` 未收，见本 PR 正文）：
 //   左边技能库里刚导进来的卡片好好地立着，右边 Agent 的 `/` 技能菜单里**一个字都没有它**。
 // 五门全绿、单测全绿、旧走查全绿——因为没有任何一条走查跨过「面板」与「Agent」这条缝。
 //
@@ -121,7 +121,7 @@ async function waitForSkillDir(win, dirName, label) {
 /**
  * 证据截图必须等画面安定。第一版用裸 `win.screenshot()`，拍到的失败回执正卡在 140ms 的
  * 滑入动画里、右半截还在屏幕外——那张图看着像「toast 被裁了」的 bug，其实是快门太快
- * （同族坑见 docs/lessons/walkthrough-computed-color-asserts.md）。
+ * （同族坑见 docs/archive/lessons/walkthrough-computed-color-asserts.md）。
  */
 async function shot(win, name) {
   const file = path.join(shotDir, `${name}.png`)
@@ -144,7 +144,7 @@ try {
   // 面板默认停在「Nomi 内置」那一栏（`SkillLibraryPanel.tsx:55`）。找自己导进来的东西要先切到
   // 「我的技能」——真实用户就是这么点的，而那句导入提示也只在这一栏渲染（同文件 :396）。
   // 旧断言写在默认栏上，于是 2026-09-15 复跑时红成「空态没有告诉用户怎么导入」，
-  // 其实是这条走查停在了另一栏（docs/lessons/dead-selector-lies-both-ways.md）。
+  // 其实是这条走查停在了另一栏（docs/archive/lessons/dead-selector-lies-both-ways.md）。
   await clickOrFail(panel.getByRole('tab', { name: '我的技能', exact: true }).first(), '技能库的「我的技能」栏')
   // 空态必须说得出「别人发来的技能怎么进来」——只指「用 AI 新建」等于把手上已有文件的用户晾着。
   await expect(
@@ -182,10 +182,10 @@ try {
   // `SkillLibraryPanel.tsx:62` 的 `notify({ level: 'inline' })` 把它交给面板内联呈现。
   // 旧断言钉在 `.mantine-Notification-root` 上，2026-09-15 复跑时红成「用户没看到失败回执」——
   // 其实回执一直在，只是换了家。前面那句「等 toast 散掉」随之删掉：它在一个恒为 0 的计数上
-  // 等待，是一条永远会过的断言（docs/lessons/expect-absent-passes-too-early.md）。
+  // 等待，是一条永远会过的断言（docs/archive/lessons/expect-absent-passes-too-early.md）。
   await fileInput.setInputFiles(legacyZipPath)
   // 断言必须钉在**这条失败回执**上：早先写成全页 getByText('SKILL.md') 时它命中的是空态
-  // 里那句导入提示——一条恒真的假绿（docs/lessons/dead-selector-lies-both-ways.md）。
+  // 里那句导入提示——一条恒真的假绿（docs/archive/lessons/dead-selector-lies-both-ways.md）。
   await expect(
     panel.locator('[role="status"]').getByText('技能正文必须放在 SKILL.md 里', { exact: false }).first(),
     '没有 SKILL.md 的旧包导入失败时，用户没有看到一条说得出下一步的失败回执',
@@ -242,7 +242,7 @@ try {
     + '2026-09-15 实测：只给正文时 11 句里有 4 句回复看不出技能被用过（7/11 → 9/11）',
   ).toBe(true)
   // 阳性对照：那个标记**真的**在盘上那份 SKILL.md 的 frontmatter 里。没有这一句，
-  // 下面那条「它不该出现」在标记压根不存在时也会绿（docs/lessons/walkthrough-assertions-need-a-real-signal.md）。
+  // 下面那条「它不该出现」在标记压根不存在时也会绿（docs/archive/lessons/walkthrough-assertions-need-a-real-signal.md）。
   expect(
     fs.readFileSync(path.join(userSkillsRoot, 'walk-hermes-zip', 'SKILL.md'), 'utf8').includes(FRONTMATTER_MARK),
     `盘上那份 SKILL.md 里没有 ${FRONTMATTER_MARK}——下面那条「frontmatter 不该进模型」是恒真的假绿`,

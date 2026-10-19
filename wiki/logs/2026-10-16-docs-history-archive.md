@@ -15,4 +15,4 @@ okf_version: "0.1"
 - [보관 색인](../../docs/archive/index.md)
 - [이동표와 원본 산출물 해시](../../docs/archive/2026-10-16-path-map.json)
 - [현재 문서 지도](../references/document-map.md)
-- [설계와 검증 범위](../../docs/plan/2026-10-16-docs-history-archive.md)
+- [설계와 검증 범위](../../docs/archive/plan/2026-10-16-docs-history-archive.md)

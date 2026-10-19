@@ -421,9 +421,9 @@ R2-U1 另需真实跨空间用例：同一对话从创作发送指令，执行/�
 ## 11. 与原方案的证据连接
 
 - [#180 手册 Part 6](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/docs/handoff/2026-08-26-codex-execution-handbook.md:310)：原队列；B4-1 是清理剩余入口，不是从零再造 B1。
-- [统一 Agent 总计划](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md:40)：旧 pi 不引入结论，需要显式修订。
-- [#179 B4 分期合同](https://github.com/aqm857886159/Nomi/blob/f7c23f8e3fb20e709622d88c00cf50d79ff6dfab/docs/plan/2026-08-26-b4-harness-implementation-plan.md)：固定 PR head 的 domain 合同，不是已在 main 的 runtime。
+- [统一 Agent 总计划](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md:40)：旧 pi 不引入结论，需要显式修订。
+- [#179 B4 分期合同](https://github.com/aqm857886159/Nomi/blob/f7c23f8e3fb20e709622d88c00cf50d79ff6dfab/docs/archive/plan/2026-08-26-b4-harness-implementation-plan.md)：固定 PR head 的 domain 合同，不是已在 main 的 runtime。
 - [原运行时阅读/适配指南](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/docs/guide/agent-runtime-source-reading-and-adaptation.md:95)：已有可替换端口思路；SDK 具体能力仍以本次固定版源码为准。
-- [总排期讨论稿](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/docs/plan/2026-08-26-pr180-execution-sequence-discussion.md)：本稿细化运行层和项目级统一 Agent；完整 B5 样张不阻塞 R0/R1，但统一交付不可省略。
+- [总排期讨论稿](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/docs/archive/plan/2026-08-26-pr180-execution-sequence-discussion.md)：本稿细化运行层和项目级统一 Agent；完整 B5 样张不阻塞 R0/R1，但统一交付不可省略。
 
 **已确认方向：R0 兼容验证 → R1 替换六条现有业务分支的运行核 → R2-U1 项目级统一会话/任务/宿主并安全迁移历史 → 结合 E2 完成真实作品闭环。总体目标始终是贯穿三个空间的同一个 Agent；不是换完 pi 后继续保留两个页面助手。**

@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url'
 import { screenshotSettled } from './_assert.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
-const outDir = path.join(repoRoot, 'docs/design/mockups/2026-08-04-settings-after')
+const outDir = path.join(repoRoot, 'docs/archive/design/mockups/2026-08-04-settings-after')
 fs.mkdirSync(outDir, { recursive: true })
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nomi-settings-walk-'))

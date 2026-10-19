@@ -2,7 +2,7 @@
 
 > 状态：已完成（2026-09-29）。触发：`check:symptom-cluster` 报 `src/config` 7 天内第三份根因合同（2026-09-28 渠道行并进模型身份）。
 > 对应合同：`docs/fixes/2026-09-22-vendor-connection-identity.root-cause.json`、`docs/fixes/2026-09-22-vendor-landing-one-owner.root-cause.json`、`docs/fixes/2026-09-28-channel-model-identity-merge.root-cause.json`。
-> 姊妹评审：`docs/audit/2026-09-29-render-layer-second-answers-structure-review.md`（同一分支在 `src/workbench` 触发的那一簇）。
+> 姊妹评审：`docs/archive/audit/2026-09-29-render-layer-second-answers-structure-review.md`（同一分支在 `src/workbench` 触发的那一簇）。
 
 ## 三份合同是同一个模式在收尾，不是同一个洞在反复漏
 

@@ -99,7 +99,7 @@
 
 CLI 与独立 Gemini API 不是同一条鉴权/计费通道。Google [条款](https://antigravity.google/terms)对第三方访问有约束；“CLI 支持程序调用”不等于消费订阅复用许可已得到确认。不得承诺无限免费、自动绕过额度或复制登录 token。
 
-本机只读检查未发现 agy（PATH 与常见安装位均无），已有 gemini 不等于 agy。未安装、未登录、未调用 Google 生成。接入方案与现有 Nomi 外壳样张见 `docs/plan/2026-08-26-agnes-gemini-antigravity-design.md`。
+本机只读检查未发现 agy（PATH 与常见安装位均无），已有 gemini 不等于 agy。未安装、未登录、未调用 Google 生成。接入方案与现有 Nomi 外壳样张见 `docs/archive/plan/2026-08-26-agnes-gemini-antigravity-design.md`。
 
 ## 5. 后续实现范围与验收门（提案，未批准、未执行）
 

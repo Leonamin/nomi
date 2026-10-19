@@ -36,14 +36,14 @@ PR #223 已经把“主进程 Host 拥有项目绑定、提案、审批、幂等
 直接证据：
 
 - `git diff --stat origin/main...origin/pr-223-head`：767 个文件，约 95,443 行新增、14,756 行删除。这个规模已经不是一个可轻易审查的 Phase 1 小 PR。
-- `git merge-tree --write-tree origin/main origin/pr-223-head` 返回冲突，冲突包括 `docs/ARCHITECTURE-NOW.md`、`package.json`、`scripts/check-file-sizes.mjs`、`electron/assets/projectAssetStore.ts`、`electron/capabilityCore/apimartGenerationProvider.ts`、`electron/capabilityCore/generationRuntimeAdapter.ts`、`electron/productionRun/productionGenerationSubmission.ts`、`src/workbench/generationCanvas/nodes/InlineParameterBar.tsx` 等。
+- `git merge-tree --write-tree origin/main origin/pr-223-head` 返回冲突，冲突包括 `docs/archive/guides/ARCHITECTURE-NOW.md`、`package.json`、`scripts/check-file-sizes.mjs`、`electron/assets/projectAssetStore.ts`、`electron/capabilityCore/apimartGenerationProvider.ts`、`electron/capabilityCore/generationRuntimeAdapter.ts`、`electron/productionRun/productionGenerationSubmission.ts`、`src/workbench/generationCanvas/nodes/InlineParameterBar.tsx` 等。
 - GitHub PR 页面显示 PR #223 标题为 “wip: project agent host phase 1 checkpoint”，状态为 Draft；PR 描述自己列出 Phase 2B 生产切换、重复 `canvas.read` 路径、巨壳、性能、全量 gate、打包 GUI 旅程等未完成项。[PR #223](https://github.com/aqm857886159/Nomi/pull/223)
 
 本地 `pnpm run delivery:preflight` 因当前 checkout 是 detached HEAD 而停止；`pnpm run radar:models` 因环境缺少 `tsx` 而停止。这两项是本轮环境/交付证据，不是 Agent 代码通过或失败的结论。
 
 ### 1.2 当前主线的事实底座
 
-`docs/ARCHITECTURE-NOW.md:35-60` 明确：主线当前 Agent runtime 是 Pi SDK 0.84.3；工具按 capability 选择而不是按 skillKey；creation 与 generation 仍是两份 area history；Preview 尚未挂 Agent；React Flow 是唯一画布内核；内部 Agent 与 MCP 是两套入口合同、共享领域实现。该文件是“现在是什么”，不能被 PR 中的计划文档替代。
+`docs/archive/guides/ARCHITECTURE-NOW.md:35-60` 明确：主线当前 Agent runtime 是 Pi SDK 0.84.3；工具按 capability 选择而不是按 skillKey；creation 与 generation 仍是两份 area history；Preview 尚未挂 Agent；React Flow 是唯一画布内核；内部 Agent 与 MCP 是两套入口合同、共享领域实现。该文件是“现在是什么”，不能被 PR 中的计划文档替代。
 
 ## 2. 你提供的材料到底给出了什么架构要求
 

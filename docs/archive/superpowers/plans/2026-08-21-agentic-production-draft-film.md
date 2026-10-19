@@ -70,7 +70,7 @@ StoryboardPlan 落画布
 | `electron/skills/skillManifestSchema.ts` | stage-level `skillRefs` 和能力声明 |
 | `skills/*/skill.json` | playbook 阶段、依赖、暂停点和 Skill 证据来源 |
 | `tests/ux/` | 外部 MCP、Nomi UI、真实用户旅程和截图验收 |
-| `docs/evals/` | 对抗矩阵、真实样片评分、成本和证据记录 |
+| `docs/archive/evals/` | 对抗矩阵、真实样片评分、成本和证据记录 |
 
 ---
 
@@ -475,9 +475,9 @@ git commit -m "feat(ux): make project artifacts discoverable from production run
 - Create: `tests/production/real-draft-film.spec.ts`
 - Create: `tests/production/real-draft-film-rubric.ts`
 - Create: `tests/production/real-draft-film-adversarial.spec.ts`
-- Create: `docs/evals/2026-08-21-real-draft-film-rubric.md`
-- Create: `docs/evals/2026-08-21-real-draft-film-results.md`
-- Create: `docs/evals/assets/README.md`
+- Create: `docs/archive/evals/2026-08-21-real-draft-film-rubric.md`
+- Create: `docs/archive/evals/2026-08-21-real-draft-film-results.md`
+- Create: `docs/archive/evals/assets/README.md`
 
 - [ ] **Step 1: 冻结真实片题目和验收 Rubric。**
 
@@ -554,8 +554,8 @@ Run: `pnpm vitest run tests/production/real-draft-film-adversarial.spec.ts tests
 ## Task 9: 完整门禁、对抗审评和交付
 
 **Files:**
-- Modify: `docs/evals/2026-08-21-real-draft-film-results.md`
-- Modify: `docs/superpowers/plans/2026-08-21-agentic-production-draft-film.md`
+- Modify: `docs/archive/evals/2026-08-21-real-draft-film-results.md`
+- Modify: `docs/archive/superpowers/plans/2026-08-21-agentic-production-draft-film.md`
 - Modify: `README.md` and `README.zh-CN.md` only if claims changed
 
 - [ ] **Step 1: 运行完整门禁。**

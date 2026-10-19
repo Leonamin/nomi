@@ -2,7 +2,7 @@ import { z } from 'zod'
 import i18n from '../../i18n'
 
 // viewType 系统已删除 (E.2C-13)：5 个分类全部基于同一画布底座，
-// 仅节点渲染样式按分类不同。详见 docs/plans/2026-05-25-phase-e2-completion-and-tech-uplift.md §3 决策 4。
+// 仅节点渲染样式按分类不同。详见 docs/archive/plans/2026-05-25-phase-e2-completion-and-tech-uplift.md §3 决策 4。
 // 节点渲染分发改由 NodeRenderKind 处理（见 E.2C-14/15）。
 
 // E.2C-14: NodeRenderKind 系统。

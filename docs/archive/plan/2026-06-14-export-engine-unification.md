@@ -1,7 +1,7 @@
 # P0-5 导出引擎统一（所见即所得）执行文档
 
-> 分支 `fix/export-engine`。对应审计 `docs/audit/2026-06-14-ultra-deep-mechanism-audit.md` 的 P0-5，
-> 修复计划 `docs/plan/2026-06-14-ultra-audit-remediation.md` 相6。架构决策（ffmpeg 为主）已由用户拍板。
+> 分支 `fix/export-engine`。对应审计 `docs/archive/audit/2026-06-14-ultra-deep-mechanism-audit.md` 的 P0-5，
+> 修复计划 `docs/archive/plan/2026-06-14-ultra-audit-remediation.md` 相6。架构决策（ffmpeg 为主）已由用户拍板。
 
 ## 根因（两条）
 

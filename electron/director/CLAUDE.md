@@ -1,7 +1,7 @@
 # electron/director/
 > L2 | 父级: 主进程 electron/（无独立 CLAUDE.md，归属导演台 V2 手机桥）
 > 导演台 V2 的手机虚拟相机桥：局域网 HTTPS（自签名）+ WebSocket，手机扫码打开页面发 32 字节 Float32 包；渲染层只经 IPC / preload / getDesktopBridge 消费，不 import 本目录实现。
-> 安全四闸（2026-09-11，docs/plan/2026-09-11-director-lan-pairing-hardening.md）：没同意不 bind · 配对码一次性+有时效换出会话令牌 · 证书指纹进状态与二维码 fragment · 入站 maxPayload + schema，畸形即断开。
+> 安全四闸（2026-09-11，docs/archive/plan/2026-09-11-director-lan-pairing-hardening.md）：没同意不 bind · 配对码一次性+有时效换出会话令牌 · 证书指纹进状态与二维码 fragment · 入站 maxPayload + schema，畸形即断开。
 > 成员清单
 > mobileBridgeServer.ts: HTTPS/HTTP + WS 服务（同意闸、一次性配对码与会话令牌、证书缓存与指纹、hello/record/pong、设备/延迟事件）；单测用 secure=false；事件/状态类型从 electron/shared/contracts/directorMobileBridge.ts derive
 > mobileBridgeMessages.ts: 入站帧的唯一判据（纯判定、不碰 socket）：decodePacketValues 定长 32 字节 + 逐槽量程；parseControlMessage 白名单 hello/record/pong 逐字段校验

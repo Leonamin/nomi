@@ -2,7 +2,7 @@
 //   · extractFrame：复用抽帧 IPC(getDesktopBridge().video.extractFrame,which:'first')→ nomi-local 首帧 URL；
 //   · judge：复用 agent 的 mode:'chat' 多模态 single-shot 链路,非新建视觉 IPC；
 //   · visionAvailable：默认 true，靠 judge 的逐镜 try/catch 优雅降级(非多模态模型 → 解析失败 → 跳过该镜)。
-// 方案:docs/plan/2026-06-28-storyboard-closed-loop-verify.md（Stage 1 实时编排，架构决策已锁定）。
+// 方案:docs/archive/plan/2026-06-28-storyboard-closed-loop-verify.md（Stage 1 实时编排，架构决策已锁定）。
 
 import { getDesktopBridge } from '../../../desktop/bridge'
 import { shotVerifySessionKey } from '../../ai/agentSessionKey'
