@@ -75,3 +75,20 @@ export async function resolveProductionReferenceUrls(input: Readonly<{
   if (localized.length !== input.references.length) throw new Error('generation_reference_url_unavailable');
   return Object.fromEntries(input.references.map((reference, index) => [spendReferenceKey(reference), localized[index]]));
 }
+
+const SCOPE_CHANGED = 'generation_reference_scope_changed';
+const SCOPE_RETRY_ATTEMPTS = 3;
+
+/**
+ * 乐观并发：快照（项目 revision + Run revision）在上传参考图的异步窗口里可能被我们自己的写入推进
+ * （批量里上一镜的调度 / 画布落地）。每次 attempt 由宿主闭包重新取快照再封，所以重试封的是最新状态；
+ * 只重试这一个码——素材身份变化（generation_reference_identity_changed）等真实变化照旧直接失败。
+ */
+export async function retryOnReferenceScopeChange<T>(attempt: () => Promise<T>): Promise<T> {
+  for (let tried = 1; ; tried += 1) {
+    try { return await attempt(); }
+    catch (error) {
+      if (tried >= SCOPE_RETRY_ATTEMPTS || !(error instanceof Error) || error.message !== SCOPE_CHANGED) throw error;
+    }
+  }
+}
