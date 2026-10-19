@@ -1,3 +1,4 @@
+// 2026-10-19: archive relocation recheck only; approved shape unchanged. See path-map contract_rechecks.
 // Agent 回复代码块 · **意图层**形态契约（2026-09-25 用户拍板样张「设计没问题」，D3-A / D5-A）。
 //
 // 正本是样张本身（docs/archive/design/mockups/2026-09-25-agent-panel-tidy/index.html）。D3/D4 取代了
@@ -13,7 +14,7 @@ export default {
   mockup: 'docs/archive/design/mockups/2026-09-25-agent-panel-tidy/index.html',
   mechanizes: {
     sections: ['D3-A 去掉语言标题行、复制钮 24px 在右上角', 'D5-A 字体按内容判断'],
-    migratedAt: '2026-09-25',
+    migratedAt: '2026-10-19',
   },
   surface: 'Agent 回复代码块',
   layer: 'intent',

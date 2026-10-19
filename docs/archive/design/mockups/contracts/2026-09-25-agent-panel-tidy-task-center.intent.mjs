@@ -1,3 +1,4 @@
+// 2026-10-19: archive relocation recheck only; approved shape unchanged. See path-map contract_rechecks.
 // 任务面板 · **意图层**形态契约（2026-09-25 用户拍板样张「设计没问题」，D1-A / D2-A）。
 //
 // 正本是样张本身（docs/archive/design/mockups/2026-09-25-agent-panel-tidy/index.html），没有另一份散文合同。
@@ -11,7 +12,7 @@ export default {
   mockup: 'docs/archive/design/mockups/2026-09-25-agent-panel-tidy/index.html',
   mechanizes: {
     sections: ['D1-A 等你处理排最上面、行上常驻重新拉取', 'D2-A 顶栏数字计入等你处理'],
-    migratedAt: '2026-09-25',
+    migratedAt: '2026-10-19',
   },
   surface: '任务面板',
   layer: 'intent',

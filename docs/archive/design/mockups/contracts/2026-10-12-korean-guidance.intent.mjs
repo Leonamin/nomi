@@ -1,3 +1,4 @@
+// 2026-10-19: archive relocation recheck only; approved shape unchanged. See path-map contract_rechecks.
 // 사용자가 2026-10-12 승인한 한국어 말투와 용어의 체험 샘플.
 // 앱 레이아웃 재설계 승인이 아니다. 아래 계약은 샘플을 이루는 관계만 검증한다.
 // 실제 앱의 언어 선택, 번역 누락, 안내 내용은 한국어 UX walk에서 따로 확인한다.
@@ -5,7 +6,7 @@ const authority = {
   mockup: 'docs/archive/design/mockups/2026-10-12-korean-guidance/index.html',
   mechanizes: {
     sections: ['프로젝트 시작', '언어 선택', '처음 쓰는 학생용 안내'],
-    migratedAt: '2026-10-12',
+    migratedAt: '2026-10-19',
   },
   layer: 'intent',
 }

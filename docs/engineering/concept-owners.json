@@ -4614,6 +4614,87 @@
       ],
       "since": "2026-10-14",
       "notes": "The existing preview owner derives thumbnail URLs from stored preview metadata before transport; importing and listing share the same DTO admission."
+    },
+    {
+      "name": "계약 참조의 보관 이전 판정",
+      "subject": "delivery.contract-reference-relocation",
+      "lifecycle": "delivery",
+      "authority_kind": "decision",
+      "trust_domain": "tooling",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "scripts/root-cause-contracts.mjs",
+        "symbol": "classifyReferenceOnlyContractRelocation"
+      },
+      "write_api": [
+        {
+          "path": "scripts/root-cause-contracts.mjs",
+          "symbol": "classifyReferenceOnlyContractRelocation"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "scripts/check-root-cause-contracts.mjs",
+        "scripts/check-root-cause-contracts.node-test.mjs"
+      ],
+      "parity_test": "scripts/check-root-cause-contracts.node-test.mjs",
+      "since": "2026-10-19",
+      "notes": "문서 보관 이관에서 사용하는 단일 판정 경계. 기존 검사의 의미를 유지하며 실제 Git/문서 자료를 대조하는 회귀 검증으로 소유권을 확인한다."
+    },
+    {
+      "name": "차이 검사에서 기존 식별자 출처",
+      "subject": "delivery.private-identifier-provenance",
+      "lifecycle": "delivery",
+      "authority_kind": "decision",
+      "trust_domain": "tooling",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "scripts/check-no-secrets.mjs",
+        "symbol": "gitDiffAdded"
+      },
+      "write_api": [
+        {
+          "path": "scripts/check-no-secrets.mjs",
+          "symbol": "gitDiffAdded"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "scripts/check-no-secrets.mjs",
+        "scripts/check-no-secrets.test.mjs"
+      ],
+      "parity_test": "scripts/check-no-secrets.test.mjs",
+      "since": "2026-10-19",
+      "notes": "문서 보관 이관에서 사용하는 단일 판정 경계. 기존 검사의 의미를 유지하며 실제 Git/문서 자료를 대조하는 회귀 검증으로 소유권을 확인한다."
+    },
+    {
+      "name": "현재 fork 계획의 소유 범위",
+      "subject": "delivery.current-plan-membership",
+      "lifecycle": "delivery",
+      "authority_kind": "decision",
+      "trust_domain": "tooling",
+      "fact_kind": "rule",
+      "migration_status": "converged",
+      "owner": {
+        "path": "scripts/build-delivery-ledger.mjs",
+        "symbol": "currentPlanDocuments"
+      },
+      "write_api": [
+        {
+          "path": "scripts/build-delivery-ledger.mjs",
+          "symbol": "currentPlanDocuments"
+        }
+      ],
+      "forbidden_derivations": [],
+      "allowed_consumers": [
+        "scripts/build-delivery-ledger.mjs",
+        "scripts/build-delivery-ledger.node-test.mjs"
+      ],
+      "parity_test": "scripts/build-delivery-ledger.node-test.mjs",
+      "since": "2026-10-19",
+      "notes": "문서 보관 이관에서 사용하는 단일 판정 경계. 기존 검사의 의미를 유지하며 실제 Git/문서 자료를 대조하는 회귀 검증으로 소유권을 확인한다."
     }
   ]
 }

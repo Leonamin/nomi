@@ -3844,5 +3844,61 @@
   "preserved_snapshots": {
     "docs/engineering/active-lanes.md": "docs/archive/engineering/active-lanes-before-2026-10-19.md"
   },
-  "task_brief": "docs/archive/plan/2026-10-19-docs-current-only.md"
+  "task_brief": "docs/archive/plan/2026-10-19-docs-current-only.md",
+  "contract_rechecks": [
+    {
+      "file": "docs/archive/design/mockups/contracts/2026-09-01-storyboard-table-image-first.intent.mjs",
+      "authority": "docs/archive/design/2026-09-05-storyboard-table-v6-design-contract.md",
+      "previous": "2026-09-18",
+      "checked_on": "2026-10-19",
+      "source_sha256": "97ac4b1d7db86d342858e31dc5247c20f2ca4c005f057ec7bac8c859f9ad884f",
+      "current_sha256": "c7e636ba6898d34c77673eac3858b1d02d57bf1fadfd9a3a470d78eaf71f83d4",
+      "change": "archive-reference-text-only"
+    },
+    {
+      "file": "docs/archive/design/mockups/contracts/2026-09-06-agent-artifact-node.intent.mjs",
+      "authority": "docs/archive/design/mockups/2026-09-06-agent-artifact-node.html",
+      "previous": "2026-09-07",
+      "checked_on": "2026-10-19",
+      "source_sha256": "f3a448ed1fecbb678020ded8ee1e92094cdb9b1ff780ab53ead6a94caf8daa7e",
+      "current_sha256": "f3a448ed1fecbb678020ded8ee1e92094cdb9b1ff780ab53ead6a94caf8daa7e",
+      "change": "bytes-identical"
+    },
+    {
+      "file": "docs/archive/design/mockups/contracts/2026-09-25-agent-panel-tidy-code-block.intent.mjs",
+      "authority": "docs/archive/design/mockups/2026-09-25-agent-panel-tidy/index.html",
+      "previous": "2026-09-25",
+      "checked_on": "2026-10-19",
+      "source_sha256": "29d71660ac47b1d4be0e7f035396c6bd90fad23e810efc7d8cd8275ab8c84b42",
+      "current_sha256": "29d71660ac47b1d4be0e7f035396c6bd90fad23e810efc7d8cd8275ab8c84b42",
+      "change": "bytes-identical"
+    },
+    {
+      "file": "docs/archive/design/mockups/contracts/2026-09-25-agent-panel-tidy-task-center.intent.mjs",
+      "authority": "docs/archive/design/mockups/2026-09-25-agent-panel-tidy/index.html",
+      "previous": "2026-09-25",
+      "checked_on": "2026-10-19",
+      "source_sha256": "29d71660ac47b1d4be0e7f035396c6bd90fad23e810efc7d8cd8275ab8c84b42",
+      "current_sha256": "29d71660ac47b1d4be0e7f035396c6bd90fad23e810efc7d8cd8275ab8c84b42",
+      "change": "bytes-identical"
+    },
+    {
+      "file": "docs/archive/design/mockups/contracts/2026-10-01-paid-card-generate-remaining.intent.mjs",
+      "authority": "docs/archive/design/mockups/2026-10-01-paid-card-generate-remaining/README.md",
+      "previous": "2026-10-01",
+      "checked_on": "2026-10-19",
+      "source_sha256": "de33da37d58406d955830608e5d5b7b7b2fef021e1e9046bddde74ad1f12999c",
+      "current_sha256": "36d066ad6900073d73a507644df76df517a857679f75d627f69f77c1226b66b3",
+      "change": "archive-reference-text-only"
+    },
+    {
+      "file": "docs/archive/design/mockups/contracts/2026-10-12-korean-guidance.intent.mjs",
+      "authority": "docs/archive/design/mockups/2026-10-12-korean-guidance/index.html",
+      "previous": "2026-10-12",
+      "checked_on": "2026-10-19",
+      "source_sha256": "42778365e8d070ff94548fefe8d3fc56f9882db45dc3fafbe27f25ba2518f6f8",
+      "current_sha256": "42778365e8d070ff94548fefe8d3fc56f9882db45dc3fafbe27f25ba2518f6f8",
+      "change": "bytes-identical"
+    }
+  ]
 }

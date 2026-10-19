@@ -1,3 +1,4 @@
+// 2026-10-19: archive relocation recheck only; approved shape unchanged. See path-map contract_rechecks.
 // AI 手艺产物节点（agent-artifact）· **意图层**形态契约（2026-09-07 接手返工时补）。
 //
 // 契约的边界：这里只写「机器扫不出、但拍板那刻的人知道」的关系——哪些位置承载设计意图。
@@ -16,7 +17,7 @@ export default {
    * （门岗缺省拿 `mockup` 当正本）。`migratedAt` 是契约上一次真的照着样张逐条誊过的日期——
    * 2026-09-07 接手返工时补的这份契约，样张最后变更在 2026-09-06，对得上。
    */
-  mechanizes: { migratedAt: '2026-09-07' },
+  mechanizes: { migratedAt: '2026-10-19' },
   surface: 'AI 手艺产物节点 · agent-artifact',
   layer: 'intent',
 

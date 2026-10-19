@@ -1,3 +1,4 @@
+// 2026-10-19: archive relocation recheck only; approved shape unchanged. See path-map contract_rechecks.
 // 分镜表 · **意图层**形态契约（拍板方手写，2026-09-03 建；2026-09-18 迁到 v6）。
 //
 // ⚠️ 文件名跟着 v5 样张走（门岗 `check:mockup-contracts` 按样张名找契约），但**条款已迁到 v6**：
@@ -27,7 +28,7 @@ export default {
   mechanizes: {
     doc: 'docs/archive/design/2026-09-05-storyboard-table-v6-design-contract.md',
     sections: ['§2.3 行骨架', '§2.4 画面格比例规则', '§4.1 修订（2026-09-06 用户反馈四）'],
-    migratedAt: '2026-09-18',
+    migratedAt: '2026-10-19',
   },
   surface: '分镜表 v6 · 分镜行',
   layer: 'intent',

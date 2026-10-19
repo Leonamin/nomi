@@ -1,3 +1,4 @@
+// 2026-10-19: archive relocation recheck only; approved shape unchanged. See path-map contract_rechecks.
 // 付费卡「生成剩下 N 张」· **意图层**形态契约（2026-10-01 用户拍板样张；位置随后按用户反馈调整）。
 //
 // 正本是样张目录的 README（docs/archive/design/mockups/2026-10-01-paid-card-generate-remaining/README.md）：
@@ -14,7 +15,7 @@ export default {
   mechanizes: {
     doc: 'docs/archive/design/mockups/2026-10-01-paid-card-generate-remaining/README.md',
     sections: ['拍板：四处默认', '位置调整：翻页行只有翻页器（与合计）；「生成剩下」在动作行最左；右边两颗一组'],
-    migratedAt: '2026-10-01',
+    migratedAt: '2026-10-19',
   },
   surface: '付费卡（多镜）',
   layer: 'intent',
