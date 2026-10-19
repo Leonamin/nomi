@@ -130,15 +130,21 @@ function monthBuckets(documents) {
   return [...counts.entries()].sort((a, b) => b[0].localeCompare(a[0]))
 }
 
+function currentPlanDocuments(documents) {
+  return documents.filter((doc) => doc.relativePath.startsWith('docs/plan/'))
+}
+
 function render(documents) {
-  const byStatus = (list) => documents
+  const current = currentPlanDocuments(documents)
+  const archived = documents.filter((doc) => doc.relativePath.startsWith('docs/archive/'))
+  const byStatus = (list) => current
     .filter((doc) => list.includes(doc.status))
     .sort((a, b) => list.indexOf(a.status) - list.indexOf(b.status) || a.relativePath.localeCompare(b.relativePath))
 
   const open = byStatus(OPEN_STATUSES)
   const deferred = byStatus(DEFERRED_STATUSES)
-  const closed = documents.filter((doc) => CLOSED_STATUSES.includes(doc.status))
-  const unregistered = documents.filter((doc) => doc.status === null)
+  const closed = current.filter((doc) => CLOSED_STATUSES.includes(doc.status))
+  const unregistered = current.filter((doc) => doc.status === null)
 
   const lines = [
     '# 交付账本 — 已拍板但没交付的，都在这',
@@ -163,6 +169,8 @@ function render(documents) {
       deferred,
       '_没有标记为远期的方案。_',
     ),
+    `- **보관 자료**: ${archived.length}개. 당시 상태를 보존하며 현재 fork 작업이나 알림으로 집계하지 않습니다. [보관 색인](archive/index.md)에서 확인합니다.`,
+    '',
     '## 其余',
     '',
     `- **已结案**：${closed.length} 篇（✅ 已交付 / ⛔ 已废弃 / 📎 交接日志）`,
@@ -180,7 +188,7 @@ function render(documents) {
       '</details>',
       '',
     ]),
-    `- 合计扫描：${documents.length} 篇方案文档（live docs/archive/plan/、archive/plan/ 与 archive/superpowers/plans/，不含 INDEX.md）`,
+    `- 合计扫描：${documents.length} 篇方案文档（live docs/plan/、archive/plan/ 与 archive/superpowers/plans/，不含 INDEX.md）`,
     '',
     '---',
     '',
@@ -201,7 +209,7 @@ function render(documents) {
 }
 
 function brief(documents) {
-  const open = documents.filter((doc) => OPEN_STATUSES.includes(doc.status))
+  const open = currentPlanDocuments(documents).filter((doc) => OPEN_STATUSES.includes(doc.status))
   if (open.length === 0) return '交付账本：当前没有登记在案的欠账。'
   const aged = open
     .map((doc) => ({ ...doc, days: lastTouchedDays(doc.relativePath) }))
@@ -245,7 +253,7 @@ function main() {
     return
   }
 
-  const openCount = documents.filter((doc) => OPEN_STATUSES.includes(doc.status)).length
+  const openCount = currentPlanDocuments(documents).filter((doc) => OPEN_STATUSES.includes(doc.status)).length
 
   if (process.argv.includes('--check')) {
     const stale = COMMITTED_ARTIFACTS.filter((artifact) => {

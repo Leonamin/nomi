@@ -107,3 +107,12 @@ test('committed 产物进 git；local 产物被 gitignore 挡在 git 之外', ()
     )
   }
 })
+
+
+test('archived pending plans are preserved as history and do not become current fork debt', () => {
+  const ledger = LOCAL_ARTIFACTS.find(artifact => artifact.label.endsWith('DELIVERY-LEDGER.md'));
+  const rendered = ledger.renderer([doc('docs/plan/current.md', 'Current'), doc('docs/archive/plan/old.md', 'Historical'), doc('docs/archive/superpowers/plans/old.md', 'Historical master')]);
+  assert.match(rendered, /现役欠账（1）/);
+  assert.ok(!rendered.includes('[old.md]'), 'historical tasks must not appear in the current debt table');
+  assert.match(rendered, /보관 자료.*2/);
+});
