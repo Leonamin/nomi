@@ -1,4 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
+
+vi.mock('../electron/assets/projectAssetStore', async importOriginal => ({ ...(await importOriginal<object>()),
+  listProjectAssets: () => ({ items: [{ id: 'asset-img', data: { url: 'nomi-local://asset/project/assets/shot1.png' } }], cursor: null }) }))
 import { createWebSemanticAgentTools, assertDraftReferencesDeliverable } from './semanticAgentTools'
 import { captureGenerationContext } from '../electron/shared/agentCapabilities/generationInvocationContext'
 import { modelFacingToolSpecs } from '../electron/shared/agentCapabilities/modelFacingToolRegistry'
@@ -72,5 +75,12 @@ describe('reference-bearing shots never silently go text-only', () => {
   it('refuses anchorIds that carry no image, and accepts an image-capable model with references', () => {
     expect(() => assertDraftReferencesDeliverable({ shots: [{ modelId: 'flux-edit', storyboard: { anchorIds: ['hero'] } }] }, models)).toThrow(/anchorIds/)
     expect(() => assertDraftReferencesDeliverable({ candidate: { providerId: 'comfy', modelId: 'flux-edit' }, shots: [{ references: ['asset-1'], storyboard: { anchorIds: ['hero'] } }, { role: 'anchor', modelId: 'qwen-t2i' }] }, models)).not.toThrow()
+  })
+  it('look_at_canvas lists the project asset id of each node result (the id look_at_media and draft_shots use)', async () => {
+    const readCanvas = () => ({ nodes: [{ id: 'n1', kind: 'image', shotIndex: 1, result: { id: 'production-r1', url: 'nomi-local://asset/project/assets/shot1.png' } }], edges: [], groups: [], selectedNodeIds: [] })
+    const tools = createWebSemanticAgentTools({ binding: { projectId: 'project', immutableProjectUuid: 'uuid', projectGeneration: 1 }, signal: new AbortController().signal,
+      documentPort: { read: vi.fn(), write: vi.fn() }, generation: { readTask: vi.fn(), transport: { tryExecute: vi.fn() } }, listModels: () => [], readCanvas } as unknown as WebSemanticAgentToolDependencies)
+    const out = await tools.find(tool => tool.name === 'look_at_canvas')!.run({}) as { text: string }
+    expect(out.text).toContain('assetId: asset-img')
   })
 })

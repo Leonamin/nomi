@@ -48,6 +48,8 @@ const canvasReadNodeSchema = z
     shotOwnerNodeIds: z.array(trimmedNonEmptyStringSchema).optional(),
     hasResult: z.boolean(),
     currentResultId: opaqueResultIdSchema.optional(),
+    /** 当前结果在项目素材库里的 assetId（与 look_at_media 返回的同一个 id；`draft_shots.references[].assetId` 要的就是它）。 */
+    currentAssetId: trimmedNonEmptyStringSchema.optional(),
     resultIds: z.array(opaqueResultIdSchema).optional(),
     taskRef: taskReferenceSchema.optional(),
     /**
@@ -240,7 +242,10 @@ function projectNodeModel(meta: UnknownRecord | undefined): CanvasReadNode["mode
   };
 }
 
-function projectNode(value: unknown, seen: Set<string>): CanvasReadNode | undefined {
+/** 结果 → 项目素材库 assetId：结果自带就用它，否则交给宿主按素材库解析（素材库是 id 的唯一 owner，这里不另造一套）。 */
+export type CanvasResultAssetResolver = (result: Readonly<{ url?: string }>) => string | undefined;
+
+function projectNode(value: unknown, seen: Set<string>, resolveAssetId?: CanvasResultAssetResolver): CanvasReadNode | undefined {
   const node = asRecord(value);
   const id = nonEmptyString(node?.id);
   const kind = nonEmptyString(node?.kind);
@@ -259,6 +264,9 @@ function projectNode(value: unknown, seen: Set<string>): CanvasReadNode | undefi
   const status = parseGenerationNodeStatus(rawStatus) ?? "idle";
   const currentResultId = resultId(node.result);
   const resultIds = stableResultIds(node);
+  const rawResult = asRecord(node.result);
+  const currentAssetId = nonEmptyString(rawResult?.assetId)
+    ?? (rawResult ? resolveAssetId?.({ ...(nonEmptyString(rawResult.url) ? { url: nonEmptyString(rawResult.url) } : {}) }) : undefined);
   const prompt = typeof node.prompt === "string" ? node.prompt : "";
   const runId = nonEmptyString(asRecord(node.meta)?.productionRunId);
   const model = projectNodeModel(asRecord(node.meta));
@@ -273,6 +281,7 @@ function projectNode(value: unknown, seen: Set<string>): CanvasReadNode | undefi
     locked: node.locked === true,
     hasResult: asRecord(node.result) !== undefined,
     ...(currentResultId ? { currentResultId } : {}),
+    ...(currentAssetId ? { currentAssetId } : {}),
     ...(resultIds.length ? { resultIds } : {}),
     ...(runId ? { taskRef: { domain: 'generation' as const, jobId: runId } } : {}),
     ...(model ? { model } : {}),
@@ -338,7 +347,7 @@ function projectGroups(values: unknown, survivingNodeIds: ReadonlySet<string>): 
   return groups;
 }
 
-export function projectCanvasRead(source: unknown): CanvasReadResult {
+export function projectCanvasRead(source: unknown, resolveAssetId?: CanvasResultAssetResolver): CanvasReadResult {
   const canvas = asRecord(source);
   const truncated = Array.isArray(canvas?.nodes) && canvas.nodes.some((value) => {
     const node = asRecord(value);
@@ -347,7 +356,7 @@ export function projectCanvasRead(source: unknown): CanvasReadResult {
   const identityInputs: Array<Parameters<typeof resolveShotIdentities>[0][number]> = [];
   const seenNodeIds = new Set<string>();
   const nodes = (Array.isArray(canvas?.nodes) ? canvas.nodes : []).flatMap((value): CanvasReadNode[] => {
-    const node = projectNode(value, seenNodeIds);
+    const node = projectNode(value, seenNodeIds, resolveAssetId);
     if (!node) return [];
     const raw = asRecord(value)!;
     identityInputs.push({

@@ -95,7 +95,8 @@ export function createWebSemanticAgentTools(deps: WebSemanticAgentToolDependenci
       if (spec.name === 'look_at_media') return lookAtMedia(deps.binding.projectId, args as Parameters<typeof lookAtMedia>[1])
       if (spec.name === 'draft_shots') assertDraftReferencesDeliverable(args as Parameters<typeof assertDraftReferencesDeliverable>[0], await deps.listModels() as ModelRow[])
       if (spec.name === 'look_at_canvas') {
-        const canvas = projectCanvasRead(await deps.readCanvas())
+        const assets = listProjectAssets({ projectId: deps.binding.projectId, limit: 500 }).items
+        const canvas = projectCanvasRead(await deps.readCanvas(), ({ url }) => url ? assets.find(asset => asset.data.url === url)?.id : undefined)
         return { ok: true, text: formatCanvasForAgent(canvas), details: { nodeCount: canvas.nodes.length } }
       }
       const translated = verbToTransportCall({ toolCallId, toolName: spec.name, args })
