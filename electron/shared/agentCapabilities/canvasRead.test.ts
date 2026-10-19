@@ -524,3 +524,21 @@ describe("projectCanvasRead", () => {
     expect(implementation).not.toMatch(/\b(?:globalThis|currentProject|getState|gateway)\b/);
   });
 });
+
+describe("canvas.read result asset id", () => {
+  const canvas = { nodes: [
+    { id: "n1", kind: "image", shotIndex: 1, result: { id: "production-r1", url: "nomi-local://asset/p/assets/a.png" } },
+    { id: "n2", kind: "image", result: { id: "res-2", assetId: "asset-own" } },
+    { id: "n3", kind: "image" },
+  ] };
+  it("exposes the project asset id from the result itself or the host's asset-owner resolver", () => {
+    const projected = projectCanvasRead(canvas, ({ url }) => (url === "nomi-local://asset/p/assets/a.png" ? "asset-abc" : undefined));
+    expect(projected.nodes.map((node) => node.currentAssetId)).toEqual(["asset-abc", "asset-own", undefined]);
+    expect(projectCanvasRead(canvas).nodes[0]?.currentAssetId).toBeUndefined();
+  });
+  it("prints the asset id next to the result identity in the agent text", async () => {
+    const { formatCanvasForAgent } = await import("./canvasReadCompact");
+    const text = formatCanvasForAgent(projectCanvasRead(canvas, () => "asset-abc"));
+    expect(text).toContain("currentResultId: production-r1 | assetId: asset-abc");
+  });
+});

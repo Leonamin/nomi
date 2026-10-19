@@ -1,6 +1,7 @@
 import { GENERATION_ARGUMENT_REFUSAL, refuseToModel } from "./transportFailure";
 import { pinAssetReference } from "./semanticGenerationCandidate";
 import { storyboardPlanFromDraftSubjects, presentStoryboardAuthoring, patchStoryboardAuthoring, upsertStoryboardDesign, storyboardSavedFact, type StoryboardSavedFact } from './mcpGenerationMultiShot';
+import { retryOnReferenceScopeChange } from './productionReferenceUrls';
 import { GenerationOperationNotFoundError } from '../productionRun/productionRunErrors';
 import { generationTaskReference } from '../shared/agentCapabilities/taskReference';
 import type { GenerationInvocationContext } from '../shared/agentCapabilities/generationInvocationContext';
@@ -661,8 +662,9 @@ export function createGenerationPlanningHandler(deps: GenerationPlanningHandlerD
       // 这条拒绝等于「我们没建价格标尺 → 你不准干活」。要防的「未知被当成 0 元」由授权信封的
       // 类型守（`price.maximum: number | null` + `budget.unknownJobCount`），不靠拒绝生成来防。
       const price = priceForCandidate(candidate);
-      const authorization = needsSeal && deps.prepareAuthorization
-        ? await deps.prepareAuthorization({ lease: input.lease, operation: base, contract, ...(multiShotSeal ? { multiShot: multiShotSeal } : {}) })
+      const prepareAuthorization = deps.prepareAuthorization, lease = input.lease;
+      const authorization = needsSeal && prepareAuthorization
+        ? await retryOnReferenceScopeChange(async () => prepareAuthorization({ lease, operation: base, contract, ...(multiShotSeal ? { multiShot: multiShotSeal } : {}) }))
         : undefined;
       const sealed = needsSeal
         ? await deps.operations.seal(input.lease.projectId, operationId, contract, now(), multiShotSeal, authorization)

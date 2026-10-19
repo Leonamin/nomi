@@ -1,3 +1,4 @@
+import { AsyncLocalStorage } from 'node:async_hooks';
 import { buildViewUrl, comfyInputName } from '../catalog/comfyuiLocal';
 import { rewriteVendorUrl } from '../vendor/vendorBaseFallback';
 import { readCatalog } from '../catalog/catalogStore';
@@ -69,9 +70,37 @@ export async function resolveProductionReferenceUrls(input: Readonly<{
     }
     return asset.data.url;
   });
-  const localized = await deps.localize(input.providerId, urls);
+  // 重试里复用上一次 attempt 的上传结果：不再有 I/O 等待，快照与 assertCurrent 之间就插不进别的写入。
+  const memo = localizedInRetry.getStore(), memoKey = `${input.providerId}\n${urls.join('\n')}`;
+  const localized = memo?.get(memoKey) ?? await deps.localize(input.providerId, urls);
+  memo?.set(memoKey, localized);
   input.assertCurrent();
   input.references.forEach(verify);
   if (localized.length !== input.references.length) throw new Error('generation_reference_url_unavailable');
   return Object.fromEntries(input.references.map((reference, index) => [spendReferenceKey(reference), localized[index]]));
+}
+
+const SCOPE_CHANGED = 'generation_reference_scope_changed';
+const SCOPE_RETRY_ATTEMPTS = 3;
+
+/**
+ * 乐观并发：快照（项目 revision + Run revision）在上传参考图的异步窗口里可能被我们自己的写入推进
+ * （批量里上一镜的调度 / 画布落地；视频渲染中 Run 进度写得很密）。每次 attempt 由宿主闭包重新取快照再封，
+ * 重试复用已上传的参考（见 localizedInRetry），窗口里没有 I/O；
+ * 只重试这一个码——素材身份变化（generation_reference_identity_changed）等真实变化照旧直接失败。
+ */
+export async function retryOnReferenceScopeChange<T>(attempt: () => Promise<T>): Promise<T> {
+  return localizedInRetry.run(new Map(), () => retryAttempts(attempt));
+}
+
+/** 只活在一次 retryOnReferenceScopeChange 里：签名 URL 不会跨请求被复用。 */
+const localizedInRetry = new AsyncLocalStorage<Map<string, readonly string[]>>();
+
+async function retryAttempts<T>(attempt: () => Promise<T>): Promise<T> {
+  for (let tried = 1; ; tried += 1) {
+    try { return await attempt(); }
+    catch (error) {
+      if (tried >= SCOPE_RETRY_ATTEMPTS || !(error instanceof Error) || error.message !== SCOPE_CHANGED) throw error;
+    }
+  }
 }
