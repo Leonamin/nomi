@@ -290,10 +290,10 @@ P1 一直在管「新实现落地就删旧实现」，但没人管**旧入口**�
 
 档位：用户 2026-08-02 拍板 **B「重排常驻位」**——清死码 + 收敛重复入口 + 把常驻位压到预算内，**低频的收进 ▾ 不真删能力**。首批四个面全做。
 
-- **v1 已作废**：`docs/design/mockups/2026-08-02-control-hierarchy-v1.html`（收得太狠，见 §5.0）
-- **v2 已作废**：`docs/design/mockups/2026-08-02-control-hierarchy-v2.html`（画布节点那一面又错了两处，见 §5.0.3）
-- **现行样张**：`docs/design/mockups/2026-08-02-control-hierarchy-v3.html`
-- **真机截图**：`docs/design/mockups/2026-08-02-real-ui/`（01 项目库 / 02 画布 / 03 剪辑 / 04 3D，3360×1842，零额度）
+- **v1 已作废**：`docs/archive/design/mockups/2026-08-02-control-hierarchy-v1.html`（收得太狠，见 §5.0）
+- **v2 已作废**：`docs/archive/design/mockups/2026-08-02-control-hierarchy-v2.html`（画布节点那一面又错了两处，见 §5.0.3）
+- **现行样张**：`docs/archive/design/mockups/2026-08-02-control-hierarchy-v3.html`
+- **真机截图**：`docs/archive/design/mockups/2026-08-02-real-ui/`（01 项目库 / 02 画布 / 03 剪辑 / 04 3D，3360×1842，零额度）
 - 走查脚本：`tests/ux/ia-audit-shots.walk.mjs`
 
 ### 5.0 v1 错在哪（记下来，防再犯）

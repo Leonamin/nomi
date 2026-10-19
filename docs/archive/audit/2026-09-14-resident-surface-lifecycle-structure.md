@@ -62,4 +62,4 @@
 1. **类型**：`ResidentSurfaceLifecycle` 是判别联合，读者必须 `switch` 穷举；加一种相，所有读者当场不编译（R28 最早那层）。
 2. **owner 测试**：`residentSurfaceLifecycle.test.ts` 钉五种相各是各的；`appIntegrationSpendConfirmInstall.test.ts` 钉「同一种相在读者那里得到一致的答案」。
 3. **fail-closed 不变**：真的装配失败仍然抛、仍然 console.error、走查与性能门仍然硬红。本轮没有降级任何一条 console error。
-4. **教训**：`docs/lessons/not-installed-is-not-install-failed.md` —— 看到「surface unavailable」类症状先读那次运行自己的主进程日志，有没有 ERROR 决定你在修哪一类问题。
+4. **教训**：`docs/archive/lessons/not-installed-is-not-install-failed.md` —— 看到「surface unavailable」类症状先读那次运行自己的主进程日志，有没有 ERROR 决定你在修哪一类问题。

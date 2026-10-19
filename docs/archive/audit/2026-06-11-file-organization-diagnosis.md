@@ -7,7 +7,7 @@
 ## 一句话结论
 
 **分类骨架没问题，问题是一个倾倒场 + 全局缺地图。**
-不是分类维度错了，是 `docs/plan/` 长成了 64 个平铺文件的黑洞，且整个 docs/ 和 src/ 缺一层「要找 X 去哪」的索引，导致每次查找都从冷启动全扫开始。
+不是分类维度错了，是 `docs/archive/plan/` 长成了 64 个平铺文件的黑洞，且整个 docs/ 和 src/ 缺一层「要找 X 去哪」的索引，导致每次查找都从冷启动全扫开始。
 
 ## 实测盘点
 
@@ -38,7 +38,7 @@
 
 不是「分类错」，是这三条让查找无法走「查表」、只能走「全扫」：
 
-1. **`docs/plan` 按日期命名，不按主题** —— 想找「画布节点方案」，相关文件叫 `2026-06-06-composable-node-execution-plan.md`、`2026-05-31-asset-node-and-canvas-perf.md`、`2026-06-10-...`，散在 64 个里。日期排序只对「找最近改的」有用，对「找某主题」零帮助 → 只能 grep 全量再逐个读。
+1. **`docs/archive/plan` 按日期命名，不按主题** —— 想找「画布节点方案」，相关文件叫 `2026-06-06-composable-node-execution-plan.md`、`2026-05-31-asset-node-and-canvas-perf.md`、`2026-06-10-...`，散在 64 个里。日期排序只对「找最近改的」有用，对「找某主题」零帮助 → 只能 grep 全量再逐个读。
    主题其实高度可聚类（文件名词频）：onboarding 12 · agent/harness 各 5–6 · node/canvas 各 3–4 · model 4 · timeline/export/workspace 各 2。
 
 2. **全局没有索引层** —— `MEMORY.md` 是会话记忆的索引，但代码和文档本身没有「这块逻辑/这个主题在哪」的地图。唯一的 README 是 `src/design/README.md`。每次查找都是冷启动。
@@ -49,7 +49,7 @@
 
 | 级别 | 问题 | 证据 |
 |---|---|---|
-| **P0** | docs/plan 64 文件平铺无索引、无主题分组 | `ls docs/plan` = 64；词频可聚成 8 类 |
+| **P0** | docs/archive/plan 64 文件平铺无索引、无主题分组 | `ls docs/archive/plan` = 64；词频可聚成 8 类 |
 | **P1** | docs/ 与 src/ 缺顶层「找 X 去哪」地图 | 全仓仅 1 个内容性 README |
 | **P2** | 已落地的历史 plan 未归档，与进行中混存 | docs/archive 仅 13，plan 里大量 2026-05 旧方案 |
 | **P3** | 个别巨壳文件（与分类无关，属 R9/R12） | Scene3DFullscreen.tsx 3860 行（应在白名单内，单列追踪） |
@@ -58,7 +58,7 @@
 
 | 方案 | 做什么 | 代价 | 见效 |
 |---|---|---|---|
-| **A（推荐）** | docs/plan 按主题分子目录（onboarding/canvas/model/agent-harness/timeline/export/infra...）+ 写 `docs/plan/INDEX.md` 地图；已落地的移入 archive | 低，纯移动+加索引，不碰代码 | 立竿见影，查 plan 从全扫变查表 |
+| **A（推荐）** | docs/archive/plan 按主题分子目录（onboarding/canvas/model/agent-harness/timeline/export/infra...）+ 写 `docs/plan/INDEX.md` 地图；已落地的移入 archive | 低，纯移动+加索引，不碰代码 | 立竿见影，查 plan 从全扫变查表 |
 | **B** | 全 docs 加一张 `docs/README.md` 总地图（「要找 X 去 Y」），文件不动 | 极低，纯加导航 | 中，覆盖面广但粒度粗 |
 | **C** | 给 generationCanvas 加一张 `ENTRY.md` 入口图（各子目录职责 + 关键文件 file:line） | 低，不动代码 | 中，降低代码查找成本 |
 | **D** | 巨壳拆分（Scene3DFullscreen 等） | 高，动代码需评审 | 与本次查找成本关系不大，单列 |
@@ -73,7 +73,7 @@ A + B + C 三个加起来仍是「纯加索引 + 移文件」，零代码风险�
 
 ## 执行回填（2026-06-11）
 
-用户拍板做 A/B/C。**A 据实情调整**：发现 docs/plan 内 50+ 处路径互链，物理移动会断链 + 对「查东西花 token」一份索引本就优于子目录（读一个文件拿全图），故 **A 改为索引化、不挪文件**。
+用户拍板做 A/B/C。**A 据实情调整**：发现 docs/archive/plan 内 50+ 处路径互链，物理移动会断链 + 对「查东西花 token」一份索引本就优于子目录（读一个文件拿全图），故 **A 改为索引化、不挪文件**。
 
 - ✅ **A** — [`docs/plan/INDEX.md`](../plan/INDEX.md)：64 篇按 8 主题分组 + 状态标记（✅/🚧/📋/⛔/📎），零断链
 - ✅ **B** — [`docs/README.md`](../../README.md)：全 docs「要找 X 去哪」总地图

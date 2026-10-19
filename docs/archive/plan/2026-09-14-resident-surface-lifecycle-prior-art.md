@@ -26,4 +26,4 @@
 
 ## 验收门
 
-见 PR #785 正文「验证」一节与 `docs/fixes/2026-09-14-resident-generation-adapter-install.root-cause.json`（schema v3，16 扇门）、结构评审 `docs/audit/2026-09-14-resident-surface-lifecycle-structure.md`。
+见 PR #785 正文「验证」一节与 `docs/fixes/2026-09-14-resident-generation-adapter-install.root-cause.json`（schema v3，16 扇门）、结构评审 `docs/archive/audit/2026-09-14-resident-surface-lifecycle-structure.md`。

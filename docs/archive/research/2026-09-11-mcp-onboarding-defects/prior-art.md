@@ -1,10 +1,10 @@
 # 先查别人 · 外部 AI 经 MCP 接模型的六条缺陷
 
-日期：2026-09-11 · 服务于 [docs/plan/2026-09-11-mcp-onboarding-defects.md](../../plan/2026-09-11-mcp-onboarding-defects.md)
+日期：2026-09-11 · 服务于 [docs/archive/plan/2026-09-11-mcp-onboarding-defects.md](../../plan/2026-09-11-mcp-onboarding-defects.md)
 
 ## 0. 一次真实测量（本题的起点，不是别人做过什么，而是我们做过什么）
 
-`exp/mcp-onboard-deepseek-20260910` 分支的 `docs/research/2026-09-10-mcp-onboard-experiment/baseline.md`：
+`exp/mcp-onboard-deepseek-20260910` 分支的 `docs/archive/research/2026-09-10-mcp-onboard-experiment/baseline.md`：
 真实 Codex CLI 0.153.4 + 真实 DeepSeek key，9 个 agent 回合 / 58 次 `nomi_*` 调用 /
 入参一次写对 36/58 = 62% / 9 回合里 1 回合完全成功 / 人工引导 5 次 / 窗口点确认 4 次（3 次白点）。
 

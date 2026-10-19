@@ -299,7 +299,7 @@ Claude/Codex/Cursor
   → structured result + progress + elicitation/widget
 ```
 
-MCP 的确认语义也不能复制：支持 elicitation 的客户端在客户端完成一次确认；不支持时由 Nomi GUI 兜底；两者最终都由主进程铸造同一类 approval receipt。`docs/superpowers/specs/2026-08-23-mcp-client-first-authorization-design.md:15-19,57-75,114-145` 和 `docs/handoff/2026-08-24-semantic-single-shot-p1-p3-handoff.md:44-76,232-272` 已经定义了这条边界。
+MCP 的确认语义也不能复制：支持 elicitation 的客户端在客户端完成一次确认；不支持时由 Nomi GUI 兜底；两者最终都由主进程铸造同一类 approval receipt。`docs/archive/superpowers/specs/2026-08-23-mcp-client-first-authorization-design.md:15-19,57-75,114-145` 和 `docs/handoff/2026-08-24-semantic-single-shot-p1-p3-handoff.md:44-76,232-272` 已经定义了这条边界。
 
 **本轮方案对 MCP 的修正：** 之前“12–14 个工具”的数字只针对内嵌模型面，不能直接当作 MCP 工具删减清单。MCP 还需要一次独立的 `tools/list` 全量盘点：逐个标记 `keep semantic / merge alias / resource-only / host-only / deprecated`，并验证 MCP 与 GUI 产生同一个 Run、同一个 contractHash 和同一个 receipt。若现有 MCP 目录仍有几十个工具，先做 canonical 映射和执行路径去重，再决定是否减少公开工具数量；不能因为“模型面少了”就宣称 MCP 已收敛。
 

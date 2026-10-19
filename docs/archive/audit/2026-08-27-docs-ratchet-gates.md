@@ -2,16 +2,16 @@
 
 ## 范围
 
-- 新增 `check:docs-index`：扫描 `docs/plan/**/*.md` 与 `docs/superpowers/plans/**/*.md`，禁止新增未被文档索引链接的方案。
+- 新增 `check:docs-index`：扫描 `docs/archive/plan/**/*.md` 与 `docs/archive/superpowers/plans/**/*.md`，禁止新增未被文档索引链接的方案。
 - 新增 `check:doc-status`：要求上述方案在开头带既有五类状态标记，并要求 `⛔` 状态给出替代文档指向。
 - 将两道门接入 `package.json` 的 `gates` 链，并修正两个索引入口的已知事实错误。
-- 给 `docs/plan/agent-merge-architecture.md` 只加一行过期提示，不改历史正文。
+- 给 `docs/archive/plan/agent-merge-architecture.md` 只加一行过期提示，不改历史正文。
 
 ## 不动项
 
 - 不批量修改存量方案文档；现有违规全部进入具体文件身份 baseline。
 - 不删除或移动任何文档。
-- 不修改 `CLAUDE.md`、`docs/ARCHITECTURE-NOW.md`、`docs/GLOSSARY.md`。
+- 不修改 `CLAUDE.md`、`docs/archive/guides/ARCHITECTURE-NOW.md`、`docs/GLOSSARY.md`。
 - 不运行与本任务无关的 `test` 或 `build`。
 
 ## 回滚策略
@@ -28,7 +28,7 @@
 
 ### `check:docs-index` RED
 
-违规样例 `docs/plan/__docs-index-gate-red-sample.md`：
+违规样例 `docs/archive/plan/__docs-index-gate-red-sample.md`：
 
 ```markdown
 # 文档索引门岗 RED 样例
@@ -48,7 +48,7 @@
 
 文档索引覆盖：433 篇方案；76 篇已收录；357 篇未收录（基线 356）
 ✖ 文档索引回归：1 篇新增未收录方案
-  docs/plan/__docs-index-gate-red-sample.md
+  docs/archive/plan/__docs-index-gate-red-sample.md
   → 在 docs/README.md 或某个 docs/**/INDEX.md 中用 Markdown 链接收录，不能抬高 baseline
  ELIFECYCLE  Command failed with exit code 1.
  WARN   Local package.json exists, but node_modules missing, did you mean to install?
@@ -70,7 +70,7 @@
 
 ### `check:doc-status` RED
 
-违规样例 `docs/superpowers/plans/__doc-status-gate-red-sample.md`：
+违规样例 `docs/archive/superpowers/plans/__doc-status-gate-red-sample.md`：
 
 ```markdown
 # 方案状态门岗 RED 样例
@@ -88,7 +88,7 @@
 
 方案状态：433 篇；缺状态 425（基线 424）；⛔ 无替代指向 0（基线 0）
 ✖ 方案状态回归：1 篇新增文档在开头 12 行内没有状态标记
-  docs/superpowers/plans/__doc-status-gate-red-sample.md
+  docs/archive/superpowers/plans/__doc-status-gate-red-sample.md
   → 沿用：✅ 已落地 ｜ 🚧 进行中/待实施 ｜ 📋 方案待拍板 ｜ ⛔ 已撤销/废弃 ｜ 📎 交接/日志
  ELIFECYCLE  Command failed with exit code 1.
  WARN   Local package.json exists, but node_modules missing, did you mean to install?
@@ -104,7 +104,7 @@
 
 方案状态：433 篇；缺状态 424（基线 424）；⛔ 无替代指向 1（基线 0）
 ✖ 废弃文档回归：1 篇新增 ⛔ 状态没有替代文档指向
-  docs/plan/__doc-status-deprecated-red-sample.md
+  docs/archive/plan/__doc-status-deprecated-red-sample.md
   → 在状态同一行或紧邻行写明由哪篇现行 .md 取代，且目标必须真实存在
  ELIFECYCLE  Command failed with exit code 1.
  WARN   Local package.json exists, but node_modules missing, did you mean to install?
@@ -126,8 +126,8 @@
 
 ## 存量基线
 
-- 未收录：356 篇（`docs/plan/` 322；`docs/superpowers/plans/` 34）。
-- 缺状态：424 篇（`docs/plan/` 389；`docs/superpowers/plans/` 35；按最终“真实状态行”判据实扫）。
+- 未收录：356 篇（`docs/archive/plan/` 322；`docs/archive/superpowers/plans/` 34）。
+- 缺状态：424 篇（`docs/archive/plan/` 389；`docs/archive/superpowers/plans/` 35；按最终“真实状态行”判据实扫）。
 - `⛔` 无替代指向：0 篇。
 
 ## 最终检查原始输出
@@ -219,11 +219,11 @@ Node.js v22.15.0
  M CLAUDE.md
  M docs/README.md
  M docs/plan/INDEX.md
- M docs/plan/agent-merge-architecture.md
+ M docs/archive/plan/agent-merge-architecture.md
  M package.json
-?? docs/ARCHITECTURE-NOW.md
+?? docs/archive/guides/ARCHITECTURE-NOW.md
 ?? docs/GLOSSARY.md
-?? docs/audit/2026-08-27-docs-ratchet-gates.md
+?? docs/archive/audit/2026-08-27-docs-ratchet-gates.md
 ?? scripts/check-doc-status.mjs
 ?? scripts/check-docs-index.mjs
 ?? scripts/doc-status-baseline.json

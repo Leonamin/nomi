@@ -1,7 +1,7 @@
 # Nomi 全链路性能（卡顿）专项 — 总方案
 
 > 2026-06-22。范围：从用户第一眼见到软件 → 到最终出片的**全 journey 卡顿**。
-> 方法：6 路并行静态审计（`docs/audit/perf/01..06`）+ 真机探针实测（`tests/ux/ui-driver.mjs` 的 `__nomiProbe`）。
+> 方法：6 路并行静态审计（`docs/archive/audit/perf/01..06`）+ 真机探针实测（`tests/ux/ui-driver.mjs` 的 `__nomiProbe`）。
 > 本文是**单一真相源**；6 份分段审计是细节附录。
 
 ## 0. 一句话根因（贯穿全链路的同一把刀）
@@ -85,4 +85,4 @@
 节点 `React.memo`+比较器、节点拖拽 rAF+ref、画布缩放已拆 store、时间轴编辑侧全 memo+transform、3D InstancedMesh/矩阵 useMemo/小相机 demand、`StagingCaptureHost`/`CameraMoveCaptureHost` 无待处理时 `return null` 不占 GPU（**确认没有常驻离屏渲染**）、图片 lazy+async decode、导出主路径走主进程 ffmpeg 子进程（异步/有进度/不阻塞 UI）。
 
 ## 附录：分段审计原文
-`docs/audit/perf/01-cold-start.md` · `02-state-rerenders.md` · `03-canvas.md` · `04-scene3d.md` · `05-creation-streaming.md` · `06-timeline-media-export.md`
+`docs/archive/audit/perf/01-cold-start.md` · `02-state-rerenders.md` · `03-canvas.md` · `04-scene3d.md` · `05-creation-streaming.md` · `06-timeline-media-export.md`

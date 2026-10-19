@@ -5,7 +5,7 @@
  * 这层「接管 + 怎么回去」的编排跟素材库自己的列表/筛选/选择逻辑是两件事；
  * 塞回 AssetLibraryPanel 会把那个文件顶过 800 行（R9/R12 实测 801 行当场红）。
  *
- * 接管而不是推开的由来见 docs/qa/2026-09-08-find-reference-walkthrough.md P0-1：
+ * 接管而不是推开的由来见 docs/archive/qa/2026-09-08-find-reference-walkthrough.md P0-1：
  * 素材库的常态是「一整片已有素材」，推开会让上下文全丢、加完也看不到刚加的那条。
  */
 import React, { type JSX } from 'react'

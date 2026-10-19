@@ -333,7 +333,7 @@ pi 的 CLI 本身跑一个真实回合需要 API key（`No API key found for the
 3. **改写 33 个内置技能**：frontmatter 全量补齐，`inputs` / `examples` 转成正文 `## 输入` / `## 示例` 段，`git rm` 9 个 `skill.json`，两处 `skillKey` 常量与目录改名，修 `director-art-design`。
 4. **删旧 + 门岗上线**：`documentDescriptors.ts` 的 30 行 manifest schema、`skillWrite.ts` 的 `manifest` 字段、`creationToolCalls.ts:24`、`skillWriteTransportAdapters.ts:157-161`；`permissions` / `inputs` / `examples` / `storyboardProfile` 从 schema 删除、两条说谎注释改正；`check:skills-format` 进 `gates:contracts`。
 5. **用户目录迁移 + 测试**：§6.2 的一次性迁移、备份、提示文案（i18n），A5 单测在临时 HOME 下跑。
-6. **文档同步**：`docs/skill-pack-format.md` 改写、`docs/integrate-with-your-agent{,-en}.md:106-115`、`docs/user-guide.md:131`。
+6. **文档同步**：`docs/skill-pack-format.md` 改写、`docs/integrate-with-your-agent{,-en}.md:106-115`、`docs/archive/guides/user-guide.md:131`。
 
 ### 6.4 导入解析层：渲染层与主进程拉平口径（2026-09-07 补，源自 #582 的解析层四条）
 

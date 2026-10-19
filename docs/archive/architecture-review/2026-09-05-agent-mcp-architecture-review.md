@@ -3,7 +3,7 @@
 > 状态：📋 方案待拍板 · docs-only，本文不改任何生产代码
 > 日期：2026-09-05 · 基线 `origin/main = ea54dcea7`（Merge PR #486）
 > 用户授权：从底层质疑现有设计。本文对每条质疑只做一件事——**用 `file:line` 证实或推翻**，然后给改法、迁移路径、验收，最后 6 角色评审 + R3 决策对比表。
-> 相关：[docs/plan/2026-09-05-nomi-convergence-handoff.md](../plan/2026-09-05-nomi-convergence-handoff.md)（M0–M5 收敛主轴）、[docs/design/nomi-agent-interaction.md](../../design/nomi-agent-interaction.md)（交互设计合同）、[docs/ARCHITECTURE-NOW.md](../guides/ARCHITECTURE-NOW.md)
+> 相关：[docs/archive/plan/2026-09-05-nomi-convergence-handoff.md](../plan/2026-09-05-nomi-convergence-handoff.md)（M0–M5 收敛主轴）、[docs/archive/design/nomi-agent-interaction.md](../design/nomi-agent-interaction.md)（交互设计合同）、[docs/archive/guides/ARCHITECTURE-NOW.md](../guides/ARCHITECTURE-NOW.md)
 
 ---
 
@@ -107,7 +107,7 @@ export type CapabilityProjectionSurface = "pi" | "mcp" | "ui";
 1. **先加门岗，后动代码**（R28）：写一条契约测试断言「同一 capability id 在 pi 面与 mcp 面的必填字段集合，除 `leaseHandle`/`projectId` 外必须相等」。**先验它现在会红**（R17）——按 §1.2 的表它至少在 document/generation 两处红。
 2. 补 MCP 校验器 → 删手抄 schema（此步无面变化，零对外风险）。
 3. timeline/media/export pi 面收敛（只动内部面，MCP 面不变，零对外风险）。
-4. generation 统一命名（**唯一破坏对外契约的一步**，需按 `mcpToolCatalogChanges.ts` 的 `listChanged` 通知走，并在 `docs/integrate-with-your-agent.md` 标改名）。
+4. generation 统一命名（**唯一破坏对外契约的一步**，需按 `mcpToolCatalogChanges.ts` 的 `listChanged` 通知走，并在 `docs/archive/guides/integrate-with-your-agent.md` 标改名）。
 5. canvas read 二选一（与 §3 同批做）。
 
 **验收**：上述契约测试转绿且 baseline 只减不增；`agentToolCatalog.test.ts:19` 的 33 与 `MCP_TOOL_RESOLVER.list().length` **由同一常量 derive**；R13 真机走查 Nomi 内 Agent 与 Codex MCP 各跑一遍「读画布 → 改第三镜提示词 → 撤销」，对照同一 `projectId` 的 receipt/revision。
@@ -122,7 +122,7 @@ export type CapabilityProjectionSurface = "pi" | "mcp" | "ui";
 
 **更离谱的例子**（实测，见 2.2 表）：用户说「撤销刚才那次删除」——**撤销本身也要弹确认**。而 `apply_edit_plan`（真正把剪辑改动落到时间轴上）反而**不弹**。
 
-用户拍板过的设计（`docs/design/nomi-agent-interaction.md:508-516`）写得清清楚楚：`自动批准安全动作` = 「自动读项目、搜索、**创建可撤销草稿**；高风险暂停」，硬闸只有「花钱、发布、删除、账号、外部写入」；`完全允许（本项目）` = 「沙箱内**自动执行可撤销动作**」；`:516`「**完全允许只减少本地、可撤销动作的停顿，不得绕过硬闸**」。连「改完显示什么」都定死了（`:121`：「10 | 写入回执 | **一行** | 「已加 5 个节点 · 撤销」」）。**代码没有做到这个。**
+用户拍板过的设计（`docs/archive/design/nomi-agent-interaction.md:508-516`）写得清清楚楚：`自动批准安全动作` = 「自动读项目、搜索、**创建可撤销草稿**；高风险暂停」，硬闸只有「花钱、发布、删除、账号、外部写入」；`完全允许（本项目）` = 「沙箱内**自动执行可撤销动作**」；`:516`「**完全允许只减少本地、可撤销动作的停顿，不得绕过硬闸**」。连「改完显示什么」都定死了（`:121`：「10 | 写入回执 | **一行** | 「已加 5 个节点 · 撤销」」）。**代码没有做到这个。**
 
 **一处必须先纠正的措辞（诚实边界）**：设计文档的分级轴是「**本地 / 可撤销**」vs「花钱、发布、删除、账号、验证码、外部写入」，**不是「便宜 / 贵」**。全文没有任何一处说「金额小就免确认」——相反 `:39` 把「不显示价格」斥为半诚实反例，`:405` 要求付费卡必须每项单价 + 合计。**所以本节主张的是「本地可撤销的编辑不该弹确认」，不是「便宜的动作不该弹确认」。**任何按金额减免确认的提议都与已拍板设计冲突，本文不提。
 
@@ -195,7 +195,7 @@ export function projectAgentExecutionRisk(toolName: string, args?: unknown): Pro
 
 这个 bug 的存在完全取决于「排一个分镜需要一次**用户确认**、并因此在 Host 队列账本里登记一条跨面 proposal」。如果分镜提案走的是「直写 + 撤销回执」，这个 target 一致性检查根本不会被触发。**确认门越通用，它能拒绝的合法路径就越多。**
 
-**这个 bug 今天（2026-09-05）已经修了，而修法本身就是最好的度量。**`docs/plan/2026-09-05-proposal-transition-table.md`（✅ 已交付，已在 `origin/main`）把 (来源域 × 目标域 × 状态 × 动作) 做成显式数据表，reducer 只查表。域轴的规模是 **8×8 = 64 格**：8 格同名放行、**1 格 `document → canvas` 显式关闭**（`host_anchor_required`）、**其余 55 格「表中无」**（`cross_domain_admission_absent`）。
+**这个 bug 今天（2026-09-05）已经修了，而修法本身就是最好的度量。**`docs/archive/plan/2026-09-05-proposal-transition-table.md`（✅ 已交付，已在 `origin/main`）把 (来源域 × 目标域 × 状态 × 动作) 做成显式数据表，reducer 只查表。域轴的规模是 **8×8 = 64 格**：8 格同名放行、**1 格 `document → canvas` 显式关闭**（`host_anchor_required`）、**其余 55 格「表中无」**（`cross_domain_admission_absent`）。
 
 这个修法是对的（可诊断性 + 编译器拦新域），本文不主张回退。但它精确回答了「审批机器有多通用」：**一个 64 格的跨域准入矩阵，服务于 20 个 capability，而其中只有 1 个真的花钱。**§2.4 的改法与这张表不冲突——把可撤销写从「需要确认」降到「直写 + 回执」后，走进这张表的 turn 变少，表本身继续为付费门与 production 写服务。
 
@@ -389,7 +389,7 @@ return prior ? `此前同一项目线程：\n${prior}\n\n本轮请求：\n${requ
 
 **大白话**：用户自己搭了个中转站（new-api 之类），手上只有两样东西：一个网址和一把 key。他想让 Nomi 用上面的模型。
 
-**用户实际说过的话**（`docs/audit/2026-06-07-ux-walkthrough-actions.md:38`，一位剪映用户给 Nomi 打 4/10，列出三个「想关掉软件」的瞬间）：「① **被要求贴 API 文档 + key** ② 点『等待生成』格子没反应又无引导 ③ 满屏 `kie` 黑话」。
+**用户实际说过的话**（`docs/archive/audit/2026-06-07-ux-walkthrough-actions.md:38`，一位剪映用户给 Nomi 打 4/10，列出三个「想关掉软件」的瞬间）：「① **被要求贴 API 文档 + key** ② 点『等待生成』格子没反应又无引导 ③ 满屏 `kie` 黑话」。
 
 **第一个瞬间就是本节要修的东西。**现在的对外说法（`conversational-model-integration.md:5-7`）确实把读文档摆在第一位——「把这个 API 地址和**官方文档**里的模型接进 Nomi……助手会先**读取公开资料**并列出完整候选」——但用户的自建中转站**往往根本没有公开文档**，它就是一个 OpenAI 兼容端点。
 
@@ -397,14 +397,14 @@ return prior ? `此前同一项目线程：\n${prior}\n\n本轮请求：\n${requ
 
 | 日期 | 出处 | 用户原话 / 条目 |
 |---|---|---|
-| 2026-08-11 | `docs/plan/2026-08-11-model-kind-misguess.md:3,27` | 主诉「**接入了模型但用不了**」（issue #4/#8/#9/#19/#23/#42/#62 同源）；「模型明明接进来了、明明启用着，却不在列表里，**且没有一个字解释为什么**」 |
+| 2026-08-11 | `docs/archive/plan/2026-08-11-model-kind-misguess.md:3,27` | 主诉「**接入了模型但用不了**」（issue #4/#8/#9/#19/#23/#42/#62 同源）；「模型明明接进来了、明明启用着，却不在列表里，**且没有一个字解释为什么**」 |
 | 2026-08-11 | `electron/catalog/modelKindHeuristic.ts:28` / `:38-40`（代码注释） | 「MiniMax H3 **用户反馈想接但被分进文本桶**」；「**用户报『grok 接不进去、识别不出 image/video 类型』**」 |
-| 2026-08-11 | `docs/plan/2026-08-11-vendor-connection-health.md:4,16` | 「显示『已保存 · 未测试』，用户会疑惑去哪里测试」；「**自定义中转家连状态都没有——恰是最容易填错 baseUrl 的那类**」 |
-| 2026-07-24 | `docs/plan/2026-07-24-archetype-vendor-scoped-transport.md:5` | 「通用中转接 `gpt-image-2`，接入测试能出图、同 key 其他软件能出图，**唯独画布生成报『未开启生图功能』**」 |
-| 2026-08-18 | `docs/plan/2026-08-18-vendor-connection-discoverability.md:4,5` | 「要改一下 api url，结果翻了半天没找到修改的地方」；「需要加一个单独的删除按钮」 |
-| 2026-07-15 | `docs/plan/2026-07-15-comfyui-custom-workflow.md:3` | 「装了 WAN2.2+WanVideoWrapper+VHS 想接本地文生/图生视频**接不进来**」 |
-| 2026-08-11 | `docs/plan/2026-08-11-issue-62-triage.md:3,8` | GitHub #62 "Does not work"；「报 bug 的唯一入口是商务合作表单 → 真实故障被挡在门外」 |
-| 2026-08-26 / 2026-05-30 | `docs/lessons/group-says-broken-usually-means-undiscoverable.md:6`；`docs/plan/v0.8-handoff-2026-05-30.md:124` | 「已连续三次是『功能一直在，用户找不到入口』」；「我配的 gpt-5.5 看不到」 |
+| 2026-08-11 | `docs/archive/plan/2026-08-11-vendor-connection-health.md:4,16` | 「显示『已保存 · 未测试』，用户会疑惑去哪里测试」；「**自定义中转家连状态都没有——恰是最容易填错 baseUrl 的那类**」 |
+| 2026-07-24 | `docs/archive/plan/2026-07-24-archetype-vendor-scoped-transport.md:5` | 「通用中转接 `gpt-image-2`，接入测试能出图、同 key 其他软件能出图，**唯独画布生成报『未开启生图功能』**」 |
+| 2026-08-18 | `docs/archive/plan/2026-08-18-vendor-connection-discoverability.md:4,5` | 「要改一下 api url，结果翻了半天没找到修改的地方」；「需要加一个单独的删除按钮」 |
+| 2026-07-15 | `docs/archive/plan/2026-07-15-comfyui-custom-workflow.md:3` | 「装了 WAN2.2+WanVideoWrapper+VHS 想接本地文生/图生视频**接不进来**」 |
+| 2026-08-11 | `docs/archive/plan/2026-08-11-issue-62-triage.md:3,8` | GitHub #62 "Does not work"；「报 bug 的唯一入口是商务合作表单 → 真实故障被挡在门外」 |
+| 2026-08-26 / 2026-05-30 | `docs/archive/lessons/group-says-broken-usually-means-undiscoverable.md:6`；`docs/archive/plan/v0.8-handoff-2026-05-30.md:124` | 「已连续三次是『功能一直在，用户找不到入口』」；「我配的 gpt-5.5 看不到」 |
 
 > **注**：`docs/feedback/` 目前**只有 `sources.example.json`，一份 digest 都没落过盘**。上表是从 plan/audit/lessons/代码注释里打捞的——**反馈本身没有单一真相源**，这本身是一条独立发现。
 
@@ -490,7 +490,7 @@ B 类里最露骨的三条，形状与 §1 的「两张嘴」完全一致：
 4. 把 `providerAdapter/{docsDiscovery,compiler}` 在 onboarding 路径上的残留删净，或反过来撤销「已下线」注释——**二选一，不留「有时读有时不读」的并行世界**。现状是最坏的一种：注释说下线了、代码还在跑、i18n 还在显示 `discovering_docs`。
 
 **C 线（治 74%，最贵但最值）**
-5. `docs/plan/2026-09-03-self-hosted-relay-conformance-harness.md`（📋 已立项）方向对：CI 里起一个严格的假中转，把「用户接入」这条唯一没有反馈回路的路径接上回路。
+5. `docs/archive/plan/2026-09-03-self-hosted-relay-conformance-harness.md`（📋 已立项）方向对：CI 里起一个严格的假中转，把「用户接入」这条唯一没有反馈回路的路径接上回路。
 6. **本文追加建议**：harness 只能抓 A 类（7%）。要压 B 类（74%）需**给 71 个 vendor 文件加一条「同一不变量只能有一个作者」的门岗**——把 vendor 层的 taskKind / mode / reference-role / model-identity 四个不变量登记进 `check:vocabularies`，是 R14.1 的机器化延伸。**加规则前先验它会红**（R17）——按 `orphan-mapping-cable` / `relay-variant-axis-inert` 的描述它必红。
 
 ### 5.7 覆盖比例（诚实标注：不编数字）

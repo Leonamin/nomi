@@ -85,7 +85,7 @@ function buildProfiledFetch(modelId: string, proxyUrl?: string): typeof fetch {
     //   · 落盘的是 `logVendorCall` 的六字段摘要（供应商主机 / 模型 / 状态 / 耗时）——
     //     没有请求体、没有响应体、没有素材 URL；
     //   · 上游返回体片段（诊断 502/超时/路由错的关键，见
-    //     docs/workflow/2026-06-06-real-generation-e2e-loop.md「主进程埋点」）会回显请求内容，
+    //     docs/archive/workflow/2026-06-06-real-generation-e2e-loop.md「主进程埋点」）会回显请求内容，
     //     所以只走 `logDevDetail`：开发终端照看，用户机器上一个字都不留。
     // 成功不打，避免噪音。
     const urlStr = typeof url === "string" ? url : ((url as { url?: string })?.url || String(url));

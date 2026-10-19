@@ -37,12 +37,12 @@
 
 ## 验收与回滚
 
-小 UI 恢复并沿用用户指定的现有样式，按 docs/lessons/mockup-approval-gates-only-big-ui.md 直接实现，交付真实截图，不需要额外拍板。回归红绿、根因合同、风险分层 gates、真实任务走查、整分支 Ponytail、PR 交付。回滚使用 PR revert，不改用户数据。未合并前不标已解决。
+小 UI 恢复并沿用用户指定的现有样式，按 docs/archive/lessons/mockup-approval-gates-only-big-ui.md 直接实现，交付真实截图，不需要额外拍板。回归红绿、根因合同、风险分层 gates、真实任务走查、整分支 Ponytail、PR 交付。回滚使用 PR revert，不改用户数据。未合并前不标已解决。
 
 ## 实测证据
 
 - `tests/ux/node-prompt-presets.walk.mjs --before`：真实旧构建只有文字效果菜单，普通公共条目不可选。
 - 新版真实 UI 建项目/节点、公共预设搜索和插入、无匹配空态、追加/撤销、个人图片与视频预设新建和立即调用、跨类型排除、Escape/外点、浮层可达、Agent Skill 搜索/预览/引用均通过。
 - zh/en × light/dark 实际设置切换后截图；效果预览图片实际解码 naturalWidth > 0；无图个人预设用 FileText 占位。
-- [截图与旅程记录](../../design/verification/2026-09-20-node-prompt-presets)；主代理亲眼查看旧菜单、公共搜索、效果带图预览、个人库、英文暗色、Agent 共享选择器。
+- [截图与旅程记录](../design/verification/2026-09-20-node-prompt-presets)；主代理亲眼查看旧菜单、公共搜索、效果带图预览、个人库、英文暗色、Agent 共享选择器。
 - 11 个专门回归单测通过；读取失败用真实 IPC 返回形状 `ok:false` 做 API 回归（修改前返回空数组而失败，修改后抛错通过）。没有付费生成；真实网络故障重试未注入。

@@ -432,8 +432,8 @@ Commit: `git add electron/capabilityCore/generationRecoveryProjection.ts electro
 
 **Files:**
 - Create: `tests/ux/mcp-generation-provider-degradation.e2e.mjs`
-- Modify: `docs/audit/2026-08-23-p1-p3-evidence.md`
-- Modify: `docs/superpowers/plans/2026-08-23-p1-p3-editable-mcp-generation.md`
+- Modify: `docs/archive/audit/2026-08-23-p1-p3-evidence.md`
+- Modify: `docs/archive/superpowers/plans/2026-08-23-p1-p3-editable-mcp-generation.md`
 
 - [ ] **Step 1: Write the zero-credit real-user journey**
 
@@ -462,7 +462,7 @@ Keep provider/spend counters injected and zero for the planning/edit/preview/gat
 
 Run: `node tests/ux/mcp-generation-provider-degradation.e2e.mjs`  
 Expected: all assertions pass; no real quota used.  
-Commit: `git add tests/ux/mcp-generation-provider-degradation.e2e.mjs docs/audit/2026-08-23-p1-p3-evidence.md docs/superpowers/plans/2026-08-23-p1-p3-editable-mcp-generation.md && git commit -m "test: cover degraded provider user journey"`
+Commit: `git add tests/ux/mcp-generation-provider-degradation.e2e.mjs docs/archive/audit/2026-08-23-p1-p3-evidence.md docs/archive/superpowers/plans/2026-08-23-p1-p3-editable-mcp-generation.md && git commit -m "test: cover degraded provider user journey"`
 
 - [ ] **Step 5: Run one explicit APIMart smoke after the zero-credit matrix is green**
 
@@ -471,8 +471,8 @@ Use the already stored APIMart key through Nomi secure storage. Run exactly one 
 ## Task 8: Final verification and delivery
 
 **Files:**
-- Modify: `docs/audit/2026-08-23-p1-p3-evidence.md`
-- Modify: `docs/superpowers/plans/2026-08-23-provider-capability-degradation.md`
+- Modify: `docs/archive/audit/2026-08-23-p1-p3-evidence.md`
+- Modify: `docs/archive/superpowers/plans/2026-08-23-provider-capability-degradation.md`
 
 - [ ] **Step 1: Run focused and full verification**
 
@@ -496,7 +496,7 @@ Inspect normal confirmation, APIMart observe-only notice, unknown receipt, expli
 - [ ] **Step 3: Update evidence and commit**
 
 Record profile matrix, fake submit counts, APIMart low-cost smoke, screenshot paths, and any remaining provider-specific limitations.  
-Commit: `git add docs/audit/2026-08-23-p1-p3-evidence.md docs/superpowers/plans/2026-08-23-provider-capability-degradation.md && git commit -m "docs: close provider degradation evidence"`
+Commit: `git add docs/archive/audit/2026-08-23-p1-p3-evidence.md docs/archive/superpowers/plans/2026-08-23-provider-capability-degradation.md && git commit -m "docs: close provider degradation evidence"`
 
 - [ ] **Step 4: Push the isolated branch, do not merge PR**
 

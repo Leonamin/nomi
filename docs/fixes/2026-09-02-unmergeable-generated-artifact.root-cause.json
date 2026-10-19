@@ -19,7 +19,7 @@
     "scripts/claude-hooks/self-check.sh",
     "docs/README.md",
     "docs/plan/INDEX.md",
-    "docs/superpowers/plans/INDEX.md"
+    "docs/archive/superpowers/plans/INDEX.md"
   ],
   "entry_points": [
     "pnpm run check:ledger（gates 链与 CI Contracts job 中的静态门岗）",
@@ -30,7 +30,7 @@
     "进 git 且受逐字节把关的生成物，其渲染函数必须满足可达性：render(union) 的每一行都出现在 render(base)、render(A)、render(B) 三者之一——等价于不含任何全局聚合量。",
     "docs/DELIVERY-LEDGER.md 是本地视图，不进 git，且被 .gitignore 挡住，使得 git add -A 不会再把它带回仓库。",
     "「已拍板但没交付」的 salience 不依赖任何 committed 产物的新鲜度：由 L0 hook 每轮跑 --brief 现算。",
-    "docs/superpowers/plans/INDEX.md 继续 commit 并受把关——它是纯排序清单、无聚合量（合并后每一行三方都写过），且是 check:docs-index 的索引源，删除会让该棘轮翻红。"
+    "docs/archive/superpowers/plans/INDEX.md 继续 commit 并受把关——它是纯排序清单、无聚合量（合并后每一行三方都写过），且是 check:docs-index 的索引源，删除会让该棘轮翻红。"
   ],
   "regression_tests": [
     "scripts/build-delivery-ledger.node-test.mjs"
@@ -53,7 +53,7 @@
       "evidence": "可达性属性测试对该数组每一份产物实测。反向对照已实跑：把账本放回该数组后，测试立刻由 3 绿变 2 红，并精确指出 `## 现役欠账（8）` 与 `- 合计扫描：8 篇方案文档…` 两行不可达；移出后恢复全绿。"
     },
     {
-      "path": "docs/superpowers/plans/INDEX.md",
+      "path": "docs/archive/superpowers/plans/INDEX.md",
       "entry_point": "同一生成器的另一份 committed 产物（renderPlansIndex）",
       "disposition": "enforced",
       "evidence": "同一属性测试实测其可达性为空集，故保留 commit + 逐字节把关。它是纯排序清单，行内容与相邻行无关；两分支各加一行时即便产生文本冲突，人工「两行都留」即得正确结果，与账本的不可解冲突有本质区别。"
@@ -94,7 +94,7 @@
     "classification": "recurring",
     "reason": "已复发数十次且成因是结构性的：只要产物含全局聚合量并被逐字节把关，任意两个并行分支都会重演，与作者是否细心无关。2026-08-25 起约 25 个纯「追平 main 后重生成」commit 即为反复施加症状修法的记录；2026-09-02 合并潮中连续多个 merge SHA 因此变红并阻断 exact-SHA 收据。",
     "same_class_scan": [
-      "枚举仓库中带「禁止手改／生成物」声明的 committed 产物，命中三份：docs/DELIVERY-LEDGER.md（本次移出 git）、docs/superpowers/plans/INDEX.md（实测可合并，保留）、AGENTS.md（派生自单文件 CLAUDE.md，实查生成器确认产物无聚合量，不受影响）。",
+      "枚举仓库中带「禁止手改／生成物」声明的 committed 产物，命中三份：docs/DELIVERY-LEDGER.md（本次移出 git）、docs/archive/superpowers/plans/INDEX.md（实测可合并，保留）、AGENTS.md（派生自单文件 CLAUDE.md，实查生成器确认产物无聚合量，不受影响）。",
       "横扫其余全局语料门岗的形态：check:docs-index、check:doc-status、check:vocabularies、check:boundaries、check:filesize、lint:ci 全部为棘轮式基线（只减不增），对合并免疫；check:ledger 是唯一使用逐字节相等的例外，本次修正后不再有例外。",
       "实测复现与反向对照均已跑通：在 origin/main 上拉两个分支各加一篇方案文档并各自重生成，两边 check 全绿，git merge 后门岗红；按最自然方式解冲突（两行都保留）后门岗仍红，计数行停在 31 而真值 32，证明人工解冲突不可能修对。反向对照见 same_class_entry_points 第一条。"
     ]

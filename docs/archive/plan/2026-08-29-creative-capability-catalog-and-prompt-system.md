@@ -2,7 +2,7 @@
 
 > 日期：2026-08-29
 > 状态：📎 方案交接；生产实现等待 Agent/Skill 接线稳定后再拍板
-> 关联研究：`docs/research/2026-08-29-browser-assets-pi-ecosystem-research.md`
+> 关联研究：`docs/archive/research/2026-08-29-browser-assets-pi-ecosystem-research.md`
 > 当前基线：Pi SDK `0.84.3`；工具由 `capability` 授权；创作区与生成区仍有两份 Agent 历史；Nomi 当前是 MCP Server，不是外部 MCP Client。
 
 ## 0. 决策结论

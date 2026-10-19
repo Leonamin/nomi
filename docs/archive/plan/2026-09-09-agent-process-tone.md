@@ -22,8 +22,8 @@ recurring：V4Process 容器、V4ToolGroup 和 V4ToolReceipt 独立指定墨色/
 待运行视觉检查后列出确实含过程行且变化的名称，再定向更新；不批量重录其他基线。
 
 ## 证据
-红日志：docs/fixes/agent-process-tone/red.log。
-真机截图：docs/plan/agent-process-tone-evidence/（light/dark × collapsed/expanded/mouse/tab）。
+红日志：docs/archive/fixes/agent-process-tone/red.log。
+真机截图：docs/archive/plan/agent-process-tone-evidence/（light/dark × collapsed/expanded/mouse/tab）。
 
 ## 真机发现与裁决落实
 改前 C66 红：summary L=0.68、子行 L=0.32 / weight=500。改后普通文字 L=0.50 / weight=400（light）。

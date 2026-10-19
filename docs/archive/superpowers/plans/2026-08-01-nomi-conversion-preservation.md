@@ -14,7 +14,7 @@
 
 | Responsibility | Files |
 |---|---|
-| Approved correction | `docs/superpowers/specs/2026-08-01-nomi-conversion-preservation-design.md` |
+| Approved correction | `docs/archive/superpowers/specs/2026-08-01-nomi-conversion-preservation-design.md` |
 | Conversion facts and localized copy | Modify `scripts/marketing/content.mjs` |
 | Existing-design rendering | Modify `scripts/marketing/template.mjs` |
 | Generated outputs | Regenerate `marketing/index.html`, `marketing/en/index.html` |
@@ -369,7 +369,7 @@ Keep the existing four-item list. Keep both the Business Inquiry and `TZ85788615
 Replace the current first-screen link line with:
 
 ```markdown
-[简体中文](README.zh-CN.md) · [Website](https://nomiaqm.com/en/) · [Download](https://github.com/aqm857886159/Nomi/releases/latest) · [Community](https://github.com/aqm857886159/Nomi/discussions) · [For Teams](https://nomiaqm.com/en/#teams) · [Watch the 60s film](https://nomiaqm.com/assets/video/launch-film-en.mp4) · [Documentation](docs/user-guide.md)
+[简体中文](README.zh-CN.md) · [Website](https://nomiaqm.com/en/) · [Download](https://github.com/aqm857886159/Nomi/releases/latest) · [Community](https://github.com/aqm857886159/Nomi/discussions) · [For Teams](https://nomiaqm.com/en/#teams) · [Watch the 60s film](https://nomiaqm.com/assets/video/launch-film-en.mp4) · [Documentation](docs/archive/guides/user-guide.md)
 ```
 
 - [x] **Step 4: Add an international Community section without forcing WeChat**
@@ -508,8 +508,8 @@ git commit -m "test(marketing): verify community conversion journeys"
 
 **Files:**
 
-- Modify: `docs/superpowers/specs/2026-08-01-nomi-conversion-preservation-design.md`
-- Modify: `docs/superpowers/plans/2026-08-01-nomi-conversion-preservation.md`
+- Modify: `docs/archive/superpowers/specs/2026-08-01-nomi-conversion-preservation-design.md`
+- Modify: `docs/archive/superpowers/plans/2026-08-01-nomi-conversion-preservation.md`
 
 - [x] **Step 1: Run focused website verification**
 
@@ -537,7 +537,7 @@ Update the spec state to `已实施并验证`. Append an evidence block containi
 - [x] **Step 4: Commit verification evidence**
 
 ```bash
-git add docs/superpowers/specs/2026-08-01-nomi-conversion-preservation-design.md docs/superpowers/plans/2026-08-01-nomi-conversion-preservation.md
+git add docs/archive/superpowers/specs/2026-08-01-nomi-conversion-preservation-design.md docs/archive/superpowers/plans/2026-08-01-nomi-conversion-preservation.md
 git commit -m "docs(marketing): record conversion recovery evidence"
 ```
 

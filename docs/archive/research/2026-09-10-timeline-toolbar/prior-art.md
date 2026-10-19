@@ -1,6 +1,6 @@
 # 时间轴工具条与面板折叠：先查别人（2026-09-10）
 
-> 服务于 `docs/plan/2026-09-10-timeline-toolbar-row-collapse.md`。
+> 服务于 `docs/archive/plan/2026-09-10-timeline-toolbar-row-collapse.md`。
 > 要回答的问题只有两个：**剪辑器的时间轴工具条到底放在哪一层**，**面板的「收起」按惯例长什么样**。
 
 ## 1. 仓库里已有？
@@ -36,7 +36,7 @@
 
 ## 3. 我们自己的定稿怎么说？
 
-- `docs/design/2026-09-05-editing-panel-design-contract.md:87`（§2.7）已经把工具条**分簇与图标**钉死：
+- `docs/archive/design/2026-09-05-editing-panel-design-contract.md:87`（§2.7）已经把工具条**分簇与图标**钉死：
   「这一段」`IconScissors`/`IconCopy`/`IconTrash`｜「整片」`IconWand`/`IconArrowBackUp`/`IconArrowForwardUp`｜
   「视图」`IconMagnet`/`IconZoomOut`/`IconViewportWide`/`IconZoomIn`。
   → 本次**只动位置，不动分簇与图标**。合同没写工具条该浮还是该占行，这一格是本次补上的。

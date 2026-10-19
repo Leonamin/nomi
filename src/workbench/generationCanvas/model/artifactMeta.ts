@@ -1,6 +1,6 @@
 // agent-artifact 节点的 meta.artifact 元数据：AI 手艺产物（不调模型直接做出的表达物）的画布承载。
 //
-// 设计约束（见 docs/plan/2026-09-06-agent-artifact-node.md §4.1）：
+// 设计约束（见 docs/archive/plan/2026-09-06-agent-artifact-node.md §4.1）：
 // - 不扩展 GenerationResultType（zod 5 值闭集，media 白名单/下载扩展名链密集消费）——产物元数据
 //   挂在 node.meta.artifact，渲染走 BaseGenerationNode 的 kind 专属分支（scene3d/panorama 同级）。
 // - url 必须带真实扩展名（svg/html/md…）：主进程下载按 url 扩展名补全，无需动 useResultDownload 闭集。

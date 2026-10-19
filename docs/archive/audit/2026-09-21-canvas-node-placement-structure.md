@@ -29,10 +29,10 @@
 
 - **不是这一单能一次修掉的结构问题**，但本单没有把它搞得更糟：本单删掉了三处 ≥40 钳制和一处手写坐标换算，落点换算收敛到内核 `screenToFlowPosition` 一个来源（`components/canvasStageDrop.ts` 的 `CanvasStageDropContext.toCanvasPoint`）。
 - **结构性修法（提议，未实施）**：让新卡出生时带一个「放置意图」`{ point, anchor }`（anchor 为卡面比例坐标），由一个放置层（候选：`generationCanvas/model/` 下新模块）同时拥有「出生定位」和「出生后尺寸改写时的位置补偿」。之后任何尺寸回填（图片比例、视频元数据、composer 贴边）都经它按 anchor 补位，不再各自保持左上角或各自保持边中点。收益：拖入/粘贴/导入/切图的「对准」在尺寸变化后仍成立；`exactPosition` 这个布尔开关可以被「有没有放置意图」取代。
-- **为什么现在不做**：它会碰 `nodeSizing.ts` 的 composer 贴边补位和 10 个 `exactPosition` 调用方，属于多文件行为改动，按 P5/R4 要先写 `docs/plan` 并过评审；本单是用户报障的最小根因修复。
+- **为什么现在不做**：它会碰 `nodeSizing.ts` 的 composer 贴边补位和 10 个 `exactPosition` 调用方，属于多文件行为改动，按 P5/R4 要先写 `docs/archive/plan` 并过评审；本单是用户报障的最小根因修复。
 
 ## 4. 本单对这一层的交代
 
 - 本单只在 `src/workbench/generationCanvas/` 的落点入口做减法（删钳制、删手算、收敛到内核换算），不新增放置语义之外的开关。
 - 残留风险在合同 `residual_risks` 里明写：视频卡元数据回填后中心上移（松手点仍在卡内）、非系统文件来源按默认尺寸锚定。
-- 后续：把第 3 节的「放置意图」提议登记进 `docs/roadmap/TODO.md` 候选，由用户排期。
+- 后续：把第 3 节的「放置意图」提议登记进 `docs/archive/roadmap/TODO.md` 候选，由用户排期。

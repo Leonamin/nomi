@@ -8,7 +8,7 @@
 
 ## 0. 一句话
 
-pi 已经出了整套技能加载（`loadSkills` / `loadSourcedSkills` / `formatSkillInvocation` / `SkillDiagnostic`），我们一个都没用，自己写了约 3000 行。自研那份在 6 月到 9 月踩出了 **59 条**经验（下表）。这份文档先把 59 条按原文捞出来，再按「pi 已覆盖 / 我们薄薄保留 / 确已过时」三档判，**每条 pi 已覆盖 / 薄薄保留的都要变成一条断言**——没变成断言的清单条目，等于没对照过（`docs/audit/2026-09-18-electron-unowned-state-structural-review.md` 的结论：958 个声明过的不变量因为没人核，等于不存在）。
+pi 已经出了整套技能加载（`loadSkills` / `loadSourcedSkills` / `formatSkillInvocation` / `SkillDiagnostic`），我们一个都没用，自己写了约 3000 行。自研那份在 6 月到 9 月踩出了 **59 条**经验（下表）。这份文档先把 59 条按原文捞出来，再按「pi 已覆盖 / 我们薄薄保留 / 确已过时」三档判，**每条 pi 已覆盖 / 薄薄保留的都要变成一条断言**——没变成断言的清单条目，等于没对照过（`docs/archive/audit/2026-09-18-electron-unowned-state-structural-review.md` 的结论：958 个声明过的不变量因为没人核，等于不存在）。
 
 ## 先查别人（R27 模板四问，实施前的检索报告）
 
@@ -132,8 +132,8 @@ pi 已经出了整套技能加载（`loadSkills` / `loadSourcedSkills` / `format
 
 | # | 经验 | 出处 | 判定 |
 |---|---|---|---|
-| L1 | 「自造 `skill.json`：标准就摆在那儿，只是没人在动手前去看一眼」——判据：**除了我们的代码，还有没有第二个程序会读写它** | `docs/lessons/self-invented-skill-json-while-the-standard-existed.md` | 本次迁移就是同一条教训的第三次落地：读技能的第二个程序（pi / Claude Code）已经有加载器了，我们不该再有一份 |
-| L2 | 「hook 指向的技能可以根本不存在」——文档写了不等于执行体在 | `docs/lessons/hook-pointed-at-a-skill-that-never-existed.md` | 与加载层无关；记录以免漏 |
+| L1 | 「自造 `skill.json`：标准就摆在那儿，只是没人在动手前去看一眼」——判据：**除了我们的代码，还有没有第二个程序会读写它** | `docs/archive/lessons/self-invented-skill-json-while-the-standard-existed.md` | 本次迁移就是同一条教训的第三次落地：读技能的第二个程序（pi / Claude Code）已经有加载器了，我们不该再有一份 |
+| L2 | 「hook 指向的技能可以根本不存在」——文档写了不等于执行体在 | `docs/archive/lessons/hook-pointed-at-a-skill-that-never-existed.md` | 与加载层无关；记录以免漏 |
 | L3 | `harness/skillIndex.ts`（`formatNomiSkillIndex`）零生产调用者，是 pi `formatSkillsForPrompt` 的并行版 | 本次数门 | 删（P1） |
 | L4 | `framework-boundaries.json › resources` 那一格登记为 debt（due 2026-09-21）：「Nomi 的技能系统目前走自己那条路」 | `framework-boundaries.json:213-218` | 本次还清，改判 `derived` |
 | L5 | `check:skills-format` F6 已经在拿 pi-coding-agent 的 `loadSkillsFromDir` 当「别的宿主能不能读」的判官 | `scripts/skills-format-lib.mjs:165-175` | 加载器换成 pi 后，判官与被判的是同一把尺子——这条门岗从「对账」退成「回归」，保留 |
@@ -193,7 +193,7 @@ WIP 之外补的：BOM env（S14 实跑证伪「pi 已覆盖」）、`writeSkill
 - `my-skill.md`（S1，两条）：迁移前 `discoverSkillRecordsFromRoots` 看不见它、`createLaneInstalledSkills` 对它抛 `Installed Skill records require an absolute SKILL.md path.`；迁移后进目录（句柄 `my-skill`、包根 = 所在技能根）、进 `<available_skills>`、lane 的 `read` 真的读到、`renderSelectedSkillPrompt` 出 pi 信封、MCP 内容寻址与导出都成立。
 - 真实 ChatCut 技能（S31 / S55，夹具 `tests/fixtures/skills/chatcut-video-gen/` 与 `~/.claude/skills/chatcut-video-gen` `diff -rq` 零差异）：`name: video-gen` ≠ 目录、未知键 `user-invocable`，pi 只发一条 `invalid_metadata` warning，技能照常加载、`references/` 一并进包；提示词里它点名的 `submit_video` / `track_progress` / `browse_assets` 原样在、权威节在正文之后、语气是能力清单。
 
-**根因合同**：`docs/fixes/2026-09-18-skill-loader-diverges-from-ecosystem.root-cause.json`（recurring，30 扇门由 `node scripts/door-map.mjs readSkillRecords discoverSkillRecords renderSelectedSkillPrompt` 出 + 定义门）。顺手回填了两份同批合同：`skill-restates-registry-facts` 的门表指着已删的 `buildSelectedSkillPrompt`、回归测试指着已删的 `foreignSkillPortability.test.ts`；`shot-envelope-fields…` 的 `scope_paths` 是整目录（`electron/agentLane/` 等），把本次无关改动都算成它的「门没数全」，收窄到它门表里的文件。`check:symptom-cluster` 对 `electron/harness` 报本周第三份合同，结构评审按指示引用既有的 `docs/audit/2026-09-18-electron-unowned-state-structural-review.md`（补记 §8 点名本层，正本是本文档）。
+**根因合同**：`docs/fixes/2026-09-18-skill-loader-diverges-from-ecosystem.root-cause.json`（recurring，30 扇门由 `node scripts/door-map.mjs readSkillRecords discoverSkillRecords renderSelectedSkillPrompt` 出 + 定义门）。顺手回填了两份同批合同：`skill-restates-registry-facts` 的门表指着已删的 `buildSelectedSkillPrompt`、回归测试指着已删的 `foreignSkillPortability.test.ts`；`shot-envelope-fields…` 的 `scope_paths` 是整目录（`electron/agentLane/` 等），把本次无关改动都算成它的「门没数全」，收窄到它门表里的文件。`check:symptom-cluster` 对 `electron/harness` 报本周第三份合同，结构评审按指示引用既有的 `docs/archive/audit/2026-09-18-electron-unowned-state-structural-review.md`（补记 §8 点名本层，正本是本文档）。
 
 **已知边界（不是债）**：单文件技能的可信读根是它所在的技能根（lane 的 `read` 因而能读同根下的兄弟文件，软链逃逸仍被 canonical 校验拒）；pi 会递归进没有 SKILL.md 的子目录（`root/a/b/SKILL.md` 句柄 `b`），删除只认顶层两种形态——导入不会产出嵌套形态。
 

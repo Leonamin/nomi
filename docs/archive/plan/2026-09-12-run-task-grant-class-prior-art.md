@@ -25,4 +25,4 @@
 
 ## 验收门
 
-见 PR #782 正文「防线」与「验证」两节：编译器必填 + `check:run-task-grant` 硬零（自带红绿对照 `scripts/check-run-task-grant.node-test.mjs`，阳性对照就是事故当时那段漏带 `grantId` 的原样写法）；根因合同 `docs/fixes/2026-09-12-run-task-grant-class.root-cause.json`（schema-v3，`recurring`，20 扇门逐扇判定）；结构评审 `docs/audit/2026-09-12-electron-video-structural-review.md`；逐跳根因链与被证伪的候选见 `docs/research/2026-09-12-deconstruct-all-fail/README.md`。
+见 PR #782 正文「防线」与「验证」两节：编译器必填 + `check:run-task-grant` 硬零（自带红绿对照 `scripts/check-run-task-grant.node-test.mjs`，阳性对照就是事故当时那段漏带 `grantId` 的原样写法）；根因合同 `docs/fixes/2026-09-12-run-task-grant-class.root-cause.json`（schema-v3，`recurring`，20 扇门逐扇判定）；结构评审 `docs/archive/audit/2026-09-12-electron-video-structural-review.md`；逐跳根因链与被证伪的候选见 `docs/archive/research/2026-09-12-deconstruct-all-fail/README.md`。

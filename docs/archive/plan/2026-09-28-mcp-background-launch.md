@@ -26,7 +26,7 @@
 
 ## 先查别人
 
-完整报告：[docs/research/2026-09-28-mcp-background-launch/prior-art.md](../research/2026-09-28-mcp-background-launch/prior-art.md)。
+完整报告：[docs/archive/research/2026-09-28-mcp-background-launch/prior-art.md](../research/2026-09-28-mcp-background-launch/prior-art.md)。
 
 - 依赖里已有：隐藏启动用 Electron 的 `show: false` + `ready-to-show`（https://www.electronjs.org/docs/latest/api/browser-window ），「窗口显示过」的唯一 owner 用 `BrowserWindow` 的 `show` 事件（`node_modules/electron/electron.d.ts:4953`），后台节流用 `backgroundThrottling`（`node_modules/electron/electron.d.ts:19232`），macOS 用 `app.dock.hide()`（`node_modules/electron/electron.d.ts:8088`）。全部直接用，不自写窗口管理。
 - 仓库里已有：冷启路径只有一条 `electron/capabilityCore/mcpNodeLauncher.ts:203`（`ensureLiveInstance` → `startNomi`），零窗口自愈的唯一入口 `electron/mainWindowPresence.ts:10`；本方案只在这条路径前面加「被动请求不冷启」的分流，复用这两处，不另起一份。

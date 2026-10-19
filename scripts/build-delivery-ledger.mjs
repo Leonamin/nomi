@@ -180,7 +180,7 @@ function render(documents) {
       '</details>',
       '',
     ]),
-    `- 合计扫描：${documents.length} 篇方案文档（live docs/plan/、archive/plan/ 与 archive/superpowers/plans/，不含 INDEX.md）`,
+    `- 合计扫描：${documents.length} 篇方案文档（live docs/archive/plan/、archive/plan/ 与 archive/superpowers/plans/，不含 INDEX.md）`,
     '',
     '---',
     '',

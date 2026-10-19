@@ -1,8 +1,8 @@
 # Agent 领域三件事（附件 / 默认模型 / 分镜表自己打开）的结构评审
 
 > 状态：已完成（2026-09-30）。触发：`check:symptom-cluster` 报 `src/workbench` 7 天内已有几十份根因合同，本分支再加三份（`2026-09-30-agent-user-message-attachment-shape`、`2026-09-30-agent-declared-default-model`、`2026-09-30-storyboard-open-is-a-user-action`）。
-> 姊妹评审：`docs/audit/2026-09-29-render-layer-second-answers-structure-review.md`（同一层「渲染层另给一个答案」那一族）。
-> 来源：走查报告里的三条规则 `attachment-gone-after-send`、`agent-ignores-declared-default`、`surface-creationSelection`；Agent 消息层对照报告（`docs/research/2026-09-29-agent-message-layer-conformance/report.md` §5）判定这三条都是领域逻辑，换框架消不掉。
+> 姊妹评审：`docs/archive/audit/2026-09-29-render-layer-second-answers-structure-review.md`（同一层「渲染层另给一个答案」那一族）。
+> 来源：走查报告里的三条规则 `attachment-gone-after-send`、`agent-ignores-declared-default`、`surface-creationSelection`；Agent 消息层对照报告（`docs/archive/research/2026-09-29-agent-message-layer-conformance/report.md` §5）判定这三条都是领域逻辑，换框架消不掉。
 
 `src/workbench`、`electron/capabilityCore`、`electron/agentLane`、`electron/shared/agentLane` 这几个粒度都说明不了哪一层有问题（同簇的合同几乎都是别的 lane 的）。本评审只看这三件事各自落在的那一层，回答「这一层的结构要不要先动」。
 

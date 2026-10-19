@@ -7,7 +7,7 @@
  * （和缩放/适配同一族：都在调整你怎么看/怎么摆），不进加号（canvasToolbarModel 的意图表）。
  *
  * 手势归属**用声明式开关，不在 capture 阶段偷事件**（2026-09-07 R29 §6.2，
- * docs/research/2026-09-07-react-flow-subflows-vs-frame.md）：工具就绪期间画布传
+ * docs/archive/research/2026-09-07-react-flow-subflows-vs-frame.md）：工具就绪期间画布传
  * `panOnDrag={false}` + `nodesDraggable={false}`，内核**知道**这次拖动不归它，
  * 于是空白左键自然落到 bubble 阶段的本 hook 手里。
  *

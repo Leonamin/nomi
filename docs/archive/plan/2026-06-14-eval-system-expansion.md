@@ -1,6 +1,6 @@
 # 评测体系扩建 v2 —— 量化 + benchmark 基线 + 完整用户流程 + 生成质量
 
-> 接 `docs/plan/2026-06-11-eval-system-master-plan.md`(v3 已落地的 L0-L4 地基)。
+> 接 `docs/archive/plan/2026-06-11-eval-system-master-plan.md`(v3 已落地的 L0-L4 地基)。
 > 本文是 **v2 扩建** 的执行契约。用户已拍板方向(2026-06-14)。
 
 ## 背景:用户三条判断(全部成立,带证据)

@@ -3,7 +3,7 @@
 //
 // 为什么有它(根因):光照 HTML 样张猜代码 + 肉眼验收 → 反复出「结构没对齐 / 隐藏覆盖(twMerge 吞字号、
 // Mantine 吃 radius)」这类一眼不一致。改成「规范精确值 → computed style 自动核对」后,这类问题每次都被堵住。
-// 规范:docs/design/2026-06-06-reference-v4-implementation-spec.md。改任何参考区设计后必须跑这条绿。
+// 规范:docs/archive/design/2026-06-06-reference-v4-implementation-spec.md。改任何参考区设计后必须跑这条绿。
 //
 // 用法:pnpm run build && node tests/ux/design-fidelity.e2e.mjs
 import { launchNomiApp } from "./_launchApp.mjs";
@@ -52,7 +52,7 @@ try {
   else console.log("  ⊘ 无封面项目卡核对 — 跳过（当前库内项目都有封面）");
 
   // ── 起始页 v3（O2 动作卡片）：主入口层级 + 单一模型入口互斥 ──
-  // 规范：docs/design/2026-06-12-start-page-onboarding-v3-spec.md §3 A 屏。
+  // 规范：docs/archive/design/2026-06-12-start-page-onboarding-v3-spec.md §3 A 屏。
   // 显式等主入口渲染（项目列表走 IPC，固定 sleep 会赌时序 → flake）。
   await win.locator(".tc-action-card").first().waitFor({ timeout: 10000 });
   const start = await win.evaluate(() => {

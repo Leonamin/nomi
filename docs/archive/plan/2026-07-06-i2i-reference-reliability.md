@@ -67,5 +67,5 @@
 
 ## 关联
 
-- 调查记录：本文件背景节（2026-07-05 会话）；docs/plan/2026-07-01-generic-relay-image-edit-and-resolution.md（其「存量需删了重加」遗留由本次 L1 关闭）。
+- 调查记录：本文件背景节（2026-07-05 会话）；docs/archive/plan/2026-07-01-generic-relay-image-edit-and-resolution.md（其「存量需删了重加」遗留由本次 L1 关闭）。
 - 记忆：generic-relay-image-edit-and-resolution / url-priority-inconsistency-ref-lost / retry-must-not-wrap-paid-submit（上传重试边界不变）。

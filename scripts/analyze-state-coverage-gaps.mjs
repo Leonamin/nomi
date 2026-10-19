@@ -4,7 +4,7 @@
  *
  * 背景：样张描述了每种形态的「正常态」，但实现者遇到异常（空/加载中/错误/超长文本/最小窗）
  * 时，只能「自己发明」——这正是实现和设计反复打回改的根源之一。
- * 本脚本产出 docs/design/agent-ui-state-coverage-gaps.md，让设计班知道哪些组合
+ * 本脚本产出 docs/archive/design/agent-ui-state-coverage-gaps.md，让设计班知道哪些组合
  * 需要补画（P0：用户高频会遇到），哪些可以延后。
  *
  * 5 种异常态（来自 conformance testspec §4 + 工程实践）：
@@ -27,8 +27,8 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const OUTPUT_PATH = path.join(ROOT, 'docs/design/agent-ui-state-coverage-gaps.md')
-const MOCKUP_PATH = path.join(ROOT, 'docs/design/mockups/2026-09-01-agent-ui-final-redesign.html')
+const OUTPUT_PATH = path.join(ROOT, 'docs/archive/design/agent-ui-state-coverage-gaps.md')
+const MOCKUP_PATH = path.join(ROOT, 'docs/archive/design/mockups/2026-09-01-agent-ui-final-redesign.html')
 
 // ── 21 形态定义（来自 agent-ui-final-redesign.md §4.0 映射表）─────────────────
 

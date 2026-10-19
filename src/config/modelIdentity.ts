@@ -1,6 +1,6 @@
 // 模型身份（canonical model id）+ 去重聚合 —— 治本「画布弹窗一大堆模型」的领域层（单一真相）。
 //
-// 根因（见 docs/plan/2026-06-23-model-picker-identity-dedup.md）：同一个底层模型被每个供应商
+// 根因（见 docs/archive/plan/2026-06-23-model-picker-identity-dedup.md）：同一个底层模型被每个供应商
 // 各列一份（火山/apimart/kie 对 Seedream 各用不同 modelKey），弹窗只按 modelKey 字符串去重、
 // 认不出是同一个 → 平铺重复。这里给模型立「版本级 canonical 身份」，同模型只呈现一次、
 // 收集所有能调它的供应商（providers[]），把「选哪家」交给上层（自动选最优 + 可锁）。

@@ -4,7 +4,7 @@
 
 ## 一、参考「显示真相源」vs「生成真相源」结构性分裂（系统性，影响所有视频模型）
 
-**地基根因**：显示用 `resolveReferenceSlots`（`runner/referenceSlots.ts:73-148`），生成用**另一个独立函数** `resolveGenerationReferences`（`runner/generationReferenceResolver.ts:26-121`）。memory `connection-reference-bugs-2026-06-14` 的方案（`docs/plan/2026-06-14-connection-reference-capability-model.md`）的 **S3「生成也收口到 resolveReferenceSlots」从未落地**——只做了 S1（建函数）+ S4（显示接入）。两函数对边的处理规则不同 → 显示能画出的图，生成不一定读得到。
+**地基根因**：显示用 `resolveReferenceSlots`（`runner/referenceSlots.ts:73-148`），生成用**另一个独立函数** `resolveGenerationReferences`（`runner/generationReferenceResolver.ts:26-121`）。memory `connection-reference-bugs-2026-06-14` 的方案（`docs/archive/plan/2026-06-14-connection-reference-capability-model.md`）的 **S3「生成也收口到 resolveReferenceSlots」从未落地**——只做了 S1（建函数）+ S4（显示接入）。两函数对边的处理规则不同 → 显示能画出的图，生成不一定读得到。
 
 ### 1a.「线没连上但参考图上去了」根因（钉死）
 `nodes/completeNodeConnection.ts:17-28`：拖线到「当前模式有 image **数组**槽」的节点（可灵 i2v 的 image_ref、所有全能参考模式），走 `addAssetUrlToNode` 把 URL 写进 `meta.referenceImageUrls`，然后 **`cancelConnection()` + return——不建任何 edge**，且**不弹 toast**。

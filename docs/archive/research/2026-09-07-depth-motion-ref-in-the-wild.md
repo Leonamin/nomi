@@ -25,7 +25,7 @@
 - 原始记录 **321 条 → 去重 302 条**（X 96 / 抖音 71 / B 站 77 / 小红书 58）。
 - 用「depth / 深度图 / 深度视频 / vace / controlnet / 骨架 / pose / 动作迁移 / 参考视频 / scail / animate」正则过一遍，**得到有信号的 153 条**（X 38 / 抖音 41 / B 站 40 / 小红书 34）。下表从这 153 条里挑出**有实质内容**（说清了喂什么、喂给谁、或给了结论）的 26 条。
 - 没查成的：`q10「即梦 动作参考 视频」` 的**小红书**那腿三次 400 失败（TikHub 侧 `Request failed`，其余 9 组小红书全部正常），该组小红书数据缺失；抖音/B 站正常。X 只走 `search_type=Top`，未做 Latest 全量翻页。
-- 原始 JSON 全量落在 `docs/research/2026-09-07-depth-motion-ref-in-the-wild/tikhub/`（10 个子目录，各含 `tikhub-search.json` + `tikhub-search.md`）。
+- 原始 JSON 全量落在 `docs/archive/research/2026-09-07-depth-motion-ref-in-the-wild/tikhub/`（10 个子目录，各含 `tikhub-search.json` + `tikhub-search.md`）。
 
 ---
 
@@ -118,7 +118,7 @@
 
 | 家 | 最近有没有新增「控制视频/深度/姿态」输入 | 出处 |
 |---|---|---|
-| **Seedance 2.0 / 2.5（火山方舟）** | ❌ **没有**。参考是**无类型多模态**：图/视频/音频进 `content[]`，提示词用 `@video1` 指名；2.5 放宽到 30 图 + 10 视频 + 10 音频。**无 depth / control_video 参数** | https://docs.volcengine.com/docs/82379/2607688 ；聚合文档 https://docs.apiyi.com/en/api-capabilities/seedance2/overview ；仓库既有对账 `docs/research/2026-09-02-docaudit-apimart.md:56`（APIMart 侧字段 `image_urls, video_urls, audio_urls, image_with_roles`） |
+| **Seedance 2.0 / 2.5（火山方舟）** | ❌ **没有**。参考是**无类型多模态**：图/视频/音频进 `content[]`，提示词用 `@video1` 指名；2.5 放宽到 30 图 + 10 视频 + 10 音频。**无 depth / control_video 参数** | https://docs.volcengine.com/docs/82379/2607688 ；聚合文档 https://docs.apiyi.com/en/api-capabilities/seedance2/overview ；仓库既有对账 `docs/archive/research/2026-09-02-docaudit-apimart.md:56`（APIMart 侧字段 `image_urls, video_urls, audio_urls, image_with_roles`） |
 | **Kling 3.0 Motion Control** | ⚠️ 有动作控制，但输入是**原始参考视频 + 参考图**，**不是深度/骨架** | https://kling.ai/document-api/api/video/motion-control ；https://kling.ai/document-api/apiReference/model/motionControl |
 | **MiniMax H3（托管 API）** | ❌ 只有通用参考：`{"type":"video_url", "role":"reference_video"}`，图 ≤9 / 视频 ≤3 / 音频 ≤3。深度/姿态**只在开源权重 + Fun-ControlNet-Union**（Canny/Depth/HED/MLSD/Pose） | https://platform.minimax.io/docs/guides/video-generation ；https://huggingface.co/MiniMaxAI/MiniMax-H3 |
 | **Runway Act-Two** | ❌ 吃 driving video（智能手机拍即可），官方明说**不需要深度传感器**；无深度输入 | https://help.runwayml.com/hc/en-us/articles/42311337895827-Performance-Capture-with-Act-Two |
@@ -131,7 +131,7 @@
 本轮结论**全部**建立在 TikHub 抓到的一手自媒体帖上——论文与英文技术博客那两层讲不了「真做的人卡在哪」，而本题恰恰是「在野有没有人真的这么干」。
 
 - 工具：`scripts/research/tikhub-search.mjs`（`origin/main@d230da0a6`），密钥只从 `TIKHUB_API_KEY` 环境变量读；产物已核验不含密钥。
-- 附件：`docs/research/2026-09-07-depth-motion-ref-in-the-wild/tikhub/`，10 个子目录对应 10 组关键词，每个含 `tikhub-search.json`（结构化）+ `tikhub-search.md`（人读）。
+- 附件：`docs/archive/research/2026-09-07-depth-motion-ref-in-the-wild/tikhub/`，10 个子目录对应 10 组关键词，每个含 `tikhub-search.json`（结构化）+ `tikhub-search.md`（人读）。
 - 覆盖：X（Twitter）/ 抖音 / B 站 / 小红书；原始 321 条，去重 302 条，有信号 153 条。
 - **一处脱敏**：`q09` 的一条 B 站记录里，作者自己在简介中贴了一个 32 位 hex 的 `vd_source` 追踪串（B 站的第三方跟踪参数，非我们的凭证，也无调研价值）。仓库敏感数据门岗按「疑似明文 key」拦下，已就地替换为 `REDACTED-BILIBILI-TRACKING-TOKEN`——**这是全部 10 组产物里唯一一处对原始响应的改动**。
 - **失败留痕**：`q10-cn-jimeng-motion-ref` 的小红书腿 3 次 400 失败（TikHub 侧 `Request failed`），该组小红书数据缺失；其余 9 组小红书正常。X 只走 `search_type=Top`，未做 Latest 全量翻页——所以本文的计数是**下界**，不是全网普查。

@@ -1,7 +1,7 @@
 # 先查别人：「重建一条记录时怎么保证不漏字段」+「已损坏数据怎么修」
 
 > 状态：已完成（2026-09-18）
-> 服务于 `docs/plan/2026-09-18-vendor-upsert-completeness.md`；结论抄进那份方案的「## 先查别人」节。
+> 服务于 `docs/archive/plan/2026-09-18-vendor-upsert-completeness.md`；结论抄进那份方案的「## 先查别人」节。
 
 问的两个问题：
 1. 部分更新（partial update）的语义有没有既成标准？我们要不要自造一套？

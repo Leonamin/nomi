@@ -10,14 +10,14 @@
 ## 1. 动手前必读（铁律，别跳）
 1. **`CLAUDE.md`** — 全部工程纪律（P1–P5 / R1–R14），最高真相源。
 2. **`docs/design/nomi-design-system.md`** — 任何用户可见改动**前完整读**；token-only（禁非 token 的 px/hex/圆角）。
-3. **`docs/audit/2026-06-14-ultra-deep-mechanism-audit.md`** — 这些项的出处与根因。
-4. **`docs/plan/2026-06-14-remaining-work-handoff.md`** — 总交接（含已做清单、单窗口工作方式）；本文是它的子集（去掉跨分类边那件，因为有人在做）。
+3. **`docs/archive/audit/2026-06-14-ultra-deep-mechanism-audit.md`** — 这些项的出处与根因。
+4. **`docs/archive/plan/2026-06-14-remaining-work-handoff.md`** — 总交接（含已做清单、单窗口工作方式）；本文是它的子集（去掉跨分类边那件，因为有人在做）。
 5. memory `ultra-deep-audit-2026-06-14b` — 全部来龙去脉 + 已做清单 + 坑。
 
-触发式：碰第三方库先 Context7（R5；画布是**自研非 React Flow**，别查 RF）；UI 改动先样张后实现（R8/P5）；多文件先写 `docs/plan`（R4）；取舍出 R3 对比表让用户拍板；报完成前真机走查（P3/R13）。
+触发式：碰第三方库先 Context7（R5；画布是**自研非 React Flow**，别查 RF）；UI 改动先样张后实现（R8/P5）；多文件先写 `docs/archive/plan`（R4）；取舍出 R3 对比表让用户拍板；报完成前真机走查（P3/R13）。
 
 ## 2. 工作方式（单窗口 main 直作）
-每件一个循环：**Explore 摸现状（记真实 file:line，别信本文行号——代码会漂）→ 设计/plan（按需）→ TDD 实现 → 五门全过（`pnpm run check:filesize && pnpm run lint:ci && pnpm run typecheck && pnpm test && pnpm build`）→ commit（只 add 指名文件，中文 message，结尾挂 `Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`）→ `git fetch` 对账后 push → 下一件**。UI 任务额外做真机走查。每件做完回填 `docs/plan/2026-06-14-ultra-audit-remediation.md` 进度。
+每件一个循环：**Explore 摸现状（记真实 file:line，别信本文行号——代码会漂）→ 设计/plan（按需）→ TDD 实现 → 五门全过（`pnpm run check:filesize && pnpm run lint:ci && pnpm run typecheck && pnpm test && pnpm build`）→ commit（只 add 指名文件，中文 message，结尾挂 `Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`）→ `git fetch` 对账后 push → 下一件**。UI 任务额外做真机走查。每件做完回填 `docs/archive/plan/2026-06-14-ultra-audit-remediation.md` 进度。
 
 ---
 
@@ -38,12 +38,12 @@
 - 范围：`electron/catalog/catalogCommit.ts` + 新增 `electron/main.ts` IPC handler + `src/desktop/bridge.ts` 入口 + 接入面板一个「测试连接」按钮。交付：非阻断的连通性探活（如 GET {baseUrl}/models），当场提示通不通，不拦提交。
 
 **1d. 草稿态「完全不写盘」补 renderer 端**
-- 现象/根因：点「新建空白」哪怕零编辑也立刻落盘（现已加「空壳启动 GC」兜底，是「写了再回收」的等价态）。真正「未编辑不落盘」需在 `src/workbench/NomiStudioApp.tsx` newProject 端延迟创建到第一笔编辑。差异已在 `docs/plan/2026-06-14-empty-draft-project-gc.md` 声明。
+- 现象/根因：点「新建空白」哪怕零编辑也立刻落盘（现已加「空壳启动 GC」兜底，是「写了再回收」的等价态）。真正「未编辑不落盘」需在 `src/workbench/NomiStudioApp.tsx` newProject 端延迟创建到第一笔编辑。差异已在 `docs/archive/plan/2026-06-14-empty-draft-project-gc.md` 声明。
 - 交付：newProject 不立即 createLocalProject，改为「内存草稿 + 首次编辑才落盘」；保留 GC 作兜底。**这件改 NomiStudioApp，注意和 1a 同文件——1a、1d 放一起做或顺序做，别分头改 NomiStudioApp。**
 
 ## 任务 ②（再做）文本三真相源片段 ID —— 先写 plan，别盲改
 - 现象/根因：同段源文本散成三份拷贝——创作区文档(`workbenchDocument`)、AI 拆的分镜方案(`storyboardPlan`)、落画布后的镜头节点 prompt——互不相连，改一处另两处不动，越改越对不上。根因：系统无「这是同一段文本」的概念，每次派生都是「读 trim 字符串→写进新对象」，复制即断联。入口：`src/workbench/creation/SelectionGeneratePopover.tsx`、`createNodeFromSelection.ts`、`CreationAiPanel.tsx`(runStoryboardPlanner)、`generationCanvas/agent/storyboardPlan.ts`。
-- **性质：架构改造**（引入「文本片段 ID」绑定源文本与派生物，重连 创作→分镜→画布 数据流）。**先按 R4 写 `docs/plan` + R7 六角色评审 + R3 给用户拍板方向，再动代码。本任务到「plan + 拍板」为止，不要直接改实现。**
+- **性质：架构改造**（引入「文本片段 ID」绑定源文本与派生物，重连 创作→分镜→画布 数据流）。**先按 R4 写 `docs/archive/plan` + R7 六角色评审 + R3 给用户拍板方向，再动代码。本任务到「plan + 拍板」为止，不要直接改实现。**
 
 ## 任务 ③（最后做，撞 GenerationCanvas）弹层翻转/clamp 共用原语（R13）
 - 现象/根因：画布各弹层（`NodeGenerationComposer` / `AssetPickerPopover` / `SelectionGeneratePopover` / `OnboardingFloatingPanel` / 右键菜单）的「翻转 + 防裁切」各自手写，边缘位置偶发被裁；右键菜单 clamp 用写死常数（如 148/330）。`src/design/portal.tsx` 只导出裸 `BodyPortal`，无可复用定位原语。

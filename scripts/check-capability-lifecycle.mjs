@@ -210,7 +210,7 @@ function main() {
   console.error(`  ✗ ${violations.length} 处执行路径读取了只由组件生命周期发布的 store 字段：`)
   for (const violation of violations) console.error(`    ${violation.at}  .${violation.field}  ← 唯一发布者：${violation.publishedBy.join('；')}`)
   console.error('  修法：把这份能力的 owner 上移到项目会话层（src/workbench/project/），组件挂载只做增强覆盖；')
-  console.error('  参考 src/workbench/project/documentSessionPort.ts 与 docs/lessons/capability-bound-to-component-lifecycle-reports-stale.md')
+  console.error('  参考 src/workbench/project/documentSessionPort.ts 与 docs/archive/lessons/capability-bound-to-component-lifecycle-reports-stale.md')
   process.exit(1)
 }
 

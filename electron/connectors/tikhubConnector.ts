@@ -1,6 +1,6 @@
 // TikHub 数据 connector —— 分享链接 → 无水印直链（喂现有拆解引擎 / 落项目素材）。
 //
-// 规格：docs/plan/2026-09-01-tikhub-connector-v1.md（R5 OpenAPI 对账见其中）。
+// 规格：docs/archive/plan/2026-09-01-tikhub-connector-v1.md（R5 OpenAPI 对账见其中）。
 // 只接 TikHub；BYO-key（用户设置里自带，走 catalog 的 safeStorage 凭据层）；抖音/TikTok；
 // 小红书/走势/轮询留 v2。
 //
@@ -265,7 +265,7 @@ async function fetchTikhubJson(
  *   · 401 无效 key → `{"detail": {"code": 401, "message": "Invalid API token, ..."}}`
  *   · 422 参数错   → `{"detail": [{"type": "int_parsing", "loc": [...], "msg": "..."}]}`
  * 顶层读不到时用户只会看到「TikHub 请求失败（401）」这种废话。
- * （docs.tikhub.io 并未规定统一 error envelope——见 docs/plan/2026-09-07-find-reference-connector.md。）
+ * （docs.tikhub.io 并未规定统一 error envelope——见 docs/archive/plan/2026-09-07-find-reference-connector.md。）
  */
 export function extractTikhubErrorMessage(body: JsonRecord): string {
   const top = firstString(body.message_zh, body.message);
@@ -486,7 +486,7 @@ export async function resolveShareVideo(
 // 端点按平台分族（TikHub 自己就是这么组织文档的：按平台而不是按能力）。
 // 每个平台的请求形状不同（GET query vs POST body），响应形状也不同——
 // 前者在这里吸收，后者交给 referenceSearch.ts 的 normalizer。
-// 方案：docs/plan/2026-09-07-find-reference-connector.md
+// 方案：docs/archive/plan/2026-09-07-find-reference-connector.md
 
 /** 一次检索的请求参数（平台无关的那部分）。 */
 export type ReferenceSearchQuery = {

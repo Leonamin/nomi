@@ -720,9 +720,9 @@
 | 文档 | 角色 | 关系 |
 |---|---|---|
 | `nomi-differentiation-prd-2026-05-23.md` (v1) | 差异化战略奠基 | 本 v2 PRD 的基础，§3 竞品分析仍然有效 |
-| `docs/quickstart.md` | 用户首启文档 | 需要根据 v0.2 项目包变化更新 |
-| `docs/user-guide.md` | 用户操作手册 | 每个里程碑发布同步更新 |
-| `docs/provider-integration.md` | 模型接入文档 | v0.3 Provider Pack 上线后需要重写 |
+| `docs/archive/guides/quickstart.md` | 用户首启文档 | 需要根据 v0.2 项目包变化更新 |
+| `docs/archive/guides/user-guide.md` | 用户操作手册 | 每个里程碑发布同步更新 |
+| `docs/archive/guides/provider-integration.md` | 模型接入文档 | v0.3 Provider Pack 上线后需要重写 |
 | `skills/` 各 SKILL.md | Agent 能力封装 | 受 v0.4 Agent 执行协议影响 |
 | GitHub Discussions | 公开讨论 | 每个 milestone 同步发帖 |
 | README.md | 入口文档 | 每 1-2 个 milestone 更新一次 demo 和定位 |

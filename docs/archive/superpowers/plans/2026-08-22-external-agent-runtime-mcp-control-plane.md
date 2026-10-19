@@ -5,9 +5,9 @@
 
 Codex/Pi 的源码研究和可吸收边界见：
 
-- `docs/audit/2026-08-22-agent-runtime-source-review.md`
-- `docs/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md` 的 External E0/E1
-- `docs/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md` 的 External E0/E1
+- `docs/archive/audit/2026-08-22-agent-runtime-source-review.md`
+- `docs/archive/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md` 的 External E0/E1
+- `docs/archive/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md` 的 External E0/E1
 
 唯一执行真相仍是 `ProductionRun`、Run intent/WAL、`RuntimeEnvelope`、
 `submissionOutbox`、Artifact/materialization receipt 和 per-run lock/CAS。

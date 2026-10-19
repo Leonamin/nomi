@@ -46,7 +46,7 @@ zustand store 字段没有寿命标签，所以「谁顺手创建了它谁持有
 | `residentSurfaceLifecycle.current` | `electron/capabilityCore/residentSurfaceLifecycle.ts:37` | 09-14 结构评审 | 五相显式（disabled/starting/ready/install-failed/stopped） | 能力核会话 | ✅ **正例**：把三份 nullable 影子收成一个带相的 owner |
 | `appWindowRegistry.recordsByWindowId / mainWindowId` | `electron/appWindowRegistry.ts:45-46` | 2026-09-08 素材盒根因 | 建窗登记、`closed` 自动注销 | 窗口 | ✅ **正例**：寿命随被服务对象的生命周期事件走 |
 | `rendererBridge.target` | `electron/capabilityCore/rendererBridge.ts:32` | `cb97541e8` 2026-06-22（直推 main，无 PR；正文写明「main 登记窗口 webContents…窗口销毁即清除」）| `main.ts:332` 建窗设、`destroyed` 清 | 窗口 | **拍板过**，但它是 `appWindowRegistry` 的**第二份「哪个窗口是主窗」**（晚 2.5 个月出现的登记表没回头收编它）。今天靠「拒绝第二个活动窗口」（#802 方案）不出事。**A**：`target` 改从 `getMainWindow()` 派生，删这份 `let` |
-| `spendGrant.GRANTS` | `electron/spendGrant.ts:28` | `5af99be46` 2026-06-21（方案 `docs/plan/2026-06-21-spend-confirmation-gate.md`，红队钉死的不变量）| TTL 30 min + 每节点次数；`purgeExpired` 只在铸新令牌时跑 | 用户这一次确认 | **拍板过**，绑 `nodeIds` 是拍板；**拍板时没想到「切项目」**——令牌无 `projectId` 轴，切到项目 B 后 A 的令牌仍活 30 min（推断；nodeId 随机，实际撞上概率低）。**B**（见 §2） |
+| `spendGrant.GRANTS` | `electron/spendGrant.ts:28` | `5af99be46` 2026-06-21（方案 `docs/archive/plan/2026-06-21-spend-confirmation-gate.md`，红队钉死的不变量）| TTL 30 min + 每节点次数；`purgeExpired` 只在铸新令牌时跑 | 用户这一次确认 | **拍板过**，绑 `nodeIds` 是拍板；**拍板时没想到「切项目」**——令牌无 `projectId` 轴，切到项目 B 后 A 的令牌仍活 30 min（推断；nodeId 随机，实际撞上概率低）。**B**（见 §2） |
 | `dispatcher.canvasDeleteUndoJournal` | `electron/capabilityCore/dispatcher.ts:227` | #360 2026-09-02 | 只在 undo 时删；无上限无 TTL | 一次删除 → 下一次用户动作 | 撤销时校 `entry.projectId !== lease.projectId`（`:629`）✅ 身份对；寿命无界。**A**：加上限（同 `adoptionProposalRegistry` 的 200 条淘汰法） |
 | `laneHost` `failures = {key,count}` | `electron/agentLane/laneHost.mts:356` | #607 2026-09-07 | 闭包 = 一条 lane 会话；「换 key 或成功一次归零」 | 用户这一轮 / 条件变化 | **拍板过**（注释把「连续」定义写死在两行里）；**拍板时没想到「墙被拆了」**（用户打开创作页）——**在途**（批次 2 J 块 D6 条件恢复） |
 | `mcpConfig.repairStaleMcpConfigs` 触发的宿主配置改写 | `electron/capabilityCore/mcpConfig.ts:544` ← `appIntegration.ts:163` | #519 | 每次能力核启动 | 用户装的那份 | **拍板过**（PR 正文「防止用户拿到手不能用」）；**拍板时没想到多副本并存**——**在途**（批次 3 launch-rewrite ①） |
@@ -87,7 +87,7 @@ zustand store 字段没有寿命标签，所以「谁顺手创建了它谁持有
 
 隔离守卫（`assertHostConfigWritable` `mcpConfig.ts:288`）只罩 `atomicWrite` 一处 = 19 处里 2 条路；其余 17 处靠 `getSettingsRoot()` 的 `NOMI_SETTINGS_DIR` 覆盖间接隔离。
 **判断**：静默 7 处里只有 ①（改宿主配置）和 external ①（外部输入触发落盘）碰到「不是 Nomi 自己的东西 / 不是用户的动作」；其余 5 处写的是 Nomi 自己的设置根，属可接受的启动初始化。
-「读路径写盘」这个形状 09-14 已有教训（`docs/lessons/mcp-read-path-must-not-write-host-configs.md`），当时修在 `readMcpInfo`，但**同形状在 connector 路由里还有一份**（tikhub）——教训没变成门岗，所以又长了一个。**C**（§6 C3）。
+「读路径写盘」这个形状 09-14 已有教训（`docs/archive/lessons/mcp-read-path-must-not-write-host-configs.md`），当时修在 `readMcpInfo`，但**同形状在 connector 路由里还有一份**（tikhub）——教训没变成门岗，所以又长了一个。**C**（§6 C3）。
 
 ## 4. D4 同一语义多份定义（R14.1）
 

@@ -1,8 +1,8 @@
 # 调研模板（复制这份开工）
 
 > 状态：📎 长期参考（模板本身，不是某次调研）
-> 用法：`cp docs/research/TEMPLATE.md docs/research/<date>-<topic>.md`，然后逐节填。
-> 附件目录约定：`docs/research/<date>-<topic>/`，其中自媒体检索产物固定放 `<date>-<topic>/tikhub/`。
+> 用法：`cp docs/archive/research/TEMPLATE.md docs/archive/research/<date>-<topic>.md`，然后逐节填。
+> 附件目录约定：`docs/archive/research/<date>-<topic>/`，其中自媒体检索产物固定放 `<date>-<topic>/tikhub/`。
 > 门岗：`pnpm run check:research-sources`（advisory）会检查「标题含调研/research 的文档有没有 §自媒体来源 + 有没有引用 tikhub 附件」。
 
 ---
@@ -46,10 +46,10 @@
 export TIKHUB_API_KEY="…"        # 只从环境变量读，别写进任何文件
 node scripts/research/tikhub-search.mjs \
   --q "<关键词>" --platform all --limit 20 --since <YYYY-MM-DD> \
-  --out docs/research/<date>-<topic>/tikhub/
+  --out docs/archive/research/<date>-<topic>/tikhub/
 ```
 
-产物附件：`docs/research/<date>-<topic>/tikhub/tikhub-search.json` · `…/tikhub-search.md`
+产物附件：`docs/archive/research/<date>-<topic>/tikhub/tikhub-search.json` · `…/tikhub-search.md`
 
 | 平台 | 出处 URL | 作者 | 发布时间 | 观点摘要（原文前 300 字，不改写） | 提到的框架/工具 |
 |---|---|---|---|---|---|

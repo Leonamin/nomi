@@ -8,7 +8,7 @@
 
 ## 1. 诊断：不是没有流程，是流程有两个洞
 
-**先纠一个我自己的初判**：第一轮我以为「我们没有防止界面变复杂的机制」。**查完发现错了**——我们有一套完整的**七闸页面设计流程**（`docs/design/page-design-process.md`），有 howto，有工具链（`check:mockup-contracts` / `check:design-lab` / `inject-mockup-tokens`），hook 里还有设计关键词检测。
+**先纠一个我自己的初判**：第一轮我以为「我们没有防止界面变复杂的机制」。**查完发现错了**——我们有一套完整的**七闸页面设计流程**（`docs/archive/design/page-design-process.md`），有 howto，有工具链（`check:mockup-contracts` / `check:design-lab` / `inject-mockup-tokens`），hook 里还有设计关键词检测。
 
 那为什么界面还是越长越杂？查出来是**两个具体的洞**，都是机械问题，不是态度问题：
 
@@ -30,17 +30,17 @@
 
 ### 旁证：事后体检也不可靠
 
-`docs/audit/redundancy-backlog.md` 里 B7 标着「【第 2 轮·**用户点名**】模型选择弹窗零信息架构」——**审计第 1 轮没扫出来，是用户自己撞上的。** 所以不能靠「事后再扫一遍」补救，得在画的那一刻就有约束。
+`docs/archive/audit/redundancy-backlog.md` 里 B7 标着「【第 2 轮·**用户点名**】模型选择弹窗零信息架构」——**审计第 1 轮没扫出来，是用户自己撞上的。** 所以不能靠「事后再扫一遍」补救，得在画的那一刻就有约束。
 
 ## 先查别人
 
-完整报告：[`docs/research/2026-09-07-subtractive-design/prior-art.md`](../research/2026-09-07-subtractive-design/prior-art.md)（含 TikHub 自媒体检索产物）
+完整报告：[`docs/archive/research/2026-09-07-subtractive-design/prior-art.md`](../research/2026-09-07-subtractive-design/prior-art.md)（含 TikHub 自媒体检索产物）
 
 **① 依赖里已有？** ❌ 没有。
 - `ls node_modules | grep eslint-plugin` → 只有 `eslint-plugin-react-hooks`、`eslint-plugin-react-refresh`，**无任何设计系统 / 图标一致性 lint**。
 
 **② 仓库里已有？** ✅ 有，而且**这一问翻转了整个方案**。
-- 七闸页面设计流程：`docs/design/page-design-process.md:12-38`（全景 + 每闸防的真实事故）
+- 七闸页面设计流程：`docs/archive/design/page-design-process.md:12-38`（全景 + 每闸防的真实事故）
 - 控件层级 L1/L2/L3/L4 + 三条硬规则：`docs/design/nomi-design-system.md:101-152`
 - 样张工具链：`package.json:157`（`check:mockup-contracts`）、`scripts/inject-mockup-tokens.mjs`、`scripts/check-design-lab.mjs`
 - 事后 UX 体检（8 类固定尺子 + 四档分诊）：`.claude/skills/nomi-ux-audit/SKILL.md`
@@ -73,7 +73,7 @@
 | # | 做了什么 | 落点 | 补的是哪个洞 |
 |---|---|---|---|
 | 1 | **建出 `nomi-design-flow` 技能** | `.claude/skills/nomi-design-flow/SKILL.md` | 洞 1 |
-| 2 | **闸② 补「新面」那一半：三件产物** | `docs/design/page-design-process.md` §2.5（真相源）+ `nomi-design-system.md` §1.5.5（索引） | 洞 2 |
+| 2 | **闸② 补「新面」那一半：三件产物** | `docs/archive/design/page-design-process.md` §2.5（真相源）+ `nomi-design-system.md` §1.5.5（索引） | 洞 2 |
 | 3 | **三件产物进 hook 闸①** | `scripts/claude-hooks/self-check.sh` | 洞 2 的 salience |
 | 4 | **图标语义门岗** | `scripts/check-icon-semantics.mjs` + `.node-test.mjs` + baseline，挂进 `gates:contracts` | 用户点名的 icon 问题 |
 
@@ -116,4 +116,4 @@
 
 - **`.claude/skills/` 是 gitignore 的本机数据**，nomi-* 技能没有仓内真相源——这正是洞 1 的成因（技能会随机器丢失且无人发现）。要不要像 hooks 那样立 `scripts/claude-skills/` 真相源 + postinstall 安装 + `check:claude-skills` 同步门岗？**建议做，但另起一件**，本次不夹带。
 - 图标存量 3 条待清（需先看真实 3D 工具栏）。
-- 第一个跑这套新流程的案例：TikHub「找参考」，见 `docs/research/2026-09-07-tiktok-creative-intelligence.md` §4 与后续设计文档。
+- 第一个跑这套新流程的案例：TikHub「找参考」，见 `docs/archive/research/2026-09-07-tiktok-creative-intelligence.md` §4 与后续设计文档。

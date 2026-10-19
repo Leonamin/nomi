@@ -1,7 +1,7 @@
 # 导入中节点 = 进度驱动的 img-fx 渐显（2026-09-14）
 
 > 状态：📋 实施方案 · 样张已拍板（用户 2026-09-14）
-> 样张：`docs/design/mockups/2026-09-14-import-progress-reveal.svg`
+> 样张：`docs/archive/design/mockups/2026-09-14-import-progress-reveal.svg`
 > 诊断底本：主会话 2026-09-14「导入媒体时那根蓝色粗条是什么」只读诊断（带 file:line）
 > 依赖：`fix/canvas-media-preview-lod-20260914`（PR #776 v2）先合——预览派生的唯一 owner 在那条分支
 
@@ -37,7 +37,7 @@
 
 ### 不动项
 - 生成路径的时间驱动揭示、1100ms 卸载闸、音频等高灰条、失败卡：逐字不动。
-- 任务卡 / 时间轴：仍然只吃文本，不接动效（`docs/plan/2026-09-09-process-feedback-imgfx.md:13`）。
+- 任务卡 / 时间轴：仍然只吃文本，不接动效（`docs/archive/plan/2026-09-09-process-feedback-imgfx.md:13`）。
 - **没有进度线**：底部那根 2px 条不做，无 GPU 兜底那格也不做——马赛克本身就是进度（用户 2026-09-14 拍板）。
 - 导入的收什么类型 / 多大 / 要不要转码：归另一条 lane（`fix/media-import-single-owner-20260914`），本 PR 不碰。
 

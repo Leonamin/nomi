@@ -10,8 +10,8 @@ Category: repository assets and documentation; no product behavior or new UI.
 | Cell | Decision / evidence |
 | --- | --- |
 | ★1 User job | Find implementation, open historical design samples, and inspect original verification evidence without root-level scratch folders. Preserve real media, test inputs, approved samples and receipts. |
-| ★2 Owner | Existing `docs/design/` owns design records; `docs/archive/` owns retired handoffs. Runtime output paths remain owned by their existing walkthrough scripts. No application state owner changes. Repository-wide path/content searches identify consumers; no production mutator is changed. |
-| ★3 Reuse | Use existing documentation directories and Git history. Consolidate historical samples under `docs/design/archive/`; update incoming and relative links. No new framework or duplicate implementation. |
+| ★2 Owner | Existing `docs/archive/design/` owns design records; `docs/archive/` owns retired handoffs. Runtime output paths remain owned by their existing walkthrough scripts. No application state owner changes. Repository-wide path/content searches identify consumers; no production mutator is changed. |
+| ★3 Reuse | Use existing documentation directories and Git history. Consolidate historical samples under `docs/archive/design/archive/`; update incoming and relative links. No new framework or duplicate implementation. |
 | ★4 States | Not applicable: file organization only; existing app states and zh/en UI remain unchanged. Keep historical verification claims dated and unchanged. |
 | ★9 Acceptance / rollback | Compare moved bytes, verify affected local links, preserve referenced assets, run repository gates and inspect the diff. Revert the cleanup commit to restore all tracked content. Independent acceptance is not required for this category. |
 
@@ -19,7 +19,7 @@ Category: repository assets and documentation; no product behavior or new UI.
 
 - Remove three root-level experimental screenshot folders; retain the relay walkthrough source and ignore regenerated local output.
 - Move retired root reports and the README-only runtime experiment into `docs/archive/` without changing their historical status claims.
-- Consolidate `docs/mockups/`, `docs/prototypes/`, `docs/plan/mockups/`, `docs/ui-designs/` and output-only design samples under `docs/design/archive/`.
+- Consolidate `docs/mockups/`, `docs/prototypes/`, `docs/archive/plan/mockups/`, `docs/ui-designs/` and output-only design samples under `docs/archive/design/archive/`.
 - Keep provider evidence, A/B source videos and generated images, anchor references, failure captures, acceptance screenshots, JSON receipts and the feel seed ledger.
 - Delete only derived camera frame/contact sheets with retained source video, and unreferenced cover contact sheets. Keep rejected paid images because generation receipts refer to them.
 - Clean ignored local `.tmp/` and `test-results/` from the original checkout after repository validation. These are prior results, not current verification.
@@ -30,24 +30,24 @@ Root-cause production contract: not applicable; this is an authorized asset/docu
 
 | Original | Current |
 | --- | --- |
-| `docs/mockups/c1-generation-error.html` | `docs/design/archive/c1-generation-error.html` |
-| `docs/mockups/c5-text-node.html` | `docs/design/archive/c5-text-node.html` |
-| `docs/mockups/node-error-state-redesign.html` | `docs/design/archive/node-error-state-redesign.html` |
-| `docs/mockups/selection-dropdown-redesign.html` | `docs/design/archive/selection-dropdown-redesign.html` |
-| `docs/mockups/unified-assistant-panel.html` | `docs/design/archive/unified-assistant-panel.html` |
-| `docs/prototypes/canvas-workflow-plugin.html` | `docs/design/archive/canvas-workflow-plugin.html` |
-| `docs/prototypes/library-discovery.html` | `docs/design/archive/library-discovery.html` |
-| `docs/prototypes/workflow-library.html` | `docs/design/archive/workflow-library.html` |
-| `docs/plan/mockups/2026-06-09-plan-card.html` | `docs/design/archive/2026-06-09-plan-card.html` |
-| `docs/plan/mockups/2026-08-01-nomi-bilingual-homepage.html` | `docs/design/archive/2026-08-01-nomi-bilingual-homepage.html` |
-| `docs/plan/mockups/2026-09-07-storyboard-table-node/now-01-right-rail-cards.png` | `docs/design/archive/2026-09-07-storyboard-table-node/now-01-right-rail-cards.png` |
-| `docs/plan/mockups/2026-09-07-storyboard-table-node/now-02-landed-frames-lose-columns.png` | `docs/design/archive/2026-09-07-storyboard-table-node/now-02-landed-frames-lose-columns.png` |
-| `docs/plan/mockups/editor-toolbar-layout.html` | `docs/design/archive/editor-toolbar-layout.html` |
-| `docs/ui-designs/3d-node-canvas-state.png` | `docs/design/archive/3d-node-canvas-state.png` |
-| `outputs/issue-198-group-port-design/index.html` | `docs/design/archive/group-port-design.html` |
-| `outputs/issue-198-group-port-design/01-collapsed-group-port.png` | `docs/design/archive/group-port-01-collapsed.png` |
-| `outputs/issue-198-group-port-design/02-expanded-group-lines.png` | `docs/design/archive/group-port-02-expanded.png` |
-| `outputs/canvas-card-stack-20260827/00-approved-mockup.png` | `docs/design/archive/canvas-card-stack-approved.png` |
+| `docs/mockups/c1-generation-error.html` | `docs/archive/design/archive/c1-generation-error.html` |
+| `docs/mockups/c5-text-node.html` | `docs/archive/design/archive/c5-text-node.html` |
+| `docs/mockups/node-error-state-redesign.html` | `docs/archive/design/archive/node-error-state-redesign.html` |
+| `docs/mockups/selection-dropdown-redesign.html` | `docs/archive/design/archive/selection-dropdown-redesign.html` |
+| `docs/mockups/unified-assistant-panel.html` | `docs/archive/design/archive/unified-assistant-panel.html` |
+| `docs/prototypes/canvas-workflow-plugin.html` | `docs/archive/design/archive/canvas-workflow-plugin.html` |
+| `docs/prototypes/library-discovery.html` | `docs/archive/design/archive/library-discovery.html` |
+| `docs/prototypes/workflow-library.html` | `docs/archive/design/archive/workflow-library.html` |
+| `docs/archive/plan/mockups/2026-06-09-plan-card.html` | `docs/archive/design/archive/2026-06-09-plan-card.html` |
+| `docs/archive/plan/mockups/2026-08-01-nomi-bilingual-homepage.html` | `docs/archive/design/archive/2026-08-01-nomi-bilingual-homepage.html` |
+| `docs/archive/plan/mockups/2026-09-07-storyboard-table-node/now-01-right-rail-cards.png` | `docs/archive/design/archive/2026-09-07-storyboard-table-node/now-01-right-rail-cards.png` |
+| `docs/archive/plan/mockups/2026-09-07-storyboard-table-node/now-02-landed-frames-lose-columns.png` | `docs/archive/design/archive/2026-09-07-storyboard-table-node/now-02-landed-frames-lose-columns.png` |
+| `docs/archive/plan/mockups/editor-toolbar-layout.html` | `docs/archive/design/archive/editor-toolbar-layout.html` |
+| `docs/ui-designs/3d-node-canvas-state.png` | `docs/archive/design/archive/3d-node-canvas-state.png` |
+| `outputs/issue-198-group-port-design/index.html` | `docs/archive/design/archive/group-port-design.html` |
+| `outputs/issue-198-group-port-design/01-collapsed-group-port.png` | `docs/archive/design/archive/group-port-01-collapsed.png` |
+| `outputs/issue-198-group-port-design/02-expanded-group-lines.png` | `docs/archive/design/archive/group-port-02-expanded.png` |
+| `outputs/canvas-card-stack-20260827/00-approved-mockup.png` | `docs/archive/design/archive/canvas-card-stack-approved.png` |
 | `CODEX-HANDOFF.md` | `docs/archive/2026-09-28-canvas-media-dimensions-handoff.md` |
 | `CODEX-REPORT.md` | `docs/archive/2026-09-06-agent-panel-v4-report.md` |
 | `.superpowers/sdd/2026-09-01-agent-architecture-test-system/task-1-report.md` | `docs/archive/2026-09-01-agent-architecture-task-1.md` |
@@ -86,8 +86,8 @@ Original bytes remain recoverable from commit `299905da9bab75bf903635a2451ec18d0
 | `outputs/en-prompt-ab-20260902/camera/zh-push-first.png` | 980215 | Derived camera frame/contact sheet; the corresponding MP4 is retained |
 | `outputs/en-prompt-ab-20260902/camera/zh-push-firstlast.png` | 1833532 | Derived camera frame/contact sheet; the corresponding MP4 is retained |
 | `outputs/en-prompt-ab-20260902/camera/zh-push-last.png` | 832373 | Derived camera frame/contact sheet; the corresponding MP4 is retained |
-| `docs/design/covers/contact-sheet-v3.png` | 3414117 | Unreferenced intermediate cover contact sheet |
-| `docs/design/covers/upstream-contact-sheet.png` | 774348 | Unreferenced intermediate cover contact sheet |
+| `docs/archive/design/covers/contact-sheet-v3.png` | 3414117 | Unreferenced intermediate cover contact sheet |
+| `docs/archive/design/covers/upstream-contact-sheet.png` | 774348 | Unreferenced intermediate cover contact sheet |
 
 Total removed: 29 files, 24,660,746 bytes.
 

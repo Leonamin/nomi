@@ -63,7 +63,7 @@ A 是「能在早层拦的留给了晚层」，B 是「能并行给出的证据�
   mcp-journey 1m04s / mcp-elicitation 26.5s / real-user-journeys 3m01s / canvas-critical 1m28s）。
   另跑了阳性对照（三步两红）确认「红了继续跑、退出码=任一红」。
 - **顺手补的一条**：走查会重写**已跟踪的**证据文件（`outputs/canvas-card-stack-20260827/*.png`
-  实测 677KB → 184KB、`docs/plan/…-triage-board-evidence/*.png` 同理）。
+  实测 677KB → 184KB、`docs/archive/plan/…-triage-board-evidence/*.png` 同理）。
   这堆脏东西极易被 `git add -A` 捎进无关提交，所以链跑完会点名列出来。
 - **刻意没做**：没有把 `test:e2e:ci-chain` 塞进 `pnpm run gates`。
   塞进去等于让每个功能 lane 都占着全机那把锁跑十分钟走查，

@@ -1,7 +1,7 @@
 # Nomi — Engineering Discipline
 
-> Read this file before acting. Current fork knowledge starts at `wiki/index.md` (configured in `.agents/wiki-path`). Triggered details: `docs/engineering-rules.md`, `docs/engineering/`, `docs/lessons/INDEX.md`, `docs/GLOSSARY.md`. Message-keyed hints come from `scripts/claude-hooks/self-check.sh`.
-> **Maintenance discipline**: this file is curated, not appended — it holds only what makes Claude err once removed, and its bytes may only shrink; adding one rule means deleting two. New bumps go to `docs/lessons/` or the hook's `violations.log`. **Never hand-edit `AGENTS.md`**: to change discipline, change only this file, then run `pnpm run gen:agents`.
+> Read before acting. Current fork knowledge starts at `wiki/index.md` (configured in `.agents/wiki-path`). Triggered details: `docs/engineering-rules.md`, `docs/engineering/`, `docs/archive/lessons/INDEX.md`, `docs/GLOSSARY.md`. Message hints: `scripts/claude-hooks/self-check.sh`.
+> **Maintenance discipline**: this file is curated, not appended — it holds only what makes Claude err once removed, and its bytes may only shrink; adding one rule means deleting two. New bumps go to `docs/archive/lessons/` or the hook's `violations.log`. **Never hand-edit `AGENTS.md`**: to change discipline, change only this file, then run `pnpm run gen:agents`.
 
 ## Project overview
 

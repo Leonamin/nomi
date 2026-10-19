@@ -4,8 +4,8 @@
 
 > 状态：已实现（随 `fix/canvas-media-preview-lod-20260914` 交付，取代 PR #776；机制来自 `ba753cfa5`）
 > 上游调研（数字、根因、别人怎么做、验收预算都在那里）：
-> [docs/research/2026-09-12-canvas-perf-at-scale/README.md](../research/2026-09-12-canvas-perf-at-scale/README.md) §1.5 / §5 S5 / §6
-> 前一刀（S3 + S6 + 三条门岗场景）：[docs/plan/2026-09-12-canvas-perf-s3-s6.md](2026-09-12-canvas-perf-s3-s6.md) · PR #763
+> [docs/archive/research/2026-09-12-canvas-perf-at-scale/README.md](../research/2026-09-12-canvas-perf-at-scale/README.md) §1.5 / §5 S5 / §6
+> 前一刀（S3 + S6 + 三条门岗场景）：[docs/archive/plan/2026-09-12-canvas-perf-s3-s6.md](2026-09-12-canvas-perf-s3-s6.md) · PR #763
 >
 > 本文件只写「这一刀做什么、不做什么、怎么回滚、凭什么算做完」。
 

@@ -5,7 +5,7 @@
 状态：已实施，PR #683 待评审；本次补齐可复核的方案引用。
 
 ## 范围与原因
-用户阅读回答时，过程明细应收敛，四个工作面的面板宽度与外框应一致。实施依据为 #678 批准的 `docs/design/2026-09-09-agent-process-state-and-panel-frame.md`；具体 owner、回滚和验收见 [B2c 实施计划](2026-09-09-b2c-panel-form.md)。本文件整理已有调研，不宣称新增调研或改变已批准语义。
+用户阅读回答时，过程明细应收敛，四个工作面的面板宽度与外框应一致。实施依据为 #678 批准的 `docs/archive/design/2026-09-09-agent-process-state-and-panel-frame.md`；具体 owner、回滚和验收见 [B2c 实施计划](2026-09-09-b2c-panel-form.md)。本文件整理已有调研，不宣称新增调研或改变已批准语义。
 
 ## 先查别人
 - [Beautiful UI Thinking State](https://www.beautifului.dev/#thinking-state)：单个可展开入口承载过程步骤，采用交互思路，内容继续由现役 V4FlowRow 渲染。
@@ -25,4 +25,4 @@
 只参考视觉形态，没有引入框架、SDK、新协议或其新层，没有新增 framework-surface 字段。面板宽度沿用 editingPanelLayout 单一 owner，品牌复用 NomiBrand。
 
 ## 不动项 / 回滚 / 验收
-不改 B2a 行为和冻结区；本次仅补文档引用，不变更生产代码。回滚本文件及 PR 引用即可。`node scripts/check-prior-art.mjs --pr` 核对方案及 PR；完整 gates exit 0 后推送，正常提交/推送 hooks。B2c 真机与批准样张对账见 `docs/plan/b2c-form-evidence/`。
+不改 B2a 行为和冻结区；本次仅补文档引用，不变更生产代码。回滚本文件及 PR 引用即可。`node scripts/check-prior-art.mjs --pr` 核对方案及 PR；完整 gates exit 0 后推送，正常提交/推送 hooks。B2c 真机与批准样张对账见 `docs/archive/plan/b2c-form-evidence/`。

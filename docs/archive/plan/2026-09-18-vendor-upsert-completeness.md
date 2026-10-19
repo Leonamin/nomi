@@ -4,7 +4,7 @@
 
 > 状态：已实施（PR #816）
 > 根因合同：[docs/fixes/2026-09-18-vendor-upsert-drops-fields.root-cause.json](../../fixes/2026-09-18-vendor-upsert-drops-fields.root-cause.json)
-> 调研：[docs/research/2026-09-18-record-rebuild-completeness/prior-art.md](../research/2026-09-18-record-rebuild-completeness/prior-art.md)
+> 调研：[docs/archive/research/2026-09-18-record-rebuild-completeness/prior-art.md](../research/2026-09-18-record-rebuild-completeness/prior-art.md)
 
 ## 要解决的真实摩擦
 

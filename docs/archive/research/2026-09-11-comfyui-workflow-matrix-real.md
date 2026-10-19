@@ -2,7 +2,7 @@
 
 > 回答的问题：**「ComfyUI 各种工作流都能接进 Nomi 并且好用吗？」**
 >
-> 8 月那份 `docs/research/2026-08-25-comfyui-workflow-matrix-report.md` 是 fake HTTP server 跑的合同层结论；
+> 8 月那份 `docs/archive/research/2026-08-25-comfyui-workflow-matrix-report.md` 是 fake HTTP server 跑的合同层结论；
 > 本次是**第一次对着本机真 ComfyUI 跑**，只记真机事实，不复述其合同层结论。
 > 纪律：像真人一样只走界面（粘贴 / 点按钮 / 看屏幕），不预埋 catalog、不灌 store、不发 IPC。
 
@@ -157,7 +157,7 @@ Flux / WAN / SVD **按要求没下**，只用其工作流测第③步。
   `'分析工作流'`（现在是「分析」）。也就是说：**自这些文案改名以来它一次都没跑过**，
   而它的结论还挂在那儿当证据。
 - **为什么没人发现**：它住在 `scripts/` 不在 CI 里；`check:walkthroughs` 是**静态**检查、不执行走查
-  （docs/lessons 里「gates 绿 ≠ 走查跑过」正是这条）。
+  （docs/archive/lessons 里「gates 绿 ≠ 走查跑过」正是这条）。
 - **更要紧的**：它一上来就 `writeFileSync(model-catalog.json, { vendors: [{ enabled: true }] })`，
   **从一个真实用户到不了的状态起跑**——恰好把 BUG-1 跳过去了。
   唯一覆盖这条路的测试，把这条路上两个坏掉的闸中的一个直接写成了前提。
@@ -316,7 +316,7 @@ Flux / WAN / SVD **按要求没下**，只用其工作流测第③步。
 
 ## 证据清单
 
-全部在 `docs/research/2026-09-11-comfyui-matrix-evidence/`：
+全部在 `docs/archive/research/2026-09-11-comfyui-matrix-evidence/`：
 
 - **截图** 46 张（`<row>-<step>.png`；`00-/02-/03-` 接入，`row*-01-pasted/02-analyzed` 每行两步，
   `row1b-03/04` 导入闸与确认后，`C*`/`P*` 启用探针，`PB-*` 落盘探针，`D*` 画布与模型选择器）

@@ -3,7 +3,7 @@
  *
  * 一套折叠语言，预置供应商卡 / 「其他模型」卡共用（P1 单一来源，P4 通用）：
  * 默认折成一行（logo + 名/副标题 + 状态胶囊 + chevron），点 header 就地展开 body。
- * 样张：docs/design/mockups/onboarding-panel-A.html；规范：docs/plan/2026-06-07-onboarding-panel-redesign.md §5.1
+ * 样张：docs/archive/design/mockups/onboarding-panel-A.html；规范：docs/archive/plan/2026-06-07-onboarding-panel-redesign.md §5.1
  */
 import React, { type JSX } from 'react'
 import { useTranslation } from 'react-i18next'

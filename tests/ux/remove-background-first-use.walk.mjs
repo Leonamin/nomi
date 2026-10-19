@@ -204,7 +204,7 @@ try {
     })
     return { ok: true, seen }
     // 不在这里 catch：让错误原样冒到外面，否则 harness 自己的 bug 会被洗成产品结论
-    // （docs/lessons：harness 的 catch 会把自己的 bug 洗成产品结论）。
+    // （docs/archive/lessons：harness 的 catch 会把自己的 bug 洗成产品结论）。
   }).catch((e) => ({ ok: false, error: String(e && e.message ? e.message : e).slice(0, 300) }))
 
   if (!warm.ok) {

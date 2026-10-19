@@ -14,7 +14,7 @@ fork 전용 웹 호스트와 웹 전개 코드는 `web/`, `scripts/web/`에 있�
 
 ## 근거와 확인일
 
-- 경계 문서: [docs/fork-boundary.md](../../docs/archive/guides/fork-boundary.md)
+- 경계 문서: [docs/archive/guides/fork-boundary.md](../../docs/archive/guides/fork-boundary.md)
 - 초기 기준 및 사용자 승인 기록: [개인용 웹 설계·검증 계획](../../docs/archive/plan/2026-10-12-personal-web.md)
 - 웹 호스트 구현: [web/server.ts](../../web/server.ts), [web/rpc.ts](../../web/rpc.ts)
 - 확인일: 2026-10-16. 제품 범위는 현재 코드와 fork 문서에서 확인했다. 이후 upstream 동기화로 달라질 수 있다.

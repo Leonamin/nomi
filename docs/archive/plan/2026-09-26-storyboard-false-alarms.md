@@ -3,7 +3,7 @@
 > 状态：🚧 实施完，待合入（v0.22.1）· 分支 `claude/storyboard-false-alarms`（从 origin/main 切出）
 > 根因合同：[`docs/fixes/2026-09-26-storyboard-resolve-vendor-rejected.root-cause.json`](../../fixes/2026-09-26-storyboard-resolve-vendor-rejected.root-cause.json)、
 > [`docs/fixes/2026-09-26-storyboard-planned-first-frame-slot.root-cause.json`](../../fixes/2026-09-26-storyboard-planned-first-frame-slot.root-cause.json)；
-> 症状簇结构评审：[`docs/audit/2026-09-26-storyboard-false-alarms-structure-review.md`](../audit/2026-09-26-storyboard-false-alarms-structure-review.md)。
+> 症状簇结构评审：[`docs/archive/audit/2026-09-26-storyboard-false-alarms-structure-review.md`](../audit/2026-09-26-storyboard-false-alarms-structure-review.md)。
 > 这是纯 bug 修复（根因明确、不改产品行为的意图），按 P5 不走 grill 轮；本文只写范围、不动项、回滚与验收门，满足 R4/R5②。
 
 ## 用户看到的

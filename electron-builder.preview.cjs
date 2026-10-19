@@ -22,7 +22,7 @@ module.exports = {
    * electron/capabilityCore/host.ts 顶部注释记的那次 headless 偶发）。
    *
    * 于是 Preview 得到 `<appData>/Nomi Preview` 与 `Documents/Nomi Preview Projects`，
-   * 也就是 docs/release-process.md 一直在写、但直到今天才真正成立的那句话。
+   * 也就是 docs/archive/guides/release-process.md 一直在写、但直到今天才真正成立的那句话。
    * 首次启动会把稳定版那份配置**拷**一份过来（electron/settings/sideBySideInstallSeed.ts）：
    * 拷贝可以，共用不行。
    */

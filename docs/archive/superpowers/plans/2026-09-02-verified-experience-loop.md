@@ -1,7 +1,7 @@
 # Verified Experience Loop 实现计划
 
 > 状态：🚧 canonical Host 替换接线已完成；真实用户任务与打包运行证据待补
-> 设计规格：`docs/superpowers/specs/2026-09-02-verified-experience-loop-design.md`
+> 设计规格：`docs/archive/superpowers/specs/2026-09-02-verified-experience-loop-design.md`
 > 目标：完成自动候选提炼、证据闸门、路由、生命周期与会话完成接线；不做远端训练、不自动合并代码。
 
 ## 任务 1：建立严格领域合同（TDD）
@@ -38,7 +38,7 @@
 
 - 仅允许 green `fact` 通过显式适配器写入现有 memory 事件；yellow/red 不注入 prompt。
 - 为 extractor 的结构化 envelope 写开发者文档和示例；明确 Git/Skill/Runbook/ADR/training-data 的边界。
-- 更新 `docs/ARCHITECTURE-NOW.md` 一行，标注当前实现的触发器和“不自动改生产”的边界。
+- 更新 `docs/archive/guides/ARCHITECTURE-NOW.md` 一行，标注当前实现的触发器和“不自动改生产”的边界。
 
 ## 任务 7：验证与交付
 

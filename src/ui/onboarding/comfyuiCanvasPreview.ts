@@ -1,5 +1,5 @@
 // 「画布节点预览 · 实时」的视图模型：**这条工作流在生成画布上会长成什么样**（纯函数，可单测）。
-// plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+// plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
 //
 // 为什么要这块：用户配完绑定，直到回画布点开节点才知道自己配出了什么。中间隔着「保存 → 关设置 →
 // 建节点 → 选模型」四步，配错要走完全程才发现（D1：effect-first，先给效果再谈配置）。

@@ -128,7 +128,7 @@ export interface SandboxManagerLike {
  * 「盘上有一份真的」，它**不改**任何人手里已经拿着的字符串。Electron 只给自己进程的 `fs`
  * 打了补丁，所以运行时那句 `existsSync(归档里的路径)` 回 `true`、当场认定找到了、
  * 不再往后试别的候选——然后把这个路径 `spawn` 出去，内核回 `ENOTDIR`。
- * 实测见 `docs/lessons/2026-09-12-sandbox-runtime-not-unpacked.md`。
+ * 实测见 `docs/archive/lessons/2026-09-12-sandbox-runtime-not-unpacked.md`。
  *
  * 所以 0.0.75 开的那三个显式入口（`seccomp.applyPath` / `javaAgentJarPath` /
  * `windows.srtWin.path`，见 `dist/sandbox/sandbox-config.d.ts`）不是备选项，是**唯一**

@@ -1,9 +1,9 @@
 # Agent 工具层根修方案（2026-09-06）
 
-> ⛔ **2026-09-07 被 [`docs/plan/2026-09-07-agent-runtime-rebuild.md`](2026-09-07-agent-runtime-rebuild.md) 取代（用户改判重做）。**
+> ⛔ **2026-09-07 被 [`docs/archive/plan/2026-09-07-agent-runtime-rebuild.md`](2026-09-07-agent-runtime-rebuild.md) 取代（用户改判重做）。**
 > 本文的渐进修方向已不再采用，保留只为追溯证据与被吸收的结论。
 
-状态：⛔ 已废弃（2026-09-07 被重做方案取代）—— 原状态是「方案待拍板」。上游证据是 `docs/audit/2026-09-06-agent-tool-layer-audit.md`（真机实测：`canvas.write` 18 次调用 0 次通过）。
+状态：⛔ 已废弃（2026-09-07 被重做方案取代）—— 原状态是「方案待拍板」。上游证据是 `docs/archive/audit/2026-09-06-agent-tool-layer-audit.md`（真机实测：`canvas.write` 18 次调用 0 次通过）。
 本文只写方案，**不含实现**；拍板后按 §7 分段落地。
 
 ---
@@ -56,7 +56,7 @@
 - **不引入 Vercel AI SDK 依赖。** 只借 `UIMessage.parts` 的**结构**（一条有序流 + 位置即顺序），不装包。
 - **不改 MCP 对外协议版本**；对外工具面随刀 3 一起收敛，但 `tools/list` 的确定性顺序保持不变
   （`agentToolCatalog.ts:31-35` 已合规，见审计 V9）。
-- **不动 `docs/design/2026-09-06-agent-panel-v4.md` 的设计定稿。**
+- **不动 `docs/archive/design/2026-09-06-agent-panel-v4.md` 的设计定稿。**
 - **不在提示词里加任何新的「请不要把数组写成字符串」。** 相反，刀 2 落地后**删掉现有三处**
   （`storyboardLauncher.ts:40`、`:80`，以及渲染层那半个 `parseJsonArrayString`）——P1 加新必删旧。
 
@@ -214,7 +214,7 @@ Anthropic 要求「Write **instructive** error messages… include what went wro
 **门岗做成棘轮**（基线只减不增），和 `check:heavy-path` / `check:boundaries` 同一套路。
 
 另加一条**离线一次写对率回归**（零额度）：把真机抓到的**真实错误参数**
-（`docs/audit/attachments/2026-09-06-tool-probe.jsonl` 里那些 `"nodes": "[...]"`）
+（`docs/archive/audit/attachments/2026-09-06-tool-probe.jsonl` 里那些 `"nodes": "[...]"`）
 钉成 fixture，断言「归一化后应当通过」+「若仍不通过，错误必须带 `path`/`expected`/`nextAction`」。
 这是把本次 bug 变成永久回归测试。
 
@@ -242,7 +242,7 @@ Anthropic 要求「Write **instructive** error messages… include what went wro
 | `fix/agent-v4-real-use-20260906` | **已全部合入 `origin/main`**（`git rev-list --count origin/main..` = 0）。本文所有 file:line 都是在 `origin/main`（`d974e6a55`）上核对的 | 无冲突 |
 | `fix/design-lab-wired-states-20260906` | 正在改 `agentPanelV4Projection.ts` 的 `sortedItems()` 第二键：`itemId` 字典序 → **宿主数组下标**（提交 `f2b5a5c4a`），另改实验室/走查 | ⚠️ **同一个函数**。**先合它，再动刀 1**。它的改动方向与本方案一致（用写入顺序而不是哈希），是刀 1 的正确前置；刀 1 落地后 `sortedItems()` 退化成单键 `turnSeq`，那两个 tie-break 一起删（P1）。**本方案不重写它、不与它并行改同一个函数。** |
 | `feat/design-lab-agent-panel-20260906` | 设计实验室状态格 | 刀 1 会改宿主快照形状 → 实验室夹具的 items 要补 `turnSeq`。作为刀 1 的验收项之一，不单独立轨。 |
-| 分镜投影清零等在途修复 | 见 `docs/lessons/roadmap-20260905-four-cuts.md` 一族 | 刀 3 会改 `canvas.write` 的工具切分 → 与分镜写入路径相邻。**刀 3 排在分镜相关 PR 全部合入之后**。 |
+| 分镜投影清零等在途修复 | 见 `docs/archive/lessons/roadmap-20260905-four-cuts.md` 一族 | 刀 3 会改 `canvas.write` 的工具切分 → 与分镜写入路径相邻。**刀 3 排在分镜相关 PR 全部合入之后**。 |
 
 ---
 

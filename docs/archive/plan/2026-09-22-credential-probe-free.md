@@ -31,7 +31,7 @@
 
 ## 先查别人
 
-报告全文：`docs/research/2026-09-22-credential-probe-free/prior-art.md`（四问齐全）。结论摘要
+报告全文：`docs/archive/research/2026-09-22-credential-probe-free/prior-art.md`（四问齐全）。结论摘要
 （每条都带出处；`file:line` 与 URL 为准）：
 
 - **依赖里已有？没有。** `node_modules/@ai-sdk/provider/dist/index.d.ts:1` 的 `ProviderV3` 只有三个模型工厂，既没有 `validateCredential` 这类端点，也没有「这次调用花多少」的声明位；`node_modules/electron/electron.d.ts:1` 的 `safeStorage` 只管凭据怎么存，不管怎么验。
@@ -40,7 +40,7 @@
 - **仓库里已有（反例）**：`electron/vendor/vendorBaseFallback.ts:12` 的实测注释说 apimart 对无鉴权 `GET /v1/models` 恒 401——所以模型列表**不能**当它的 key 判据，这正是 09-17 裁决要求实测证伪的那条。
 - **生态里已有（共识形状）**：LiteLLM 把「真打上游、文档明说要花钱」的 `/health` 与只查本地配置的 `/health/readiness` 分开，并让运维指定便宜模型 <https://docs.litellm.ai/docs/proxy/health>。
 - **生态里已有（免费 key 判据）**：OpenAI <https://platform.openai.com/docs/api-reference/models/list>、Anthropic <https://docs.anthropic.com/en/api/models-list>、OpenRouter 的 `GET /api/v1/key` <https://openrouter.ai/docs/api-reference/limits>、APIMart 的 `GET /v1/balance` <https://docs.apimart.ai/en/api-reference/account/token-balance.md> —— 全都免费且按 key 鉴权。
-- **TikHub 自媒体？本次没用**，因为这一题的权威源只有官方文档与一次真实对照实验（假 key vs 无鉴权，见 §4），自媒体内容既不构成证据也无法证伪；详见 `docs/research/2026-09-22-credential-probe-free/prior-art.md`。
+- **TikHub 自媒体？本次没用**，因为这一题的权威源只有官方文档与一次真实对照实验（假 key vs 无鉴权，见 §4），自媒体内容既不构成证据也无法证伪；详见 `docs/archive/research/2026-09-22-credential-probe-free/prior-art.md`。
 - **结论：确认面 / 报价 / 问人通道用已有，声明位自研。** 自研的只有 `credentialProbe.cost` 这个声明位、它的唯一读者 `electron/catalog/credentialProbePolicy.ts:56`，以及缺省 `paid` + 装配期不变量这两道 fail-closed——生态里最接近的 LiteLLM 也只做到「分两个端点 + 在文档里提醒」，没把价格变成机器可判的声明 <https://docs.litellm.ai/docs/proxy/health>。
 
 ## 2.8 顺带分家的一件事：`livenessProbe` 曾经兼职

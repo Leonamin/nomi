@@ -177,7 +177,7 @@
 
 ### 4.5 Nomi 内部现状：哪些能直接站上去
 
-**先纠正任务书中的三处名称／完成状态。** 指定基线未找到 `LANE_MAX_MODEL_REQUESTS`，也不存在 `scripts/agent-lane-replay-shadow.mjs`（已用 `rg`、`git ls-files` 和文件存在检查核验）。3a 审批已在 `laneHost.mts:179`；3c 看门狗调用仍在旧 `electron/harness/runtime/pi/run.mts:164`，不能把计划中的 lane 请求上限和 L2 回放写成已交付。L2 要求位于 `docs/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md:229`；当前 L1 证据是 `tests/agent-runtime/lane-shadow-parity.test.mts:1`。
+**先纠正任务书中的三处名称／完成状态。** 指定基线未找到 `LANE_MAX_MODEL_REQUESTS`，也不存在 `scripts/agent-lane-replay-shadow.mjs`（已用 `rg`、`git ls-files` 和文件存在检查核验）。3a 审批已在 `laneHost.mts:179`；3c 看门狗调用仍在旧 `electron/harness/runtime/pi/run.mts:164`，不能把计划中的 lane 请求上限和 L2 回放写成已交付。L2 要求位于 `docs/archive/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md:229`；当前 L1 证据是 `tests/agent-runtime/lane-shadow-parity.test.mts:1`。
 
 `.nomi/agent-session.json` 是已退役的 pre-Host 文件，打开项目时归档；现役旧对话上下文是 `.nomi/agent-thread-context-v1.json`（`electron/harness/context/contextPaths.ts:11`）。宿主 `snapshot-v1.json` 在注入 rootDir 的 `project-agent-host/<partition>/`，不是每个项目里同名文件（`electron/projectAgentHost/projectAgentRepository.ts:350`）。新 lane 才是 `<project>/.nomi/agent-sessions/`（`electron/agentLane/laneSession.mts:25`）。本轮未越出限定 worktree 寻找私人项目快照，所以这些是**实现路径证据，不是冒称看过某位用户的真实转录**。
 
@@ -193,7 +193,7 @@
 
 **研究发现的接线风险，不在本轮改码：** `productionQaVerdict.ts:126` 用“每个可重试镜头至少一预算单位”作资格判断，不等于真实模型报价；最终付费边界仍应校验，不能宣称该判断已保证重试总成本。`shotVerifyOrchestrate.ts:91` 在未评时 `passed` 可为 true，因此 Goal 必须同时看 evaluated／skipped／不可评计数。`productionRunDriverOps.ts:627` 组装和 `:671` 默认导出仍请求 renderer；“主进程活着”不足以保证关窗后整片完成。
 
-**已有调研的关系。** `docs/research/2026-09-07-long-running-tasks-for-agent.md:17` 已讲清 deferred 是模型侧异步响应，不是视频任务；本文不重造它的 start／subscribe／artifact 结论。`2026-09-07-pi-reference-implementation-conformance.md:120` 已指出压缩领域错配，本轮进一步核实 Harness 的 custom 截断与 transform_context。`2026-09-07-pi-0.85.1-probe-report.md:1`、`2026-09-07-pi-package-ecosystem.md:1` 的探针和生态结论作为背景；本轮未重复安装或声称重跑。`2026-09-07-agent-self-review-of-generated-shots.md:373` 已盘点审片入口，Goal 只补“何时够交付”，不再造第二个判官系统。
+**已有调研的关系。** `docs/archive/research/2026-09-07-long-running-tasks-for-agent.md:17` 已讲清 deferred 是模型侧异步响应，不是视频任务；本文不重造它的 start／subscribe／artifact 结论。`2026-09-07-pi-reference-implementation-conformance.md:120` 已指出压缩领域错配，本轮进一步核实 Harness 的 custom 截断与 transform_context。`2026-09-07-pi-0.85.1-probe-report.md:1`、`2026-09-07-pi-package-ecosystem.md:1` 的探针和生态结论作为背景；本轮未重复安装或声称重跑。`2026-09-07-agent-self-review-of-generated-shots.md:373` 已盘点审片入口，Goal 只补“何时够交付”，不再造第二个判官系统。
 
 ## 5. 方案梯度：默认 v1
 
@@ -269,7 +269,7 @@
 - Nomi lane：`electron/agentLane/laneHost.mts:107`、`laneSession.mts:23`、`laneProjection.mts:140`、`laneApprovalGate.ts:215`、`laneToolCatalog.ts:41`、`laneIpc.ts:9`。
 - Nomi production：`electron/productionRun/productionRunTypes.ts:341`、`productionRunPaths.ts:15`、`multiShotBatchScheduler.ts:9`、`anchorCheckpoint.ts:51`、`approvalPolicy.ts:77`、`budgetLedger.ts:52`、`submissionOutbox.ts:15`、`productionRunResume.ts:14`、`productionRunDriverOps.ts:612`、`productionQaVerdict.ts:89`、`artifactProjection.ts:205`。
 - Nomi 成片：`electron/capabilityCore/shotVerifyCore.ts:31`、`shotVerifyOrchestrate.ts:43`；`src/workbench/adoption/adoptStoryboardBatch.ts:161`；`src/workbench/timeline/agent/exportToolCall.ts:178`；`electron/export/exportJobs.ts:205`。
-- 主线：`docs/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md:180`、`:229`、`:367`；既有研究关系见 §4.5，不把旧研究的外部链接冒充本轮重新访问。
+- 主线：`docs/archive/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md:180`、`:229`、`:367`；既有研究关系见 §4.5，不把旧研究的外部链接冒充本轮重新访问。
 
 ### 7.2 外部一手来源
 

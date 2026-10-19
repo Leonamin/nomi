@@ -1,6 +1,6 @@
 # 2026-06-13 机制层根治计划（承接穿透审计 18 项）
 
-> 输入：`docs/audit/2026-06-13-deep-ui-mechanism-audit.md`（18 项，5 类机制共因）。
+> 输入：`docs/archive/audit/2026-06-13-deep-ui-mechanism-audit.md`（18 项，5 类机制共因）。
 > 原则：修机制不修症状——每个切片的验收门里必须有「这类问题不再能从别的入口复发」的结构保证（不变量测试 / 原语收口 / 单一真相源）。
 > 并行声明：另一会话正在改 `AgentPlanCard.tsx` / `agentPlanSummary.ts` / `storyboard.test.ts` / `check-file-sizes.mjs`，本计划**不碰这四个文件**；commit 只 add 本计划文件。
 

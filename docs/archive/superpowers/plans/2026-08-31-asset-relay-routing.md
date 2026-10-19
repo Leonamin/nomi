@@ -12,7 +12,7 @@
 
 **Tech Stack:** Electron, React 18, TypeScript, Zustand, Vitest, Node test runner, Cloudflare Workers, R2, Wrangler.
 
-**Spec:** `docs/plan/2026-08-31-asset-upload-routing.md`
+**Spec:** `docs/archive/plan/2026-08-31-asset-upload-routing.md`
 
 ## Global Constraints
 
@@ -86,8 +86,8 @@
 ### Task 4: Document product behavior and operational limits
 
 **Files:**
-- Modify: `docs/ARCHITECTURE-NOW.md`
-- Modify: `docs/plan/2026-08-31-asset-upload-routing.md`
+- Modify: `docs/archive/guides/ARCHITECTURE-NOW.md`
+- Modify: `docs/archive/plan/2026-08-31-asset-upload-routing.md`
 - Modify: `workers/nomi-asset-relay/README.md`
 
 - [x] Document the user-visible route order and the fact that normal users do not configure Relay environment variables.

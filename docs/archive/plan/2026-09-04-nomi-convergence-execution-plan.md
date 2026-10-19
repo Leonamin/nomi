@@ -10,7 +10,7 @@
 
 **Tech Stack:** Electron + React/TypeScript + MCP stdio/tool catalog/semantic manifest + Project Agent Host + React Flow canvas + `.nomi` project persistence + Vitest/node tests + Playwright/Electron journeys + packaged smoke + computed-style design conformance + image2 design confirmation gate。
 
-**Spec:** 本方案依据 `docs/qa/2026-09-04-real-user-test-contract.md`、`docs/qa/2026-09-04-epics-rebaseline-audit.md`、`docs/qa/2026-09-04-mcp-rebaseline-audit.md`、`docs/design/2026-09-01-agent-ui-final-redesign.md` 和已合入 PR 的实际差异；本方案只描述执行，不把历史 PR 标题、静态 mockup、fixture、loopback 或 skipped check 当作完成证据。
+**Spec:** 本方案依据 `docs/archive/qa/2026-09-04-real-user-test-contract.md`、`docs/archive/qa/2026-09-04-epics-rebaseline-audit.md`、`docs/archive/qa/2026-09-04-mcp-rebaseline-audit.md`、`docs/archive/design/2026-09-01-agent-ui-final-redesign.md` 和已合入 PR 的实际差异；本方案只描述执行，不把历史 PR 标题、静态 mockup、fixture、loopback 或 skipped check 当作完成证据。
 
 ### Current baseline freshness (2026-09-05)
 
@@ -89,10 +89,10 @@ git worktree list --porcelain
 
 | 设计层 | 权威来源 | 执行规则 |
 |---|---|---|
-| Agent v3.2 结构/状态 | `docs/design/2026-09-01-agent-ui-final-redesign.md`、`docs/design/2026-09-01-agent-ui-redesign-decisions.md`、`docs/design/2026-09-02-agent-ui-v3-walkthrough.md` | 用真实 shell、状态、字段和用户任务冻结 contract；不从抽象“AI 面板”脑补布局 |
-| 异常态 | `docs/design/2026-09-03-agent-ui-p0-exception-states-walkthrough.md`、对应 mockup contracts | 解决 contract 与实现 selector/文案冲突后再实现；异常态必须单独走查 |
-| 机器规范 | `docs/design/agent-ui-spec.generated.json`、`scripts/extract-design-spec.mjs`、`tests/ux/agent-ui-conformance.walk.mjs` | 保留 generated spec 作为可追溯输入，补 source locator、adaptation rule、runtime measurement 和 delta 报告 |
-| 设计流程 | `docs/design/page-design-process.md`、`docs/design/nomi-design-flow-howto.md`、`docs/design/nomi-design-flow-image2-gate.md` | 已有 PR 设计稿优先；只有方向被否定或未冻结时才走新的 Prompt Brief/image2 用户确认 |
+| Agent v3.2 结构/状态 | `docs/archive/design/2026-09-01-agent-ui-final-redesign.md`、`docs/archive/design/2026-09-01-agent-ui-redesign-decisions.md`、`docs/archive/design/2026-09-02-agent-ui-v3-walkthrough.md` | 用真实 shell、状态、字段和用户任务冻结 contract；不从抽象“AI 面板”脑补布局 |
+| 异常态 | `docs/archive/design/2026-09-03-agent-ui-p0-exception-states-walkthrough.md`、对应 mockup contracts | 解决 contract 与实现 selector/文案冲突后再实现；异常态必须单独走查 |
+| 机器规范 | `docs/archive/design/agent-ui-spec.generated.json`、`scripts/extract-design-spec.mjs`、`tests/ux/agent-ui-conformance.walk.mjs` | 保留 generated spec 作为可追溯输入，补 source locator、adaptation rule、runtime measurement 和 delta 报告 |
+| 设计流程 | `docs/archive/design/page-design-process.md`、`docs/design/nomi-design-flow-howto.md`、`docs/archive/design/nomi-design-flow-image2-gate.md` | 已有 PR 设计稿优先；只有方向被否定或未冻结时才走新的 Prompt Brief/image2 用户确认 |
 | Beautiful UI | PR #315 设计来源表；Thinking、Loading、Tool Chips、Streaming Text、Task Rows、Approval Card、Prompt Bar | 复用交互 pattern/结构/行为算法，改成 Nomi tokens、Tabler icons 和 Nomi state owner |
 | AI Elements | PR #315 设计来源表；Context、Checkpoint、Message、Artifact、Queue | 只借鉴结构和行为；不引入 AI Elements runtime，不复制第二套视觉系统 |
 | Nomi 独有 | AgentPlanCard、proposal receipt/undo、SpendConfirm、ReconcileDeviation、shot/canvas/timeline | Nomi 自有语义优先，必须绑定真实 owner store、receipt、revision 和恢复状态 |
@@ -158,7 +158,7 @@ git worktree list --porcelain
 
 - `docs/architecture/agent-m0-owner-map.md`、`agent-m0-tool-mapping.md`、`agent-m0-legacy-paths.md`、`agent-m0-pr-slices.md` 和 `agent-m-line-rulings.md` 已合入。
 - #272/#275 提供文档基线；#469 把 M0/M1 矩阵和部分 runtime evidence 合入。
-- `docs/qa/2026-09-01-agent-m0-red-lights.md` 记录过偏离红灯；旧 `hostLifecycle.test.ts` 转发 shell 不能证明生产 `deviated`。
+- `docs/archive/qa/2026-09-01-agent-m0-red-lights.md` 记录过偏离红灯；旧 `hostLifecycle.test.ts` 转发 shell 不能证明生产 `deviated`。
 
 **证据状态**：`implemented`（架构文档）；`tested`（映射/静态/局部契约）；`live-certified` 不适用；M0 的真实状态 owner/重启契约 `blocked`，不能把“文档完成”写成 Agent 完成。
 
@@ -181,7 +181,7 @@ git worktree list --porcelain
 
 - #301 的 Host 基础、lifecycle/settlement/projection 和 legacy preservation 已合入；#469 提供 document/canvas approval、undo/disk rollback、stopped terminal、独立 thread、cold restart 的 M1 证据入口。
 - #452 仍是 open 的 usage/receipt follow-up，不能整体当作完成；先比较 `projectRevision` 防漂移和 `execution_settled` 是否重复。
-- 参考 `docs/plan/2026-09-03-m1-contract-coverage-gap-remediation.md`、`docs/plan/2026-09-01-m1-round2-host-runtime.md`。
+- 参考 `docs/archive/plan/2026-09-03-m1-contract-coverage-gap-remediation.md`、`docs/archive/plan/2026-09-01-m1-round2-host-runtime.md`。
 
 **证据状态**：`implemented`（Host 基础）；`tested`（unit/局部 Electron）；`live-certified` `blocked`（真实 Host 默认关闭，未证明 provider）；M1 全量 `partial`。
 
@@ -272,7 +272,7 @@ git worktree list --porcelain
 **现有代码/PR/证据**：
 
 - #420 packaged MCP 基础已合入；#419/#421/#422 属旧 M5 stacked/open 候选，不能替代当前 main 取证。
-- `docs/qa/2026-09-03-m5-graduation-checklist.md` 明确记录 Host 全量、M2 L2、M4 spend 和 current-main fresh package 尚未毕业。
+- `docs/archive/qa/2026-09-03-m5-graduation-checklist.md` 明确记录 Host 全量、M2 L2、M4 spend 和 current-main fresh package 尚未毕业。
 - 入口：`tests/ux/packaged-mcp-smoke.e2e.mjs`、`tests/ux/model-integration-packaged.e2e.mjs`、`pnpm run test:mcp-l2:packaged`、`pnpm run dist:mac:dir`。
 
 **证据状态**：`implemented`（packaged 基础）；`tested`（历史/局部 smoke）；`live-certified` `blocked`（当前 SHA 新包、M0–M5 全链、真实 Host/provider/视觉未闭合）。
@@ -375,8 +375,8 @@ pnpm run test:mcp-l2:packaged
 ### Task 0：基线与账本冻结
 
 **Files:**
-- Read: `docs/qa/2026-09-04-main-convergence-inventory.md`, `docs/qa/2026-09-04-epics-rebaseline-audit.md`, `docs/qa/2026-09-04-test-coverage-gap-audit.md`
-- Read: all files under `docs/plan/` and `docs/architecture/agent-m0-*`
+- Read: `docs/archive/qa/2026-09-04-main-convergence-inventory.md`, `docs/archive/qa/2026-09-04-epics-rebaseline-audit.md`, `docs/archive/qa/2026-09-04-test-coverage-gap-audit.md`
+- Read: all files under `docs/archive/plan/` and `docs/architecture/agent-m0-*`
 - Produce: `outputs/qa/<date>/baseline/manifest.json`（不提交共享 outputs）
 
 - [ ] 刷新 `origin/main`，记录 SHA、open PR、worktree、dirty 文件和 merge ancestry。
@@ -536,16 +536,16 @@ decision: merge | rework | blocked
 
 ## 9. 来源索引
 
-- 当前主线盘点：[2026-09-04-main-convergence-inventory.md](../../qa/2026-09-04-main-convergence-inventory.md)
-- Epic 重基线：[2026-09-04-epics-rebaseline-audit.md](../../qa/2026-09-04-epics-rebaseline-audit.md)
-- MCP 审计：[2026-09-04-mcp-rebaseline-audit.md](../../qa/2026-09-04-mcp-rebaseline-audit.md)
-- 真实用户测试契约：[2026-09-04-real-user-test-contract.md](../../qa/2026-09-04-real-user-test-contract.md)
-- 覆盖缺口审计：[2026-09-04-test-coverage-gap-audit.md](../../qa/2026-09-04-test-coverage-gap-audit.md)
-- 长视频任务：[2026-09-04-real-user-long-video-task.md](../../qa/2026-09-04-real-user-long-video-task.md)
-- 分镜/Agent 审计：[2026-09-04-pr454-storyboard-agent-audit.md](../../qa/2026-09-04-pr454-storyboard-agent-audit.md)
-- M0 红灯：[2026-09-01-agent-m0-red-lights.md](../../qa/2026-09-01-agent-m0-red-lights.md)
-- M5 清单：[2026-09-03-m5-graduation-checklist.md](../../qa/2026-09-03-m5-graduation-checklist.md)
-- Agent 设计真源：[2026-09-01-agent-ui-final-redesign.md](../../design/2026-09-01-agent-ui-final-redesign.md)
-- 设计流程：[nomi-design-flow-howto.md](../../design/nomi-design-flow-howto.md)、[nomi-design-flow-image2-gate.md](../../design/nomi-design-flow-image2-gate.md)
+- 当前主线盘点：[2026-09-04-main-convergence-inventory.md](../qa/2026-09-04-main-convergence-inventory.md)
+- Epic 重基线：[2026-09-04-epics-rebaseline-audit.md](../qa/2026-09-04-epics-rebaseline-audit.md)
+- MCP 审计：[2026-09-04-mcp-rebaseline-audit.md](../qa/2026-09-04-mcp-rebaseline-audit.md)
+- 真实用户测试契约：[2026-09-04-real-user-test-contract.md](../qa/2026-09-04-real-user-test-contract.md)
+- 覆盖缺口审计：[2026-09-04-test-coverage-gap-audit.md](../qa/2026-09-04-test-coverage-gap-audit.md)
+- 长视频任务：[2026-09-04-real-user-long-video-task.md](../qa/2026-09-04-real-user-long-video-task.md)
+- 分镜/Agent 审计：[2026-09-04-pr454-storyboard-agent-audit.md](../qa/2026-09-04-pr454-storyboard-agent-audit.md)
+- M0 红灯：[2026-09-01-agent-m0-red-lights.md](../qa/2026-09-01-agent-m0-red-lights.md)
+- M5 清单：[2026-09-03-m5-graduation-checklist.md](../qa/2026-09-03-m5-graduation-checklist.md)
+- Agent 设计真源：[2026-09-01-agent-ui-final-redesign.md](../design/2026-09-01-agent-ui-final-redesign.md)
+- 设计流程：[nomi-design-flow-howto.md](../../design/nomi-design-flow-howto.md)、[nomi-design-flow-image2-gate.md](../design/nomi-design-flow-image2-gate.md)
 - 旧 open-work-ledger：[2026-09-03-open-work-ledger.md](2026-09-03-open-work-ledger.md)（历史快照，状态以本方案和 current-main 审计为准）
 - 旧后续计划：[2026-09-04-main-convergence-follow-ups.md](2026-09-04-main-convergence-follow-ups.md)（被本方案的 current-main 基线和 M0–M5 主轴取代）

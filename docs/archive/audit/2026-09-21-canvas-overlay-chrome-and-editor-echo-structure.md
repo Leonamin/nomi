@@ -35,4 +35,4 @@
 - **仍未收口的结构问题（提议，未实施）**：
   1. 「可用视口」目前是**底部**一份判据加**左缘**一段就地测量（`useComposerViewportPlacement` 里量 `data-canvas-left-dock`）。应把左缘也登记进同一个 chrome 名单（四边声明 + 一个 `resolveUsableStage`），让任何锚定浮层（结果堆叠、节点菜单、未来的浮条）都只读一份可用区。碰 `NodeResultStack.tsx` 等并行在改的文件，需另排。
   2. React Flow 投影滞后是**所有**读 `node` prop 又写 store 的节点内控件的共性风险。受控 Tiptap 已由账本兜住；纯受控 `<input>/<textarea>` 若直接绑 `node.*` 也会中招（本次实扫：标题编辑走本地 draft，未中招）。建议把「节点内受控输入必须经本地草稿或 `controlledEditorSync`」写成门岗规则（AST 扫 `value={node.`）。
-- 两条提议登记进 `docs/roadmap/TODO.md` 候选，由用户排期。
+- 两条提议登记进 `docs/archive/roadmap/TODO.md` 候选，由用户排期。

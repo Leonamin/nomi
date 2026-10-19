@@ -1,7 +1,7 @@
 # 计划：把档案默认参数桥接到 electron（根治 headless/MCP 缺参类）
 
 状态：**已实现并真机验证（2026-06-30）**。采用方案 A（codegen），但比原设计多一层 **vendor 分桶**（vendorParams 覆盖：apimart Kling duration=number vs kie=string，不串台）。生成文件按 `{archetypeId:{taskKind:{"*"|vendorKey:{param:default}}}}`，runtime 取 `perKind[vendorKey] ?? perKind["*"]`。真机验证：sora/veo/seedance/hailuo/wan/omni/kling 视频 + 火山 seedream size + 豆包 voice + apimart audio model 全部不再缺参 400（kling 推进到 queued=不再 400、仅渲染慢；火山 seedance/豆包语音推进到「账号未开通/凭证格式」= 用户配置项，非代码）。删除本轮手写的 3 个 defaultParams（已被生成覆盖，回到单一真相源）。同步门 check:archetype-defaults 进 gates。
-关联：`docs/audit/2026-06-30-onboarding-sweep.md`（接入测试扫描，挖出此类）。
+关联：`docs/archive/audit/2026-06-30-onboarding-sweep.md`（接入测试扫描，挖出此类）。
 
 ## 1. 问题（一句话+底层逻辑）
 

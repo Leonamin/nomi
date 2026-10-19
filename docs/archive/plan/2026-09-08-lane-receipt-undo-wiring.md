@@ -11,7 +11,7 @@
 | 依赖里已有？ | pi 已提供 `appendCustomEntry` 和 `watch`，分别见锁定依赖 `node_modules/@earendil-works/pi-agent-core/dist/harness/agent-harness.d.ts:642`、`:674`；领域收据关联继续骑在同一转录，主进程读取 owner 是 `electron/agentLane/laneReceiptAuthority.mts:6`。不另建授权缓存或会话存储。 |
 | 仓库里已有？ | 有。`src/workbench/generationCanvas/agent/proposalUndo.ts:145` 已做精确 binding 水合，`:462` 的 `runProposalUndo` 已有补偿与持久化 CAS；`src/workbench/ai/v4/AgentPanelV4Receipt.tsx:20`、`:124` 是原收据与折叠组。此次只把原按钮和这笔真实记录重新接通。 |
 | 生态里已有？ | 沿用[阶段 4 母方案“先查别人”](2026-09-08-agent-lane-stage4-switch.md#先查别人)已记录的[官方 pi harness 源码](https://github.com/earendil-works/pi/tree/main/packages/agent-core/src/harness)与锁定版本 API 裁决。本补线未新增生态检索，也未引入外部撤销系统；Nomi 的画布补偿事务已有唯一领域 owner。 |
-| TikHub 自媒体里怎么说？ | 本补线未查询，不声称覆盖。问题是已批准组件与内部 G5 关联断开，社媒经验不能裁决 CAS、项目 binding 或具体补偿操作；产品形态依据 `docs/plan/2026-09-06-agent-panel-v4-wiring.md:111` 的 `undoable → useCommittedProposal + runProposalUndo` 原映射和实际原组件，不新增设计。 |
+| TikHub 自媒体里怎么说？ | 本补线未查询，不声称覆盖。问题是已批准组件与内部 G5 关联断开，社媒经验不能裁决 CAS、项目 binding 或具体补偿操作；产品形态依据 `docs/archive/plan/2026-09-06-agent-panel-v4-wiring.md:111` 的 `undoable → useCommittedProposal + runProposalUndo` 原映射和实际原组件，不新增设计。 |
 
 **结论：用已有。** 只派生精确 `toolCallId` 给原收据按钮，点击重读现有 owner 并走原 CAS；不把显示数据当授权。适用边界是 Nomi 内部恢复接线，生态和 TikHub 未作新增查询有上述具体理由；本节仍完整回答四问并给出处，不申请门岗格式豁免。
 

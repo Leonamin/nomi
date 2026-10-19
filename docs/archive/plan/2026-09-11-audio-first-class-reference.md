@@ -13,7 +13,7 @@
 
 1. Seedance 2.0 omni 官方约束已由 `electron/config/modelArchetypes/seedance20Contract.test.ts:9-19` 对账：最多三段参考音频，但必须同时有图片或视频；`electron/shared/videoCapabilities/seedance.ts:96` 保留该约束。
 2. ComfyUI 官方 `LoadAudio` 源码：<https://raw.githubusercontent.com/comfyanonymous/ComfyUI/master/comfy_extras/nodes_audio.py>。`class_type=LoadAudio`、输入键 `audio` 与仓内 `MEDIA_INPUT_KEYS` 对齐。
-3. 仓内教训 `docs/lessons/nomi-reference-slots-are-already-declarative.md:8` 明确参考槽应由声明式通用渲染器承载，不为单模型另造 UI。
+3. 仓内教训 `docs/archive/lessons/nomi-reference-slots-are-already-declarative.md:8` 明确参考槽应由声明式通用渲染器承载，不为单模型另造 UI。
 
 ## 修复与证据（已随 PR #737 合入）
 

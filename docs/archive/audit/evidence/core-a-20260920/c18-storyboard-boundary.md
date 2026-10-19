@@ -14,7 +14,7 @@
 
 ## 原任务边界
 
-- A 原文 `docs/audit/evidence/core-a-20260920/scope/Nomi_plan_A_core_fixes_2026-09-19.md:188` K4 明确从旧发布兼容数据、新草稿、现有方案分别选夹具；不能带入 T3 专用树的未完成格式/prepared/部分IPC，不能新增旧 B Agent 写门。
+- A 原文 `docs/archive/audit/evidence/core-a-20260920/scope/Nomi_plan_A_core_fixes_2026-09-19.md:188` K4 明确从旧发布兼容数据、新草稿、现有方案分别选夹具；不能带入 T3 专用树的未完成格式/prepared/部分IPC，不能新增旧 B Agent 写门。
 - 同文件 `:270` C18：候选包打开旧格式、半迁移、不支持格式夹具；不破坏原数据，不支持明确拒绝。
 - 简化方案 `.../Nomi_simplified_A_plus_T7_original_storyboard_plan_2026-09-20.md:110` 明确不先验要求 Run.authoring 全迁移；`:282` 明确 C18 不自动授权新增迁移。
 - 为辨别术语，只读了 Downloads 中 B 的 T3 `:181–217`，未把 B 的其他要求加入施工。其建议迁移协议不等于当前生产格式定义。

@@ -4,7 +4,7 @@
 
 日期：2026-09-07 · 基线：`origin/main@6a7c81786`
 性质：只调研 + 出方案，不改生产码
-服务对象：`docs/plan/2026-09-07-generation-strategy-resolver.md` §5 登记的 **P4 模式选择建议**（那一刀被明确挡在「先出判据方案再写码」后面）
+服务对象：`docs/archive/plan/2026-09-07-generation-strategy-resolver.md` §5 登记的 **P4 模式选择建议**（那一刀被明确挡在「先出判据方案再写码」后面）
 
 > **用户的猜想**：「把模型档案和模式描述给模型就可以」。
 > **本次实核后的回答**：这件事 **Nomi 今天已经在做了**，而且做了整整 3 078 token/轮。
@@ -150,7 +150,7 @@ Codex 的实际实现（<https://learn.chatgpt.com/docs/agent-configuration/agen
 **描述三通道**：① `description` 进工具 schema（每次请求都花 token）；② `promptSnippet` 进系统提示词的
 `Available tools:` 菜单；③ `promptGuidelines` 进 `Guidelines:` 块、**去重且按实际工具集条件化**
 （`dist/core/system-prompt.js:44-79`：只有 bash 在而 grep/find/ls 都不在时才加那条）。
-详见 `docs/research/2026-09-07-pi-reference-implementation-conformance.md` §1.1 / §4.7（G-03）。
+详见 `docs/archive/research/2026-09-07-pi-reference-implementation-conformance.md` §1.1 / §4.7（G-03）。
 
 **⚠️ 对本方案有决定性影响的一条**：`dist/core/system-prompt.js:16-34` —— 走 `customPrompt` 分支时
 （Nomi 就是这条），pi **仍然**会追加 `<project_context>`、**`<available_skills>`（`:31` 调
@@ -161,7 +161,7 @@ Codex 的实际实现（<https://learn.chatgpt.com/docs/agent-configuration/agen
 
 Nomi 侧已自建同形索引：`electron/harness/skillIndex.ts:35-45` 的 `formatNomiSkillIndex`
 （`DEFAULT_SKILL_INDEX_LIMIT = 24`、`SKILL_DESCRIPTION_LIMIT = 180`）+ `load_skill` 工具按需读正文。
-`docs/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md` §3.4 已拍板「留索引式 ①、删整段式 ②」。
+`docs/archive/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md` §3.4 已拍板「留索引式 ①、删整段式 ②」。
 
 ### 1.4 Cursor Rules：把三种触发做成一张真值表
 
@@ -392,7 +392,7 @@ LTX 的漂移承认写得比谁都白：重新生成时眼睛颜色变了、头�
 **① Nomi 的槽位设计已经站在行业终点上了，不需要再造模式 tab。**
 Seedance 2.5 与 Kling 3.0 各自独立收敛到「素材贴角色标签 → 模式推断出来」，
 与已拍板的「参考槽 = 声明式数据、archetype 六种 slot kind」是同一方向
-（`docs/lessons` 的 `nomi-reference-slots-are-already-declarative`）。
+（`docs/archive/lessons` 的 `nomi-reference-slots-are-already-declarative`）。
 
 **② 真做自动路由，必须抄 Seedance 那个「可覆盖 + 冲突报错」三件套，不能做成静默黑箱。**
 `auto` 默认推断 → 允许显式指定 → 推断与声明不符时**抛 TaskTypeMismatch 而不是猜一个跑掉**。
@@ -502,7 +502,7 @@ Token 估算沿用本仓约定「英文/JSON ~4 字符/token」（`scripts/lab-a
 | 纯索引（模型 id + label + 各模式 intent） | 2 235 | **~564** | ~15 token/模型 |
 
 对照锚：production 工具档今天 30 个工具 / **12 641 token**
-（`docs/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md` §3.2）。
+（`docs/archive/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md` §3.2）。
 Anthropic Skills 的 L1 是 **~100 token/技能**（§1.1）——**与我们「一个模型 ~81–154 token」是同一量级**，
 这说明「一个模型 = 一个技能」的类比在成本上成立。
 
@@ -540,7 +540,7 @@ Anthropic Skills 的 L1 是 **~100 token/技能**（§1.1）——**与我们「
 **为什么不是 hook**（题面点名要回答）：三条理由，按重要性排。
 
 1. **hook 是 fail-closed 的拦截点，判据是 fail-open 的建议。** 本仓 hook 的语义已经写死在
-   `docs/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md` §1.2 / §4.3-P1：`before_tool` 抛异常 = block。
+   `docs/archive/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md` §1.2 / §4.3-P1：`before_tool` 抛异常 = block。
    「这三镜同角色，建议改参考图模式」**不该 block**——它可能是错的（用户就想要文生的自由构图），
    把建议做成 hook 等于把 D5「给真判断」做成了 D1 反面的「多一道关卡」。
 2. **hook 拿不到叙事上下文。** 判据要读的是「跨镜锚点复现」——那是**整份方案**的性质，
@@ -693,12 +693,12 @@ export type ModeProposal = {
 export TIKHUB_API_KEY="…"        # 只从环境变量读
 for q in "AI视频 角色一致 参考图" "Seedance 首尾帧" "即梦 参考模式"; do
   node scripts/research/tikhub-search.mjs --q "$q" --platform all --limit 8 \
-    --since 2026-03-01 --out "docs/research/2026-09-07-model-mode-knowledge/tikhub/<ascii-slug>/"
+    --since 2026-03-01 --out "docs/archive/research/2026-09-07-model-mode-knowledge/tikhub/<ascii-slug>/"
 done
 ```
 
 产物附件（四平台 × 8 条 × 3 组 = 96 条）：
-`docs/research/2026-09-07-model-mode-knowledge/tikhub/character-consistency-reference/`、
+`docs/archive/research/2026-09-07-model-mode-knowledge/tikhub/character-consistency-reference/`、
 `.../seedance-first-last-frame/`、`.../jimeng-reference-mode/`（各含 `tikhub-search.json` + `tikhub-search.md`）。
 
 | 平台 | 出处 URL | 作者 | 发布 | 观点摘要（原文，未改写） |
@@ -784,7 +784,7 @@ done
 没有「不给判据」的对照臂，「给了判据就选对了」证明不了任何事。
 
 **装置**：本仓已有的 loopback 通路 —— `tests/agent-runtime/lane-tool-accuracy.test.mts` 同款
-（`AgentHarness` + loopback provider，零额度；见 `docs/research/2026-09-07-pi-0.85.1-probe-report.md` §4.2 三条 loopback 臂）。
+（`AgentHarness` + loopback provider，零额度；见 `docs/archive/research/2026-09-07-pi-0.85.1-probe-report.md` §4.2 三条 loopback 臂）。
 
 **三条指令**（每条都有唯一正确答案，且答案来自 §5.1 的判据表）：
 
@@ -811,7 +811,7 @@ done
 改 description 重跑，**不是**改成常驻（那是 §1 所有人的反面）。A2 就红 = §5.1 判据表本身要重写。
 
 **成本**：零额度（loopback）。若要一条真实模型对照，DeepSeek V4 Flash 一轮 ≈ ¥0.004
-（`docs/research/2026-09-07-pi-0.85.1-probe-report.md` §1）。
+（`docs/archive/research/2026-09-07-pi-0.85.1-probe-report.md` §1）。
 
 ---
 

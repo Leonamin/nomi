@@ -12,7 +12,7 @@
 - **加进来**（实测 / 用户新报）：自动保存在界面线程同步读回整份项目（每次 41–154ms）；@ 被 `673e6c5f4` 接到拖线的首尾帧规则（图生视频 @ 视频 30/30 不出 chip）→ 新增 @ 专用规则 `resolveMentionReference`（用户：「用 @ 就该是参考图模式」）；方向键微移失灵（`b65ce1c743`，授权靠微任务时间窗口）；RC 上的不稳定测试；9 个脚本 Windows 入口判断永远为假（door-map 与 5 道门岗在 Windows 本机空跑绿）。
 - **@ 缩略图 1–3 秒的真根因**：候选项不带缩略图——图片加载原图、视频各抽 16 帧胶片条（同时 2 个 ffmpeg）；视频封面在全应用收成落盘边界一个来源。
 - **粘鼠标的真根因**：React Flow 只在 window 收到 mouseup 时结束拖动，没有松手丢失时的兜底（0.21 自研拖动有）；我们的取消只清了自己的状态、内核仍在拖。「原生控件吞 mouseup」的假设被 Chromium 源码推翻。
-- 先查别人：[`docs/research/2026-09-25-canvas-follow-hand/prior-art.md`](../research/2026-09-25-canvas-follow-hand/prior-art.md)；结构复核：[`docs/audit/2026-09-25-generation-canvas-ownership-review.md`](../audit/2026-09-25-generation-canvas-ownership-review.md)。
+- 先查别人：[`docs/archive/research/2026-09-25-canvas-follow-hand/prior-art.md`](../research/2026-09-25-canvas-follow-hand/prior-art.md)；结构复核：[`docs/archive/audit/2026-09-25-generation-canvas-ownership-review.md`](../audit/2026-09-25-generation-canvas-ownership-review.md)。
 
 ## 用户报的是什么
 
@@ -33,7 +33,7 @@
 - <https://reactflow.dev/api-reference/hooks/use-viewport> 与本仓 `src/workbench/generationCanvas/reactFlow/canvasViewportScale.ts:15-18` —— `useViewport()` 按 x/y/zoom 三个标量比较，**平移也会让用它的组件重渲**；只要缩放的消费者应该只订 `transform[2]`（本仓已有 `useCanvasLiveZoom()`，节点外壳没用上）。
 - <https://reactflow.dev/api-reference/hooks/use-nodes-data> —— 官方的「每个组件只订自己那一个节点」原语。
 - 本仓提交 `3a72f0ce7`（PR #787，2026-09-14）—— **封面 + 交互后才建 `<video>` 我们自己已经做过一次**，真素材下拖动最长帧 125 → 9 ms、交互前播放器 24 → 0；09-15 因同一笔里的「屏幕尺寸轻量渲染」有真 bug 被 `fae43a80e` + `29e232a31` 整笔撤回，封面那半被连带撤掉。主进程封面派生（`a20bf49ce`，`electron/assets/assetPreview.ts:22` 注释：「画布首屏只挂 `<img>`，交互后才创建 `<video>`」）留在 main 上，前端没人消费。
-- 同类产品对画布 / 网格里大量视频的处理（tldraw 视频形状、相册类时间线的悬停预览、Chromium `preload` 行为、原生 `controls` 与外层拖动的事件关系）：见 `docs/research/2026-09-25-canvas-follow-hand/prior-art.md`（调研中，结论回填本节）。
+- 同类产品对画布 / 网格里大量视频的处理（tldraw 视频形状、相册类时间线的悬停预览、Chromium `preload` 行为、原生 `controls` 与外层拖动的事件关系）：见 `docs/archive/research/2026-09-25-canvas-follow-hand/prior-art.md`（调研中，结论回填本节）。
 
 **结论：先把「我们自己已经写过、被误撤的」接回来，再按 React Flow 官方口径改订阅粒度；不自研新机制。**
 官方指南只管框架那一层（摆放、拖动、只画屏幕内节点）；**节点里装了什么（视频）不归它管**——实测最大的一项恰恰在这一层，所以两条腿都要走。
@@ -58,7 +58,7 @@
 1. **内存压力**：32 个视频 GPU 进程 1.3–2.0 GB；Mac 是 CPU/GPU 共用内存，压力上来整机迟钝，光标反馈跟着慢。修法同第 1 刀，修完用户体感即可验证；也可在 Mac「活动监视器」看「内存压力」与「Nomi Helper (GPU)」。
 2. **设计层故意的慢**：选中卡片两侧跟着光标走的「+」号，位置用 180 ms 缓动追光标（`reactFlow/generationCanvasReactFlow.css:209`，而且动的是 `left/top`，每帧重排）——天生慢半拍，正是「鼠标到了反馈才来」的样子。
 
-## 为什么之前几轮没修好（调研结论，证据见 `docs/audit` 与 git 历史）
+## 为什么之前几轮没修好（调研结论，证据见 `docs/archive/audit` 与 git 历史）
 
 1. **量的不是这块画布。** 存档测量里页面上实际只挂 6–24 个节点、≤ 6 个视频；名义上的「96 / 320 节点」被视口裁剪吃掉；夹具视频多数根本没加载。「30 多个视频同时在屏上、节点数又低于轻量渲染门槛 80」这个区间从没量过。
 2. **测的不是卡的动作。** 悬停响应、打字、@、时长滑杆、新建节点从没有过延迟场景——这些路径也恰好从没修过。

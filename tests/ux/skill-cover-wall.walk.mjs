@@ -4,7 +4,7 @@ import { launchNomiApp } from './_launchApp.mjs'
 import { expect } from './_assert.mjs'
 import { stationTimeout } from './_station-budget.mjs'
 import { COMPOSER_SKILL, SKILL_POPOVER } from './agent-runtime-walk-support.mjs'
-const out = path.resolve('docs/design/verification/2026-09-09-skill-ui-b')
+const out = path.resolve('docs/archive/design/verification/2026-09-09-skill-ui-b')
 fs.mkdirSync(out, { recursive: true })
 const run = await launchNomiApp({ name: 'skill-cover-wall', settleMs: 0,
   initialLocalStorage: { 'nomi-color-scheme': 'light', 'nomi:splash:v1': 'seen', 'nomi:journey-tour:v1': 'seen' },

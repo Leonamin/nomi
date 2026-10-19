@@ -1,5 +1,5 @@
 import { remainingReferenceCapacity } from '../../../../electron/shared/videoCapabilities/crossFieldConstraints'
-// 能力驱动的参考槽解析 —— **唯一真相源**（方案 docs/plan/2026-06-14-connection-reference-capability-model.md）。
+// 能力驱动的参考槽解析 —— **唯一真相源**（方案 docs/archive/plan/2026-06-14-connection-reference-capability-model.md）。
 //
 // 一个函数把「目标当前模式声明的槽」+「指向它的画布边」+「meta 里手动上传的值」解析成
 // 每个槽的有序填充。显示 / 生成 / 校验 / 对账 四处共用它，杜绝「显示读 meta、生成读边」的分裂。

@@ -12,7 +12,7 @@
 
 ## File and project map
 
-- Design source: `docs/superpowers/specs/2026-08-01-nomi-international-launch-film-design.md`
+- Design source: `docs/archive/superpowers/specs/2026-08-01-nomi-international-launch-film-design.md`
 - Implementation trace: `docs/marketing/2026-08-01-nomi-launch-film-production-trace.md`
 - Final scripts: `docs/marketing/2026-08-01-nomi-launch-film-scripts.md`
 - ChatCut project: `Nomi International Launch Film`

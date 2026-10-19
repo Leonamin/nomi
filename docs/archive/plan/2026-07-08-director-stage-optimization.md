@@ -1,6 +1,6 @@
 # 3D 导演台优化 plan（2026-07-08）
 
-> 依据：`docs/research/2026-07-08-3d-director-stage-competitive-analysis.md`（竞品+前沿全查）。
+> 依据：`docs/archive/research/2026-07-08-3d-director-stage-competitive-analysis.md`（竞品+前沿全查）。
 > **决策门：A vs B 主押方向需用户拍板（产品方向岔路）。本 plan 记录分析 + 推荐 + 切片，实现前等 sign-off。**
 
 ## 背景（一句话）
@@ -21,7 +21,7 @@
 ## 范围（推荐路径，主押 B）
 
 ### ~~P0（与方向无关，先修）— `frameloop` 漏配~~ → 复查已修，撤销
-- 2026-07-08 实查 `Scene3DFullscreen.tsx:630`：主编辑器 Canvas 已是 `frameloop={播放/录制/时间轴开 ? 'always' : 'demand'}`，静止即 demand，**不烧 GPU**。`docs/audit/perf/04-scene3d.md:671` 的 P0 是写在修复前的旧账（stale），无需再动。
+- 2026-07-08 实查 `Scene3DFullscreen.tsx:630`：主编辑器 Canvas 已是 `frameloop={播放/录制/时间轴开 ? 'always' : 'demand'}`，静止即 demand，**不烧 GPU**。`docs/archive/audit/perf/04-scene3d.md:671` 的 P0 是写在修复前的旧账（stale），无需再动。
 - 教训：召回的审计反映的是写它当时的状态，用前先核实（D3）。
 - **注意巨壳**：`Scene3DFullscreen.tsx` 已 792 行，逼近 R9 800 红线——后续任何改动只加/改必要行，不得涨破线；必要时抽出。
 

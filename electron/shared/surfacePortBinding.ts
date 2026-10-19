@@ -384,7 +384,7 @@ export type CanvasReadSurfaceBridge = Readonly<{
  * 这一族码在仓库里曾有 15 份定义、8 个文件，其中 6 份是手抄——连这里自己都抄了两遍
  * （一份联合类型 + 一份同样内容的 Set 字面量）。代价不是好看不好看：拆
  * `surface_port_stale` 为「不存在 / 已过期」两码时，漏改任意一份，那条通道就把新码当未知码
- * 吞掉，模型收到的是「读一遍再试」而不是真原因（`docs/audit/2026-09-17-ownership-lifetime-census.md` §4）。
+ * 吞掉，模型收到的是「读一遍再试」而不是真原因（`docs/archive/audit/2026-09-17-ownership-lifetime-census.md` §4）。
  *
  * 现在只有这一条元组是手写的，类型和 Set 都从它 derive；下游 adapter 只许
  * `new Set([...SURFACE_PORT_WIRE_ERROR_CODES, ...自己那几个])`，不许重列。

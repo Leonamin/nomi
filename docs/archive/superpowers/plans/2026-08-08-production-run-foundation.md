@@ -279,7 +279,7 @@ git commit -m "feat(run): expose typed production run bridge"
 
 **Files:**
 - Create: `electron/productionRun/productionRunFaults.test.ts`
-- Modify: `docs/superpowers/plans/2026-08-08-production-run-foundation.md`
+- Modify: `docs/archive/superpowers/plans/2026-08-08-production-run-foundation.md`
 
 - [ ] **Step 1: Add fault-injection matrix**
 
@@ -298,6 +298,6 @@ Expected: all gates pass and `.claude/.gates-ok` is refreshed.
 - [ ] **Step 4: Mark this plan complete and commit**
 
 ```bash
-git add docs/superpowers/plans/2026-08-08-production-run-foundation.md electron/productionRun/productionRunFaults.test.ts
+git add docs/archive/superpowers/plans/2026-08-08-production-run-foundation.md electron/productionRun/productionRunFaults.test.ts
 git commit -m "test(run): verify crash and concurrency invariants"
 ```

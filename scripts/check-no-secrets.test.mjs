@@ -1,7 +1,7 @@
 // 安全门岗的凭证检测单测。
 //
 // 为什么存在：2026-08-25 复盘——一个真实可用的 kie.ai key 明文躺在公开仓库 3 个月没被拦住
-// （docs/onboarding-trials/fixtures/SECURITY-AUDIT.md:5）。这份测试把「必须拦住」和
+// （docs/archive/onboarding-trials/fixtures/SECURITY-AUDIT.md:5）。这份测试把「必须拦住」和
 // 「不许误报」两头同时钉死，防止门岗再被悄悄降级成橡皮图章。
 //
 // 注意：本文件自己也会被门岗扫（凭证规则不受路径白名单管）。所以**不许**在源码里写
@@ -293,6 +293,30 @@ describe("私有待办编号（只查新增行）", () => {
     expect(r.code).toBe(1);
     expect(r.out).toContain(FRESH);
     expect(r.out).toContain("私有待办编号不进公开仓库，改成写问题本身");
+  });
+
+  it("path-only edits in an existing line inherit its exact old identifier in staged and committed diffs", () => {
+    const { root, git } = makeRepo();
+    fs.writeFileSync(path.join(root, "docs/old.md"), `Historical ${OLD}: docs/evidence/result.json and docs/engineering/rules.json\n`);
+    git("add", "-A"); git("commit", "-q", "-m", "test(fixture): seed reference line");
+    const base = git("rev-parse", "HEAD");
+    fs.writeFileSync(path.join(root, "docs/old.md"), `Historical ${OLD}: docs/archive/evidence/result.json and docs/engineering/rules.json\n`);
+    git("add", "-A");
+    expect(run(root).code).toBe(0);
+    git("commit", "-q", "-m", "refactor(fixture): relocate reference");
+    expect(run(root, ["--all"], {SECRET_SCAN_BASE_REF: base}).code).toBe(0);
+    fs.writeFileSync(path.join(root, "docs/old.md"), `Historical ${FRESH}: docs/archive/evidence/result.json and docs/engineering/rules.json\n`);
+    git("add", "-A"); expect(run(root).code).toBe(1);
+  });
+
+  it("a changed claim or a credential cannot inherit merely because it mentions an archive path", () => {
+    const { root, git } = makeRepo();
+    fs.writeFileSync(path.join(root, "docs/old.md"), `Historical ${OLD}: docs/evidence/result.json and docs/engineering/rules.json\n`);
+    git("add", "-A"); git("commit", "-q", "-m", "test(fixture): seed reference line");
+    fs.writeFileSync(path.join(root, "docs/old.md"), `New claim ${OLD}: docs/archive/evidence/result.json\n`);
+    git("add", "-A"); expect(run(root).code).toBe(1);
+    fs.writeFileSync(path.join(root, "docs/old.md"), `Historical ${OLD}: docs/archive/evidence/result.json\nTarget: kie.ai (${fixtureHex("relocation-credential", 32)})\n`);
+    git("add", "-A"); expect(run(root).code).toBe(1);
   });
 
   function makeArchiveRepo() {

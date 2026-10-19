@@ -2,7 +2,7 @@
 //
 // 只编排（prompt → 调 connector 桥 → 落素材 → 回报），不持有 UI 状态。失败态照三段式
 // （发生什么 / 为什么 / 下一步），含「第三方抓取源可能随平台风控波动」的诚实提示。
-// 语义见 docs/plan/2026-09-01-tikhub-connector-v1.md。
+// 语义见 docs/archive/plan/2026-09-01-tikhub-connector-v1.md。
 import type { TFunction } from 'i18next'
 import { getDesktopBridge } from '../../desktop/bridge'
 import { notify } from '../../ui/notificationPolicy'

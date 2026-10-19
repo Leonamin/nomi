@@ -70,5 +70,5 @@ CI 五门(filesize/lint≤98/typecheck/vitest/build)全绿 + Rule 11 自 commit/
 - [x] **② @ 键 suggestion**(见上)。
 - [x] **③ tile 拖拽重排 + picker 浏览全部**:`moveArrayItem` 单源重排(同 metaKey 守卫)+ `nomi-open-files-panel` 事件开文件面板。
 - [x] **④ 每类型上限 toast + 灰显**:`showInfoToast`(无 Undo)+ picker `atLimitKinds` 灰显,单源计数。
-- [ ] **⑤ 拖入 / 连线 → 参考**:见独立执行文档 `docs/plan/2026-06-06-drop-and-wire-execution.md`(含压缩上下文 + 评审 must-fix
+- [ ] **⑤ 拖入 / 连线 → 参考**:见独立执行文档 `docs/archive/plan/2026-06-06-drop-and-wire-execution.md`(含压缩上下文 + 评审 must-fix
   + 降风险方案:onDrop 挂 NodeGenerationComposer 非巨壳)。**待用户拍板 D1/D2 后执行。**

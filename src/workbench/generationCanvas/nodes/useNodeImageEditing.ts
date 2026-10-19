@@ -16,7 +16,7 @@ import { resolveMediaDeliveryUrl } from '../../../media/assetDeliveryUrl'
 
 // 裁切 / 旋转 / 网格切分统一产 PNG **Blob**，落盘换 nomi-local:// 之后才写 store。
 //
-// 根因笔记（2026-08-20「九宫格直接卡死」，取证见 docs/plan/2026-08-20-grid-split-freeze.md）：
+// 根因笔记（2026-08-20「九宫格直接卡死」，取证见 docs/archive/plan/2026-08-20-grid-split-freeze.md）：
 // 旧管线每个 cell 都 new Image() 重新解码整张源图、再 canvas.toDataURL 同步编码成 base64，
 // 9 段 base64 先塞进 store 再逐个落盘替换 —— 主线程连冻 1.6s（9 次同步 PNG 编码就占 700ms），
 // 且 1+9 次 updateNode 每次都被 emitCanvasGesture 做 JSON 深拷贝，共 60MB 走一遍 JSON。

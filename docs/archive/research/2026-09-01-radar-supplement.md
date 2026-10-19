@@ -4,7 +4,7 @@
 
 **本轮真正的增量在「agent 编排」方向，不在视频生成方向——正好撞上用户的 phase-7 底座复审（PR #272 在评审）。** 视频侧这轮几乎全是前轮已列或窗口外的噪音（MSVBench/MuSS/Co-Director/VQQA 都在册 10-17 次；见底部筛除表），唯一的视频真增量是 IAMFlow（🟡，有码但吃开源底模）。
 
-**这轮头条是三篇「拿 Nomi 的架构当考卷」的 agent 编排 benchmark**——它们把「主 agent 当指挥、派专职子 agent、并行异步收活」这套（= Nomi 的 decompose-stitch 编排层）单独拎出来量化，而且**都是近两月、其中两篇有官方代码、测了 Fable-5/GPT-5.5 这代模型**。这不是「视频画质」论文，是**直接给 phase-7 底座复审当外部证据**的工程 benchmark。三篇 grep 全仓 `docs/research/*` 均 **0 前轮记录**（真新增，非误判）。
+**这轮头条是三篇「拿 Nomi 的架构当考卷」的 agent 编排 benchmark**——它们把「主 agent 当指挥、派专职子 agent、并行异步收活」这套（= Nomi 的 decompose-stitch 编排层）单独拎出来量化，而且**都是近两月、其中两篇有官方代码、测了 Fable-5/GPT-5.5 这代模型**。这不是「视频画质」论文，是**直接给 phase-7 底座复审当外部证据**的工程 benchmark。三篇 grep 全仓 `docs/archive/research/*` 均 **0 前轮记录**（真新增，非误判）。
 
 分诊：**🟢 0 · 🟡 4 · 🔵 1**。没有一篇是「这周直接接进 Nomi 产品」的能力（编排 benchmark 是评测/诊断工具，IAMFlow 吃 Wan2.1 底模穿不过黑盒 provider），所以头条不占 🟢。
 

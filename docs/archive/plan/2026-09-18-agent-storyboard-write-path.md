@@ -44,7 +44,7 @@
 ### Q3 有没有投影 / 产品怎么设想
 
 - **没有 A→B 投影**（§1 末行）。
-- 产品设想（v2 工具面，2026-09-14）：`docs/plan/2026-09-14-agent-tool-face-v2.md:88`——「20 动词下**分镜是草稿直接落画布、卡在 `generate`**」；同文 `:74`「对外 `nomi_canvas_edit` 的 operation 分支含分镜写入（`propose_storyboard_plan`/`patch_shots`），它们在内部面**归 `draft_shots`**」。也就是说 v2 的设计是：**Agent 拆的分镜 = 画布上的草稿节点组，不再经过「分镜方案」**。这与根因合同 `docs/fixes/2026-09-11-agent-generation-second-door.root-cause.json` 的不变量「只有 `draft_shots` 能造出生成类节点」和 `2026-09-10-agent-draft-single-ledger.root-cause.json`「plan candidate 是意图、画布节点是它的投影」一致，也与 2026-09-01 拍板「分镜表 = 画布节点的表格表示版」（`docs/lessons/shot-table-is-a-projection-of-canvas-nodes.md`）同向。
+- 产品设想（v2 工具面，2026-09-14）：`docs/archive/plan/2026-09-14-agent-tool-face-v2.md:88`——「20 动词下**分镜是草稿直接落画布、卡在 `generate`**」；同文 `:74`「对外 `nomi_canvas_edit` 的 operation 分支含分镜写入（`propose_storyboard_plan`/`patch_shots`），它们在内部面**归 `draft_shots`**」。也就是说 v2 的设计是：**Agent 拆的分镜 = 画布上的草稿节点组，不再经过「分镜方案」**。这与根因合同 `docs/fixes/2026-09-11-agent-generation-second-door.root-cause.json` 的不变量「只有 `draft_shots` 能造出生成类节点」和 `2026-09-10-agent-draft-single-ledger.root-cause.json`「plan candidate 是意图、画布节点是它的投影」一致，也与 2026-09-01 拍板「分镜表 = 画布节点的表格表示版」（`docs/archive/lessons/shot-table-is-a-projection-of-canvas-nodes.md`）同向。
 - **但读侧一处都没跟着改**：「新建方案」按钮仍然 `storyboardPlannerLauncher()`（`DocumentListSidebar.tsx:124`）→ 常驻 Agent 发 `agentResident.storyboardRequest`「把当前文稿拆成一份分镜方案…」并挂 `workbench.storyboard.planner` 技能（`ProjectAgentResidentShell.tsx:240-250`；`src/i18n/locales/agentResident.ts:7`）；用户随后看的分镜页读 B。SKILL.md 自己也自相矛盾：`:44` 「通过一次 `draft_shots` 调用产出」、`:50` 「草稿落在画布上」，而 `:203` **「绝不调用写画布/生成类工具——你只产出方案对象，落画布与生成由用户确认后系统处理」**（这一句是 2026-06-13 `44304dd42` 时代为 `propose_storyboard_plan` 写的，`draft_shots` 那些句子是 2026-09-15 `8bd61d0f4` 加的，两代指令叠在一起）。frontmatter `:3` 的 description 还是「不直接落画布或生成」。**4/5 轮模型只读不写、把三镜写成聊天文字，读侧这三处指令就是直接原因**。
 - 「这 5 轮为什么没触发投影」：没有投影可触发；而且第 5 轮的写入本身没成功（Q5 补充 / §3）。
 
@@ -63,11 +63,11 @@
 | 2026-06-13 | `44304dd42` | `propose_storyboard_plan` 激活，SKILL.md 写下「绝不调用写画布/生成类工具」 |
 | 2026-08-25 | `852dcbd27` | P4 S6.5 多镜 `create` 入口：`draftShotFromPlan` 要求每镜带完整 `candidate`（`mcpGenerationMultiShot.ts:121-126`）；语义→候选的合成只给了 `scriptText` 分支（`draftShotFromStoryboard :133-169`） |
 | 2026-09-08 | `a369215de` | 切 pi lane 时给 `generationPlanInputSchema.shots[]` 加了 `prompt/taskKind/modelId/...` 语义字段（`generationPlanSchemas.ts:55-68`）——**schema 收了，handler 从没学会展开它** |
-| 2026-09-10 | `dc113e712` | `ensureStoryboardShotTable`：B → `shot_table` 节点接通；同日走查 `docs/audit/2026-09-10-shot-table-storyboard-walk.md` 「点『新建分镜方案』，真实模型返回三个图片镜头并审批保存」「复验立即生成表节点成功」——**那天的写入走的是 `nomi_canvas_plan → propose_storyboard_plan → setStoryboardPlan`（账本 B）**（`git grep propose_storyboard_plan dc113e712 -- electron/shared/agentCapabilities/canvasWrite.ts:174,446,469`） |
+| 2026-09-10 | `dc113e712` | `ensureStoryboardShotTable`：B → `shot_table` 节点接通；同日走查 `docs/archive/audit/2026-09-10-shot-table-storyboard-walk.md` 「点『新建分镜方案』，真实模型返回三个图片镜头并审批保存」「复验立即生成表节点成功」——**那天的写入走的是 `nomi_canvas_plan → propose_storyboard_plan → setStoryboardPlan`（账本 B）**（`git grep propose_storyboard_plan dc113e712 -- electron/shared/agentCapabilities/canvasWrite.ts:174,446,469`） |
 | 2026-09-11 | `a12dded21` | 动词声明化：lane 上仍有 `nomi_storyboard_write`（operation=`propose_storyboard_plan`/`patch_shots`） |
 | 2026-09-14 | `afe85411d` | **20 动词替换 37 名**：`git show afe85411d` 删掉 `nomi_storyboard_write` 整段（diff 第 221-256 行），只留一句「旧名不在这里兼容」（`verbSemanticInput.ts:58-59`）。`--stat` 里**没有任何 storyboard/shotTable 文件被改**——账本 B 的 Agent 写入口被删，没有接班者 |
 | 2026-09-14 | `4753f64af` | lane 走一张 typed 传输表；`draft_shots` 翻成 `nomi_generation_plan create`（今天的 `laneVerbTransport.ts`） |
-| 2026-09-15 | `8bd61d0f4` / `2b9af6c48` | SKILL.md 改成「一次 `draft_shots`」（但 `:203` 那句没删）；`golden-path.e2e.mjs` 改成发 `draft_shots`（`:191-197`，带 `title`）却仍断言 **账本 B** 里有 3 镜（`planFromPayload :117-121` 读 `storyboardDesignsByDocumentId`；`:223-226`；分镜页 3 行 `:240`）。`docs/plan/2026-09-14-agent-tool-face-v2.md:88` 自述「这些 Electron 走查未在本机重跑」；`test:golden` 只在 `package.json:149`，**不在任何 workflow / `test:e2e` / `check:walkthroughs` 里** |
+| 2026-09-15 | `8bd61d0f4` / `2b9af6c48` | SKILL.md 改成「一次 `draft_shots`」（但 `:203` 那句没删）；`golden-path.e2e.mjs` 改成发 `draft_shots`（`:191-197`，带 `title`）却仍断言 **账本 B** 里有 3 镜（`planFromPayload :117-121` 读 `storyboardDesignsByDocumentId`；`:223-226`；分镜页 3 行 `:240`）。`docs/archive/plan/2026-09-14-agent-tool-face-v2.md:88` 自述「这些 Electron 走查未在本机重跑」；`test:golden` 只在 `package.json:149`，**不在任何 workflow / `test:e2e` / `check:walkthroughs` 里** |
 
 所以 09-10 的「复验成功」是真的，但它证明的是账本 B 那条链；09-14 把那条链的 Agent 入口删了以后，没有任何一条自动化证据再跑过「Agent 拆镜头 → 用户在表里看到」。
 
@@ -91,16 +91,16 @@
 | 花钱 | `generate` 出卡 → 封印/收据 | 行内 `confirmAndRunNode` → spendConfirm |
 | 谁能写 | 内部 lane（`draft_shots`）、外部 MCP（`nomi_operation_*`） | UI、外部 MCP（`nomi_canvas_edit` 分镜 operation）；**内部 lane 不能** |
 
-这已经不只是「表没同步」：同一个用户任务（把剧本拆成可生成的镜头）在内部 Agent 和外部 MCP 宿主上会落进**不同的账本、不同的画布对象、不同的付费门**。`docs/plan/2026-09-14-agent-tool-face-v2.md:74` 已经承认这一点（外部面暂留分镜 operation 是因为「MCP 侧的生成面还没收编」），但没有登记到期日。按 R17 这算「登记不是防线」的那类欠账。
+这已经不只是「表没同步」：同一个用户任务（把剧本拆成可生成的镜头）在内部 Agent 和外部 MCP 宿主上会落进**不同的账本、不同的画布对象、不同的付费门**。`docs/archive/plan/2026-09-14-agent-tool-face-v2.md:74` 已经承认这一点（外部面暂留分镜 operation 是因为「MCP 侧的生成面还没收编」），但没有登记到期日。按 R17 这算「登记不是防线」的那类欠账。
 
 顺带一条事实澄清（不是判断）：09-11 合同把 `propose_storyboard_plan` 描述成「一次落一整排永不出卡的生成类节点」；**在 HEAD 上**账本 B 的投影只建一张 `shot_table`、只更新已绑定节点（`ensureStoryboardShotTable.ts:14-17`；`storyboardProjection.ts:72-82`），生成类节点由行内动作按需建并经 spendConfirm。也就是说今天的 B 并不绕付费门——删它的理由是「一效果一动词」，不是安全。这影响方案 A 的代价评估，不影响判定。
 
 ## 先查别人
 
-报告：`docs/research/2026-09-18-storyboard-single-ledger/prior-art.md`（四问全答，自媒体一问如实写「未查」及理由）。结论抄在这里：
+报告：`docs/archive/research/2026-09-18-storyboard-single-ledger/prior-art.md`（四问全答，自媒体一问如实写「未查」及理由）。结论抄在这里：
 
 - 依赖里已有：`@xyflow/react` 的节点数据就是画布单一真相，官方状态管理指引要求派生视图从 nodes 读、不另存 — https://reactflow.dev/learn/advanced-use/state-management ；`zod` 的 `z.never().optional()` 让「表不存行」在 schema 上不可能（`electron/shared/canvas/shotTable.ts:60`）。
-- 仓库里已有：storyboard 表 `rows: z.never()`（`electron/shared/canvas/shotTable.ts:53`）、表与方案同生（`src/workbench/creation/storyboard/exec/ensureStoryboardShotTable.ts:16`）、deconstruction 表证明 union 已容纳多种表源（`src/workbench/generationCanvas/nodes/shotTable/factBridge.ts:23`）、reducer 早就按 shotId 改一镜（`electron/productionRun/productionGenerationPlanEdits.ts:105`）、2026-09-01 拍板 `docs/lessons/shot-table-is-a-projection-of-canvas-nodes.md`、09-10 单一账本合同 `docs/fixes/2026-09-10-agent-draft-single-ledger.root-cause.json`。
+- 仓库里已有：storyboard 表 `rows: z.never()`（`electron/shared/canvas/shotTable.ts:53`）、表与方案同生（`src/workbench/creation/storyboard/exec/ensureStoryboardShotTable.ts:16`）、deconstruction 表证明 union 已容纳多种表源（`src/workbench/generationCanvas/nodes/shotTable/factBridge.ts:23`）、reducer 早就按 shotId 改一镜（`electron/productionRun/productionGenerationPlanEdits.ts:105`）、2026-09-01 拍板 `docs/archive/lessons/shot-table-is-a-projection-of-canvas-nodes.md`、09-10 单一账本合同 `docs/fixes/2026-09-10-agent-draft-single-ledger.root-cause.json`。
 - 生态里已有：Automerge 单文档+派生视图 https://automerge.org/docs/concepts/ ；IETF Idempotency-Key（幂等键粒度 = 被改对象粒度）https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/ ；OpenTimelineIO 单结构+投影视图 https://opentimelineio.readthedocs.io/ 。
 - 结论：用已有——Run 账本 + `rows: z.never()` 表源 + reducer 的按镜 patch；自研只有第三种表源的行派生与对应表上 `lift` 一档。不做方案 A（第二份真相）、不做方案 C（两扇门）。
 
@@ -121,12 +121,12 @@
 ### 方案 B（推荐）：分镜表读 Run 落地的节点；「新建方案」入口对准账本 A
 
 - **改哪层**：
-  1. `electron/shared/canvas/shotTable.ts` 加第三种 source `{ kind:'production', runId }`；行从画布上 `metadata.productionRunId === runId` 的节点派生（节点已带 `productionShotId/productionShotRole/candidate 戳`，`src/workbench/capability/multiShotCanvasLanding.ts:214-221`），左半列按现行「片种模板 derive」规则、右半列按该节点模型 `mode.slots`（照 `docs/lessons/shot-table-is-a-projection-of-canvas-nodes.md` 两半列纪律）。
+  1. `electron/shared/canvas/shotTable.ts` 加第三种 source `{ kind:'production', runId }`；行从画布上 `metadata.productionRunId === runId` 的节点派生（节点已带 `productionShotId/productionShotRole/candidate 戳`，`src/workbench/capability/multiShotCanvasLanding.ts:214-221`），左半列按现行「片种模板 derive」规则、右半列按该节点模型 `mode.slots`（照 `docs/archive/lessons/shot-table-is-a-projection-of-canvas-nodes.md` 两半列纪律）。
   2. 主进程落地成功后（`canvasLandingHost` 已知 runId+groupId）在同一事务里建那张 `shot_table` 节点（复用 `ensureStoryboardShotTable` 的形状，source 换成 `production`），整批仍一个 Cmd+Z。
   3. 分镜页/侧栏「方案」列表增加一类条目 = 有 `shot_table(production)` 的 Run；「新建方案」按钮语义改成「让 Agent 起草」，落地后自动激活该表（不再制造/依赖 `starter-*` design；起手架只在用户手动新建方案时出现）。
   4. 表内改提示词/模型 → 走既有 `generation.revise`（候选 revision +1 → `rebindLandedShots` 同步节点），不新增写路径。
 - **代价**：大于 A，但方向对：账本 A 成为 Agent 分镜唯一 owner，表是节点投影（拍板一致），付费门只有 `generate` 一条。
-- **连带影响谁**：`StoryboardPlanEditor` 要能以「只读候选 + revise」模式渲染一类新 source；`golden-path.e2e.mjs:223-240` 的断言改读画布节点组与 `shot_table(production)`；`docs/plan/2026-09-14-agent-tool-face-v2.md:74` 的外部面欠账要登记到期日（外部 MCP 的 `propose_storyboard_plan` 与内部 `draft_shots` 最终应收敛到同一入口）。账本 B 保留给用户手写方案，**但要在方案里明写它的去留日期**，否则 §4 的双 owner 长期存在。
+- **连带影响谁**：`StoryboardPlanEditor` 要能以「只读候选 + revise」模式渲染一类新 source；`golden-path.e2e.mjs:223-240` 的断言改读画布节点组与 `shot_table(production)`；`docs/archive/plan/2026-09-14-agent-tool-face-v2.md:74` 的外部面欠账要登记到期日（外部 MCP 的 `propose_storyboard_plan` 与内部 `draft_shots` 最终应收敛到同一入口）。账本 B 保留给用户手写方案，**但要在方案里明写它的去留日期**，否则 §4 的双 owner 长期存在。
 
 ### 方案 C：把 lane 上的分镜写动词加回来（恢复 09-10 的 B 链）
 
@@ -140,7 +140,7 @@
 - **那 4 次 `draft_shots` 的真实 tool_result 文本**：我没有你那 5 轮的 lane 转录（`.nomi/agent-sessions/**/*.jsonl`）。结论「每次都死在 `candidate` 校验」是从 HEAD 代码 + 探针推出的必然，不是从转录读出的。请对照转录里 4 条 `draft_shots` 的结果，预期看到 `generation_execution_failed` 与 `"received": "undefined"`。若其中有单镜无 `role` 的调用，它应当已经落了一个节点——那就与「nodes 仍 `[]`」矛盾，需要再查 `isProjectOpen`（`canvasLandingHost.ts:90`）当时是否为假。
 - **你那棵树里的修法是否碰到了候选合成**：任务书只说修了 `durationSec→parameters.duration` 与删 `title`。若你已经顺手合成了 candidate，前置项就是已完成，其余判定不变。
 - **外部 MCP 宿主今天的多镜 `nomi_operation_create`（语义 `shots[]`）是否同样失败**：同一 handler、同一分支，按代码应当同样失败；没跑外部宿主实证。
-- **golden-path 最近一次真跑的结果**：文件历史与 `docs/plan/2026-09-14-agent-tool-face-v2.md:88` 都说没重跑；我也没跑（任务纪律：不起 Electron）。按代码它至少在 `:223-226` 必红（三个独立理由：`title` 被 strict 拒；多镜候选缺失；即便成功也不写账本 B）。
+- **golden-path 最近一次真跑的结果**：文件历史与 `docs/archive/plan/2026-09-14-agent-tool-face-v2.md:88` 都说没重跑；我也没跑（任务纪律：不起 Electron）。按代码它至少在 `:223-226` 必红（三个独立理由：`title` 被 strict 拒；多镜候选缺失；即便成功也不写账本 B）。
 
 ## 7. 探针（可复跑，不起 Electron）
 
@@ -222,15 +222,15 @@ draftShotFromPlan((call!.call.args as any).shots[0], 0, {
 
 - **保留场景**：仅用户手写方案（分镜页编辑器 / 侧栏「新建方案」/ 拆解表「复制成方案」/ 外部 MCP `nomi_canvas_edit` 的 `propose_storyboard_plan`/`patch_shots`）。Agent lane **不写**它（09-14 起）。
 - **退役日期：2026-10-16。**
-- **退役条件（全部满足才删）**：① B.3 落地（分镜页/侧栏能渲染 `shot_table(production)`，样张拍板）；② 外部 MCP 的分镜 operation 收编到 `draft_shots`（与 #754 同刀，`docs/plan/2026-09-14-agent-tool-face-v2.md` §6 那张表的到期项）；③ `projectRepository.ts` 的 `starter-*` 起手架删除（空项目由 Agent 起草进入分镜，不再靠两行空白方案）；④ golden-path 与四条分镜走查在单一账本上全绿。
-- **到期未满足**：按 R17 算红——但**仓库今天没有通用的「带到期日的欠账」门岗**（只有 `check:framework-boundary` 对框架债到期即红），本条登记在 `docs/roadmap/TODO.md` T-DS-19，到期由人核。这是一条结构性发现（见 §8.4）。
+- **退役条件（全部满足才删）**：① B.3 落地（分镜页/侧栏能渲染 `shot_table(production)`，样张拍板）；② 外部 MCP 的分镜 operation 收编到 `draft_shots`（与 #754 同刀，`docs/archive/plan/2026-09-14-agent-tool-face-v2.md` §6 那张表的到期项）；③ `projectRepository.ts` 的 `starter-*` 起手架删除（空项目由 Agent 起草进入分镜，不再靠两行空白方案）；④ golden-path 与四条分镜走查在单一账本上全绿。
+- **到期未满足**：按 R17 算红——但**仓库今天没有通用的「带到期日的欠账」门岗**（只有 `check:framework-boundary` 对框架债到期即红），本条登记在 `docs/archive/roadmap/TODO.md` T-DS-19，到期由人核。这是一条结构性发现（见 §8.4）。
 - 到期前每一处新读分镜的面（表/页/栏/走查）**只许读账本 A**；往 B 加 Agent 写门 = 复活双 owner，`check:tool-face mutual-tiebreak` 会红。
 
 ### 8.4 结构性发现
 
 1. 仓库没有通用的「带到期日的欠账」登记与门岗：`framework-boundaries.json` 的到期机制只服务框架债。分镜账本 B 这类「留一份到某天」的承诺没有机器核的地方。
 2. 一个 Run 落地的节点有**两扇付费门**（Run 的 `generate` 报价卡；节点自己的画布生成按钮/表内「生成」→ spendConfirm）。两条都早已存在，本刀没有收敛；「付费门只有 `generate` 一条」（§5 方案 B 的目标）要另案裁决。
-3. 对外 MCP 面的分镜 operation（`nomi_canvas_edit`）仍写账本 B，与内部 `draft_shots` 写账本 A 分叉——`docs/plan/2026-09-14-agent-tool-face-v2.md` §6 登记过但无日期；本文把它绑到账本 B 的退役日 2026-10-16。
+3. 对外 MCP 面的分镜 operation（`nomi_canvas_edit`）仍写账本 B，与内部 `draft_shots` 写账本 A 分叉——`docs/archive/plan/2026-09-14-agent-tool-face-v2.md` §6 登记过但无日期；本文把它绑到账本 B 的退役日 2026-10-16。
 4. **（已修）** `check:verb-host-conformance` R3 的逐字段探针只从最小实例出发，够不到「只有和另一个字段同在才合法」的字段（`shotId` 要 `draftId`）；一个字段可以被声明成 drop 而门岗一整天全绿。现在从示例再探一遍（见 8.1）。同类：任何靠 `superRefine` 跨字段约束的动词，其被约束的字段都曾是探针盲区。
 5. **（未修）** 同一门岗的 R5「信封不许手抄」只匹配无嵌套花括号的对象字面量，`{ shotId: x.shotId, ...(x.role ? { role: x.role } : {}) }` 这种 spread-conditional 写法看不见——in-memory store 的 `create` 就是第六处手抄，`title` 死在那里（本刀改成 spread `generationShotEnvelopeOf`）。R5 要认这种形状才算封上。
 6. **（未修）** `generate.shotIds` 在动词上声明了、对应表翻了、schema 收了，handler 的 `present` 分支**从不读** `params.shotIds`（永远返回全部 included 镜）。「声明→翻译→收下→忽略」与 shotId 被 drop 是同一形状的洞：门岗核到宿主收下为止，核不到宿主用没用。

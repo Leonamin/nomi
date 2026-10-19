@@ -2,8 +2,8 @@
 
 状态：🚧 进行中
 
-> 施工图（规格）：`docs/research/2026-09-01-shortvideo-data-apis-eval.md` §4 咬合 + §7 v1 五条。
-> 合同原文：`docs/plan/2026-08-29-creative-capability-catalog-and-prompt-system.md` §5.5 `ConnectorDefinition`（#226 已入 main）。
+> 施工图（规格）：`docs/archive/research/2026-09-01-shortvideo-data-apis-eval.md` §4 咬合 + §7 v1 五条。
+> 合同原文：`docs/archive/plan/2026-08-29-creative-capability-catalog-and-prompt-system.md` §5.5 `ConnectorDefinition`（#226 已入 main）。
 > 用户已拍板：只接 TikHub；BYO-key；走势/轮询留 v2；轻抖不接；文稿继续走现有 whisper。
 
 ## 真实摩擦（D1）

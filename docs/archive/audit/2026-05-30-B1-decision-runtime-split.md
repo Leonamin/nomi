@@ -103,7 +103,7 @@ runtime.ts (2,687 行)
 
 具体：
 1. 现在花 30 分钟做 F：runtime.ts 顶部加目录注释 + 各 section 加 banner
-2. 在 docs/plan 写一份 `B1-targeted-catalog-split.md`，明确未来哪些函数搬去 `electron/catalog/`，做边界冻结
+2. 在 docs/archive/plan 写一份 `B1-targeted-catalog-split.md`，明确未来哪些函数搬去 `electron/catalog/`，做边界冻结
 3. **不动代码**，继续推 M5.5 + M6
 
 **中期（v0.8 M8 期间）：执行 C**

@@ -30,7 +30,7 @@
 | kie | `https://docs.kie.ai/llms.txt` | 75KB / 516 条 | `- 分类 > 家族 [标题](url): 描述` —— **分类就在行里** |
 | apimart | `https://docs.apimart.ai/llms.txt` | 49KB / 164 条 | `- [标题](url): 描述` —— 分类由 URL 路径段派生（`/images/` `/videos/`） |
 
-体积小到可以直接把快照提交进仓库（`docs/research/model-radar/<vendor>.json`）——快照进 git 的价值：差异可 review、换机器不丢、「上次见过什么」有权威出处而不是某台机器的本地状态。
+体积小到可以直接把快照提交进仓库（`docs/archive/research/model-radar/<vendor>.json`）——快照进 git 的价值：差异可 review、换机器不丢、「上次见过什么」有权威出处而不是某台机器的本地状态。
 
 **apimart 另有 `GET /v1/models?expand=…`（带 capability/parameter schema，官方标注 for automation）**，比文档索引更权威。但它要 API key，而 key 是 safeStorage 加密存在 Electron 里、独立脚本解不开。故本轮**统一用 llms.txt**（两家同构、免凭证、零成本），把 `/v1/models` 记为后续增强。
 
@@ -47,7 +47,7 @@
 
 `scripts/model-radar.ts`（tsx 跑，可 import 仓库 TS）：
 
-- `pnpm run radar:models` —— 抓 → 归一 → 与快照做差 → 与覆盖集交叉引用 → 打印人类可读摘要 + 写 `docs/research/model-radar/latest.json`
+- `pnpm run radar:models` —— 抓 → 归一 → 与快照做差 → 与覆盖集交叉引用 → 打印人类可读摘要 + 写 `docs/archive/research/model-radar/latest.json`
 - `--update-baseline` —— 把本次索引写成新快照（确认过之后才更新，否则「新」会被吃掉）
 - `--offline <dir>` —— 用本地样本跑（单测与离线复现用，不打网络）
 
@@ -63,7 +63,7 @@
 `.claude/skills/nomi-model-radar/SKILL.md`，仿论文雷达：
 1. 跑脚本拿结构化结果。
 2. 对 new / uncovered 做**三档分诊**（🟢 值得接 / 🟡 观望 / ⚪ 忽略），每条说清「对 Nomi 哪个痛点」。
-3. 写 `docs/research/<date>-model-radar.md`。
+3. 写 `docs/archive/research/<date>-model-radar.md`。
 4. 向用户汇报 1-2 句：今天上了什么、最该接哪个。
 5. 用户确认某个 → **先出接入方案**（契约摘要 + 档案设计 + 与现有档案合/分的理由），点头后才写码。
 

@@ -1,6 +1,6 @@
 # 分镜方案卡片回看 · 实现规范（2026-06-15）
 
-> 用户已拍板样张 `docs/design/reviews/2026-06-15-storyboard-card.html`。
+> 用户已拍板样张 `docs/archive/design/reviews/2026-06-15-storyboard-card.html`。
 > 第二批（见 [history-prompt-backlog](2026-06-15-history-prompt-backlog.md)）。
 
 ## 目标

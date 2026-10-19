@@ -59,7 +59,7 @@
 
 ## Schema 收口与预算
 
-时间轴 plan/undo、导出 job、画布维护、production brief/control/gate/artifact 与 generation create/patch 的字段都复用 lane 同一 owner，删除手写字段表。独立补查见 `docs/plan/2026-09-10-b6-generation-schema-parity.md`。保留 object 聚合与 lease/vendor/modelKey 寻址别名。
+时间轴 plan/undo、导出 job、画布维护、production brief/control/gate/artifact 与 generation create/patch 的字段都复用 lane 同一 owner，删除手写字段表。独立补查见 `docs/archive/plan/2026-09-10-b6-generation-schema-parity.md`。保留 object 聚合与 lease/vendor/modelKey 寻址别名。
 
 补齐约束后通过精简重复工具标题和共享 workflow 指南的同义冗长表达释放空间；不删除字段、枚举、上限或校验，不提高 payload 基线。指南仍包含参考载体、场景分组、图片/视频/首帧、模型参数、站位/运镜预设及 fallback 的所有语义要求，且两 profile 仍读同一数组。
 
@@ -73,7 +73,7 @@ nomi_session_open 是外部 verified project lease 建立；nomi_project_create 
 
 1. 保留外部已发布名字与动作值；人类标题只保留任务名，去除与描述/字段枚举重复的文字，以原 payload 上限容纳完整 schema；用 lane 同源 schema 组装外部传输字段，删除 timeline/export/canvas maintenance 另一份属性表。
 2. verified client 校验前移到共享 MCP 请求边界，两种 stdio 都返回 -32001 + data.code；loopback 403 保留同一码，工具执行错误保留 isError 形式。
-3. C54 按独立方案 `docs/plan/2026-09-10-b6-mcp-skill-content.md` 执行。
+3. C54 按独立方案 `docs/archive/plan/2026-09-10-b6-mcp-skill-content.md` 执行。
 4. 先红后绿：L1、skills integration、共享边界单测；打包 smoke；gates（等待锁）→ commit/push → PR。
 5. 6 角色自审：CTO 同源边界；设计不改页面布局；PM 不扩大付费权限；前端保留工具标题；后端验证先于副作用；真实用户收到可诊断拒绝、可读完整技能。
 
@@ -81,7 +81,7 @@ nomi_session_open 是外部 verified project lease 建立；nomi_project_create 
 
 - 基线红：`.tmp/b6/unit-red.log` 8 failed；`.tmp/b6/l1-red.log` 未验证 Electron 客户端启动即退出；`.tmp/b6/production-red.log` 真基线 build 的 durationSeconds=number，lane=integer。
 - C54 红 6 / 局部绿 23；generation 红 3 / 局部绿 4；总验证日志在 `.tmp/b6/`，最终交接 `b6-mcp-parity-LAST.md`。
-- 改前真机截图 `docs/evidence/b6-mcp-parity/before.png` 来自 macOS Terminal 展示真实隔离 Electron stdio 响应；不是 Claude/WorkBuddy 私有 UI 模拟。改后同脚本/同窗口取证。
+- 改前真机截图 `docs/archive/evidence/b6-mcp-parity/before.png` 来自 macOS Terminal 展示真实隔离 Electron stdio 响应；不是 Claude/WorkBuddy 私有 UI 模拟。改后同脚本/同窗口取证。
 - 全套 gates 和打包 smoke 未完成前不宣称完成。prompt-only shots 在两条路同样被共同 owner 拒绝，本任务不改候选默认值或付费行为。
 
 
@@ -94,5 +94,5 @@ nomi_session_open 是外部 verified project lease 建立；nomi_project_create 
 - 单 worker 窄回归：递归/非法 schema/数值边界先红5条；修复后通过。MCP 59文件472条首轮471通过，唯一旧空提示词放行断言强化为 capability_input_invalid 且无生成调用，相关16条复测通过。
 - Electron tsc、根因合同、prior-art、model-schema、28 operation constructible、payload 均通过。payload 44002 / 45822字节；删除5条已修复空schema豁免，不增加任何基线。
 - 真 Electron stdio L1通过；Claude + WorkBuddy skills integration累计28断言；macOS arm64打包 smoke通过（25 tools / 165 resources / director body 7886 chars）。
-- 实际Terminal改前改后截图与复跑脚本：docs/evidence/b6-mcp-parity/。
+- 实际Terminal改前改后截图与复跑脚本：docs/archive/evidence/b6-mcp-parity/。
 - 新增Ajv使用官方draft-07语义；未知schema关键字及悬空/外部引用均fail-closed，不加载远程schema、不改写参数。

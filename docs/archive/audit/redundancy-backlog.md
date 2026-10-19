@@ -1,7 +1,7 @@
 # Nomi UX 冗余/复杂度 · 活路线图（backlog）
 
 > **唯一活真相源**：所有「该简化的冗余/复杂度」项 + 状态 + 优先级 + 什么时候整，都在这。
-> 由 `nomi-ux-audit` 技能（`.claude/skills/nomi-ux-audit/`）每轮体检更新；point-in-time 体检报告见 `docs/audit/<date>-app-wide-redundancy-audit.md`。
+> 由 `nomi-ux-audit` 技能（`.claude/skills/nomi-ux-audit/`）每轮体检更新；point-in-time 体检报告见 `docs/archive/audit/<date>-app-wide-redundancy-audit.md`。
 > 做完一项即把状态改 ✅ 并标 commit；体检复跑时把新发现并进来、回归项标 ⚠️。
 
 ## 攻坚原则（什么时候整）
@@ -68,7 +68,7 @@
 
 ## 对话返回面专项（第 3 轮 2026-06-23 · 用户点名「两个 agent 返回怎么返回」）
 
-> 报告 `docs/audit/2026-06-23-agent-conversation-render-audit.md`。范围=两个 agent 对话「返回内容」渲染面。竖排按钮根因已治本（9d59383）。
+> 报告 `docs/archive/audit/2026-06-23-agent-conversation-render-audit.md`。范围=两个 agent 对话「返回内容」渲染面。竖排按钮根因已治本（9d59383）。
 
 | 档 | 项 | 问题 | 状态 |
 |---|---|---|---|
@@ -87,5 +87,5 @@
 | ⚫D | CR-D2 | `CanvasAssistantPanel`/`CreationAiPanel` 逼近 800 | ⬜ 评估：均在 800 门内（filesize 门把关），拆精密流式/事务闭包高风险低回报且非缺陷 → 监控不强拆 |
 
 ## 体检轮次
-- **第 1 轮 2026-06-22**：基线体检，五路并行扫出上述全部项，建 backlog。报告 `docs/audit/2026-06-22-app-wide-redundancy-audit.md`。
-- **第 2 轮 2026-06-23**：六路（五路 + 模型接入专项深扫），重点压用户点名的模型弹窗 + 模型接入。新增 **B7（模型弹窗 IA，真痛点）** + **A8-A12 死码/文案批**。回归看门狗：无并行版回潮；A4/A5 漏网的 `onModelIntegration` dead prop 补进 A10；模型接入主流程复核未回潮（71ff41c 保持）。报告 `docs/audit/2026-06-23-app-wide-redundancy-audit.md`。
+- **第 1 轮 2026-06-22**：基线体检，五路并行扫出上述全部项，建 backlog。报告 `docs/archive/audit/2026-06-22-app-wide-redundancy-audit.md`。
+- **第 2 轮 2026-06-23**：六路（五路 + 模型接入专项深扫），重点压用户点名的模型弹窗 + 模型接入。新增 **B7（模型弹窗 IA，真痛点）** + **A8-A12 死码/文案批**。回归看门狗：无并行版回潮；A4/A5 漏网的 `onModelIntegration` dead prop 补进 A10；模型接入主流程复核未回潮（71ff41c 保持）。报告 `docs/archive/audit/2026-06-23-app-wide-redundancy-audit.md`。

@@ -27,4 +27,4 @@
 
 ## 검증 상태
 
-진행 중. 실제 결과와 독립 인수 보고서는 `docs/qa/2026-10-14-recovered-web-production.md`에 기록.
+진행 중. 실제 결과와 독립 인수 보고서는 `docs/archive/qa/2026-10-14-recovered-web-production.md`에 기록.

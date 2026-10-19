@@ -1,4 +1,4 @@
-// 应用内代理设置的 IPC（见 docs/plan/2026-08-01-in-app-proxy-setting.md）。
+// 应用内代理设置的 IPC（见 docs/archive/plan/2026-08-01-in-app-proxy-setting.md）。
 // get 读状态、set 写偏好并**即时重装 dispatcher**（不用重启）、test 探连通。
 import { app, ipcMain, session } from "electron";
 import { normalizeProxyPrefs, readProxyPrefs, writeProxyPrefs, type ProxyPrefs } from "./proxySettings";

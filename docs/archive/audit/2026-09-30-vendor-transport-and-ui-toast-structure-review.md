@@ -2,7 +2,7 @@
 
 > 状态：已完成（2026-09-30）。触发：`check:symptom-cluster`——`electron/vendor` 与 `src/ui` 各在 7 天窗口里收到第三份根因合同（本分支「生成失败要说真话」的四份合同带出来的）。
 > 对应合同：`docs/fixes/2026-09-29-failure-reason-from-upstream-evidence.root-cause.json`（`electron/vendor`）、`docs/fixes/2026-09-29-toast-identity-withdrawal-and-window-fit.root-cause.json`（`src/ui`）。
-> 姊妹评审：`docs/audit/2026-09-29-render-layer-second-answers-structure-review.md`（同一类「渲染层另给一个答案」，其中点名的「失败不记身份」缺口由本分支的 `2026-09-29-failure-belongs-to-the-dispatched-attempt` 关闭）。
+> 姊妹评审：`docs/archive/audit/2026-09-29-render-layer-second-answers-structure-review.md`（同一类「渲染层另给一个答案」，其中点名的「失败不记身份」缺口由本分支的 `2026-09-29-failure-belongs-to-the-dispatched-attempt` 关闭）。
 
 ## 结论
 

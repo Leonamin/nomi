@@ -1,6 +1,6 @@
 # 2026-09-10 UX 反馈修复（B1+B2）· 先查别人报告
 
-> 方案：docs/plan/2026-09-10-ux-feedback-triage.md（B1 单点小修 8 条 + B2 apimart direct-key 模型接入修复）。
+> 方案：docs/archive/plan/2026-09-10-ux-feedback-triage.md（B1 单点小修 8 条 + B2 apimart direct-key 模型接入修复）。
 > 本报告按模板四问复核每类修法「别人做过没有」，结论抄进方案「## 先查别人」节。
 
 ## ① 依赖里已有？
@@ -21,7 +21,7 @@
   - AIFast OpenAI-Compatible API 教程（四步验收，`/v1/models` + short non-streaming request 缺一不可）：https://docs.aifast.hk/en/guides/openai-compatible-api（2026-09-10 查）
   - Web Pulse「7 Checks Before You Blame the SDK」：401 排查顺序 + `max_tokens=20` 的一发小请求作端到端判据：https://wpnews.pro/news/openai-compatible-base-url-troubleshooting-7-checks-before-you-blame-the-sdk（2026-09-10 查）
   - 但部分聚合商的 `/v1/models` 对合法 key 也回 401（需要鉴权的模型列表端点），apimart 即如此——仓库一手证据 `electron/vendor/vendorBaseFallback.ts:153` 注释（2026-09-08 前后实测），官方 chat 端点契约 https://docs.apimart.ai/en/api-reference/texts/general/chat-completions-nostream.md（apimartVendor.ts:32 带 checkedAt）。**结论：验证策略必须 per-vendor 分派，direct-key 用种子声明的一次 max_tokens:1 真实探测，certification 维持 /v1/models——与生态「最小真实请求是最终判据」一致，且比无差别打 /v1/models 更诚实。**
-- **direct-key「填 key 即解锁」模式**：本仓设计文档 `docs/plan/2026-06-07-apimart-curated-onboarding.md` 早已确立该契约（apimartVendor.ts:25-27 注释引用）；本次是把后来加的认证独占诚实门补上它应有的 direct-key 分支，不是新模式。
+- **direct-key「填 key 即解锁」模式**：本仓设计文档 `docs/archive/plan/2026-06-07-apimart-curated-onboarding.md` 早已确立该契约（apimartVendor.ts:25-27 注释引用）；本次是把后来加的认证独占诚实门补上它应有的 direct-key 分支，不是新模式。
 
 ## ④ TikHub 自媒体里怎么说？
 

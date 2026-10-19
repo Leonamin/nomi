@@ -70,7 +70,7 @@
 4. **⌘V 粘贴到鼠标处**：`reactFlow/useCanvasPastePlacement.ts` 记住鼠标最后一次在舞台里的位置（离开舞台即清空）；节点粘贴与剪贴板媒体粘贴共用这一个落点来源。`pasteNodes(point, anchor)` 按粘贴簇**看得见的**外接盒中心对准该点。右键菜单「粘贴」同样改为以右键点为中心（一个点只有一种含义）。
 5. **提示**：「画布操作」帮助面板「节点操作」组加一行「⌥ Option + 拖动 / Alt + 拖动 → 拖出副本」，键名按平台（`design/platformShortcut.ts` 的 `platformAltKey`）；zh / en。不加常驻控件（§1.5：快捷键是加速器不是入口）。
 
-「落点」共用词汇：`model/canvasPlacement.ts`（`{ point, anchor }` + 中心锚），拖入 / 粘贴 / 结果拖出都用它，对齐结构评审 `docs/audit/2026-09-21-canvas-node-placement-structure.md` §3 提议的「放置意图」形状。
+「落点」共用词汇：`model/canvasPlacement.ts`（`{ point, anchor }` + 中心锚），拖入 / 粘贴 / 结果拖出都用它，对齐结构评审 `docs/archive/audit/2026-09-21-canvas-node-placement-structure.md` §3 提议的「放置意图」形状。
 
 ## 待用户确认
 

@@ -11,7 +11,7 @@
 // 本文件是**中立契约层**：不引 node 内置、不引 electron——渲染层 bundle 也要 import 它。
 // 路径只给「相对哪个根 + 段」，真正 join / existsSync 住在 electron/capabilityCore/mcpDetectedClients.ts。
 //
-// 规范链接（R31：每家一条，偏差理由见 docs/plan/2026-09-14-mcp-connection-truthfulness.md）：
+// 规范链接（R31：每家一条，偏差理由见 docs/archive/plan/2026-09-14-mcp-connection-truthfulness.md）：
 //   Claude Code    https://code.claude.com/docs/en/mcp        user scope = ~/.claude.json 顶层 mcpServers
 //   Claude Desktop https://modelcontextprotocol.io/quickstart/user
 //                    macOS ~/Library/Application Support/Claude/claude_desktop_config.json；Windows %APPDATA%\Claude\…

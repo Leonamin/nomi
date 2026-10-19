@@ -12,7 +12,7 @@
 
 **根因（分两层，P2 两层一起堵才算根治）**：
 
-1. **缺大脑**：创作助手 / 拆镜头是 agent，主控需要一个 `kind === "text"` 的 LLM（[electron/ai/agentChatV2.ts:174-191](../../../electron/ai/agentChatV2.ts) `chooseTextModel` 在 catalog 里找不到任何 enabled 的 text 模型就抛错）。而 APIMart 预置种子（[electron/catalog/seedBuiltins.ts:87-90](../../../electron/catalog/seedBuiltins.ts) `APIMART_CURATED_MODELS`）**只播图片6/视频7/音频1，没有一个文本模型**——这是 2026-06-07 apimart 接入时刻意「不做文本模型」的决定（[docs/plan/2026-06-07-apimart-curated-onboarding.md:126](2026-06-07-apimart-curated-onboarding.md)）。
+1. **缺大脑**：创作助手 / 拆镜头是 agent，主控需要一个 `kind === "text"` 的 LLM（[electron/ai/agentChatV2.ts:174-191](../../../electron/ai/agentChatV2.ts) `chooseTextModel` 在 catalog 里找不到任何 enabled 的 text 模型就抛错）。而 APIMart 预置种子（[electron/catalog/seedBuiltins.ts:87-90](../../../electron/catalog/seedBuiltins.ts) `APIMART_CURATED_MODELS`）**只播图片6/视频7/音频1，没有一个文本模型**——这是 2026-06-07 apimart 接入时刻意「不做文本模型」的决定（[docs/archive/plan/2026-06-07-apimart-curated-onboarding.md:126](2026-06-07-apimart-curated-onboarding.md)）。
 
 2. **死胡同报错**：报错是一句英文字符串塞进对话气泡（[src/workbench/creation/CreationAiPanel.tsx:182](../../../src/workbench/creation/CreationAiPanel.tsx)），没有可恢复动作。面板上写着「已连通 14 个模型」，又说「没有文本模型」，自相矛盾，用户不知道还要去「添加模型」手填一个文本 LLM。
 

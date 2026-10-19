@@ -498,7 +498,7 @@ export default function NodeGenerationComposer({ onFeedback, node, visualSize, h
       {/* 底栏（v1.1，2026-09-11 用户拍板）：铺满卡宽（w-full），一行三段、不换行：
           `[模型 ▾] [16:9 · 5s ▾] │ [✦][✨] │ [×N ▾] ……… [↑]`
           从左到右是「出什么 → 怎么写 → 出几张 → 走」，与人在按下生成那一刻的决策顺序同向。
-          三类归位见 docs/design/2026-09-10-node-composer-bar-v1.md：
+          三类归位见 docs/archive/design/2026-09-10-node-composer-bar-v1.md：
             A 决定出什么/花多少 → 第一段与第三段；B 帮我写提示词 → 中段缩小一号的纯 icon；
             锁 → 回节点浮条（它的作用对象是**这个节点**，不是这一次生成）。
           参数区两个宿主各一种摆法：画布节点是**摘要 pill**（同日 02:10 的逐参数 chip 于 04:30 被用户

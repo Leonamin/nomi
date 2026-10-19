@@ -8,11 +8,11 @@ This audit maps the storyboard table samples to the current `StoryboardWorkspace
 
 ## Source designs
 
-- `docs/design/mockups/2026-09-01-storyboard-table-image-first.html` (v5 table and anchor strip)
-- `docs/design/mockups/storyboard-options/A-inline-generation.html`
-- `docs/design/mockups/storyboard-options/B-first-column-composer.html`
-- `docs/design/mockups/storyboard-options/C-anchor-strip-inline-reference.html`
-- `docs/design/reviews/2026-06-15-storyboard-editor-redesign.html` (legacy reference states)
+- `docs/archive/design/mockups/2026-09-01-storyboard-table-image-first.html` (v5 table and anchor strip)
+- `docs/archive/design/mockups/storyboard-options/A-inline-generation.html`
+- `docs/archive/design/mockups/storyboard-options/B-first-column-composer.html`
+- `docs/archive/design/mockups/storyboard-options/C-anchor-strip-inline-reference.html`
+- `docs/archive/design/reviews/2026-06-15-storyboard-editor-redesign.html` (legacy reference states)
 
 ## Evidence boundary
 

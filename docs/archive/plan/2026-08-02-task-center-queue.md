@@ -1,6 +1,6 @@
 # 任务中心 / 队列面板 + 完成通知
 
-> 2026-08-02。来源：`docs/research/2026-08-01-shuo-canvas-benchmark.md` backlog 第 1 项（最大缺口）。
+> 2026-08-02。来源：`docs/archive/research/2026-08-01-shuo-canvas-benchmark.md` backlog 第 1 项（最大缺口）。
 > 样张已拍板（2026-08-02），两个岔路用户选定：**外化队列做真取消** + **连续失败 3 个暂停并问**。
 
 ## 1. 为什么做（用户那一刻卡在哪）

@@ -2,7 +2,7 @@
  * 命中判定的节点矩形**只有一个真相源：React Flow 内核测量出来的那个**。
  *
  * 为什么不能自己从 Zustand 算（2026-09-07 R29 边界检查 §6.1，
- * docs/research/2026-09-07-react-flow-subflows-vs-frame.md）：
+ * docs/archive/research/2026-09-07-react-flow-subflows-vs-frame.md）：
  * `getCanvasNodeVisualSize(node)` 给的是**声明**尺寸（节点类型的标称宽高），
  * 而用户看到的是浏览器**实际渲染**出来的边。两者一旦不一致——某类节点内容撑高、
  * 缩放取整、字体回退让标题多折一行——判定线和视觉边就不是同一条，

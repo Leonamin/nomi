@@ -2,7 +2,7 @@
 
 - 触发：`check:symptom-cluster` —— `electron/agentLane` 在 2026-09-17 到 2026-09-22 的 7 天里收到 21 份根因合同，`electron/productionRun` 20 份。
 - 范围：本文只评审**「这一刻在等用户」**这一件事在这两层里的归属，以及它的终态。两个簇里其余合同（会话恢复、压缩、批调度、预览令牌…）不在本文证据范围内。
-- 证据全部来自真机：2026-09-22 三轮真实模型轨迹（`docs/evidence/2026-09-2{1,2}-askback-real-model*`）、spend 七条走查在合并 ③ 提交上的归因复跑、以及两个临时探针（占位节点 id 与面板 pending 的逐字段比对；提问卡待答时的 composer 输入）。
+- 证据全部来自真机：2026-09-22 三轮真实模型轨迹（`docs/archive/evidence/2026-09-2{1,2}-askback-real-model*`）、spend 七条走查在合并 ③ 提交上的归因复跑、以及两个临时探针（占位节点 id 与面板 pending 的逐字段比对；提问卡待答时的 composer 输入）。
 
 ## 一、这一层今天真正的形状
 
@@ -23,7 +23,7 @@
 这一次多出来的变体值得单独记：**终态不由账本自己说、要靠第二趟往返去补**。× 之后「别复活」靠的是渲染层观察到节点被删、再另发一趟
 `plan.detach-shot-nodes`（先读再写、失败静默吞掉）——任何这种形状都自带一个抢跑窗口，而抢输的那一侧不会报错，只会多出一个节点。
 
-## 三、本轮做掉的（`docs/fixes/2026-09-22-waiting-for-user-one-owner.root-cause.json`；方案 `docs/plan/2026-09-22-waiting-for-user-one-owner.md`）
+## 三、本轮做掉的（`docs/fixes/2026-09-22-waiting-for-user-one-owner.root-cause.json`；方案 `docs/archive/plan/2026-09-22-waiting-for-user-one-owner.md`）
 
 1. × = 真终态：`generation.cancel` + `cancelReason: "declined"`；`dismiss` 一支（reducer 分支、两个 store、接口成员、`dismissGenerationPlan`）同 commit 删净；落地不认被撤回的计划；同一个 operationId 不再被 present 复活。
 2. 提问卡待答时打字 = 那道题的答案（`answer`，不是 `deny`）；有闸在等时 follow-up 与 steer 同义。

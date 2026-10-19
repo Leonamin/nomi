@@ -1,7 +1,7 @@
 # 生成轨迹图（ViMax 化）执行方案
 
 日期：2026-06-12
-前置：`docs/plan/2026-06-12-vimax-trajectory-into-agent.md`（方向已拍板：A 为主，B 为可选边语义非默认；用户确认三能力可行性后要求出完整方案）
+前置：`docs/archive/plan/2026-06-12-vimax-trajectory-into-agent.md`（方向已拍板：A 为主，B 为可选边语义非默认；用户确认三能力可行性后要求出完整方案）
 状态：方案定稿，待用户过目后实施
 
 ---

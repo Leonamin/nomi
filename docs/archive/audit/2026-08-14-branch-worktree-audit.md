@@ -115,7 +115,7 @@ so deleted names and their decisions remain auditable.
 | `claude/blissful-kare-fedb5c` | Seedance observation/spike tooling, not a product patch |
 | `claude/bold-meitner-ba7296` | WeChat local-read/key tooling; security-sensitive and has additional uncommitted work |
 | `claude/mystifying-greider-a2b7fd` | WeChat database-key recovery tooling; security-sensitive archive only |
-| `docs/design-system-v2` | Historical design documentation superseded by current tokens and checks |
+| `docs/archive/design-system-v2` | Historical design documentation superseded by current tokens and checks |
 | `feat/memory-cards` | Old memory-card implementation line; current architecture has diverged |
 | `feat/memory-setting-cards`, `refactor/light-only-fonts` | Same old theme/settings tip; do not revive |
 | `feat/quick-ux-wins` | Historical feedback tooling plus local artifacts; review separately if the tooling is wanted |

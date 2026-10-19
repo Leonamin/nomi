@@ -16,7 +16,7 @@
 //
 // Run: pnpm run build && node tests/ux/agent-artifact.walk.mjs
 import { assertMockupContract, clickOrFail, expect, expectAbsent, expectVisible, proveProbe } from './_assert.mjs'
-import artifactIntentContract from '../../docs/design/mockups/contracts/2026-09-06-agent-artifact-node.intent.mjs'
+import artifactIntentContract from '../../docs/archive/design/mockups/contracts/2026-09-06-agent-artifact-node.intent.mjs'
 import { findCanvasBlankPoint } from './_canvasHit.mjs'
 import { laneMessages, readLaneTranscripts } from './agent-lane-observer.mjs'
 import { FIXTURE_TEXT_MODEL_LABEL, flattenRequestText } from './agent-runtime-fixture.mjs'

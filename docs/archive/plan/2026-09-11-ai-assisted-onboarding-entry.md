@@ -1,7 +1,7 @@
 # 「用 AI 帮我接入」：把接模型这件事交给用户已经在用的 AI 助手
 
 > 2026-09-11 · 分支 `feat/ai-assisted-onboarding-entry-20260911` · 状态：✅ 已交付
-> 设计定稿：[docs/design/2026-09-11-ai-assisted-onboarding-entry.md](../../design/2026-09-11-ai-assisted-onboarding-entry.md)（用户 2026-09-11「按默认」拍板）
+> 设计定稿：[docs/archive/design/2026-09-11-ai-assisted-onboarding-entry.md](../design/2026-09-11-ai-assisted-onboarding-entry.md)（用户 2026-09-11「按默认」拍板）
 
 ## 底层逻辑（这治的是哪个真实摩擦）
 
@@ -30,7 +30,7 @@
 
 ## 先查别人
 
-完整报告：[docs/research/2026-09-11-ai-assisted-onboarding-entry/prior-art.md](../research/2026-09-11-ai-assisted-onboarding-entry/prior-art.md)。摘要（每条带出处）：
+完整报告：[docs/archive/research/2026-09-11-ai-assisted-onboarding-entry/prior-art.md](../research/2026-09-11-ai-assisted-onboarding-entry/prior-art.md)。摘要（每条带出处）：
 
 - **仓库里已有（卡本体）**：`src/ui/onboarding/ConnectAssistantCard.tsx:1` 已能干「把 Nomi 接进助手」，
   入口在 `src/workbench/settings/AutomationPermissionsSection.tsx:213`。**用已有**：那件事继续由它独占，新卡不复制它的任何按钮。

@@ -72,7 +72,7 @@
 | 画布上的浮层/组框/工具栏 | `src/workbench/generationCanvas/components/` | 同目录 |
 | Sidebar 行 / 分类 | `src/workbench/sidebar/` | 同目录 |
 | 助手 composer（输入框/附件）| `src/workbench/ai/composer/` | 同目录 |
-| **agent 对话流里的任何东西**（工具条/计划卡/付费卡/进度/失败/反问/等待指示器…）| 规格看 **[nomi-agent-interaction.md](nomi-agent-interaction.md)**（Agent 专章：17 种形态 + 统一状态词表 + 动效 + 控件尺寸/等宽规则）| 同文档 §11 拆迁清单指定 |
+| **agent 对话流里的任何东西**（工具条/计划卡/付费卡/进度/失败/反问/等待指示器…）| 规格看 **[nomi-agent-interaction.md](../archive/design/nomi-agent-interaction.md)**（Agent 专章：17 种形态 + 统一状态词表 + 动效 + 控件尺寸/等宽规则）| 同文档 §11 拆迁清单指定 |
 | Logo / 字标 / 加载标 / 步骤器 | `../../design`（全部出自 `src/design/identity.tsx`，§3.9）| **不新增**，复用 |
 | 图标 | `@tabler/icons-react`（§6）| 不自带 svg；**例外**：agent「工序指示器」是受管动效资产，见 agent 专章 §5.1 |
 
@@ -108,7 +108,7 @@ Script → Generate → Edit → Preview → Export
 ## 1.5 控件层级规则（强制 · 画图前必过）
 
 > **这份文档过去只管「长什么样」，不管「住哪一层」。** 2026-08-02 全 App 控件盘点（10 个界面、约 620 个可点位）发现：十个界面各自发明了十套摆法——画布左缘 8 个平铺竖条、剪辑页一条 toolbar 横铺 15 个跨 4 类心智、3D 四面包围、节点四面包围再叠 hover 浮条。
-> **根因就是这一节缺失。** 补上它，新功能进来才不会又长回去。梳理全文见 `docs/plan/2026-08-02-control-hierarchy-audit.md`。
+> **根因就是这一节缺失。** 补上它，新功能进来才不会又长回去。梳理全文见 `docs/archive/plan/2026-08-02-control-hierarchy-audit.md`。
 
 ### 1.5.1 一个判定问题
 
@@ -199,7 +199,7 @@ Script → Generate → Edit → Preview → Export
    底部必答：**这条路几步、能不能砍掉一步**（步骤数由结构决定，实现完就改不动了）。每行要有证据（`file:line` 或「没做，因为 X」），留空不算。
    > **减法本身会制造路径问题**：把选项收起来构图赢了，但用户想用时找不到入口。所以删除清单第三列的每一句承诺，都要在卡点①里被验证。
 
-**详解与代价说明在 `docs/design/page-design-process.md` §2.5（真相源，本节是它的索引）。**
+**详解与代价说明在 `docs/archive/design/page-design-process.md` §2.5（真相源，本节是它的索引）。**
 
 ---
 
@@ -332,7 +332,7 @@ DaVinci Resolve 确实有「选中跟随播放头」，但它是 **opt-in 且默
 一张卡一页只管一项、又要能一下决定整叠时，整叠的动作是一颗**写明数量的描边次按钮**，住在**动作行最左**：
 整叠的动作在左、这一项的动作在右（「去掉这张」+ 主按钮「生成这张」），最贵的那颗离主按钮最远，不容易误点；
 主按钮仍是这一项的那一下（回车按的是它）。
-- **为什么是文字、而且超过 4 字**：它没有公认图形（规则 2），**数量就是它要说的那件事**——不写张数，用户点之前不知道这一下管几张。所以它是规则 3「≤4 字」的有意例外；`check:controls` 量不到投影出来的标签，这一条靠样张对账守（`docs/design/mockups/contracts/2026-10-01-paid-card-generate-remaining.intent.mjs`）。
+- **为什么是文字、而且超过 4 字**：它没有公认图形（规则 2），**数量就是它要说的那件事**——不写张数，用户点之前不知道这一下管几张。所以它是规则 3「≤4 字」的有意例外；`check:controls` 量不到投影出来的标签，这一条靠样张对账守（`docs/archive/design/mockups/contracts/2026-10-01-paid-card-generate-remaining.intent.mjs`）。
 - **只剩 1 项时不画**：那时它和主按钮是同一件事，两颗按钮做一件事只会让人犹豫。
 - **放不下一行时**（英文），它整颗换到上一行、靠左；右边这一项的两颗保持一组、靠右——不截断、不挤压、不把主按钮挤到下一行。
 - **钱只印一处**：报得出价时这一叠的合计印在翻页那一行的右端（翻页行说的就是「这一叠」：第几页 + 一共多少），批量按钮上不再印第二遍。
@@ -512,7 +512,7 @@ Mantine 组件的 `color` prop 收的是**色板名**（`red` / `grape` / `teal`
 
 > 注：**状态色三族（success / danger / warning）已在 2026-09-07 收口成 ① 层 `--nomi-*` 的别名**，不再各写一份 iOS hex。那份 hex 曾是与根层 oklch 并行的第二真相源：两边各自漂移，明暗切换只有一边跟着动。现在 `--workbench-danger: var(--nomi-danger)`，全仓 240 处消费点零改动跟着变；暗色块也不再重定义它们（`--nomi-*` 自己翻，工作区层自动跟）。
 >
-> 剩下的 hex/rgba（video / hover / pressed / backdrop 等）是**非状态语义**（轨道色、交互底），仍在 ② 层直写——它们不参与状态语义体系，本轮不动。消费方**只用类名**（`text-workbench-danger` 等），不要把值抄进组件。定义在 `:root` 而非 `.workbench-shell` 作用域——CSS 变量沿 DOM 继承，作用域定义会让 portal / 库页浮层静默退灰（2026-08-24 收口，docs/plan/2026-08-24-workbench-token-root-scope.md）。
+> 剩下的 hex/rgba（video / hover / pressed / backdrop 等）是**非状态语义**（轨道色、交互底），仍在 ② 层直写——它们不参与状态语义体系，本轮不动。消费方**只用类名**（`text-workbench-danger` 等），不要把值抄进组件。定义在 `:root` 而非 `.workbench-shell` 作用域——CSS 变量沿 DOM 继承，作用域定义会让 portal / 库页浮层静默退灰（2026-08-24 收口，docs/archive/plan/2026-08-24-workbench-token-root-scope.md）。
 
 | Token | 实际值 | 用途 |
 |---|---|---|
@@ -722,7 +722,7 @@ className="transition-[background,color] duration-nomi-fast ease-nomi-fast"
 
 | 用户此刻在哪 | 确认长在哪 | 状态 |
 |---|---|---|
-| 正在跟内嵌 agent 对话 | **对话流内的付费富卡**，对话暂停等回答（不弹居中窗——弹窗会打断「对话主驾」心流） | 🚧 待建，随 B5 落；规格见 [nomi-agent-interaction.md](nomi-agent-interaction.md) |
+| 正在跟内嵌 agent 对话 | **对话流内的付费富卡**，对话暂停等回答（不弹居中窗——弹窗会打断「对话主驾」心流） | 🚧 待建，随 B5 落；规格见 [nomi-agent-interaction.md](../archive/design/nomi-agent-interaction.md) |
 | 用户自己点单个生成（画布 ↑、分镜表「生成镜 N」、重试、重新生成；非首次托管） | **不弹**：按下即开始，照样先报价再凭报价铸令牌（2026-09-25 用户拍板）。**不显示价格**（2026-09-26 用户拍板「先把价格这个维度隐藏掉，等后续官方上线再说」：现在所有模型都走中转、各家价格不一，Nomi 不计算价格；等官方模型供应上线、价格可算时再设计） | ✅ 现役 |
 | 用户一下跑 ≥2 个（×N、多选、批量、先补参考）或首次匿名托管 | `SpendConfirmDialog` 居中弹窗，金币图标 | ✅ 现役 |
 | 人不在 Nomi，外部 MCP 驱动（`source: 'agent'`） | `SpendConfirmDialog` 居中弹窗 —— 这是唯一该「召唤注意力」的场景 | ✅ 现役 |
@@ -774,18 +774,18 @@ mark 是 **28×28 viewBox 的圆角方块**：深色底（`oklch(0.22 0.01 80)` 
 
 | 组件 | 真实调用点（file:line）|
 |---|---|
-| `NomiBrand` | 顶栏 [NomiAppBar.tsx:81](src/ui/app-shell/NomiAppBar.tsx:81)、开屏标版 [SplashIntro.tsx:382](src/workbench/onboarding/SplashIntro.tsx:382) |
-| `NomiLogoMark` | 关于弹层 [AboutNomiPopover.tsx:83](src/ui/app-shell/AboutNomiPopover.tsx:83)、项目库标题 [ProjectLibraryPage.tsx:85](src/workbench/library/ProjectLibraryPage.tsx:85)、助手发言头 [AssistantMessageView.tsx:20](src/workbench/ai/AssistantMessageView.tsx:20)、画布助手 [CanvasAssistantPanel.tsx:603](src/workbench/generationCanvas/components/CanvasAssistantPanel.tsx:603)、创作 AI 面板 [CreationAiPanel.tsx:402](src/workbench/creation/CreationAiPanel.tsx:402)、提示词优化按钮 [NodePromptOptimizer.tsx:109](src/workbench/generationCanvas/nodes/NodePromptOptimizer.tsx:109) |
-| `NomiWordmark` | 项目库标题、助手身份行、关于弹层、提示词库 [PromptLibraryPanel.tsx:100](src/workbench/promptLibrary/PromptLibraryPanel.tsx:100)（字标唯一真相源，已全仓收口）|
-| `NomiAILabel` | 画布助手头 [CanvasAssistantPanel.tsx:558](src/workbench/generationCanvas/components/CanvasAssistantPanel.tsx:558)（suffix 生成）、创作区头 [CreationWorkspace.tsx:53](src/workbench/creation/CreationWorkspace.tsx:53)（suffix 创作）|
-| `NomiLoadingMark` | 路由加载、画布/壳加载、节点生成中 [CardCommon.tsx:134](src/workbench/generationCanvas/nodes/render/CardCommon.tsx:134)、附件上传、导出忙、AssetPicker、按钮 loading 态（`actions.tsx` 内置）等 10+ 处 |
-| `NomiStepper` | 顶栏 [NomiAppBar.tsx:173](src/ui/app-shell/NomiAppBar.tsx:173)（唯一处）|
+| `NomiBrand` | 顶栏 [NomiAppBar.tsx:81](../archive/design/src/ui/app-shell/NomiAppBar.tsx:81)、开屏标版 [SplashIntro.tsx:382](../archive/design/src/workbench/onboarding/SplashIntro.tsx:382) |
+| `NomiLogoMark` | 关于弹层 [AboutNomiPopover.tsx:83](../archive/design/src/ui/app-shell/AboutNomiPopover.tsx:83)、项目库标题 [ProjectLibraryPage.tsx:85](../archive/design/src/workbench/library/ProjectLibraryPage.tsx:85)、助手发言头 [AssistantMessageView.tsx:20](../archive/design/src/workbench/ai/AssistantMessageView.tsx:20)、画布助手 [CanvasAssistantPanel.tsx:603](../archive/design/src/workbench/generationCanvas/components/CanvasAssistantPanel.tsx:603)、创作 AI 面板 [CreationAiPanel.tsx:402](../archive/design/src/workbench/creation/CreationAiPanel.tsx:402)、提示词优化按钮 [NodePromptOptimizer.tsx:109](../archive/design/src/workbench/generationCanvas/nodes/NodePromptOptimizer.tsx:109) |
+| `NomiWordmark` | 项目库标题、助手身份行、关于弹层、提示词库 [PromptLibraryPanel.tsx:100](../archive/design/src/workbench/promptLibrary/PromptLibraryPanel.tsx:100)（字标唯一真相源，已全仓收口）|
+| `NomiAILabel` | 画布助手头 [CanvasAssistantPanel.tsx:558](../archive/design/src/workbench/generationCanvas/components/CanvasAssistantPanel.tsx:558)（suffix 生成）、创作区头 [CreationWorkspace.tsx:53](../archive/design/src/workbench/creation/CreationWorkspace.tsx:53)（suffix 创作）|
+| `NomiLoadingMark` | 路由加载、画布/壳加载、节点生成中 [CardCommon.tsx:134](../archive/design/src/workbench/generationCanvas/nodes/render/CardCommon.tsx:134)、附件上传、导出忙、AssetPicker、按钮 loading 态（`actions.tsx` 内置）等 10+ 处 |
+| `NomiStepper` | 顶栏 [NomiAppBar.tsx:173](../archive/design/src/ui/app-shell/NomiAppBar.tsx:173)（唯一处）|
 
 #### 3.9.3 App 图标 / favicon（打包层，非组件）
 
 | 文件 | 用途 |
 |---|---|
-| [public/nomi-logo.svg](public/nomi-logo.svg) | 浏览器 favicon（[index.html:6](index.html:6) `<link rel="icon">`）+ 营销用。512×512，**fill `#2e2c2a` 是硬编码 hex**（≈ ink 但未对齐 token，§14 漂移）|
+| [public/nomi-logo.svg](../archive/design/public/nomi-logo.svg) | 浏览器 favicon（[index.html:6](index.html:6) `<link rel="icon">`）+ 营销用。512×512，**fill `#2e2c2a` 是硬编码 hex**（≈ ink 但未对齐 token，§14 漂移）|
 | `build/icon.png` / `build/icon.ico` / `release/.icon-icns/icon.icns` | Electron 打包后的应用图标（dock/任务栏/安装包）|
 
 > 改 logo 视觉时这几个文件 + `identity.tsx` 的 mark 路径**必须一起改**，否则 app 图标和 in-app logo 会不一致。
@@ -988,7 +988,7 @@ showUndoToast({ message, onUndo, isUndoable, watchUndoable })
 
 视觉：一行一个生产单元（镜头/锚）的密集表格行——固定几何列（画面格列、参考列）+ 一个占满剩余宽度的提示词块，模型/模式/参数收进提示词块内部的底栏，不做成表格列。
 
-规格与完整规则见合同文档，不在此复制细节：**`docs/design/2026-09-05-storyboard-table-v6-design-contract.md` §2/§6**（行 grid `14px 136px 200px minmax(0,1fr)`、画面格列固定宽+媒体框按比例缩放、动作条在图下方不压图）。
+规格与完整规则见合同文档，不在此复制细节：**`docs/archive/design/2026-09-05-storyboard-table-v6-design-contract.md` §2/§6**（行 grid `14px 136px 200px minmax(0,1fr)`、画面格列固定宽+媒体框按比例缩放、动作条在图下方不压图）。
 
 何时用 / 何时不用：
 - 用：需要"批量冗余观察 + 逐条精细编辑"两件事共存的密集列表（分镜表是目前唯一实例）。
@@ -1000,7 +1000,7 @@ showUndoToast({ message, onUndo, isUndoable, watchUndoable })
 
 视觉：一个槽（不是一张素材）在参考列/列表里的固定占位——单张素材是普通 tile；≥2 张素材时叠成"手抓扑克"扇形（首张正放最上，其余以左下角为轴逐张多转 13°，露出右上角）+ 右下角 `已用/上限` 计数角标，点开出浮层网格增删排序。
 
-规格与完整规则见合同文档，不在此复制细节：**`docs/design/2026-09-05-storyboard-table-v6-design-contract.md` §4/§6**（槽 vs 素材的语义区分、`characterIndexed` 编号规则、`max` 缺省时的角标画法）。
+规格与完整规则见合同文档，不在此复制细节：**`docs/archive/design/2026-09-05-storyboard-table-v6-design-contract.md` §4/§6**（槽 vs 素材的语义区分、`characterIndexed` 编号规则、`max` 缺省时的角标画法）。
 
 何时用 / 何时不用：
 - 用：一个数据槽可能装多个素材、且槽本身需要在密集列表里占**固定**视觉预算的场景。
@@ -1252,7 +1252,7 @@ CSS 不会报错、不会回退到默认值，而是**静默作废整条声明**
 | 组件库说明 | `src/design/README.md` |
 | Tailwind 扩展 | `tailwind.config.*` |
 | Mura 设计原稿 | 用户本地 `Mura - 画布设计.html`（Claude Artifacts）|
-| Phase E.2 execution plan | `docs/plans/2026-05-25-phase-e2-completion-and-tech-uplift.md` |
+| Phase E.2 execution plan | `docs/archive/plans/2026-05-25-phase-e2-completion-and-tech-uplift.md` |
 
 ---
 
@@ -1332,4 +1332,4 @@ CSS 不会报错、不会回退到默认值，而是**静默作废整条声明**
 
 ### 画布分镜表节点（B1，2026-09-10）
 
-`src/workbench/generationCanvas/nodes/shotTable/ShotTableNode.tsx` 消费已拍板 TableNode 画板：纸面节点、40px 标题/底栏、32px 表行、24px 高关键帧、sticky 表头、内部横纵滚动。≥80% 全表，40–80% 镜号/关键帧/状态，<40% 摘要卡；尺寸仍由画布 NodeResizer 单源持久化。生产表只读，双击回 v6 全页；参考片自定义列操作复用 WorkbenchMenu/promptDialog。两套列集共用 token 与表壳，状态沿现役行执行 derive。详见 [三组设计合同](2026-09-08-left-sidebar-canvas-nodes-process-feedback.md)。
+`src/workbench/generationCanvas/nodes/shotTable/ShotTableNode.tsx` 消费已拍板 TableNode 画板：纸面节点、40px 标题/底栏、32px 表行、24px 高关键帧、sticky 表头、内部横纵滚动。≥80% 全表，40–80% 镜号/关键帧/状态，<40% 摘要卡；尺寸仍由画布 NodeResizer 单源持久化。生产表只读，双击回 v6 全页；参考片自定义列操作复用 WorkbenchMenu/promptDialog。两套列集共用 token 与表壳，状态沿现役行执行 derive。详见 [三组设计合同](../archive/design/2026-09-08-left-sidebar-canvas-nodes-process-feedback.md)。

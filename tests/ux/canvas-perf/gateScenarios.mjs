@@ -39,7 +39,7 @@ export const CANVAS_PERF_GATE_SCENARIOS = Object.freeze([
  *
  * 数字来自实测而不是拍脑袋：run 34899530314（Linux/xvfb，`--scale M --runs 1`）在 20 分钟
  * 硬顶前跑完 20 条、死在第 21 条 `video-hover` 的采样里 —— 均值约 60 s/场景。CI 是软渲染，
- * 比 macOS 慢 1.3–2×（`docs/lessons/canvas-perf-budget-calibrated-on-macos-fails-on-linux.md`），
+ * 比 macOS 慢 1.3–2×（`docs/archive/lessons/canvas-perf-budget-calibrated-on-macos-fails-on-linux.md`），
  * 而 `cold-open` / `reload-heavy` 这种带整轮重启的明显高于均值，所以取 90 s = 实测均值 ×1.5。
  *
  * 这不是性能预算 —— 预算是 `canvas-performance-verdict.mjs` 里那些帧间隔/长任务断言。

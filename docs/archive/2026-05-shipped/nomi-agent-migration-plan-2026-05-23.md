@@ -70,7 +70,7 @@
 - [ ] 22 个早期 tapcanvas-* skill 已归档到 `skills/legacy/`
 - [ ] `apps/` 目录已清理（已完成）
 - [ ] 所有新代码有对应 vitest 测试
-- [ ] `docs/provider-integration.md` 和 `docs/user-guide.md` 与新架构同步
+- [ ] `docs/archive/guides/provider-integration.md` 和 `docs/archive/guides/user-guide.md` 与新架构同步
 - [ ] CI 全绿，release v0.4.0 桌面包三平台可分发
 
 ---
@@ -154,7 +154,7 @@
 - 验收：
   - [ ] 手动测试：添加 Claude vendor + 一个 API key
   - [ ] AI 面板使用 Claude 模型完成一次问答
-  - [ ] 截图存档 `docs/product/screenshots/phase-a-anthropic-call.png`
+  - [ ] 截图存档 `docs/archive/product/screenshots/phase-a-anthropic-call.png`
 
 #### Task A6: 添加 Phase A 单元测试
 
@@ -420,7 +420,7 @@ Spawn audit agent（模板见 §5.2）。
 
 #### Task C7: 录制 demo 视频
 
-- 文件：`docs/product/demos/v0.4-story-to-storyboard.mp4` (不入 git，软链接到 release)
+- 文件：`docs/archive/product/demos/v0.4-story-to-storyboard.mp4` (不入 git，软链接到 release)
 - 操作：录 90 秒视频，准备发 Twitter / B站 / GitHub release
 - 提交：`docs(product): add v0.4 demo video reference`
 - 验收：
@@ -516,9 +516,9 @@ Spawn audit agent。
 
 #### Task D5: 文档同步
 
-- 更新 `docs/quickstart.md`：新建项目流程提到"试试看"
-- 更新 `docs/user-guide.md`：删除 `apps/agents` 引用（已不存在）；新增"Agent 工具调用"章节
-- 更新 `docs/provider-integration.md`：加入 Anthropic provider 配置说明
+- 更新 `docs/archive/guides/quickstart.md`：新建项目流程提到"试试看"
+- 更新 `docs/archive/guides/user-guide.md`：删除 `apps/agents` 引用（已不存在）；新增"Agent 工具调用"章节
+- 更新 `docs/archive/guides/provider-integration.md`：加入 Anthropic provider 配置说明
 - 更新 `README.md`：定位语 + 主 demo 视频链接
 - 新建 `docs/skill-pack-format.md`：Skill Pack v2 完整规范
 - 提交：`docs: sync to v0.4.0 architecture`
@@ -566,7 +566,7 @@ Spawn final audit agent，全面 review。
 | 假流式逻辑 | B4 | `src/api/server.ts:openDesktopAgentsChatStream` 旧实现 | rebased SHA in branch | ✅ |
 | 23 个 legacy skill | D4 | `skills/tapcanvas-*` 等 → `skills/legacy/` | `f690259` | ✅ |
 | `apps/` 目录 | (已删) | / | `--` (untracked clean) | ✅ |
-| `apps/agents` 在 user-facing docs 中的引用 | D5 | `docs/user-guide.md`, `docs/provider-integration.md`, `README.md` | `a07cbfa` | ✅ |
+| `apps/agents` 在 user-facing docs 中的引用 | D5 | `docs/archive/guides/user-guide.md`, `docs/archive/guides/provider-integration.md`, `README.md` | `a07cbfa` | ✅ |
 | 文本资产生成路径的 postJson chat completions | D6 | `electron/runtime.ts:runGenerationTask` 文本路径 → AI SDK `generateText` | (D6 commit) | ✅ |
 
 ---
@@ -581,10 +581,10 @@ Agent({
   subagent_type: "general-purpose",
   prompt: `
 你是一个独立的代码审查 agent，从未参与 Nomi 的 Agent 迁移工作。
-你的任务：审查 Phase X (W{N}) 的实际产出，对照 docs/product/nomi-agent-migration-plan-2026-05-23.md 的 §{section}。
+你的任务：审查 Phase X (W{N}) 的实际产出，对照 docs/archive/product/nomi-agent-migration-plan-2026-05-23.md 的 §{section}。
 
 具体步骤：
-1. 读 docs/product/nomi-agent-migration-plan-2026-05-23.md §{当前 Phase} 完整章节
+1. 读 docs/archive/product/nomi-agent-migration-plan-2026-05-23.md §{当前 Phase} 完整章节
 2. 用 git log 找出本 Phase 时间范围内的 commits
 3. 对每个 commit 验证：
    - 是否完成了对应 task 描述的内容

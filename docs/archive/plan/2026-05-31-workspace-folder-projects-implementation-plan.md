@@ -1184,7 +1184,7 @@ legacyProjectMigration.ts
 
 **Files:**
 
-- Create: `docs/qa/workspace-folder-projects-qa.md`
+- Create: `docs/archive/qa/workspace-folder-projects-qa.md`
 
 手工 QA 场景：
 

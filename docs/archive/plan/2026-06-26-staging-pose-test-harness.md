@@ -28,7 +28,7 @@
 - `src/devlab/stagingShots.tsx` + `staging-shots.html` —— 多视角离屏渲染，`window.__shots`。
 - `tests/ux/staging-pose-shots.walk.mjs` —— vite dev + chromium 驱动，逐例存 PNG。
 - `src/workbench/.../scene3d/stagingPoses.test.ts` —— 不变量单测。
-- `docs/audit/2026-06-26-staging-pose-review.md` —— 子 agent 审查结论 + 修复记录。
+- `docs/archive/audit/2026-06-26-staging-pose-review.md` —— 子 agent 审查结论 + 修复记录。
 
 ## 验收门
 1. 五门全过。

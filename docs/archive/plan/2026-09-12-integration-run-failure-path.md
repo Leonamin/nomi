@@ -2,7 +2,7 @@
 
 状态：✅ 已交付 · 分支 `fix/integration-run-failure-path-20260912`
 
-> 上游复盘：`docs/plan/2026-09-11-mcp-integration-quality.md`（真机接入 otokapi 的完整轨迹与分层方案）。
+> 上游复盘：`docs/archive/plan/2026-09-11-mcp-integration-quality.md`（真机接入 otokapi 的完整轨迹与分层方案）。
 > 根因合同：`docs/fixes/2026-09-12-integration-run-failure-path.root-cause.json`（recurring）。
 > 本轮只做那份方案里的 **P0 + P1**；P2（并发/部分晋升/仅重试失败模型）与 P3（目录刷新滞后）按用户拍板不进本 PR。
 
@@ -43,7 +43,7 @@ catch 自己出错时无人兜底——那一下正好是「把 run 写成失败
 **结论：没有可复用的持有者，新建一个模块。**
 
 **③ 生态里已有？** 上游同一批近邻调研已做完，正本在
-`docs/research/2026-09-11-mcp-integration-quality/prior-art.md`（主仓未提交）。原文结论：
+`docs/archive/research/2026-09-11-mcp-integration-quality/prior-art.md`（主仓未提交）。原文结论：
 
 | 来源 | 与本轮相关的做法 | 我们照办 / 有意不同 |
 |---|---|---|

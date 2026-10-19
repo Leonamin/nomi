@@ -30,6 +30,6 @@ PR #827 的 Linux CI run `35497170584` 在 Golden Path 第 354 行失败：第 2
 - 先红：新增重绑定、幂等重放、结果回填 3 项均在旧生产代码失败，fit nonce 从 2 增至 3；其他 3 项新内容展示正向控制通过。日志 `/tmp/nomi-materialization-viewport-red.log`（调用 fair-share runner 实际选了 157 个文件，3 failed /1712 passed）。
 - 修复后 4 个相关测试文件共 66 项通过：落地、Agent 单账本、create_canvas_nodes、生产分镜行派生。日志 `/tmp/nomi-materialization-viewport-green.log`。重绑定测试同时证明 ID、其他镜头提示词、节点选择、表格选择和活动分类保持。结果回填使用合成 nomi-local URL，只验证状态写入，不声称真实媒体或付费生成已验收。
 - Scoped ESLint 通过；生产文件 391 行，测试 250 行，均低于 800 行。
-- 父任务增强 Golden Path，在旧构建先确定性复现：matrix(0.8,0,0,0.8,-81.3092,-443.694) 被改成 matrix(0.589109,0,0,0.589109,-28.6931,19.7327)，从 80% 降为 58.9%。归档 `docs/audit/2026-09-20-waiting-grid-evidence/golden-viewport-before.json`；稳定窗口跨过 360ms delayed fit，排除抢在副作用前的假绿。修后重建/真实应用完整旅程与 Linux CI 由父任务执行。
+- 父任务增强 Golden Path，在旧构建先确定性复现：matrix(0.8,0,0,0.8,-81.3092,-443.694) 被改成 matrix(0.589109,0,0,0.589109,-28.6931,19.7327)，从 80% 降为 58.9%。归档 `docs/archive/audit/2026-09-20-waiting-grid-evidence/golden-viewport-before.json`；稳定窗口跨过 360ms delayed fit，排除抢在副作用前的假绿。修后重建/真实应用完整旅程与 Linux CI 由父任务执行。
 - `pnpm run check:root-cause-contracts` 48 项脚本自测与合同检查通过；加入 Golden Path 回归路径后单独重跑 checker 通过。日志 `/tmp/nomi-materialization-viewport-contract.log`。
 - `pnpm run check:door-map` 11 项脚本自测与本次 3 份受管合同门表通过；日志 `/tmp/nomi-materialization-viewport-doormap-check.log`。原始生成门表 `/tmp/nomi-materialization-viewport-doors.txt`，全部 5 门保持，无新增导航入口。PR 正文引用由父任务交付阶段处理。

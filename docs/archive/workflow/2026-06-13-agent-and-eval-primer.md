@@ -7,8 +7,8 @@
 >
 > **和已有文档的关系**：本文是**历史讲义**（解释当时为什么），不是当前真相源，
 > 其中 EventLog/NomiEvent 只作研究语汇。当前 runtime 施工真相是
-> `docs/superpowers/specs/2026-08-22-runtime-ownership-adr.md` 与
-> `docs/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`；
+> `docs/archive/superpowers/specs/2026-08-22-runtime-ownership-adr.md` 与
+> `docs/archive/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`；
 > 任何冲突以最新 ownership ADR 为准。
 > 日期：2026-06-13。代码引用以当日 main（`5c7eab9`）为准。
 
@@ -182,14 +182,14 @@
 
 循环已转通：施工期抓出并修掉 2 个真 bug（prod projectId 解析、agent 连线 clientId 吊边），各配回归锁。实测账：冒烟 5 case ≈3 分钟 ≈11 万 token;全量 15 case ≈10 分钟 ≈31 万 token。
 
-**还欠你三件事**：① `evals/judge.config.json` 填便宜档 judge key;② 查看器标注 ≥10 条导出;③ 拍板 Q1（默认连线？）/ Q2（宣传片默认 image 还是 video？）——见 `docs/audit/2026-06-12-eval-error-analysis-v1.md`。
+**还欠你三件事**：① `evals/judge.config.json` 填便宜档 judge key;② 查看器标注 ≥10 条导出;③ 拍板 Q1（默认连线？）/ Q2（宣传片默认 image 还是 video？）——见 `docs/archive/audit/2026-06-12-eval-error-analysis-v1.md`。
 
 ---
 
 # Part C · 论文与设计导读
 
 > 按「读它学什么 → 我们抄了什么 / 没抄什么」组织。标 ⭐ 的是建议精读的五篇/个，其余按兴趣。
-> harness 侧更完整的拆解（含核实程度声明）见 `docs/plan/2026-06-10-nomi-harness-teardown-reference-pool.md`。
+> harness 侧更完整的拆解（含核实程度声明）见 `docs/archive/plan/2026-06-10-nomi-harness-teardown-reference-pool.md`。
 
 ## C1. Agent / Harness 架构
 

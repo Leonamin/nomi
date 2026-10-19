@@ -9,7 +9,7 @@ import type { MediaImportRejection } from '../contracts/mediaImportPolicy';
 // 拆开之后：`LaneToolSpec` 是一份纯数据，`scripts/check-model-schema.ts` 直接 import
 // 就能量；`bindLaneTool` 把 `execute` 挂上去变成可执行的 `LaneToolDescriptor`。
 //
-// ── 描述三通道（G-03，出处 `docs/research/2026-09-07-pi-reference-implementation-conformance.md` §1.1）──
+// ── 描述三通道（G-03，出处 `docs/archive/research/2026-09-07-pi-reference-implementation-conformance.md` §1.1）──
 //
 // 上游 pi 把「模型怎么知道该用哪个工具」拆成三条通道，各花各的钱：
 //   ① `description`        进工具 schema，**每次请求都花 token**。说「这个工具干什么、

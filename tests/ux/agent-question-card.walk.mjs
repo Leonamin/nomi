@@ -7,7 +7,7 @@
 // 要花钱、而且模型问不问是概率的。这条腿证的是另一件事：**问出来之后，用户答得了吗**。
 // 所以远端供应商用 loopback（零额度、必然触发），而从「打字」到「点 chip」到
 // 「在卡里写一句」全部是真实 UI 动作——渲染层、IPC、AgentLane、审批闸、pi SDK、
-// 落盘一条不绕（`docs/lessons/tests-must-drive-ui-like-a-human.md`）。
+// 落盘一条不绕（`docs/archive/lessons/tests-must-drive-ui-like-a-human.md`）。
 //
 // 两条真人任务（任务书点名的那两条）：
 //   ① 点 chip 作答 → 回合**在同一轮里**继续，模型收到的就是 chip 上那几个字；
@@ -159,7 +159,7 @@ try {
   //
   // 这里**不能**用 `win.evaluate(setItem) + win.reload()` 换语言：原地刷新之后
   // `getActiveWorkbenchProjectId()` 恒 null，面板会静默空掉，看起来像极了一个真 bug
-  // （`docs/lessons/walkthrough-no-win-reload.md`）。而这条走查的全部价值是
+  // （`docs/archive/lessons/walkthrough-no-win-reload.md`）。而这条走查的全部价值是
   // 「答得了吗」，不是「英文外壳长什么样」。
   // EN 那一轨由 `design-lab-question-card-generality.walk.mjs` 出（它本来就是 zh/en 两轨），
   // 两边渲的是同一个 `V4Intervention`。

@@ -1,4 +1,4 @@
-// 能力核 · 实例广告 / 探测（见 docs/plan/2026-06-20-capability-core-headless-exposure.md §S4）。
+// 能力核 · 实例广告 / 探测（见 docs/archive/plan/2026-06-20-capability-core-headless-exposure.md §S4）。
 //
 // 「Nomi 开着没」是开/不开自动适配的关键探针。运行中的 app 启动 RPC server 后，把实例广告（v2 形状见
 // instanceAdvert.ts：{ version:2, pid, port, token, startedAt, projectsRoot, heartbeatAt, appVersion }）写到

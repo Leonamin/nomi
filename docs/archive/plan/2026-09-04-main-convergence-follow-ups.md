@@ -102,7 +102,7 @@
 
 **用户价值：** Agent 能在一个稳定的 Host 会话里开始、暂停、取消、结算并恢复任务，用户不会看到重复执行、孤儿任务或“看似成功但没有副作用”。
 
-**当前 main / PR / merge SHA：** #301 `13a78c02` 已在 main；M1 gap 参考 `docs/plan/2026-09-03-m1-contract-coverage-gap-remediation.md`；#452 head `75f8e4148ee6d539d2e54250e3c7bb5b75497f5a` 尚未 merge。当前没有 M1 completion SHA。
+**当前 main / PR / merge SHA：** #301 `13a78c02` 已在 main；M1 gap 参考 `docs/archive/plan/2026-09-03-m1-contract-coverage-gap-remediation.md`；#452 head `75f8e4148ee6d539d2e54250e3c7bb5b75497f5a` 尚未 merge。当前没有 M1 completion SHA。
 
 **依赖 / 不重复：** 依赖 M0 契约、现有 Host capability/lease owner 和 #452 owner 的 usage ledger/receipt 取舍；先比较 #452 的 diff，不复制 `execution_settled`/usage receipt。M5 只消费本项目的 receipt，不在这里做 packaged graduation。
 
@@ -326,7 +326,7 @@
 
 **用户价值：** 用户在设备 A 保存并关闭项目，在设备 B 打开、编辑、保存，再回到 A 继续工作；冲突、离线、缺资产和半同步不会静默丢稿。
 
-**当前 main / PR / merge SHA：** current main `53e3ab7c` 已含 #457 head `a58d048d9fe8789656bc80daa1bd58d403f6e396` 及其 workspace sync/settings/contract/E2E 代码；没有真实双设备 completion SHA。#328 head `fee6d56f40890dce7361bb55c9ba1fbd11ba9a05` 仍是旧候选。相关设计基线为 `docs/superpowers/plans/2026-09-01-cross-device-project-continuation.md`。
+**当前 main / PR / merge SHA：** current main `53e3ab7c` 已含 #457 head `a58d048d9fe8789656bc80daa1bd58d403f6e396` 及其 workspace sync/settings/contract/E2E 代码；没有真实双设备 completion SHA。#328 head `fee6d56f40890dce7361bb55c9ba1fbd11ba9a05` 仍是旧候选。相关设计基线为 `docs/archive/superpowers/plans/2026-09-01-cross-device-project-continuation.md`。
 
 **依赖 / 不重复：** 依赖 project manifest/asset/export persistence、M0-M3 restart receipt；不引入 cloud SDK，不复制 #328 全量，不把 local simulated profiles 计为真实 sync。
 
@@ -438,7 +438,7 @@
 
 **用户价值：** 用户在真实组件出现前就能确认层级、密度、信息优先级和状态设计，减少静态稿与真实工作流脱节；实现后还能在 Electron/package 中确认视觉没有退化。
 
-**当前 main / PR / merge SHA：** `docs/design/nomi-design-flow-image2-gate.md` 与 `docs/design/agent-ui-state-coverage-gaps.md` 当前由 PR #453 分支承载，尚未属于 `origin/main`；本 feature 没有产品 merge SHA。审计依据 `docs/qa/2026-09-04-pr454-storyboard-agent-audit.md`：#454 旧 anchor 方向已 rejected。
+**当前 main / PR / merge SHA：** `docs/archive/design/nomi-design-flow-image2-gate.md` 与 `docs/archive/design/agent-ui-state-coverage-gaps.md` 当前由 PR #453 分支承载，尚未属于 `origin/main`；本 feature 没有产品 merge SHA。审计依据 `docs/archive/qa/2026-09-04-pr454-storyboard-agent-audit.md`：#454 旧 anchor 方向已 rejected。
 
 **依赖 / 不重复：** 依赖真实 shell/current screenshot、用户任务、featureId 和相关功能的状态矩阵；不从旧 HTML/mockup 继续实现，不用 image2 图替代真实交互/持久化/Agent/MCP/canvas/provider 证据。
 

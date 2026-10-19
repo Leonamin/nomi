@@ -1,8 +1,8 @@
 # W2 · 一致性地基（圣经冻结 + I2V 默认路径）：实现方案（2026-08-20）
 
-> 探明对象：蓝图 `docs/plan/2026-08-19-dialogue-draft-quality-blueprint.md` §二幕1-2 + §三 W2。
+> 探明对象：蓝图 `docs/archive/plan/2026-08-19-dialogue-draft-quality-blueprint.md` §二幕1-2 + §三 W2。
 > 验收对象：`tests/ux/draft-journey.e2e.mjs` 幕 2（今为 pending，line 84-85）——W2 点亮它。
-> 现状依据：`docs/research/2026-08-19-nomi-draft-capability-inventory.md`（定妆卡/参考边现状）＋ B 报告 §3.3（ViMax static/dynamic 分离）。
+> 现状依据：`docs/archive/research/2026-08-19-nomi-draft-capability-inventory.md`（定妆卡/参考边现状）＋ B 报告 §3.3（ViMax static/dynamic 分离）。
 > 复用不重造：W1 刚落地的 shotVerify 审片环（`electron/capabilityCore/shotVerify*`）、参考键投影（`taskParams.projectReferencesOntoBodyKeys`，commit 2669373a）、抽帧基建（`extractVideoFrameToAsset`）、gate/elicitation 确认基建。
 >
 > 本文件只做侦察 + 方案，**不改任何代码**。所有结论带 file:line。

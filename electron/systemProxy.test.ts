@@ -198,7 +198,7 @@ describe("describeNetworkError（把 fetch failed 翻成人话）", () => {
   });
 });
 
-// ── 应用内三态设置（2026-08-01，见 docs/plan/2026-08-01-in-app-proxy-setting.md）──────────
+// ── 应用内三态设置（2026-08-01，见 docs/archive/plan/2026-08-01-in-app-proxy-setting.md）──────────
 // 用户偏好必须**先于**探测：这正是「给 Nomi 单独设代理」这个需求成立的地方。
 describe("resolveProxy — 用户偏好先于系统探测", () => {
   const askedSession = (answer: string, calls: string[]) =>

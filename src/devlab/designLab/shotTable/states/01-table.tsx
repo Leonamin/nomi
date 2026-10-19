@@ -1,6 +1,6 @@
 import type { LabState } from '../../labScreen'
 import { ShotTableStage } from '../ShotTableStage'
-const SOURCE = 'docs/plan/2026-09-10-left-sidebar-and-shot-table-node.md'
+const SOURCE = 'docs/archive/plan/2026-09-10-left-sidebar-and-shot-table-node.md'
 export const SHOT_TABLE_STATES: readonly LabState[] = [
   {
     id: 'shot-table-empty',

@@ -1,6 +1,6 @@
 /**
  * 工作流设置整页的数据层：后端清单 / 这台的工作流 / 原始 JSON 草稿 / 缺件对账 / 连通探测。
- * plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+ * plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
  *
  * 全部走既有 IPC，**后端零改动**：listVendors / listModels / listMappings / probeComfyui /
  * reconcileComfyWorkflows。抽成 hook 是为了让页面组件只管「摆」和「改」，不被取数撑爆

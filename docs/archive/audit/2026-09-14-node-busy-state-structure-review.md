@@ -3,7 +3,7 @@
 > R21.2 触发。本轮合同 `docs/fixes/2026-09-14-import-borrows-generation-waiting-surface.root-cause.json`
 > 把 `electron/assets`（连带 `electron`）、`src/workbench`、`src/desktop`、`src/i18n` 四个模块
 > 推过了 7 天 ≥3 份合同的线。本文点名的就是这四个。
-> 直接前作：`docs/audit/2026-09-13-canvas-media-preview-structure-review.md`（同一条导入/落盘链的上一刀）。
+> 直接前作：`docs/archive/audit/2026-09-13-canvas-media-preview-structure-review.md`（同一条导入/落盘链的上一刀）。
 
 ## 0. 先摘掉假信号
 

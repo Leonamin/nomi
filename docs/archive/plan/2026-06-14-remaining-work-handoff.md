@@ -11,14 +11,14 @@ Nomi = 本地优先 AI 视频创作工作台（Electron + React18 + Zustand + Ve
 按顺序读：
 1. **`CLAUDE.md`** — 全部工程纪律（P1–P5 / R1–R14）。最高真相源，与任何 skill 冲突以它为准。
 2. **`docs/design/nomi-design-system.md`** — 任何用户可见改动**前完整读**（§2 token 全表 / §3 通用组件 / 规范）。**token-only**：禁非 token 的 px/hex/圆角（如 `h-[34px]`/`text-[12.5px]` 违规）。
-3. **`docs/audit/2026-06-14-ultra-deep-mechanism-audit.md`** — 审计全貌，剩余项的出处与根因。
-4. **`docs/plan/2026-06-14-ultra-audit-remediation.md`** — 修复计划 + 进度回填。
+3. **`docs/archive/audit/2026-06-14-ultra-deep-mechanism-audit.md`** — 审计全貌，剩余项的出处与根因。
+4. **`docs/archive/plan/2026-06-14-ultra-audit-remediation.md`** — 修复计划 + 进度回填。
 5. memory `ultra-deep-audit-2026-06-14b` — 这轮全部来龙去脉 + 已做清单 + 踩过的坑。
 
 触发式纪律：
 - 碰第三方库（AI SDK / Mantine / Electron / Tiptap / Vite…）→ 先 Context7 查官方文档（R5）。**注意：Nomi 画布是自研的，不是 React Flow，别查 RF**。
 - 用户可见改动 → 先出 HTML mockup → 用户拍板 → 实现后逐项对账（R8/P5）。
-- 多文件/多步 → 先写 `docs/plan`（范围/不动项/回滚/验收门）（R4）。
+- 多文件/多步 → 先写 `docs/archive/plan`（范围/不动项/回滚/验收门）（R4）。
 - 涉及取舍/产品方向 → 给 R3 对比表让用户拍板，别单方面开干；样张自相矛盾就停下上报。
 - 报「做完」前 → 真机体感走查（Playwright 截图人眼判断），全绿 ≠ 完成（P3/R13）。
 
@@ -32,7 +32,7 @@ Nomi = 本地优先 AI 视频创作工作台（Electron + React18 + Zustand + Ve
 ## 3. 工作方式（单窗口，main 直作）
 每个任务一个循环：
 1. **调研**：Explore agent 摸现状，记**真实 file:line**（别用本文里的行号当真，代码会漂——以你查到的为准）。
-2. **设计/plan**（按需）：UI 任务出样张 + R3/R7；多文件任务写 `docs/plan`。
+2. **设计/plan**（按需）：UI 任务出样张 + R3/R7；多文件任务写 `docs/archive/plan`。
 3. **实现**：TDD（先红后绿），分层清楚，单文件 ≤800 行。
 4. **五门**：`pnpm run check:filesize && pnpm run lint:ci && pnpm run typecheck && pnpm test && pnpm build` 全过。
 5. **commit**：只 `git add` 指名文件（**绝不 -A**），中文 message（做了什么+为什么+验证），结尾挂 `Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`。
@@ -54,7 +54,7 @@ Nomi = 本地优先 AI 视频创作工作台（Electron + React18 + Zustand + Ve
 - 已有结构化引用统计：`hooks/useNodeRelationships.ts` 的 `useNodeUsageCount`（已改为按 edges 统计，"徽标"方案可直接复用）
 - 分类归属：`model/generationNodeKinds.ts`；节点卡片：`nodes/BaseGenerationNode.tsx`；改分类不动边的入口：`store/canvasNodeActions.ts` 的 `reassignNodeCategory`
 **交付（R8 流程，别跳）**：
-1. 出 **2–3 个 HTML mockup**（放 `docs/design/reviews/<日期>-cross-category-edge-*.html`，token-only）：① 节点徽标 MVP（卡上"被 N 个镜头引用 / 引用了 X"，复用 useNodeUsageCount，近纯代码）② 跨分类引用面板/抽屉 ③ 跨视图指示（点节点高亮其在别分类的引用对端）。
+1. 出 **2–3 个 HTML mockup**（放 `docs/archive/design/reviews/<日期>-cross-category-edge-*.html`，token-only）：① 节点徽标 MVP（卡上"被 N 个镜头引用 / 引用了 X"，复用 useNodeUsageCount，近纯代码）② 跨分类引用面板/抽屉 ③ 跨视图指示（点节点高亮其在别分类的引用对端）。
 2. 设计师 agent + 真实用户 agent 各审一遍（R7 子集），回填。
 3. R3 对比表（方案/用户看到什么/代价）→ 用户拍板。**拍板前不写实现。**
 4. 拍板后实现 + 真机走查 + 逐项对账。
@@ -70,11 +70,11 @@ Nomi = 本地优先 AI 视频创作工作台（Electron + React18 + Zustand + Ve
 1. **统一 `ProjectCreationSpec` 单一构造点**：newProject/openProject/tryExample 三入口对 seedKey/categoryId/workspaceMode/默认节点的约定收口到一处 + 不变量测试（create 后 manifest 必含这些）。涉及 `NomiStudioApp.tsx` + `project/projectRepository.ts` + `workspace/workspaceRepository.ts`。
 2. **缩略图双份派生收口**：`project/projectNormalize.ts`（renderer）与 `workspace/workspaceRepository.ts`（main）各一份 deriveThumbnail —— 抽共享或保证逻辑等价 + 交叉注释单一来源。
 3. **manual 接入连通性测试**：`catalog/catalogCommit.ts` 存了即"成功"无连通校验 → 补一个非阻断「测试连接」（需 main.ts IPC + bridge.ts 入口），对齐"接入即验证"纪律。
-4. **草稿态"完全不写盘"补 renderer 端**：现在空白项目是"写盘 + 启动 GC"的等价态；真正"未编辑不落盘"需在 `NomiStudioApp.tsx` newProject 端延迟创建（见 `docs/plan/2026-06-14-empty-draft-project-gc.md` 声明的差异）。
+4. **草稿态"完全不写盘"补 renderer 端**：现在空白项目是"写盘 + 启动 GC"的等价态；真正"未编辑不落盘"需在 `NomiStudioApp.tsx` newProject 端延迟创建（见 `docs/archive/plan/2026-06-14-empty-draft-project-gc.md` 声明的差异）。
 
 ### 任务 4 文本三真相源（片段 ID）—— 先写 plan，别盲改
 **问题**：同段源文本散在文档(`workbenchDocument`)/分镜方案(`storyboardPlan`)/节点 prompt 三处，改一处另两处不同步。派生动作都是"读 trim 后字符串 → 写进新对象"，无回溯。
-**性质**：架构改造（引入"文本片段 ID"绑定源文本与派生物，重连 创作→分镜→画布 数据流）。**先按 R4 写 `docs/plan` + R7 六角色评审 + R3 给用户拍板方向，再动代码**。不要直接改。
+**性质**：架构改造（引入"文本片段 ID"绑定源文本与派生物，重连 创作→分镜→画布 数据流）。**先按 R4 写 `docs/archive/plan` + R7 六角色评审 + R3 给用户拍板方向，再动代码**。不要直接改。
 
 ### 延后（用户已拍板，不做）
 - **Scene3D 3860 行全拆** —— 纯技术债，卡顿已修，维护性问题，往后延。
@@ -83,4 +83,4 @@ Nomi = 本地优先 AI 视频创作工作台（Electron + React18 + Zustand + Ve
 ---
 
 ## 5. 顺序与节奏建议
-任务 1（最高价值，需用户拍板样张）→ 任务 2（自包含）→ 任务 3（零散批量）→ 任务 4（先 plan 等拍板）。每完成一件回填 `docs/plan/2026-06-14-ultra-audit-remediation.md` 的进度。报「全部完成」前按 P3 做一遍真机走查。
+任务 1（最高价值，需用户拍板样张）→ 任务 2（自包含）→ 任务 3（零散批量）→ 任务 4（先 plan 等拍板）。每完成一件回填 `docs/archive/plan/2026-06-14-ultra-audit-remediation.md` 的进度。报「全部完成」前按 P3 做一遍真机走查。

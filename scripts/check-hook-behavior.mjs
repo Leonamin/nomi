@@ -19,7 +19,7 @@
 //   · 假绿——这些字符串在 hook 的**注释里也有**。把可执行那行改回 `MARKER="$ROOT/.claude/.gates-ok"`
 //     而注释原样保留（merge 时极常见，注释与代码是两个 hunk），门岗照样打勾。实测确认。
 //   · 假红——把 sed 换成等价的 awk / read 循环，行为完全正确，门岗却报「漏读 sha 字段」。
-//     而 `docs/design/page-design-process.md` 自己写着：会误报的门岗三次之后就被人绕过，等于不存在。
+//     而 `docs/archive/design/page-design-process.md` 自己写着：会误报的门岗三次之后就被人绕过，等于不存在。
 // 所以改成**行为验证**：造一棵临时仓库，用唯一书写者盖出真戳，然后把真的
 // `git push` 载荷喂给真的 hook，看它到底放行还是拦。这样任何等价改写都合法，
 // 而任何真的行为回退都拦得住——注释是骗不过一次真实执行的。
@@ -298,7 +298,7 @@ function checkCommandDetection(root, problems) {
       if (expect === 'allow' && blocked) {
         problems.push(
           `命令识别误伤：${label} —— 闸门拦了本该放行的命令。` +
-            `会误报的闸门用不了几次就会被人绕过（见 docs/design/page-design-process.md）。`,
+            `会误报的闸门用不了几次就会被人绕过（见 docs/archive/design/page-design-process.md）。`,
         )
       }
     }
@@ -438,7 +438,7 @@ function checkSettingsGuards(root, problems) {
       }
 
       // 负向对照：脚本在场 + 无害载荷 → 必须原样放行。守卫不许退化成「拦一切」，
-      // 会误报的闸门用不了几次就会被人绕过（见 docs/design/page-design-process.md）。
+      // 会误报的闸门用不了几次就会被人绕过（见 docs/archive/design/page-design-process.md）。
       const present = runSettingsCommand(command, {
         projectDir: root,
         cwd: root,

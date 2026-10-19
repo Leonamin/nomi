@@ -96,11 +96,11 @@ if (configuredUserDataDir) {
   app.setPath("logs", path.join(configuredUserDataDir, "logs"));
 }
 installMainProcessLifecycle(app);
-// 单实例锁（能力核前提，docs/plan/2026-06-20）：保证同一 user-data 只有一个 app 实例 = 工程文件的
+// 单实例锁（能力核前提，docs/archive/plan/2026-06-20）：保证同一 user-data 只有一个 app 实例 = 工程文件的
 // 唯一写者，外部 CLI/MCP 才能安全地「app 开着走 RPC、关着走 headless」。隔离实例（eval/promo 用独立
 // --user-data-dir）拿到的是各自的锁，不受影响。拿不到锁 = 已有实例在跑 → 让出（聚焦老窗后退出）。
 // MCP stdio 模式：Claude Code / Codex 用 Nomi 自身二进制 + env NOMI_MCP_STDIO=1 把它拉起当 MCP server
-//（见 docs/plan/2026-06-24-packaged-mcp-stdio-server.md）。此模式**绝不抢单实例锁**——否则 GUI 在跑时
+//（见 docs/archive/plan/2026-06-24-packaged-mcp-stdio-server.md）。此模式**绝不抢单实例锁**——否则 GUI 在跑时
 // 它会被判第二实例而自杀；也不开窗、不起 IPC，只跑进程内 stdio JSON-RPC（下方 GUI whenReady 由
 // hasSingleInstanceLock=false 自动跳过）。
 const isMcpStdio = process.env.NOMI_MCP_STDIO === "1";

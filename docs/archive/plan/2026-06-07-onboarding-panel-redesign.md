@@ -1,7 +1,7 @@
 # 模型接入面板重设计 · 实施文档（方案 A 折叠摘要卡）
 
 日期：2026-06-07
-样张：`docs/design/mockups/onboarding-panel-A.html`（已用户拍板，方向 A）
+样张：`docs/archive/design/mockups/onboarding-panel-A.html`（已用户拍板，方向 A）
 对应规则：R4（执行前写文档）/ R8（样张已批 + 实现后逐项对账）/ R2（极简）/ R9（模块化）/ P4（通用第一）/ P1（加新删旧）
 
 ---

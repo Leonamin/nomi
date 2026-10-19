@@ -14,7 +14,7 @@
 - **依赖里已有（滚轮语义）** `node_modules/@xyflow/react/dist/esm/types/component-props.d.ts:458` —— `@xyflow/react` 12.11.5 公开 `zoomOnScroll`(:458) / `panOnScroll`(:469) / `panOnScrollSpeed`(:475) / `panOnScrollMode`(:482) 四颗开关；运行时缺省逐字写在 `node_modules/@xyflow/react/dist/esm/index.js:3745`（`zoomOnScroll = true, panOnScroll = false, panOnScrollMode = Free, panOnScrollSpeed = 0.5`）。→ **用已有**：旧内核的 `resolveWheelIntent` 只需把档位映射成这两颗 prop，不必再自己接 wheel 事件。
 - **依赖里已有（Shift+滚轮横向平移）** `node_modules/.pnpm/@xyflow+system@0.0.81/node_modules/@xyflow/system/dist/esm/index.js:2775` —— `createPanOnScrollHandler` 写着 `if (!isMacOs() && event.shiftKey …) { deltaX = event.deltaY }`，与 OLD `src/workbench/generationCanvas/components/useCanvasViewportGestures.ts:436` 的 `deltaX === 0 ? deltaY : deltaX` 是同一条判据（macOS 由浏览器换轴、非 macOS 由框架换轴）。→ **用已有**，不再写第二份。
 - **依赖里已有（⌘/Ctrl 与捏合恒缩放）** `node_modules/.pnpm/@xyflow+system@0.0.81/node_modules/@xyflow/system/dist/esm/index.js:3001` —— `const isPanOnScroll = panOnScroll && !zoomActivationKeyPressed`，加上同文件 `:2762` 的 `if (event.ctrlKey && zoomOnPinch)`，保证「平移档下 ⌘+滚轮与捏合仍缩放」，正是 `src/utils/canvasGesturePreference.ts:25` 那张真值表的第二行。
-- **依赖里已有（框选相交语义）** `node_modules/@xyflow/react/dist/esm/types/component-props.d.ts:295` —— `selectionMode` 默认 `'full'`（运行时缺省见 `node_modules/@xyflow/react/dist/esm/index.js:3745` 的 `selectionMode = SelectionMode.Full`）。→ **用已有**：一行 `SelectionMode.Partial` 回到 `docs/plan/2026-06-14-canvas-smoothness-ABC.md` §B2 拍板的「相交即选」，不复活旧 AABB 几何代码。
+- **依赖里已有（框选相交语义）** `node_modules/@xyflow/react/dist/esm/types/component-props.d.ts:295` —— `selectionMode` 默认 `'full'`（运行时缺省见 `node_modules/@xyflow/react/dist/esm/index.js:3745` 的 `selectionMode = SelectionMode.Full`）。→ **用已有**：一行 `SelectionMode.Partial` 回到 `docs/archive/plan/2026-06-14-canvas-smoothness-ABC.md` §B2 拍板的「相交即选」，不复活旧 AABB 几何代码。
 - **仓库里已有（设置项与帮助浮层）** `src/utils/canvasGesturePreference.ts:25` 与 `src/workbench/generationCanvas/components/canvasControlsHelpModel.ts:29` —— 偏好模块、设置芯片（`src/workbench/settings/CanvasGestureSection.tsx:39`）与帮助文案都还在，且文案本来就从档位 derive。→ 不新增任何文案，接回内核后说明书自动与实物一致。
 - **仓库里已有（同一偏好的第二个消费者）** `src/ui/onboarding/workflowPage/WorkflowGraphCanvas.tsx:106` —— ComfyUI 工作流画布仍在用 `resolveWheelIntent`，而且 `tests/ux/_comfyWorkflowMacGestures.mjs:61` 的 `checkMainCanvas()` 早就断言过「同一设置也作用于主画布」。→ 这条走查就是本轨的现成红灯，不另造判据。
 - **生态里已有** https://reactflow.dev/api-reference/react-flow —— 官方 API 文档逐条写明这四颗 prop 的语义与默认值；tldraw / Figma 同族产品同样把「滚轮=缩放 还是 双指=平移」做成用户偏好而不是定死，与 #832 的拍板一致。
@@ -23,7 +23,7 @@
 
 
 OLD = `8f9365aeb` (2026-08-27，迁移提交 `74346baca` 的父)　NEW = `origin/main` @ `af3652e1c` (2026-09-11)
-迁移计划书 `docs/plan/2026-08-27-react-flow-canvas-complete-migration.md` 承诺「user-visible behavior stable」「no parallel renderer remains」。本文逐项核对这两条。
+迁移计划书 `docs/archive/plan/2026-08-27-react-flow-canvas-complete-migration.md` 承诺「user-visible behavior stable」「no parallel renderer remains」。本文逐项核对这两条。
 
 ## ① 一句话结论
 
@@ -40,18 +40,18 @@ OLD = `8f9365aeb` (2026-08-27，迁移提交 `74346baca` 的父)　NEW = `origin
 
 ## ② 逐项对照表
 
-「已报」列：✅=已在 `docs/fixes`/`docs/lessons`/commit 里出现过；空=本审计首次记录。
+「已报」列：✅=已在 `docs/fixes`/`docs/archive/lessons`/commit 里出现过；空=本审计首次记录。
 
 ### 视口 / 手势
 
 | 交互 | OLD | NEW | 判定 | 用户看到的差别 | 已报 |
 |---|---|---|---|---|---|
-| 空白左键拖=平移 | `components/useCanvasViewportGestures.ts:7`（拍板 `docs/plan/2026-08-08-canvas-drag-pan-and-quiet-render.md`） | `reactFlow/GenerationCanvasReactFlowViewport.tsx:185` `panOnDrag={[0,1]}` | 一致 | — | |
+| 空白左键拖=平移 | `components/useCanvasViewportGestures.ts:7`（拍板 `docs/archive/plan/2026-08-08-canvas-drag-pan-and-quiet-render.md`） | `reactFlow/GenerationCanvasReactFlowViewport.tsx:185` `panOnDrag={[0,1]}` | 一致 | — | |
 | 空格/中键/右键拖=平移（压在节点上也生效） | `useCanvasViewportGestures.ts:8` | `reactFlow/useGenerationCanvasReactFlowPointer.ts:86-102` | 一致 | — | |
 | 右键拖超阈值吞掉右键菜单 | `useCanvasViewportGestures.ts:411-418` | `useGenerationCanvasReactFlowPointer.ts:181-184` | 一致 | — | |
-| **滚轮语义可配（缩放/平移二选一）** | `useCanvasViewportGestures.ts:433` `resolveWheelIntent(gestureScheme,…)`；拍板 `docs/plan/2026-08-03-canvas-gesture-scheme-setting.md` | 无。RF 未设 `panOnScroll`，滚轮恒缩放。`utils/canvasGesturePreference.ts` 只剩 `ui/onboarding/workflowPage/WorkflowGraphCanvas.tsx:106` 在用 | **丢了** | 设置页（`workbench/settings/SettingsDialog.tsx:363`）里那个「画布手势」开关对生成画布完全失效；画布帮助浮层 `components/canvasControlsHelpModel.ts:29,45-53` 还在告诉用户「滚轮=平移、⌘+滚轮=缩放」——说明书与实物不符 | |
+| **滚轮语义可配（缩放/平移二选一）** | `useCanvasViewportGestures.ts:433` `resolveWheelIntent(gestureScheme,…)`；拍板 `docs/archive/plan/2026-08-03-canvas-gesture-scheme-setting.md` | 无。RF 未设 `panOnScroll`，滚轮恒缩放。`utils/canvasGesturePreference.ts` 只剩 `ui/onboarding/workflowPage/WorkflowGraphCanvas.tsx:106` 在用 | **丢了** | 设置页（`workbench/settings/SettingsDialog.tsx:363`）里那个「画布手势」开关对生成画布完全失效；画布帮助浮层 `components/canvasControlsHelpModel.ts:29,45-53` 还在告诉用户「滚轮=平移、⌘+滚轮=缩放」——说明书与实物不符 | |
 | Shift+滚轮=横向平移（平移档） | `useCanvasViewportGestures.ts:436-438` | 无 | 丢了 | 触控板党的横向平移没了（随上一条） | |
-| **卡内可滚区放行原生滚动** | `useCanvasViewportGestures.ts:425-431` 通用 `findScrollableAncestor`（一处覆盖所有入口；根因见 `docs/plan/2026-08-13-prompt-wheel-containment.md`） | 改成逐个组件贴 `nowheel`。实测卡内 28 处 `overflow-auto` 只有 1 处有（`nodes/shotTable/ShotTableGrid.tsx:22`） | **丢了** | 在提示词编辑器、结果堆、参数条、生成记录、错误报告、产物正文里滚轮 → 整个画布缩放，内容不动 | |
+| **卡内可滚区放行原生滚动** | `useCanvasViewportGestures.ts:425-431` 通用 `findScrollableAncestor`（一处覆盖所有入口；根因见 `docs/archive/plan/2026-08-13-prompt-wheel-containment.md`） | 改成逐个组件贴 `nowheel`。实测卡内 28 处 `overflow-auto` 只有 1 处有（`nodes/shotTable/ShotTableGrid.tsx:22`） | **丢了** | 在提示词编辑器、结果堆、参数条、生成记录、错误报告、产物正文里滚轮 → 整个画布缩放，内容不动 | |
 | 滚轮缩放锚光标 | `useCanvasViewportGestures.ts:443-445` | RF 默认锚光标 | 一致 | — | |
 | 缩放上下限 0.2 / 3 | `useCanvasViewportGestures.ts:443` | `GenerationCanvasReactFlowViewport.tsx:175-176` | 一致 | 迁移当时漏传，RF 用了自己的 .5/2 默认，09-10 才修回 | ✅ `docs/fixes/2026-09-10-canvas-zoom-kernel-range.root-cause.json` |
 | 双击空白 | OLD 无此手势 | `GenerationCanvasReactFlowViewport.tsx` 未设 `zoomOnDoubleClick` → RF 默认 true | **变了（无人拍板）** | 双击空白会突然放大一档 | |
@@ -63,7 +63,7 @@ OLD = `8f9365aeb` (2026-08-27，迁移提交 `74346baca` 的父)　NEW = `origin
 |---|---|---|---|---|---|
 | Shift+左键拖=框选 | `components/useMarqueeSelection.ts:1-4` | `GenerationCanvasReactFlowViewport.tsx:188` `selectionKeyCode="Shift"` | 一致 | — | |
 | 框选恒追加 | `useMarqueeSelection.ts:107` `additive=true` | `:189` `multiSelectionKeyCode="Shift"` + `GenerationCanvasReactFlow.tsx:490-493` | 一致 | — | |
-| **框选命中=相交即选** | `store/canvasNodeActions.ts:293-298`（AABB 相交）；拍板 `docs/plan/2026-06-14-canvas-smoothness-ABC.md` §B2 | 未设 `selectionMode` → RF 默认 `Full`＝**必须整张卡落进框内** | **变了（无人拍板）** | 框只扫过卡的一半 → 那张卡不会被选上；走查已被改写去迁就新语义而不是守住旧的（`tests/ux/canvas-drag-pan-gestures.walk.mjs:156-157` 白纸黑字写着「React Flow 只选完全落在框内的节点」） | |
+| **框选命中=相交即选** | `store/canvasNodeActions.ts:293-298`（AABB 相交）；拍板 `docs/archive/plan/2026-06-14-canvas-smoothness-ABC.md` §B2 | 未设 `selectionMode` → RF 默认 `Full`＝**必须整张卡落进框内** | **变了（无人拍板）** | 框只扫过卡的一半 → 那张卡不会被选上；走查已被改写去迁就新语义而不是守住旧的（`tests/ux/canvas-drag-pan-gestures.walk.mjs:156-157` 白纸黑字写着「React Flow 只选完全落在框内的节点」） | |
 | 点空白清空选区 | `components/GenerationCanvas.tsx:516-519` | `GenerationCanvasReactFlow.tsx:583-585` | 一致 | — | |
 | **多选包围盒（16px 留白虚框 · 框内空白可拖整批）** | `components/GenerationCanvas.tsx:633-644` + `:78` | 不渲染。CSS `styles/generationCanvas.css:46` 与 handler `components/useCanvasSelectionDrag.ts:234` 双双成死码 | **丢了** | 多选后没有那圈包围虚框，也不能从选区空白处抓起整批搬（只能抓某一张卡） | |
 | 多选浮条位置 | `GenerationCanvas.tsx:699-716`（bounds 上沿 −58px） | `reactFlow/selectionToolbarPlacement.ts` + `:250-269`（恒屏幕尺寸、避开底部停靠、对齐所属框上沿） | 变了（有意） | 比旧版更不容易被时间轴压住 | ✅ `fbdcb09cb` |
@@ -112,7 +112,7 @@ OLD = `8f9365aeb` (2026-08-27，迁移提交 `74346baca` 的父)　NEW = `origin
 | 空白右键=加节点；节点右键=节点菜单；已在多选里则保留多选 | `GenerationCanvas.tsx:188-191,741-759` | `useGenerationCanvasReactFlowMenus.ts:129-132` + `reactFlow/GenerationCanvasReactFlowOverlays.tsx` | 一致 | — | |
 | 节点菜单条目 copy/cut/paste/group/delete | `components/NodeContextMenu.tsx:25` | 同文件 `:38` | 一致 | — | |
 | 全套快捷键（Esc/Del/⌘A/C/X/V/G/⌘Z/缩放） | `components/useCanvasShortcuts.ts` | 同文件（+ `deleteActiveEdge`） | 一致 | — | |
-| 组框渲染 / 组拖动 / 组连线 | `components/GroupFrame.tsx` + `GenerationCanvas.tsx:646-651` | `components/CanvasGroupProjectionLayer.tsx`（挂在 `ViewportPortal` 内） | 变了（有意） | 升级成 Frame 工具（F 画框、拖进拖出、折叠卡堆） | ✅ `docs/plan/2026-09-06-canvas-frame-tool.md` |
+| 组框渲染 / 组拖动 / 组连线 | `components/GroupFrame.tsx` + `GenerationCanvas.tsx:646-651` | `components/CanvasGroupProjectionLayer.tsx`（挂在 `ViewportPortal` 内） | 变了（有意） | 升级成 Frame 工具（F 画框、拖进拖出、折叠卡堆） | ✅ `docs/archive/plan/2026-09-06-canvas-frame-tool.md` |
 | **媒体预览打开时收起画布 chrome** | `styles/generationCanvas.css:24-31` + `nodes/NodeMediaPreviewDialog.tsx:30-42`（工具条/导航栈/多选浮条/composer/节点浮条/时间轴把手一起 `visibility:hidden`） | CSS 与 setter **双双删除**，删它的提交是 `903d992f6`「fix(agent-panel): restore folding…」——与媒体预览毫无关系 | **丢了** | 打开图片/视频灯箱时，左侧工具条、右下导航栈、节点浮条仍浮在画面上 | |
 | composer 让位平移 | `components/useComposerVisibilityPan.ts` | 迁移当天漏接（`0dee38744` 补回）→ 09-09 `527a96df0` 改成「浮框上下翻转 + 视口内 clamp」并删除 | 变了（有意） | 打字时画布不再自己滑动，改成浮框翻到节点上方 | ✅ |
 | 小地图 / 导航栈 / 适应视图 / 重置 / 整理 | `components/CanvasNavigationStack.tsx` | 同组件 | 一致 | 「适应视图」改成框住「节点 ∪ 框」 | ✅ `model/canvasFitBounds.ts` 内有裁决 |
@@ -129,14 +129,14 @@ OLD = `8f9365aeb` (2026-08-27，迁移提交 `74346baca` 的父)　NEW = `origin
 
 | # | 项 | 影响 | 建议动作 |
 |---|---|---|---|
-| 1 | **卡内滚轮被画布吞掉** | 每天都撞：提示词框、结果堆、参数条、错误报告里滚轮就是缩放画布。旧版有过一次根因修复（`docs/plan/2026-08-13-prompt-wheel-containment.md`），现在退回逐处补丁 | **恢复旧行为的根因版**：在 RF 宿主 `onWheelCapture` 里复用 `components/canvasScroll.ts` 的 `findScrollableAncestor`，命中就 `stopPropagation`——一处覆盖所有入口，而不是给 27 个 DOM 挨个贴 `nowheel` |
+| 1 | **卡内滚轮被画布吞掉** | 每天都撞：提示词框、结果堆、参数条、错误报告里滚轮就是缩放画布。旧版有过一次根因修复（`docs/archive/plan/2026-08-13-prompt-wheel-containment.md`），现在退回逐处补丁 | **恢复旧行为的根因版**：在 RF 宿主 `onWheelCapture` 里复用 `components/canvasScroll.ts` 的 `findScrollableAncestor`，命中就 `stopPropagation`——一处覆盖所有入口，而不是给 27 个 DOM 挨个贴 `nowheel` |
 | 2 | **`canvasZoom` 冻结成 1** | 剪辑节点内嵌时间轴在任何非 100% 缩放下拖/裁都算错位移，是真 bug 不是观感 | **恢复**：要么让 RF 的 `onMove` 写回 `setCanvasTransform`，要么把 `ClipNode`/`ClipNodeTimeline` 改读 `useReactFlow().getViewport().zoom`；并删掉 store 里已无人写的 `canvasZoom/canvasOffset` 两个字段（选一个真相源，别留两个） |
 | 3 | **滚轮语义设置整条失效 + 帮助浮层说假话** | 设置页还摆着「画布手势：缩放/平移」开关，选了没用；帮助浮层照着这个开关生成文案 | **恢复**：RF 支持 `panOnScroll` / `zoomOnScroll`，按 `useCanvasGestureScheme()` 声明式地传进 `<ReactFlow>` 即可。若决定不做，则必须同批删掉设置项与帮助文案（P1：不留说明书对不上实物的入口） |
 | 4 | **媒体预览时画布 chrome 不再收起** | 看大图时工具条/导航栈/节点浮条压在画面上 | **恢复**：`NodeMediaPreviewDialog` 重新写 `data-media-preview-open`，CSS 规则按新类名（`.generation-canvas-react-flow` 下的工具条/导航栈/浮条）重写 |
-| 5 | **框选从「相交即选」变成「必须整张落进框」** | 用户习惯扫一下就选上；现在得把框拉得比卡还大。且走查已被改写去迁就，等于把偏差固化进验收 | **需拍板**：`selectionMode={SelectionMode.Partial}` 一行就能回到旧语义。若保留新语义，请在 `docs/plan` 里补一条裁决，并把走查注释从「RF 只选完全落在框内的」改成「我们选择完全包含，理由是 X」 |
+| 5 | **框选从「相交即选」变成「必须整张落进框」** | 用户习惯扫一下就选上；现在得把框拉得比卡还大。且走查已被改写去迁就，等于把偏差固化进验收 | **需拍板**：`selectionMode={SelectionMode.Partial}` 一行就能回到旧语义。若保留新语义，请在 `docs/archive/plan` 里补一条裁决，并把走查注释从「RF 只选完全落在框内的」改成「我们选择完全包含，理由是 X」 |
 | 6 | **多选包围盒消失** | 多选后没有视觉边界，也不能从选区空白处抓起整批 | **需样张**：RF 自带 `.react-flow__nodesselection-rect`（CSS 已在 `generationCanvasReactFlow.css:37-46` 调过色），但它只在「用框选产生的选区」出现、Shift 点选出来的不出现，且拖它的语义与旧版不同。先出样张定「什么时候出框、框内空白能不能拖」 |
 | 7 | **边标签随缩放变大变小** | 缩到 30% 看不清边是什么类型 | **恢复旧行为**：给 `.generation-canvas-react-flow__edge-label` 加 `transform: scale(calc(1 / var(--rf-zoom)))`，或用 `useViewport()` 的 zoom 反缩放（选择浮条已有同款做法可复用：`reactFlow/selectionToolbarPlacement.ts`） |
-| 8 | **磁吸带只在「只选中一张」时出现** | 多选几张图片卡时磁吸带集体退成小圆点 | **保留新并补拍板**：多选时不显磁吸带其实更干净，但要写进 `generationCanvasReactFlowVisualContract.ts` 的注释与 `docs/plan`，别让它只是 `primarySelection` 这个名字的副作用 |
+| 8 | **磁吸带只在「只选中一张」时出现** | 多选几张图片卡时磁吸带集体退成小圆点 | **保留新并补拍板**：多选时不显磁吸带其实更干净，但要写进 `generationCanvasReactFlowVisualContract.ts` 的注释与 `docs/archive/plan`，别让它只是 `primarySelection` 这个名字的副作用 |
 | 9 | **双击空白会缩放** | 误触放大 | **恢复旧行为**：`zoomOnDoubleClick={false}`（旧画布没有这个手势）；或拍板保留并写进帮助浮层 |
 | 10 | 中键/右键平移时光标不变 grabbing | 轻微 | 恢复：平移开始时写 `data-panning` |
 | 11 | 边菜单弹在中点而非点击处 | 轻微；长边上点一端、菜单跑到中间 | 保留新并补一行注释即可 |

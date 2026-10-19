@@ -40,11 +40,11 @@
 
 六角色复核：CTO—复用现有 admission/hash，不建独立分镜端口；设计—无控件变更；PM—保留显式新建入口；前端—选中变化不得串写；后端—旧 approval hash 与新证据不匹配会拒绝；真实用户—同名重复不能用工具绿灯洗成成功。原生转录较大，用 gzip 无损封存供完整回放，trace.jsonl 只保留工具状态摘要。官方定价来源 https://api-docs.deepseek.com/quick_start/pricing ：峰值 Flash 输入 $0.44/M、缓存 $0.014/M、输出 $1.32/M；统一乘8计人民币上界，不把 pi 未配置价目产生的0当免费。
 
-第一轮严格指标：loopback 写对2/10、保存2/10、回合2/10；DeepSeek 写对2/6、保存2/10、回合2/10。工具执行均未报错，但重复目标和后续错目标均判失败。真实 usage 费用上界 ¥0.430618，另认证探测预留 ¥0.03。详见 [REPORT](../../fixes/storyboard-reliability/round-1/REPORT.md)。
+第一轮严格指标：loopback 写对2/10、保存2/10、回合2/10；DeepSeek 写对2/6、保存2/10、回合2/10。工具执行均未报错，但重复目标和后续错目标均判失败。真实 usage 费用上界 ¥0.430618，另认证探测预留 ¥0.03。详见 [REPORT](../fixes/storyboard-reliability/round-1/REPORT.md)。
 
 ## Round 2 与退出
 
-参见 [Round 2 REPORT](../../fixes/storyboard-reliability/round-2/REPORT.md)。真实写对6/6、保存6/10、回合8/10；loopback8/10、8/10、8/10。目标身份簇复扫消失，但媒体模型缺前提连续两轮未修下，按退出④结束模型循环。尚未达到稳定阈值。累计费用保守上界¥1.082421，零媒体；完整 gates/PR 交付继续。
+参见 [Round 2 REPORT](../fixes/storyboard-reliability/round-2/REPORT.md)。真实写对6/6、保存6/10、回合8/10；loopback8/10、8/10、8/10。目标身份簇复扫消失，但媒体模型缺前提连续两轮未修下，按退出④结束模型循环。尚未达到稳定阈值。累计费用保守上界¥1.082421，零媒体；完整 gates/PR 交付继续。
 
 ## 新簇先查别人
 

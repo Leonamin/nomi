@@ -40,7 +40,7 @@ export type CreationAiMode = {
    * 同一条专长层的英文正文。**中文那份是档案源值、永不随语言变**（`prompt` 字段），
    * 英文界面下由 builtinPromptFor() 换成这一份。
    *
-   * 为什么正文也要翻（2026-08-02 用户拍板，见 docs/plan/2026-09-02-english-system-prompts.md）：
+   * 为什么正文也要翻（2026-08-02 用户拍板，见 docs/archive/plan/2026-09-02-english-system-prompts.md）：
    * 设置→AI 那个编辑框是**邀请用户改**的（可编辑/可覆盖/可重置/可自建），模式名早就翻了、
    * 正文没翻，于是英文用户面对一个「请你来定制」的框、里面是他读不懂更不敢动的中文——
    * 这个功能对他等于关闭。
@@ -156,7 +156,7 @@ export const CREATION_AI_MODES: CreationAiMode[] = [
       '如果是续集，保留“将@视频1延长15s”的开头，并说明 @图片/@视频 引用用途。',
       '避免过长堆砌，优先清晰可执行。',
     ].join('\n'),
-    // ⚠️ 这条和 assets 一样属于「产物也英文」的高风险项，A/B 验收必须覆盖它（见 docs/plan）：
+    // ⚠️ 这条和 assets 一样属于「产物也英文」的高风险项，A/B 验收必须覆盖它（见 docs/archive/plan）：
     // 运镜词是喂给 Seedance 的**受控词表**，「将@视频1延长15s」更是续集的固定起手式。
     // Seedance 是中文调优模型，换成英文词表/起手式有可能不被识别——实测不行就退回中文词表。
     promptEn: [

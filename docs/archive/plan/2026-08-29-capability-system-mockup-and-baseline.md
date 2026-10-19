@@ -53,12 +53,12 @@
 
 ## 回滚
 
-本轮文件均位于 `docs/design/mockups/capability-system/`、`evals/capability-system/` 和本计划文档。删除这些新增文件即可完整回滚，不影响产品数据和运行时。
+本轮文件均位于 `docs/archive/design/mockups/capability-system/`、`evals/capability-system/` 和本计划文档。删除这些新增文件即可完整回滚，不影响产品数据和运行时。
 
 ## 本轮结果
 
-- 交互样张：`docs/design/mockups/capability-system/index.html`
-- 样张机器走查：`node docs/design/mockups/capability-system/verify.mjs`
+- 交互样张：`docs/archive/design/mockups/capability-system/index.html`
+- 样张机器走查：`node docs/archive/design/mockups/capability-system/verify.mjs`
 - J1-J10 定义：`evals/capability-system/journeys.mjs`
 - 当前基线：`evals/capability-system/baseline-2026-08-29.md`
 - 基线结果：0 success / 10 partial / 0 blocked；P0 就绪度 25%。

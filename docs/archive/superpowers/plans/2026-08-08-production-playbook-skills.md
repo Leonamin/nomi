@@ -194,7 +194,7 @@ git commit -m "feat(playbook): connect staged driver to production runs"
 ### Task 6: Playbook integration gate
 
 **Files:**
-- Modify: `docs/superpowers/plans/2026-08-08-production-playbook-skills.md`
+- Modify: `docs/archive/superpowers/plans/2026-08-08-production-playbook-skills.md`
 
 - [ ] **Step 1: Run Skill and playbook suites**
 
@@ -207,7 +207,7 @@ Run: `pnpm run gates`
 - [ ] **Step 3: Mark plan complete and commit**
 
 ```bash
-git add docs/superpowers/plans/2026-08-08-production-playbook-skills.md
+git add docs/archive/superpowers/plans/2026-08-08-production-playbook-skills.md
 git commit -m "docs(playbook): complete production driver plan"
 ```
 

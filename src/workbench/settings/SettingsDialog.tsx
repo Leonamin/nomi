@@ -49,7 +49,7 @@ const LOCALE_LABEL_KEY: Record<AppLocale, string> = { 'zh-CN': 'common.chinese',
 // （默认模型策略 / 上传边界）其实服务的是 **MCP 代跑护栏**（trustedHosts=nomi/claude/codex/cursor），
 // 不是「我的模型」——名不副实正是「改 api url 翻半天找不到」的根因，故一并改名「AI 策略」。
 // 手法按 §1.5.3 取代价最低的那档：**分组**（代价 0），不是把东西收进 ▾。
-// plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+// plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
 export type SettingsTab = 'file' | 'models' | 'ai' | 'automation' | 'general' | 'about'
 export type SettingsInitialSection = 'automation' | 'ai-models' | 'tikhub-connector' | null
 

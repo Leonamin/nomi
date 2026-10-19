@@ -3,7 +3,7 @@
 > 状态：用户已批准按阶段实施；R0 隔离兼容实验本地验收通过，见 [验收记录](../audit/2026-08-26-pi-r0-verification.md)。R1 切换实施中，逐片测试与审查见 [R1 实施卡](2026-08-26-pi-r1-runtime-cutover.md)；尚未通过产品入口/正式包验收，项目级统一 Agent 尚未交付，新增 UI 的具体样张仍待批准。
 > 本文重排 #180 工作队列并记录已确认调整，不另建业务合同。实施前同步原方案中的技术选型与阶段边界，避免旧手册与新实现互相矛盾。
 > For agentic workers：按阶段细化实施和验证；执行使用 subagent-driven-development 或 executing-plans。确认 pi 与全局 Agent 方向不等于豁免兼容、样张和验证门。
-> 后续核对修正（2026-08-26）：运行层不必等待完整交互样张或 B2/B3 全量完成。先做 pi 兼容验证，再在现有 UI 接回六条业务分支，随后必须完成项目级会话/任务/宿主统一；见 [逐文件迁移方案](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/docs/plan/2026-08-26-pi-agent-loop-file-migration.md)。本文件管总排期，逐项实施证据以 [R0 实施卡](2026-08-26-pi-r0-compatibility.md) 和后续阶段报告为准。
+> 后续核对修正（2026-08-26）：运行层不必等待完整交互样张或 B2/B3 全量完成。先做 pi 兼容验证，再在现有 UI 接回六条业务分支，随后必须完成项目级会话/任务/宿主统一；见 [逐文件迁移方案](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/docs/archive/plan/2026-08-26-pi-agent-loop-file-migration.md)。本文件管总排期，逐项实施证据以 [R0 实施卡](2026-08-26-pi-r0-compatibility.md) 和后续阶段报告为准。
 
 **Goal:** 在已有生产底座上，让人和 Agent 在创作、生成、剪辑三个空间连续完成并修改同一部作品。
 
@@ -92,7 +92,7 @@
 - [ ] R1：兼容门通过后，本期就接现有创作对话、画布对话、分镜规划、方向候选、镜级校验、制作文本规划六条分支；同次删除旧 Agent runtime，不等完整 B2/B3/B5。
 - [ ] R1 保留原有批准/业务执行链，并补后端无工具模式、同会话串行、切项目/新对话失效、确认来源和停止竞态；旧 area 会话键只作兼容过渡。此阶段不重画 UI，不等于统一 Agent 已交付。
 
-**出口：** R0 证明兼容性、隔离验证不写真实 Run/预算/画布；R1 则在现有 UI 走真实业务，写入仍经已有确认/执行路径。若 R0 不通过，只阻止未经证明的迁移，不阻止 E2 继续交付。逐文件动作和验收以本稿的[运行层附稿](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/docs/plan/2026-08-26-pi-agent-loop-file-migration.md)为准。
+**出口：** R0 证明兼容性、隔离验证不写真实 Run/预算/画布；R1 则在现有 UI 走真实业务，写入仍经已有确认/执行路径。若 R0 不通过，只阻止未经证明的迁移，不阻止 E2 继续交付。逐文件动作和验收以本稿的[运行层附稿](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/docs/archive/plan/2026-08-26-pi-agent-loop-file-migration.md)为准。
 
 **1C — 可以独立交付的粗剪基础（E2 必补项）。**
 
@@ -195,7 +195,7 @@
 
 - [PR #180](https://github.com/aqm857886159/Nomi/pull/180)；[PR #179](https://github.com/aqm857886159/Nomi/pull/179)；[两提交对比](https://github.com/aqm857886159/Nomi/compare/84abca8d012cc78cf8692f929351db65a314a985...f7c23f8e3fb20e709622d88c00cf50d79ff6dfab)。
 - [手册 Part 6](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/docs/handoff/2026-08-26-codex-execution-handbook.md:310)：原工作队列；Part 5 明确 TTS 归属与不可用能力边界。
-- [B4 分期实施合同（#179 固定提交）](https://github.com/aqm857886159/Nomi/blob/f7c23f8e3fb20e709622d88c00cf50d79ff6dfab/docs/plan/2026-08-26-b4-harness-implementation-plan.md)。
+- [B4 分期实施合同（#179 固定提交）](https://github.com/aqm857886159/Nomi/blob/f7c23f8e3fb20e709622d88c00cf50d79ff6dfab/docs/archive/plan/2026-08-26-b4-harness-implementation-plan.md)。
 - [会话键真实边界](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/src/workbench/ai/agentSessionKey.ts:8)；[现有审批入口](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/electron/ai/agentChatV2.ts:302)；[项目偏好注入](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/electron/ai/agentChatV2.ts:597)。
 - [当前时间轴版本摘要](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/src/workbench/adoption/adoptionProposalKey.ts:26)；[当前导出音频设置](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/src/workbench/export/renderManifest.ts:185)；[镜头时长构造](../../../Users/aoqimin/Desktop/Nomi-codex-execution-20260826/src/workbench/generationCanvas/model/buildClipFromGenerationNode.ts:54)。
 - [pi 官方 SDK](https://pi.dev/docs/latest/sdk)；[固定版本工具执行前拦截源码](https://github.com/earendil-works/pi/blob/4e58f324fae8ebfa98a3d45181fb248072a2afac/packages/agent/src/agent-loop.ts#L600)。本轮复核文档/源码，不等于 Nomi 接入已经通过。

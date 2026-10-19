@@ -48,7 +48,7 @@
 ## External E0/E1 适配边界
 
 Codex/Pi 源码研究只作为只读证据，固定提交与摘要见
-`docs/audit/2026-08-22-agent-runtime-source-review.md`（source commit
+`docs/archive/audit/2026-08-22-agent-runtime-source-review.md`（source commit
 `5431c5ddf4d2dc5bdfeb0fc22c4b07f724f7a6fb`）。它不引入第二个 Session、Operation、
 Event、Task 或 lane owner。
 

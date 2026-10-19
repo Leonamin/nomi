@@ -1,6 +1,6 @@
 # 先查别人：减法设计流程 + 图标语义门岗
 
-日期：2026-09-07 · 服务对象：`docs/plan/2026-09-07-subtractive-design-process.md`
+日期：2026-09-07 · 服务对象：`docs/archive/plan/2026-09-07-subtractive-design-process.md`
 性质：R27 要求的可复核检索报告。**结论先行：流程那半"用已有"（补洞不新建），门岗那半"自研"（生态只覆盖形制，不覆盖跨文件语义漂移）。**
 
 ---
@@ -18,7 +18,7 @@
 
 | 查了什么 | 结果 | file:line |
 |---|---|---|
-| 有没有页面设计流程 | ✅ **有，而且很完整**——七闸流水线 + 每闸防的真实事故 + 可搬运模板 | `docs/design/page-design-process.md`（全文） |
+| 有没有页面设计流程 | ✅ **有，而且很完整**——七闸流水线 + 每闸防的真实事故 + 可搬运模板 | `docs/archive/design/page-design-process.md`（全文） |
 | 有没有控件层级规则 | ✅ 有 L1/L2/L3/L4 判定 + 三条硬规则 + 手法优先级 | `docs/design/nomi-design-system.md:101-152` |
 | 有没有样张工具链 | ✅ 有 `check:mockup-contracts` / `check:design-lab` / `inject-mockup-tokens` / `extract-design-spec` | `package.json:157` 等 |
 | 有没有事后体检 | ✅ 有 `nomi-ux-audit` 技能（8 类固定尺子 + 四档分诊 + 活 backlog） | `.claude/skills/nomi-ux-audit/SKILL.md` |
@@ -55,10 +55,10 @@
 ```bash
 node scripts/research/tikhub-search.mjs \
   --q "界面 太复杂 做减法 设计 冗余 按钮太多" --platform douyin,bilibili --limit 6 \
-  --out docs/research/2026-09-07-subtractive-design/tikhub/
+  --out docs/archive/research/2026-09-07-subtractive-design/tikhub/
 ```
 
-产物：`docs/research/2026-09-07-subtractive-design/tikhub/tikhub-search.{json,md}`（抖音 6 + B站 6）
+产物：`docs/archive/research/2026-09-07-subtractive-design/tikhub/tikhub-search.{json,md}`（抖音 6 + B站 6）
 
 | 平台 | 出处 | 摘要（原文，未改写） | 这条证明了什么 |
 |---|---|---|---|

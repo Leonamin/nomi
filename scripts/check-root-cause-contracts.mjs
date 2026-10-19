@@ -4,7 +4,7 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { DOOR_MAP_SINCE, classifyFindings, inheritLegacyContractHashes, validateRootCauseChange, validateRootCauseHistory } from "./root-cause-contracts.mjs";
+import { DOOR_MAP_SINCE, classifyReferenceOnlyContractRelocation, classifyFindings, inheritLegacyContractHashes, validateRootCauseChange, validateRootCauseHistory } from "./root-cause-contracts.mjs";
 import { doorsForTargets } from "./door-map.mjs";
 import { gitPaths } from "./lib/gitPaths.mjs";
 
@@ -81,6 +81,8 @@ const contracts = contractFiles.map((file) => {
 const legacyBaselineRelativePath = "scripts/root-cause-contract-v1-baseline.json";
 const legacyBaselinePath = path.join(repoRoot, legacyBaselineRelativePath);
 let legacyHashes;
+let trustedBaseContracts = [];
+let trustedBaseFiles;
 try {
   let baselineRaw;
   try {
@@ -93,7 +95,7 @@ try {
 
   const baseContractFiles = gitPaths(["ls-tree", "-r", "--name-only", baseRef, "--", "docs/fixes"], { cwd: repoRoot })
     .filter((file) => file.endsWith(".root-cause.json"));
-  const baseContracts = baseContractFiles.map((file) => {
+  trustedBaseContracts = baseContractFiles.map((file) => {
     const raw = gitRaw(["show", `${baseRef}:${file}`]);
     return {
       ...JSON.parse(raw),
@@ -101,7 +103,8 @@ try {
       __contentHash: createHash("sha256").update(raw).digest("hex"),
     };
   });
-  legacyHashes = inheritLegacyContractHashes(legacyHashes, baseContracts);
+  trustedBaseFiles = new Set(gitPaths(["ls-tree", "-r", "--name-only", baseRef, "--"], { cwd: repoRoot }));
+  legacyHashes = inheritLegacyContractHashes(legacyHashes, trustedBaseContracts);
 } catch (error) {
   console.error(`✖ 无法读取根因合同 v1 只读基线或可信 base 历史：${error instanceof Error ? error.message : String(error)}`);
   process.exit(1);
@@ -150,6 +153,10 @@ const doorFillNotes = [];
 for (const contract of contracts) {
   if (!changedFiles.has(contract.__file)) continue;
   if (contract.schema_version !== 3 || (contract.change_kind ?? "corrective") !== "corrective") continue;
+  const baseContract = trustedBaseContracts.find((base) => base.__file === contract.__file);
+  if (baseContract && classifyReferenceOnlyContractRelocation(baseContract, contract, {
+    baseFiles: trustedBaseFiles, currentFiles: existingFiles,
+  }).isReferenceOnly) continue;
   const datePrefix = /^(\d{4}-\d{2}-\d{2})-/.exec(path.basename(contract.__file))?.[1];
   if (!datePrefix || datePrefix < DOOR_MAP_SINCE) continue;
   if (Array.isArray(contract.doors) && contract.doors.length > 0) continue;
@@ -179,6 +186,8 @@ const result = validateRootCauseChange({
   changedFiles: [...changedFiles],
   contracts,
   existingFiles,
+  baseContracts: trustedBaseContracts,
+  baseFiles: trustedBaseFiles,
   legacyHashes,
   fileContents,
 });

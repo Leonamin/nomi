@@ -212,7 +212,7 @@ L0 底座             ProductionRun / 合同 / 预算 / outbox / 资产   [✅ �
 - **P2 修根因 + 通用性判定**：修完必问「这个病只在这个功能上，还是别的功能也可能有」。是通用的就：① **全仓实扫**同类入口给 file:line（**扫，不猜**）② 能 grep 的做成**棘轮门岗**（`scripts/check-*.mjs` + baseline，只减不增）③ 存量进基线、新增当场报红。
 - **P3 全绿 ≠ 完成**：CI 只证代码健康，证不了体验对不对。用户可见改动报完成前：① 和获批样张逐项并排对账 ② 真体感走查（截图**人眼判断**）。
 - **P4 通用第一**：能力/组件按「模型身份 / 通用场景」设计，与具体供应商解耦。**不为不同模型写两套 UI。**
-- **P5 想清楚再动手**：UI 改动**先读设计系统再画**，出可视样张 + owner 拍板；架构改动先查官方文档 + 读顶尖开源 + 6 角色评审；多文件改动先写 `docs/plan` 文档。
+- **P5 想清楚再动手**：UI 改动**先读设计系统再画**，出可视样张 + owner 拍板；架构改动先查官方文档 + 读顶尖开源 + 6 角色评审；多文件改动先写 `docs/archive/plan` 文档。
 
 ## 3.3 规则速查
 
@@ -221,7 +221,7 @@ L0 底座             ProductionRun / 合同 / 预算 / outbox / 资产   [✅ �
 | R1 | 加新必删旧（CSS 只可减不可增）|
 | R2 | 用户视角 + 极简：每条信息问「有行动价值吗」，没有就删 |
 | R3 | 涉及取舍先给 owner 对比表，不单方面开干 |
-| R4 | 多文件/多步改动先写 `docs/plan`：范围/不动项/回滚/验收门 |
+| R4 | 多文件/多步改动先写 `docs/archive/plan`：范围/不动项/回滚/验收门 |
 | R5 | 碰第三方库必先查官方文档；**选型/引入新框架先查当前现役方案**，不凭记忆判断新旧；**接入任何模型前必先抓到该模型真实官方 API 文档逐项对账** |
 | R6 | 做方案前先读真实开源代码，给 file:line |
 | R7 | 项目方案定稿前 6 角色评审（CTO/设计/PM/前端/后端/真实用户）|
@@ -394,9 +394,9 @@ L0 底座             ProductionRun / 合同 / 预算 / outbox / 资产   [✅ �
 
 | 计划 | 文档 | 要点 |
 |---|---|---|
-| **L6 Pack 合同 + 模式选择器** | `docs/plan/2026-08-26-l6-workflow-pack-contract.md` | Pack 与现有 playbook 关系已查明是**并存**（Skill 层 `PlaybookRun` 是纯内存方法编排，Production 层 `ProductionPlaybookDefinition` + durable Run driver，**不是同一个对象**）。默认落法：Pack 当声明层、现有 registry 当执行 adapter，**不把 durable 账本搬到 Skill 层**。**L6-DEC-1 待 owner 拍板**：物理收编（迁移 `productionPlaybooks.ts`）vs 逻辑收编（adapter、文件并存）。`generation.single-shot` 的 legacy bypass **不自行解除**。 |
-| **E3 理解式剪辑** | `docs/plan/2026-08-26-e3-semantic-editing.md` | 成本是核心设计约束：价格目录**尚未覆盖 VLM/转写**，所以**价格未知时默认禁止自动执行**（fail-closed），不是「先跑起来再说」。与 E2 共用同一 EditPlan/Proposal/一步 Undo 通道。 |
-| **Track C 外部体验** | `docs/plan/2026-08-26-track-c-external-experience.md` | **重大发现见下。** |
+| **L6 Pack 合同 + 模式选择器** | `docs/archive/plan/2026-08-26-l6-workflow-pack-contract.md` | Pack 与现有 playbook 关系已查明是**并存**（Skill 层 `PlaybookRun` 是纯内存方法编排，Production 层 `ProductionPlaybookDefinition` + durable Run driver，**不是同一个对象**）。默认落法：Pack 当声明层、现有 registry 当执行 adapter，**不把 durable 账本搬到 Skill 层**。**L6-DEC-1 待 owner 拍板**：物理收编（迁移 `productionPlaybooks.ts`）vs 逻辑收编（adapter、文件并存）。`generation.single-shot` 的 legacy bypass **不自行解除**。 |
+| **E3 理解式剪辑** | `docs/archive/plan/2026-08-26-e3-semantic-editing.md` | 成本是核心设计约束：价格目录**尚未覆盖 VLM/转写**，所以**价格未知时默认禁止自动执行**（fail-closed），不是「先跑起来再说」。与 E2 共用同一 EditPlan/Proposal/一步 Undo 通道。 |
+| **Track C 外部体验** | `docs/archive/plan/2026-08-26-track-c-external-experience.md` | **重大发现见下。** |
 
 ### ⚠️ 确认三宿主的第三个宿主**并不存在**
 

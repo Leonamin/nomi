@@ -4,7 +4,7 @@
 
 Baseline: dfca9990b. Scope: K1-K3 of Core A. No paid calls, real projects, authoring migration, push or merge.
 
-Reuse reviewed payment-only deltas b39333729 and 883f6904b. Existing prior art: docs/research/2026-09-18-storyboard-single-ledger/prior-art.md and docs/plan/2026-09-18-tool-layer-prior-art-verdict.md. Keep ProductionRun CAS, immutable events and submission outbox as owners.
+Reuse reviewed payment-only deltas b39333729 and 883f6904b. Existing prior art: docs/archive/research/2026-09-18-storyboard-single-ledger/prior-art.md and docs/archive/plan/2026-09-18-tool-layer-prior-art-verdict.md. Keep ProductionRun CAS, immutable events and submission outbox as owners.
 
 Red baseline: real generation adapter selected 3 but projected 33; all four invalid scopes resolved; dismissal persisted cancelled. Six failures, no missing APIs, 2026-09-19 20:57 local. Command: python3 scripts/with-gates-lock.py -- pnpm exec vitest run electron/capabilityCore/agentPanelSpendConfirm.e2e.test.ts -t 'reliability: scoped'.
 

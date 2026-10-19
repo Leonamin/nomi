@@ -71,4 +71,4 @@
 ---
 
 本刀（`2026-09-18-vendor-upsert-drops-fields`）的修法与行动项 3 是同一件事，已落地；
-其余三项（含两条门岗归类改进）不在本 PR 范围内，排期见 `docs/roadmap/TODO.md`。
+其余三项（含两条门岗归类改进）不在本 PR 范围内，排期见 `docs/archive/roadmap/TODO.md`。

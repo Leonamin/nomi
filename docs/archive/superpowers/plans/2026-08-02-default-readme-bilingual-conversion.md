@@ -92,8 +92,8 @@ git commit -m "docs(readme): put WeChat conversion on the first screen"
 
 **Files:**
 
-- Modify: `docs/superpowers/specs/2026-08-02-default-readme-bilingual-conversion-design.md`
-- Modify: `docs/superpowers/plans/2026-08-02-default-readme-bilingual-conversion.md`
+- Modify: `docs/archive/superpowers/specs/2026-08-02-default-readme-bilingual-conversion-design.md`
+- Modify: `docs/archive/superpowers/plans/2026-08-02-default-readme-bilingual-conversion.md`
 
 - [x] **Step 1: Render both Markdown files and inspect the top section**
 

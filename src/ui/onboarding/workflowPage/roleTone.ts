@@ -1,5 +1,5 @@
 // 角色 → 颜色/图标的**唯一对照表**（节点卡、菜单、左栏预览、图例共用）。
-// plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+// plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
 //
 // 为什么集中：同一个角色在图上、菜单里、预览里必须是同一个颜色，否则用户没法把三处对上——
 // 各处各写一份就是第一次改颜色时开始漂。

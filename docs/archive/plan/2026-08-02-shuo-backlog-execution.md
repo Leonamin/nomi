@@ -18,7 +18,7 @@
 > 需要 `promptMentions` 支持第二种按 nodeId 锚定的 mention kind，与「编号一致性」这条唯一真相源有交互，
 > 单独一轮做。另：全局热键**真按下去那一下**没法在走查里验（Playwright 发不出 OS 级按键），留真机。
 
-> 2026-08-02。开工文档见 `docs/plan/2026-08-02-shuo-backlog-remaining.md`（现状 + file:line 起手点）。
+> 2026-08-02。开工文档见 `docs/archive/plan/2026-08-02-shuo-backlog-remaining.md`（现状 + file:line 起手点）。
 > 本文档是**执行方案**：每项的范围 / 不动项 / 数据结构 / 回滚 / 验收门。
 > 第 1 项（任务中心）已落 `bea95577`；第 4 项（人物替换）用户已决定暂缓。
 

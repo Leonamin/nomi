@@ -12,7 +12,7 @@
 //
 // 用户以前被同一个坑修过一次：一个工具的契约有好几份（schema / 描述 / 提示词里的用法 /
 // MCP 目录 / 校验器 / 渲染层类型），每份不一样，于是 Agent 很难触发它
-// （`docs/lessons/stale-directives-outlive-tool-renames.md`）。09-18 的根治
+// （`docs/archive/lessons/stale-directives-outlive-tool-renames.md`）。09-18 的根治
 // （`4b43f3ac9`）把模型可见工具收成一条动词声明，schema / 描述 / 必填 / 注解全从它算出来。
 // 提问工具是**全新**的模型可见工具，最容易再长出那个坑，所以这里把话说死：
 //
@@ -204,6 +204,6 @@ export const AGENT_ASK_CAPABILITY = {
 /**
  * 内部面上这个动词叫什么。**从契约的别名取，不在别处手打字符串**——
  * 宿主要按工具名认出「这一次是提问」的地方不止一处，而每多一个手打的 `"ask_user"`
- * 就多一个改名时会悄悄失效的判据（`docs/lessons/stale-directives-outlive-tool-renames.md`）。
+ * 就多一个改名时会悄悄失效的判据（`docs/archive/lessons/stale-directives-outlive-tool-renames.md`）。
  */
 export const ASK_USER_VERB_NAME = AGENT_ASK_CAPABILITY.aliases.pi;

@@ -1,6 +1,6 @@
 # T2 · MCP 可见性栈（进度 / 图片块 / 深链 / 签名预览）P0-B
 
-plan 追溯：`docs/plan/2026-08-11-mcp-conversation-native-p0.md`（本 T2 = 其 Phase A 之后的 P0-B）。
+plan 追溯：`docs/archive/plan/2026-08-11-mcp-conversation-native-p0.md`（本 T2 = 其 Phase A 之后的 P0-B）。
 
 ## 问题（用户看到的现象）
 

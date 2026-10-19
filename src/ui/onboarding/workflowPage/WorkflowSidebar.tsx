@@ -1,6 +1,6 @@
 /**
  * 工作流设置整页的左栏：后端（多台 · 加/删/改地址）+ 这台的工作流列表。
- * plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+ * plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
  *
  * 「加一台」复用既有的 AddComfyuiInstanceButton（P1：一个功能一个家，不为这页再写一份加机器的表单）。
  *

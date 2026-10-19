@@ -13,7 +13,7 @@
 
 ## 先查别人
 
-- 既有共享层调研 `docs/research/2026-08-24-video-capability-shared-layer.md` 明确 params/slots 为唯一事实来源；无现成条件选项语法，不另建 JSON Schema 或供应商 UI。
+- 既有共享层调研 `docs/archive/research/2026-08-24-video-capability-shared-layer.md` 明确 params/slots 为唯一事实来源；无现成条件选项语法，不另建 JSON Schema 或供应商 UI。
 - MiniMax 官方 https://platform.minimax.io/docs/api-reference/video-generation-i2v ：2026-09-08 实读，2.3/2.3-Fast 的 1080P 仅 6 秒。
 - MiniMax 官方 https://platform.minimax.io/docs/guides/video-generation ：2026-09-08 实读 Mixed input is capped at 12 files in total。
 - APIMart https://docs.apimart.ai/en/api-reference/videos/minimax-hailuo-2.3/generation.md ：2026-09-08 实读，同样限制 1080p 为 6 秒。

@@ -21,6 +21,6 @@
 
 - 仓库已有唯一装配边界：[launchNomiApp](../../../tests/ux/_launchApp.mjs) 的目录解析与 buildNomiLaunchEnv。复用此边界，不增加第二份启动器；故障由本仓默认值覆盖顺序决定，外部 SDK 不负责这条规则。
 - 仓库已有双进程调用：[packaged smoke](../../../tests/ux/packaged-mcp-smoke.e2e.mjs) 与 [plan-gate](../../../tests/ux/plan-gate.walk.mjs) 均给 GUI/helper 同一个 env 目录。两条独立入口证明应修共享装配，不能只改 smoke 参数。
-- 仓库已有规避例：[mcp-lease-project-binding](../../../tests/ux/mcp-lease-project-binding.e2e.mjs) 用显式 capabilityDir 避开覆盖。保留优先级并删除过期的“env 不可用”说明；[隔离教训](../../lessons/iso-walkthrough-key-seeding-traps.md) 同步更新。
+- 仓库已有规避例：[mcp-lease-project-binding](../../../tests/ux/mcp-lease-project-binding.e2e.mjs) 用显式 capabilityDir 避开覆盖。保留优先级并删除过期的“env 不可用”说明；[隔离教训](../lessons/iso-walkthrough-key-seeding-traps.md) 同步更新。
 
 结论：用已有启动器恢复配置优先级，不引入依赖或格式。本次没有生态选型、自研通用能力或外部协议变化，外部文档和自媒体无法裁决内部路径装配；不声称做过无关联网调研。

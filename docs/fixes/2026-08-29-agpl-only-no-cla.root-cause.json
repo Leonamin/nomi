@@ -19,10 +19,10 @@
     "scripts/check-cla-workflow.node-test.mjs",
     "scripts/marketing/content.mjs",
     "tests/ux/marketing-home.static.mjs",
-    "docs/research/2026-08-29-openmontage-nomi-license-cla.html",
-    "docs/research/2026-08-29-toonflow-nomi-license-cla.html",
-    "docs/plan/2026-08-29-cla-signature-ledger.md",
-    "docs/plan/2026-08-29-agpl-only-no-cla.md"
+    "docs/archive/research/2026-08-29-openmontage-nomi-license-cla.html",
+    "docs/archive/research/2026-08-29-toonflow-nomi-license-cla.html",
+    "docs/archive/plan/2026-08-29-cla-signature-ledger.md",
+    "docs/archive/plan/2026-08-29-agpl-only-no-cla.md"
   ],
   "entry_points": [
     "GitHub contributor workflow and signature ledger",

@@ -1,6 +1,6 @@
 # 先查别人 · 一轮回复里「文本—工具—文本」怎么摆
 
-> 2026-09-10。服务 `docs/plan/2026-09-10-agent-transcript-merge-skill-evidence.md`。
+> 2026-09-10。服务 `docs/archive/plan/2026-09-10-agent-transcript-merge-skill-evidence.md`。
 > 问题只有一个：**模型一轮回复产出多段文本、中间夹着工具调用时，界面是一个气泡还是几个气泡？技能用没用上又是怎么给凭据的？**
 > 所有 URL 都实抓过；抓到的是 monorepo 迁移后的真实路径（Cline 老的顶层 `webview-ui/` 已 404）。
 

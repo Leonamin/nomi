@@ -2,7 +2,7 @@
 
 > 状态：📎 长期参考（接口契约笔记，随 TikHub 版本变化时更新）
 > 实读日期：**2026-09-06** · 契约来源：`https://api.tikhub.io/openapi.json`（OpenAPI 3.1.0，`info.version = V5.3.2`，spec 自述 `更新时间 2026-06-22`，`环境 Production`）
-> 相关：脚本 `scripts/research/tikhub-search.mjs` · 手册 `docs/engineering/agent-orchestration-playbook.md` §15 · 模板 `docs/research/TEMPLATE.md`
+> 相关：脚本 `scripts/research/tikhub-search.mjs` · 手册 `docs/engineering/agent-orchestration-playbook.md` §15 · 模板 `docs/archive/research/TEMPLATE.md`
 
 ## 0. 为什么要接这个（底层逻辑）
 

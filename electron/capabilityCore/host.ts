@@ -1,4 +1,4 @@
-// 能力核 · headless host（见 docs/plan/2026-06-20-capability-core-headless-exposure.md §S5）。
+// 能力核 · headless host（见 docs/archive/plan/2026-06-20-capability-core-headless-exposure.md §S5）。
 //
 // 「Nomi 关着」时的执行体：一个**无窗口的 Electron 进程**（不是纯 node——生成链路要 safeStorage 解密
 // vendor key、app.getPath 取数据根，纯 node 够不着）。CLI 探测到 app 没开 → spawn `electron host.js`，

@@ -27,7 +27,7 @@
 
 - 仓库的落盘尺寸探测：`electron/assets/assetPreview.ts:88-106` 通过 `probeMediaMetadata` 得到源文件 `width/height`，预览缩放只影响 preview 文件；`electron/assets/assetPreview.test.ts:63-72` 锁定 1600×900 原图不会被 1024 边长预览取代。
 - 现有画布拖拽入口：`src/workbench/generationCanvas/components/canvasResultDrag.ts:70-108` 已经用 `computeMediaMetaPatch` 把拖入结果的原始尺寸写入节点 meta，证明共享 owner 可以覆盖不同入口。
-- 开源画布 prior art：仓库的性能审计 `docs/audit/2026-09-02-canvas-performance-ceiling-audit.md:60-66` 对照 tldraw 的 image shape，采用图片 intrinsic size / aspect ratio 驱动卡片几何；本改动沿用同一原则，只把原始比例补齐到 Nomi 的 canonical meta。
+- 开源画布 prior art：仓库的性能审计 `docs/archive/audit/2026-09-02-canvas-performance-ceiling-audit.md:60-66` 对照 tldraw 的 image shape，采用图片 intrinsic size / aspect ratio 驱动卡片几何；本改动沿用同一原则，只把原始比例补齐到 Nomi 的 canonical meta。
 
 ## 不动项
 

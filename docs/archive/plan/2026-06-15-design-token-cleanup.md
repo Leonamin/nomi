@@ -1,6 +1,6 @@
 # 设计 token 纪律根治（2026-06-15）
 
-> 用户拍板「P1 + P2 打包根治 + 加 lint 门」。来源审计 `docs/audit/2026-06-15-full-design-review.md`。
+> 用户拍板「P1 + P2 打包根治 + 加 lint 门」。来源审计 `docs/archive/audit/2026-06-15-full-design-review.md`。
 > 策略：**先做零视觉变化的安全大头（px→token 1:1），再做有视觉影响的小头，最后上守门脚本根治整类**。分片，每片过五门 + 抽样验证。
 
 ## 分片

@@ -1,7 +1,7 @@
 # 计划：per-connection provider proxy + onboarding 加固（#258 拆项①③）
 
 > 状态：🚧 进行中（实现完成，待 PR/合并）｜日期：2026-09-01｜分支 `feat/provider-proxy-onboarding-20260901`
-> 来源：`docs/plan/2026-09-01-pr258-derived-directions-eval.md` 的方向①🟢 + 方向③🟢。**方向②（即梦改名）不做。**
+> 来源：`docs/archive/plan/2026-09-01-pr258-derived-directions-eval.md` 的方向①🟢 + 方向③🟢。**方向②（即梦改名）不做。**
 > 不动 PR #258 本体。从 #258 authored commit（`03a4e532`/`30c4bd5a`）按文件 port 到 main 现状，逐文件适配。
 
 ## 范围

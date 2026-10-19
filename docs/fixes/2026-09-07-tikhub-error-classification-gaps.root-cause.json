@@ -129,7 +129,7 @@
   },
   "dependency_lifecycle": {
     "decision": "not-applicable",
-    "rationale": "不新增、不升级、不保留任何第三方依赖。官方 TikHub SDK（Python/TS/Go/Java/C++）刻意不引入——它们自带 HTTP 栈，会绕过主进程 hardenedFetch 的域白名单与敏感头剥离；理由与四列表见 docs/plan/2026-09-07-find-reference-connector.md。",
+    "rationale": "不新增、不升级、不保留任何第三方依赖。官方 TikHub SDK（Python/TS/Go/Java/C++）刻意不引入——它们自带 HTTP 栈，会绕过主进程 hardenedFetch 的域白名单与敏感头剥离；理由与四列表见 docs/archive/plan/2026-09-07-find-reference-connector.md。",
     "exit_criteria": []
   },
   "invariant_owner_layer": {

@@ -28,7 +28,7 @@
 | 分类器新增 `coreSmoke` lane：只有纯文档改动才关，其他一律开，fail-closed | `scripts/validation-policy.mjs` 和它的单测 |
 | CI 新增 job `core-smoke`（matrix: empty/used），**empty 纳入汇总判定，used 非阻断**（见下「2026-09-22 用户拍板」） | `.github/workflows/quality-gate.yml`、`scripts/check-quality-gate-workflow.node-test.mjs` |
 | 合后收据要求**阻断档**的核心冒烟是 success（仅纯文档 merge 例外，并写明原因）；非阻断档抄结论不判 | `scripts/git-delivery.mjs` 和它的单测 |
-| 流程纪律：上一个合入没有收据，就不合下一个 | `CLAUDE.md`（再跑 `gen:agents`）、`docs/release-process.md` |
+| 流程纪律：上一个合入没有收据，就不合下一个 | `CLAUDE.md`（再跑 `gen:agents`）、`docs/archive/guides/release-process.md` |
 | 真实素材登记：仓库内真实素材（公开仓库里已有的真 AI 镜头）登记为 `repoPath` 类素材 | `tests/ux/real-media-fixtures.json`、`tests/ux/fixtures/realMedia.mjs`、`scripts/check-real-media-fixture.mjs` |
 
 ## 不动项
@@ -86,7 +86,7 @@ CI 的汇总步骤：只有 `core_smoke=false` 且 `reason=docs_only` 时，才�
 
 ## 2026-09-22 用户拍板：`used` 暂为非阻断
 
-交工前按验收门 1 和 3 实测，结果分两半（全部原始数据见 [`docs/evidence/2026-09-22-core-smoke-negative-control/`](../../evidence/2026-09-22-core-smoke-negative-control)）：
+交工前按验收门 1 和 3 实测，结果分两半（全部原始数据见 [`docs/archive/evidence/2026-09-22-core-smoke-negative-control/`](../evidence/2026-09-22-core-smoke-negative-control)）：
 
 - **验收门 1 成立**：把 `data-dragging` 的三个 owner 回退到 #836 之前，`empty` 与 `used` 都红 0/2，红的条目逐条对上用户报的三件事；`used` 还多抓到一条 `G6`（平移后接滚轮）。
 - **验收门 3 不成立**：修复在位、生产代码逐字未变的前提下，`empty` 两种语言各 2/2，但 **`used` / zh-CN 连跑 5 次只有 1 次全绿**（1、1、2、0、1），`used` / en 两次都是 1/2。三种失败全部出自下面「实测发现」里已登记、本 PR 没修的小窗布局问题（T-CV-19 / T-CV-20 / T-QA-21），归因依据是 Playwright 报出的拦截者 DOM 原文。
@@ -100,7 +100,7 @@ CI 的汇总步骤：只有 `core_smoke=false` 且 `reason=docs_only` 时，才�
 
 - **2026-09-22 补：advisory 在注解卫生这一环漏了，已堵**。「非阻断」有**三条判定链路**要落地，当初只落了两条：① job 聚合（`continue-on-error` 只改 conclusion，`needs['core-smoke'].result` 照旧 success）、② 合后收据（`used` 不进 `requiredChecks`，记进 `coreSmoke.advisory`）都对了；③ Quality Gate 汇总 job 的第一行 `test "${{ steps.ci-hygiene.outcome }}" = "success"` 没人管——`scripts/ci-annotation-hygiene.mjs` 的 `delegatedOwner()` 只认三种情形，不认 advisory 格失败留下的 `##[error]Process completed with exit code 1.`，于是它落进 `unexpected`，汇总 job 红、收据出不来。main 上 merge ffffadc7d（#843）实测：16 annotations / 10 delegated / 0 allowed / **1 unexpected**。也就是说 `used` 实际**仍然阻断**，上面这条拍板当时并没有真的生效。**怎么堵的**：`delegatedOwner()` 新增一条规则，把非阻断冒烟格的 failure 注解委派给 T-QA-23；格子名从 `CORE_SMOKE_ADVISORY_CHECK_NAMES` 派生而**不写死**，所以升阻断那天它自动失效，阻断档 `Core Flow Smoke (empty)` 的逐字相同注解照旧是 `unexpected`。不判不等于看不见：报告多一个 `advisorySmoke` 子集、日志单列一行 `advisory-smoke: N`，`used` 红了仍然看得见——否则 T-QA-23 的「连跑 5 次全绿」没有观测面。根因合同：`docs/fixes/2026-09-22-advisory-check-still-blocked-via-annotation-hygiene.root-cause.json`。
 
-跟进项：`docs/roadmap/TODO.md` 的 T-QA-23。
+跟进项：`docs/archive/roadmap/TODO.md` 的 T-QA-23。
 
 ## 实测发现（「用过的项目」夹具第一次跑就抓到的）
 
@@ -116,7 +116,7 @@ CI 的汇总步骤：只有 `core_smoke=false` 且 `reason=docs_only` 时，才�
 - 判据只看这条走查自己建的两张卡和那条线，不再用「全画布第一张 / 全部卡」。
 - 需要把卡放大时，先点「适应视图」，再在空白处滚轮放大。
 - 建卡后的露出平移结束之后，才读平移前的基线。
-- 回填证据截图改写到 `tests/ux/shots/canvas-drag-pan-gestures/<fixture>/evidence/`，不再改脏已跟踪的 `docs/plan/2026-09-11-triage-board-evidence/*.png`。
+- 回填证据截图改写到 `tests/ux/shots/canvas-drag-pan-gestures/<fixture>/evidence/`，不再改脏已跟踪的 `docs/archive/plan/2026-09-11-triage-board-evidence/*.png`。
 - runner 跑完会断言 `git status --porcelain` 前后不变；在 CI 上还要求工作树为空。
 
 ## 如何登记新场景（给后来的会话，照着做即可）
@@ -146,7 +146,7 @@ CI 的汇总步骤：只有 `core_smoke=false` 且 `reason=docs_only` 时，才�
 ## 验收门
 
 1. **阳性对照：会红。** 本地临时回退 #836 的生产代码修复（不提交）后，`empty` 和 `used` 两遍冒烟都必须红，并记下哪几条红。
-   → **已验，通过**：两遍各 0/2，证据 `docs/evidence/2026-09-22-core-smoke-negative-control/`。
+   → **已验，通过**：两遍各 0/2，证据 `docs/archive/evidence/2026-09-22-core-smoke-negative-control/`。
 2. **分类器阳性对照：** 一个只改共享 CSS（`src/styles/*.css`）或 `src/workbench/generation/*` 的 diff，`coreSmoke` 必须为 true，有单测钉住。纯文档 diff 为 false。
 3. 修复还在时，两种夹具本地全绿；截图 zh-CN 和 en 都亲眼看过。
    → **部分**：`empty` zh-CN / en 各 2/2；`used` 5 次只绿 1 次，据此降为非阻断（见上「用户拍板」）。截图两种语言都看过。

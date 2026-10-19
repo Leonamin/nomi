@@ -8,8 +8,8 @@
 
 1. 本文件。
 2. `CLAUDE.md`（工程纪律，注意 R17 已加宽 + R18 新增）+ 记忆库 `MEMORY.md`（尤其：体验测试情绪日志、付费只用 APIMart、管道吞退出码、阳性对照、走查坑）。
-3. `docs/superpowers/plans/2026-08-24-p4-multishot-continuity.md` —— P4 计划（6 角色评审版，含全部拍板记录）。
-4. `docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md` —— 统一 Agent 总方案 Rev.2（北极星/分层/harness/交互层/Pack/三轨排序）。
+3. `docs/archive/superpowers/plans/2026-08-24-p4-multishot-continuity.md` —— P4 计划（6 角色评审版，含全部拍板记录）。
+4. `docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md` —— 统一 Agent 总方案 Rev.2（北极星/分层/harness/交互层/Pack/三轨排序）。
 5. `docs/handoff/2026-08-24-semantic-single-shot-p1-p3-handoff.md` —— 底座语义与不回归清单（仍然有效）。
 
 ## 1. P4 已落地的五个切片（全部经过「代码审 + E2E 亲跑 + 截图亲读」三关后合入）
@@ -44,7 +44,7 @@ S6 = P4 最后实施切片，分支 `claude/p4-s6-rework-acceptance`，交付物
 ## 4. P4 收官剩余三步（顺序执行）
 
 1. **S6 审查合入**（§2）。
-2. **体验走查专项**（用户强要求，Task 系统里是 #10）：以「预算焦虑短剧创作者」人物设定，在**真实 App + 真实 APIMart 额度**走 J1/J2 全程（写脚本→多镜卡→定妆照点头→批量生成→连片→返工一镜），**逐秒记情绪摩擦日志**（四类：等得心慌/看不懂/吓一跳/想骂人），**摩擦全修**（不是记 backlog）后复走确认。对照产品同环节（小云雀/TapNow，调研在 docs/research/2026-08-24-*）。
+2. **体验走查专项**（用户强要求，Task 系统里是 #10）：以「预算焦虑短剧创作者」人物设定，在**真实 App + 真实 APIMart 额度**走 J1/J2 全程（写脚本→多镜卡→定妆照点头→批量生成→连片→返工一镜），**逐秒记情绪摩擦日志**（四类：等得心慌/看不懂/吓一跳/想骂人），**摩擦全修**（不是记 backlog）后复走确认。对照产品同环节（小云雀/TapNow，调研在 docs/archive/research/2026-08-24-*）。
 3. **S7 legacy 收敛**：P4 计划 §3.6/§7——legacy production driver 的「逐节点 mintSpendGrant+spend.confirm」批量路径收敛为 deprecated 边界（GUI 手动单节点生成不受影响），独立 PR、自带回归证据与回滚。完成后按 P4 计划 §5 验收门逐项打钩，才能宣告 P4 完成。
 
 ## 5. P4 之后的路线（总方案 §6 三轨，均已拍板）

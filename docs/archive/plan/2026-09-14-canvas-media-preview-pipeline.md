@@ -4,8 +4,8 @@
 
 > 状态：已实现 · 分支 `fix/canvas-media-preview-lod-20260914`（取代 PR #776；机制来自本地分支 `ba753cfa5`，按评审 `review-776.md` §六补齐重做）
 > 根因合同：`docs/fixes/2026-09-13-canvas-media-preview-lifecycle.root-cause.json`
-> 结构评审：`docs/audit/2026-09-13-canvas-media-preview-structure-review.md`
-> 同 PR 带的 S5（LOD 判据换屏上尺寸）：`docs/plan/2026-09-12-canvas-lod-screen-size.md`
+> 结构评审：`docs/archive/audit/2026-09-13-canvas-media-preview-structure-review.md`
+> 同 PR 带的 S5（LOD 判据换屏上尺寸）：`docs/archive/plan/2026-09-12-canvas-lod-screen-size.md`
 
 ## 用户报的是什么
 
@@ -49,7 +49,7 @@
 
 - 单测：`electron/assets/assetPreview.test.ts`、`resultUrlRelocalizeBridge.test.ts`、`canvasNodeLevelOfDetail.test.ts`。
 - 真机 journey：`tests/ux/canvas-image-preview-and-rename.e2e.mjs`（inline=预览、modal=原图、aria-modal、角色卡预览入口、改名持久化）。
-- 真实素材走查（R13，macOS arm64）：用户素材 `9月12日(1).mov`（3840×2160 / 10-bit HEVC / 527s / 1.38GB）与从它抽的 4K PNG（22–26MB）。数字见 PR 正文与 `docs/audit/...structure-review.md` 的越界根因一节。
+- 真实素材走查（R13，macOS arm64）：用户素材 `9月12日(1).mov`（3840×2160 / 10-bit HEVC / 527s / 1.38GB）与从它抽的 4K PNG（22–26MB）。数字见 PR 正文与 `docs/archive/audit/...structure-review.md` 的越界根因一节。
 
 ## 回滚
 

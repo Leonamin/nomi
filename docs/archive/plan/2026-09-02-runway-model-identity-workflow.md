@@ -133,7 +133,7 @@ return exactMode.length === 0 && candidates.length === 1 ? candidates[0] : null;
 
 ### U5 · fal 两处同类假绿
 
-`fal/bytedance/seedance-2.5` 的 `first`/`firstlast`/`omni` 与 `fal/google/gemini-omni-flash/v1.1` 的 `firstlast`：U1 之后会 fail-closed 暴露为「无 mapping」。按 fal 官方 `reference-to-video` / `image-to-video` 合同补齐各模式自己的 mapping（依据已存 `docs/research/2026-09-02-docaudit-fal-runway-etc.md` §2.2，不新编字段）。
+`fal/bytedance/seedance-2.5` 的 `first`/`firstlast`/`omni` 与 `fal/google/gemini-omni-flash/v1.1` 的 `firstlast`：U1 之后会 fail-closed 暴露为「无 mapping」。按 fal 官方 `reference-to-video` / `image-to-video` 合同补齐各模式自己的 mapping（依据已存 `docs/archive/research/2026-09-02-docaudit-fal-runway-etc.md` §2.2，不新编字段）。
 
 ### U6 · registry 打分 bug
 

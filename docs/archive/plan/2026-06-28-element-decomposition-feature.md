@@ -1,7 +1,7 @@
 # 落地方案：图片元素拆解 + 改字（对标 Lovart Edit Elements）
 
 > 状态：**方案文档（待 6 角色评审 + 样张拍板 → 才实现）**。
-> 上承研究：`docs/research/2026-06-27-lovart-element-decomposition-research.md`（§3.7 真生成实测结论）。
+> 上承研究：`docs/archive/research/2026-06-27-lovart-element-decomposition-research.md`（§3.7 真生成实测结论）。
 > 决策依据：用户 2026-06-28「更接近完美否则不做」+「测够→写→过评审→落地→全做完」+ 已付 Replicate key（实测 ~$1.15）。
 
 ---

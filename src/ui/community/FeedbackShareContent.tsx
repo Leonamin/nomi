@@ -8,7 +8,7 @@ import { type FeedbackOpenRequest } from './feedbackTypes'
 
 // 反馈与分享的**容器无关**主体（2026-09-01 修：入口在设置内嵌，情境入口仍是浮层）。
 // 为什么要拆出这一层：这块内容有两个家——
-//   ① 设置 → 关于 → 「反馈与分享」：获批样张（docs/design/mockups/2026-09-01-feedback-share-center*.png）
+//   ① 设置 → 关于 → 「反馈与分享」：获批样张（docs/archive/design/mockups/2026-09-01-feedback-share-center*.png）
 //      画的是它**长在设置弹窗右栏里**，左侧 tab（文件/通用/关于）始终在，顶部一条「‹ 关于」面包屑；
 //   ② 生成失败卡上「反馈此问题」：画布里冒出来的浮层，天然没有设置外壳，仍走 DesignModal。
 // 它只有**一个**家：设置 → 关于 → 反馈。四个失败面那条路不经过这里——

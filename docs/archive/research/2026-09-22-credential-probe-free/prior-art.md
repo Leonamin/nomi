@@ -1,6 +1,6 @@
 # 2026-09-22 凭据验证的付费边界 · 先查别人报告
 
-> 方案：docs/plan/2026-09-22-credential-probe-free.md
+> 方案：docs/archive/plan/2026-09-22-credential-probe-free.md
 > 根因合同：docs/fixes/2026-09-22-credential-probe-paid-without-consent.root-cause.json
 > 要回答的问题：「点一次保存验证要不要花用户的钱」这件事，依赖里 / 仓里 / 生态里 / 真实用户那儿，
 > 已经有人做过了吗？做成什么形状？

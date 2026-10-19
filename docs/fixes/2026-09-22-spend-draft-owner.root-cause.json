@@ -20,7 +20,7 @@
     "确认那一刻的部分消费（confirm → persistEdits → consumeSpendDraft）"
   ],
   "external_sources": [],
-  "internal_only_reason": "账本只活在渲染层的 localStorage，键、形状、生命周期都是 Nomi 自己的；没有任何外部方读写它，也没有跨进程契约变化（`PendingSpendConfirm` 一个字节没动，`check:model-face-frozen` 不受影响）。姿势上对齐的是本仓已定的那条裁决：待决身份锚 `operationId` 不锚 `quoteId`（docs/plan/2026-09-22-waiting-for-user-one-owner.md §1 B）。",
+  "internal_only_reason": "账本只活在渲染层的 localStorage，键、形状、生命周期都是 Nomi 自己的；没有任何外部方读写它，也没有跨进程契约变化（`PendingSpendConfirm` 一个字节没动，`check:model-face-frozen` 不受影响）。姿势上对齐的是本仓已定的那条裁决：待决身份锚 `operationId` 不锚 `quoteId`（docs/archive/plan/2026-09-22-waiting-for-user-one-owner.md §1 B）。",
   "invariants": [
     "卡上没提交的手改，身份 = 这一次 `generate`（`operationId`）：报价刷新、改参数推版、× 收回再出价都带得过去。",
     "换一次生成（或换项目 / 换 Run）才是换一本账本，一个字都带不过去。",

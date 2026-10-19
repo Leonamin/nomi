@@ -32,7 +32,7 @@ if (!['red', 'green', 'unsupported'].includes(phase)) throw new Error('Use red, 
 const plan = JSON.parse(fs.readFileSync(path.join(repoRoot, `docs/archive/plan/anchor-real-evidence/${phase === 'unsupported' ? 'red' : phase}.json`), 'utf8'))
 plan.title = `角色参考 · ${phase === 'red' ? '修复前' : phase === 'unsupported' ? '模型不支持参考' : '修复后'}`
 const fixtureImage = path.join(projectRoot, 'assets', 'hero.png')
-fs.copyFileSync(path.join(repoRoot, 'docs/design/covers/anchors/anchor-1.png'), fixtureImage)
+fs.copyFileSync(path.join(repoRoot, 'docs/archive/design/covers/anchors/anchor-1.png'), fixtureImage)
 const referenceUrl = `file://${fixtureImage}`
 plan.anchors[0].referenceUrl = referenceUrl
 for (const shot of plan.shots) {

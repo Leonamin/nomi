@@ -39,7 +39,7 @@ the single push. A small local blocker must not restart the entire suite.
 - `.github/workflows/quality-gate.yml`: classifier job and conditional lanes.
 - `scripts/check-quality-gate-workflow.node-test.mjs`: contract tests for the
   workflow and policy.
-- `docs/audit/2026-08-29-test-surface-audit.md`: evidence-backed keep,
+- `docs/archive/audit/2026-08-29-test-surface-audit.md`: evidence-backed keep,
   simplify, and missing-coverage decisions.
 
 ## Acceptance

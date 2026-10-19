@@ -11,7 +11,7 @@
 **它其实是一坨大杂烩**，混了三类东西，评估必须先拆开：
 - **A｜本次真正新写的三方向**（authored commit `03a4e532` + `30c4bd5a` + 两篇 docs）：provider proxy、即梦 CLI 3.x wiring、onboarding 重构/加固。← 本文评的就是这三块。
 - **B｜从已合 PR 漂回来的巨量 payload**：minimax/elevenlabs/meshy/runway/suno/lyria 一堆 archetype + 认证体系（来自 #241/#226）。**这些不是 #258 的贡献，是 merge 噪音**，不该跟着这个「反馈雷达」PR 走。
-- **C｜纯反馈 docs**：`docs/fixes/*.root-cause.json`、`docs/research/2026-08-31-*.md`、`docs/plan/2026-08-31-*.md`、handoff。这是标题声称的东西，但在 diff 里只占极小一角。
+- **C｜纯反馈 docs**：`docs/fixes/*.root-cause.json`、`docs/archive/research/2026-08-31-*.md`、`docs/archive/plan/2026-08-31-*.md`、handoff。这是标题声称的东西，但在 diff 里只占极小一角。
 
 真实 authored 文件清单来自 `git log --no-merges --name-only main..pr258`；下文 file:line 均指 PR 分支 tip `30c4bd5a`。
 
@@ -72,7 +72,7 @@
 
 | 部分 | 内容 | 去向 |
 |---|---|---|
-| **C 纯反馈 docs** | `docs/research/2026-08-31-dreamina-and-per-api-proxy.md`、`docs/plan/2026-08-31-dreamina-cli-and-provider-proxy.md`、`docs/fixes/2026-08-31-*.root-cause.json`、handoff | **保留**。质量高（研究doc实查了 CLI help + 划清即梦/方舟边界），是①②的依据。可单独归档为一个小 docs PR，或并进②的计划。 |
+| **C 纯反馈 docs** | `docs/archive/research/2026-08-31-dreamina-and-per-api-proxy.md`、`docs/archive/plan/2026-08-31-dreamina-cli-and-provider-proxy.md`、`docs/fixes/2026-08-31-*.root-cause.json`、handoff | **保留**。质量高（研究doc实查了 CLI help + 划清即梦/方舟边界），是①②的依据。可单独归档为一个小 docs PR，或并进②的计划。 |
 | **A①provider proxy** | `providerNetwork.ts`/`systemProxy.ts` 扩展/`ProviderProxyField.tsx`/modelSetup 文案 + onboarding 穿线 | 拆到**独立 📋 计划 + PR**（🟢），补代理凭据/私网重定向断言后直接落。 |
 | **A②即梦 CLI 3.x** | `dreaminaSeedance3.ts` 两档 + `dreaminaImage.ts` 收窄 + `dreaminaVideos/Codec` 对齐 + 各 test | 拆到**独立 📋 计划 + PR**（🟡）：**先改名去掉「Seedance」**，再交付 + 群里回执 2.5/5pro 正确出处。 |
 | **A③onboarding 加固** | `useOnboardingConnectionTest` 抽取 + `CodexLocalImageCard` catch | 跟着①走（proxy 字段）或作为独立小修（catch/抽 hook）；UI 字段过 R8/R13 走查。 |

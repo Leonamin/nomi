@@ -1,7 +1,7 @@
 # 剪辑链路真走查审计（#202 式）：MCP × 剪辑/时间轴工具族
 
 日期：2026-09-02 · 基线：`origin/main@349529e6`（Merge PR #309）
-性质：只审计 + 记录，不修产品代码。参照 #202（MCP 生成链事故审计）与 `docs/research/2026-09-02-mcp-survey.md` §3 的记法：E-ID / 现象 / 证据 file:line / 影响 / 修法一句。
+性质：只审计 + 记录，不修产品代码。参照 #202（MCP 生成链事故审计）与 `docs/archive/research/2026-09-02-mcp-survey.md` §3 的记法：E-ID / 现象 / 证据 file:line / 影响 / 修法一句。
 服务对象：M2 slice-2（把剪辑族收敛成 `timeline_read` / `timeline_edit(preview|apply)` / `export_job(host-only)` / `media_query` 四个语义意图，见 `docs/architecture/agent-m0-tool-mapping.md` 行 26-38）。
 
 ## 0. 走查方法与诚实记分

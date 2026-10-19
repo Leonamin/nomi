@@ -1,6 +1,6 @@
 # 连线/边收口：有序参考边（order 字段）实现计划
 
-> 主 spec：`docs/audit/2026-06-16-reference-split-and-apimart-params.md` §1a/§1d/「地基修法」。
+> 主 spec：`docs/archive/audit/2026-06-16-reference-split-and-apimart-params.md` §1a/§1d/「地基修法」。
 > 隔离 worktree 实现，**不 push、不合并**。
 
 **Goal：** 让数组参考（image_ref，characterIndexed，按序 character1..N）用**有序的画布边**表达，治三件事：①拖线到数组槽不画线（用户困惑）②显示(resolveReferenceSlots)与生成(buildArchetypeInputParams)真相源分裂 ③#4 整类不复发。

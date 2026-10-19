@@ -16,8 +16,8 @@
 
 ## 1. 已完成（都在 origin/main）
 
-- **P4「小说/剧本→一集」生产段全部完成并宣告**：验收门 §5.1-§5.5 逐项打钩（`docs/audit/2026-08-25-p4-acceptance-checklist.md`），含真金付费验收（真视频 submit→慢轮询→completed→materialize 全程落盘）。
-- **体验走查 J1 专项**（`docs/audit/2026-08-25-experiential-walkthrough-j1.md`）：8 条摩擦，6 修入 main、1 撤案（F16 是我的测量误诊，护栏见 PR #168）、1 进样张队列。
+- **P4「小说/剧本→一集」生产段全部完成并宣告**：验收门 §5.1-§5.5 逐项打钩（`docs/archive/audit/2026-08-25-p4-acceptance-checklist.md`），含真金付费验收（真视频 submit→慢轮询→completed→materialize 全程落盘）。
+- **体验走查 J1 专项**（`docs/archive/audit/2026-08-25-experiential-walkthrough-j1.md`）：8 条摩擦，6 修入 main、1 撤案（F16 是我的测量误诊，护栏见 PR #168）、1 进样张队列。
 - 当日合入的关键 PR：#153 S6 返工链 / #155 S6.5 生产入口 / #154 走查六摩擦 / #156 锚检查点决议链 / #158 调度器慢供应商三洞 / #161 锚复用 E2E / #162 F15 冻结门操作者 / #163+#173 术语人话化 / #165 S7a 门岗 / #167 形象确认卡 / #168 防误诊护栏 / #171 全应用地基审计 / #169 P4 宣告。
 
 ## 2. 在飞（本会话派出、可能尚未落地）
@@ -30,7 +30,7 @@
 | `claude/p5-e1-adoption-bridge` @ `~/Desktop/nomi-e1-adoption` | **P5 E1 采纳桥**：产物→时间轴收敛为唯一受控通道（EditProposal / 幂等键 / 原子 apply+补偿 / 一步 Undo）；顺带交付验收门「时间轴连片」证据 | 已建 `src/workbench/adoption/` + plan 文档 |
 | `claude/ux-f3-f16b` @ `~/Desktop/nomi-ux-friction` | **F3 + F16b**（样张已获用户批准）：拆镜入口进选中浮条；花钱卡与托管卡合并成一张 | 全新开工 |
 
-**若 Codex 那边没交付**：进对应 worktree 看 `git status` 的未提交改动 + 读它的 `docs/plan/*.md`，**接着做别推倒重来**。
+**若 Codex 那边没交付**：进对应 worktree 看 `git status` 的未提交改动 + 读它的 `docs/archive/plan/*.md`，**接着做别推倒重来**。
 
 ## 3. 已获批样张的实施规格（F3 / F16b）
 

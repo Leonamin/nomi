@@ -20,7 +20,7 @@ import type { ModelArchetype } from "./types";
 // 与官方 role 取值逐字相同，不需要 roleName 覆盖。
 //
 // 本轮**不接** file_url（文档参考）与 link_url（网页参考），理由同 kie 侧，
-// 见 docs/plan/2026-08-27-wan-3-0-integration.md。
+// 见 docs/archive/plan/2026-08-27-wan-3-0-integration.md。
 // ---------------------------------------------------------------------------
 
 const opt = (values: Array<string | number>): ModelParameterControl["options"] =>

@@ -18,7 +18,7 @@ import type { AdoptionApplyPorts, AdoptionOutcome } from './adoptionTypes'
 /**
  * 单产物采纳（合同 §5 的 `Artifact → EditProposal → Apply/Undo`）。
  *
- * 收敛掉的旧路径（见 docs/plan/2026-08-25-p5-e1-adoption-bridge.md §3）：
+ * 收敛掉的旧路径（见 docs/archive/plan/2026-08-25-p5-e1-adoption-bridge.md §3）：
  *  · 节点「加入时间轴」点击贴尾（原 addNodeToTimelineEnd.ts 直写）
  *  · 节点拖拽自选位置（原 useNodeDragResize.ts 直写）
  * 两条现在都到这儿汇流——**用户看到的按钮和拖拽手感一个字没改**，

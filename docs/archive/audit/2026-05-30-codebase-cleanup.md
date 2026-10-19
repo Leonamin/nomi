@@ -9,8 +9,8 @@
 | 类目 | 现状 | 动作 | 影响 |
 |---|---|---|---|
 | `RELEASE_NOTES_v0.6-0.7.9.md` × 12 | 12 个发布说明散在根目录 | `mv -> docs/release-notes/` | 根目录清爽 -12 文件 |
-| `docs/plans/` (2 文件) | 与 `docs/plan/` 撞名 | `mv 内容到 docs/plan/`，删 `plans/` | 消除歧义 |
-| `docs/onboarding-trials/2026-05-28T14-14~24` × 14 dir | 早期 Kimi 调试时的崩溃 trial（`rounds: 0`） | 删除 | -14 dirs，~5MB |
+| `docs/archive/plans/` (2 文件) | 与 `docs/archive/plan/` 撞名 | `mv 内容到 docs/archive/plan/`，删 `plans/` | 消除歧义 |
+| `docs/archive/onboarding-trials/2026-05-28T14-14~24` × 14 dir | 早期 Kimi 调试时的崩溃 trial（`rounds: 0`） | 删除 | -14 dirs，~5MB |
 | `src/workbench/feedback/showUndoToast.ts` (单文件) | 1 个文件的目录 | `mv -> src/utils/showUndoToast.ts`，删空目录 | 结构紧凑 |
 | `src/workbench/nomi/NomiAppBar.tsx` (单文件) | 1 个文件的目录 | `mv -> src/ui/app-shell/NomiAppBar.tsx`（与 design 体系靠拢） | 入口找得到 |
 
@@ -21,10 +21,10 @@
 mkdir -p docs/release-notes && git mv RELEASE_NOTES_*.md docs/release-notes/
 
 # plans -> plan
-git mv docs/plans/* docs/plan/ && rmdir docs/plans
+git mv docs/archive/plans/* docs/archive/plan/ && rmdir docs/archive/plans
 
 # 早期失败 trial（保留 attack-A/B/C + kling-3-0 成功 + m4-retest + m5-install）
-rm -rf docs/onboarding-trials/2026-05-28T14-{14,15,17,18,19,23,24,36}-*-gpt-image-2-text-to
+rm -rf docs/archive/onboarding-trials/2026-05-28T14-{14,15,17,18,19,23,24,36}-*-gpt-image-2-text-to
 
 # 单文件目录归位
 git mv src/workbench/feedback/showUndoToast.ts src/utils/
@@ -89,7 +89,7 @@ runtime.ts (2687)
 | `ProfileKind` 不含音频 task | `electron/runtime.ts:39` | 加 `text_to_audio`, `image_to_audio` |
 | onboarding `ModelKind` ≠ runtime `BillingModelKind` | 各自一份 | 共享同一 union，导出到 `electron/types/modelKinds.ts` |
 | `RELEASE_NOTES_v0.7.x` 手写 + git tag 没自动化 | 根目录 | 加 `scripts/release.mjs`：从 `package.json` 版本 + git log 自动生成 |
-| `docs/plan` 和 `docs/plans` 风格混乱 | 见 A | 统一 |
+| `docs/archive/plan` 和 `docs/archive/plans` 风格混乱 | 见 A | 统一 |
 
 ## D. 未来 6 个月的优化点（按 ROI 排）
 

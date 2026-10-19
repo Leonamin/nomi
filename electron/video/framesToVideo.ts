@@ -1,7 +1,7 @@
 // 帧序列 → mp4：把 N 张 PNG dataURL 写进临时目录 → ffmpeg image2 拼成 H.264 mp4 →
 // 落成项目素材（kind 'generated'）→ 返回 { url, assetId }。
 //
-// AI 运镜工具的「轨迹→视频文件」桥（docs/plan/2026-06-22-ai-camera-move-tool.md S2）：
+// AI 运镜工具的「轨迹→视频文件」桥（docs/archive/plan/2026-06-22-ai-camera-move-tool.md S2）：
 // 渲染层在隐藏 Canvas 沿相机轨迹采 N 帧 → 这里拼片。ffmpeg/执行位复用 export 那套
 // （resolveFfmpegPath + ensureExecutable），与 extractVideoFrame 同源。args 抽在
 // framesToVideoArgs.ts（纯函数 + 单测）。

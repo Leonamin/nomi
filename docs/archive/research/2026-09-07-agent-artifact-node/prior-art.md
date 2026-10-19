@@ -1,6 +1,6 @@
 # 「先查别人」调研报告：AI 手艺产物节点（agent-artifact）（2026-09-07）
 
-> R27 §16 的必交物。对应方案：[`docs/plan/2026-09-06-agent-artifact-node.md`](../../plan/2026-09-06-agent-artifact-node.md)。
+> R27 §16 的必交物。对应方案：[`docs/archive/plan/2026-09-06-agent-artifact-node.md`](../../plan/2026-09-06-agent-artifact-node.md)。
 > 交付分支 `feat/agent-artifact-node-takeover-20260907`（PR #588，接手 #564 返工）。
 >
 > 补交说明（诚实记分优先）：方案在门岗上线日（2026-09-07）**之前**就已拍板并实施到走查通过，

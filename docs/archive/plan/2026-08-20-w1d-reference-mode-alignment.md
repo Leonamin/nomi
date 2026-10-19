@@ -1,6 +1,6 @@
 # W1d · MCP 对话路径「参考模式错位」根因修复
 
-> 现场：docs/audit/2026-08-19-l3-w1-shot-verify/run.json（打包二进制 + 用户真实 apimart 目录）。
+> 现场：docs/archive/audit/2026-08-19-l3-w1-shot-verify/run.json（打包二进制 + 用户真实 apimart 目录）。
 > `nomi_generate` 带 character_ref 参考的**所有**图生图/图生视频被 L3 诚实护栏拒发：
 > 「该模型没有任何模式能携带你连上的参考图」——seedream-4.5 / gemini-2.5-flash-image / seedance-2.0 全中招。
 > 无参考的锚图（同 seedream-4.5 纯文生）成功且真 VLM 判分通过。

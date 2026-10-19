@@ -7,8 +7,8 @@
 关联件：
 - [执行计划](../research/2026-09-01-agent-architecture-solution-and-execution-plan.md) §6.0（I-1）、§6、§8；
 - [根因总稿](../research/2026-09-01-agent-architecture-root-cause-synthesis.md)；
-- [M0 owner map](agent-m0-owner-map.md)、[50 工具映射](agent-m0-tool-mapping.md)、[旧路径清单](agent-m0-legacy-paths.md)、[PR #223 切片](agent-m0-pr-slices.md)、[M1 红灯清单](../../qa/2026-09-01-agent-m0-red-lights.md)；
-- 交互设计 [nomi-agent-interaction.md](../../design/nomi-agent-interaction.md) §14（#194 §14，批准/工作方式两轴词表）。
+- [M0 owner map](agent-m0-owner-map.md)、[50 工具映射](agent-m0-tool-mapping.md)、[旧路径清单](agent-m0-legacy-paths.md)、[PR #223 切片](agent-m0-pr-slices.md)、[M1 红灯清单](../qa/2026-09-01-agent-m0-red-lights.md)；
+- 交互设计 [nomi-agent-interaction.md](../design/nomi-agent-interaction.md) §14（#194 §14，批准/工作方式两轴词表）。
 
 ---
 
@@ -37,7 +37,7 @@
 
 **附 I-3（维护者评审补条）**：L1 回放测试在 PR 描述如实标 **written-not-wired**、并补 wiring；不得把“已写测试”当“已接线跑通”。维护者交叉验证实测本机 `test:agent-system:l1` = 3/3、`test:agent-system:m0-m1` = 8/8（NodeNext 编译岛 `tests/agent-system/tsconfig.json` 生效）。
 
-**为什么是硬前置**：这三件都属“缺共享生命周期/状态 owner”，本地小场景看不出、跨轮/重启/并发才炸。当场看不出毛病的一族只能靠机器每次拦，不能靠“下轮补”。红灯记录见 [M1 红灯清单](../../qa/2026-09-01-agent-m0-red-lights.md)。
+**为什么是硬前置**：这三件都属“缺共享生命周期/状态 owner”，本地小场景看不出、跨轮/重启/并发才炸。当场看不出毛病的一族只能靠机器每次拦，不能靠“下轮补”。红灯记录见 [M1 红灯清单](../qa/2026-09-01-agent-m0-red-lights.md)。
 
 ---
 
@@ -65,7 +65,7 @@
 
 ## R-M-4 — 审批/生成闸门 = 用户可配权限档位
 
-**裁决**：审批与生成闸门不是写死的“永远停一次”，而是**用户可配的权限档位**；机制在 M1 落地（settlement barrier + Host policy + proposal receipt store 已是 owner）。档位词表**对齐 #194 §14**（[nomi-agent-interaction.md](../../design/nomi-agent-interaction.md) §14 的“工作方式”与“批准策略”两根轴），不另造一套词。
+**裁决**：审批与生成闸门不是写死的“永远停一次”，而是**用户可配的权限档位**；机制在 M1 落地（settlement barrier + Host policy + proposal receipt store 已是 owner）。档位词表**对齐 #194 §14**（[nomi-agent-interaction.md](../design/nomi-agent-interaction.md) §14 的“工作方式”与“批准策略”两根轴），不另造一套词。
 
 四条规则：
 

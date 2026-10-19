@@ -233,7 +233,7 @@ describe('model settings workspace structure', () => {
 
   // 2026-08-18：群里「要改 api url 翻了半天没找到」的实测根因是——地址/凭证排在 24 行模型列表
   // 之后，落地连接详情页那一屏整块被弹窗 overflow 裁在窗外（铅笔 y=817 / 弹窗底边 y=706）。
-  // 见 docs/plan/2026-08-18-vendor-connection-discoverability.md。
+  // 见 docs/archive/plan/2026-08-18-vendor-connection-discoverability.md。
   it('puts the connection block before the model list on the custom vendor card', () => {
     const card = read('src/ui/onboarding/CustomVendorCard.tsx')
     const connectionAt = card.indexOf('<CustomVendorManage')

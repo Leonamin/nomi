@@ -414,7 +414,7 @@ try {
   //   ③ 否则边缘提示出现、方向对、点一下那张卡完整进 stage。
   // 「完整」只在走提示那条路上断：落在屏里的那张可能右缘被舞台切掉一截（CI 的 Linux runner 把窗口夹到 1280 宽，
   // 下面 resize(1600, 1000) 静默不生效），产品按中心判它「看见了」、不出提示，这是拍板后的设计不是回归。
-  // 仍逐张量而不是建完两张再要求同时在 stage 内：点第二张的提示会把第一张挪向边缘。见 docs/lessons/
+  // 仍逐张量而不是建完两张再要求同时在 stage 内：点第二张的提示会把第一张挪向边缘。见 docs/archive/lessons/
   // walkthrough-geometry-must-reverify-under-the-real-cursor.md 同一族。
   const createdPlacement = []
   for (const kind of ['image', 'video']) {
@@ -442,7 +442,7 @@ try {
   )
   if (nodeIds.length < 2) {
     // 节点建了却没渲染出来：把 React Flow 容器尺寸、视口、节点数与控制台告警一起交出去（NaN 视口那一族见
-    // docs/lessons/walkthrough-geometry-must-reverify-under-the-real-cursor.md）。
+    // docs/archive/lessons/walkthrough-geometry-must-reverify-under-the-real-cursor.md）。
     const diag = await getWin().evaluate(() => {
       const rf = document.querySelector('.react-flow')?.getBoundingClientRect()
       const layer = document.querySelector('.generation-canvas-v2__canvas')

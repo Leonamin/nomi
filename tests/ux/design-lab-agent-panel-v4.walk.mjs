@@ -12,7 +12,7 @@ await walkDesignLabScreen({
   screen: 'agent-panel-v4',
   title: 'Agent 面板 v4',
   // 端口按 worktree + 角色派生（design-lab/labServer.mjs）：写死端口在这台常年 20+ worktree
-  // 的机器上一定会撞，撞了截回来的是别人分支的 UI（docs/lessons/design-lab-port-5197-collision-fakes-visual-red.md）。
+  // 的机器上一定会撞，撞了截回来的是别人分支的 UI（docs/archive/lessons/design-lab-port-5197-collision-fakes-visual-red.md）。
   role: 'walk-agent-panel-v4',
   cellWidth: 410,
   columns: 4,

@@ -2,8 +2,8 @@
 
 日期：2026-09-15 · 分支 `feat/feedback-loop-20260915` · 状态：🚧 实施中
 样张（用户 09-15 已拍板）：`scratchpad/feedback-loop/feedback-loop-proposal-v2.svg`（v1 同目录，仅作参考）
-调研：[docs/research/2026-09-15-feedback-loop/prior-art.md](../research/2026-09-15-feedback-loop/prior-art.md)
-清单条目：`docs/roadmap/TODO.md` 的 T-AG-11（轨迹 + 隐私边界）· T-AG-12（就近的快速反馈）· T-EC-05（轨迹导出没有产品入口）
+调研：[docs/archive/research/2026-09-15-feedback-loop/prior-art.md](../research/2026-09-15-feedback-loop/prior-art.md)
+清单条目：`docs/archive/roadmap/TODO.md` 的 T-AG-11（轨迹 + 隐私边界）· T-AG-12（就近的快速反馈）· T-EC-05（轨迹导出没有产品入口）
 
 ---
 
@@ -201,7 +201,7 @@ FeedbackOpenRequest += { summary?: string }   // 调用处用它所在域的 own
 | 门 | 判据 |
 |---|---|
 | 脱敏金测试 | 真实 pi 转录（含提示词 + 绝对路径 + `sk-` key）过投影，产物里三者零命中 |
-| R13 走查① | 隔离 profile 真实 App：第一次打开 Agent 面板出卡 → 点「愿意」→ 关面板重开**不再出**；截图入 `docs/evidence/` |
+| R13 走查① | 隔离 profile 真实 App：第一次打开 Agent 面板出卡 → 点「愿意」→ 关面板重开**不再出**；截图入 `docs/archive/evidence/` |
 | R13 走查② | 假 key 触发「模型验证失败」→ 点「反馈」→ 看到自动摘要 → 发送到本机 mock 端点 → 拿到 `NF-MMDD-NNNN` |
 | 设计实验室 | 两张卡各录状态（首次询问卡 2 态、反馈面 3 态：待发/已发/离线排队） |
 | 五门 | 本地跑**完整** `pnpm run gates`（不手挑清单） |

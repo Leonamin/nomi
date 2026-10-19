@@ -50,7 +50,7 @@ export const CURATED_ASSET_INGESTION: Record<string, AssetIngestion> = {
     accepts: ["image", "video", "audio"],
     visibility: "public-provider",
   },
-  // Higgsfield 自有上传（2026-09-17 字节级实测通过，证据 docs/evidence/2026-09-17-higgsfield-contract）：
+  // Higgsfield 自有上传（2026-09-17 字节级实测通过，证据 docs/archive/evidence/2026-09-17-higgsfield-contract）：
   //   POST /files/generate-upload-url {content_type}
   //     → { public_url, upload_url, content_type, upload_headers }
   //   PUT 字节到 upload_url（**不带 Higgsfield 凭据**，预签名 URL 自带授权）

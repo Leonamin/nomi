@@ -118,7 +118,7 @@ function readRoundTrajectory(projectDir, seenToolCallIds, seenResultIds) {
   // 这一轮**到底有没有跑到模型**。run6 实测：7 轮连着 `assistant_error: Connection error.`
   // （四次重试全是 0 token），而走查照旧记 `roundErrors: 0`——它只捕自己的异常，不读 lane
   // 那边这次 operation 的结局。后果不是少一行日志，是**所有比率的分母都掺进了没跑到的轮次**，
-  // 报告看上去完全正常（证据 docs/evidence/2026-09-22-askback-real-model-run6 发现 ①）。
+  // 报告看上去完全正常（证据 docs/archive/evidence/2026-09-22-askback-real-model-run6 发现 ①）。
   const outcomes = []
   for (const session of readLaneTranscripts(projectDir)) {
     for (const write of session.writes) {

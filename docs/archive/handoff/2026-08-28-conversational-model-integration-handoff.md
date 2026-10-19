@@ -124,8 +124,8 @@ Codex / Claude / WorkBuddy（无仓库）       现有 Nomi 设置 UI
 
 设计真源：
 
-- `docs/superpowers/specs/2026-08-28-conversational-model-integration-design.md`
-- `docs/superpowers/plans/2026-08-28-conversational-model-integration.md`
+- `docs/archive/superpowers/specs/2026-08-28-conversational-model-integration-design.md`
+- `docs/archive/superpowers/plans/2026-08-28-conversational-model-integration.md`
 
 根因合同：
 

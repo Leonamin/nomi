@@ -64,7 +64,7 @@
 |---|---|---|---|---|---|
 | ⌘Z | 撤销 | 有：`useCanvasShortcuts.ts:178-182` | 同 | 没写 | 已有，只补说明 |
 | ⌘⇧Z | 重做 | 有：`useCanvasShortcuts.ts:173-177`（另有 ⌘Y `:183-186`） | 同（我们多一个 ⌘Y） | 没写 | 已有，只补说明 |
-| ⌘F | 画布节点搜索 | 没有；仓库也没有可复用的搜索/命令面板组件（`git grep -i "commandpalette\|cmdk\|nodeSearch"` 零命中，`package.json` 无 cmdk） | — | — | **要新画 UI → 只交方案+样张，不实现**：见 [样张](../../plan/2026-09-21-canvas-node-search-mockup.html) |
+| ⌘F | 画布节点搜索 | 没有；仓库也没有可复用的搜索/命令面板组件（`git grep -i "commandpalette\|cmdk\|nodeSearch"` 零命中，`package.json` 无 cmdk） | — | — | **要新画 UI → 只交方案+样张，不实现**：见 [样张](2026-09-21-canvas-node-search-mockup.html) |
 | ⌫ | 删除 | 有：`useCanvasShortcuts.ts:112-133`（多选删除给撤销 toast） | 同 | 写了（`delete`） | 已有 |
 
 **另外发现（我们有、LibTV 面板没列、我们帮助面板也没写）**：⌘X 剪切（`useCanvasShortcuts.ts:164-168`，帮助只写了 ⌘C/⌘V）、F 画框（`useCanvasFrameTool.ts:93-112`，只在按钮 tooltip 里写了）。一并补进帮助面板。
@@ -86,7 +86,7 @@
    - 代价：动 Electron 主进程的一条转发（与 ⌘+/⌘- 同一条通道），需要重新打包才能在装机版生效。反方先例：tldraw 把适应画布放在 ⇧1、100% 放在 ⇧0（https://github.com/tldraw/tldraw/blob/6d1c6ae341478debd9d2166b09a162b1c12df110/packages/tldraw/src/lib/ui/context/actions.tsx#L1196-L1220），正是为了躲开浏览器的 ⌘0。
 2. **⌘⌥G 合并分镜组**。我们有分镜组（`NodeGroup`），没有合并。要做得先定：合并后叫什么名（取第一个？）、框边界（并集）、组入参/出参（并集去重）、合并能不能撤销成原来两组。默认建议：**先不做**——今天可以 ⌘⇧G 解组再 ⌘G 成组达到同样效果；等真有人要再做。
 3. **V / H 工具**。默认建议：**不做**（理由见对照表：我们的默认手势不用切工具就同时有平移和框选）。若要照顾 LibTV 用户，可以只在帮助面板写一句「Nomi 里空白拖就是平移，Shift+拖框选」，不加键。
-4. **⌘F 画布节点搜索**：要新画一个浮层，见样张 [2026-09-21-canvas-node-search-mockup.html](../../plan/2026-09-21-canvas-node-search-mockup.html)。拍板后再实现。
+4. **⌘F 画布节点搜索**：要新画一个浮层，见样张 [2026-09-21-canvas-node-search-mockup.html](2026-09-21-canvas-node-search-mockup.html)。拍板后再实现。
 5. **⌘⌥+拖动 创建副本**：与 ⌥+拖动 的区别不清楚，需用户说明想要的效果（另一工人的分支也在等这条）。
 
 ## 实施结果（2026-09-21）

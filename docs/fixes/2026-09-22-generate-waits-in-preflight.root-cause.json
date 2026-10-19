@@ -35,7 +35,7 @@
     "打开项目的补齐钩子（`withdrawStalePresentations`）"
   ],
   "external_sources": [],
-  "internal_only_reason": "只动本仓 lane 宿主、Run 账本状态机与面板输入框；没有新增或改动任何对外 wire 契约。模型可见面有意改了两句（`generate` 的菜单句与后果句：这次调用会等用户答完），`check:model-face-frozen` 基线按门岗程序更新。与 MCP elicitation 规范的对照（2025-11-25 / 2026-07-28）写在 docs/plan/2026-09-22-waiting-for-user-one-owner.md §5c。",
+  "internal_only_reason": "只动本仓 lane 宿主、Run 账本状态机与面板输入框；没有新增或改动任何对外 wire 契约。模型可见面有意改了两句（`generate` 的菜单句与后果句：这次调用会等用户答完），`check:model-face-frozen` 基线按门岗程序更新。与 MCP elicitation 规范的对照（2025-11-25 / 2026-07-28）写在 docs/archive/plan/2026-09-22-waiting-for-user-one-owner.md §5c。",
   "invariants": [
     "等用户只有一个 owner：审批闸。`generate` 的 present 与等用户都发生在 `before_tool`（`toolLifecycle.approved`），不计入工具超时；execute 里没有任何等待，也不再碰一次领域",
     "用户在报价卡上的结论以**成功形状**回给模型：approved / declined / redirected；只有「没有窗口能问」「被停下」是错误形状",

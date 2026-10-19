@@ -162,7 +162,7 @@ function kindOf(rule) {
  * 跑一份形态契约。**一次跑完全部规则再抛**——让人一眼看全所有偏离，而不是修一条跑一次。
  *
  * @param scope  Playwright Page（或已 scope 的 Locator 的 page）
- * @param contract  契约对象（`docs/design/mockups/contracts/*.{intent,auto}.mjs` 的默认导出）
+ * @param contract  契约对象（`docs/archive/design/mockups/contracts/*.{intent,auto}.mjs` 的默认导出）
  */
 export async function assertMockupContract(scope, contract, { timeout = DEFAULT_TIMEOUT_MS } = {}) {
   const rules = [...(contract.structure ?? []), ...(contract.geometry ?? [])]

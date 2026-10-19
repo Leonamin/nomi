@@ -5,7 +5,7 @@
 > 命令族：`eval:run / eval:score / eval:diff / eval:view / eval:ops / eval:judge-calibrate / eval:review-images / test:journeys`，节奏提醒并入 `check:audit`。
 > 循环已实证转通：施工期抓出并修掉 2 个真 bug（prod projectId 解析、agent 连线 clientId 吊边），各配回归锁；基线 15 case 行为分全绿（饱和 = 扩容信号，扩容来源限定真实失败 + Q1/Q2 拍板）。
 > 实测账（回填 D2）：单 trial 26–50s / 1.6–2.8 万 tokens；冒烟档 5 case ≈3 分钟 ≈11 万 tokens；全量 15 case ≈10 分钟 ≈31 万 tokens。
-> 待用户三件事：① `evals/judge.config.json` 填便宜档 key；② 查看器标注 ≥10 条导出；③ 拍板 Q1（默认连线？）/ Q2（宣传片默认 image 还是 video？）——见 `docs/audit/2026-06-12-eval-error-analysis-v1.md`。
+> 待用户三件事：① `evals/judge.config.json` 填便宜档 key；② 查看器标注 ≥10 条导出；③ 拍板 Q1（默认连线？）/ Q2（宣传片默认 image 还是 video？）——见 `docs/archive/audit/2026-06-12-eval-error-analysis-v1.md`。
 > 关系：本方案是 `2026-06-11-nomi-harness-master-plan.md`（ETCSLV）的**姊妹件**——评测体系是 EventLog（S）的读侧第四消费者，复用 V 层的 NormalizedRecipe / V-a 自检结果，不另造日志格式。施工顺序关系见 D3。
 
 ---
@@ -152,7 +152,7 @@ evals/
 
 | 触发（事件驱动，不按日历硬转） | 动作 | 门 |
 |---|---|---|
-| **轨迹攒够 ~50 条新增**（`check:audit` 扩展提醒） | error analysis：查看器里 open coding → 失败分类 → 每个新失败模式 ≥1 case 进 dataset → 排修复优先级。**首轮约 2–4 小时，之后每轮 ~1 小时**（数字按 Hamel 实践对齐，不再写"每周 30 分钟"） | `docs/audit/` 增量记录 |
+| **轨迹攒够 ~50 条新增**（`check:audit` 扩展提醒） | error analysis：查看器里 open coding → 失败分类 → 每个新失败模式 ≥1 case 进 dataset → 排修复优先级。**首轮约 2–4 小时，之后每轮 ~1 小时**（数字按 Hamel 实践对齐，不再写"每周 30 分钟"） | `docs/archive/audit/` 增量记录 |
 | **改 agent prompt / 工具 schema / 模型 profile** | 跑 smoke 档（≤5 case，pass@1，分钟级）+ `eval:diff` | **提醒不阻断**：LLM 在环（非确定 + 烧额度 + 断网不可跑）不进五门（评审 CTO#7 裁定）；只有确定性断言子集未来可考虑进门 |
 | **接入新模型** | 走已有"接入即验证 E2E 回路"，验证过的任务沉淀成 dataset case | 一次真实 E2E 跑通 |
 | **发版前** | L4 双层（断言 + R13 人眼）+ regression 全量 + L3 抽样 | 全绿 + 走查对账 |
@@ -170,7 +170,7 @@ evals/
 | **S0.5** | 零额度运营周报 | 从 EventLog 统计失败率 / P50 耗时 / 成本，进 `check:audit` 输出 | 跑一条命令出三个数 | 0.5 天 |
 | **S1** | eval 骨架 + L1 | `evals/types.ts` + 三命令 + runner（按 D5 拍板，A 方案复用 ui-driver 基建）+ 拆镜头 dataset v0（15 case 纯确定性断言，含 tool-args 语义谓词）+ report 样张 | smoke 档分钟级跑通出 report；**首次全量 run 实测 token/耗时回填 D2 账表** | 4–6 天（含 runner 环境，不再写 2–3 天） |
 | **S1.5** | 轨迹查看器 + 标注 | §3.5 单 HTML + annotations 写回 | 打开任一轨迹 30 秒内看懂一条对话全貌；能标 pass/fail+critique | 1–2 天 |
-| **S2** | 首轮 error analysis | 真实轨迹 open coding（首轮 2–4h 人工）→ 失败分类法 v1 → dataset 扩到 30–50（真实失败为主）→ L2 rubric 候选维度验证/淘汰 | `docs/audit/` 失败分类法文档 + dataset v1 | 1 天 |
+| **S2** | 首轮 error analysis | 真实轨迹 open coding（首轮 2–4h 人工）→ 失败分类法 v1 → dataset 扩到 30–50（真实失败为主）→ L2 rubric 候选维度验证/淘汰 | `docs/archive/audit/` 失败分类法文档 + dataset v1 | 1 天 |
 | S3 | L2 judge + 校准 | 查看器里标 30 条 → judge few-shot → P/R ≥80% | 校准报告；judge 进 eval:score | 2 天 |
 | S4 | L3 生成质量 | L3a 整条管线（本地化→探测[含新写黑帧/静音滤镜]→review 事件→节点 ⚠，异步旁路）**记 harness 工期不重复计价**；L3b 按 D4 | 坏产物有结构化记录且不挡用户感知 | （harness 侧 2–3 天）+ L3b 1 天 |
 | S5 | L4 旅程断言化（收窄版） | 只断言可谓词化骨架：J3/J5 全程 + J1/J4 终态可达 + 遮挡几何；截图存档复用 `__shots__`；**J1/J2 质量明示留给 L1/L2 + R13 人眼** | 骨架断言独立 exit code；R13 上层门写进发版清单不被豁免 | 2 天 |

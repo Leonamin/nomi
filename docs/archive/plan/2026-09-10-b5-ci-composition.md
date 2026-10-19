@@ -42,7 +42,7 @@ main run 34414378679：M/click-select 35.5ms，6/6 selected，stage 798×876；B
 
 真实 Chromium 的受遮挡卡片回归：使用 git HEAD 的原 runMultiNodeDrag，2 张请求卡片实际选中 0 张，原断言红；同一 DOM、同一断言调用修复后 runner，2/2 选中，遮挡按钮激活数为 0，绿。证据见 docs/fixes/b5-density-evidence/ci-perf-hit-{red,green}.txt。该浏览器夹具验证手势归属，不替代真实 Electron 性能预算。
 
-修复后真实 Electron click-select 三轮：frameGapP95Ms=13.9/16.8/12.5，严格 macOS 33ms 原预算通过；每轮 domainSelected=flowSelected=mounted=6，stageHeight=876。人眼查看 after 截图，时间轴保持收起，未出现额外时间轴 clip。摘要与截图见 docs/fixes/b5-density-evidence/ci-perf-click-local.json、ci-perf-click-after.png。
+修复后真实 Electron click-select 三轮：frameGapP95Ms=13.9/16.8/12.5，严格 macOS 33ms 原预算通过；每轮 domainSelected=flowSelected=mounted=6，stageHeight=876。人眼查看 after 截图，时间轴保持收起，未出现额外时间轴 clip。摘要与截图见 docs/archive/fixes/b5-density-evidence/ci-perf-click-local.json、ci-perf-click-after.png。
 
 ## 最新 main 合流
 

@@ -15,7 +15,7 @@ Phase 0 把“一个事两个口”的发现结果从零散合同、审计和 TO
 | 问题 | 已查证据 | 结论 |
 |---|---|---|
 | 依赖里已有？ | `electron/productionRun/productionRunIntentLog.ts:1-260`、`electron/productionRun/submissionOutbox.ts:1-240`、`electron/capabilityCore/executionContract.ts:1-120` | 复用现有 intent log、outbox、执行合同和授权 envelope；不新造 EventStore 或第三套 intent。 |
-| 仓库里已有？ | `docs/ARCHITECTURE-NOW.md:1-12`、`docs/engineering/concept-owners.json:1-8`、`docs/audit/2026-09-26-phase-minus-one-entrance-matrix.md:1-40`、`docs/fixes/` 606 份合同 | 真实 owner、生命周期、入口和旧路径已在本仓；本阶段做账本与聚类，不凭目录猜架构。 |
+| 仓库里已有？ | `docs/archive/guides/ARCHITECTURE-NOW.md:1-12`、`docs/engineering/concept-owners.json:1-8`、`docs/archive/audit/2026-09-26-phase-minus-one-entrance-matrix.md:1-40`、`docs/fixes/` 606 份合同 | 真实 owner、生命周期、入口和旧路径已在本仓；本阶段做账本与聚类，不凭目录猜架构。 |
 | 生态里已有？ | [Automerge concepts](https://automerge.org/docs/concepts/)、[IETF Idempotency-Key](https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/)、[OpenTimelineIO](https://opentimelineio.readthedocs.io/)、[Temporal Workflows](https://docs.temporal.io/workflows) | 采纳稳定身份、幂等命令、可重建 projection 和 replay 思路；不引入对应外部运行时。 |
 | TikHub 自媒体里怎么说？ | 本阶段处理的是仓库内部契约、持久化和恢复架构，外部自媒体无法提供比源码、协议和真实故障证据更强的依据 | 不用内容观点替代代码和运行证据。 |
 | 结论 | 证据已进入本方案引用的契约卫生、结构簇和依赖闸门文档 | 用已有 owner + 单向 adapter；先完成 ledger，再进入生产迁移。 |

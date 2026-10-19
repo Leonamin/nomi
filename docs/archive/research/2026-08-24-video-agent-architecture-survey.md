@@ -1,6 +1,6 @@
 # Video Agent 通用架构调研与 Nomi 方案建议
 
-> 归档说明：本文为用户 2026-08-24 提供的调研成果（会话中粘贴），当日归档进仓库作为 Video Agent 路线的参考基线。与 P4 计划的关系见 `docs/superpowers/plans/2026-08-24-p4-multishot-continuity.md` §10。外部产品/框架能力以文中官方链接为据，未在 Nomi 侧逐项复核。
+> 归档说明：本文为用户 2026-08-24 提供的调研成果（会话中粘贴），当日归档进仓库作为 Video Agent 路线的参考基线。与 P4 计划的关系见 `docs/archive/superpowers/plans/2026-08-24-p4-multishot-continuity.md` §10。外部产品/框架能力以文中官方链接为据，未在 Nomi 侧逐项复核。
 
 - 日期：2026-08-24
 - 状态：研究结论，尚未进入实现计划

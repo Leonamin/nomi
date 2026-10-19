@@ -1,7 +1,7 @@
 /**
  * 凭据绑定：**用户按下「保存」那一刻，这把 key 被绑在哪个 origin 上**。
  *
- * ── 它在解决哪个真实摩擦（docs/plan/2026-09-18-agent-model-onboarding.md §6.1）──
+ * ── 它在解决哪个真实摩擦（docs/archive/plan/2026-09-18-agent-model-onboarding.md §6.1）──
  *
  * 一段未签名的对话文本（Agent 交来的地址、旧版本写进盘的 catalog、手改的 model-catalog.json）
  * 不该决定用户的密钥发往哪里。这是 Cherry Studio 的铁律，九家先例里没有一家例外。

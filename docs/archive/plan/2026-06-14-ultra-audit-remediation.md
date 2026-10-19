@@ -1,6 +1,6 @@
 # 2026-06-14 极底层审计 · 修复执行计划
 
-> 真相源 = `docs/audit/2026-06-14-ultra-deep-mechanism-audit.md`（~80 条发现）。本文是执行计划：分相、排期、验收门、用户决策。
+> 真相源 = `docs/archive/audit/2026-06-14-ultra-deep-mechanism-audit.md`（~80 条发现）。本文是执行计划：分相、排期、验收门、用户决策。
 > 纪律：每个逻辑改动 TDD（先红后绿）+ 五门全过（filesize/typecheck/lint≤98/test/build）+ 单独 commit（R11，只 add 指名文件）。
 > 范围：修代码根因；存量数据按用户决策处理。不动项：已核实真根治的 06-14A A3/A4/A5/A6、06-13 A2。
 
@@ -36,7 +36,7 @@
 
 ### 相 2 · 持久化/数据治理
 - [x] **P0-2** 真删盘（commit 1ebda46）：新增 deleteWorkspaceProject——native 真删、外部文件夹只解绑（双重边界防误删用户目录）；UI 文案/ toast 按 source 如实区分。
-- [~] **P0-3** 草稿态延迟落盘 + 空壳 GC：raman 分支按「renderer 延迟」实现后**真机测出不达标**——「真不写盘」跨 project record / conversations / 画布事件**三个持久化子系统**（详见 `docs/plan/2026-06-15-draft-no-write-gate.md`）。半成品已 revert；**完整版（共享 draft-gate）用户拍板在 main 上另起**。空壳 GC 兜底现状仍在（症状不暴露给用户）。
+- [~] **P0-3** 草稿态延迟落盘 + 空壳 GC：raman 分支按「renderer 延迟」实现后**真机测出不达标**——「真不写盘」跨 project record / conversations / 画布事件**三个持久化子系统**（详见 `docs/archive/plan/2026-06-15-draft-no-write-gate.md`）。半成品已 revert；**完整版（共享 draft-gate）用户拍板在 main 上另起**。空壳 GC 兜底现状仍在（症状不暴露给用户）。
 - [ ] **P0-4 + 存量收敛**：一次性迁移——示例按 name 去重留最新 + 回填 seedKey；删空壳未命名。带 dry-run 日志。
 - [ ] **P1** discoverLegacyProjects 移出 list 热路径（只首次/手动同步）。
 - [ ] **P1** 外部文件夹 home/系统目录 denylist + 非空二次确认。

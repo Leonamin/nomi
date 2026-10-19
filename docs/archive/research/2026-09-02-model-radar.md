@@ -27,7 +27,7 @@
 - **实抓到的能力面**：`image_urls` **≤7 张**（单张 ≤20MB），**与 `first_frame_url` 互斥**；`first_frame_url`/`last_frame_url`（尾帧需伴随首帧）；用 `first_frame_url` 时 `image_urls`/`video_list`/`character_ids`/`audio_ids` 全禁；`duration` 4/6/8/10s（有视频输入时忽略）；`resolution` 360p/720p(默认)/1080p/4k；`aspect_ratio` 16:9/9:16。**配额系统**：共 7 units（图 1/张、视频 2/最多 1、character_ids 1/最多 3）。计费回调报 `creditsConsumed`（具体价文档未给）。
 - **对 Nomi 哪个痛点**：跨镜身份（7 张参考图上限高）+ 首尾帧转场。
 - **覆盖现状**（grep 复核，铁律 7）：**已覆盖**。`electron/shared/videoCapabilities/geminiOmni11.ts` 的 `GEMINI_OMNI_11_ARCHETYPE` `identifierPatterns:["google/gemini-omni-flash-1-1","gemini-omni-flash-1-1"]` 精确命中该 slug；三模式 t2v / firstlast / reference(≤7) 全在，4k、audio_ids≤3、video_list≤1 均已在 `sources.covers` 记录（同一 kie 页，checkedAt 2026-08-30）。
-- **判断**：⚪ 忽略。**并订正 08-31 radar**：`docs/research/2026-08-31-model-radar.md` 当天把此模型判为「🟢 真缺口，`gemini-omni` 全仓 grep 无命中」——**该结论现已不成立**（档案已建，很可能就是那次点头后接的，或另一路并行接入）。这正是铁律 7 的教训：断言缺口前先按归一 token grep，别只按报错串。今日 `added:1` 是**基线未更新**的显形，不是回归、不是缺口。
+- **判断**：⚪ 忽略。**并订正 08-31 radar**：`docs/archive/research/2026-08-31-model-radar.md` 当天把此模型判为「🟢 真缺口，`gemini-omni` 全仓 grep 无命中」——**该结论现已不成立**（档案已建，很可能就是那次点头后接的，或另一路并行接入）。这正是铁律 7 的教训：断言缺口前先按归一 token grep，别只按报错串。今日 `added:1` 是**基线未更新**的显形，不是回归、不是缺口。
 
 ---
 

@@ -1,6 +1,6 @@
 // 任务面板「乱 + 状态对不上」R13 走查（用户 2026-09-25 反馈，PR claude/agent-panel-tidy）。
 // 用法: NOMI_EVIDENCE_LABEL=before|after node tests/ux/task-center-states.walk.mjs（缺省 after）
-// 产出: docs/evidence/2026-09-25-agent-panel-tidy/task-center-<label>-<zh|en>.png + task-center-<label>.json
+// 产出: docs/archive/evidence/2026-09-25-agent-panel-tidy/task-center-<label>-<zh|en>.png + task-center-<label>.json
 //
 // 现场按用户截图摆，全部走真 app、真 IPC、真磁盘：
 //   · 两份 Agent 草稿 run —— 事件日志原样取自一次真实 Agent 对话走查（tests/ux/fixtures/task-center-agent-drafts/，
@@ -21,13 +21,13 @@ import { fileURLToPath } from 'node:url'
 import { launchNomiApp } from './_launchApp.mjs'
 import { DEFAULT_TIMEOUT_MS, assertMockupContract, clickOrFail, expect, expectAbsent, expectVisible, proveProbe, screenshotSettled } from './_assert.mjs'
 // 获批样张（2026-09-25「设计没问题」）的意图契约：等你处理排最上面、重新拉取常驻在那一组。
-import taskCenterIntentContract from '../../docs/design/mockups/contracts/2026-09-25-agent-panel-tidy-task-center.intent.mjs'
+import taskCenterIntentContract from '../../docs/archive/design/mockups/contracts/2026-09-25-agent-panel-tidy-task-center.intent.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 // 标签走环境变量：runtime walk 的启动器只认 `--packaged <path>` 一种参数。
 const label = process.env.NOMI_EVIDENCE_LABEL || 'after'
 if (!['before', 'after'].includes(label)) throw new Error('Usage: NOMI_EVIDENCE_LABEL=before|after node tests/ux/task-center-states.walk.mjs')
-const outDir = path.join(repoRoot, 'docs/evidence/2026-09-25-agent-panel-tidy')
+const outDir = path.join(repoRoot, 'docs/archive/evidence/2026-09-25-agent-panel-tidy')
 fs.mkdirSync(outDir, { recursive: true })
 const fixtureDir = path.join(repoRoot, 'tests/ux/fixtures/task-center-agent-drafts')
 const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'nomi-task-center-states-'))

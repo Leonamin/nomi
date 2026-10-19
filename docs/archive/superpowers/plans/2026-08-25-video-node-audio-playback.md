@@ -98,7 +98,7 @@
 - [ ] **Step 7: Commit the scoped implementation**
 
   ```bash
-  git add src/workbench/generationCanvas/nodes/useNodeVideoHoverPreview.ts src/workbench/generationCanvas/nodes/useNodeVideoHoverPreview.test.ts src/workbench/generationCanvas/nodes/NodeVideoPlaybackGuard.tsx docs/superpowers/plans/2026-08-25-video-node-audio-playback.md
+  git add src/workbench/generationCanvas/nodes/useNodeVideoHoverPreview.ts src/workbench/generationCanvas/nodes/useNodeVideoHoverPreview.test.ts src/workbench/generationCanvas/nodes/NodeVideoPlaybackGuard.tsx docs/archive/superpowers/plans/2026-08-25-video-node-audio-playback.md
   git commit -m "fix(canvas): keep user-started video playback audible"
   ```
 

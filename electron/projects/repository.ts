@@ -1,5 +1,5 @@
 // 项目存储 —— 从 runtime.ts 拆出（见
-// docs/plan/2026-06-04-runtime-split-execution.md 第 6 步）。
+// docs/archive/plan/2026-06-04-runtime-split-execution.md 第 6 步）。
 // 依赖底层 runtimePaths / jsonFile / workspace，不反向依赖 runtime（无循环）。
 // 删除了原 runtime 里的死代码 uniqueDir / toSummary（全仓零调用，规则 1）。
 import crypto from "node:crypto";

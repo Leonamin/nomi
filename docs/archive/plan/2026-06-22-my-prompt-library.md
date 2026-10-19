@@ -13,7 +13,7 @@
 ## 1. 技术讲解
 
 ### 1.1 我的库 = Nomi 第一个「用户级（跨项目）」存储
-现状所有记忆都 **per-project 隔离**（防串台）。「我的库」要能跨项目复用，必须落在**用户级**：单文件 `prompt-library-user.json` 存 `getSettingsRoot()`（userData，非项目目录）。**拷贝语义**——送上画布是复制 prompt 文本进节点，不是全局共享真相源（避免一处改处处变）。对齐 `docs/plan/2026-06-21-user-level-memory-direction.md` §3.2「基础库」。
+现状所有记忆都 **per-project 隔离**（防串台）。「我的库」要能跨项目复用，必须落在**用户级**：单文件 `prompt-library-user.json` 存 `getSettingsRoot()`（userData，非项目目录）。**拷贝语义**——送上画布是复制 prompt 文本进节点，不是全局共享真相源（避免一处改处处变）。对齐 `docs/archive/plan/2026-06-21-user-level-memory-direction.md` §3.2「基础库」。
 
 ### 1.2 数据形态（单一真相源扩字段）
 `LibraryPrompt` 加 `origin: "public" | "user"`（缺省 public）。用户条目：`id=user-<uuid>`、`origin=user`、`source="我的"`、`mediaUrl=""`（无成品封面 → 文字卡）、`mediaType=promptType`、`updatedAt`。`promptType` 由新建时选图/视频决定，不 hardcode。

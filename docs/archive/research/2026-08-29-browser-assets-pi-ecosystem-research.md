@@ -622,7 +622,7 @@ P1 验收任务：
 
 > Nomi 如何从外部生态发现可用方法，经过许可、安全、适配和真实任务评测，把它变成用户在创作现场可以理解、可以调用、可以复现的能力。
 
-详细实施合同、迁移和验收见：`docs/plan/2026-08-29-creative-capability-catalog-and-prompt-system.md`。
+详细实施合同、迁移和验收见：`docs/archive/plan/2026-08-29-creative-capability-catalog-and-prompt-system.md`。
 
 ## 17. GitHub Skill、Workflow 与 Prompt 生态
 
@@ -905,7 +905,7 @@ Nomi 应把“项目 trust”细化成：信任内容、信任外部数据连接
 
 ### Nomi 内部
 
-- [`docs/ARCHITECTURE-NOW.md`](../guides/ARCHITECTURE-NOW.md)
+- [`docs/archive/guides/ARCHITECTURE-NOW.md`](../guides/ARCHITECTURE-NOW.md)
 - [`electron/browser/core/browserViewTypes.ts`](../../../electron/browser/core/browserViewTypes.ts)
 - [`electron/browser/core/browserViewSession.ts`](../../../electron/browser/core/browserViewSession.ts)
 - [`electron/harness/agentChatPolicy.ts`](../../../electron/harness/agentChatPolicy.ts)

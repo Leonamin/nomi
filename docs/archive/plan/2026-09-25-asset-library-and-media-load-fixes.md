@@ -49,7 +49,7 @@
 - **COEP 两档的语义**：credentialless 下跨源 no-cors 子资源不带凭据发出、不要求对方返回 CORP，页面照样 cross-origin isolated（Chrome 96 起）——https://developer.chrome.com/blog/coep-credentialless-origin-trial ；两档都满足 `crossOriginIsolated` / SharedArrayBuffer——https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cross-Origin-Embedder-Policy 。Electron 43.4.1（Chrome 150）自带支持，另用最小探针在真 Electron 里验了矩阵。
 - **「落盘前把不稳定地址换掉」仓库里已有现成的那一遍遍历**：清单事务每次写 / 加锁读都会跑 `localizeEmbeddedMediaUrls` 把 `data:` 媒体落成文件——`electron/workspace/workspaceManifest.ts:122`。B4 挂在同一遍遍历上，不另起一个迁移器；随包示例图的落盘形状照抄引导 seed `electron/onboarding/demoAssetSeed.ts:40`（onboarding-demo sidecar，可互相复用）。
 - **面板折叠**：react-resizable-panels 的 `collapsible` + `collapsedSize` 在拖过最小宽度时会自己吸成收起态，并通过 `onResize` 报出收起后的尺寸——`src/workbench/preview/PreviewWorkspace.tsx:202`；所以收起只要把这次回报写回 store 的 `visibility`，不另造拖拽判定。
-- **反方**：0.21 的做法是「直接引用别的项目的文件」，最省事；08-31 的方案（`docs/plan/2026-08-31-library-discovery-slice.md`）已论证它会让项目搬走 / 删源后裂图，所以不回退，改走复制。
+- **反方**：0.21 的做法是「直接引用别的项目的文件」，最省事；08-31 的方案（`docs/archive/plan/2026-08-31-library-discovery-slice.md`）已论证它会让项目搬走 / 删源后裂图，所以不回退，改走复制。
 
 ## 回滚
 

@@ -2,7 +2,7 @@
 
 > 状态：📋 方案待拍板 —— **零生产代码改动**，本篇只出决策，不改 `package.json`、不在本仓装 Mantine 8。
 > 日期：2026-09-08 · 基线 `09a05ac04`（worktree `design-system-optimization-b44d66`）· 平台 darwin 25.5.0
-> 服务对象：[`docs/plan/2026-09-06-stack-upgrade-react19-aisdk-tailwind4.md`](../plan/2026-09-06-stack-upgrade-react19-aisdk-tailwind4.md) §2.3(a) 与 §6 步骤②
+> 服务对象：[`docs/archive/plan/2026-09-06-stack-upgrade-react19-aisdk-tailwind4.md`](../plan/2026-09-06-stack-upgrade-react19-aisdk-tailwind4.md) §2.3(a) 与 §6 步骤②
 > 实跑现场：`/private/tmp/claude-501/…/scratchpad/mantine-probe/`（`v7/` = 7.17.8、`v8/` = 8.3.18 两套隔离 npm 安装 + Playwright 渲染对照）
 > 引用格式：仓库内相对仓库根；两套 npm 树用 `v7/` / `v8/` 前缀；外部一律给 URL。
 

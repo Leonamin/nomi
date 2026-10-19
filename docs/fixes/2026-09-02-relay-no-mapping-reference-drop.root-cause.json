@@ -14,7 +14,7 @@
     "electron/catalog/taskParams.ts",
     "electron/runtime.ts",
     "electron/catalog/taskParams.test.ts",
-    "docs/research/2026-09-02-self-hosted-relay-capability-audit.md"
+    "docs/archive/research/2026-09-02-self-hosted-relay-capability-audit.md"
   ],
   "entry_points": [
     "electron/catalog/taskParams.ts::imageEditGuardError —— L3 护栏本体。改为按 hasMapping 区分 undefined 的两种成因：hasMapping=false 时用 NO_MAPPING_FALLBACK_BODY 作判据 body 跑同一套 unreachableReferenceLabels，**所有 kind 一口径**；hasMapping=true 且无 body 时维持 fail-open。**话语权例外**：image_edit / image_to_video 无 mapping 时仍由下方那条「没有『图生图（改图）』通道」应答——两条路都拒发且零扣费，但那条点名了缺哪条通道、用户该怎么办，更会说话；补兜底 body 只补下方没管的 kind，不抢答（taskParams.test.ts 有专门用例锁住这个次序）。",
@@ -32,12 +32,12 @@
   ],
   "recurrence": {
     "classification": "recurring",
-    "reason": "「参考素材静默丢弃 + 照常扣费」在本仓已从多个不同入口复发过：最早是模板丢空键导致图生图不按原图（docs/plan/2026-07-06-i2i-reference-reliability.md，第三闸因此设立）；随后是画布连线来的参考不在手抄键名单里导致第三闸空转（carriedReferences 改读 referenceInputParams）；再后来是中转视频模型缺 image_to_video 通道（catalogCommit 补齐 + v8 迁移）；本轮是同一族从「无 mapping 兜底 + 纯文生 kind」这个入口回来。每次都是同一个后果（UI 说能发、实际发不出、还扣费），只是入口不同——正是 recurring 的定义。防复发必须落在闸门的判据本身（让「所有 kind 一口径」与「两种 undefined 分开」成为结构），不能靠这次把两个 kind 补上。",
+    "reason": "「参考素材静默丢弃 + 照常扣费」在本仓已从多个不同入口复发过：最早是模板丢空键导致图生图不按原图（docs/archive/plan/2026-07-06-i2i-reference-reliability.md，第三闸因此设立）；随后是画布连线来的参考不在手抄键名单里导致第三闸空转（carriedReferences 改读 referenceInputParams）；再后来是中转视频模型缺 image_to_video 通道（catalogCommit 补齐 + v8 迁移）；本轮是同一族从「无 mapping 兜底 + 纯文生 kind」这个入口回来。每次都是同一个后果（UI 说能发、实际发不出、还扣费），只是入口不同——正是 recurring 的定义。防复发必须落在闸门的判据本身（让「所有 kind 一口径」与「两种 undefined 分开」成为结构），不能靠这次把两个 kind 补上。",
     "same_class_scan": [
       "**imageEditGuardError 的全部生产调用点**：git grep 显示唯一生产调用点是 electron/runtime.ts:363（runTask 前置闸）。该点同时传入 hasMapping 与 createBody，本次判据所需的两个输入均已就位，无第二个调用点需要同步。",
       "**runtime 里所有绕过 mapping 直接发请求的路径逐条扫描**：① 无 mapping 兜底（runtime.ts 兜底分支，POST /v1/{images,videos}/generations）→ 本轮修复目标，已纳管；② executeTextTask（wantedKind === \"text\"）→ 文本任务不承载参考素材，不属本类；③ runAudioTask（usesSynchronousAudioRunner，无 query 的 audio）→ 同步 TTS，探针实测不带参考时放行、行为不变；④ runCustomCallTask（脚本渠道）→ hasMapping 由 `Boolean(mapping) || Boolean(customCallScript)` 计算，脚本存在即为 true，故仍走 fail-open，未被本次收紧误伤（探针已实测）。四条路径全部核对完毕。",
       "**UI 侧同形状判据复核**：src/workbench/generationCanvas/nodes/controls/useChannelCreateBody.ts:44 与 channelModeReach.ts:55-62 的三态（undefined 查不到 / null 确知没有）本就把两种成因分开了，方向与本次修复一致，无需改动——本次是把闸门侧对齐到 UI 侧已有的纪律。",
-      "**中转全链路逐段审计**（docs/research/2026-09-02-self-hosted-relay-capability-audit.md）：接入→目录→显示→发送四段 + 其它 7 个收窄面（modelCapabilityProjection / derivePublishedExecution / MCP nomi_list_models / mappingsForModel / archetypeVariantAxisIsLive 等）× 三种中转 mapping 形状（零 mapping / 无 modeId / 部分模式有 mapping）全表核对：除本条外，其余各面要么 fail-open 要么如实报空，未发现第二处隐藏或阉割用户能力的点。",
+      "**中转全链路逐段审计**（docs/archive/research/2026-09-02-self-hosted-relay-capability-audit.md）：接入→目录→显示→发送四段 + 其它 7 个收窄面（modelCapabilityProjection / derivePublishedExecution / MCP nomi_list_models / mappingsForModel / archetypeVariantAxisIsLive 等）× 三种中转 mapping 形状（零 mapping / 无 modeId / 部分模式有 mapping）全表核对：除本条外，其余各面要么 fail-open 要么如实报空，未发现第二处隐藏或阉割用户能力的点。",
       "**#351 selectTaskMapping 收紧的回归面**（本次调查的另一半）：逐形状探针证明中转侧五种真实 mapping 形状（S0 零 mapping / S1 图像精确 / S2 视频精确 / S3 老 generic / S4 混合）在收紧前后选中结果**逐格相同**，唯一会变的 S5（同桶两条精确行）被 applyMappingUpsert 的去重键 (vendorKey, taskKind, modelKey, modeId) 结构性排除。发送未被打断，不属本合同修复范围，仅作为同类扫描的阴性结论记录。"
     ]
   },

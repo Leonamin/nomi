@@ -1,5 +1,5 @@
 // ComfyUI 工作流设置整页的文案。
-// plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+// plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
 //
 // 单独成命名空间（不塞 onboardingProviders）：那份已经 1400+ 行，且这页是自成一体的子系统——
 // 混进去以后「改这页的文案」要在一千多行里翻。

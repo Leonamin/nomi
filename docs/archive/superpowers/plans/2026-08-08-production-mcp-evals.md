@@ -153,7 +153,7 @@ git commit -m "feat(mcp): project production runs in host widgets"
 - Create: `tests/production/productionFaultMatrix.test.ts`
 - Create: `tests/production/productionSecurityMatrix.test.ts`
 - Create: `tests/production/productionRubric.ts`
-- Create: `docs/evals/2026-08-08-agentic-production-rubric.md`
+- Create: `docs/archive/evals/2026-08-08-agentic-production-rubric.md`
 
 - [ ] **Step 1: Freeze criterion-specific rubric before running**
 
@@ -171,7 +171,7 @@ Expected: all rubric criteria pass with saved machine-readable results.
 - [ ] **Step 4: Commit**
 
 ```bash
-git add tests/production docs/evals/2026-08-08-agentic-production-rubric.md
+git add tests/production docs/archive/evals/2026-08-08-agentic-production-rubric.md
 git commit -m "test(run): add production fault and security rubric"
 ```
 
@@ -179,8 +179,8 @@ git commit -m "test(run): add production fault and security rubric"
 
 **Files:**
 - Create: `tests/e2e/production-r16.spec.ts`
-- Create: `docs/evals/2026-08-08-agentic-production-results.md`
-- Create: `docs/evals/2026-08-08-agentic-production/screenshots/.gitkeep`
+- Create: `docs/archive/evals/2026-08-08-agentic-production-results.md`
+- Create: `docs/archive/evals/2026-08-08-agentic-production/screenshots/.gitkeep`
 
 - [ ] **Step 1: Implement the six approved journeys**
 
@@ -207,7 +207,7 @@ Write results, exact model/provider, actual cost if available, screenshots, run 
 - [ ] **Step 6: Commit**
 
 ```bash
-git add tests/e2e/production-r16.spec.ts docs/evals/2026-08-08-agentic-production
+git add tests/e2e/production-r16.spec.ts docs/archive/evals/2026-08-08-agentic-production
 git commit -m "test(run): complete real production journeys"
 ```
 
@@ -216,7 +216,7 @@ git commit -m "test(run): complete real production journeys"
 **Files:**
 - Modify: `README.md`
 - Modify: `README.zh-CN.md`
-- Modify: `docs/superpowers/plans/2026-08-08-production-mcp-evals.md`
+- Modify: `docs/archive/superpowers/plans/2026-08-08-production-mcp-evals.md`
 
 - [ ] **Step 1: Update only verified capability claims**
 
@@ -235,7 +235,7 @@ Expected: only intended plan completion and verified documentation changes.
 - [ ] **Step 4: Commit and push the isolated worktree**
 
 ```bash
-git add README.md README.zh-CN.md docs/superpowers/plans/2026-08-08-production-mcp-evals.md
+git add README.md README.zh-CN.md docs/archive/superpowers/plans/2026-08-08-production-mcp-evals.md
 git commit -m "feat(run): deliver observable agentic production"
 git push origin HEAD:main
 ```

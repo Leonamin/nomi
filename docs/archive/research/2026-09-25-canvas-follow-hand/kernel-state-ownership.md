@@ -1,6 +1,6 @@
 # 生成画布：React Flow 内核和我们的 store 各管一份（2026-09-25 分析）
 
-> 触发：`docs/audit/2026-09-25-generation-canvas-ownership-review.md` 里同一层一周五份合同，共同形状是「一件事两个 owner」。本文追到这个形状从哪来。
+> 触发：`docs/archive/audit/2026-09-25-generation-canvas-ownership-review.md` 里同一层一周五份合同，共同形状是「一件事两个 owner」。本文追到这个形状从哪来。
 > 覆盖范围：这是 `framework-boundaries.json` 里 `xyflow-react` 参考实现对照债（到期 2026-10-07）的**状态归属层**，不是九层全交；债不因本文销账。
 > 引用钉在：ComfyUI_frontend `5f63bb1`、tldraw `e8e194c`、本仓 `claude/canvas-follow-hand`。
 

@@ -14,7 +14,7 @@
 - 复用模型默认 owner：`src/workbench/settings/defaultGenerationModelOptions.ts:49` 保留双段身份与默认偏好，仅共享展示投影。
 - 复用持久化宽度：`src/workbench/preview/editingPanelLayoutSlice.ts:167` 的 syncEditingPanelSize 已负责更新并标记持久化，四面统一消费。
 
-本轮不引入框架或协议。已批准样张及其 Beautiful UI 形态研究见 docs/design/2026-09-09-agent-process-state-and-panel-frame.md；继续用现役 details、品牌组件、宽度边界与持久化布局，不增加依赖。现役生成面的 pointer capture 拖动是可复用实现；预览的 react-resizable-panels 继续负责已有预览布局。
+本轮不引入框架或协议。已批准样张及其 Beautiful UI 形态研究见 docs/archive/design/2026-09-09-agent-process-state-and-panel-frame.md；继续用现役 details、品牌组件、宽度边界与持久化布局，不增加依赖。现役生成面的 pointer capture 拖动是可复用实现；预览的 react-resizable-panels 继续负责已有预览布局。
 
 ## 不动项 / 回滚
 冻结 electron/agentLane、src/workbench/ai/lane、reactFlow；不更改 B2a 审批、停止、消息保留、模型选择语义。回滚本任务提交即可恢复，宽度沿用已有持久化字段无需数据迁移。

@@ -49,7 +49,7 @@ function collectPlans() {
     }
   }
   walk(PLAN_DIR)
-  walk(path.join(repoRoot, 'docs/archive/plan'))
+  walk(path.join(repoRoot, 'docs/plan'))
   return plans
 }
 

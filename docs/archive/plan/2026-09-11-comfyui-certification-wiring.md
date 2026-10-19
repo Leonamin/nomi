@@ -1,9 +1,9 @@
 # ComfyUI 接入主链阻断：认证服务的运行时依赖从没接上
 
 - 状态：🚧 已实现·等合入（分支 `fix/comfyui-certification-wiring-20260911`）
-- **触发**：2026-09-11 第一次对着本机真 ComfyUI 跑的接入矩阵（`docs/research/2026-09-11-comfyui-workflow-matrix-real.md` §BUG-1/2/3，那份报告在 worktree `Nomi-comfy-matrix`，PR #743）
+- **触发**：2026-09-11 第一次对着本机真 ComfyUI 跑的接入矩阵（`docs/archive/research/2026-09-11-comfyui-workflow-matrix-real.md` §BUG-1/2/3，那份报告在 worktree `Nomi-comfy-matrix`，PR #743）
 - **根因合同**：[`docs/fixes/2026-09-11-comfyui-certification-wiring.root-cause.json`](../../fixes/2026-09-11-comfyui-certification-wiring.root-cause.json)（schema v3，`recurring`）
-- **真机证据**：[`docs/plan/2026-09-11-comfyui-cert-evidence/`](2026-09-11-comfyui-cert-evidence)
+- **真机证据**：[`docs/archive/plan/2026-09-11-comfyui-cert-evidence/`](2026-09-11-comfyui-cert-evidence)
 
 ## 一句话
 
@@ -118,7 +118,7 @@ ComfyUI 把编号叫 `prompt_id`，只走 `response_mapping` 这一条路，于�
    §BUG-1/2/3 已经逐跳核实过这条链，并存下了可复跑的探针脚本与 7 行工作流夹具。
    结论：不重跑矩阵，只复核行号（main 已前进）并复用它的探针写法与 SD1.5 夹具。
 6. **自媒体来源？** —— 本条没用 TikHub：它修的是本仓自己的装配顺序与结果判读，判据全部来自本机真
-   ComfyUI 的可复跑证据（`docs/plan/2026-09-11-comfyui-cert-evidence/acceptance-result.json:1`），
+   ComfyUI 的可复跑证据（`docs/archive/plan/2026-09-11-comfyui-cert-evidence/acceptance-result.json:1`），
    外部观点对「这个依赖该不该必填」给不出更强的裁决。
 
 ## 验收（R13/R16，本机真 ComfyUI）
@@ -138,7 +138,7 @@ ComfyUI，CI 上没有；同目录的 `comfyui-real-server-verify.mjs` 是同一
 | E | 点生成后真出来一张图（产物落盘） | ✅ `assets/generated/2026-09-11/image-1789112819055.png` |
 | E2 | ComfyUI 侧收到的正向提示词就是用户写的那句 | ✅ `a red apple on a wooden table` |
 
-截图与产物：`docs/plan/2026-09-11-comfyui-cert-evidence/`（`after-01` … `after-13`）。
+截图与产物：`docs/archive/plan/2026-09-11-comfyui-cert-evidence/`（`after-01` … `after-13`）。
 其中 `after-06-instance-enabled.png` 是连接详情、`after-12-generated.png` 是画布上的成图、
 `after-13-asset-on-disk.png` 是落盘的那张 512×512 原图。
 

@@ -1,7 +1,7 @@
 # P4 S7 — legacy 批量路径收敛（批量只剩一台机器）
 
 日期：2026-08-25 · 分支：`claude/p4-s7-legacy-converge` · 基线：origin/main @ 1a3465be（含 #162 F15 冻结门操作者）
-计划源：`docs/superpowers/plans/2026-08-24-p4-multishot-continuity.md` §3.6/§7（S7 独立成片）+ `docs/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md` §7-8（legacy 处理纪律 + 回滚）+ F15 plan §5（S7 收敛注记）
+计划源：`docs/archive/superpowers/plans/2026-08-24-p4-multishot-continuity.md` §3.6/§7（S7 独立成片）+ `docs/archive/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md` §7-8（legacy 处理纪律 + 回滚）+ F15 plan §5（S7 收敛注记）
 
 ---
 

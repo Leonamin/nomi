@@ -17,7 +17,7 @@
 // 升 Electron 修不掉（已逐版本读源码核对）。唯一的解就是**别把流交出去**：自己 new ReadableStream，
 // 用一个同步置位的 closed 闸让 close 与 cancel 不可能互相竞争。
 //
-// 完整证据链见 docs/plan/2026-08-24-local-protocol-stream-ownership.md。
+// 完整证据链见 docs/archive/plan/2026-08-24-local-protocol-stream-ownership.md。
 // 门岗：scripts/check-heavy-path.mjs 的 node-stream-into-response 规则会拦住写回去的尝试。
 import fs from "node:fs";
 

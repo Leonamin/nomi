@@ -77,7 +77,7 @@
 ### 3. 可观测事实直接驱动用户数据变更，没有所有权隔离
 
 `vendorHealth.startCatalogReconciliation` 的设计意图是「监测供应商健康」，但它通过调用 `upsertModel` 直接修改 `Model.enabled`，属于用户数据。这个字段的所有权没有在任何层被明确声明，导致：
-- 2026-09-08 的设计拍板文档（`docs/plan/2026-09-08-catalog-liveness-reconcile.md`）说「自动禁用，保留配置」；
+- 2026-09-08 的设计拍板文档（`docs/archive/plan/2026-09-08-catalog-liveness-reconcile.md`）说「自动禁用，保留配置」；
 - 2026-09-21 的用户反馈推翻了这个决定（「缺口是我们的，不能让用户扛」）；
 - 但代码里的这条赋值从来没有一个机器可核对的不变量声明，所以设计变更落不到代码约束上，只能靠人工逐处修改。
 

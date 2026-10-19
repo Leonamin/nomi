@@ -46,4 +46,4 @@ agent 阶段 4 原子切换 PR #646 通过其既有合并门：L2 回放全绿�
 
 ## 回滚
 
-不合并即无影响；#646 自带回滚演练记录（`docs/plan/2026-09-08-agent-lane-rollback-rehearsal.md`），正式回滚针对届时实际 merge SHA 另开回滚 PR。
+不合并即无影响；#646 自带回滚演练记录（`docs/archive/plan/2026-09-08-agent-lane-rollback-rehearsal.md`），正式回滚针对届时实际 merge SHA 另开回滚 PR。

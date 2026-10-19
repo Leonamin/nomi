@@ -70,7 +70,7 @@ export function resolveHostVendorKey(
 /**
  * 解析这次操作落在哪个 vendorKey 上。
  *
- * 规则（拍板 2026-09-22，详见 docs/plan/2026-09-22-vendor-connection-identity.md §4.1）：
+ * 规则（拍板 2026-09-22，详见 docs/archive/plan/2026-09-22-vendor-connection-identity.md §4.1）：
  *   1. 给了 `catalogVendorKey` → 就是它（= 编辑既有连接，不许被名字改动带跑）。
  *   2. host 段还没被占 → 返回 host 段本身。**与改之前逐字相同 = 存量目录零迁移。**
  *   3. host 段已被占 + 连接名 slug 非空：

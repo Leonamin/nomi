@@ -78,7 +78,7 @@
 
 ## 3. 历史界面提案（已由上方一致性修订取代，不再执行）
 
-样张：`docs/design/mockups/2026-08-26-antigravity-cli.html`。默认展示 **2026-08-27 本机官方 CLI 的四项实测记录**，依据为同日 authenticated-verification 审计，不是实时探测，也不代表 Nomi 接入完成。其他状态按钮注明“模拟”；样张不执行 CLI、不发起请求、不消耗额度。初版仅文字样张的批准不视为本次能力布局已获批准；生产卡片等待此修订确认。
+样张：`docs/archive/design/mockups/2026-08-26-antigravity-cli.html`。默认展示 **2026-08-27 本机官方 CLI 的四项实测记录**，依据为同日 authenticated-verification 审计，不是实时探测，也不代表 Nomi 接入完成。其他状态按钮注明“模拟”；样张不执行 CLI、不发起请求、不消耗额度。初版仅文字样张的批准不视为本次能力布局已获批准；生产卡片等待此修订确认。
 
 画样张前已完整读取 `ModelSettingsHome.tsx`、`ModelSettingsPageSurface.tsx`、`ModelSettingsDetailDialog.tsx`、`FoldableModelCard.tsx`、`CodexLocalImageCard.tsx` 及 `ModelChipGroups.tsx`；本次再次核对真实首页/连接卡外壳与设计系统 §1.5。保留现有设置页宽度、页头、返回、滚动区与 token 明暗主题，不另建设置面。
 

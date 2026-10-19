@@ -41,7 +41,7 @@
 
 - **自然流量侧**：`tiktok/app/v3/fetch_video_search_result`（`sort_type` 1=最多点赞、`publish_time` 1/7/30/90/180、`region`）；`tiktok/web/fetch_trending_searchwords`。
 - **国内对偶**：`douyin/billboard/*`（热榜/飙升/挑战）、`douyin/index/fetch_content_{publish,interact,consume}_trend`、`douyin/creator/fetch_creator_hot_*_billboard`——抖音侧没有 Creative Center 那种广告表现面，**只有市场热度，没有单条广告的 CTR/分位**。
-- **已知缺口（沿用 `docs/research/2026-09-01-shortvideo-data-apis-eval.md` 的结论，仍成立）**：TikHub **没有口播转写**；抖音/TikTok 侧 `caption` 是标题不是文稿；也**没有单条视频的历史时序**（要走势得自己定时轮询落库）。
+- **已知缺口（沿用 `docs/archive/research/2026-09-01-shortvideo-data-apis-eval.md` 的结论，仍成立）**：TikHub **没有口播转写**；抖音/TikTok 侧 `caption` 是标题不是文稿；也**没有单条视频的历史时序**（要走势得自己定时轮询落库）。
 
 ### 2.3 Vizzy 自己怎么说
 
@@ -60,10 +60,10 @@
 ```bash
 node scripts/research/tikhub-search.mjs \
   --q "TikTok 素材分析 爆款拆解 投放" --platform douyin,bilibili --limit 8 \
-  --out docs/research/2026-09-07-tiktok-creative-intelligence/tikhub/
+  --out docs/archive/research/2026-09-07-tiktok-creative-intelligence/tikhub/
 ```
 
-产物：`docs/research/2026-09-07-tiktok-creative-intelligence/tikhub/tikhub-search.{json,md}`（抖音 8 + B站 8）
+产物：`docs/archive/research/2026-09-07-tiktok-creative-intelligence/tikhub/tikhub-search.{json,md}`（抖音 8 + B站 8）
 
 | 平台 | 出处 | 作者 | 时间 | 摘要（原文，未改写） | 提到的工具 |
 |---|---|---|---|---|---|

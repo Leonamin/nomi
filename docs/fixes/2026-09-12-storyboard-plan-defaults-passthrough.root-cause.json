@@ -33,7 +33,7 @@
     "electron/shared/agentCapabilities/canvasModelShapes.ts",
     "scripts/check-storyboard-owner.mjs",
     "tests/ux/storyboard-film-aspect-passthrough.walk.mjs",
-    "docs/plan/2026-09-12-storyboard-plan-defaults-passthrough.md"
+    "docs/archive/plan/2026-09-12-storyboard-plan-defaults-passthrough.md"
   ],
   "entry_points": [
     "src/workbench/generationCanvas/agent/storyboardPlan.ts:buildShotRowNodes — 整份方案落画布与单行 materialize 共用的建节点构造器（MCP production.materialize-storyboard、分镜表行内生成、引导 tour 都经它）",

@@ -5,7 +5,7 @@
 // `AdapterNeedsAiError`——「想接模型，先接一个模型」。而驱动这次接入的 Codex / Claude Code /
 // WorkBuddy 本身就是一个能读文档写 JSON 的模型，它只是不知道要写成什么形状。
 //
-// 对齐 docs/plan/2026-09-03-mcp-integration-q8-seams.md 的「确定性归我们、情境性归模型」：
+// 对齐 docs/archive/plan/2026-09-03-mcp-integration-q8-seams.md 的「确定性归我们、情境性归模型」：
 // 我们交出去的是**确定性的东西**——目标 schema、身份锁定的模型清单、撰写规则；
 // 收回来的东西一律过 validateProviderAdapterDraft，再走同一条真实认证。不放宽任何一格。
 import { zodToJsonSchema } from "zod-to-json-schema";

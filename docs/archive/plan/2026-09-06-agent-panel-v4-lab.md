@@ -10,7 +10,7 @@
 
 **Tech Stack:** React 18.3、TypeScript、Tailwind 3、Mantine 7、Tabler Icons、Vitest、Playwright 设计实验室入口。
 
-**Spec:** `docs/design/2026-09-06-agent-panel-v4.md` 与 `docs/design/mockups/2026-09-06-agent-panel-v4/`。
+**Spec:** `docs/archive/design/2026-09-06-agent-panel-v4.md` 与 `docs/archive/design/mockups/2026-09-06-agent-panel-v4/`。
 
 ## Global Constraints
 
@@ -25,9 +25,9 @@
 
 ### Task 1：设计输入与计划（里程碑 ①）
 
-- Create: `docs/plan/2026-09-06-agent-panel-v4-lab.md`
-- Create: `docs/research/2026-09-06-ai-elements-anatomy.md`
-- Copy: `docs/design/mockups/2026-09-06-agent-panel-v4/`
+- Create: `docs/archive/plan/2026-09-06-agent-panel-v4-lab.md`
+- Create: `docs/archive/research/2026-09-06-ai-elements-anatomy.md`
+- Copy: `docs/archive/design/mockups/2026-09-06-agent-panel-v4/`
 - Acceptance: 设计真相源、AI Elements 解剖和范围/回滚/验收门进入当前分支；提交并推送。
 
 ### Task 2：v4 基础契约与纯函数
@@ -57,7 +57,7 @@
 ### Task 5：i18n 与对账
 
 - Create/Modify: `src/i18n/locales/agentPanelV4.ts`、`src/i18n/resources.ts`、类型声明
-- Create: `docs/qa/2026-09-06-agent-panel-v4-lab-reconcile.md`
+- Create: `docs/archive/qa/2026-09-06-agent-panel-v4-lab-reconcile.md`
 - Acceptance: 可见文案中英齐全；逐件记录尺寸、间距、字号、颜色、icon、文案差异及处理结果；截图存于 `artifacts/design-lab/agent-panel-v4/`。
 
 ### Task 6：集成验证与里程碑 ④

@@ -1,7 +1,7 @@
 # 反馈回路 · 先查别人（R27 / R29 / R31）
 
 日期：2026-09-15 · 检索人：实施 lane（feat/feedback-loop-20260915）
-对应方案：[docs/plan/2026-09-15-feedback-loop.md](../../plan/2026-09-15-feedback-loop.md)
+对应方案：[docs/archive/plan/2026-09-15-feedback-loop.md](../../plan/2026-09-15-feedback-loop.md)
 对应旧拍板：[2026-09-06 opt-in 频率遥测](../../plan/2026-09-06-opt-in-frequency-telemetry.md)（Aptabase）· [2026-09-01 反馈与分享中心](../../plan/2026-09-01-feedback-share-center.md)（Tally / GitHub）
 
 > **这份报告的结论先写在最前面**：这件事**在本仓已经有三分之二**。
@@ -34,7 +34,7 @@
 
 | 它提供 | 我们用了 | 我们另写了 | 我们拆散了 |
 |---|---|---|---|
-| `gen_ai.*` 属性注册表：`operation.name` / `provider.name` / `request.model` / `response.model` / `tool.name` / `tool.call.id` / `usage.input_tokens` / `usage.output_tokens` / `usage.cache_read.input_tokens` / `usage.cache_creation.input_tokens` / `conversation.id` / `response.finish_reasons`；span 名 `{operation.name} {request.model}`，工具是 `execute_tool`。**明确标了敏感的那几格**：`gen_ai.input.messages` / `output.messages` / `system_instructions` / `tool.call.arguments` / `tool.call.result` / `retrieval.query.text`（[属性注册表](https://raw.githubusercontent.com/open-telemetry/semantic-conventions/main/docs/registry/attributes/gen-ai.md)） | span 语义：`electron/agentLane/laneTrace.mts:62` `spanName: 'invoke_agent Nomi'`、`:75` `` `execute_tool ${part.name}` ``；token 四格 `tokens{input,cacheRead,cacheWrite,output}` | 本地可读的字段名（`durationMs` 而非 `duration`），理由与偏差已登记在 `docs/engineering/standard-formats.json` 的 `nomi-agent-trace-view` 条目 + `docs/plan/2026-09-10-trace-log.md:12` | 刻意**不**装 OTel SDK、不声称本地 JSONL 是 OTLP；pi 的 `cacheRead`/`cacheWrite` 保持分开，不把原生 input 冒充成 OTel 的「含缓存 input」 |
+| `gen_ai.*` 属性注册表：`operation.name` / `provider.name` / `request.model` / `response.model` / `tool.name` / `tool.call.id` / `usage.input_tokens` / `usage.output_tokens` / `usage.cache_read.input_tokens` / `usage.cache_creation.input_tokens` / `conversation.id` / `response.finish_reasons`；span 名 `{operation.name} {request.model}`，工具是 `execute_tool`。**明确标了敏感的那几格**：`gen_ai.input.messages` / `output.messages` / `system_instructions` / `tool.call.arguments` / `tool.call.result` / `retrieval.query.text`（[属性注册表](https://raw.githubusercontent.com/open-telemetry/semantic-conventions/main/docs/registry/attributes/gen-ai.md)） | span 语义：`electron/agentLane/laneTrace.mts:62` `spanName: 'invoke_agent Nomi'`、`:75` `` `execute_tool ${part.name}` ``；token 四格 `tokens{input,cacheRead,cacheWrite,output}` | 本地可读的字段名（`durationMs` 而非 `duration`），理由与偏差已登记在 `docs/engineering/standard-formats.json` 的 `nomi-agent-trace-view` 条目 + `docs/archive/plan/2026-09-10-trace-log.md:12` | 刻意**不**装 OTel SDK、不声称本地 JSONL 是 OTLP；pi 的 `cacheRead`/`cacheWrite` 保持分开，不把原生 input 冒充成 OTel 的「含缓存 input」 |
 | **裁决** | 轨迹投影（本 lane 新增）**只准用上表左列里那些非敏感的名字**，敏感的六格一个都不出门。这不是新格式，是在 `nomi-agent-trace-view` 上再做一次**减法投影**（R31：自定义只能放在标准的扩展点，不另起平行文件） | | | |
 
 ---
@@ -47,7 +47,7 @@
 | **PostHog**（[隐私控制](https://posthog.com/docs/privacy) · [控制采集](https://posthog.com/docs/privacy/data-collection)） | `opt_out_capturing_by_default: true` 可把默认改成不收；`posthog.opt_in_capturing()` 显式同意；`before_send` 钩子在**客户端**改写或整条丢弃事件；`has_opted_out_capturing()` 查状态 | **抄**：`before_send` 那条「脱敏发生在离开客户端之前」的位置判断——这正是用户 09-15 那条硬约束。我们的等价物是 `isTelemetryProps()`（`telemetryEvents.ts:66`）与本 lane 新增的轨迹投影，两者都跑在主进程、在 fetch 之前。**不抄**：不引它的 SDK（会顺带把自动采集、录屏、person profiles 的能力面带进来，而我们的承诺是「数据只去我们的端点」） |
 | **Aptabase** | 见 §1.1。它的「Never Collected」清单写得最干脆：无设备 ID / 无广告 ID / 无指纹 / 无持久标识 / IP 只用于推国家且不落盘 / 无姓名邮箱 | **抄它的措辞结构**（「收什么 ✓ / 不收什么 ✗」两栏并排），样张 A 的卡面就是这个形状。**不抄**它的托管端点 |
 | **Anthropic / Claude 桌面端**（[隐私中心：怎么改模型改进设置](https://privacy.claude.com/en/articles/12109829-how-do-i-change-my-model-improvement-privacy-settings) · [消费者条款更新](https://www.anthropic.com/news/updates-to-our-consumer-terms)） | 新用户在注册流里选；**老用户见一次弹窗**；设置里 Privacy → 「Help improve our AI models」开关随时可改；同意与不同意对应不同保留期 | **抄三件**：① 只问一次；② 问的时候给的是二选一而不是「稍后再说」；③ 开关的家在 设置 → 隐私，文案叫「帮助改进 Nomi」（我们 `settings.general.telemetry.toggle` 现役文案已经是这句，不改）。**不抄**：不谈模型训练（我们不拿数据训模型），所以不需要保留期分档那套话 |
-| **我们自己 2026-09-01 的反馈中心**（`docs/plan/2026-09-01-feedback-share-center.md`） | 设置 → 关于 → 反馈与分享；`home / feedback / share / success` 四页；用户**手选功能阶段 + 手写一句话**，再选「私密 Tally / 公开 GitHub」，最后**在浏览器里自己提交** | **抄**：事件通道 `nomi-open-feedback-share`（`src/ui/community/FeedbackShareHost.tsx:14`）、供应商身份脱敏 `sanitizeProviderIdentity`（`src/ui/community/feedbackDiagnostics.ts:41`，自定义中转的 key 会编码用户的 base-url，所以塌成字面量 `custom`）、`safeFeedbackValue`（`feedbackTypes.ts:27`）。**删**：手选阶段 + 手写摘要 + 目的地二选一 + Tally/GitHub 外跳 —— 与「用户零输入 + 数据只去我们的端点」直接冲突，留着就是 P1 的并行版 |
+| **我们自己 2026-09-01 的反馈中心**（`docs/archive/plan/2026-09-01-feedback-share-center.md`） | 设置 → 关于 → 反馈与分享；`home / feedback / share / success` 四页；用户**手选功能阶段 + 手写一句话**，再选「私密 Tally / 公开 GitHub」，最后**在浏览器里自己提交** | **抄**：事件通道 `nomi-open-feedback-share`（`src/ui/community/FeedbackShareHost.tsx:14`）、供应商身份脱敏 `sanitizeProviderIdentity`（`src/ui/community/feedbackDiagnostics.ts:41`，自定义中转的 key 会编码用户的 base-url，所以塌成字面量 `custom`）、`safeFeedbackValue`（`feedbackTypes.ts:27`）。**删**：手选阶段 + 手写摘要 + 目的地二选一 + Tally/GitHub 外跳 —— 与「用户零输入 + 数据只去我们的端点」直接冲突，留着就是 P1 的并行版 |
 
 ---
 

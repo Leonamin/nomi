@@ -19,5 +19,5 @@ okf_version: "0.1"
 - 웹 provider 허용 모드: [web/comfyuiProductionProvider.ts](../../web/comfyuiProductionProvider.ts)
 - 웹의 provider 구성 및 generation RPC: [web/productionHost.ts](../../web/productionHost.ts), [web/rpc.ts](../../web/rpc.ts)
 - TTS 모델 archetype 예: [electron/shared/modelArchetypes/doubaoTtsArchetype.ts](../../electron/shared/modelArchetypes/doubaoTtsArchetype.ts), [electron/shared/modelArchetypes/seedTtsArchetype.ts](../../electron/shared/modelArchetypes/seedTtsArchetype.ts)
-- 오디오 결과의 타임라인 처리 코드 검토: [2026-10-15 generated audio timeline review](../../docs/qa/2026-10-15-generated-audio-timeline-review.md)
+- 오디오 결과의 타임라인 처리 코드 검토: [2026-10-15 generated audio timeline review](../../docs/archive/qa/2026-10-15-generated-audio-timeline-review.md)
 - 확인일: 2026-10-16. TTS를 웹 UI에서 실제 생성하는 브라우저 검증 증거는 확인하지 못했다.

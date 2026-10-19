@@ -3,8 +3,8 @@
 状态：📋 方案待拍板 —— 含**必须先拍板的产品决策 5 条**（§6）与**两条前提被实查推翻**（§0.2）。
 拍板前不动接线轨与删除轨（P5：想清楚再动手；硬规矩：设计与宿主真冲突就停下上报，不自己挑一条）。
 
-上游：设计定稿 `docs/design/2026-09-06-agent-panel-v4.md`（用户 2026-09-06 拍板「画布的设计没有问题」）、
-逐板对账 `docs/qa/2026-09-06-agent-panel-v4-lab-reconcile.md`（57 态基线已落，PR #534 已合 `a85055d81`）。
+上游：设计定稿 `docs/archive/design/2026-09-06-agent-panel-v4.md`（用户 2026-09-06 拍板「画布的设计没有问题」）、
+逐板对账 `docs/archive/qa/2026-09-06-agent-panel-v4-lab-reconcile.md`（57 态基线已落，PR #534 已合 `a85055d81`）。
 
 ---
 
@@ -41,7 +41,7 @@
 
 `tests/ux/agent-runtime-walk-support.mjs:11-13` 只是**面板根选择器**的收口处（`CREATION_PANEL`/`CANVAS_PANEL`），
 其余 140 个锚点散在 23 个走查文件里，没有收口。
-另：`agent-ui-conformance.walk.mjs` 由 `docs/design/agent-ui-spec.generated.json` 驱动，
+另：`agent-ui-conformance.walk.mjs` 由 `docs/archive/design/agent-ui-spec.generated.json` 驱动，
 **要靠重新生成 spec 迁移，不是手改那 1012 行**——而生成 spec 需要一份 v4 的可计算设计契约，本身是一件独立的活。
 
 ---
@@ -186,7 +186,7 @@
 > 常驻的 chrome，角标落这儿才切面不挪窝。`V4CollapsedLogoDock` 那个组件已随之删除（P1 无并行版）。
 >
 > 本节下表描述的是最早那版 rail，留作接线来源的记录；现役合同看
-> `docs/design/2026-09-01-agent-ui-final-redesign.md` §11.2 + `docs/design/2026-09-06-agent-panel-v4.md` 拍板 ⑪。
+> `docs/archive/design/2026-09-01-agent-ui-final-redesign.md` §11.2 + `docs/archive/design/2026-09-06-agent-panel-v4.md` 拍板 ⑪。
 
 
 | v4 字段 | 宿主来源 | 状态 |
@@ -257,7 +257,7 @@ v4 要把它换成真数字，正是这一条的意义；换不成的分项**宁
 | `check:filesize` | 容器 ≤800 行 |
 | 走查（R13） | loopback 零额度：三面真实对话 · 冷重启不丢 · 介入槽确认与拒绝 · 权限三档切换 · 停止三态。用 `tests/ux/_assert.mjs`；`expectAbsent` 必须配 `proveProbe` 阳性对照 |
 | 每日闸 | `tests/ux/golden-path.e2e.mjs` 绑 `data-agent-*`，**切换当天就会红**，必须同 PR 迁移 |
-| 摩擦日志（R16） | `docs/qa/2026-09-06-agent-panel-v4-wire-walkthrough.md`：「让 Agent 从零做一条 20 秒短片」全程，逐处不爽点记录并修掉 |
+| 摩擦日志（R16） | `docs/archive/qa/2026-09-06-agent-panel-v4-wire-walkthrough.md`：「让 Agent 从零做一条 20 秒短片」全程，逐处不爽点记录并修掉 |
 
 **走查前置**：`uptime` 看负载、`lsof -nP -iTCP:5241` 确认端口没被别的 worktree 占
 （对账文档记的第 1 个坑：连到别人家的 vite，截出来每张都很正常）。
@@ -336,7 +336,7 @@ v4 要把它换成真数字，正是这一条的意义；换不成的分项**宁
 切换那一刻全部变 tier-A dead，`check-i18n-dead-keys.ts` 的基线**只减不增**、
 `OVERBROAD_NAMESPACE_DEBT` 是空的，所以**同 PR 删干净 zh + en 两侧**，否则闸必红。
 
-⚠️ 按 `docs/lessons/dead-i18n-keys-two-causes.md`：删前先做「译文值 × 源码硬编码」交叉比对，
+⚠️ 按 `docs/archive/lessons/dead-i18n-keys-two-causes.md`：删前先做「译文值 × 源码硬编码」交叉比对，
 免得把「组件改成硬编码中文了所以 key 看着死了」误当成真死条。
 **不许**往 `i18n-dead-keys-baseline.json` 里加条目（脚本头明文禁止）。
 

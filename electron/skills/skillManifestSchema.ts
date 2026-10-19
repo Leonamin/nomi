@@ -20,7 +20,7 @@ import { CAPABILITY_CONTRACTS } from "../shared/agentCapabilities/registry";
  * validator.py:104-115 对顶层多一个键就报 error，却完全不检查 metadata 内部。
  * 所以独有字段挂这里，别的宿主原样忽略、我们照常读到。
  * 收敛前这份 schema 校验的是另一份文件 `skill.json`，两份清单已经漂出不同的
- * description —— 详见 docs/plan/2026-09-07-skill-format-convergence.md。
+ * description —— 详见 docs/archive/plan/2026-09-07-skill-format-convergence.md。
  *
  * 线上（YAML）用 kebab-case，与 frontmatter 的既有习惯（`allowed-tools`、
  * `disable-model-invocation`）一致；schema 在这里一次性转成 camelCase，
@@ -47,7 +47,7 @@ export const skillRequestedCapabilitySchema = z.string().refine(
  * 阶段级模型偏好 —— **只声明能力身份（kind + 可选 family），绝不绑 vendor 专属 archetypeId，
  * 也不写死参数**（参数合法区间交模型档案给）。这是「通用第一（P4）」+「分享出去不绑死」的硬约束：
  * 用 `.strict()` 从结构上拒绝 `archetypeId` / `params` 等键，违规直接校验失败。
- * 详见 docs/plan/2026-06-19-skill-playbook-system.md §0.5.b。
+ * 详见 docs/archive/plan/2026-06-19-skill-playbook-system.md §0.5.b。
  */
 export const skillStageModelPrefSchema = z
   .object({

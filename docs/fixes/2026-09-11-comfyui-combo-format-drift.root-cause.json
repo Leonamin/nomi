@@ -27,7 +27,7 @@
     "src/ui/community/communityLinks.test.ts",
     "src/i18n/locales/onboardingProviders.ts",
     "tests/ux/comfy-unknown-combo-feedback.walk.mjs",
-    "docs/plan/2026-09-11-comfyui-dynamic-combo.md"
+    "docs/archive/plan/2026-09-11-comfyui-dynamic-combo.md"
   ],
   "entry_points": [
     "fetchComfyuiObjectInfoIndex(baseUrl) -> parseObjectInfoIndex, called from electron/comfyuiTemplates.ts buildComfyuiTemplateDetail (template library import/recheck) and from electron/catalog/comfyuiWorkflowImportStore.ts's reconcile path (onboarding workflow import panel)",

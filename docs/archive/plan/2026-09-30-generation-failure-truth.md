@@ -37,7 +37,7 @@
 3. **失败属于发出去的那一次**：运行开始时把 (供应商, 模型) 写进运行记录（`attempt`，可选字段，随项目落盘）；切家提示与模型健康记账读它。
 4. **提示的身份、撤回、位置**归 `src/ui/toast.tsx`：`occurrence`、`validWhile`、容器列宽与随窗口的高度上限；提示句子只在 `useNodeModelAutoSelect` 一处拼。
 5. **提示版面补两刀（验收页复核）**：动作按钮上的字永远完整——正文至少 12.5rem，放不进同一行的长动作折到正文下面、长标签折行不截断（`src/ui/toast.tsx`，设计系统 §4.5 同步改）；提示点名供应商用显示名不用内部 id；目录里「这次失败不计费」这类话只有请求没发出去的类别才许说（`NEVER_SENT_KINDS` + `noChargeClaims.test`）。
-6. 概念登记（`concept-owners.json`）、结构评审（`docs/audit/2026-09-30-vendor-transport-and-ui-toast-structure-review.md`）、全功能走查 pb07（零花费，真 Electron）。
+6. 概念登记（`concept-owners.json`）、结构评审（`docs/archive/audit/2026-09-30-vendor-transport-and-ui-toast-structure-review.md`）、全功能走查 pb07（零花费，真 Electron）。
 
 ## 不动项
 

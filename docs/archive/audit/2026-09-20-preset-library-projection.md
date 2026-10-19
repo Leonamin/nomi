@@ -6,7 +6,7 @@
 
 本轮 symptom-cluster 把 09-14 至 09-20 的 20 份合同归入 `src/workbench`。这不是 20 次相同的预设故障；共同风险是各宿主对既有 owner 的数据做局部复制/裁剪，再误当完整能力。本轮复核提示词库→节点→Agent 这条链，不冒充对整个工作台的全新审计。
 
-参考已有 `docs/audit/2026-09-17-ownership-lifetime-census.md` 与 `docs/fixes/2026-09-18-ownership-single-source.root-cause.json`：一个事实有多个私有投影，就会在 owner 改变时漂移。本次 981858b719 的效果筛选把“推荐哪几条”升级成“只能使用哪几条”，并且菜单与 Agent 的 Skill 选择器分别实现，出现数据与体验两类漂移。
+参考已有 `docs/archive/audit/2026-09-17-ownership-lifetime-census.md` 与 `docs/fixes/2026-09-18-ownership-single-source.root-cause.json`：一个事实有多个私有投影，就会在 owner 改变时漂移。本次 981858b719 的效果筛选把“推荐哪几条”升级成“只能使用哪几条”，并且菜单与 Agent 的 Skill 选择器分别实现，出现数据与体验两类漂移。
 
 ## 当前所有权与裁决
 

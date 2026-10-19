@@ -73,7 +73,7 @@ Nomi 对中转有两条接入路：
 
 ### 4.3 返回解析（成败点，必须写新码）
 - 扩 `assetUrlExtract.ts`（或加一个 chat-image 专用解析步骤）：从 `choices[0].message.content` 抠图：
-  - content 是字符串 → 正则抠 `data:image/…;base64,…` 或 markdown `![](%E2%80%A6)`。
+  - content 是字符串 → 正则抠 `data:image/…;base64,…` 或 markdown `![](…)`。
   - content 是数组 → 找 `image_url.url` / `{type:"image_url"}`。
   - 或 `message.images[]`（部分中转结构化返回）。
 - 加单测覆盖三种返回形态。
@@ -146,5 +146,5 @@ Nomi 对中转有两条接入路：
 
 ## 八、后记（2026-07-06）
 
-- 「存量模型需删了重加才生效」的遗留已由 **catalog v4→v5 迁移**根治（见 docs/plan/2026-07-06-i2i-reference-reliability.md L1）：老中转 image 条目升级即自动补 image_edit mapping + supportsReferenceImages + 比例/清晰度参数，不再要求用户删了重加。
+- 「存量模型需删了重加才生效」的遗留已由 **catalog v4→v5 迁移**根治（见 docs/archive/plan/2026-07-06-i2i-reference-reliability.md L1）：老中转 image 条目升级即自动补 image_edit mapping + supportsReferenceImages + 比例/清晰度参数，不再要求用户删了重加。
 - 同一批修复还包含：参考 URL 本地优先（providerUrl 过期链整类失效）+ 图生图/图生视频缺参考或缺 mapping 时拒发报人话（不再静默退化纯文生图）。

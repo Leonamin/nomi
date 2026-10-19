@@ -3,7 +3,7 @@
 // 判据在 `../shared/agentLane/laneApproval.ts`（纯函数）；这里是那张图上会动的部分：
 // 一次调用停在 `before_tool` 里等人，用户点了什么，等待期被什么打断。
 //
-// ── 三条踩过的坑，写在最前面（探针 `docs/research/2026-09-07-agent-lane-stage3-probes.md`）──
+// ── 三条踩过的坑，写在最前面（探针 `docs/archive/research/2026-09-07-agent-lane-stage3-probes.md`）──
 //
 // ① **被打断时必须 resolve，不能 reject。** pi 的 `hooks.js:121-125` 把钩子里抛出的任何
 //    异常洗成 `block.reason`，于是模型看到的是 `signal.reason.message`——那是

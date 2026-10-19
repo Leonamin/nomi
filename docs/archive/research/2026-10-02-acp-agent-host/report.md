@@ -1,7 +1,7 @@
 # 右侧 Agent 面板接入外部 Agent：ACP 调研（2026-10-02）
 
 > 只读调研，没有改任何产品代码。对照基线：调研当天的 `origin/main`。
-> 方案文档：[`docs/plan/2026-10-02-acp-agent-host.md`](../../plan/2026-10-02-acp-agent-host.md)。
+> 方案文档：[`docs/archive/plan/2026-10-02-acp-agent-host.md`](../../plan/2026-10-02-acp-agent-host.md)。
 > 标「未核实」的条目是真没核实，不是省略；「未读全文」= 只看到摘要或部分代码。
 
 ## 一屏结论

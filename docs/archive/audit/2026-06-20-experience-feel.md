@@ -1,6 +1,6 @@
 # E5 多维体验质感审计 — 结果 2026-06-20
 
-> 方法：`docs/plan/2026-06-20-experience-feel-audit.md`（启发式 + 感知性能 + 反应卡）。
+> 方法：`docs/archive/plan/2026-06-20-experience-feel-audit.md`（启发式 + 感知性能 + 反应卡）。
 > 采集：常驻驱动 + 注入探针（延迟/帧率/密度/对比度，见 `tests/ux/ui-driver.mjs`），真机走 J1/J3/J5（J2/J4 复用同画布/节点/助手基建，体验信号等价）。
 > 决策：建探针✅ / 只测 UI 反馈质量（不跑真实生成）/ 全 J1–J5。
 > 环境：120Hz ProMotion 显示器（故满帧基线=120fps，非 60）。

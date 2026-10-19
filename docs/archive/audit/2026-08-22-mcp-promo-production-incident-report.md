@@ -610,8 +610,8 @@ nomi-v0201-promo-vo-dayi-r03.mp4
 
 ## 关联资料
 
-- `docs/audit/2026-08-09-mcp-agentic-experience-audit.md`：此前已指出 MCP widget、Run 时间线和资产链没有闭合；本次实际制作进一步验证了这些缺口。
-- `docs/audit/2026-08-09-production-mcp-adversarial-review.md`：生产 MCP 安全边界审计；本次报告关注的是制作体验、参数可见性和媒体后期链路。
+- `docs/archive/audit/2026-08-09-mcp-agentic-experience-audit.md`：此前已指出 MCP widget、Run 时间线和资产链没有闭合；本次实际制作进一步验证了这些缺口。
+- `docs/archive/audit/2026-08-09-production-mcp-adversarial-review.md`：生产 MCP 安全边界审计；本次报告关注的是制作体验、参数可见性和媒体后期链路。
 - `outputs/promo-runs/2026-08-22-nomi-v0201/02-storyboard.md`：本次 45 秒分镜。
 - `outputs/promo-runs/2026-08-22-nomi-v0201/04-edl.md`：本次编辑决策表。
 - `outputs/promo-runs/2026-08-22-nomi-v0201/05-delivery.md`：本次交付记录。

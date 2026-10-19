@@ -174,7 +174,7 @@
       "electron/skills/builtinSkills.test.ts",
       "scripts/check-skills-format.node-test.mjs"
     ],
-    "structural_ticket": "docs/plan/2026-09-07-skill-format-convergence.md"
+    "structural_ticket": "docs/archive/plan/2026-09-07-skill-format-convergence.md"
   },
   "legacy_paths": {
     "status": "removed",

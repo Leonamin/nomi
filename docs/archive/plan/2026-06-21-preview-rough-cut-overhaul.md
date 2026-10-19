@@ -8,7 +8,7 @@
 > - ✅ redo 重做(04463c1)：workbenchStore 加 timelineRedoStack(所有 ~8 处压栈点 + capture 均清 redo)+ redoTimeline + ⇧⌘Z + 工具栏按钮;单测 4 例(还原/新编辑清栈/空栈安全)。
 > - ⏳ scrub 91ms：先真机 probe-latency 实测确认是否真存在再决定修不修——**未做**(需稳定窗口 + 视频 clip 才能 probe;隔离实例无内容+studio 窗口 flaky,本轮没测成)。留给正常 GPU 实例。
 > 真相源：本文件。代码地图见对话；对标基线 2026 实搜（非记忆）。
-> 关联：`docs/audit/2026-06-19-clip-timeline-walkthrough.md`、`docs/audit/2026-06-20-experience-feel.md`、记忆 [[preview-roughcut-canvas-bridge-plan]]。
+> 关联：`docs/archive/audit/2026-06-19-clip-timeline-walkthrough.md`、`docs/archive/audit/2026-06-20-experience-feel.md`、记忆 [[preview-roughcut-canvas-bridge-plan]]。
 
 ---
 

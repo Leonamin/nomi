@@ -1,7 +1,7 @@
 # 代码梳理执行报告 2026-05-30
 
 > Status: 执行中
-> Audit 来源：`docs/audit/2026-05-30-codebase-cleanup.md`
+> Audit 来源：`docs/archive/audit/2026-05-30-codebase-cleanup.md`
 > 本次范围：A1-A5（立即可删/合并）+ C1（audio 端到端补全）
 > 不在本次范围：B1 拆 runtime.ts（高风险，单独立项 v0.8.1）
 
@@ -15,7 +15,7 @@
 | 编号 | 动作 | 风险 | 估时 |
 |---|---|---|---|
 | A1 | 12 RELEASE_NOTES → `docs/release-notes/` | 极低 | 5 min |
-| A2 | `docs/plans/` → `docs/plan/` | 极低 | 2 min |
+| A2 | `docs/archive/plans/` → `docs/archive/plan/` | 极低 | 2 min |
 | A3 | 删 14 个失败 trial 目录 | 极低 | 1 min |
 | A4 | `src/workbench/feedback/` → `src/utils/` | 低（要 grep 修引用） | 10 min |
 | A5 | `src/workbench/nomi/` → `src/ui/app-shell/` | 低（要 grep 修引用） | 10 min |
@@ -35,7 +35,7 @@
 ## 3. 回滚策略
 
 - 每步独立 commit，跑挂直接 `git revert <sha>` 不影响其它步骤
-- A1-A5 全是 `git mv` 或 `rm -rf docs/onboarding-trials/2026-05-28T...` —— 没有代码逻辑变更，最坏情况文件错位
+- A1-A5 全是 `git mv` 或 `rm -rf docs/archive/onboarding-trials/2026-05-28T...` —— 没有代码逻辑变更，最坏情况文件错位
 - C1 改 union 类型 + 两处 if 分支，tsc 兜底
 - 整个会话不会动 `electron/runtime.ts` 的业务函数体（仅类型）
 
@@ -60,7 +60,7 @@
 | 编号 | 状态 | 验收要点 |
 |---|---|---|
 | A1 | ✓ | 12 个 RELEASE_NOTES_v*.md 全部进 `docs/release-notes/v*.md`，根目录无 RELEASE_NOTES 文件 |
-| A2 | ✓ | `docs/plans/` 内 2 文件合入 `docs/plan/`，空目录已删 |
+| A2 | ✓ | `docs/archive/plans/` 内 2 文件合入 `docs/archive/plan/`，空目录已删 |
 | A3 | ✓ | 14 个 `2026-05-28T14-{14..36}-*-gpt-image-2-text-to` 失败 trial 删除（gitignored，纯本地清理）；保留 7 个有效 trial（kling success + 3 attack + 2 m4-retest + 1 m5-install） |
 | A4 | ✓ | `showUndoToast.ts` → `src/utils/`；唯一引用 `CategorySidebar.tsx` 已改路径 |
 | A5 | ✓ | `NomiAppBar.tsx` → `src/ui/app-shell/`；`WorkbenchShell.tsx` import 已更新；NomiAppBar 内部 3 个相对路径同步升级 |
@@ -71,7 +71,7 @@
 
 ```
  mv  12 release notes -> docs/release-notes/
- mv  2  plan docs     -> docs/plan/
+ mv  2  plan docs     -> docs/archive/plan/
  rm  14 failed trials -> gone
  mv  1  showUndoToast -> src/utils/
  mv  1  NomiAppBar    -> src/ui/app-shell/

@@ -24,11 +24,11 @@
 ## 证据和问题簇
 
 - `docs/fixes/` 按日期筛出的 2026-09-20 至 2026-09-26 根因合同有 113 份；最近的合同反复命中 owner、schema 漂移、投影重复派生、跨边界丢身份和生命周期混用。
-- `docs/audit/2026-09-24-v022-feedback-structure-review.md` 已记录“入口统一后，旧判据仍在拦”；连线、项目打开、媒体能力各自还有旧 owner。
-- `docs/audit/2026-09-25-generation-canvas-ownership-review.md` 在同一周列出手势寿命、视频播放、媒体封面、引用语义、缩放五组双 owner。
-- `docs/audit/2026-09-25-agent-run-canvas-projection-structure-review.md` 证明 Run 身份、节点状态、产物取回在持久账本、进程内记忆和 renderer 投影之间断开。
-- `docs/audit/2026-09-26-generation-derived-facts-two-engines-structure-review.md` 明确指出画布引擎与 `capabilityCore`/`productionRun` 是两台生成发动机；变体只是刚收掉的一份副本，模式和参数面仍在同一风险带。
-- `docs/audit/2026-09-26-storyboard-false-alarms-structure-review.md` 同时记录 IPC 类型/schema 双写和分镜对画布参考槽判据的重抄。
+- `docs/archive/audit/2026-09-24-v022-feedback-structure-review.md` 已记录“入口统一后，旧判据仍在拦”；连线、项目打开、媒体能力各自还有旧 owner。
+- `docs/archive/audit/2026-09-25-generation-canvas-ownership-review.md` 在同一周列出手势寿命、视频播放、媒体封面、引用语义、缩放五组双 owner。
+- `docs/archive/audit/2026-09-25-agent-run-canvas-projection-structure-review.md` 证明 Run 身份、节点状态、产物取回在持久账本、进程内记忆和 renderer 投影之间断开。
+- `docs/archive/audit/2026-09-26-generation-derived-facts-two-engines-structure-review.md` 明确指出画布引擎与 `capabilityCore`/`productionRun` 是两台生成发动机；变体只是刚收掉的一份副本，模式和参数面仍在同一风险带。
+- `docs/archive/audit/2026-09-26-storyboard-false-alarms-structure-review.md` 同时记录 IPC 类型/schema 双写和分镜对画布参考槽判据的重抄。
 - 第一轮 Phase -1 实扫又确认：语义/分镜路径已经走 `PlanCandidate → ExecutionContractV1 → AuthorizationEnvelope → ProductionRun`，但旧画布直生成仍由 `generationRunController → catalogTaskActions → runtime.runTask/submissionLedger` 直接提交 provider，不创建 `ProductionRun`/授权 envelope/ProductionJob；这是第二条真实的付费执行生命周期，必须先登记边界或迁移目标。
 - `docs/engineering/concept-owners.json` 当前登记 38 个概念，其中“出价/待决身份”和“画布缩放”仍是有界 `pending`；登记表目前能提示风险，但 `check:concept-owners` 尚未实现，暂不能自动阻止第二个写口。（2026-09-29 更新：门岗已落地、登记表升到 v2 共 76 个概念，见「Phase 1 进度」。）
 - 2026-09-25 至 2026-09-26 的 main 提交连续出现 `agent-run-node-state-single-owner`、`generation-variant-single-owner`、`storyboard-planned-first-frame-slot`、`storyboard-resolve-vendor-rejected`、`open-fit-reopen-remembered-echo`、`spend-card-patch-json-values`，说明发现速度很快，但系统仍在靠反复发现后收口。
@@ -37,7 +37,7 @@
 
 | 问题 | 已查证据 | 结论 |
 |---|---|---|
-| 依赖里已有？ | `electron/productionRun/productionRunIntentLog.ts:1-260`、`electron/productionRun/submissionOutbox.ts:1-240` 和 [`docs/audit/2026-08-22-agent-runtime-source-review.md`](../audit/2026-08-22-agent-runtime-source-review.md) 已对照 | 复用 intent/outbox/receipt/replay；不把框架内核当领域 owner，也不新造 EventStore |
+| 依赖里已有？ | `electron/productionRun/productionRunIntentLog.ts:1-260`、`electron/productionRun/submissionOutbox.ts:1-240` 和 [`docs/archive/audit/2026-08-22-agent-runtime-source-review.md`](../audit/2026-08-22-agent-runtime-source-review.md) 已对照 | 复用 intent/outbox/receipt/replay；不把框架内核当领域 owner，也不新造 EventStore |
 | 仓库里已有？ | `PlanCandidate`/`ExecutionContractV1`（`electron/capabilityCore/executionContract.ts:1-120`）、授权 envelope（`electron/productionRun/productionGenerationAuthorization.ts:1-100`）、Run journal/reducer（`electron/productionRun/productionRunRepository.ts:450-640` / `productionRunReducer.ts:718-738`） | 扩展既有 owner，禁止新建第三套 `GenerationIntent` |
 | 生态里已有？ | Automerge 单文档/派生视图（https://automerge.org/docs/concepts/）、IETF Idempotency-Key（https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/）、OpenTimelineIO（https://opentimelineio.readthedocs.io/）、Temporal workflow/replay（https://docs.temporal.io/workflows） | 采纳稳定业务 ID、不可变执行规格、幂等命令、可重建 projection；不引入对应的外部运行时服务 |
 | TikHub 自媒体怎么说？ | 本方案是仓库内部持久化、契约和恢复架构，不是竞品或内容策略；TikHub 资料不会提供比源码、协议和真实故障测试更强的证据，因此本轮不查，并把理由留在这里 | 不用自媒体观点替代代码/协议/真实运行证据 |
@@ -307,11 +307,11 @@ pilot 的放行阈值是：crash injection 下重复付费提交为 0；跨入�
 
 本稿不凭记忆新造持久化范式，采用仓库已经审查过的近邻证据：
 
-- [`docs/research/2026-09-18-storyboard-single-ledger/prior-art.md`](../research/2026-09-18-storyboard-single-ledger/prior-art.md)：单一作者账本、派生视图、稳定 revision 和窄引用；用于 C 线。
-- [`docs/plan/2026-08-15-model-integration-no-dead-end-master-plan.md`](2026-08-15-model-integration-no-dead-end-master-plan.md)：provider effect broker、submission intent、idempotency、unknown submission 和能力降级；用于 A/B 线。
-- [`docs/audit/2026-08-22-agent-runtime-source-review.md`](../audit/2026-08-22-agent-runtime-source-review.md)：accepted → intent → effect → settlement、checkpoint、recovery 的现有 Nomi 形态；用于 durable commit。
-- [`docs/plan/2026-09-18-agent-storyboard-write-path.md`](2026-09-18-agent-storyboard-write-path.md)：Automerge 单文档+派生视图、IETF Idempotency-Key 和 OpenTimelineIO 的单结构/投影对照；用于作者内容与入口幂等。
-- [`docs/plan/2026-08-15-model-integration-no-dead-end-master-plan.md`](2026-08-15-model-integration-no-dead-end-master-plan.md) 中的 Temporal 对照只作为 workflow ID、replay 和版本校验的反方参考；本地桌面不引入 Temporal 服务，不把其运行时当成 Nomi 的新 owner。
+- [`docs/archive/research/2026-09-18-storyboard-single-ledger/prior-art.md`](../research/2026-09-18-storyboard-single-ledger/prior-art.md)：单一作者账本、派生视图、稳定 revision 和窄引用；用于 C 线。
+- [`docs/archive/plan/2026-08-15-model-integration-no-dead-end-master-plan.md`](2026-08-15-model-integration-no-dead-end-master-plan.md)：provider effect broker、submission intent、idempotency、unknown submission 和能力降级；用于 A/B 线。
+- [`docs/archive/audit/2026-08-22-agent-runtime-source-review.md`](../audit/2026-08-22-agent-runtime-source-review.md)：accepted → intent → effect → settlement、checkpoint、recovery 的现有 Nomi 形态；用于 durable commit。
+- [`docs/archive/plan/2026-09-18-agent-storyboard-write-path.md`](2026-09-18-agent-storyboard-write-path.md)：Automerge 单文档+派生视图、IETF Idempotency-Key 和 OpenTimelineIO 的单结构/投影对照；用于作者内容与入口幂等。
+- [`docs/archive/plan/2026-08-15-model-integration-no-dead-end-master-plan.md`](2026-08-15-model-integration-no-dead-end-master-plan.md) 中的 Temporal 对照只作为 workflow ID、replay 和版本校验的反方参考；本地桌面不引入 Temporal 服务，不把其运行时当成 Nomi 的新 owner。
 
 共同裁决是：稳定业务身份、不可变执行规格、显式 outbox/receipt、可重建投影和未知态优先；不采纳“再加一个全局 EventStore/Operation DB”作为解决方案。
 
@@ -370,7 +370,7 @@ pilot 的放行阈值是：crash injection 下重复付费提交为 0；跨入�
 
 ### 5. 把文档现状接入交付
 
-每次 owner 变更同 PR 更新 `docs/ARCHITECTURE-NOW.md`、`concept-owners.json` 和对应结构测试。`docs/plan/` 只写目标；现状文件只写可验证的 `file:symbol`。每个结构合同必须标注“收掉了几份决策逻辑”，不能只报门数。lineage 日志只记录 ID/hash/revision/observedAt，prompt、reference URL、credential、provider raw response 必须沿用现有 redact/sanitizer 分级，不能原样写日志。
+每次 owner 变更同 PR 更新 `docs/archive/guides/ARCHITECTURE-NOW.md`、`concept-owners.json` 和对应结构测试。`docs/archive/plan/` 只写目标；现状文件只写可验证的 `file:symbol`。每个结构合同必须标注“收掉了几份决策逻辑”，不能只报门数。lineage 日志只记录 ID/hash/revision/observedAt，prompt、reference URL、credential、provider raw response 必须沿用现有 redact/sanitizer 分级，不能原样写日志。
 
 ## 分阶段执行顺序
 
@@ -480,7 +480,7 @@ Phase 1 只落地治理门、schema/owner parity、lifecycle identity 和 durabl
 - author、frozen execution、provider observation、materialized artifact 四种生命周期不会互相冒充；重启和重放后的结果有明确的冲突与未知态。
 - Run 的 command、approval、budget、event、snapshot、artifact receipt 具备可证明的提交/恢复关系；故障注入后不会产生无法解释的半提交。
 - 每个结构合同的旧路径已删除，residual risk 逐项有 owner、证据和到期日；没有“已登记但没有出口”的债。
-- `docs/ARCHITECTURE-NOW.md` 与代码锚点同步，真实 Electron 旅程通过后才把对应项记为已解决。
+- `docs/archive/guides/ARCHITECTURE-NOW.md` 与代码锚点同步，真实 Electron 旅程通过后才把对应项记为已解决。
 
 验收指标不以 `doors` 总数简单判断好坏。一次收口可能让读入口变多（例如任务中心需要显式列出所有消费者），所以要同时记录：`decision_owner_count = 1`、`write_owner_count = 1`、`projection_count = N`、入口对等矩阵是否全绿，以及旧决策实现是否删除。只有决策 owner 或写 owner 增加，才算结构回归。
 

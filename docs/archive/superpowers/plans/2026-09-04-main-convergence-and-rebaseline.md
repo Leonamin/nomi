@@ -12,9 +12,9 @@
 
 | 报告 | 当前状态 | 用途 |
 |---|---|---|
-| [`docs/qa/2026-09-04-pr-branch-inventory.md`](../../../qa/2026-09-04-pr-branch-inventory.md) | 已提交 | PR、branch、merge-base、patch-id、worktree 和未知项基线 |
-| [`docs/qa/2026-09-04-mcp-rebaseline-audit.md`](../../../qa/2026-09-04-mcp-rebaseline-audit.md) | 已提交 | MCP 工具面、合同、L2/打包证据与当前缺口 |
-| [`docs/qa/2026-09-04-epics-rebaseline-audit.md`](../../../qa/2026-09-04-epics-rebaseline-audit.md) | 工作区已存在，待其所属会话提交 | M0–M5、Agent、TikHub、视频拆解、画布、资源链等史诗状态重基线 |
+| [`docs/archive/qa/2026-09-04-pr-branch-inventory.md`](../../qa/2026-09-04-pr-branch-inventory.md) | 已提交 | PR、branch、merge-base、patch-id、worktree 和未知项基线 |
+| [`docs/archive/qa/2026-09-04-mcp-rebaseline-audit.md`](../../qa/2026-09-04-mcp-rebaseline-audit.md) | 已提交 | MCP 工具面、合同、L2/打包证据与当前缺口 |
+| [`docs/archive/qa/2026-09-04-epics-rebaseline-audit.md`](../../qa/2026-09-04-epics-rebaseline-audit.md) | 工作区已存在，待其所属会话提交 | M0–M5、Agent、TikHub、视频拆解、画布、资源链等史诗状态重基线 |
 
 史诗报告当前仍是未跟踪文件，本次不代替其所属会话提交；因此本计划只引用其路径，并保留“待提交”状态，不把它误写成已合入主分支的证据。
 
@@ -26,13 +26,13 @@
 |---|---|---|---|
 | PR [#457](https://github.com/aqm857886159/Nomi/pull/457) | `main ← codex/cross-device-continuation-repair-20260904`，head `e54aa4d447d81c0e9013b90b39f4c02884d30525`；Contracts failure，分类 `blocked / needs repair` | 任何 cross-device continuation、workspace sync、恢复或依赖该分支行为的重基线/合并任务 | 刷新 PR head/base/owner/dirty 状态和 checks；在最新 main 上取得可复现红测，修复后以同一断言绿测，并补齐 Electron/打包真实任务证据后，才可转 `open-ready` |
 | 前会话释放的 PR [#313](https://github.com/aqm857886159/Nomi/pull/313) / [#328](https://github.com/aqm857886159/Nomi/pull/328) | 两者均为 `previous-session-released / convergence-queue-pending`；#328 的 E2E/Performance/Quality 失败；相关 dirty/unknown worktree 受保护 | experience learning loop、cross-device continuation 及任何会接管其 branch/worktree 或复用其结论的任务 | 先刷新 owner、branch head、最终 merge SHA、dirty/clean 状态和当前 checks；不得抢合、改分支或把旧 checks 当完成证据。接管后重新走本计划的覆盖、红→绿、真实 Electron/打包和视觉门 |
-| orphan/prunable worktree 审计（若已有） | [S0 main inventory](../../../qa/2026-09-04-main-convergence-inventory.md) 与 [S1 PR/branch/worktree inventory](../../../qa/2026-09-04-pr-branch-inventory.md) 已记录 2 个 prunable 候选：`/private/tmp/nomi-issue-237.bBdypr`（`ac9129b`）和 `/private/tmp/nomi-runway-seedance-20260830`（`c397992`）；活跃会话状态 `unknown` | 所有清理、捞取、分支归属判断、PR 重建和可能读取这些路径的任务 | 先逐路径记录 owner/contact、HEAD/branch、tracked/untracked/dirty 状态、gitdir 是否存在、恢复需求和处理决定；确认无外部会话且无需恢复后，才可按生命周期规则处理。没有这份审计或审计未刷新时，禁止 prune、删除、覆盖或据此宣称来源已收敛 |
+| orphan/prunable worktree 审计（若已有） | [S0 main inventory](../../qa/2026-09-04-main-convergence-inventory.md) 与 [S1 PR/branch/worktree inventory](../../qa/2026-09-04-pr-branch-inventory.md) 已记录 2 个 prunable 候选：`/private/tmp/nomi-issue-237.bBdypr`（`ac9129b`）和 `/private/tmp/nomi-runway-seedance-20260830`（`c397992`）；活跃会话状态 `unknown` | 所有清理、捞取、分支归属判断、PR 重建和可能读取这些路径的任务 | 先逐路径记录 owner/contact、HEAD/branch、tracked/untracked/dirty 状态、gitdir 是否存在、恢复需求和处理决定；确认无外部会话且无需恢复后，才可按生命周期规则处理。没有这份审计或审计未刷新时，禁止 prune、删除、覆盖或据此宣称来源已收敛 |
 
 依赖收据必须同时写入：依赖名称、刷新时间、精确 SHA、命令/PR URL、观察到的阻塞、owner/下一动作。依赖只影响相应能力域，不得用 unrelated check 或“文件已经在工作树”替代。
 
 **Architecture:** 本计划是“收敛与重基线”工作，不新增产品功能。执行顺序固定为：冻结现场 → 盘点证据 → 安全收敛 → 捞取唯一提交 → 建立 M0–M5/功能/视觉矩阵 → 真实 Electron/打包走查 → 生成新的优先级和后续任务。所有产品修复都必须另开小范围任务和 PR，不能借盘点任务顺手扩大范围。
 
-**Tech Stack:** Git/GitHub PR、Git worktree、pnpm、Vitest、Electron/Playwright walkthrough、现有 `tests/ux` 和 `tests/system` 证据脚本、`docs/plan` 与 `docs/qa` 文档。
+**Tech Stack:** Git/GitHub PR、Git worktree、pnpm、Vitest、Electron/Playwright walkthrough、现有 `tests/ux` 和 `tests/system` 证据脚本、`docs/archive/plan` 与 `docs/archive/qa` 文档。
 
 **Spec:** 这是一份执行方案，不是“理想状态”宣言。每一阶段必须有可重跑的红证据和绿证据；绿证据必须包括与风险相称的自动化测试、持久化/重启验证以及真实视觉走查。任何依赖 skip、吞异常、只看截图、不验证落盘、只看 PR 页面状态的结果都不能作为完成证据。
 
@@ -60,7 +60,7 @@ Gate A 的退出条件是：能力矩阵五类场景都有测试归属，外部�
 
 ### Gate B — User-Confirmed image2 Design Contract Before UI Implementation
 
-所有用户可见或用户可操作的 UI 变更必须引用 [`docs/design/nomi-design-flow-image2-gate.md`](../../../design/nomi-design-flow-image2-gate.md)，并严格按以下顺序执行：
+所有用户可见或用户可操作的 UI 变更必须引用 [`docs/archive/design/nomi-design-flow-image2-gate.md`](../../design/nomi-design-flow-image2-gate.md)，并严格按以下顺序执行：
 
 ```text
 Prompt Brief → image2/image_gen → 用户确认 → 冻结 visual direction/design contract
@@ -80,12 +80,12 @@ Gate B 的退出条件是：确认记录和冻结合同可追溯，红测发生�
 
 - 当前 main 基线曾推进到 `45912ae01a155a3f6592f65368d0ce3d12fc034e`，其中已包含 Agent normal/exception/work-mode、MCP 既有修复、TikHub/视频拆解代码、若干画布性能修复、凭据加密和 M0–M4 相关提交；“代码已在 main”不等于每个用户路径已经毕业。
 - #313 与 #328 已释放到收敛队列；只读取状态和最终 merge SHA，接管前必须重新确认 owner、dirty/clean worktree 和分支 head。#452 的 Agent Host usage/receipt 路径曾有 Linux L2 `receipt_invalid`、本地 `lease_invalid` 证据，必须重新验证，不能按 checks 通过的部分宣称完成。
-- #457 当前为 `main ← codex/cross-device-continuation-repair-20260904`、head `e54aa4d447d81c0e9013b90b39f4c02884d30525`；Contracts 已失败，Unit/E2E 在运行，分类为 `blocked / 需修复`。#458 当前为 `codex/main-typecheck-repair-20260904 ← codex/pr456-failure-gates-followup-20260904`、head `cd0cc1e9d22bb1abd14462417ffa2ceceda94659`，是 #456 failure-gate diagnosis 的 stacked PR，分类为 `stacked / 待重基线`。详见 [S1 PR/branch/worktree inventory](../../../qa/2026-09-04-pr-branch-inventory.md)。
+- #457 当前为 `main ← codex/cross-device-continuation-repair-20260904`、head `e54aa4d447d81c0e9013b90b39f4c02884d30525`；Contracts 已失败，Unit/E2E 在运行，分类为 `blocked / 需修复`。#458 当前为 `codex/main-typecheck-repair-20260904 ← codex/pr456-failure-gates-followup-20260904`、head `cd0cc1e9d22bb1abd14462417ffa2ceceda94659`，是 #456 failure-gate diagnosis 的 stacked PR，分类为 `stacked / 待重基线`。详见 [S1 PR/branch/worktree inventory](../../qa/2026-09-04-pr-branch-inventory.md)。
 - #419 是 stacked 的 M5 packaged graduation 路线；M5 checklist 仍要求重新确认 packaged parity、真实 Host context、M4 taint/approval spend guard、client confirmation chain 和 packaged L2。
 - 已知有 dirty/blocked/stacked PR（包括 #435、#403、#399、#384、#412、#314 等）和 dirty worktree；它们先保留，不能因为硬盘清理目标而删除代码。#452、#419 的状态也必须按最新 PR 页面刷新。
 - `origin/perf/canvas-click-select-20260903` 曾存在未开 PR 的唯一代码提交；`origin/fix/mcp-remaining-holes-20260903` 曾主要是 test-only 分支。两者必须通过 patch-id 和当前行为重测后，分别决定开 PR、归类 duplicate，或转后续任务。
 - 历史账本和 `docs/plan/INDEX.md` 存在明显状态漂移：TikHub、视频拆解、画布、MCP、凭据和部分 Agent/M 线条目可能已经有代码但仍标旧状态；反向地，资源链 P0-2/3/4、MCP Q8、M5 graduation、Agent 真实创作闭环等可能只有计划或部分实现。最终以当前 SHA 的证据矩阵为准。
-- **PR #454 必须作为独立审计输入纳入本轮：** 它有真实分镜表三栏工作区、分镜行引用/选择解耦、`patch_shots` 编辑内核、模型 vendor 修复和若干走查，但锚行/参数条样章已被用户明确否定；右侧 Agent 的生产模型目录使用 `nomi_canvas_plan`，而部分桥接/投影/选中注入仍按旧工具名 `patch_shots` 判断。详见 `docs/qa/2026-09-04-pr454-storyboard-agent-audit.md`。在 canonical Agent 闭环红→绿和新视觉方向确认前，不把 #454 整体合入。
+- **PR #454 必须作为独立审计输入纳入本轮：** 它有真实分镜表三栏工作区、分镜行引用/选择解耦、`patch_shots` 编辑内核、模型 vendor 修复和若干走查，但锚行/参数条样章已被用户明确否定；右侧 Agent 的生产模型目录使用 `nomi_canvas_plan`，而部分桥接/投影/选中注入仍按旧工具名 `patch_shots` 判断。详见 `docs/archive/qa/2026-09-04-pr454-storyboard-agent-audit.md`。在 canonical Agent 闭环红→绿和新视觉方向确认前，不把 #454 整体合入。
 
 ## Exhaustive Feature Discovery: Preventing Memory-Based Omissions
 
@@ -97,7 +97,7 @@ Gate B 的退出条件是：确认记录和冻结合同可追溯，红测发生�
 | 领域逻辑 | `src/workbench/ai`、`creation/storyboard`、`generationCanvas`、`generation`、`timeline`、`preview`、`assets`、`library`、`production`、`project`、`settings`、`onboarding`、`taskCenter`、`skillLibrary`、`export`、`player`、`observability` 等模块 | 每个模块要有用户价值、事实源、持久化边界、失败恢复和当前证据 |
 | 外部能力 | `src/desktop/*BridgeTypes.ts`、MCP tool mapping、provider/model catalog、skills、IPC/transport 和 `nomi_*` 工具 | 每个 tool/capability 要有 schema/授权/执行/副作用/receipt/恢复测试，不能只登记 UI 名称 |
 | 自动化证据 | `tests/agent-runtime`、`tests/agent-system`、`tests/ux`、`src/**/*.test.*`、`package.json` 中的 test/gate/build 脚本 | 每个测试要反向指向能力；通过测试但没有真实用户路径或视觉证据时标为未证明 |
-| 计划与历史 | `docs/plan`、`docs/superpowers/plans`、`docs/superpowers/specs`、`docs/architecture`、`docs/qa`、已合并/开放 PR 和所有 Git refs | 每个计划要绑定当前代码/PR/SHA 或明确标为历史、重复、仅设计、阻塞或待决策 |
+| 计划与历史 | `docs/archive/plan`、`docs/archive/superpowers/plans`、`docs/archive/superpowers/specs`、`docs/architecture`、`docs/archive/qa`、已合并/开放 PR 和所有 Git refs | 每个计划要绑定当前代码/PR/SHA 或明确标为历史、重复、仅设计、阻塞或待决策 |
 
 执行 S1 时必须保存以下“无遗漏检查”：
 
@@ -177,7 +177,7 @@ MCP 测试按“工具面 → 握手/授权 → 执行 → 副作用 → 收据/
 
 新版分镜表不是旧分镜方案的一个改名页面，而是“分镜计划/镜头状态/参考绑定/执行结果”的工作面。盘点时必须把旧方案和新版实现按同一条链对齐，明确哪些是迁移后的能力、哪些是新增加的能力、哪些仍只是计划：
 
-- **Design/source 层：** 以 `docs/plan/2026-09-01-storyboard-table-genre-profile.md`、`docs/plan/2026-08-13-video-deconstruction-storyboard-table.md`、`docs/design/mockups/2026-09-01-storyboard-table-image-first.html` 和 `docs/design/mockups/contracts/2026-09-01-storyboard-table-image-first.intent.mjs` 为入口；更早的 storyboard 方案只能作为历史需求来源，不能直接覆盖新版设计。
+- **Design/source 层：** 以 `docs/archive/plan/2026-09-01-storyboard-table-genre-profile.md`、`docs/archive/plan/2026-08-13-video-deconstruction-storyboard-table.md`、`docs/archive/design/mockups/2026-09-01-storyboard-table-image-first.html` 和 `docs/archive/design/mockups/contracts/2026-09-01-storyboard-table-image-first.intent.mjs` 为入口；更早的 storyboard 方案只能作为历史需求来源，不能直接覆盖新版设计。
 - **Workspace/UI 层：** 检查 `src/workbench/creation/storyboard/StoryboardWorkspace.tsx`、`StoryboardShotTable.tsx`、`StoryboardPlanEditor.tsx`、`StoryboardPlanCard.tsx`、`StoryboardActionCard.tsx`、`StoryboardBulkBar.tsx`、`StoryboardSelectionToolbar.tsx`、`shotRow/StoryboardShotRow.tsx` 和 `shotRow/StoryboardShotFrame.tsx`。
 - **Interaction/exec 层：** 检查 `storyboardDInteractions.ts`、`storyboardActionCardModel.ts`、`exec/storyboardRowActions.ts`、`exec/storyboardExec.ts`、`exec/storyboardNodeBinding.ts` 和 `exec/storyboardRowStatus.ts`，确保单镜生成、批量生成、锁定/等待参考、重试、筛选、折叠、插镜、选择、拖拽/排序、编辑 prompt、设置首帧/参考和回画布都有明确动作与状态。
 - **Plan/IR/provenance 层：** 检查 `src/workbench/generationCanvas/agent/storyboardPlan.ts`、`storyboardPlanSchema.ts`、`storyboardPlanEdits.ts`、`storyboardDialogue.ts`、`storyboardTimelinePlan.ts`、`runStoryboardPlanner.ts`、`sendStoryboardToTimeline.ts`、`adoptStoryboardBatch.ts`；验证镜头 ID/order、场分组、对白、prompt skeleton、model/mode/params、参考素材、source/version/hash 和 stale/revision 不会在表格与画布/时间线之间丢失。
@@ -191,7 +191,7 @@ MCP 测试按“工具面 → 握手/授权 → 执行 → 副作用 → 收据/
 | 阶段 | 结果 | 必须留下的证据 | 未满足时的动作 |
 |---|---|---|---|
 | S0 冻结现场 | 当前 main、PR、worktree 和远端快照固定 | `main-convergence-inventory` 初版、基线 SHA、dirty 清单 | 停止清理，先保护现场 |
-| S1 全量盘点 | 每个 PR/分支/计划都有唯一身份和状态；未知会话/未提交史诗报告必须显式保留 | [PR/branch/worktree inventory](../../../qa/2026-09-04-pr-branch-inventory.md)、[MCP audit](../../../qa/2026-09-04-mcp-rebaseline-audit.md)、[epics audit](../../../qa/2026-09-04-epics-rebaseline-audit.md) 及其 SHA/重复判断 | 不能凭标题或 CI 状态判断完成度；未知项未解除前不得清理/合并 |
+| S1 全量盘点 | 每个 PR/分支/计划都有唯一身份和状态；未知会话/未提交史诗报告必须显式保留 | [PR/branch/worktree inventory](../../qa/2026-09-04-pr-branch-inventory.md)、[MCP audit](../../qa/2026-09-04-mcp-rebaseline-audit.md)、[epics audit](../../qa/2026-09-04-epics-rebaseline-audit.md) 及其 SHA/重复判断 | 不能凭标题或 CI 状态判断完成度；未知项未解除前不得清理/合并 |
 | S2 安全收敛 | 只有可验证、非重复、非阻塞的提交进入 main | 每次合并的 merge SHA、checks、合并后验证 | 冲突或失败转后续修复 PR |
 | S3 遗留提交捞取 | 唯一且已提交的 worktree/remote branch 得到归宿 | patch-id/range-diff、来源、目标 PR | dirty/detached 只保留，不自动搬运 |
 | S4 真实重基线 | M0–M5、Agent、各 epic 的事实状态被重新证明 | 状态矩阵、当前 main SHA、未证实项 | 文档状态降级为“未证实/阻塞” |
@@ -203,7 +203,7 @@ MCP 测试按“工具面 → 握手/授权 → 执行 → 副作用 → 收据/
 
 - [x] 在独立 worktree 从最新 `origin/main` 建立本轮工作分支，并保存 `git rev-parse HEAD`、`git status --short --branch`、`git worktree list --porcelain`、`git remote -v` 和远端 refs。
 - [x] 运行 `pnpm run delivery:preflight`。若 preflight 失败，先分类为环境、权限、网络、依赖或仓库问题，记录结果，不通过盲目重试伪造基线。
-- [x] 建立 `docs/qa/2026-09-04-main-convergence-inventory.md`，先写入基线快照和运行环境；后续所有盘点追加到该文件或同名结构化数据中。
+- [x] 建立 `docs/archive/qa/2026-09-04-main-convergence-inventory.md`，先写入基线快照和运行环境；后续所有盘点追加到该文件或同名结构化数据中。
 - [x] **红证据：** 在清单尚不存在时，尝试读取本轮清单应得到明确的“尚未建立”结果；随后以当前 SHA 建立清单。这里的红证据只证明收据链尚未建立，不把缺文件当作产品失败。
 - [x] **绿证据：** 清单包含当前 SHA、分支、worktree、远端访问结果和 preflight 结果，并通过 `git diff --check`。
 - [x] 退出条件：现场已经冻结，且所有后续操作都能回到本轮基线。任何脏 worktree 的路径、所有者和保留原因必须登记。
@@ -212,11 +212,11 @@ MCP 测试按“工具面 → 握手/授权 → 执行 → 副作用 → 收据/
 
 > 当前状态：盘点报告已完成并入账；活跃会话进程扫描受 macOS 权限限制，已在报告中显式标记为 `unknown`。S1 的未知项不是失败隐藏点，后续任何清理/捞取前仍必须重新确认所有权。
 
-- [x] 读取全部 open PR 的 `number/title/head/base/state/checks`，同时读取最近关闭/已合并 PR；详见 [S1 PR/branch/worktree inventory](../../../qa/2026-09-04-pr-branch-inventory.md)。
+- [x] 读取全部 open PR 的 `number/title/head/base/state/checks`，同时读取最近关闭/已合并 PR；详见 [S1 PR/branch/worktree inventory](../../qa/2026-09-04-pr-branch-inventory.md)。
 - [x] 扫描本地和远端分支，计算与 `origin/main` 的 merge-base、ahead/behind、变更文件、patch-id 和 exact-tree duplicate；详见同一报告的重点 refs 表。
 - [x] 扫描所有 worktree，区分 clean、dirty、detached、prunable 和未知会话风险；只登记，不删除。活跃进程检测的权限阻塞已保留在报告中。
 - [x] 把现有 orphan/prunable 审计作为后续任务依赖：记录每个候选的路径、HEAD/branch、gitdir、dirty/untracked、owner 和“保留/待确认/可回收”决定；本轮已有 2 个 prunable 候选，但因会话状态 `unknown` 只登记不处理。
-- [x] 读取计划/历史来源并记录文档状态漂移；MCP 与史诗的专项证据分别见 [MCP rebaseline audit](../../../qa/2026-09-04-mcp-rebaseline-audit.md) 和 [epics rebaseline audit](../../../qa/2026-09-04-epics-rebaseline-audit.md)。
+- [x] 读取计划/历史来源并记录文档状态漂移；MCP 与史诗的专项证据分别见 [MCP rebaseline audit](../../qa/2026-09-04-mcp-rebaseline-audit.md) 和 [epics rebaseline audit](../../qa/2026-09-04-epics-rebaseline-audit.md)。
 - [x] **红证据：** 报告记录了过期账本与当前 PR/check/ref/worktree 证据的冲突，以及无法证明活跃会话为空的环境阻塞。
 - [x] **绿证据：** 当前可确认条目已按 `open-blocked`、`stacked`、`duplicate`、`dirty-preserve`、`previous-session-released`、`convergence-queue-pending`、`needs-decision` 等唯一分类登记，并带 URL/SHA/路径；未确认项保持 `unknown`。
 - [x] 退出条件：形成以 `origin/main=45912ae01a155a3f6592f65368d0ce3d12fc034e` 为基线的 PR、branch、worktree、计划来源清单；剩余未知项已显式列出，不作为清理或合并授权。
@@ -237,7 +237,7 @@ MCP 测试按“工具面 → 握手/授权 → 执行 → 副作用 → 收据/
 - [ ] 对 clean committed 的 worktree 和远端无 PR 分支做来源审计；优先处理明显唯一且与当前 main 不重复的提交，例如 canvas click-select 分支、test-only MCP remaining-holes 分支和 stacked M5 分支，但先确认所有权、依赖和是否已有新实现。
 - [ ] 对每个来源使用 `git merge-tree --write-tree origin/main <head>`、`git range-diff origin/main...<head>`、`git diff --cherry-pick origin/main...<head>` 和文件级审阅；不得直接 cherry-pick 未审计的整条历史。
 - [ ] dirty 或 detached worktree 只收集路径、SHA、修改文件和联系人；除非用户明确授权，不移动、清理、覆盖或强制提交它们。untracked 文件也必须登记，不能因为 Git 默认不显示就丢失。
-- [ ] 对所有 orphan/prunable/unknown-session 记录先消费 [S0/S1 审计结果](../../../qa/2026-09-04-main-convergence-inventory.md)，逐路径补齐 owner、HEAD、branch、gitdir、dirty/untracked 和恢复/回收决定；若审计不存在或无法刷新，任务停在 `blocked`，不得执行 `git worktree prune`、删除或捞取。
+- [ ] 对所有 orphan/prunable/unknown-session 记录先消费 [S0/S1 审计结果](../../qa/2026-09-04-main-convergence-inventory.md)，逐路径补齐 owner、HEAD、branch、gitdir、dirty/untracked 和恢复/回收决定；若审计不存在或无法刷新，任务停在 `blocked`，不得执行 `git worktree prune`、删除或捞取。
 - [ ] **红证据：** 每个拟捞取来源在合并前必须有一个可复现的缺口断言，证明该唯一能力尚未在当前 main 中成立；若断言已经绿，则来源归类为 duplicate/已吸收。
 - [ ] 将唯一变更拆成最小 PR；test-only 变更与生产代码分开；stacked 变更按依赖从底到顶处理，任何 base 不可重放的分支转为重建任务，不强行合并。
 - [ ] **绿证据：** 每个捞取 PR 都有红→绿记录、merge verification、相关系统测试和视觉走查（若触及 UI），来源 commit 与最终 merge SHA 可追溯。
@@ -247,8 +247,8 @@ MCP 测试按“工具面 → 握手/授权 → 执行 → 副作用 → 收据/
 
 > 当前状态：史诗重基线报告已在工作区生成但尚未由其所属会话提交；在该报告提交并可追溯到当前 `origin/main` 前，Task 4 仍保持未完成。MCP 的专项报告已提交，可作为 Task 4 的输入，但不能替代史诗全量重基线。
 
-- [ ] 以最新 main SHA 重新阅读并汇总 [epics rebaseline audit](../../../qa/2026-09-04-epics-rebaseline-audit.md)；同时以 [MCP rebaseline audit](../../../qa/2026-09-04-mcp-rebaseline-audit.md) 和 [PR/branch inventory](../../../qa/2026-09-04-pr-branch-inventory.md) 校对来源、SHA、PR 状态和阻塞项。史诗报告未提交前，不把 Task 4 标为完成。
-- [ ] 建立 `docs/qa/2026-09-04-main-convergence-rebaseline.md`，每一行至少有：目标/用户价值、代码路径、相关 PR/merge SHA、契约证据、单元证据、系统/真实 Electron 证据、持久化/重启证据、视觉证据、当前状态、阻塞原因和下一动作；主表至少分为 MCP、Agent、Storyboard Table 三大能力簇，并记录三者之间的交接。
+- [ ] 以最新 main SHA 重新阅读并汇总 [epics rebaseline audit](../../qa/2026-09-04-epics-rebaseline-audit.md)；同时以 [MCP rebaseline audit](../../qa/2026-09-04-mcp-rebaseline-audit.md) 和 [PR/branch inventory](../../qa/2026-09-04-pr-branch-inventory.md) 校对来源、SHA、PR 状态和阻塞项。史诗报告未提交前，不把 Task 4 标为完成。
+- [ ] 建立 `docs/archive/qa/2026-09-04-main-convergence-rebaseline.md`，每一行至少有：目标/用户价值、代码路径、相关 PR/merge SHA、契约证据、单元证据、系统/真实 Electron 证据、持久化/重启证据、视觉证据、当前状态、阻塞原因和下一动作；主表至少分为 MCP、Agent、Storyboard Table 三大能力簇，并记录三者之间的交接。
 - [ ] 对每个 `featureId` 增加 Gate A 覆盖矩阵：Happy Path、Boundary、Error、Timeout、Network failure 的测试文件/命令、外部依赖 mock 边界、红测/绿测 SHA、coverage 结果、未覆盖 branch 条件、真实 Electron 任务和实际打包任务（适用时）；缺少真实任务时不能因自动化全绿而升级状态。
 - [ ] 状态只能使用：`已合入且已证明`、`已合入但未证明`、`部分完成`、`仅计划/设计`、`未开始`、`被阻塞`、`等待 owner/状态刷新`、`等待用户决策`。`CI green` 只能填某个证据列，不能直接填完成状态。
 - [ ] M0–M5 必须按现行 checklist 重跑，尤其确认当前 main 的 packaged parity、真实 Agent Host context、M4 taint/approval spend guard、M5 client confirmation chain 和 packaged L2；旧的 50/50、旧 release 或旧 SHA 证据全部标记为历史证据。
@@ -261,19 +261,19 @@ MCP 测试按“工具面 → 握手/授权 → 执行 → 副作用 → 收据/
 
 ## Task 4A — Audit PR #454 Storyboard Slice Before Any Merge
 
-- [ ] 阅读并引用 `docs/qa/2026-09-04-pr454-storyboard-agent-audit.md`，把 #454 拆成三条独立状态：分镜表功能、锚行/参数条设计、右侧 Agent canonical tool path；不得用 PR 标题或单个 Workers check 代表整体完成。
+- [ ] 阅读并引用 `docs/archive/qa/2026-09-04-pr454-storyboard-agent-audit.md`，把 #454 拆成三条独立状态：分镜表功能、锚行/参数条设计、右侧 Agent canonical tool path；不得用 PR 标题或单个 Workers check 代表整体完成。
 - [ ] **功能红测：** 在当前 main 和 #454 head 各执行一次生产形状的 Agent 调用：`toolName=nomi_canvas_plan`、`args.operation=patch_shots`。断言选中行注入、确认卡、行内 diff、批准/拒绝、proposal/receipt、落盘和重启恢复；若现有测试只喂 `patch_shots` 或使用 `window.__nomiStoryboardPatchPreview`，该证据只能列为旧名/测试探针证据，不能代替红测。
 - [ ] **别名正性对照：** 同一测试用故意将 `operation` 改成未知值、修改错误 revision、遗漏必需 selector 或点名 `durationSec` 但篡改另一个字段；每种错误都必须可靠失败/不落盘。测试必须能证明 `nomi_canvas_plan` 与 `patch_shots` 的工具名/operation 责任边界没有漏接。
 - [ ] **功能绿测：** 修正或证明 canonical 边界后，用同一生产形状跑通“右侧 Agent 提议 → 分镜行内预览 → 一次确认 → 一次撤销/拒绝 → receipt → 重启恢复”；至少覆盖 prompt、shot kind、duration、aspect ratio、model/vendor 中的代表性字段，并验证未点名字段逐字保留。
 - [ ] **MCP 交接：** 从 `nomi_canvas_plan` 的 MCP/模型目录、schema、授权、执行器和 output receipt 追到分镜表；补跑 `check:mcp-payload`、`check:mcp-tool-refs`、合同/单元和相关 L2 journey。不能只测 legacy `patch_shots` descriptor。
-- [ ] **设计红证据：** 将已否定的 `docs/design/mockups/2026-09-03-storyboard-anchor-row-and-param-rail.html` 及交接文档中的用户反馈登记为视觉 FAIL；不把 `storyboard-anchor-model-modes.walk.mjs` 的 8 个静态模式通过写成设计通过。
+- [ ] **设计红证据：** 将已否定的 `docs/archive/design/mockups/2026-09-03-storyboard-anchor-row-and-param-rail.html` 及交接文档中的用户反馈登记为视觉 FAIL；不把 `storyboard-anchor-model-modes.walk.mjs` 的 8 个静态模式通过写成设计通过。
 - [ ] **设计绿门：** 新方向先明确锚/镜头空间组织、信息层级、真实字段和交互状态，再在真实 Electron 隔离原型或真实组件中截图；必须由用户/指定 reviewer 视觉确认后才允许进入实现 PR。新方案仍按红→绿→视觉走查，不继续在未确认的旧样张上叠修。
 - [ ] **范围判定：** #454 只算 storyboard + Agent tool slice，不替代 Agent interaction epic、MCP 全量、M0–M5、TikHub/视频拆解或画布性能的重基线；任何未覆盖面进入对应 follow-up。
 - [ ] 退出条件：#454 每个文件簇都有 `merged-and-proven`、`duplicate`、`open-ready`、`needs-decision` 或 `merged-but-unproven` 的唯一分类；不存在“功能可能已做、设计不喜欢、Agent 还没验证”混成一个 PR 状态的情况。
 
 ## Task 5 — Perform the Required Visual and Interaction Walkthrough
 
-- [ ] 任何 UI 走查对象先引用 [`docs/design/nomi-design-flow-image2-gate.md`](../../../design/nomi-design-flow-image2-gate.md)，确认 Prompt Brief → image2 → 用户确认 → 冻结 contract 已完成；未确认对象停在 `waiting user decision`，不得先做红测后的 UI 实现。至少对照 `docs/design/mockups/2026-09-03-agent-ui-p0-exception-states.html`、`docs/design/mockups/2026-09-01-video-deconstruction-v1.html` 以及仓库中对应的 design contract；PR #454 的锚行/参数条样张明确是失败样张，必须标记为 `visual-fail / needs-design-decision`，不能当批准稿。
+- [ ] 任何 UI 走查对象先引用 [`docs/archive/design/nomi-design-flow-image2-gate.md`](../../design/nomi-design-flow-image2-gate.md)，确认 Prompt Brief → image2 → 用户确认 → 冻结 contract 已完成；未确认对象停在 `waiting user decision`，不得先做红测后的 UI 实现。至少对照 `docs/archive/design/mockups/2026-09-03-agent-ui-p0-exception-states.html`、`docs/archive/design/mockups/2026-09-01-video-deconstruction-v1.html` 以及仓库中对应的 design contract；PR #454 的锚行/参数条样张明确是失败样张，必须标记为 `visual-fail / needs-design-decision`，不能当批准稿。
 - [ ] 走查 Agent 正常态、异常态、恢复态、工作中/停止/重试/需确认态；额外走查 storyboard 右侧 Agent 的 canonical `nomi_canvas_plan(operation=patch_shots)` 提议、预览、确认、拒绝、撤销和重启恢复；走查 MCP 工具调用、授权/确认、失败/重试和结果回写；走查 TikHub → 视频拆解 → 新版分镜表 → 后续创作入口；走查画布拖拽/选中/缩放/大量节点；走查 M5 打包应用关键链路。
 - [ ] 优先使用现有 walkthrough：`tests/ux/agent-ui-conformance.walk.mjs`、`tests/ux/agent-ui-exception-states-runtime.walk.mjs`、`tests/ux/mcp-l2-journeys.e2e.mjs`、`tests/ux/mcp-generation-elicitation-first.e2e.mjs`、`tests/ux/mcp-skills-integration.e2e.mjs`、`tests/ux/tikhub-connector.walk.mjs`、`tests/ux/storyboard-table-exec.walk.mjs`、`tests/ux/storyboard-table-phasec.walk.mjs`、`tests/ux/canvas-performance-benchmark.e2e.mjs`、`tests/ux/p4-s5-canvas-landing.e2e.mjs`、`tests/ux/p4-s6-rework-version.e2e.mjs`；打包态使用 `tests/ux/mcp-l2-journeys.e2e.mjs --packaged release/mac-arm64/Nomi.app`，并记录是否因缺 release/凭据而阻塞。
 - [ ] 每条路径至少保存：进入前状态、关键交互后状态、错误/确认态、落盘或恢复后的状态。截图存入本轮 QA 证据目录，不以一张“看起来对”的截图代替完整走查。
@@ -296,7 +296,7 @@ MCP 测试按“工具面 → 握手/授权 → 执行 → 副作用 → 收据/
 
 ## Task 7 — Produce the New Prioritized Execution Backlog
 
-- [ ] 根据 S4/S5 的真实结果生成 `docs/plan/2026-09-04-main-convergence-follow-ups.md`，只保留当前 main 上确实未完成或未证明、且有用户价值的项目；每项写明用户价值、依赖、风险、红测、实现范围、绿测、视觉验收和交付方式。
+- [ ] 根据 S4/S5 的真实结果生成 `docs/archive/plan/2026-09-04-main-convergence-follow-ups.md`，只保留当前 main 上确实未完成或未证明、且有用户价值的项目；每项写明用户价值、依赖、风险、红测、实现范围、绿测、视觉验收和交付方式。
 - [ ] 优先级默认按“阻塞主创作链路 → 影响 Agent 核心闭环 → 影响团队复用/稳定性 → 性能/体验 → 研究/扩展”排序；但必须以证据矩阵为准，不凭历史标题排序。
 - [ ] 预期需要单独推进的候选包括：#452 Agent Host usage/receipt 稳定性、M5 packaged graduation、Agent piece 3/真实创作闭环、MCP Q8/B 余项、新版分镜表与旧分镜方案的迁移/补齐、resource chain P0-2/3/4、canvas click-select S6；它们只有在 S4 重新确认后才进入正式顺序。
 - [ ] 架构三期（清理硬环并建立中立契约层）必须单列为架构决策任务：先读近邻开源实现，再做六角色评审和迁移边界，不在本收敛任务里直接重构。
@@ -307,7 +307,7 @@ MCP 测试按“工具面 → 握手/授权 → 执行 → 副作用 → 收据/
 
 ## Task 8 — Close the Delivery Loop
 
-- [ ] 更新 `docs/qa/2026-09-04-main-convergence-receipt.md`，汇总本轮开始/结束 SHA、合并 PR、捞取来源、保留的 dirty worktree、状态矩阵、视觉 reviewer、阻塞项和 follow-up 链接。
+- [ ] 更新 `docs/archive/qa/2026-09-04-main-convergence-receipt.md`，汇总本轮开始/结束 SHA、合并 PR、捞取来源、保留的 dirty worktree、状态矩阵、视觉 reviewer、阻塞项和 follow-up 链接。
 - [ ] 仅在事实发生后更新 `docs/plan/INDEX.md` 和过期计划的状态；每个状态变化引用当前证据，不批量把旧 `🚧` 改成完成。
 - [ ] 最终 main 合并完成后再次运行 `pnpm run delivery:preflight` 和 `pnpm run delivery:verify-merged -- --expected-sha <actual-main-sha>`；按本轮改动风险补齐 contracts、build、system、journey、packaged 和 visual gates。
 - [ ] **红证据：** 在最终收据写入前，检查必填字段/证据路径缺失应失败；检查是否仍有未解释的 dirty/blocked/skip/视觉 fail。

@@ -8,7 +8,7 @@
 // 与 2 秒 crf-35 的 720p，解码成本接近零，而且**直接写 project.json 快照**、导入一步都没走。
 // 前三件真实（真实应用 / 真实页面输入 / 真实工具轨迹）全都拦不住它：走查可以完全「像人一样点」，
 // 只要点的是合成素材，就照样测不出来。所以第④件必须单列，并且必须是机器判据。
-// 详见 docs/lessons/2026-09-14-real-media-first-run-exposed-import-and-open-time.md
+// 详见 docs/archive/lessons/2026-09-14-real-media-first-run-exposed-import-and-open-time.md
 //
 // 三层判据（和 check:standard-formats / check:framework-surface 同一套棘轮形状）：
 //   (a) 覆盖面：画布性能 / 导入 / 导出 / 走查四类各至少一条登记测试；指到的文件必须存在、

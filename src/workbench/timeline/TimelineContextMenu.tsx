@@ -9,7 +9,7 @@ import { collectApplicableSeams } from './timelineTransition'
  * 时间轴右键菜单。**2026-09-08 刀 1：只换实现，不动形态。**
  *
  * 换掉的是壳：项、顺序、文案、快捷键、危险项、四种 target 的分支——一条没动
- * （逐项对账表在 docs/plan/2026-09-08-menu-primitive-inventory.md §1 第 17 行）。
+ * （逐项对账表在 docs/archive/plan/2026-09-08-menu-primitive-inventory.md §1 第 17 行）。
  * 换来的是 `WorkbenchMenu`（Radix）带的四样现役没有的东西：
  *   · **点外面能关**——迁移前全仓唯一关不掉的菜单（只能 Esc 或点项，清单 C16）；
  *   · **方向键 / Home / End / 首字母跳转**——迁移前 0 项支持；

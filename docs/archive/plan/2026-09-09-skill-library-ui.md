@@ -32,4 +32,4 @@
 节点更多菜单红测：虚拟锚点与触发 chip 横向相差 507px。内容虽然 Portal 到 body，Trigger 仍在 transform 祖先内，fixed 坐标被再变换。共享 WorkbenchMenu 将 Trigger 同样 Portal 到 body；保持原菜单 API、键盘与关闭行为。验证普通画布与额外祖先平移两种场景，菜单左边距触发点 <32px。其它点位菜单同用这个边界，不做节点专用定位器。
 
 ## 视觉对账收据
-逐项结果与四面 Electron 截图：`docs/design/verification/2026-09-09-skill-library/README.md`。
+逐项结果与四面 Electron 截图：`docs/archive/design/verification/2026-09-09-skill-library/README.md`。

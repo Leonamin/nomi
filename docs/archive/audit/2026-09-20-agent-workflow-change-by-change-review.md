@@ -31,13 +31,13 @@ P2运维：已合入的竞品skill仍指向临时worktree，自动化亦保留�
 | CLAUDE.md + AGENTS.md | 原有模型/论文雷达无竞品流程；只新增三日入口，AGENTS生成同步 | 没删除原工程纪律；用户“只建流程”优先；自动研究不能转为开发/发布授权 |
 | agent-skills/nomi-competitive-radar/SKILL.md | 新增研究入口，未替换产品运行时skill | 核心LibTV/TapNow、扩展三家；声明/实测/反馈/推断/未知分开，不把营销文案当事实 |
 | references/protocol.md | 新增固定锚点、锁、检查点、恢复、证据、轮换与交接 | 共用现有TikHub脚本/浏览器登录，不新增抓取服务；文字规程非可执行调度器，首次执行需实证 |
-| docs/research/competitive/README.md | 新增范围、周期、入口索引 | 不声称本轮实际调研；与用户目标一致 |
+| docs/archive/research/competitive/README.md | 新增范围、周期、入口索引 | 不声称本轮实际调研；与用户目标一致 |
 | sources.md | 新增五家来源登记 | 未证实来源标未知，用户给URL不冒称验证；MiniMax Design身份要另查 |
 | TEMPLATE.md | 新增覆盖矩阵、旅程、内容案例、Nomi对照、实验结论 | 覆盖设计/引导/图标/功能/Agent/生态/社区/营销；缺口不能填完成 |
 | VALIDATION.md | 新增静态/桌面演练记录 | 明确未实际研究/未首轮调度；临时skill路径遗留已在本次审计修正 |
-| docs/plan/2026-09-19-competitive-learning-workflow.md | 新增实施前范围与规则 | 没有产品功能修改或自动发布授权 |
+| docs/archive/plan/2026-09-19-competitive-learning-workflow.md | 新增实施前范围与规则 | 没有产品功能修改或自动发布授权 |
 | docs/README.md | 追加单一目录入口 | 索引变更，无运行时代码 |
-| docs/roadmap/TODO.md | 新增T-CR项目并关联网站任务 | 未把表情/姿势/插件/营销假标为已实现；不删除原任务 |
+| docs/archive/roadmap/TODO.md | 新增T-CR项目并关联网站任务 | 未把表情/姿势/插件/营销假标为已实现；不删除原任务 |
 | 本机automation.toml、skill symlink（非Git） | 固定三日cron与可发现入口 | TOML/锚点/ACTIVE可读回；临时源已迁移稳定主仓；调度器实际接纳/首跑仍未验证 |
 
 没有修改依赖版本、鉴权协议、生成费用确认或发布配置。不执行与本diff无关的全依赖漏洞升级，也不把“不涉及”伪装成全仓安全审计。

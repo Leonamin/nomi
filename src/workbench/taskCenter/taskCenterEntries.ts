@@ -2,7 +2,7 @@ import { classifyGenerationError } from '../observability/classifyError'
 import { generationFeedback } from '../observability/generationFeedback'
 import { narrateTaskOutcome } from '../observability/narrate'
 // 任务中心的展示派生（纯函数，逻辑全在这，组件只负责画）。
-// 方案：docs/plan/2026-08-02-task-center-queue.md
+// 方案：docs/archive/plan/2026-08-02-task-center-queue.md
 //
 // 两个真相源在此合流（各管各的，零重叠）：
 //   generationQueueStore → 调度：谁被登记了、第几波、有没有被取消、批次刹没刹车

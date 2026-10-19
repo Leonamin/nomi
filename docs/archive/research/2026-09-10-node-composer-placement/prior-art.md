@@ -1,6 +1,6 @@
 # 先查别人报告：节点浮框定位 / 版本堆叠外观 / 「生成几个」计数（2026-09-10 调研）
 
-对应方案：[docs/plan/2026-09-10-node-composer-placement-variants.md](../../plan/2026-09-10-node-composer-placement-variants.md)。
+对应方案：[docs/archive/plan/2026-09-10-node-composer-placement-variants.md](../../plan/2026-09-10-node-composer-placement-variants.md)。
 对应用户反馈：2026-09-10 真机反馈 #10 前半（浮框漂移 / 不在节点正下方 / 被截断；**底栏那半条 2026-09-10 用户复核后判定「单行没有问题」，不在本次范围**）与 #11（视频节点后面的「图片」占位被读成「生成几个」）。
 
 写这份的原因（R27）：这次要动的两件事（把浮框钉回节点、给堆叠伪卡按媒体类型换外观）**每一件生态里都已有成品**，先证明自己查过、再决定用哪份，比直接改快也比直接改可信。

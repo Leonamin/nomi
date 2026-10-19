@@ -367,7 +367,7 @@ export function connectionHostname(hostname: string): string {
  *             拿它当判据正是 2026-09-06 的病根（fake-ip 合成地址被当成内网目的地）。
  *             名字层仍然是真判据：IP 字面量私网、localhost/.local 一律拒——**不是不判，是判名字**。
  *
- * 先查别人（详见 docs/plan/2026-09-07-model-generation-core-path.md「先查别人（第二轮）」）：
+ * 先查别人（详见 docs/archive/plan/2026-09-07-model-generation-core-path.md「先查别人（第二轮）」）：
  *   · GitLab 撞过一模一样的题（<https://gitlab.com/gitlab-org/gitlab/-/work_items/378267>：不能解析
  *     域名的自建实例配了代理后，GitHub Import 全挂）。他们的处置是**整段关掉** DNS 重绑保护：
  *     `Gitlab.http_proxy_env?` 为真就跳过检查。这条查出来的是「别人也栽在这里，而且默认反应就是

@@ -17,7 +17,7 @@ hit_pkg = fp.endswith("package.json")
 hit_plan = "/docs/archive/plan/" in fp and fp.endswith(".md")
 if not (hit_pkg or hit_plan):
     sys.exit(0)
-what = "动 package.json（加依赖）" if hit_pkg else "写 docs/plan 方案"
+what = "动 package.json（加依赖）" if hit_pkg else "写 docs/archive/plan 方案"
 msg = (
     f"【R5 · 选型实查最新（hook 提醒）】你正在{what}。若这一步可能引入新框架 / 新技术栈："
     "① 先 Context7（resolve-library-id + query-docs）拉它**最新**文档 + 版本/发布日期；"

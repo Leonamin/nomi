@@ -1,6 +1,6 @@
 # 2026-09-07 供应商模型雷达 · 分诊 + 接入方案
 
-雷达轮次（`pnpm run radar:models`，2026-09-07 本地实跑，结果落 `docs/research/model-radar/latest.json`）：
+雷达轮次（`pnpm run radar:models`，2026-09-07 本地实跑，结果落 `docs/archive/research/model-radar/latest.json`）：
 
 | 供应商车道 | 盯住 | 新增 | 下架 | 未接入 | 备注 |
 |---|---|---|---|---|---|
@@ -199,7 +199,7 @@ sources: [{ url: "https://docs.apimart.ai/en/api-reference/videos/gemini-omni-1.
 - `scripts/model-radar.ts:221-225` —— `usableApiKeyFromRecord()` 见到 `record.enc === "safeStorage"` **直接返回空串**，注释写明「safeStorage 密文要 Electron 主进程才解得开，纯 tsx 脚本拿不到」。
 - 于是 `:258-261` 抛出用户看到的那句错误。
 
-**所以这不是 bug，是一个已知的能力缺口**——`docs/plan/2026-08-27-vendor-model-radar.md:35` 早就把它记成「后续增强」：「apimart 另有 `GET /v1/models?expand=…`……但它要 API key，而 key 是 safeStorage 加密存在 Electron 里、独立脚本解不开。」车道本身的 **fail-closed 行为是对的**（明说「今天没查成」、快照不动、绝不静默当成「没有新模型」），符合铁律 1，不要去改它。
+**所以这不是 bug，是一个已知的能力缺口**——`docs/archive/plan/2026-08-27-vendor-model-radar.md:35` 早就把它记成「后续增强」：「apimart 另有 `GET /v1/models?expand=…`……但它要 API key，而 key 是 safeStorage 加密存在 Electron 里、独立脚本解不开。」车道本身的 **fail-closed 行为是对的**（明说「今天没查成」、快照不动、绝不静默当成「没有新模型」），符合铁律 1，不要去改它。
 
 ### 4.2 修法（三选一，**推荐 A**；本轮不实现）
 
@@ -219,7 +219,7 @@ sources: [{ url: "https://docs.apimart.ai/en/api-reference/videos/gemini-omni-1.
 
 **C. 手工在 `~/.zshenv` 里 `export APIMART_API_KEY=…`** —— 最省事，和本机 `TIKHUB_API_KEY` 现在的做法一致，**用户自己就能做**（不经聊天传 key）。但它把明文密钥重新落到一个 shell 配置文件里，是**兜底不是修法**。若用户只想今天先看到这条车道的结果，这条最快；长期仍应做 A。
 
-**建议**：把 A 排进雷达自身的维护项（它同时把 `docs/plan/2026-08-27-vendor-model-radar.md:35` 那条挂了 10 天的「后续增强」结清）；在 A 落地前，用 C 作为显式兜底，并在错误文案里保留现有指引（它已经写得很清楚）。
+**建议**：把 A 排进雷达自身的维护项（它同时把 `docs/archive/plan/2026-08-27-vendor-model-radar.md:35` 那条挂了 10 天的「后续增强」结清）；在 A 落地前，用 C 作为显式兜底，并在错误文案里保留现有指引（它已经写得很清楚）。
 
 ---
 

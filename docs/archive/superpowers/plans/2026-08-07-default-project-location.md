@@ -191,12 +191,12 @@ When `source === 'environment'`, show a concise managed-environment hint and dis
 - [ ] **Step 4: Run the journey and focused tests to verify GREEN**
 
 Run: `pnpm run build && node tests/ux/project-location-settings.walk.mjs && pnpm vitest run electron/settings/projectLocationSettings.test.ts electron/runtimePaths.test.ts electron/settings/projectLocationIpc.test.ts`
-Expected: PASS with light/dark screenshots saved under `docs/design/mockups/2026-08-07-project-location/`.
+Expected: PASS with light/dark screenshots saved under `docs/archive/design/mockups/2026-08-07-project-location/`.
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add src/workbench/settings src/i18n/locales/settings.ts tests/ux/project-location-settings.walk.mjs docs/design/mockups/2026-08-07-project-location
+git add src/workbench/settings src/i18n/locales/settings.ts tests/ux/project-location-settings.walk.mjs docs/archive/design/mockups/2026-08-07-project-location
 git commit -m "feat(settings): choose new project location"
 ```
 

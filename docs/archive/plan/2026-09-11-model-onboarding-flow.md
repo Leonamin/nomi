@@ -33,8 +33,8 @@
 一个承诺「立刻花钱验证」。用户看到的是哪一个，取决于他从哪个入口进来——他自己无从判断。
 
 真机形态证据（09-09 / 09-11 走查截图，本文不新拍）：
-`docs/plan/2026-09-09-sweep-ledger-triage/settings-model-02-open-models-after.png`（模型设置首页 IA）、
-`docs/research/2026-09-11-comfyui-matrix-evidence/D3-model-picker.png`（画布模型框）。
+`docs/archive/plan/2026-09-09-sweep-ledger-triage/settings-model-02-open-models-after.png`（模型设置首页 IA）、
+`docs/archive/research/2026-09-11-comfyui-matrix-evidence/D3-model-picker.png`（画布模型框）。
 
 ---
 
@@ -185,9 +185,9 @@ AI 编译路**本可以**生成 query —— 系统提示词第 45 行明写「A
 字段：`Model.enabled`（`electron/catalog/types.ts:262`）。
 闸门只有一处：`electron/catalog/modelCatalogListing.ts:88` `.filter((m) => m.enabled)` ——
 **这就是「哪些模型出现在画布模型框里」的唯一开关**，语义正确、可逆、已有验收记录
-（`docs/plan/2026-07-04-relay-model-enable-editing.md:39`：「停用某模型后它从生成模型下拉消失、再启用又回来」）。
+（`docs/archive/plan/2026-07-04-relay-model-enable-editing.md:39`：「停用某模型后它从生成模型下拉消失、再启用又回来」）。
 
-所以这不是「坏了」，是**找不到**——与 `docs/lessons/` 里那条「群里说『坏了』多半是『找不到』」同型，这已是第四次。
+所以这不是「坏了」，是**找不到**——与 `docs/archive/lessons/` 里那条「群里说『坏了』多半是『找不到』」同型，这已是第四次。
 
 ### 3.2 为什么找不到（四条，按权重）
 
@@ -217,11 +217,11 @@ AI 编译路**本可以**生成 query —— 系统提示词第 45 行明写「A
 
 ### 3.3 已登记但没做完的那一半
 
-`docs/audit/redundancy-backlog.md:43` B7，状态仍是 ⬜：
+`docs/archive/audit/redundancy-backlog.md:43` B7，状态仍是 ⬜：
 「【第2轮·用户点名】模型选择弹窗零信息架构：画布节点下拉全量平铺（数十条）、无搜索/分组/最近用/能力分类……
 且节点/镜卡/助手三处选模型心智不一」。
-`docs/audit/2026-06-23-app-wide-redundancy-audit.md:8` 称它是「本轮唯一的真 B 类痛点」。
-已落地的只有它的一半（去重 + 自动选最优供应商，`docs/plan/2026-06-23-model-picker-identity-dedup.md`）；
+`docs/archive/audit/2026-06-23-app-wide-redundancy-audit.md:8` 称它是「本轮唯一的真 B 类痛点」。
+已落地的只有它的一半（去重 + 自动选最优供应商，`docs/archive/plan/2026-06-23-model-picker-identity-dedup.md`）；
 供应商排序单独做在「设置 → AI 策略」（`src/workbench/settings/VendorPreferenceOrderSection.tsx:24`）。
 **「在模型框当场整理（隐藏/常用/搜索）」这一半，从 06-23 记到今天，一直空着。**
 
@@ -237,7 +237,7 @@ AI 编译路**本可以**生成 query —— 系统提示词第 45 行明写「A
 | 步数 | 填来源名 → 填 BaseURL →（填 Key）→ 保存连接 → 获取模型 / 手填 id → 勾选 → 确认验证 → 等 ≈ **7 步 + 一次等待** | 选宿主 → 复制 → 粘到助手 → 助手驱动 ③ → 回 Nomi 点确认 = **4 步 + 一次跨应用往返** | `begin → credentials → discover → select → request_confirmation → start` **6 个工具回合 + 人在 Nomi 窗口点确认** |
 | 谁定调用形状 | `catalogCommit.ts:518` 硬写配方 | 抓文档 → AI 编译；抓不到 → `builtinOpenAiCompatibleDraft` 硬写配方 | 同 ② （共享 `electron/providerAdapter/service.ts` 这条路） |
 | 谁出钱 | 用户上游额度 | 用户上游额度 + 用户文本模型 token | 同 ② |
-| 实测数字 | — | — | **入参一次写对 36/58 = 62%；9 回合里 1 回合完全成功；人工引导 5 次；窗口点确认 4 次（3 次白点）**（`docs/research/2026-09-11-mcp-onboarding-defects/prior-art.md` §0，真实 Codex CLI 0.153.4 + 真实 DeepSeek key） |
+| 实测数字 | — | — | **入参一次写对 36/58 = 62%；9 回合里 1 回合完全成功；人工引导 5 次；窗口点确认 4 次（3 次白点）**（`docs/archive/research/2026-09-11-mcp-onboarding-defects/prior-art.md` §0，真实 Codex CLI 0.153.4 + 真实 DeepSeek key） |
 | 09-17 用户拍板 | **手工入口恢复**为第三条路（`57d73c742` 下线过一次）。落点仍是向导的 `newapi` 预设＝可编辑 baseUrl 那一支；文案沿用 v0.21.0 的「自定义 API / 中转站」，放在「其他接入方式」下 | ② 保持在上面、仍是首选 | 不变 |
 
 ### 4.2 卡点表（四问 × 三入口）
@@ -246,7 +246,7 @@ AI 编译路**本可以**生成 query —— 系统提示词第 45 行明写「A
 
 | | ① 手动添加 | ② AI 帮我接入 | ③ MCP |
 |---|---|---|---|
-| **①怎么知道有** | 🟡 设置 → 模型 →「其他接入方式」第一行，说明「先保存地址与 Key，再获取列表或手动输入模型」。入口在，但它长得像「高级选项」 | 🟢 09-11 已把卡放到人在的那一屏，且空态时排第一（`docs/design/2026-09-11-ai-assisted-onboarding-entry.md`）| 🔴 **只有已经在用 Codex/Claude Code 的人才可能知道**；Nomi 这边除了 ② 那张卡，没有第二处说明 |
+| **①怎么知道有** | 🟡 设置 → 模型 →「其他接入方式」第一行，说明「先保存地址与 Key，再获取列表或手动输入模型」。入口在，但它长得像「高级选项」 | 🟢 09-11 已把卡放到人在的那一屏，且空态时排第一（`docs/archive/design/2026-09-11-ai-assisted-onboarding-entry.md`）| 🔴 **只有已经在用 Codex/Claude Code 的人才可能知道**；Nomi 这边除了 ② 那张卡，没有第二处说明 |
 | **②动手前知不知道付出什么** | 🔴 **两个对话框互相矛盾**：一个说「只写入本地、不做真实测试」，一个说「确认后立即进入认证、消耗额度」；`integrationConfirmHint` 说「一次真实生产请求」，实际最坏 6 次/模型（§2.3） | 🔴 同左（共享同一条验证路），另加一笔看不见的文本模型 token | 🔴 **最差的一格**：助手替他点了 `start`，钱从他的上游账户扣，他只在窗口里看到一个「确认」——`request_confirmation` 的幂等语义还坏着（`prior-art.md` §3：每回合再确认一次就把人的点击洗掉，与 Stripe idempotency 相反），实测 4 次点确认里 3 次是白点 |
 | **③空了/错了看到什么** | 🔴 **最差的三格之一**：一串英文 `Provider returned a pending task but the adapter has no query operation` + 「这个错误我们没认出来」+ 一个「我自己接」按钮。用户唯一能推断的是「我填错了」——而他没填错 | 🔴 同左 | 🟡 错误码 → 人话表已存在（`electron/capabilityCore/mcpToolErrorResults.ts:7`），#735 正在补六个新码；但模型侧收到的与人侧看到的仍是两份 |
 | **④凭什么信结果对·错了怎么回头** | 🔴 **最差的一格**：唯一凭证是付费真实生成；失败后模型被盖 `adapter.state=failed` 章，**从画布上消失且没有回退路径**（§2.5）——「怎么回头」的答案目前是「删了重加」 | 🔴 同左，且自动修复在盲修（拿不到响应体，§2.2） | 🟡 有 opaque receipt + 签名 challenge，结果可审计；但一旦 ④ 的发布判据本身是坏的，审计得再干净也没用 |
@@ -458,8 +458,8 @@ B3 = 「我们只确认对方收下了这个请求，能不能出片你自己第
 - 免费探测已存在：`electron/ai/onboarding/modelListProbe.ts:116`、`electron/catalog/validateCandidateCredential.ts`
 - 两份互相矛盾的披露：`src/i18n/locales/modelSetup.ts:88`、`:105`；`src/i18n/locales/onboardingProviders.ts:741`、`:743`
 - 同族旧合同：`docs/fixes/2026-08-30-synchronous-audio-certification-boundary.root-cause.json`
-- MCP 实测数字：`docs/research/2026-09-11-mcp-onboarding-defects/prior-art.md` §0
-- 已登记未做：`docs/audit/redundancy-backlog.md:43`（B7）
+- MCP 实测数字：`docs/archive/research/2026-09-11-mcp-onboarding-defects/prior-art.md` §0
+- 已登记未做：`docs/archive/audit/redundancy-backlog.md:43`（B7）
 
 外部（§5 实查，全部为官方文档页或源码原文）：
 

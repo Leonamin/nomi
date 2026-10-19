@@ -29,7 +29,7 @@ content box **0**。把 `max-height` 夹到 20 仍渲染 26。这精确解释了
 `resolveComposerViewportGeometry`，`aboveFits/belowFits` 都是 `false/false`，落进同一分支、选同一侧，结论不变。
 （该污染在 stage 1620×635 时确实会把本该发出的 pan 请求压掉，故仍需修，见 §4.2。）
 
-**已证伪：不是 Electron 43 回归**（单变量对照见 `docs/plan/2026-08-24-electron-31-to-43-upgrade.md` §9.8）。
+**已证伪：不是 Electron 43 回归**（单变量对照见 `docs/archive/plan/2026-08-24-electron-31-to-43-upgrade.md` §9.8）。
 **已证伪：不是断言写错**——`prompt-input` 与 `重新生成` 确实在 composer-card 子树内（`j3-first-success.mjs:65`
 即以 composer 为根查 prompt-input），断言量的是真问题。
 

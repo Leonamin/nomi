@@ -2,7 +2,7 @@
 
 > 🚧 **状态**：Phase 0 已交付（导入格式对齐，本 PR）；Phase 1-3 待执行。
 > **缘起**：用户群反馈「正常用 hermes 或 workbuddy 都是导入一个 zip 包就行，包里有 skill.md 就行了 / 现在都导入技能都必须是 json 格式」。挖下去发现这不是一个导入 bug，是**整条知识分发链**都只认我们自造的那套。
-> **上位方案**：`docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §2.9「SKILL.md 渐进披露」。本文把那一行展开成可执行的。
+> **上位方案**：`docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §2.9「SKILL.md 渐进披露」。本文把那一行展开成可执行的。
 
 ## 0. 一句话
 
@@ -131,7 +131,7 @@ stages: [storyboard, build]        # 哪个阶段可见（见 §2.4）
 |---|---|---|---|
 | 工作区阶段（用户在哪个 tab） | `creation \| generation \| preview` | `src/design/identity.tsx:30` | 保留（它是 UI 位置，不是工序） |
 | **Playbook 阶段（干到哪一步）** | `script \| storyboard \| build \| generate \| assemble` | `skills/brand-promo/skill.json` | ✅ **定为单一真相源** |
-| 工序图示（等待指示器） | 读本 / 拆镜 / 出图 / 出视频 / 上轨 | `docs/design/nomi-agent-interaction.md` §5 | ⛔ **我造的第四套，改为对齐上一行** |
+| 工序图示（等待指示器） | 读本 / 拆镜 / 出图 / 出视频 / 上轨 | `docs/archive/design/nomi-agent-interaction.md` §5 | ⛔ **我造的第四套，改为对齐上一行** |
 
 对应关系（几乎一一对应，所以对齐是自然的，不是硬凑）：
 

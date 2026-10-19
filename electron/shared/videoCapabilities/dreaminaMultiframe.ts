@@ -1,4 +1,4 @@
-// 即梦官方 dreamina CLI 的多帧视频档案（multiframe2video）。SOURCE：docs/research/2026-09-01-dreamina-cli-v1417-matrix.md
+// 即梦官方 dreamina CLI 的多帧视频档案（multiframe2video）。SOURCE：docs/archive/research/2026-09-01-dreamina-cli-v1417-matrix.md
 // （CLI v1.4.17，checkedAt 2026-09-01）。官方 `-h`：2-20 张图，无 model_version（固定模型）。
 //   - video_resolution：720p 或 1080p，**required**（v1.4.14 破坏性变更；本机 pre-auth 探针实测
 //     `required flag(s) "video_resolution" not set`）——此前档案漏声明此参数、buildMultiframeArgs 也不发它 → 每次多帧提交必被 CLI 硬拒（已修）。

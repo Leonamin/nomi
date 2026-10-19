@@ -1,6 +1,6 @@
 import { LEGACY_IMAGE_ROLE_PARAM_KEYS } from '../shared/imageCapabilities/comfyWorkflowInputRoles';
 // 本地 ComfyUI「自定义 workflow 导入」后端（S3）。纯函数、零副作用、可单测。
-// plan: docs/plan/2026-07-15-comfyui-custom-workflow.md
+// plan: docs/archive/plan/2026-07-15-comfyui-custom-workflow.md
 //
 // 用户可粘贴 ComfyUI 保存的 workflow.json，或 Workflow → Export (API) 导出的 workflow_api.json。
 // 本模块：① 校验是 API 格式（非 UI 保存格式，最常见坑）；② 自动识别可绑定的节点输入（提示词/首帧/输出/数值）；

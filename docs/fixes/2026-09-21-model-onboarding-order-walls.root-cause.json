@@ -410,6 +410,6 @@
     "tests": [
       "electron/capabilityCore/modelOnboarding/credentialInvariants.test.ts"
     ],
-    "structural_ticket": "docs/plan/2026-09-21-mcp-model-onboarding-floor.md"
+    "structural_ticket": "docs/archive/plan/2026-09-21-mcp-model-onboarding-floor.md"
   }
 }

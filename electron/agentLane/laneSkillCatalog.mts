@@ -19,7 +19,7 @@
 //   多根优先级（内置先于用户目录，同名先到先得，输家记诊断）、`metadata.nomi` 扩展块与策展块、内容寻址
 //   （`contentHash`）、受众（用户导入的一律 internal）、可信读根的软链纪律、损坏包不许占坑、
 //   存量 `skill.json` 的一次性迁移、「这条技能要不要 coding 工具」。每一条都在
-//   `docs/plan/2026-09-18-skill-loading-migration.md` §2 有出处与断言。
+//   `docs/archive/plan/2026-09-18-skill-loading-migration.md` §2 有出处与断言。
 //
 // ── 为什么住在岛上 ──
 //   pi 是 ESM-only，主进程是 CommonJS；凡直接摸 pi 的文件都住这个 NodeNext 岛（`tsconfig.pi.json`）。

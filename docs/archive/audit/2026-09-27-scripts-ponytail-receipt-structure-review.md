@@ -5,7 +5,7 @@
 
 ## 评审范围
 
-本次只审发布推送收据这一条共享边界：`scripts/ponytail-review-branch.mjs` 的 `verifyPushReceipt` 和 `scripts/ponytail-review-hook.mjs` 的 pre-push 适配器。它们共同决定「推送的对象是否带来本机新内容、是否需要 Ponytail 收据」。已有的 `scripts` 层结构评审（`docs/audit/2026-09-15-scripts-layer-symptom-cluster-review.md`）指出，`scripts/` 是扁平工具目录，把所有工具合成一个模块键会制造跨主题聚簇；本次不把无关门岗或测试工具并入这条边界。
+本次只审发布推送收据这一条共享边界：`scripts/ponytail-review-branch.mjs` 的 `verifyPushReceipt` 和 `scripts/ponytail-review-hook.mjs` 的 pre-push 适配器。它们共同决定「推送的对象是否带来本机新内容、是否需要 Ponytail 收据」。已有的 `scripts` 层结构评审（`docs/archive/audit/2026-09-15-scripts-layer-symptom-cluster-review.md`）指出，`scripts/` 是扁平工具目录，把所有工具合成一个模块键会制造跨主题聚簇；本次不把无关门岗或测试工具并入这条边界。
 
 ## 结构判断
 

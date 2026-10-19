@@ -6,7 +6,7 @@
 // 画布上每个节点和逐张点完一模一样。只剩 1 张时它不出现；去掉的不算在 N 里。
 // 它跑起来以后的样子（正在发出 k/N）和跑到一半点 × 停下，在 `agent-spend-stop-midway.walk.mjs`。
 //
-// 这条走查同时是样张的机器对账（`docs/design/mockups/contracts/2026-10-01-paid-card-generate-remaining.intent.mjs`）：
+// 这条走查同时是样张的机器对账（`docs/archive/design/mockups/contracts/2026-10-01-paid-card-generate-remaining.intent.mjs`）：
 //   · 翻页那一行只有翻页器和 `←→`（这一档报不出价，没有合计）；
 //   · 「生成剩下 N 张」在动作行最左，右边那两颗是一组；
 //   · 中文一行放得下；英文放不下时左边那颗整颗换到上一行、右边两颗保持一组靠右（不截断、不挤压）。
@@ -17,7 +17,7 @@
 import { clickOrFail, expect, expectAbsent, proveProbe } from './_assert.mjs'
 import { stationTimeout } from './_station-budget.mjs'
 import { assertMockupContract } from './_contract.mjs'
-import generateRemainingContract from '../../docs/design/mockups/contracts/2026-10-01-paid-card-generate-remaining.intent.mjs'
+import generateRemainingContract from '../../docs/archive/design/mockups/contracts/2026-10-01-paid-card-generate-remaining.intent.mjs'
 import { BATCH, COPY, TITLE, createPresenter } from './_spendRemainingWalk.mjs'
 import {
   CANVAS_PANEL, INTERVENTION_ALTERNATE, INTERVENTION_CONFIRM,

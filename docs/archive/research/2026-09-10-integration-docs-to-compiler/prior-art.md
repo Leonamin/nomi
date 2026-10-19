@@ -1,6 +1,6 @@
 # 先查别人：接口文档 → 编译器 / 外部编译 / 接入包格式
 
-> 2026-09-10。对应方案 [docs/plan/2026-09-10-integration-docs-to-compiler.md](../../plan/2026-09-10-integration-docs-to-compiler.md)。
+> 2026-09-10。对应方案 [docs/archive/plan/2026-09-10-integration-docs-to-compiler.md](../../plan/2026-09-10-integration-docs-to-compiler.md)。
 > 三条卡点：① `nomi_integration begin` 收的 `docs` 从不流向编译器；② 没有文本模型就 `AdapterNeedsAiError`（鸡生蛋）；
 > ③ `desktop-local-v1` 接入包没有对外说得清的形状。下面按四问逐条查，**结论先行：三条都用已有的东西，不新造机制**。
 

@@ -9,7 +9,7 @@
 >
 > 这是**既有 UI 的行为修复，不是重画面**（不出样张；被动的形态都保持 2026-07-17 拍板的样子）。
 
-先查别人报告：[docs/research/2026-09-10-node-composer-placement/prior-art.md](../research/2026-09-10-node-composer-placement/prior-art.md)
+先查别人报告：[docs/archive/research/2026-09-10-node-composer-placement/prior-art.md](../research/2026-09-10-node-composer-placement/prior-art.md)
 根因合同（R21）：`docs/fixes/2026-09-10-node-composer-placement.root-cause.json`
 
 ---
@@ -23,7 +23,7 @@
 3. **仓库里已有（现成件）？** 「量一组屏幕矩形」有现成 owner `src/workbench/generationCanvas/reactFlow/useCanvasBottomDockRects.ts:50`（消费方注释 `src/workbench/generationCanvas/components/CanvasBatchGenerateDock.tsx:30`）；「只按锚点选边、不避让」也已有先例 `src/workbench/generationCanvas/nodes/nodeResultStackPlacement.ts:3`。
 4. **仓库里已有（另外两件）？** 节点种类→图标的唯一出口是 `src/workbench/generationCanvas/nodes/renderRegistry.tsx:70`；「一次生成几个」的通用件是 `src/workbench/generationCanvas/nodes/generationVariantCount.ts:1`，执行侧 `src/workbench/generationCanvas/runner/generationRunController.ts:626` **本来就没有 image/video 分支**，硬判只在调用点 `src/workbench/generationCanvas/nodes/NodeGenerationComposer.tsx:423`。
 5. **生态里已有？** React Flow 官方给节点挂浮层的件 `NodeToolbar` 只有 `position/align/offset/isVisible/nodeId`，官方明写 “This toolbar doesn't scale with the viewport so that the content is always visible”，**没有**任何 clamp / 翻转 / 障碍检测：https://reactflow.dev/api-reference/components/node-toolbar 。翻转与 clamp 的标准实现是 Floating UI 的 `flip`（https://floating-ui.com/docs/flip ）与 `shift`（https://floating-ui.com/docs/shift ）。
-6. **TikHub 自媒体怎么说？** 实跑两轮（附件 `docs/research/2026-09-10-node-composer-placement/tikhub/`）：轮一被「乱跑」带偏成 AI 视频人物走位（https://www.douyin.com/video/7677508966104009993 ），轮二命中的是节点画布整体难用的抱怨（「ComfyUI真够难用的！」一族）。**这一层对浮层几何没有信号**——浮层做对时是隐形的，用户只会在整体「难用」里记一笔。如实记录，不据此下判断。
+6. **TikHub 自媒体怎么说？** 实跑两轮（附件 `docs/archive/research/2026-09-10-node-composer-placement/tikhub/`）：轮一被「乱跑」带偏成 AI 视频人物走位（https://www.douyin.com/video/7677508966104009993 ），轮二命中的是节点画布整体难用的抱怨（「ComfyUI真够难用的！」一族）。**这一层对浮层几何没有信号**——浮层做对时是隐形的，用户只会在整体「难用」里记一笔。如实记录，不据此下判断。
 7. **结论：用已有（框架/标准的做法），但不新增依赖。** 删掉自研避让搜索，改成锚点 + 视口 clamp + above/below 翻转的纯函数；剩下的是若干 `Math.min/Math.max` = 算术不是能力，不值得为它付 R29 引入新框架层的三份表代价。有效期条件写在报告第 4 节末尾（一旦需要 arrow / autoPlacement / virtual element，就整体迁 Floating UI，不在自研函数上长中间件）。
 
 ---

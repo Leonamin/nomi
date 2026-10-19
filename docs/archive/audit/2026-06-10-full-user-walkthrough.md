@@ -89,6 +89,6 @@
 ### B. 地基问题（单独立项，慢慢来）
 | # | 问题 | 为什么是地基 |
 |---|---|---|
-| F1 | **P1 AI 助手对话跨项目泄漏** | 表象是 bug，根因是**前端会话状态全局、未按 projectId 键控** + **前后端两份真相源**（前端 `creationAiMessages` Zustand 全局 / 后端 sessionKey 已隔离）。最小修法（hydrate 时 reset）是修症状；根因修法是前端 transcript 按 projectId 数据化键控、与后端历史收敛到单一真相源。属 agent 地基（见 `docs/plan/agent-foundation.md`），随地基一起做。 |
+| F1 | **P1 AI 助手对话跨项目泄漏** | 表象是 bug，根因是**前端会话状态全局、未按 projectId 键控** + **前后端两份真相源**（前端 `creationAiMessages` Zustand 全局 / 后端 sessionKey 已隔离）。最小修法（hydrate 时 reset）是修症状；根因修法是前端 transcript 按 projectId 数据化键控、与后端历史收敛到单一真相源。属 agent 地基（见 `docs/archive/plan/agent-foundation.md`），随地基一起做。 |
 
 落地建议顺序：L2（纯 bug）→ L1（合规，先出对照样张）→ L3/L4（出样张/拍板后做）→ F1 随地基立项。

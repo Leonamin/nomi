@@ -128,7 +128,7 @@ function check(ok, name, detail = '') {
   verdicts.push([name, ok, detail])
   console.log(`  ${ok ? '✅' : '❌'} ${name}${detail ? ` — ${detail}` : ''}`)
 }
-/** 不是断言，是「这一步舒不舒服」的人话记录，和截图一起交付（docs/lessons/experiential-qa-emotion-log）。 */
+/** 不是断言，是「这一步舒不舒服」的人话记录，和截图一起交付（docs/archive/lessons/experiential-qa-emotion-log）。 */
 function note(step, feeling) {
   friction.push([step, feeling])
   console.log(`  · 「${step}」${feeling}`)
@@ -161,7 +161,7 @@ const NODE_OVERLAY = '.generation-canvas-v2-node__generating-overlay'
  * 判据是 async 函数时，它返回的 Promise 被当成 truthy，第一次轮询就"成功"返回，
  * `handle.jsonValue()` 拿到 `null`——一个从不等待的等待。本条走查此前三处都是这么写的，
  * 于是「按下开始 → 画布上多了一张卡」这一步在 60 秒里一次都没等过，直接拿 null 去 `.nodes`。
- * 阳性对照见 docs/lessons/wait-for-function-with-async-predicate-never-waits.md。
+ * 阳性对照见 docs/archive/lessons/wait-for-function-with-async-predicate-never-waits.md。
  * 正解是 `expect.poll`（它会 await 取样器），和 agent-runtime-production 那条走查同一套。
  */
 const readCanvas = () =>
@@ -231,7 +231,7 @@ try {
   // ── ② 点下去就跑：这里**没有第二步** ────────────────────────────────────────
   //
   // 这一格断言的是一件「不存在」的事，所以它必须先证明自己测得到东西（expectAbsent 的基线
-  // 规矩，见 docs/lessons/expect-absent-passes-too-early）：先证浮条上确实有可点的按钮，
+  // 规矩，见 docs/archive/lessons/expect-absent-passes-too-early）：先证浮条上确实有可点的按钮，
   // 再证点完之后画面上**没有**任何面板/表单浮出来。
   //
   // 为什么值得专门验：上一版就在这里放了个小面板（输出三选一 +「高级」）。用户看完拍板

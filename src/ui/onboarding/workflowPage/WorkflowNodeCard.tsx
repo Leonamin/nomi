@@ -1,6 +1,6 @@
 /**
  * 只读节点图里的一张节点卡。
- * plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+ * plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
  *
  * 三行信息，按「用户认得出」排序（R2：每条信息问「有行动价值吗」）：
  *   ① 角色胶囊（绑了才有）—— 用户真正在找的就是这个（「哪个是提示词」）

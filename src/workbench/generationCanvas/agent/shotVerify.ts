@@ -1,5 +1,5 @@
 // 镜级画面校验(verify)纯函数层 —— MUSE「plan-execute-verify-revise」闭环里的 verify 原语。
-// 方案:docs/plan/2026-06-28-storyboard-closed-loop-verify.md（Stage 1）。
+// 方案:docs/archive/plan/2026-06-28-storyboard-closed-loop-verify.md（Stage 1）。
 //
 // 分工铁律(同 reconcile.ts):本文件**只放纯函数**(组 prompt / 解析判决 / 判偏差),同入参恒同结果、可裸测;
 // 真正调模型(把首帧图作 attachment 喂 runWorkbenchAgent)的副作用在 runner 层的薄编排里,不进这里。

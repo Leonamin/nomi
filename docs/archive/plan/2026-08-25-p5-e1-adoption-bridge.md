@@ -1,9 +1,9 @@
 # P5 E1 采纳桥——产物进时间轴收敛为唯一受控通道
 
 **日期**：2026-08-25 · **分支**：`claude/p5-e1-adoption-bridge` · **合同**：
-`docs/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md` §5「P5：剪辑区 Adopt 窄接入」
-+ `docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §5.1「E1 采纳桥」
-+ `docs/audit/2026-08-25-p4-acceptance-checklist.md` §5.3「时间轴连片」（范围裁定归本片）。
+`docs/archive/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md` §5「P5：剪辑区 Adopt 窄接入」
++ `docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §5.1「E1 采纳桥」
++ `docs/archive/audit/2026-08-25-p4-acceptance-checklist.md` §5.3「时间轴连片」（范围裁定归本片）。
 
 ---
 
@@ -145,7 +145,7 @@ request → ① 键归一 → registry 查同键
 现状：`addTimelineClipAtFrame` 每次都 `pushTimelineUndo`，N 个 clip = N 层栈。
 新法：apply 走**一次** `setTimeline` + **一次** `pushTimelineUndo(baseTimeline)`。
 用户按一次 Cmd+Z，整批 12 个镜头一起消失——这与 P4 S5「编组一步撤销」的既定手感一致
-（见 `docs/audit/2026-08-25-p4-acceptance-checklist.md` §5.3）。
+（见 `docs/archive/audit/2026-08-25-p4-acceptance-checklist.md` §5.3）。
 
 回执 toast 走既有 `showUndoToast`（`src/utils/showUndoToast.ts`，全仓已有 3 处在用），
 点「撤销」= 调 `undoTimeline()`。不新造 toast 变体。

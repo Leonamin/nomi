@@ -109,7 +109,7 @@ async function main() {
     const report = { totalSpentCny, model: model.modelId, turns, inserted, writes, reservedCny, requests: requests.length,
       groupSwitches: projection.parts.filter(p => p.kind === 'tool-call' && p.toolName === 'nomi_request_tools').length,
       idsInReply: projection.parts.some(p => p.kind === 'assistant-text' && /gen-v2-|op-/.test(p.text)), usage: projection.usage };
-    await writeFile('docs/plan/agent-lane-b1-evidence/deepseek-sample.json', JSON.stringify(report, null, 2));
+    await writeFile('docs/archive/plan/agent-lane-b1-evidence/deepseek-sample.json', JSON.stringify(report, null, 2));
     if (!requests.length || !inserted) throw new Error('B1_SAMPLE_INCOMPLETE');
     console.log(JSON.stringify({ model: model.modelId, inserted, reservedCny, requests: requests.length, idsInReply: report.idsInReply }));
   } finally { unsub(); await lane.close(); }

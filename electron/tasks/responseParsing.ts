@@ -1,5 +1,5 @@
 // 厂商任务响应解析 —— 从 runtime.ts 拆出（见
-// docs/plan/2026-06-04-runtime-split-execution.md 第 2 步）。
+// docs/archive/plan/2026-06-04-runtime-split-execution.md 第 2 步）。
 // 把各家 provider 返回的任意 JSON 结构按映射表抽取资产 URL / 状态 / 元数据。
 // 纯函数、无副作用、最易出 bug ——本模块的核心价值就是为它补上 characterization 测试。
 import { extractTaskId as extractTaskIdShared } from "../ai/requestPipeline";

@@ -4,7 +4,7 @@
 
 ## 先查别人
 
-完整报告：docs/research/2026-09-10-ux-feedback-fixes/prior-art.md。带出处条目：
+完整报告：docs/archive/research/2026-09-10-ux-feedback-fixes/prior-art.md。带出处条目：
 
 1. **key 验证判据**：OpenAI 兼容生态共识是「/v1/models + 最小非流式请求双通过才算通」，且部分聚合商 /v1/models 对合法 key 也回 401——https://docs.aifast.hk/en/guides/openai-compatible-api 、https://wpnews.pro/news/openai-compatible-base-url-troubleshooting-7-checks-before-you-blame-the-sdk ；apimart 恒 401 的一手证据在 electron/vendor/vendorBaseFallback.ts:153，官方 chat 契约见 electron/catalog/apimartVendor.ts:29-33（带 checkedAt）。→ B2 采用 per-vendor 分派：direct-key 用种子 livenessProbe（max_tokens:1）。
 2. **direct-key 发布守卫**：仓库已有同名判据 generationProviderBootstrap.ts:62-67（scope 匹配+无认证占用）与 seedBuiltins.ts:587（curated 契约），promoteDirectKeyVendor 直接复用，零新真相源。
@@ -189,7 +189,7 @@
 - **用户「没弹卡就生成完了」的根因**：面板里模型摸到的生成工具只有「建/改草稿」（`nomi_generation_plan` 等，`extendedModelTools.ts:52-63`），契约 `reversible_local`（`generation.ts:59-60`）→ safe-auto 本来就自动放。**真正的付费门 `generation.gate` 被 paidBoundary（`paidBoundary.ts:77-80`）从模型工具面整体剔除**，付费确认走另一条居中弹窗（SpendConfirmDialog 家族，`NomiStudioApp.tsx:93-95`），不进面板介入槽。另外 antigravity `generate_image` 是外部 CLI 自带 permission_mode，完全不过 lane 闸（`catalog/antigravityCatalog.ts:96`）——六棱柱那次疑似走的就是这类工具。
 - **`spend: 'within-budget'` 轴全仓零消费者**：project 档也不会自动花钱——设计红线成立，但体感上「三档差不多」。
 - **确认卡现状**：V4Intervention（`AgentPanelV4Cards.tsx:173-340`）只有 confirm/reject/escalate/reject-reason，approve 无参数回写通道；「提案内联编辑器」是 2026-09-06 拍板删除的。
-- **可编辑确认卡有设计**：`docs/design/2026-08-31-agent-interaction-synthesis.draft.md`（S12 付费卡冻结项/Prompt 可改、S16 生成提案卡）+ `docs/handoff/2026-08-24-semantic-single-shot-p1-p3-handoff.md` §4.2（可编辑计划 →「返回修改」→ `nomi_generation_plan` patch → re-seal → 重出卡，数据链路是通的）。
+- **可编辑确认卡有设计**：`docs/archive/design/2026-08-31-agent-interaction-synthesis.draft.md`（S12 付费卡冻结项/Prompt 可改、S16 生成提案卡）+ `docs/handoff/2026-08-24-semantic-single-shot-p1-p3-handoff.md` §4.2（可编辑计划 →「返回修改」→ `nomi_generation_plan` patch → re-seal → 重出卡，数据链路是通的）。
 
 ### 新拍板（2026-09-10 用户）：确认卡必须可调整
 
@@ -231,7 +231,7 @@
 
 ## 本轮执行记录（B6 · 2026-09-11 真机复验两条红的根因修复）
 
-走查报告：`docs/research/2026-09-10-ux-feedback-fixes/walkthrough-pr720.md`（6 绿 / 2 红 / 1 跳过）。
+走查报告：`docs/archive/research/2026-09-10-ux-feedback-fixes/walkthrough-pr720.md`（6 绿 / 2 红 / 1 跳过）。
 根因合同：`docs/fixes/2026-09-11-pr720-walkthrough-reds.root-cause.json`（recurring，四条不变量）。
 共同的类根因：**判据取自一个只在某一瞬间 / 某一子区域成立的参照系**——hover 参照按钮矩形（真实交互区是「按钮 ∪ 间隙 ∪ 菜单」）、量高参照一个主轴尺寸被父 flex 接管的元素、语言参照开 lane 那一刻的设置快照。
 

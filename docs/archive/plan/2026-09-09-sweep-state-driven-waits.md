@@ -24,6 +24,6 @@
 
 ## 本地验收记录
 
-- G1 相关单测 60/60 通过；三处固定等待反例与导出 partial 竞态均保留红/绿日志于 `docs/plan/sweep-evidence/`。
+- G1 相关单测 60/60 通过；三处固定等待反例与导出 partial 竞态均保留红/绿日志于 `docs/archive/plan/sweep-evidence/`。
 - 最终默认 loopback：`artifacts/sweep/2026-09-09T05-45-39.203Z/report.md`，33 个输入、221 个站点、0 功能 deviation、费用 ¥0；5937 条体感扫描命中保持原样，不宣称产品体验全绿。
 - 白名单 877 处；以路径和完整 SHA-256 调用指纹登记，不复制整个回调正文、不放宽敏感扫描。Ponytail 按 80 行上下文计量，因此测试适配、门岗、文档分别提交，完整 gates 绿后再分批推到同一分支。

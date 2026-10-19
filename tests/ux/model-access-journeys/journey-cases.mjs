@@ -303,7 +303,7 @@ async function manualKindRepair(journey, ui, fixture, recorder) {
     // RunningHub 连接页无任何验证入口，模型详情「后台自动适配」实测 90s 内只发 GET /models、vendor
     // 始终 enabled:false —— 用户死路。此处用 sanitizer 明确允许的合法迁移（seeded models 有 published
     // execution → 允许 enable，rendererCatalogMutation.ts:53-57）作脚手架绕过，缺口另行立项上报
-    // （docs/qa/2026-09-02-journey-debt-product-gaps.md）。
+    // （docs/archive/qa/2026-09-02-journey-debt-product-gaps.md）。
     await ui.win.evaluate(() => { window.nomiDesktop.modelCatalog.upsertVendor({ key: 'runninghub', enabled: true }) })
     await waitForCatalogState(ui, (snapshot) => snapshot.vendors?.find((v) => v.key === 'runninghub' && v.enabled), 8000, 'runninghub-not-enabled', 'RunningHub vendor 未启用')
     // 「选择器有模型时填充态」视觉证明（裁决要求的截图）：3D 节点模型选择器不再是

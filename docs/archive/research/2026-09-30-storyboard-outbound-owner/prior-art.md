@@ -1,6 +1,6 @@
 # 「先查别人」调研报告：分镜一行「发出去什么」——角色 / 风格锚要不要自动拼进提示词（2026-09-30）
 
-> R5② 的必交物。对应方案：[`docs/plan/2026-09-30-storyboard-outbound-owner.md`](../../plan/2026-09-30-storyboard-outbound-owner.md)。
+> R5② 的必交物。对应方案：[`docs/archive/plan/2026-09-30-storyboard-outbound-owner.md`](../../plan/2026-09-30-storyboard-outbound-owner.md)。
 > 触发：用户把某一镜提示词写成「巨龙」，出来的是人物（花钱错）。用户 09-30 拍板「删掉自动追加」。
 
 ## 要回答的问题

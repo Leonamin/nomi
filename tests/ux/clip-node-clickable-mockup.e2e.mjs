@@ -4,9 +4,9 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { chromium } from 'playwright'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
-const mockupPath = path.join(repoRoot, 'docs/design/mockups/2026-08-15-clip-node-export-workflow.html')
-const desktopShot = path.join(repoRoot, 'docs/design/mockups/2026-08-15-clip-node-export-workflow-desktop.png')
-const mobileShot = path.join(repoRoot, 'docs/design/mockups/2026-08-15-clip-node-export-workflow-mobile.png')
+const mockupPath = path.join(repoRoot, 'docs/archive/design/mockups/2026-08-15-clip-node-export-workflow.html')
+const desktopShot = path.join(repoRoot, 'docs/archive/design/mockups/2026-08-15-clip-node-export-workflow-desktop.png')
+const mobileShot = path.join(repoRoot, 'docs/archive/design/mockups/2026-08-15-clip-node-export-workflow-mobile.png')
 const fixture = path.join(repoRoot, 'tests/ux/fixtures/test-upload.png')
 const browser = await chromium.launch({ headless: true })
 const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 })

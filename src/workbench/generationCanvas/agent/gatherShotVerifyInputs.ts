@@ -1,5 +1,5 @@
 // 从画布节点组装镜级 verify 入参(纯函数,显式传入 nodes/edges → 可裸测;runner 层注入 store 快照)。
-// 方案:docs/plan/2026-06-28-storyboard-closed-loop-verify.md（Stage 1 实时编排）。
+// 方案:docs/archive/plan/2026-06-28-storyboard-closed-loop-verify.md（Stage 1 实时编排）。
 //
 // 逐镜:身份锚描述 = 入边(参考边)的源锚节点「标题 + 描述」;连贯对照复用能力核的前镜判据;
 // 取帧源 = 该镜 result.url(图片镜=帧本身;视频镜=视频,待抽帧)。无产物的镜跳过(没生成谈不上校验)。

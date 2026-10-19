@@ -9,8 +9,8 @@
 2026-09-10 用真实 Codex CLI 0.153.4 挂 Nomi MCP 接 DeepSeek，跑了 9 个 agent 回合、58 次 `nomi_*` 调用。
 测出来的数字是：**入参一次写对率 62%（36/58）、9 个回合里只有 1 个完全成功**，而那 1 个还是把每步入参
 写死喂给模型之后才跑通的。22 次失败调用里 9 次是「schema 的 required 撒谎」、6 次是「revision 语义分不清」。
-基线报告：`exp/mcp-onboard-deepseek-20260910` 分支的 `docs/research/2026-09-10-mcp-onboard-experiment/baseline.md`
-（本轮摘要另存 [docs/research/2026-09-11-mcp-onboarding-defects/prior-art.md](../research/2026-09-11-mcp-onboarding-defects/prior-art.md)）。
+基线报告：`exp/mcp-onboard-deepseek-20260910` 分支的 `docs/archive/research/2026-09-10-mcp-onboard-experiment/baseline.md`
+（本轮摘要另存 [docs/archive/research/2026-09-11-mcp-onboarding-defects/prior-art.md](../research/2026-09-11-mcp-onboarding-defects/prior-art.md)）。
 
 一句话说清这次要解决的真实摩擦：**我们的接入面是照着「调用方是一段代码」设计的，
 但真正的调用方是一个模型**——它不会逐字复述 1271 个字符，不会从一句英文里读出四种含义，

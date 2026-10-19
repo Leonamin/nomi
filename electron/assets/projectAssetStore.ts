@@ -465,7 +465,7 @@ const VALID_INTENDED_ROLES = ASSET_PROVENANCE_ALLOWED_ROLES;
 
 /**
  * Sanitize a caller-supplied source-evidence record into the provenance shape
- * (docs/plan/2026-09-03-creative-resource-chain-epic.md P0-1).
+ * (docs/archive/plan/2026-09-03-creative-resource-chain-epic.md P0-1).
  *
  * 三类来源：
  *   · connector  : 经 ConnectorDefinition 摄取；必须有 connectorId；

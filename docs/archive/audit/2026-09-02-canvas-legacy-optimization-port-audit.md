@@ -52,7 +52,7 @@
 
 ---
 
-## 三、6/22 全链路 P0（`2026-06-22-performance-overhaul.md` + `docs/audit/perf/03-canvas.md`）
+## 三、6/22 全链路 P0（`2026-06-22-performance-overhaul.md` + `docs/archive/audit/perf/03-canvas.md`）
 
 | # | 优化项 | ① 当年机制 | ② 现状核查 | ③ 判定 | ⑤ 证据 |
 |---|---|---|---|---|---|

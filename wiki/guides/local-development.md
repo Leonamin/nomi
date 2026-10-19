@@ -44,4 +44,4 @@ corepack pnpm run start:web
 
 - 확인일: 2026-10-16
 - 코드 근거: [`package.json`](../../package.json), [`scripts/web/deploy-web-host.mjs`](../../scripts/web/deploy-web-host.mjs)
-- 절차 근거: [`docs/engineering/commands.md`](../../docs/engineering/commands.md), [`docs/personal-web.md`](../../docs/archive/guides/personal-web.md)
+- 절차 근거: [`docs/engineering/commands.md`](../../docs/engineering/commands.md), [`docs/archive/guides/personal-web.md`](../../docs/archive/guides/personal-web.md)

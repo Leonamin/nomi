@@ -120,7 +120,7 @@ test('same-surface deletions no longer force full; renames and cross-surface del
   // 문서 삭제 + 코드 변경 → fail-closed 아님(이전에는 전량).
   const docsDeletionPlusCode = classifyValidationPolicy([
     { status: 'M', path: 'src/utils/foo.ts' },
-    { status: 'D', path: 'docs/fork-boundary.md' },
+    { status: 'D', path: 'docs/archive/guides/fork-boundary.md' },
   ])
   assert.equal(docsDeletionPlusCode.failClosed, false)
   assert.equal(docsDeletionPlusCode.reason, 'isolated_change')
@@ -597,7 +597,7 @@ test('web-only changes pay only focused-unit cost and never the desktop matrix',
   // 문서 + web 혼합도 web_surface(비-문서 파일이 전부 web).
   const withDocs = classifyValidationPolicy([
     { status: 'M', path: 'web/client.ts' },
-    { status: 'M', path: 'docs/personal-web.md' },
+    { status: 'M', path: 'docs/archive/guides/personal-web.md' },
   ])
   assert.deepEqual(surfaces(withDocs), focusedOnly)
   assert.match(withDocs.reason, /^web_surface:/)

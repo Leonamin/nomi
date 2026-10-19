@@ -1,7 +1,7 @@
 // 模型接入 → 生成 的**真实往返**测试：起一台真的 HTTP 服务器，用真实 runtime 打过去，
 // 验的是「真发出去会怎样」，而不是「我们打算发出什么」（那层由 onboardingMatrix 覆盖）。
 //
-// 为什么必须有这层（docs/plan/2026-08-11-model-onboarding-to-generation-roundtrip.md）：
+// 为什么必须有这层（docs/archive/plan/2026-08-11-model-onboarding-to-generation-roundtrip.md）：
 // 响应解析目前靠「防御式试多种路径」兜底，各家返回形状千奇百怪，这条链从没被系统性验过；
 // issue 区「接进去了但用不了」已同源出现 7 次。
 import http from "node:http";

@@ -133,11 +133,11 @@ describe('production run MCP tools', () => {
     // Keep the public guide aligned with the live catalog so a newly reachable
     // semantic surface cannot be omitted from the user-facing MCP contract.
     for (const name of MCP_TOOL_NAMES) expect(guide).toContain(`\`${name}\``)
-    // docs/integrate-with-your-agent.md 是用户**第一眼读**的上手文档，此前没有任何断言盯着它：
+    // docs/archive/guides/integrate-with-your-agent.md 是用户**第一眼读**的上手文档，此前没有任何断言盯着它：
     // 它一直写着「47 个工具」并点名早已退役的 nomi_canvas_read，而 README 与 guide 都是对的
     //（2026-09-05 外部宿主探针）。这里钉住「它提到的每个工具名都必须还活着」——
     // 数量本身刻意不写在那份文档里，改为指向 tools/list。
-    const onboarding = fs.readFileSync(path.join(process.cwd(), 'docs/integrate-with-your-agent.md'), 'utf8')
+    const onboarding = fs.readFileSync(path.join(process.cwd(), 'docs/archive/guides/integrate-with-your-agent.md'), 'utf8')
     const live = new Set<string>(MCP_TOOL_NAMES)
     const mentioned = [...new Set([...onboarding.matchAll(/`(nomi_[a-z0-9_]+)`/g)].map((match) => match[1]))]
     expect(mentioned.filter((name) => !live.has(name))).toEqual([])

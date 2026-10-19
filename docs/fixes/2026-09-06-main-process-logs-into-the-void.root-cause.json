@@ -174,7 +174,7 @@
   },
   "dependency_lifecycle": {
     "decision": "not-applicable",
-    "rationale": "未新增运行时依赖。zip 用仓库既有的 fflate；electron-log 经 Context7 与官方文档实查后不引入，理由与代价写在 docs/plan/2026-09-06-logging-and-diagnostics-bundle.md §3。",
+    "rationale": "未新增运行时依赖。zip 用仓库既有的 fflate；electron-log 经 Context7 与官方文档实查后不引入，理由与代价写在 docs/archive/plan/2026-09-06-logging-and-diagnostics-bundle.md §3。",
     "exit_criteria": []
   }
 }

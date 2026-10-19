@@ -5,7 +5,7 @@ import { CREATION_AI_MODES, defaultCreationAiPrompt, getCreationAiMode, listCrea
 import { resetSystemPromptOverridesForTest } from './systemPromptOverrides'
 import { SYSTEM_PROMPT_MAX_LENGTH } from '../../../electron/settings/systemPromptsContract'
 
-// 英文版系统提示词的语言解析（2026-09-02，见 docs/plan/2026-09-02-english-system-prompts.md）。
+// 英文版系统提示词的语言解析（2026-09-02，见 docs/archive/plan/2026-09-02-english-system-prompts.md）。
 //
 // 钉三件事，每件都对应一种「看起来没事、实际坏了」：
 //  ① 英文界面真的拿到英文正文——否则这次改动等于没做；

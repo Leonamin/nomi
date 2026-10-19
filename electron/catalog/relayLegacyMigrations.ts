@@ -57,7 +57,7 @@ function standardImageMetaParameters(): JsonRecord[] {
  * v4 → v5：给**存量**用户自建中转的 image 条目补图生图能力。8c711f0c 起新接入才写
  * image_edit mapping + meta.imageOptions.supportsReferenceImages——老条目 UI 不出参考槽、连线参考
  * 会因无 mapping 掉进 fallback 被静默丢（「图生图不按原图」根因之一）。此前唯一解法是让用户
- * 删了重加，迁移根治（docs/plan/2026-07-06-i2i-reference-reliability.md L1）。
+ * 删了重加，迁移根治（docs/archive/plan/2026-07-06-i2i-reference-reliability.md L1）。
  * 边界：只碰非内置 vendor（BUILTIN_VENDOR_KEYS 之外）且有 /images/generations 形状 t2i op 的
  * （OpenAI 兼容证据，与 v4 同款嗅探）；只增不删，自定义参数不动。幂等。
  */

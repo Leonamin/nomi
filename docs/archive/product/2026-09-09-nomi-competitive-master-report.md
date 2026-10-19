@@ -126,7 +126,7 @@ LAVE（Adobe CHI 2024）三组件——素材语义检索 / 粗剪 agent / 聊�
 
 # 第五部分 · 完整方案总集
 
-> **📁 最终方案包（开工入口）**：[docs/plan/2026-09-09-competitive-response-plans/INDEX.md](../plan/2026-09-09-competitive-response-plans/INDEX.md) —— 本部分全部方案已整理为可执行文件夹（P0-1/P0-2/P0-3/P1-1/P1-2/P1-3/P2/P0-hardening 八个文件，含路线图与批次），以下保留总集叙述。
+> **📁 最终方案包（开工入口）**：[docs/archive/plan/2026-09-09-competitive-response-plans/INDEX.md](../plan/2026-09-09-competitive-response-plans/INDEX.md) —— 本部分全部方案已整理为可执行文件夹（P0-1/P0-2/P0-3/P1-1/P1-2/P1-3/P2/P0-hardening 八个文件，含路线图与批次），以下保留总集叙述。
 
 > 制作线方案 A–H 详版见 [AdCraft 对比文档](2026-09-09-adcraft-vs-nomi-full-comparison-and-plan.md)；剪辑线方案 A'–G' 详版见 [agent 原生剪辑方案](../plan/2026-09-09-agent-native-editing-plan.md)。此处收录每条的核心设计与验收门。
 
@@ -222,4 +222,4 @@ LAVE（Adobe CHI 2024）三组件——素材语义检索 / 粗剪 agent / 聊�
 
 - **AdCraft**：README（2026-09）、1628 文件树全列、`apps/api/agent/src/prompts/agents.ts`、`contracts/agent-capabilities.json`、`specialist_agents.py`、`script_beats.py`、`durable_pi_run.py`、`productionRun` 对照的 `fenced_lease.py`/`continuation_worker.py`、`tools/{ffmpeg,media_composition,media_subtitles,volcengine_pure_music,tianpuyue_pure_music}.py`、`video-skills/` 目录树
 - **agent 原生剪辑**：ChatCut agent-plugin 全部 17 skill 实读 + 托管 MCP 端点；OpenChatCut `openchatcut-tool-schemas.json` 全量解析（约 120 工具）+ 2558 文件树；Pireel agent-plugin 结构；Palmier Pro 许可轨迹（`last-gpl-source`）
-- **Nomi 当日实核**：`docs/ARCHITECTURE-NOW.md`、`productionRunDescriptors.ts:12-96`、`laneTimelineTools.ts:1-60`、`laneCanvasTools.ts:60-171`、`agentChatPolicy.ts:35`、`exportCapabilities.ts:177-196`、`productionPlaybooks.ts:30`、`productionRunDriverOps.ts:625-638`、`deconstructVideo.ts`、`clipAudio.ts`、`ffmpegFiltergraph.ts`、`adoptStoryboardBatch.ts`、PR #646（三轮 C0 实录）/ #658 / #659 / #619 / #656 / #662 / #664 全文
+- **Nomi 当日实核**：`docs/archive/guides/ARCHITECTURE-NOW.md`、`productionRunDescriptors.ts:12-96`、`laneTimelineTools.ts:1-60`、`laneCanvasTools.ts:60-171`、`agentChatPolicy.ts:35`、`exportCapabilities.ts:177-196`、`productionPlaybooks.ts:30`、`productionRunDriverOps.ts:625-638`、`deconstructVideo.ts`、`clipAudio.ts`、`ffmpegFiltergraph.ts`、`adoptStoryboardBatch.ts`、PR #646（三轮 C0 实录）/ #658 / #659 / #619 / #656 / #662 / #664 全文

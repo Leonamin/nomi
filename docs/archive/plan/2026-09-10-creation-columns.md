@@ -9,7 +9,7 @@
 - 仓库既有真实宿主样例：`src/devlab/designLab/v4/agentPanelV4LabHost.tsx:88`，ShellStage 将 lane 投影喂给现役 Agent；沿用数据入口，不复制 Agent JSX。
 - 三栏宿主现状：`src/workbench/WorkbenchShell.tsx:364`，资源树在 Shell，编辑器与 Agent dock 在 CreationWorkspace；统一边界必须覆盖两个宿主层级，不能只改中栏。
 - 设计系统规范：`docs/design/nomi-design-system.md:155`，§1.5 先分组、去重、归位；本任务不增加、不收纳任何功能簇，只统一结构外框。
-- 已有失败教训：`docs/lessons/design-lab-baselines-green-does-not-mean-wirable.md:1`，实验室基线只证外观。本次明确不宣称生产已实施或 Agent 功能已验收。
+- 已有失败教训：`docs/archive/lessons/design-lab-baselines-green-does-not-mean-wirable.md:1`，实验室基线只证外观。本次明确不宣称生产已实施或 Agent 功能已验收。
 
 - 在飞近邻 [PR #678](https://github.com/aqm857886159/Nomi/pull/678) 包含 Agent 状态/拖宽/外框/品牌样张；本轮按 C76 明确范围补完整三栏宿主、实测表和共同外框，不采纳其中未拍板的品牌与状态变更。
 
@@ -27,4 +27,4 @@
 
 ## 实施边界
 
-本轮不提取生产共享组件、不改变 Agent lane、资料库、列表或编辑器行为。生产加新删旧清单在 `docs/design/2026-09-10-creation-workspace-columns.md`；仅用户拍板后启动。
+本轮不提取生产共享组件、不改变 Agent lane、资料库、列表或编辑器行为。生产加新删旧清单在 `docs/archive/design/2026-09-10-creation-workspace-columns.md`；仅用户拍板后启动。

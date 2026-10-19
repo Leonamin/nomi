@@ -149,5 +149,5 @@
     "electron/ 侧另有几套并存的 kind 词表（素材树的 assetKindFromContentType、工作区的 WorkspaceFileKind、认证的 certificationMedia），本次只在注释里划清分工，没有合并——合并它们要先定「到底需要几套 kind 词表」，那是结构裁决不是本次的合并路。"
   ],
   "internal_only_reason": "全部改动在本仓的媒体类型表、两个落点与门岗脚本内，证据来自仓库代码、门岗自己报的计数与单测，不涉及外部文档或供应商契约。",
-  "structural_review": "docs/audit/2026-09-15-media-landing-boundary-structure-review.md"
+  "structural_review": "docs/archive/audit/2026-09-15-media-landing-boundary-structure-review.md"
 }

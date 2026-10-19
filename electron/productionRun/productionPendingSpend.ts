@@ -11,7 +11,7 @@ import { createHash } from "node:crypto";
 //
 // 这个文件补的就是那条数据通道：把「等人点头的那笔生成」投影成一张卡需要的全部事实。
 //
-// ── 两条硬约束（照抄 docs/research/2026-09-10-permission-rework-prior-art 的 1-4 / 1-5）──
+// ── 两条硬约束（照抄 docs/archive/research/2026-09-10-permission-rework-prior-art 的 1-4 / 1-5）──
 //
 // ① **价格是数字，不是标签**，而且必须由**宿主**算。价目住在目录的 `model.pricing` 里，
 //    渲染层根本读不到；让它从 `args` 反推价格，就等于让卡自己编一个数出来。

@@ -3,7 +3,7 @@
 > 状态：📎 交接/日志 —— **只探针不改码，一行产品代码未动。**
 > 日期：2026-09-07 · 基线：`origin/main@35d444a7b` · 依赖：`@earendil-works/pi-{coding-agent,agent-core,ai}@0.85.1`（`package.json:202-204`）· Node v24.13.1 · 平台 darwin 25.5.0
 > 上游问题：2026-09-07 用户原话 —— **「pi 生态做了很多东西，我们为什么不能直接借用、坐在他们的生态上快速提升？」**
-> 前置：[`docs/research/2026-09-07-pi-package-ecosystem.md`](2026-09-07-pi-package-ecosystem.md)（生态调研，读文档与 registry）· [`docs/plan/2026-09-07-agent-runtime-rebuild.md`](../plan/2026-09-07-agent-runtime-rebuild.md) §2.1 分层图（⑤ Lane 宿主 / ⑦ 工具投影）
+> 前置：[`docs/archive/research/2026-09-07-pi-package-ecosystem.md`](2026-09-07-pi-package-ecosystem.md)（生态调研，读文档与 registry）· [`docs/archive/plan/2026-09-07-agent-runtime-rebuild.md`](../plan/2026-09-07-agent-runtime-rebuild.md) §2.1 分层图（⑤ Lane 宿主 / ⑦ 工具投影）
 > 与前置的分工：前置那篇**读文档下判断**；这一篇**真装真跑**，把「扩展这一档」从「按文档推测」升级成「实跑证据」。前置 §4.1 的结论（代码一行不借）在这里被证据推翻了一半、又被另一半证据加固——见 §6。
 
 ---

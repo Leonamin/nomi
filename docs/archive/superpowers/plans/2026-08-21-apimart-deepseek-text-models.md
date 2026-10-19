@@ -85,7 +85,7 @@ Expected: PASS with the old APIMart key removed and all five current DeepSeek ro
 - Modify: `tests/ux/staging-agent-eval.e2e.mjs`
 - Modify: `tests/ux/staging-reference.e2e.mjs`
 - Modify: `tests/ux/walk-ref-e2e.mjs`
-- Modify: `docs/superpowers/specs/2026-08-13-ux-clarity-and-discoverability-design.md`
+- Modify: `docs/archive/superpowers/specs/2026-08-13-ux-clarity-and-discoverability-design.md`
 - Modify: `electron/providerAdapter/promotionEnables.test.ts`
 - Modify: `electron/providerAdapter/textProbeBudget.test.ts`
 - Modify: `electron/providerAdapter/verifier.ts`
@@ -116,7 +116,7 @@ Expected: PASS.
 ### Task 4: Verify the real APIMart route and repository gates
 
 **Files:**
-- Modify: `docs/plan/2026-08-13-real-model-selection.md` (update stale current-model wording only)
+- Modify: `docs/archive/plan/2026-08-13-real-model-selection.md` (update stale current-model wording only)
 
 - [x] **Step 1: Run the authenticated APIMart smoke**
 
@@ -160,6 +160,6 @@ Confirm no APIMart API key, temporary probe, unrelated file, or generated artifa
 - [x] **Step 4: Commit the scoped change**
 
 ```bash
-git add electron/catalog/apimartTexts.ts electron/catalog/seedBuiltins.ts electron/catalog/apimartTextMigration.test.ts electron/catalog/seedBuiltins.test.ts electron/providerAdapter/promotionEnables.test.ts electron/providerAdapter/textProbeBudget.test.ts electron/providerAdapter/verifier.ts src/workbench/ai/assistantModelIdentity.test.ts tests/ux/apimart-text-brain.e2e.mjs tests/ux/model-selection-real.e2e.mjs tests/ux/adapter-failed-unlock.walk.mjs tests/ux/camera-move-agent-eval.e2e.mjs tests/ux/camera-move-render-e2e.mjs tests/ux/custom-call-config.walk.mjs tests/ux/model-pick-confirm.walk.mjs tests/ux/staging-agent-eval.e2e.mjs tests/ux/staging-reference.e2e.mjs tests/ux/walk-ref-e2e.mjs docs/plan/2026-08-13-real-model-selection.md docs/superpowers/specs/2026-08-13-ux-clarity-and-discoverability-design.md docs/superpowers/plans/2026-08-21-apimart-deepseek-text-models.md
+git add electron/catalog/apimartTexts.ts electron/catalog/seedBuiltins.ts electron/catalog/apimartTextMigration.test.ts electron/catalog/seedBuiltins.test.ts electron/providerAdapter/promotionEnables.test.ts electron/providerAdapter/textProbeBudget.test.ts electron/providerAdapter/verifier.ts src/workbench/ai/assistantModelIdentity.test.ts tests/ux/apimart-text-brain.e2e.mjs tests/ux/model-selection-real.e2e.mjs tests/ux/adapter-failed-unlock.walk.mjs tests/ux/camera-move-agent-eval.e2e.mjs tests/ux/camera-move-render-e2e.mjs tests/ux/custom-call-config.walk.mjs tests/ux/model-pick-confirm.walk.mjs tests/ux/staging-agent-eval.e2e.mjs tests/ux/staging-reference.e2e.mjs tests/ux/walk-ref-e2e.mjs docs/archive/plan/2026-08-13-real-model-selection.md docs/archive/superpowers/specs/2026-08-13-ux-clarity-and-discoverability-design.md docs/archive/superpowers/plans/2026-08-21-apimart-deepseek-text-models.md
 git commit -m "fix(apimart): refresh DeepSeek text models"
 ```

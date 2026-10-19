@@ -124,7 +124,7 @@ node scripts/render-marketing-posters.mjs A1-one-project B2-3d-stage
 
 **通路已验证**：spec 填 `board` 后，底板以 `opacity:.5` 铺满，上面盖一层 165° 渐变遮罩压到纯 ink，文字与截图可读性不受影响。用 `marketing/assets/demo-poster.jpg` 实渲染确认过。
 
-**但现在生成不了**：见 `docs/qa/2026-08-20-mcp-issues.md` 的 M3——经 Claude Code 的 MCP，付费生成 100% 发不出，不是「点一下就行」。**底板只能在 Nomi GUI 里手动生成**，或等 M3 修好。
+**但现在生成不了**：见 `docs/archive/qa/2026-08-20-mcp-issues.md` 的 M3——经 Claude Code 的 MCP，付费生成 100% 发不出，不是「点一下就行」。**底板只能在 Nomi GUI 里手动生成**，或等 M3 修好。
 
 **GUI 里生成底板的提示词**（竖版选 9:16，横版选 16:9；出完存到 `marketing/assets/boards/<name>.png`，spec 里填路径即可）：
 

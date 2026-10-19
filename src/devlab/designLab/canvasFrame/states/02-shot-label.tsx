@@ -52,7 +52,7 @@ export const SHOT_LABEL_STATES: readonly LabState[] = [
   {
     id: 'canvas-frame-shot-label-outside',
     name: '镜头标签 · 框外左上',
-    source: 'docs/plan/2026-09-09-node-label-outside.md',
+    source: 'docs/archive/plan/2026-09-09-node-label-outside.md',
     coverage: 'shell',
     render: () => <ShotLabelStage />,
   },

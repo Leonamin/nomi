@@ -30,7 +30,7 @@
 
 仓库里已有的，直接复用、不重写：
 - `tests/ux/core-smoke/`（清单式冒烟，两套资料）；
-- `docs/plan/2026-09-26-architecture-single-owner-governance.md`（结构收敛）；
+- `docs/archive/plan/2026-09-26-architecture-single-owner-governance.md`（结构收敛）；
 - `check:concept-owners`（概念唯一主人门岗）；
 - `scripts/intake-radar.mjs`（反馈接收端数据）；
 - `tests/ux/_paidRun.mjs`（真额度走查护栏）。

@@ -724,7 +724,7 @@ export const zhGenerationCommon = {
     dragAria: '拖动文本节点',
     label: '文本',
   },
-  // 节点生成浮框底栏 v1（样张 docs/design/2026-09-10-node-composer-bar-v1.md，2026-09-10 拍板的三类归位）。
+  // 节点生成浮框底栏 v1（样张 docs/archive/design/2026-09-10-node-composer-bar-v1.md，2026-09-10 拍板的三类归位）。
   // A 类（决定出什么/花多少）留底栏；B 类（帮我写提示词）收成提示词框右上角一簇纯 icon；锁回节点浮条。
   composerBarV1: {
     promptTools: '写提示词',

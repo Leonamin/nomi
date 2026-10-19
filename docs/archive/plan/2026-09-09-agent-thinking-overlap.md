@@ -9,7 +9,7 @@
 
 修法：在共享 V4 thinking 契约区分正文与状态；原文只进默认关闭的详情体，展开后正常文档流撑高；状态行保持 shimmer 和实际观测秒数。所有消息保持自然高度，检查流式增长与手动滚动。
 不动：模型协议、付费、真实项目库、其他 worktree、PR draft/合并状态；不新增依赖。
-现有依据：docs/design/2026-09-06-agent-panel-v4.md 第7条；AgentPanelV4Panel.tsx/V4FlowRow、laneViewModel.ts 是所有宿主共同边界。原生 details 已用于 V4ToolReceipt，无新框架。
+现有依据：docs/archive/design/2026-09-06-agent-panel-v4.md 第7条；AgentPanelV4Panel.tsx/V4FlowRow、laneViewModel.ts 是所有宿主共同边界。原生 details 已用于 V4ToolReceipt，无新框架。
 
 验收：真实 Electron 1440 宽长思考→两个只读工具→中文正文，先保存红截图；消息可见内容 rect 零相交（人为造重叠证明探针会红）；流式/完成/展开/收起均验证；投影与 SSR 回归；设计实验室对应态先看图再录基线；完整 pnpm run gates，正常 hook commit/push #646。
 回滚：单笔 revert 本次修复；无持久化格式变更。

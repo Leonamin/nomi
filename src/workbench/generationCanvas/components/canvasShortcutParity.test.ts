@@ -1,4 +1,4 @@
-// LibTV 快捷键对齐（docs/plan/2026-09-21-canvas-shortcut-parity.md）：
+// LibTV 快捷键对齐（docs/archive/plan/2026-09-21-canvas-shortcut-parity.md）：
 // 每个新键的分发、编辑器聚焦时不触发、⌘D 复制节点与内部边、⌘L 连线方向、帮助面板按平台派生字形。
 import type { RefObject } from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'

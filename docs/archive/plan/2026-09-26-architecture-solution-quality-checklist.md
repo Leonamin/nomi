@@ -1,7 +1,7 @@
 # 架构方案质量清单与当前方案逐条审查
 
 > 用途：判断一份架构方案是否足以指导真实迁移，而不是判断文档是否写得完整。
-> 被审方案：`docs/plan/2026-09-26-architecture-single-owner-governance.md`
+> 被审方案：`docs/archive/plan/2026-09-26-architecture-single-owner-governance.md`
 > 审查基线：`origin/main@1f39ea3cf`，审查日期：2026-09-26。
 > 状态：✅ 方案质量审查定稿；Phase 0 账本已完成。
 > 当前结论：**方案设计和 Phase 0 账本可施工；Phase 1 治理门、生产实施与真实旅程证据仍未产生。**
@@ -10,8 +10,8 @@
 
 | 问题 | 依据 | 本清单采用的判断 |
 |---|---|---|
-| 依赖里已有？ | `electron/productionRun/productionRunIntentLog.ts:1-260`、`electron/productionRun/submissionOutbox.ts:1-240`、[`docs/audit/2026-08-22-agent-runtime-source-review.md`](../audit/2026-08-22-agent-runtime-source-review.md) | 先复用现有 primitive，不把新框架当作结构修复 |
-| 仓库里已有？ | [`docs/audit/2026-08-22-agent-runtime-source-review.md`](../audit/2026-08-22-agent-runtime-source-review.md)、[`docs/research/2026-09-18-storyboard-single-ledger/prior-art.md`](../research/2026-09-18-storyboard-single-ledger/prior-art.md)、`electron/capabilityCore/executionContract.ts:1-120` | owner、单账本、恢复和投影的检查项必须进入清单 |
+| 依赖里已有？ | `electron/productionRun/productionRunIntentLog.ts:1-260`、`electron/productionRun/submissionOutbox.ts:1-240`、[`docs/archive/audit/2026-08-22-agent-runtime-source-review.md`](../audit/2026-08-22-agent-runtime-source-review.md) | 先复用现有 primitive，不把新框架当作结构修复 |
+| 仓库里已有？ | [`docs/archive/audit/2026-08-22-agent-runtime-source-review.md`](../audit/2026-08-22-agent-runtime-source-review.md)、[`docs/archive/research/2026-09-18-storyboard-single-ledger/prior-art.md`](../research/2026-09-18-storyboard-single-ledger/prior-art.md)、`electron/capabilityCore/executionContract.ts:1-120` | owner、单账本、恢复和投影的检查项必须进入清单 |
 | 生态里已有？ | Automerge（https://automerge.org/docs/concepts/）、IETF Idempotency-Key（https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/）、OpenTimelineIO（https://opentimelineio.readthedocs.io/）、Temporal（https://docs.temporal.io/workflows） | 采纳稳定身份、幂等、不可变执行规格、可重建投影；不引入外部运行时服务 |
 | TikHub 自媒体怎么说？ | 本清单检查的是内部架构和真实故障边界，不是竞品内容；没有能增强这些结论的自媒体证据，本轮不查并保留理由 | 不把自媒体内容当作架构证据 |
 | 结论 | 方案的 prior-art 资料和未查理由均已落档 | 方案必须有来源，也必须诚实记录不适用的来源面 |

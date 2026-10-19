@@ -1,6 +1,6 @@
 // Agent 回复里的代码块 R13 走查（用户 2026-09-25：「粘贴框设计有问题吧，为什么这么丑」）。
 // 用法: NOMI_EVIDENCE_LABEL=before|after node tests/ux/agent-code-block.walk.mjs（缺省 after）
-// 产出: docs/evidence/2026-09-25-agent-panel-tidy/code-block-<label>-<zh|en>.png + code-block-<label>.json
+// 产出: docs/archive/evidence/2026-09-25-agent-panel-tidy/code-block-<label>-<zh|en>.png + code-block-<label>.json
 //
 // 真 app、真 Agent 面板、真出站请求：loopback 模型按用户截图那样回一段「中文版 / 英文版提示词 + 一段 JSON 参数」。
 // 量的是用户说的四件事，全部读 computed style / 几何，不靠截图猜：
@@ -14,7 +14,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { assertMockupContract, clickOrFail, expect, expectVisible, screenshotSettled } from './_assert.mjs'
 // 获批样张（2026-09-25「设计没问题」）的意图契约：无语言标题行、24px 复制钮、提示词正文字体 / JSON 等宽。
-import codeBlockIntentContract from '../../docs/design/mockups/contracts/2026-09-25-agent-panel-tidy-code-block.intent.mjs'
+import codeBlockIntentContract from '../../docs/archive/design/mockups/contracts/2026-09-25-agent-panel-tidy-code-block.intent.mjs'
 import { FIXTURE_TEXT_MODEL_LABEL, flattenRequestText } from './agent-runtime-fixture.mjs'
 import { ASSISTANT_MESSAGE, CREATION_PANEL, DOCUMENT, chooseAssistantModel, createRuntimeWalk, recorded, sendCreation, waitForV4TurnIdle } from './agent-runtime-walk-support.mjs'
 
@@ -22,7 +22,7 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../
 // 标签走环境变量：runtime walk 的启动器只认 `--packaged <path>` 一种参数。
 const label = process.env.NOMI_EVIDENCE_LABEL || 'after'
 if (!['before', 'after'].includes(label)) throw new Error('Usage: NOMI_EVIDENCE_LABEL=before|after node tests/ux/agent-code-block.walk.mjs')
-const outDir = path.join(repoRoot, 'docs/evidence/2026-09-25-agent-panel-tidy')
+const outDir = path.join(repoRoot, 'docs/archive/evidence/2026-09-25-agent-panel-tidy')
 fs.mkdirSync(outDir, { recursive: true })
 
 const PROMPT_EN = 'A cozy vintage camera shop at dawn, warm golden light slanting through the display window, dust motes floating in the air, shelves lined with film cameras and lenses, a small deer figurine on the counter, cinematic composition, 35mm film grain, shallow depth of field, soft shadows, photorealistic, 16:9'

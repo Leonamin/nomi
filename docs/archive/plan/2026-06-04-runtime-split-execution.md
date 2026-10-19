@@ -1,8 +1,8 @@
 # 执行计划：增量拆分 `electron/runtime.ts`（strangler，非大爆炸）
 
 > 触发：v0.9.1 全量体检把 runtime.ts(3150 行) 列为 P0 巨壳（CTO+后端命中）；用户拍板"启动"。
-> 关联：`docs/audit/2026-05-30-B1-decision-runtime-split.md`（B1 决策）、
-> `docs/audit/2026-06-04-full-codebase-review-6role.md`（体检）。
+> 关联：`docs/archive/audit/2026-05-30-B1-decision-runtime-split.md`（B1 决策）、
+> `docs/archive/audit/2026-06-04-full-codebase-review-6role.md`（体检）。
 
 ## 0. 先正视 B1 决策文档的结论（不绕过）
 

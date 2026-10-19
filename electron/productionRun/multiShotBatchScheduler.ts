@@ -36,7 +36,7 @@ import { DispatchConsentLapsedError } from "../shared/productionDispatchConsent"
  * A real video provider takes MINUTES. Dispatch therefore only submits + polls once (instant mocks
  * settle in the same tick); everything still in flight lands in the derivation's `observe` list and is
  * polled in rounds with REAL waits between them — backoff from 3s (厂商「查询间隔 ≥3-5s」契约, see
- * docs/plan/2026-07-31-seedance-api-contract-reconciliation.md §三) doubling to a 15s cap. Waiting is
+ * docs/archive/plan/2026-07-31-seedance-api-contract-reconciliation.md §三) doubling to a 15s cap. Waiting is
  * bounded by `pollHorizonMs` per drive (default NOMI_POLL_TIMEOUT_MS or 300s, 对齐 core.ts 单镜链);
  * when in-flight units outlive it the drive rests with `quiescent: false` — NEVER `true` while pollable
  * work remains — and the caller (appIntegration) re-kicks later. Because `observe` is derived purely

@@ -1,7 +1,7 @@
 // 导演台手机虚拟相机桥（Electron 版）：局域网 HTTPS（自签名，证书缓存到 userData）+ WebSocket，
 // 手机扫码打开页面 → 发 32 字节 Float32 包 / JSON 控制消息（hello / record / pong），桌面端解包成事件回调给渲染层写机位。
 //
-// 安全面（2026-09-11，docs/plan/2026-09-11-director-lan-pairing-hardening.md）——四条不变量都归这一层管：
+// 安全面（2026-09-11，docs/archive/plan/2026-09-11-director-lan-pairing-hardening.md）——四条不变量都归这一层管：
 //  ① **同意闸**：没调过 grantConsent() 就 start()，直接抛 MobileBridgeConsentError，一个 socket 都不 bind。
 //     防线放在服务自己而不是对话框（R28：能让最早那层拦住的别留给 UI）；同意只活在本进程内存，不落盘。
 //  ② **配对码一次性 + 有时效**：URL/二维码里的 k 是配对码，第一个成功的 upgrade 消费掉它并当场轮换；

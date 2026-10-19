@@ -312,6 +312,6 @@
       "electron/capabilityCore/unknownPriceSpendConfirm.e2e.test.ts",
       "tests/ux/agent-spend-unknown-price.walk.mjs"
     ],
-    "structural_ticket": "docs/plan/2026-09-21-unknown-price-open-gate.md"
+    "structural_ticket": "docs/archive/plan/2026-09-21-unknown-price-open-gate.md"
   }
 }

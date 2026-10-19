@@ -8,10 +8,10 @@
 
 **Canonical references:**
 
-- Design: `docs/superpowers/specs/2026-08-23-mcp-client-first-authorization-design.md`
-- Chinese route: `docs/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md`
-- Vertical slice: `docs/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`
-- Focused audit: `docs/audit/2026-08-23-mcp-client-authorization-friction-audit.md`
+- Design: `docs/archive/superpowers/specs/2026-08-23-mcp-client-first-authorization-design.md`
+- Chinese route: `docs/archive/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md`
+- Vertical slice: `docs/archive/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`
+- Focused audit: `docs/archive/audit/2026-08-23-mcp-client-authorization-friction-audit.md`
 
 ## Scope
 
@@ -81,7 +81,7 @@ Deferred:
 
 ### Task 5: Zero-credit real-user journey gate
 
-**Add/modify:** `tests/ux/` journey harness and `docs/audit/2026-08-23-mcp-client-authorization-friction-audit.md` evidence section.
+**Add/modify:** `tests/ux/` journey harness and `docs/archive/audit/2026-08-23-mcp-client-authorization-friction-audit.md` evidence section.
 
 - Run one registered-client journey and one GUI-fallback journey with a fake provider.
 - Run an editability matrix before the gate: change model/provider, switch generation mode, edit parameters, add/remove/replace/reorder reference assets, cancel a draft and replan, reconnect before confirmation, and compare the resulting MCP contract preview with the equivalent UI semantic action.

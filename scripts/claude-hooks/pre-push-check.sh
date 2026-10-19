@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # PreToolUse hook（命中 Bash 里的推送命令）= push 前的**真闸门**（R11 + P3 决策点强制）。
-# 设计见 docs/plan/2026-06-17-discipline-system-overhaul.md（杠杆 1）。
+# 设计见 docs/archive/plan/2026-06-17-discipline-system-overhaul.md（杠杆 1）。
 #
 # 规则：
 #  · 命令里没有推送 → 放行（exit 0）。

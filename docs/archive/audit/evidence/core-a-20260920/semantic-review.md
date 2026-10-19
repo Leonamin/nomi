@@ -18,7 +18,7 @@ The parent full-suite log /private/tmp/nomi-core-a-unit-integrated-v6.log was re
 
 Each hunk below compares current integrated task delta against the refreshed upstream baseline. Upstream shot identities and media measurement remain in the original owners; original editor → rowActions → original runner remains the execution chain.
 
-### docs/roadmap/TODO.md
+### docs/archive/roadmap/TODO.md
 
 Base blob: `be55c6b3f100e4b57c00bc9b5a0a32b6a922f8ed`; current blob: `0adf2f54c2b8a686b4bbbc2d02dfb4d051cc95ac`; patch SHA-256: `b0f1790115bad53033319ab29141cfee1e7ca526b69f6a28746d954706aeeafd`.
 

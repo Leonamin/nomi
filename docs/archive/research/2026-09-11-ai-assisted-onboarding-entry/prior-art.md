@@ -1,6 +1,6 @@
 # 先查别人 —— 「用 AI 帮我接入」入口
 
-> 2026-09-11 · 服务于 [docs/plan/2026-09-11-ai-assisted-onboarding-entry.md](../../plan/2026-09-11-ai-assisted-onboarding-entry.md)
+> 2026-09-11 · 服务于 [docs/archive/plan/2026-09-11-ai-assisted-onboarding-entry.md](../../plan/2026-09-11-ai-assisted-onboarding-entry.md)
 > 结论先说：**这件事仓库里已经有八成，缺的是入口位置与「跟助手说什么」那一份文本。**新造一张接入卡是并行版（P1），不做。
 
 ## ① 依赖里已有？

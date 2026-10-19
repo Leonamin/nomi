@@ -82,7 +82,7 @@ cd /Users/aoqimin/Desktop/Nomi-skillreach-0919 && pnpm install
 
 这是最重要的一问，也是**至今零数字**的一问。
 
-- 按 `docs/lessons/agent-tests-must-be-prompt-driven-and-human-path.md` 的做法：**先写 ≥20 句用户真会说的话**，覆盖「明显该用某条技能」「模棱两可」「明显不该用技能」三档，**再**跑真模型。不许按界面面排 case。
+- 按 `docs/archive/lessons/agent-tests-must-be-prompt-driven-and-human-path.md` 的做法：**先写 ≥20 句用户真会说的话**，覆盖「明显该用某条技能」「模棱两可」「明显不该用技能」三档，**再**跑真模型。不许按界面面排 case。
 - 每轮记：模型有没有调 `read_skill` / 调了哪条 / 该不该调 / 最终产出对不对。
 - **额度默认授权**，直接花，事后报花了多少。
 - **怎么算答到了**：三个数字——**自选命中率**（该用时选对的比例）、**误选率**（不该用时选了的比例）、**选后成功率**（选对之后产出符合意图的比例）。
@@ -112,13 +112,13 @@ cd /Users/aoqimin/Desktop/Nomi-skillreach-0919 && pnpm install
 
 这一轮你会横跨「盘上的包 → 加载 → 索引 → 提示词 → 模型 → 产出」六层。**每一层交接处问一句：这层读到的东西，和上一层写出去的，是同一份吗，还是各自重述了一遍？**
 
-本仓刚刚合入的一整批缺陷是同一个形状：**一份事实被手写了四五遍、之间没有比对、错了不报错**（见 `docs/lessons/walkthrough-tool-args-are-a-compiler-blind-spot.md`）。如果你在技能这条链上又看见同一个形状，**点名写出来**：哪两份、在哪个 file:line、错开了会怎样。
+本仓刚刚合入的一整批缺陷是同一个形状：**一份事实被手写了四五遍、之间没有比对、错了不报错**（见 `docs/archive/lessons/walkthrough-tool-args-are-a-compiler-blind-spot.md`）。如果你在技能这条链上又看见同一个形状，**点名写出来**：哪两份、在哪个 file:line、错开了会怎样。
 
 没发现也要写「找过，没有，理由是 X」——空着等于没找。
 
 ## 五、交付物
 
-1. `docs/audit/2026-09-19-skill-reach-and-effect.md`：Q1-Q4 四张表 + 结构性发现 + 待拍板
+1. `docs/archive/audit/2026-09-19-skill-reach-and-effect.md`：Q1-Q4 四张表 + 结构性发现 + 待拍板
 2. 证据目录：截图、真实提示词片段、真模型轨迹
 3. 分支 `audit/skill-reach-20260919` 开 PR，CI 绿、Ponytail 表态齐，弄到能合的状态
 4. 报告正文控制在能一眼读完的长度；细节进证据目录

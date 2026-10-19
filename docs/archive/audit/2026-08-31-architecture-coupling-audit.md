@@ -192,7 +192,7 @@
 |---|---|
 | 3 | `docs/plan/INDEX.md` |
 | 3 | `docs/DELIVERY-LEDGER.md` |
-| 2 | `docs/superpowers/plans/INDEX.md` |
+| 2 | `docs/archive/superpowers/plans/INDEX.md` |
 
 **代码文件零重叠。** ✅ 这一波 PR 分工干净，唯一的争用面是 **docs 登记文件**（每个带方案文档的 PR 都得改 INDEX/LEDGER）——是轻微的登记摩擦，不是代码 merge 风暴。
 

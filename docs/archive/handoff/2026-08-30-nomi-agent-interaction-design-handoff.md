@@ -14,11 +14,11 @@
 ```text
 1. 进入 /Users/aoqimin/Desktop/Nomi-agent-interaction-research-20260830。
 2. 阅读 AGENTS.md、docs/design/nomi-design-system.md、
-   docs/design/nomi-agent-interaction.md 和本 handoff。
+   docs/archive/design/nomi-agent-interaction.md 和本 handoff。
 3. 运行 git status --short --branch，确认仍在 claude/youthful-buck-fe0def，
    不要丢弃现有未提交 HTML 修改。
 4. 在桌面浏览器中打开
-   docs/design/mockups/2026-08-27-agent-conversation-vocabulary.html，
+   docs/archive/design/mockups/2026-08-27-agent-conversation-vocabulary.html，
    先看真实页面和当前样张，再作判断。
 5. 从页面刷新后的初始状态先做一轮基线回归，记录现状。
 6. 优先处理“看起来能点但没有反馈”，其次处理“必须悬停才看得懂”，
@@ -68,7 +68,7 @@ claude/youthful-buck-fe0def
 
 ```text
 ## claude/youthful-buck-fe0def...origin/claude/youthful-buck-fe0def [ahead 1]
- M docs/design/mockups/2026-08-27-agent-conversation-vocabulary.html
+ M docs/archive/design/mockups/2026-08-27-agent-conversation-vocabulary.html
 ?? docs/handoff/2026-08-30-nomi-agent-interaction-design-handoff.md
 ```
 
@@ -91,11 +91,11 @@ claude/youthful-buck-fe0def
 
 | 文件 | 用途 | 当前可信度 |
 |---|---|---|
-| `docs/design/mockups/2026-08-27-agent-conversation-vocabulary.html` | 用户实际查看和点击的交互样张 | 当前主要工作面，最新但仍在迭代 |
-| `docs/design/nomi-agent-interaction.md` | Agent 输入、执行、反馈、恢复和 21 种对话形态的设计合同 | 内容较全，但部分结论已被用户后续讨论覆盖 |
+| `docs/archive/design/mockups/2026-08-27-agent-conversation-vocabulary.html` | 用户实际查看和点击的交互样张 | 当前主要工作面，最新但仍在迭代 |
+| `docs/archive/design/nomi-agent-interaction.md` | Agent 输入、执行、反馈、恢复和 21 种对话形态的设计合同 | 内容较全，但部分结论已被用户后续讨论覆盖 |
 | `docs/design/nomi-design-system.md` | Nomi 设计 token、组件、控件层级和尺寸真相源 | 修改 UI 前必须核对 |
-| `docs/plan/2026-08-30-agent-canvas-interaction-expansion.md` | 本轮原始计划和早期验收记录 | 已过时，不能按“已完成”直接收尾 |
-| `docs/research/2026-08-24-agent-conversation-vocabulary-survey.md` | 早期官方资料调研摘要 | 可作证据入口，不代表最新设计决策 |
+| `docs/archive/plan/2026-08-30-agent-canvas-interaction-expansion.md` | 本轮原始计划和早期验收记录 | 已过时，不能按“已完成”直接收尾 |
+| `docs/archive/research/2026-08-24-agent-conversation-vocabulary-survey.md` | 早期官方资料调研摘要 | 可作证据入口，不代表最新设计决策 |
 | `AGENTS.md` / `CLAUDE.md` | 仓库工程纪律 | 必须遵守；`AGENTS.md` 由 `CLAUDE.md` 生成，不应手改 |
 
 当前 HTML 是独立样张，不等于生产代码已经实现。主设计文档开头也明确写了“尚未实现”。
@@ -196,7 +196,7 @@ claude/youthful-buck-fe0def
 主要样张位于：
 
 ```text
-docs/design/mockups/2026-08-27-agent-conversation-vocabulary.html
+docs/archive/design/mockups/2026-08-27-agent-conversation-vocabulary.html
 ```
 
 ### 5.1 统一 Agent 宿主
@@ -297,7 +297,7 @@ Dock 发送函数会把 token 文本写入消息摘要并清空输入，但没�
 
 ## 7. 旧文档中必须纠正的冲突
 
-`docs/design/nomi-agent-interaction.md` 与 `docs/plan/2026-08-30-agent-canvas-interaction-expansion.md` 保留了早期结论，其中两项与用户后续明确决定冲突：
+`docs/archive/design/nomi-agent-interaction.md` 与 `docs/archive/plan/2026-08-30-agent-canvas-interaction-expansion.md` 保留了早期结论，其中两项与用户后续明确决定冲突：
 
 | 旧结论 | 用户较新的决定 | 处置 |
 |---|---|---|
@@ -376,7 +376,7 @@ PR 的职责应保持清楚：
 /private/tmp/nomi-agent-control-clarity-selected.png
 ```
 
-这些截图在 2026-08-30 交接时仍存在，但位于 `/private/tmp`，不能作为永久项目资产，也不能替代最新状态复测。最终验收截图应保存到仓库内与本任务对应的 `docs/design/reviews/` 子目录；临时截图只用于迭代过程。
+这些截图在 2026-08-30 交接时仍存在，但位于 `/private/tmp`，不能作为永久项目资产，也不能替代最新状态复测。最终验收截图应保存到仓库内与本任务对应的 `docs/archive/design/reviews/` 子目录；临时截图只用于迭代过程。
 
 本次 handoff 编写前重新执行的静态验证：
 
@@ -503,7 +503,7 @@ git diff --check: 通过，无输出
 - 弹层的 `aria-expanded` 与开关同步；菜单打开和快捷键打开均在一个 event loop 后把焦点交给第一项，Escape 返回原触发器；队列删除改为可聚焦按钮并带 `aria-label`。
 - 实测 Dock 宽度 340px，操作区 client/scroll 均为 309px；模型覆盖 0→5 类、长技能名和长提示词名均无横向溢出。生成/预览时间线默认 206px，可扩展到 300px 且上方工作面同步缩小、无横向溢出。常驻控件高度为 28px；按钮圆角 6px、选择器药丸、面板 10px。
 - 技能/提示词 token 删除后恢复默认“自动匹配 / 不使用预设”；空输入发送禁用；文字、仅引用及主输入附件已回归。Dock 文件选择 handler 已保留，但当前浏览器桥不支持 `setInputFiles`，因此未把真实文件注入计作真机证据。`prefers-reduced-motion` 仍保留，技能视频在该模式不自动播放。
-- 生成与预览的默认/扩展截图已保存到 `docs/design/reviews/2026-08-30-agent-interaction/06-generation-default.png`、`07-generation-timeline-expanded.png`、`04-preview-default.png`、`05-preview-timeline-expanded.png`，并由执行者目视检查。
+- 生成与预览的默认/扩展截图已保存到 `docs/archive/design/reviews/2026-08-30-agent-interaction/06-generation-default.png`、`07-generation-timeline-expanded.png`、`04-preview-default.png`、`05-preview-timeline-expanded.png`，并由执行者目视检查。
 
 ### 设计合同（仍非生产实现）
 
@@ -537,7 +537,7 @@ git diff --check: 通过，无输出
 
 ## 11.8 样张到代码的精准实现合同（2026-08-30）
 
-本轮新增 [`docs/design/nomi-agent-interaction-implementation-contract.md`](../../design/nomi-agent-interaction-implementation-contract.md)，把样张几何、真实组件锚点、状态归属、Agent Host seam、事件接口和截图/DOM 对比门槛逐项写成代码合同。
+本轮新增 [`docs/archive/design/nomi-agent-interaction-implementation-contract.md`](../design/nomi-agent-interaction-implementation-contract.md)，把样张几何、真实组件锚点、状态归属、Agent Host seam、事件接口和截图/DOM 对比门槛逐项写成代码合同。
 
 - 真实 `GenerationWorkspace` 与 `PreviewWorkspace` 已确认各自拥有底部 `TimelinePanel`；样张现在与这一事实一致。
 - 生产实现应把时间线高度作为 `useWorkbenchStore` 的会话级布局状态，并让生成/预览共享同一 selector；不得把高度塞进 timeline 数据或复制两套拖动逻辑。
@@ -552,7 +552,7 @@ git diff --check: 通过，无输出
 4. 修复 P1：必要语义只藏在 tooltip、340px 最坏状态溢出、键盘焦点和状态同步。
 5. 统一命名、形态数量和圆角真相源。
 6. 更新主设计文档和原计划中的过时结论，但不要把 #226 的能力目录复制进来。
-7. 从刷新状态跑 §11 全量验收回归，把最终截图保存到仓库内对应的 `docs/design/reviews/` 子目录。
+7. 从刷新状态跑 §11 全量验收回归，把最终截图保存到仓库内对应的 `docs/archive/design/reviews/` 子目录。
 8. 做一次设计评审：真实用户、交互、视觉一致性、无障碍、前端实现和状态模型。
 9. 把最终 HTML 打开给用户看，说明仍是样张还是已进入实现。
 10. 用户拍板后，再整理 #194 的正文补充；没有明确授权不要提交、推送或改远端 PR。
@@ -601,8 +601,8 @@ git diff --check: 通过，无输出
 1. AGENTS.md
 2. docs/handoff/2026-08-30-nomi-agent-interaction-design-handoff.md
 3. docs/design/nomi-design-system.md
-4. docs/design/nomi-agent-interaction.md
-5. docs/design/mockups/2026-08-27-agent-conversation-vocabulary.html
+4. docs/archive/design/nomi-agent-interaction.md
+5. docs/archive/design/mockups/2026-08-27-agent-conversation-vocabulary.html
 
 然后运行实时 git status --short --branch，核对当前分支及全部未提交/领先提交，不能只照抄 handoff 里的状态快照。预期仍在 claude/youthful-buck-fe0def；当前分支相对远端同名分支 ahead 1，而且 HTML 和 handoff 有未提交修改。必须保留并在现状上继续，禁止 reset、restore、checkout 覆盖或重做。未经我重新授权，不要 commit、push、更新、关闭或合并任何 PR；即使以后获得授权，也要先核对 ahead 1 的既有提交归属和准确提交范围，不能直接 push。不要使用、复述或保存先前对话中可能出现的 API 密钥。
 
@@ -635,7 +635,7 @@ git diff --check: 通过，无输出
 - 测量常驻控件高度、圆角、图标、实际宽度和溢出；
 - 验证技能/提示词 token 删除后恢复默认，主输入区与 Dock 的空输入/附件发送状态正确；
 - 验证创作、画布、预览帧、时间线区间和网页选区引用，产物播放/定位，会话，药丸收起/恢复；
-- 把最终截图保存到仓库内对应的 docs/design/reviews/ 子目录，并亲眼检查；
+- 把最终截图保存到仓库内对应的 docs/archive/design/reviews/ 子目录，并亲眼检查；
 - 更新 handoff 中的状态，明确哪些已完成、哪些只是设计合同、哪些仍未实现；
 - 最后把最新 HTML 页面打开给我看，并用简洁中文说明关键取舍和仍需我拍板的内容。
 

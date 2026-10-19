@@ -35,4 +35,4 @@
 
 开工：指定分支 pull --ff-only 成功；preflight 已刷新 origin/main，但因上一轮留下的规则表与本计划未提交而报 dirty_worktree。按用户明确要求继续当前任务分支并保留该两份工作；最终整合远端基线。
 
-结果：本次 10 次生成、3 张可用、37 条待生成；1 轮返工。实付 $0.125 / 保守 ¥1.00。详见 `docs/design/covers/covers-v1-report.md`。
+结果：本次 10 次生成、3 张可用、37 条待生成；1 轮返工。实付 $0.125 / 保守 ¥1.00。详见 `docs/archive/design/covers/covers-v1-report.md`。

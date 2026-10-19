@@ -1,6 +1,6 @@
 /**
  * 「画布节点预览 · 实时」：这条工作流在生成画布上会长成什么样，当场画出来、可填、可试跑。
- * plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+ * plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
  *
  * 为什么值得占左栏一格（D1 effect-first）：配完绑定到「知道自己配出了什么」中间隔着
  * 保存 → 关设置 → 建节点 → 选模型 四步，配错要走完全程才发现。把结果搬到手边，改一下看见一下。

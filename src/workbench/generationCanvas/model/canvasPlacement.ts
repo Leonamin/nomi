@@ -3,7 +3,7 @@
  *
  * 拖入（components/canvasStageDrop.ts）、粘贴（components/useCanvasShortcuts.ts）、导入适配器
  * （adapters/assetImportAdapter.ts 的 `anchor`）与 store 的 `pasteNodes` 用的都是这一对，
- * 不再各自约定「一个点指的是卡的左上角还是中心」（结构评审 docs/audit/2026-09-21-canvas-node-placement-structure.md §2）。
+ * 不再各自约定「一个点指的是卡的左上角还是中心」（结构评审 docs/archive/audit/2026-09-21-canvas-node-placement-structure.md §2）。
  */
 export type CanvasPlacementAnchor = { xRatio: number; yRatio: number }
 

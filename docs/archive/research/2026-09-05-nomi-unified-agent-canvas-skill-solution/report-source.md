@@ -63,7 +63,7 @@
 当前设计原则是“对话是任务索引/收据，画布是产物真相”；Pi runtime 负责 Agent 执行能力，Nomi 负责 provider、权限、生产能力、持久化和 UI。React Flow 是画布交互内核，Zustand 是业务与持久化真相源。关键依据：
 
 - [当前架构](../../guides/ARCHITECTURE-NOW.md)
-- [Agent 交互原则](../../../design/nomi-agent-interaction.md)
+- [Agent 交互原则](../../design/nomi-agent-interaction.md)
 - [设计系统](../../../design/nomi-design-system.md)
 
 ### 2.2 现有实现与差距
@@ -610,7 +610,7 @@ SEO 站的核心应是 Nomi 自己的原创方法和可执行教程，而不是�
 - `src/workbench/onboarding/OnboardingChecklist.tsx`：当前是顶栏紧凑的“上手 N/4”，真实行为驱动四步勾选：接入模型、出现分镜/画布节点、生成成功、导出成片；默认收起，展开面板会让开创作区，避免遮住“拆成镜头·落画布”；
 - `src/workbench/onboarding/onboardingState.ts`：有跨会话 localStorage 状态、折叠态、用户关闭、两天 TTL 和真实可用模型判定；
 - `src/workbench/onboarding/JourneyTourController.tsx` / `JourneyTour`：有首页进入示例项目后的三步工作台 tour；
-- `docs/design/2026-06-12-start-page-onboarding-v3-spec.md`：已有“30 秒体验”、示例项目、模型接入衔接、真实按钮 spotlight 和失败/重试设计；
+- `docs/archive/design/2026-06-12-start-page-onboarding-v3-spec.md`：已有“30 秒体验”、示例项目、模型接入衔接、真实按钮 spotlight 和失败/重试设计；
 - `tests/ux/onboarding-checkmark-honesty.walk.mjs`：已经验证 locked key 不能错误打绿勾、清单必须真实渲染、错误必须人话化；
 - `tests/ux/design-fidelity.e2e.mjs`：已有清单/spotlight 的真实几何走查入口。
 
@@ -904,8 +904,8 @@ Agent 只通过 capability/tool contract 写入；渲染层通过 bridge；Zusta
 
 ### 仓库内来源
 
-- `docs/ARCHITECTURE-NOW.md`
-- `docs/design/nomi-agent-interaction.md`
+- `docs/archive/guides/ARCHITECTURE-NOW.md`
+- `docs/archive/design/nomi-agent-interaction.md`
 - `docs/design/nomi-design-system.md`
 - `src/workbench/ai/ProjectAgentResidentShell.tsx`
 - `src/workbench/ai/composer/AutoGrowTextarea.tsx`
@@ -918,11 +918,11 @@ Agent 只通过 capability/tool contract 写入；渲染层通过 bridge；Zusta
 - `src/workbench/generationCanvas/nodes/extractDeconstructionShotsToNodes.ts`
 - `src/workbench/generationCanvas/store/generationCanvasStore.ts`
 - `tests/ux/tikhub-project-video-breakdown.e2e.mjs`
-- `docs/qa/2026-09-04-epics-rebaseline-audit.md`
-- `docs/research/2026-08-29-browser-assets-pi-ecosystem-research.md`
-- `docs/plan/2026-08-13-video-deconstruction-storyboard-table.md`
-- `docs/plan/2026-09-01-tikhub-connector-v1.md`
-- `docs/plan/2026-08-26-hyperframes-canvas-motion-node.md`
+- `docs/archive/qa/2026-09-04-epics-rebaseline-audit.md`
+- `docs/archive/research/2026-08-29-browser-assets-pi-ecosystem-research.md`
+- `docs/archive/plan/2026-08-13-video-deconstruction-storyboard-table.md`
+- `docs/archive/plan/2026-09-01-tikhub-connector-v1.md`
+- `docs/archive/plan/2026-08-26-hyperframes-canvas-motion-node.md`
 - `docs/skill-pack-format.md`
 - `src/workbench/skillLibrary/SkillLibraryPanel.tsx`
 - `src/workbench/skillLibrary/SkillCard.tsx`

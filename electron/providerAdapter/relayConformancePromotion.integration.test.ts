@@ -1,4 +1,4 @@
-// 自建中转一致性台架 · 落库那一段（docs/plan/2026-09-03-self-hosted-relay-conformance-harness.md）。
+// 自建中转一致性台架 · 落库那一段（docs/archive/plan/2026-09-03-self-hosted-relay-conformance-harness.md）。
 //
 // 与 relayConformance.integration.test.ts 分文件的**唯一原因**：这条链必须 vi.mock catalogStore 才能
 // 观察落库写入，而 mock 是模块级的、会污染那边的真运行时。两边覆盖的是同一条链的前后两段：

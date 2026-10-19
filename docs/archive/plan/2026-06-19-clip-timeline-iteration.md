@@ -1,6 +1,6 @@
 # 剪辑区 + 时间轴体验迭代（2026-06-19）
 
-> 来源：`docs/audit/2026-06-19-clip-timeline-walkthrough.md` 真机走查。P0（文字 clip 撞 id）已修推送 5e537e7。
+> 来源：`docs/archive/audit/2026-06-19-clip-timeline-walkthrough.md` 真机走查。P0（文字 clip 撞 id）已修推送 5e537e7。
 > 本文做用户拍板后的体验迭代。样张：聊天内 `nomi_clip_timeline_redesign` 交互原型（用户已试 + 拍板）。
 
 ## 用户拍板

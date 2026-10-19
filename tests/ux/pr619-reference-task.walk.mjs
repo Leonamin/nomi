@@ -11,7 +11,7 @@ import { screenshotSettled } from './_assert.mjs'
 
 const key = process.env.TIKHUB_API_KEY?.trim()
 assert.ok(key, 'TIKHUB_API_KEY is required; this task cannot be validated with fixtures')
-const evidence = path.join(repoRoot, 'docs/evidence/pr619-finish/task')
+const evidence = path.join(repoRoot, 'docs/archive/evidence/pr619-finish/task')
 fs.mkdirSync(evidence, { recursive: true })
 const receipt = { semantics: 'link imports one; keyword search finds references', searches: 0, imports: [], errors: [] }
 const run = await launchNomiApp({ name: 'pr619-reference-task', initialLocalStorage: { 'nomi-color-scheme': 'light' } })

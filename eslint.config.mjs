@@ -1,7 +1,7 @@
 // ESLint flat config —— 宽松起步策略：
 //   真能抓 bug 的规则设 error（红牌，阻断 CI）；风格 / any / 未用变量等存量问题
 //   设 warn（黄牌，只提示不阻断）。目标是「挡住新增的脏东西」，存量债逐步还，
-//   而不是一上来一片红把人吓退。详见 docs/audit/2026-06-04-full-codebase-review-6role.md。
+//   而不是一上来一片红把人吓退。详见 docs/archive/audit/2026-06-04-full-codebase-review-6role.md。
 import js from '@eslint/js'
 import tseslint from 'typescript-eslint'
 import reactHooks from 'eslint-plugin-react-hooks'
@@ -44,11 +44,11 @@ export default tseslint.config(
       '.hermes/**',
       'skills/**',
       // 研究产物中的原型脚本（可独立运行的 ESM 采集/校验器）——非产品源码，不 lint。
-      'docs/research/**/prototype/**',
-      // 归档的实测证据（docs/evidence/<日期>-<主题>/）：当时那次测量的**原件**，含可独立运行的
+      'docs/archive/research/**/prototype/**',
+      // 归档的实测证据（docs/archive/evidence/<日期>-<主题>/）：当时那次测量的**原件**，含可独立运行的
       // .mjs 计时脚本（Node 全局、自带未用变量）。它们在仓库里的唯一价值是可核对——
       // 按 lint 改一个字，它就不再是「当时那次运行的记录」了。非产品源码，不 lint。
-      'docs/evidence/**',
+      'docs/archive/evidence/**',
       // design-sync（组件库同步）：.ds-sync 是外部技能暂存的转换器脚本、ds-bundle 是它的构建产物、
       // .design-sync/support 是本地构建脚本+压平后的 CSS——三者都 gitignored，是构建工具不是产品源码，不 lint。
       // （.design-sync/previews/ 是手写的预览组合，走 tsx，保持被 lint。）

@@ -28,7 +28,7 @@
 - 已安装的 streamdown 2.6.0 源码：默认 `pre` 只 `cloneElement(child, {"data-block": "true"})`，`MarkdownCode` 把其余 props
   透传给 `CodeBlock`，后者铺到 `code-block-body` 上——`data-nomi-code` 就是这样到达皮肤的，没有并行渲染路径。
   代码块外框 `border + p-2 + gap-2`、标题行、带边框的 body（`p-4`）、带边框+毛玻璃的动作条都来自这里（`docs/fixes/2026-09-25-agent-code-block-skin.root-cause.json` 的 direct_cause 逐条列出）。
-- 任务中心原方案 `docs/plan/2026-08-02-task-center-queue.md`：分组/排序/可取消性判定本应「全在纯函数」，
+- 任务中心原方案 `docs/archive/plan/2026-08-02-task-center-queue.md`：分组/排序/可取消性判定本应「全在纯函数」，
   组件只负责画——本次把后来长回组件里的分组、汇总、标签表收回纯函数，是回到这份方案的初衷，不是新设计。
 - 仓内 `electron/productionRun/productionPlaybooks.ts:1` 的注册表先例：「字面量散落多处 ⇒ 加第二个就漏改一处」，
   于是 playbook 名单只有一个真相源。本次对**显示**做同样的事：流程 / 阶段的人话名只从 `productionRunLabels.ts` 取。
@@ -38,11 +38,11 @@
 
 ## 样张与拍板（2026-09-25）
 
-样张 `docs/design/mockups/2026-09-25-agent-panel-tidy/`（在线：https://claude.ai/artifact/PwZiq9tRTbiZukvAHZ4J17），
+样张 `docs/archive/design/mockups/2026-09-25-agent-panel-tidy/`（在线：https://claude.ai/artifact/PwZiq9tRTbiZukvAHZ4J17），
 用户拍板「设计没问题」，五条全取推荐项：D1-A「等你处理」排最上面、行上常驻「重新拉取」+ 悬停说明「只查结果，不重新生成，不花钱」；
 D2-A 顶栏数字计入「等你处理」；D3-A 代码块去掉语言标题行、复制钮 24px 在右上角；D4-A 全部自动换行；D5-A 字体按内容判断。
-D3/D4 取代 `docs/plan/2026-09-09-b2e-streamdown.md` 原第 9、55 行（该文已同步改写）。
-机器契约：`docs/design/mockups/contracts/2026-09-25-agent-panel-tidy-{task-center,code-block}.intent.mjs`，由两份走查执行。
+D3/D4 取代 `docs/archive/plan/2026-09-09-b2e-streamdown.md` 原第 9、55 行（该文已同步改写）。
+机器契约：`docs/archive/design/mockups/contracts/2026-09-25-agent-panel-tidy-{task-center,code-block}.intent.mjs`，由两份走查执行。
 
 ## 实施
 
@@ -63,5 +63,5 @@ D3/D4 取代 `docs/plan/2026-09-09-b2e-streamdown.md` 原第 9、55 行（该文
 - 单测：`codeFenceTypeface.test.ts`、`agentPanelV4MarkdownKernel.test.ts`、`productionRunView.test.ts`、
   `productionRunTaskCenter.test.ts`、`taskCenterEntries.test.ts`、`productionRunRepository.test.ts`、`productionRunIpc.test.ts`。
 - 真 app 走查（zh + en，截图亲眼看过）：`tests/ux/agent-code-block.walk.mjs`、`tests/ux/task-center-states.walk.mjs`，
-  改前（断言红 = 复现）与改后证据在 `docs/evidence/2026-09-25-agent-panel-tidy/`。
+  改前（断言红 = 复现）与改后证据在 `docs/archive/evidence/2026-09-25-agent-panel-tidy/`。
 - `pnpm run gates`、`pnpm run review:branch`。

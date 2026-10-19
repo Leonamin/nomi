@@ -15,12 +15,12 @@
 4. **逐旅程走 J1–J5**（真实创作目标，不是功能探索）：每步 `ui.mjs snap`（看可点元素）→ 判断 → `click/fill/setfile` → `shot` + Read 截图人眼判断。
 5. **交互态收尾**：逐个打开弹层/下拉/面板，看遮挡/溢出（R13 §交互态要求）。
 6. **挖根因**：发现问题用 Explore agent 定位 file:line，分「症状/根因/地基」。
-7. **落档**：`docs/audit/<date>-*.md`，问题分级 + 局部/地基拆分。
+7. **落档**：`docs/archive/audit/<date>-*.md`，问题分级 + 局部/地基拆分。
 8. **收**：`ui.mjs quit`，别留后台窗口。
 
 ### 能覆盖 / 覆盖不到
 - ✅ 渲染层交互 + 感知判断（~90%）、上传（`setfile` 绕过系统对话框）、跨项目状态、几何实测。
-- ⚠️ 真实生成要额度（vendor HTTP 在主进程发，渲染层抓不到——要埋点见 `docs/workflow/2026-06-06-real-generation-e2e-loop.md`）；原生 OS 对话框需 `electronApp.evaluate` stub `dialog.*`。
+- ⚠️ 真实生成要额度（vendor HTTP 在主进程发，渲染层抓不到——要埋点见 `docs/archive/workflow/2026-06-06-real-generation-e2e-loop.md`）；原生 OS 对话框需 `electronApp.evaluate` stub `dialog.*`。
 
 ---
 

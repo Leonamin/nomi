@@ -151,6 +151,6 @@
 
 - Seedance 2.5 的 `--model_version` 字符串在**所有**视频子命令 -h 里都写作 **`seedance2.5`**（有小数点，无连字符，无「3」）。
   - ❌ 不是 `seedance-3` / `dreamina-seedance-3` / `seedance3`。#258 侧支线里出现的「dreamina-seedance-3」重命名结论 **不采纳**——本机现役 CLI help 无「3」这个模型。
-  - ⚠️ `docs/plan/2026-09-01-provider-proxy-and-onboarding-hardening.md:21` 提到一个 `dreaminaSeedance3.ts` 文件，main 上**不存在**该文件，属侧支线提案，不作为现状。
+  - ⚠️ `docs/archive/plan/2026-09-01-provider-proxy-and-onboarding-hardening.md:21` 提到一个 `dreaminaSeedance3.ts` 文件，main 上**不存在**该文件，属侧支线提案，不作为现状。
 - Seedream 图片 pro 档在 -h 里写作 **`5.0Pro`**（`--model_version=5.0Pro`）。
 - 视频档案家族名保持「Seedance」；即梦 CLI 底层现覆盖 seedance1.0fast/1.5pro/2.0 家族/2.5，**不再只是 2.0**。

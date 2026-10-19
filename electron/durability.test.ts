@@ -14,7 +14,7 @@ import { createProductionRunRepository } from "./productionRun/productionRunRepo
 // 被删掉/改坏，全绿也照样看不出来。这个文件就是那道反向闸——它自己翻回 'durable'，
 // 断言真实写盘路径确实调了 fsync。
 //
-// 详见 docs/plan/2026-08-25-production-run-test-flake-fsync.md。
+// 详见 docs/archive/plan/2026-08-25-production-run-test-flake-fsync.md。
 
 describe("durability barrier", () => {
   const previous = getDurabilityMode();

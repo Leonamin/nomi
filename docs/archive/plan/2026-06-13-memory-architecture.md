@@ -18,7 +18,7 @@
 1. **一致性是视觉问题，不是文本记忆问题**：扩散模型的角色一致性 90% 由视觉条件（参考图/IPAdapter/首帧/seed）决定；两镜都写「齐肩黑发女孩」会出两张不同的脸。v1 把银弹打在「注入明文设定」上＝打错层。**且记忆文本从来没进真实生成链路**——`formatMemoryForPrompt` 只进 agent 对话 systemPrompt（`generationCanvasAgentClient.ts:154`），真实出图的 `generationNodeExecutor` 直接拿 `node.prompt` + 参考边解析成**图片 URL**，无文本通道。
 2. **conversationId 是 P0 静默炸弹**：贪婪正则 `^nomi:workbench:(.+)$`（`agentSessionStore.ts:28`/`eventLogRepository.ts:49`/`workbenchAgentRunner.ts:25`）会把 `项目id:会话id` 整段当 projectId → 查无目录 → EventLog 与记忆提炼**静默全停**。故「只做对话历史库」不能独立切，依赖方向反了。
 3. **多会话历史库是伪需求**（用户澄清证实）：用户要的「翻旧对话续聊」实为**「打开之前的项目接着干」**，已由 项目库 + S-A（重启记得）+ 记忆卡 覆盖，不需重型多会话库。
-4. **lorebook 编辑表单撞已发版设计**：`docs/design/2026-06-06-character-scene-fixation-design.md` 已废「抽屉+逐槽表单」、定死「大图即档案」。暴露 keys/injection/order ＝ 把废掉的极客抽屉换名重来。
+4. **lorebook 编辑表单撞已发版设计**：`docs/archive/design/2026-06-06-character-scene-fixation-design.md` 已废「抽屉+逐槽表单」、定死「大图即档案」。暴露 keys/injection/order ＝ 把废掉的极客抽屉换名重来。
 5. **过度工程**：全局产品记忆层（现仅 1 条候选）退化为 settings；style/brand 零 LLM 规则**抽不出**（画风隐含）；消费边记关系**做不了**（distillEvent 是无状态纯函数，边 seq 乱序）。
 
 ### 拍板（锁定）

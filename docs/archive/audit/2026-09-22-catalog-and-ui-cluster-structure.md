@@ -166,9 +166,9 @@ T-MO-20 真实烧掉过 $0.439，「我以为它免费」必须写成「有出�
 ## 6. 覆盖边界（本评审到此为止）
 
 - **本评审真正诊断的是 5 份**：子簇 A 的 3 份 + 子簇 B 的 2 份。它们的共同点是 `invariant_owner_layer`
-  都在 `electron/catalog`，且在本窗口之前没有任何一份 `docs/audit/*` 从 catalog 这一侧诊断过它们
+  都在 `electron/catalog`，且在本窗口之前没有任何一份 `docs/archive/audit/*` 从 catalog 这一侧诊断过它们
   （`credential-probe-paid-without-consent`、`transcribe-leg-vendor-independence`、`flagship-image-profiles-missing`
-  三份此前在 `docs/audit/` 下零命中）。
+  三份此前在 `docs/archive/audit/` 下零命中）。
 - **其余 10 份点名归类但不重复诊断**，各自去处见 §4 的表：C 簇 3 份见 #847 的接模型评审，
   D 簇 2 份见 09-18 workbench 评审，E 簇 5 份见各自评审。
 - **本评审不覆盖**：这两个模块键在 2026-09-17 之前的历史窗口（`electron/catalog` 在 08-28→09-03

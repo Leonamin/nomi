@@ -24,4 +24,4 @@
 
 ## 最终判断
 
-用已有的 `TextDecoder`、媒体类型表和三处校验边界；不引依赖，不采纳第二套正则或自媒体规则。报告结论已抄进 `docs/plan/2026-09-27-reference-image-markup-false-positive.md` 的「先查别人」节。
+用已有的 `TextDecoder`、媒体类型表和三处校验边界；不引依赖，不采纳第二套正则或自媒体规则。报告结论已抄进 `docs/archive/plan/2026-09-27-reference-image-markup-false-positive.md` 的「先查别人」节。

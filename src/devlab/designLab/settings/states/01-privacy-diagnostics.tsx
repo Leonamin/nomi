@@ -26,7 +26,7 @@ export const PRIVACY_DIAGNOSTICS_STATES: readonly LabState[] = [
   {
     id: 'privacy-01-idle',
     name: '隐私与诊断 · 默认（遥测关 · 未导出）',
-    source: '现役 TelemetrySection.tsx + DiagnosticsBundleSection.tsx（docs/plan/2026-09-06-logging-and-diagnostics-bundle.md §4）',
+    source: '现役 TelemetrySection.tsx + DiagnosticsBundleSection.tsx（docs/archive/plan/2026-09-06-logging-and-diagnostics-bundle.md §4）',
     coverage: 'shell',
     render: () => (
       <SettingsStage behavior={{ ok: false, reason: 'canceled' }}>
