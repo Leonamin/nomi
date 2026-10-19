@@ -33,11 +33,31 @@ test('selection rewrite persists its actual result body, reopens without replay,
     await editor.click()
     await browserExpect(editor).toBeFocused()
     await page.keyboard.press('ControlOrMeta+a')
-    await browserExpect.poll(() => page.evaluate(() => window.getSelection()?.toString())).toBe('Keep OLD tail')
+    const expectSelection = async (text, focusOffset) => {
+      await browserExpect.poll(() => page.evaluate(() => {
+        const selection = window.getSelection()
+        const prefix = document.createRange()
+        prefix.selectNodeContents(document.querySelector('.ProseMirror'))
+        prefix.setEnd(selection.focusNode, selection.focusOffset)
+        return {
+          text: selection?.toString(),
+          focusOffset: prefix.toString().length,
+          stored: window.textOwnership.snapshot().selection,
+        }
+      })).toEqual({ text, focusOffset, stored: text })
+    }
+    // Native selection and the editor transaction must settle before the next key.
+    await expectSelection('Keep OLD tail', 13)
     await page.keyboard.press('ArrowLeft')
-    for (let index = 0; index < 5; index += 1) await page.keyboard.press('ArrowRight')
-    for (let index = 0; index < 3; index += 1) await page.keyboard.press('Shift+ArrowRight')
-    await browserExpect.poll(() => page.evaluate(() => window.textOwnership.snapshot().selection)).toBe('OLD')
+    await expectSelection('', 0)
+    for (let index = 0; index < 5; index += 1) {
+      await page.keyboard.press('ArrowRight')
+      await expectSelection('', index + 1)
+    }
+    for (let index = 0; index < 3; index += 1) {
+      await page.keyboard.press('Shift+ArrowRight')
+      await expectSelection('OLD'.slice(0, index + 1), index + 6)
+    }
     await page.evaluate(() => window.textOwnership.prepare())
     await page.evaluate(() => window.textOwnership.generate())
     await browserExpect.poll(() => page.evaluate(() => window.textOwnership.snapshot().pending)).toBe(null)

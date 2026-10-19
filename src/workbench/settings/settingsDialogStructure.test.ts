@@ -79,7 +79,8 @@ const APPROVED_NON_MODEL_SECTION_SHA256 = {
   // `variant` prop 只剩一个合法值，删掉之后这里的 `variant="embedded"` 也跟着去掉。
   // 布局、区块顺序、文案一个字没动。更新这颗钉子是因为它钉的是整份文件的内容。
   // 2026-10-12: the requested web host exposes its exact source and AGPL license; desktop rendering is unchanged.
-  'AboutSection.tsx': '9b7a62c0e63205a9f4a6408364e8ca8987688393868dd933c0bd94bceed79edd',
+  // 2026-10-19: only the archived approval citation comment moved; code equality is asserted below.
+  'AboutSection.tsx': '88cf1715daf3d6c58b9255ce7922cc8577def7f8d0c8e078721816d5676e077c',
 } as const
 
 describe('settings dialog structure', () => {
@@ -311,6 +312,12 @@ describe('settings dialog structure', () => {
     expect(aiModelsSource, '读失败不许清空供应商').not.toContain('setProviders([])')
     expect(aiModelsSource, '读失败不许清空模型').not.toContain('setModels([])')
     expect(aiModelsSource).toContain('if (Array.isArray(values)) setModels(values)')
+  })
+
+  it('relocates the About approval citation while preserving its exact executable content', () => {
+    const raw = fs.readFileSync(path.join(settingsDirectory, 'AboutSection.tsx'), 'utf8')
+    expect(raw).toContain('docs/archive/design/mockups/2026-09-01-feedback-share-center')
+    expect(createHash('sha256').update(stripComments(raw)).digest('hex')).toBe('4c7b1a85a4c98e3eac5c3eb5e771388ef09008dc93668fee2102b9a24617706d')
   })
 
   it('keeps all five non-model sections at their explicitly approved content baseline', () => {
