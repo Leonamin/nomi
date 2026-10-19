@@ -525,7 +525,7 @@ const BLOCKING_PATTERNS = [
   /must be a non-empty string array/,
   /recurrence requires/,
   /detected_by|recurrence_check_on/,
-  /legacy/,
+  /(?:^|:\s*)(?:new legacy contract|legacy history|legacy_paths|removed legacy paths?|not-applicable legacy_paths)\b/,
 ];
 export function classifyFindings(errors) {
   const blocking = [];

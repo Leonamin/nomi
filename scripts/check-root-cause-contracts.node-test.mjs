@@ -1078,9 +1078,10 @@ test("reference relocation: historical removed-path evidence is not re-performed
 test("classifyFindings: historical legacy in a contract label cannot turn an advisory into a schema failure", () => {
   const result = classifyFindings([
     "2026-09-11-legacy-spend-door: door_reduction requires integer before/after",
+    "plain-contract: regression test does not exist: tests/legacy-path.test.ts",
     "docs/fixes/legacy-history.root-cause.json: legacy history changed; migrate to v3",
     "legacy-labelled-contract: schema_version must be 3",
   ]);
   assert.equal(result.blocking.length, 2);
-  assert.equal(result.warnings.length, 1);
+  assert.equal(result.warnings.length, 2);
 });
