@@ -33,6 +33,7 @@ import { currentArchetypeMode } from '../nodes/controls/archetypeMeta'
 import { isComfyuiVendorKey } from '../model/comfyuiVendor'
 import { resolveComfyWorkflowTaskKind } from '../../../../electron/catalog/comfyuiWorkflowTaskContract'
 import { readParameterReferenceContract } from '../../../../electron/catalog/parameterReferenceContract'
+import { customCapabilityArchetypeForModel } from '../../../../electron/shared/modelArchetypes/customCapabilityContract'
 import { remapArchetypeMode, resolveUsableModelForNode } from './usableVendorModel'
 import type { MediaDimensions } from '../nodes/nodeSizing'
 
@@ -277,6 +278,14 @@ export function resolveTaskKind(node: GenerationCanvasNode, references: Partial<
       const transport = modeTransportFor(currentArchetypeMode(archetype, meta), archetype, selectedVendor(node))
       if (transport) return transport
     }
+  }
+  // ComfyUI 导入工作流的能力合同是这台模型自己的声明（换模型时 replaceCustomCapabilityContractMeta 随之替换，不会残留），
+  // 它声明的模式就是传输桶。resolveTaskArchetype 对 ComfyUI 一律不信 meta.archetype，故在这里单独读合同；
+  // 否则 edit-only / i2v 合同模型在没有连线时被启发式判成文生，选不到模型、参考也发不出去。
+  if (isComfyuiVendorKey(selectedVendor(node)) && executionKind !== 'text') {
+    const custom = customCapabilityArchetypeForModel({ modelKey: asTrimmedString(meta.modelKey), modelAlias: asTrimmedString(meta.modelAlias), meta })
+    const transport = custom ? modeTransportFor(currentArchetypeMode(custom, meta), custom, selectedVendor(node)) : undefined
+    if (transport) return transport
   }
   const parameterContract = readParameterReferenceContract(meta)
   if (isComfyuiVendorKey(selectedVendor(node)) && parameterContract && isComfyuiVendorKey(parameterContract.vendorKey)
