@@ -211,7 +211,7 @@ export function useAgentPanelV4Actions(surface: ResidentSurface, data: AgentPane
         ...(storyboardTarget ? { storyboardTarget } : {}),
         target, preconditions,
         contextSnapshot: captured.snapshot,
-        availableModels,
+        availableModels: availableModels.map(({ catalogMeta: _catalogMeta, ...entry }) => entry),
         ...(capturedIntent ? { restoredIntent: capturedIntent } : {}),
         attachments: projectAgentAttachmentClaims(capturedAttachments),
         systemPrompt: composeResidentSystemPrompt(surfacePrompt, capturedSkill ? null : capturedPrompt),

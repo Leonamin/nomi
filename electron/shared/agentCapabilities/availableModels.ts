@@ -53,6 +53,11 @@ export type AgentModelEntry = {
   kind: "text" | "image" | "video" | "audio" | "model3d";
   /** Media models have a stable archetype; chat models are catalog-defined and need none. */
   archetypeId?: string;
+  /**
+   * 目录行的原始 meta（能力合同、参数声明）。仅渲染层写入、仅落画布时读——节点 meta 要与手选模型同源；
+   * 不进 lane（`useAgentPanelV4Actions` 发送前剥掉），所以 `agentModelEntrySchema` 不收它。
+   */
+  catalogMeta?: Record<string, unknown>;
   defaultModeId: string;
   modes: AgentModelMode[];
   /**

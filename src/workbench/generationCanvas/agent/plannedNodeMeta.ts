@@ -7,12 +7,14 @@ import type { AgentModelEntry } from "./availableModels";
 import { isParamValueAllowed } from "../../../../electron/shared/videoCapabilities/paramConstraints";
 import {
   canonicalArchetypeVariantId,
+  replaceCustomCapabilityContractMeta,
   resolveArchetypeForModel,
   resolveArchetypeVariant,
   specializeArchetypeForVariant,
   type ModelArchetype,
 } from "../../../../electron/shared/modelArchetypes";
 import { pickImplicitVendorMatch } from "../../../config/modelIdentity";
+import { projectParameterReferenceSlots } from "../model/parameterReferenceSlots";
 
 export type PlannedNodeModelInput = {
   modelKey?: unknown;
@@ -39,7 +41,8 @@ function entryArchetype(entry: AgentModelEntry): ModelArchetype | null {
     modelKey: entry.modelId,
     modelAlias: entry.modelAlias,
     vendorKey: entry.vendor,
-    meta: { archetypeId: entry.archetypeId },
+    // catalogMeta 带着用户导入模型的能力合同；只给 archetypeId 解析不出 `custom-capability:*`。
+    meta: { ...entry.catalogMeta, archetypeId: entry.archetypeId },
   });
 }
 
@@ -156,6 +159,11 @@ export function buildPlannedNodeMeta(
     meta.vendor = persistedVendor;
   }
   if (!mode) return meta;
+
+  // 与手选模型同口径（useNodeModelAutoSelect / buildNodeModelChangePatch）：能力合同 + 参考槽声明。
+  // 少了它，ComfyUI 导入的 edit-only / i2v 模型会被 resolveTaskKind 判成文生，选不到模型、锚点参考丢失。
+  // 先写 meta 再投影：投影靠 meta 里的 modelKey/vendor 认身份。
+  Object.assign(meta, projectParameterReferenceSlots(replaceCustomCapabilityContractMeta(meta, entry.catalogMeta), entry.catalogMeta));
 
   // 1) 铺 mode 默认参数
   for (const control of mode.params) {

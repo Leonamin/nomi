@@ -92,6 +92,7 @@ export function buildAgentModelEntries(options: readonly ModelOption[]): AgentMo
       displayName: translateModelDisplayText(option.label),
       kind,
       ...(archetype ? { archetypeId: archetype.id } : {}),
+      ...(option.meta && typeof option.meta === "object" && !Array.isArray(option.meta) ? { catalogMeta: option.meta as Record<string, unknown> } : {}),
       defaultModeId: archetype?.defaultModeId ?? "chat",
       modes,
       // 变体随档案一起投出去：准入层会拒未知 variantId，不投就是「可被拒、不可发现」。
