@@ -5,5 +5,5 @@ import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 export default function setup(): void {
-  execFileSync(process.execPath, [fileURLToPath(new URL("../../scripts/build-tailwind.mjs", import.meta.url))], { stdio: "ignore" });
+  execFileSync(process.execPath, [fileURLToPath(new URL("../../scripts/build-tailwind.mjs", import.meta.url))], { stdio: ["ignore", "ignore", "inherit"] });
 }
