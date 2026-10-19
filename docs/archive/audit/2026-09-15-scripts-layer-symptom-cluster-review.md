@@ -33,9 +33,9 @@ if (segments.length === 2) return segments[0]                      // scripts/x.
 
 - 窗口 7 天、门槛 3 份。按 09-09~09-15 的实际密度（18 份），**任何**一份新的 `scripts/` 合同都会撞红。
 - 撞红的人和那 18 份里的其余 17 份毫无关系，他能做的只有写一份「提到 scripts」的文档把闸推开。
-- `docs/audit/` 里近一周已经出现同类评审（`11ffa6fc6`「接模型验证 run 失败路径的方案、根因合同与结构评审」、`f1f8fbaf2`「技能索引快照 vs 实时…结构评审」），说明这条路已经在被例行走过。
+- `docs/archive/audit/` 里近一周已经出现同类评审（`11ffa6fc6`「接模型验证 run 失败路径的方案、根因合同与结构评审」、`f1f8fbaf2`「技能索引快照 vs 实时…结构评审」），说明这条路已经在被例行走过。
 
-这正是本仓自己写下的失效形状：**闸门一旦开始拦无辜的人，人就会开始绕过闸门**（`scripts/ponytail-review-hook.mjs` 那轮的原话，也是 `docs/lessons/review-at-the-moment-it-can-land.md` 这次记下的教训）。区别只是这里的「绕过」形式合法：写一份没人会再读的文档。
+这正是本仓自己写下的失效形状：**闸门一旦开始拦无辜的人，人就会开始绕过闸门**（`scripts/ponytail-review-hook.mjs` 那轮的原话，也是 `docs/archive/lessons/review-at-the-moment-it-can-land.md` 这次记下的教训）。区别只是这里的「绕过」形式合法：写一份没人会再读的文档。
 
 ## 三、结论与修法
 

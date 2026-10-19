@@ -1,4 +1,4 @@
-// 自建中转一致性台架 · 视频/配音那两条 wire（docs/plan/2026-09-03-self-hosted-relay-conformance-harness.md）。
+// 自建中转一致性台架 · 视频/配音那两条 wire（docs/archive/plan/2026-09-03-self-hosted-relay-conformance-harness.md）。
 //
 // 与 relayConformance.integration.test.ts 分文件的原因是**按 kind 拆**（R9 ≤800 行，宁可拆不要削注释）：
 // 那边是图像（同步单跳 + multipart 改图），这边是视频（**异步两段**：create → 轮询 → 终态）与配音

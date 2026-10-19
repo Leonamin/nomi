@@ -20,7 +20,7 @@
 ## 不动的地方（都有拍板记录，§1.5.4：拍板形态默认不动）
 
 - **不重排节点底栏**「模型 + 变体 + 参数」——2026-07-17 拍板形态，§1.5.4 明确列为反例。
-- **不动摘要 pill 的交互**（点开弹统一参数面板）——同批拍板，样张 `docs/design/mockups/node-param-panel.html`。
+- **不动摘要 pill 的交互**（点开弹统一参数面板）——同批拍板，样张 `docs/archive/design/mockups/node-param-panel.html`。
   B 只换**这一类模型的 pill 文案**，是拍板形态内的一处窄例外（2026-08-20 用户拍板）。
 - 不新增任何常驻按钮：右键菜单是 L3 收纳（§1.5.1），不占常驻预算。
 
@@ -31,7 +31,7 @@
 | `components/useCanvasContextNodeMenu.ts` | 把 `.generation-canvas-v2-node` 移出排除名单；pending 菜单带上 `nodeId`；提交时按有无 nodeId 分流「节点菜单 / 空白添加菜单」 |
 | `components/NodeContextMenu.tsx`（新）| 菜单壳沿用 NodeAddMenu 的视觉（border/rounded/bg/shadow），每项右侧一列快捷键提示 |
 | `components/GenerationCanvas.tsx` | 渲染 NodeContextMenu；接上 copy/cut/paste/group/delete 五个 store 动作 |
-| ~~`nodes/InlineParameterBar.tsx`~~ | 曾新增 `summaryOverride?: string`（pill 文案覆盖）。**2026-09-11 已随摘要 pill 一起删除**：底栏改成逐参数下拉 chip 后，「工作流参数 · N 项」这句话由 ⚙ 的名字（`更多参数 · {{count}} 项`）承担，不再需要按供应商分叉的摘要通路。见 `docs/design/2026-09-10-node-composer-bar-v1.md` §B |
+| ~~`nodes/InlineParameterBar.tsx`~~ | 曾新增 `summaryOverride?: string`（pill 文案覆盖）。**2026-09-11 已随摘要 pill 一起删除**：底栏改成逐参数下拉 chip 后，「工作流参数 · N 项」这句话由 ⚙ 的名字（`更多参数 · {{count}} 项`）承担，不再需要按供应商分叉的摘要通路。见 `docs/archive/design/2026-09-10-node-composer-bar-v1.md` §B |
 | `nodes/NodeParameterControls.tsx` | 导入工作流（`meta.comfyWorkflowImport` 存在）时算出 `工作流参数 · N 项` 传下去 |
 | `i18n/locales/generationCommon.ts` | 菜单五项 + 工作流参数文案，zh-CN / en 双语（R15） |
 

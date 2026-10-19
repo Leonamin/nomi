@@ -34,11 +34,11 @@
 开始工作前按下面顺序读：
 
 1. `AGENTS.md`
-2. `docs/ARCHITECTURE-NOW.md`
-3. `docs/plan/2026-08-30-unified-model-integration-certification.md`
+2. `docs/archive/guides/ARCHITECTURE-NOW.md`
+3. `docs/archive/plan/2026-08-30-unified-model-integration-certification.md`
 4. 本交接
-5. `docs/research/2026-08-30-flagship-provider-model-decision.md`
-6. `docs/research/2026-08-30-kie-apimart-model-generation-audit.md`
+5. `docs/archive/research/2026-08-30-flagship-provider-model-decision.md`
+6. `docs/archive/research/2026-08-30-kie-apimart-model-generation-audit.md`
 7. 旧 LocalAI/Agent Runtime 交接
 
 当前工作树状态：
@@ -48,8 +48,8 @@
 - 还有新目录、新测试、新档案、新供应商文件和 Logo 未跟踪。
 - 没有 commit、push、PR。
 - 不得 reset、checkout 或删除任何现有改动。
-- `docs/plan/2026-08-30-unified-model-integration-certification.md` 是当前执行计划。
-- `docs/plan/2026-08-30-provider-model-expansion-and-runtime.md` 已被新计划取代，只保留历史背景。
+- `docs/archive/plan/2026-08-30-unified-model-integration-certification.md` 是当前执行计划。
+- `docs/archive/plan/2026-08-30-provider-model-expansion-and-runtime.md` 已被新计划取代，只保留历史背景。
 
 当前长期目标 ID 是 `01a04e58-f764-7b50-a946-c907362239bc`。目标不是只写一份调研，而是把本交接中的全部确定性工作、验证、主线整合和 PR 交付推进到底。
 
@@ -815,8 +815,8 @@ git diff --stat
 git log --oneline --decorate -8
 
 sed -n '1,260p' AGENTS.md
-sed -n '1,320p' docs/ARCHITECTURE-NOW.md
-sed -n '1,360p' docs/plan/2026-08-30-unified-model-integration-certification.md
+sed -n '1,320p' docs/archive/guides/ARCHITECTURE-NOW.md
+sed -n '1,360p' docs/archive/plan/2026-08-30-unified-model-integration-certification.md
 sed -n '1,420p' docs/handoff/2026-08-30-provider-model-expansion-unified-certification-handoff.md
 ```
 

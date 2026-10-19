@@ -24,8 +24,8 @@
     "scripts/research/tikhub-search.mjs",
     "scripts/attention-cue/compose.mjs",
     "tests/ux/real-user-long-video.runner.mjs",
-    "docs/research/2026-09-07-skill-ecosystem-catalog/prototype/validate-skill.mjs",
-    "docs/research/2026-09-07-skill-ecosystem-catalog/prototype/collect.mjs"
+    "docs/archive/research/2026-09-07-skill-ecosystem-catalog/prototype/validate-skill.mjs",
+    "docs/archive/research/2026-09-07-skill-ecosystem-catalog/prototype/collect.mjs"
   ],
   "entry_points": [
     "scripts/check-generation-entrances.mjs 等 5 个 gates:contracts 门岗的 CLI 入口判断",
@@ -64,12 +64,12 @@
   "doors": [
     {
       "kind": "read",
-      "path": "docs/research/2026-09-07-skill-ecosystem-catalog/prototype/collect.mjs",
+      "path": "docs/archive/research/2026-09-07-skill-ecosystem-catalog/prototype/collect.mjs",
       "symbol": "pathToFileURL"
     },
     {
       "kind": "read",
-      "path": "docs/research/2026-09-07-skill-ecosystem-catalog/prototype/validate-skill.mjs",
+      "path": "docs/archive/research/2026-09-07-skill-ecosystem-catalog/prototype/validate-skill.mjs",
       "symbol": "pathToFileURL"
     },
     {
@@ -350,13 +350,13 @@
       "evidence": "改为 process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href；check:main-guard 对修前版本逐条报红（14 处，2026-09-24 实跑）。"
     },
     {
-      "path": "docs/research/2026-09-07-skill-ecosystem-catalog/prototype/validate-skill.mjs",
+      "path": "docs/archive/research/2026-09-07-skill-ecosystem-catalog/prototype/validate-skill.mjs",
       "entry_point": "CLI 入口判断",
       "disposition": "enforced",
       "evidence": "改为 process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href；check:main-guard 对修前版本逐条报红（14 处，2026-09-24 实跑）。"
     },
     {
-      "path": "docs/research/2026-09-07-skill-ecosystem-catalog/prototype/collect.mjs",
+      "path": "docs/archive/research/2026-09-07-skill-ecosystem-catalog/prototype/collect.mjs",
       "entry_point": "CLI 入口判断",
       "disposition": "enforced",
       "evidence": "改为 process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href；check:main-guard 对修前版本逐条报红（14 处，2026-09-24 实跑）。"
@@ -420,8 +420,8 @@
       "scripts/research/tikhub-search.mjs",
       "scripts/attention-cue/compose.mjs",
       "tests/ux/real-user-long-video.runner.mjs",
-      "docs/research/2026-09-07-skill-ecosystem-catalog/prototype/validate-skill.mjs",
-      "docs/research/2026-09-07-skill-ecosystem-catalog/prototype/collect.mjs"
+      "docs/archive/research/2026-09-07-skill-ecosystem-catalog/prototype/validate-skill.mjs",
+      "docs/archive/research/2026-09-07-skill-ecosystem-catalog/prototype/collect.mjs"
     ],
     "rationale": "14 处手拼入口判断全部原地换成 pathToFileURL 写法，没有保留旧写法或兼容分支。"
   },

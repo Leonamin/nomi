@@ -30,7 +30,7 @@ task id（`provider_accepted`）后，run.json 冻在 `polling`/`processing`，`
     tick/submit 经济学不变），慢供应商则留 `polling` 交给 observe。
   - tick 循环新增 observe 分支（在派发分支之后、各歇点之前）：逐单元 poll 一轮；有落定（物化/
     attention）→ 继续推进；无落定 → `sleep(backoff)` 再来。退避 3s 起步、指数到 15s 封顶（守
-    厂商「查询间隔 ≥3-5s」契约，docs/plan/2026-07-31-seedance-api-contract-reconciliation.md §三）。
+    厂商「查询间隔 ≥3-5s」契约，docs/archive/plan/2026-07-31-seedance-api-contract-reconciliation.md §三）。
   - 等待总额受 `pollHorizonMs` 界（默认 `NOMI_POLL_TIMEOUT_MS` 或 300s，对齐 legacy 链）；耗尽
     仍有在飞 → 歇下并**如实** `quiescent: false`。等待轮不消耗 maxTicks（进度 tick 才计数）。
   - `sleep` 走 deps 注入（默认真 setTimeout），测试注入虚拟时钟——测试零墙钟（R18 门岗兼容）。

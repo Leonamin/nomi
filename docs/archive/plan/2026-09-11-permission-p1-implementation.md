@@ -275,7 +275,7 @@ reducer 的两条 revise 路径（draft 态 / 已封印+门在等）各调它一
 
 ## 先查别人
 
-完整报告：[docs/research/2026-09-10-permission-rework-prior-art/prior-art.md](../research/2026-09-10-permission-rework-prior-art/prior-art.md)
+完整报告：[docs/archive/research/2026-09-10-permission-rework-prior-art/prior-art.md](../research/2026-09-10-permission-rework-prior-art/prior-art.md)
 
 ### pi 四列表（`@earendil-works/pi-agent-core@0.85.1`，我们接的是 `AgentHarness` 不是扩展运行时）
 

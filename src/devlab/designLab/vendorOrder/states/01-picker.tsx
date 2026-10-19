@@ -102,7 +102,7 @@ export const PICKER_STATES: readonly LabState[] = [
   {
     id: 'vo-06-picker-model-box',
     name: '整理过的模型框 · 按手排的顺序、藏起来的不在、手点过的那家高亮',
-    source: 'docs/plan/2026-09-11-model-box-tidy.md §3 + 样张 PickerAfter.dc.html · 用户 2026-09-11 拍板',
+    source: 'docs/archive/plan/2026-09-11-model-box-tidy.md §3 + 样张 PickerAfter.dc.html · 用户 2026-09-11 拍板',
     coverage: 'shell',
     // 喂进去的是**八个**模型；屏上只该有六行，Seedream 5.0 Lite 与 Z-Image Turbo 落进脚注那个数字里。
     // Nano Banana 2 那行的两个标签顺序仍是 APIMart、Kie（全局顺序），蓝的却是 Kie——
@@ -118,7 +118,7 @@ export const PICKER_STATES: readonly LabState[] = [
   {
     id: 'vo-07-picker-sibling-connections',
     name: '同一家多条连接 · 只有重名的那行改显示连接名',
-    source: 'docs/plan/2026-09-22-vendor-connection-identity.md §4.5 · GitHub issue #831 · 用户 2026-09-22 拍板',
+    source: 'docs/archive/plan/2026-09-22-vendor-connection-identity.md §4.5 · GitHub issue #831 · 用户 2026-09-22 拍板',
     coverage: 'shell',
     // #831：一个中转站可以有三个计价分组（同地址、不同 Key）。它们的 chip 若都显示厂商短名
     // 「APIMart」，用户分不出哪个是满血组。这一格钉住三种情形同屏：

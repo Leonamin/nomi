@@ -7,7 +7,7 @@
 **能力自 v0.16.1（2026-07-05）就在**（`CustomVendorManage.tsx`：改地址 / 换 key / 删整家齐全，
 v0.19 / v0.20 都带着）。该文件第 5 行注释本就写着「本就现成，只是没在这张卡上露出来」。
 所以这是**可发现性**问题，按 D1 从用户摩擦出发解——**不重新实现一遍功能**（那是并行版，违反 P1）。
-分诊背景见 `docs/plan/2026-08-18-private-fork-diff-triage.md` §二。
+分诊背景见 `docs/archive/plan/2026-08-18-private-fork-diff-triage.md` §二。
 
 ## 一、真机走查测到的东西（不是推测）
 
@@ -47,7 +47,7 @@ mock 回 401），截图逐张人眼看过（`tests/ux/shots/baseurl-discoverabi
 ## 三、方案（§1.5.3 只用了前三招：分组 → 去重 → 归位，没用「收纳」）
 
 用户 2026-08-18 拍板：首页行**上 health + 改副标题**；删除整家**放「连接」组里**。
-样张：`docs/design/mockups/2026-08-18-vendor-connection-discoverability.html`（已拍板）。
+样张：`docs/archive/design/mockups/2026-08-18-vendor-connection-discoverability.html`（已拍板）。
 
 | # | 改动 | 手法 | 可达性代价 |
 |---|---|---|---|

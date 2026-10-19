@@ -41,9 +41,9 @@ Deferred:
 
 | Path | Responsibility in this slice |
 |---|---|
-| `docs/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md` | Chinese canonical implementation plan; absorbs the pasted 1726-line plan and supersedes its old ordering |
-| `docs/superpowers/specs/2026-08-22-runtime-ownership-adr.md` | Ownership and naming decision (`ProductionContract` vs `ExecutionContract`) |
-| `docs/audit/2026-08-22-agent-runtime-source-review.md` | Pinned, read-only Codex/Pi source audit (`5431c5ddf4d2dc5bdfeb0fc22c4b07f724f7a6fb`); informs E0/E1 aliases, never a second execution plan |
+| `docs/archive/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md` | Chinese canonical implementation plan; absorbs the pasted 1726-line plan and supersedes its old ordering |
+| `docs/archive/superpowers/specs/2026-08-22-runtime-ownership-adr.md` | Ownership and naming decision (`ProductionContract` vs `ExecutionContract`) |
+| `docs/archive/audit/2026-08-22-agent-runtime-source-review.md` | Pinned, read-only Codex/Pi source audit (`5431c5ddf4d2dc5bdfeb0fc22c4b07f724f7a6fb`); informs E0/E1 aliases, never a second execution plan |
 | `electron/capabilityCore/moduleManifest.ts` | Zod schema and pure validation for registered modules |
 | `electron/capabilityCore/moduleRegistry.ts` | Immutable per-run module catalog snapshot and allowlist resolution |
 | `electron/capabilityCore/moduleCatalogBootstrap.ts` | Explicit built-in module registration and test reset; no runtime network install |
@@ -111,7 +111,7 @@ Deferred:
 | `electron/capabilityCore/nomiMcpGenerationSingleShot.test.ts` | Real in-process MCP round trip with zero-credit provider |
 | `tests/ux/mcp-generation-single-shot.e2e.mjs` | Real Electron stdio journey and reconnect evidence |
 | `tests/ux/mcp-generation-single-shot.real-provider.mjs` | Explicit opt-in provider smoke; never runs in zero-credit CI |
-| `docs/audit/2026-08-22-mcp-generation-phase-evidence.md` | PhaseEvidence, six-role verdicts, adversarial verdict and rollback reference |
+| `docs/archive/audit/2026-08-22-mcp-generation-phase-evidence.md` | PhaseEvidence, six-role verdicts, adversarial verdict and rollback reference |
 
 The existing `electron/runtime.ts`, `electron/productionRun/`, Asset store and current Canvas/Timeline remain owners. A new file may add an adapter or projection, but may not create a second persistent owner.
 
@@ -122,7 +122,7 @@ The existing `electron/runtime.ts`, `electron/productionRun/`, Asset store and c
 The Codex/Pi source study adds a protocol projection, not another runtime. The
 original PR document is audited at fixed commit
 `5431c5ddf4d2dc5bdfeb0fc22c4b07f724f7a6fb`; the local evidence summary is
-`docs/audit/2026-08-22-agent-runtime-source-review.md`;
+`docs/archive/audit/2026-08-22-agent-runtime-source-review.md`;
 the following rules are the only parts admitted into this implementation plan.
 
 ### E0 — read/context/draft projection (before the P3 checkpoint)
@@ -320,11 +320,11 @@ shipped durability until a code/test audit proves it.
 
 **Files:**
 
-- Create: `docs/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md`
-- Create: `docs/superpowers/specs/2026-08-22-runtime-ownership-adr.md`
+- Create: `docs/archive/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md`
+- Create: `docs/archive/superpowers/specs/2026-08-22-runtime-ownership-adr.md`
 - Create: `electron/capabilityCore/mcpGenerationPolicy.ts` (single feature-flag/kill-switch owner)
 - Test: `electron/capabilityCore/mcpGenerationPolicy.test.ts`
-- Test/evidence: `docs/audit/2026-08-22-mcp-generation-phase-evidence.md`
+- Test/evidence: `docs/archive/audit/2026-08-22-mcp-generation-phase-evidence.md`
 
 - [ ] **Step 1: Record a clean baseline before changing code**
 
@@ -651,7 +651,7 @@ No provider call or persistent migration is allowed in Task 0.
 Run:
 
 ```bash
-rg -n "TBD|FIXME|exact path to be recorded|implementation placeholder|eventually" docs/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md | rg -v "rg -n|Expected:"
+rg -n "TBD|FIXME|exact path to be recorded|implementation placeholder|eventually" docs/archive/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md | rg -v "rg -n|Expected:"
 ```
 
 Expected: no vague implementation placeholder remains; any use of “later” names a phase and an entry condition. Commit the document/ADR/evidence skeleton separately from code.
@@ -2351,7 +2351,7 @@ Expected: PASS; no timeline mutation is observable in this task.
 - Create: `tests/ux/mcp-generation-single-shot.e2e.mjs`
 - Create: `tests/ux/mcp-generation-single-shot.real-provider.mjs`
 - Modify: `tests/ux/helpers/*` only if the existing MCP harness lacks a typed reconnect helper
-- Create: `docs/audit/2026-08-22-mcp-generation-phase-evidence.md`
+- Create: `docs/archive/audit/2026-08-22-mcp-generation-phase-evidence.md`
 
 - [ ] **Step 1: Add the in-process MCP contract journey**
 
@@ -2429,9 +2429,9 @@ NOMI_REAL_PROVIDER=1 NOMI_REAL_PROVIDER_NAME=<allowlisted-provider> NOMI_REAL_MO
 
 **Files:**
 
-- Modify: `docs/audit/2026-08-22-mcp-generation-phase-evidence.md`
-- Create: `docs/audit/2026-08-22-mcp-generation-six-role-review.md`
-- Create: `docs/audit/2026-08-22-mcp-generation-adversarial-review.md`
+- Modify: `docs/archive/audit/2026-08-22-mcp-generation-phase-evidence.md`
+- Create: `docs/archive/audit/2026-08-22-mcp-generation-six-role-review.md`
+- Create: `docs/archive/audit/2026-08-22-mcp-generation-adversarial-review.md`
 
 - [ ] **Step 1: Fill PhaseEvidence**
 

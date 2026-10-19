@@ -150,7 +150,7 @@ test('读戳方等价改写（sed → awk）行为不变 → 必须照样绿（�
   assert.deepEqual(
     checkHookBehavior(dir, { only: ['stamp'] }),
     [],
-    '等价的 shell 写法必须被接受——会误报的门岗三次之后就会被人绕过（见 docs/design/page-design-process.md）',
+    '等价的 shell 写法必须被接受——会误报的门岗三次之后就会被人绕过（见 docs/archive/design/page-design-process.md）',
   )
 })
 

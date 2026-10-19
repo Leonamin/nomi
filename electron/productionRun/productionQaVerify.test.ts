@@ -9,7 +9,7 @@ import { approveLatestScript, approveLatestStoryboard, waitForProduction as wait
 import { buildQaRetryPlans, buildQaStageOutcome, adoptedGenerationShotNodeIds } from './productionQaVerdict'
 
 // W1.5 · 把审片接进 production run 路径②的 qa 阶段。
-// 方案：docs/plan/2026-08-19-w1-shot-verify-wiring.md §3「production run 路径②的对称落点」+ T10。
+// 方案：docs/archive/plan/2026-08-19-w1-shot-verify-wiring.md §3「production run 路径②的对称落点」+ T10。
 // 先红后绿：qa 阶段此前只 markComplete、零判分事件；接线后 qa 会发 production.verify-shots，
 // 把 per-shot 判决落成 qa.verdict 事件 + qa 阶段摘要（判分失败/无镜头 → 诚实降级「审片跳过」，不阻断）。
 

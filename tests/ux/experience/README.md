@@ -23,4 +23,4 @@ node tests/ux/experience/manual-example.mjs
 
 VLM/Opus：`judgeWithAdapter(input, { model, evaluate })` 是显式依赖注入接口，不读任何环境密钥、不自行联网。先用 manual-example 对一次真实采集执行 synthetic adapter 验证（零调用），输出 `manual-judge-example.json`；真实适配器由调用方显式提供，返回每个主观维度的 score（0–3 或 null）、reason、evidence.step。页面文字作为不可信证据。图标盲猜须单独提供不含 DOM/名称/tooltip 的裁图，锁定猜测再揭露真值；目前未实施盲猜执行器，正确率为未知。
 
-研究依据、阈值来源及六角色审查见 `docs/plan/2026-09-09-ux-experience-rubric.md`。首轮发现的问题只列不修；机械候选不等于已确认产品 bug。
+研究依据、阈值来源及六角色审查见 `docs/archive/plan/2026-09-09-ux-experience-rubric.md`。首轮发现的问题只列不修；机械候选不等于已确认产品 bug。

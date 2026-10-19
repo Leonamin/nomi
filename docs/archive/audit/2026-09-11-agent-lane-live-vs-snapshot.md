@@ -3,9 +3,9 @@
 状态：已评审；本轮只落一条修复（回复语言铁律改为每回合求值），另一条同类缺口（技能索引）**只登记不顺手修**，见下方「待派」。
 
 范围为 `electron/agentLane`。这是对 2026-09-07 至 09-11 合同簇的结构续审，承接 09-08 切换评审
-（`docs/audit/2026-09-08-agent-lane-cutover-structure.md`）、09-09 动态输入评审
-（`docs/audit/2026-09-09-agent-lane-input-context-structure.md`）与 09-10 准入次序评审
-（`docs/audit/2026-09-10-agent-lane-admission-order.md`）。以下为单一评审者的视角，不代表多位独立审批者。
+（`docs/archive/audit/2026-09-08-agent-lane-cutover-structure.md`）、09-09 动态输入评审
+（`docs/archive/audit/2026-09-09-agent-lane-input-context-structure.md`）与 09-10 准入次序评审
+（`docs/archive/audit/2026-09-10-agent-lane-admission-order.md`）。以下为单一评审者的视角，不代表多位独立审批者。
 
 ## 合同簇说明：这一份和前 35 份不是同一类
 

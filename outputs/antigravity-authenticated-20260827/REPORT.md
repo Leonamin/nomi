@@ -19,4 +19,4 @@ Official CLI 1.1.21; no copied OAuth tokens or global configuration changes.
 - model-models.json / model-results.json / model-followup-results.json
 - hook-negative-results.json
 
-No claim of full Nomi media routing, artifact import/reopening, native Windows readiness, or production UI completion. See docs/audit/2026-08-27-antigravity-authenticated-verification.md.
+No claim of full Nomi media routing, artifact import/reopening, native Windows readiness, or production UI completion. See docs/archive/audit/2026-08-27-antigravity-authenticated-verification.md.

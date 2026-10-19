@@ -2,7 +2,7 @@
 
 > 触发：用户「研究 TapNow 和 LibTV 的 3D 导演台，研究最新做类似技术的东西，做对比，提优化」。
 > 这份文档同时充当当天的论文/情报雷达（07-08，覆盖近 12 月）。竞品能力全部实查/实抓，不凭记忆（D3）。
-> 配套优化 plan：`docs/plan/2026-07-08-director-stage-optimization.md`。
+> 配套优化 plan：`docs/archive/plan/2026-07-08-director-stage-optimization.md`。
 
 ## 一句话结论
 
@@ -105,4 +105,4 @@ LibTV = LiblibAI 的一站式 AI 视频平台，自称「首创**无限画布 + 
 
 **推荐：主押 B，A 只做最小止血。** 依据 D2（结构先于功能）+ D1（effect-first）+ `nomi-solo-founder-strategy`（广度是敌人、别做易被抄的商品化层）。站位导演台已商品化，solo 拼迭代必输；护城河在「节点画布 × 精确 3D × 动态 previz」的组合。
 
-**顺带 P0（与方向无关、纯该修）**：主编辑器 `Scene3DFullscreen.tsx` Canvas 未声明 `frameloop`（默认 always），静止满帧 GPU（`docs/audit/perf/04-scene3d.md` 已标）——耗电/风扇第一根因，轻路径优化前先修掉。
+**顺带 P0（与方向无关、纯该修）**：主编辑器 `Scene3DFullscreen.tsx` Canvas 未声明 `frameloop`（默认 always），静止满帧 GPU（`docs/archive/audit/perf/04-scene3d.md` 已标）——耗电/风扇第一根因，轻路径优化前先修掉。

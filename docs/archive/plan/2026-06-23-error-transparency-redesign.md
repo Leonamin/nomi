@@ -1,7 +1,7 @@
 # 对话错误透传重设计（CR-B1 · 方案 A 错误卡）
 
 日期：2026-06-23 ｜ 状态：已拍板（用户选方案 A 错误卡），实现中
-来源：`docs/audit/2026-06-23-agent-conversation-render-audit.md` CR-B1（这一面最伤信任的项）
+来源：`docs/archive/audit/2026-06-23-agent-conversation-render-audit.md` CR-B1（这一面最伤信任的项）
 
 ## 背景 / 根因
 

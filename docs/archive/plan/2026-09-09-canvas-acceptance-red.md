@@ -15,7 +15,7 @@
 - React Flow 官方 [getViewportForBounds](https://reactflow.dev/api-reference/utils/get-viewport-for-bounds) 与 [padding 更新](https://reactflow.dev/whats-new/2025-03-27)：Context7 实查支持 minZoom/maxZoom 与像素 padding；安装源码 @xyflow/system/dist/esm/index.mjs:719 使用容器宽高计算 fit。复用现有 API 与 unionCanvasFitBounds，不造第二个 fit 算法。
 - tldraw [Editor.ts](https://github.com/tldraw/tldraw/blob/main/packages/editor/src/lib/editor/Editor.ts#L3859)：zoomToSelectionIfOffscreen 对已有 viewport 与选区并集计算最小滚入；zoomToBounds:3897 使用实测 viewport、inset 与 zoomSteps 下限；putContentOntoCurrentPage:10125 只在内容不与当前视口相交时转到视口中心。这支持「最小滚入」与批次适配；Nomi 的连续串/readability 是本次明确领域裁决，不声称上游有同一串定义。导轨在 flex 中占位，stage 即可用区，不能再减一遍 rail。
 - Playwright 官方 [actionability](https://playwright.dev/docs/actionability) 与 [locator.click](https://playwright.dev/docs/api/class-locator#locator-click)：visible 不等于点击点能收到事件。安装源码 playwright-core/lib/coreBundle.js:16145 默认点只裁窗口，没有与祖先舞台求交，必须断言整卡在舞台内，不能用点击偏移掩盖产品问题。
-- 现行通知政策 [09-09 方案](2026-09-09-notification-policy.md) 与 batchPlanPreview.ts:183：状态已有节点/任务中心承担，进度与普通成功不再 toast；失败汇总保留重试。已拍板 [逐步产出/编组](../../lessons/batch-output-appears-progressively-and-grouped.md) 要求同一次产出摊在画布，连续建卡不能自动推出同串首卡。
+- 现行通知政策 [09-09 方案](2026-09-09-notification-policy.md) 与 batchPlanPreview.ts:183：状态已有节点/任务中心承担，进度与普通成功不再 toast；失败汇总保留重试。已拍板 [逐步产出/编组](../lessons/batch-output-appears-progressively-and-grouped.md) 要求同一次产出摊在画布，连续建卡不能自动推出同串首卡。
 
 ## 最早共享边界与实现
 

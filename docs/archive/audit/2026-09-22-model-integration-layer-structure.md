@@ -3,7 +3,7 @@
 > 状态：📎 结构评审（`check:symptom-cluster` 触发：`electron/integrationCertification` 与 `electron/providerAdapter` 两个模块 7 天内各有 3 份根因合同）
 > 触发合同：[`2026-09-22-vendor-connection-identity`](../../fixes/2026-09-22-vendor-connection-identity.root-cause.json)、[`2026-09-22-self-check-timeout-uncertain-remnant`](../../fixes/2026-09-22-self-check-timeout-uncertain-remnant.root-cause.json)
 > 同层近邻：[`2026-09-21-integration-session-cap`](../../fixes/2026-09-21-integration-session-cap.root-cause.json)、[`2026-09-18-credential-destination-is-user-confirmed`](../../fixes/2026-09-18-credential-destination-is-user-confirmed.root-cause.json)、[`2026-09-17-presigned-put-drops-signed-headers`](../../fixes/2026-09-17-presigned-put-drops-signed-headers.root-cause.json)
-> 方案正本：[`docs/plan/2026-09-22-vendor-connection-identity.md`](../plan/2026-09-22-vendor-connection-identity.md)
+> 方案正本：[`docs/archive/plan/2026-09-22-vendor-connection-identity.md`](../plan/2026-09-22-vendor-connection-identity.md)
 
 ## 1. 这一层是什么
 
@@ -52,7 +52,7 @@
 2. **内置家识别立层**（本 PR）：`shared/builtinVendorIdentity.ts` + `check:builtin-vendor-literals`。实跑：扫 3911 个文件，新增违规 0，豁免 1 条（devlab 展示目录，已断言仍存在），债 2 条（`capabilityCore/generationProviderBootstrap.ts`、`src/ui/onboarding/ModelSettingsHome.tsx`，到期 2026-10-06，由 Core-A 打捞总合并统一收）。
 3. **自检终态去死分支**（本 PR，`1d8182c17`）：删掉 coordinator 的 uncertain/reconciling 分支，超时回到干净的 `timed_out`。
 4. **「验一下花不花钱」立层**（并行 lane `fix/credential-probe-free-20260922`，3 个提交、19 个文件）：免费优先 → 无免费则先问，接入页如实说费用，付费走全仓唯一那张确认卡。
-   —— 第 4 条是本次评审最有说服力的旁证：**第三份合同出现之后，确实有人在做结构收敛，而不是再修一次。**同时它也是 [`parallel-lanes-split-concepts-before-merge`](../../lessons/parallel-lanes-split-concepts-before-merge.md) 的活靶子：两条 lane 同时在 `electron/catalog` 立新 owner，合并那一刻才看得见有没有长出第二份。
+   —— 第 4 条是本次评审最有说服力的旁证：**第三份合同出现之后，确实有人在做结构收敛，而不是再修一次。**同时它也是 [`parallel-lanes-split-concepts-before-merge`](../lessons/parallel-lanes-split-concepts-before-merge.md) 的活靶子：两条 lane 同时在 `electron/catalog` 立新 owner，合并那一刻才看得见有没有长出第二份。
 
 ## 4. 下一刀建议（按用户摩擦排序，D1）
 

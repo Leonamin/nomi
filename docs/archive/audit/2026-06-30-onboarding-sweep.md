@@ -77,7 +77,7 @@ text 全部(claude-fable-5/deepseek-v4-pro/gpt-5.5/moonshot/Qwen3 ×3)；apimart
 - **配置缺口（用户已拍留着）**：kie 全部(no key)、火山 4.5/4.0(未在 Ark 开通)、豆包语音(凭证格式 APP_ID:ACCESS_KEY)、dreamina(账号非 maestro vip)。
 
 ## Backlog（接入测试 v2 新增）
-- [ ] **档案默认桥接到 electron**（根治 headless 视频/慢模型缺参，用户已选 A，plan: docs/plan/2026-06-30-headless-archetype-defaults-bridge.md）。
+- [ ] **档案默认桥接到 electron**（根治 headless 视频/慢模型缺参，用户已选 A，plan: docs/archive/plan/2026-06-30-headless-archetype-defaults-bridge.md）。
 - [ ] **headless 项目 poison**：同项目 MCP 生成 >3 次后**偶发**永久「项目不存在」（注册表+manifest 都在却 readWorkspaceProject 返 null）。仅 headless 磁盘网关路；GUI 渲染层网关不受影响。**setPath userData 修复后 48+ 次连续/并发生成未复现**，根因未钉死（非确定性，疑早期 userData 漂移+共享注册表脏态）。保留观察，多 agent 大流量测试时若复现即现场抓。
 - [ ] runninghub 轮询上限默认值是否该按 vendor 调（现 env 可调）。
 

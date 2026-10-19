@@ -2,7 +2,7 @@
 
 > 裁决：已被 ProductionRun/ProjectAgentHost 持久化运行时取代；证据：`electron/productionRun/productionRunService.ts:1-44`、`electron/projectAgentHost/projectAgentHost.ts:35-72`。
 
-> 上位：`docs/plan/2026-06-07-model-onboarding-final-plan.md`（R7 定稿，P1 = 独立期）。
+> 上位：`docs/archive/plan/2026-06-07-model-onboarding-final-plan.md`（R7 定稿，P1 = 独立期）。
 > 决策已拍：P0 收口，开 P1。
 > 本文是**设计稿**，待决策表签字 + R7 评审后才动产品码（R3/R4）。
 > 依据：2026-06-07 两份研究（当前任务生命周期摸底 + OSS 先例调研）。

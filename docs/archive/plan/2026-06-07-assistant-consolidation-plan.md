@@ -1,8 +1,8 @@
 # 执行计划：助手面板收敛（双面板 → 单上下文助手）
 
-> 裁决：已被 Project Agent Host/Resident Shell 架构取代；证据：`docs/audit/2026-09-03-codex-agent-host-review.md:229-234`、`src/workbench/ai/ProjectAgentResidentShell.tsx:696-700`。
+> 裁决：已被 Project Agent Host/Resident Shell 架构取代；证据：`docs/archive/audit/2026-09-03-codex-agent-host-review.md:229-234`、`src/workbench/ai/ProjectAgentResidentShell.tsx:696-700`。
 
-> 依据：`docs/audit/2026-06-07-assistant-architecture-audit.md`（决策 B + §10 复核修正）。
+> 依据：`docs/archive/audit/2026-06-07-assistant-architecture-audit.md`（决策 B + §10 复核修正）。
 > 本文是 R4 执行文档：范围 / 不动项 / 分阶段 / 回滚 / 验收门。实现按阶段推进，阶段 2 的可见改动须先过 R8 样张（见 `docs/mockup/2026-06-07-unified-assistant-panel.html`）。
 
 ## 0. 目标与非目标
@@ -49,7 +49,7 @@
 - **验收**：用户能分清两种定妆；不再出现「点定妆却没参考我的图」的错配。
 
 ### 阶段 2 — 合并面板 + 空间行为（R8 样张已拍板）
-- **前置**：`docs/design/archive/unified-assistant-panel.html` 已经用户拍板（v4：三工作区停靠 + 折叠；砍掉 S/M/L 只留拖宽手柄）。
+- **前置**：`docs/archive/design/archive/unified-assistant-panel.html` 已经用户拍板（v4：三工作区停靠 + 折叠；砍掉 S/M/L 只留拖宽手柄）。
 - 合并两组件为单一上下文感知助手；工具域随活跃区（编辑器/画布/时间轴）切换；统一模式语义 + 模型选择器常驻。
 - **可用工具默认折叠**成「N 个工具 ⌄」一行（不做常驻大条）；工具调用指示统一横排一行、超长省略。
 - **空间行为**：折叠态 = 右下角带 Nomi 标 + ✦ 的小入口；展开态 = 右侧停靠 + 左缘拖宽手柄（无级调宽）+ `»` 折回。**明确不做自由浮窗**（避免窗口管理税 / 盖节点 / 飘出屏）。
@@ -71,7 +71,7 @@
 
 ## 6. 当前进度
 - [x] 阶段 0：审计 + 复核修正（audit §10）
-- [x] R8 样张：`docs/design/archive/unified-assistant-panel.html` v4 已用户拍板
+- [x] R8 样张：`docs/archive/design/archive/unified-assistant-panel.html` v4 已用户拍板
 - [x] 阶段 1a：抽共享执行层 applyCanvasToolCall
 - [x] 阶段 1c：定妆命名消歧义（立角色卡 / 基于此图定妆）
 - [×] 阶段 2：尝试过 app 级 dock（WorkbenchAssistantDock，step1 跟随上下文 / step2 整高

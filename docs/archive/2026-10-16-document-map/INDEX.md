@@ -11,7 +11,7 @@
 - [결정](../../../wiki/decisions/index.md): 승인 근거가 있는 ADR
 - [참고 자료와 이관 지도](../../../wiki/references/index.md): upstream·과거 문서·증거의 위치와 읽기 원칙
 
-`docs/`는 검사 도구의 원본과 과거 기록·검증 증거를 보존합니다. 계약·설정은 [engineering/](../../engineering), 원인 계약은 [fixes/](../../fixes), 증거는 [evidence/](../../evidence)와 [qa/](../../qa), 상세 디자인 규범과 시안은 [design/](../../design)에서 유지합니다. 기존 경로는 도구와 과거 기록이 계속 참조하므로 일괄 이동하지 않습니다.
+`docs/`는 검사 도구의 원본과 과거 기록·검증 증거를 보존합니다. 계약·설정은 [engineering/](../../engineering), 원인 계약은 [fixes/](../../fixes), 증거는 [evidence/](../evidence)와 [qa/](../qa), 상세 디자인 규범과 시안은 [design/](../design)에서 유지합니다. 기존 경로는 도구와 과거 기록이 계속 참조하므로 일괄 이동하지 않습니다.
 
 아래는 2026-10-16 전환 전의 총목차입니다. 현재 fork의 TODO·구현·배포를 뜻하지 않습니다. 원문 탐색과 출처 보존을 위해 유지하며, 이전 시안 두 경로는 실제 통합 경로로 바로잡았습니다.
 
@@ -22,9 +22,9 @@
 
 - [한국어 사용 안내](../guides/user-guide.ko.md)
 - [한국어 지원 설계와 검증](../plan/2026-10-12-korean-guidance.md)
-- [한국어 검증 기록](../../qa/2026-10-12-korean-guidance.md)
-- [한국어 독립 검수 B](../../qa/2026-10-12-korean-independent-b.md)
-- [한국어 독립 검수 C](../../qa/2026-10-12-korean-independent-c.md)
+- [한국어 검증 기록](../qa/2026-10-12-korean-guidance.md)
+- [한국어 독립 검수 B](../qa/2026-10-12-korean-independent-b.md)
+- [한국어 독립 검수 C](../qa/2026-10-12-korean-independent-c.md)
 
 > 查文档前先看这张表，按「我要找什么」跳到对应目录；索引仍有历史存量缺口，查不到时必须继续全量 grep。
 > 各目录若有自己的索引（如 plan/），表里直接给出。
@@ -58,17 +58,17 @@
 | **每个子系统现在真正跑的是什么**（防止把三个月前的方案当现状） | [`ARCHITECTURE-NOW.md`](../guides/ARCHITECTURE-NOW.md) |
 | **术语表：同一个东西的多个叫法（搜不到时先查这里）** | [`GLOSSARY.md`](../../GLOSSARY.md) |
 | **已拍板但还没交付的，都欠着什么** | `pnpm run ledger:brief` 看一行摘要（每轮 L0 hook 也会自动顶出来）；`pnpm run gen:ledger` 生成本地 `DELIVERY-LEDGER.md`——**本地视图、不进 git**（它含全局计数，commit 了两个分支会永远抢它）|
-| **设计系统 / token / 组件规范** | [`design/`](../../design) → 核心是 `design/nomi-design-system.md`（任何 UI 改动前必读）|
-| **「设计一个页面」的完整流程（可搬到别的产品复用）** | [`design/page-design-process.md`](../../design/page-design-process.md) → 七道闸 + 每道闸防的真实事故 + 可复制的模板/门岗/断言 |
+| **设计系统 / token / 组件规范** | [`design/`](../design) → 核心是 `design/nomi-design-system.md`（任何 UI 改动前必读）|
+| **「设计一个页面」的完整流程（可搬到别的产品复用）** | [`design/page-design-process.md`](../design/page-design-process.md) → 七道闸 + 每道闸防的真实事故 + 可复制的模板/门岗/断言 |
 | **说一句话触发的设计流程技能（七闸）** | `.claude/skills/nomi-design-flow/SKILL.md`（技能）；[`design/nomi-design-flow-howto.md`](../../design/nomi-design-flow-howto.md)（使用指南）|
-| **找参考的设计画布源（4 块画板 + 布局）** | [`design/2026-09-07-find-reference-canvas/README.md`](../../design/2026-09-07-find-reference-canvas/README.md) → 改画布从这里重新生成，别手改发布产物 |
-| **借结构：把一条跑量片子变成我自己的分镜（第二张任务卡·设计中）** | [`design/2026-09-08-borrow-structure-design.md`](../../design/2026-09-08-borrow-structure-design.md) → 闸①摸出的三个断点、四件产物、10 步砍到 7 步；接的是既有拆解链路的空参考槽 |
-| **找参考的真机走查报告（真 key / 真 Electron，抓到 5 个问题）** | [`qa/2026-09-08-find-reference-walkthrough.md`](../../qa/2026-09-08-find-reference-walkthrough.md) → 走通了什么、两个 P0（素材库一大片时的共存 / 切平台不换结果）、我自己犯的两个「猜锚点」错误 |
-| **找参考：跨平台素材检索 connector（TikHub 抖音/小红书/TikTok 广告库）** | [`plan/2026-09-07-find-reference-connector.md`](../plan/2026-09-07-find-reference-connector.md) → 四列表、每平台归一、媒体直链处理、402/429 错误分类修正、诚实边界；设计见 [`design/2026-09-07-find-reference-design.md`](../../design/2026-09-07-find-reference-design.md) |
+| **找参考的设计画布源（4 块画板 + 布局）** | [`design/2026-09-07-find-reference-canvas/README.md`](../design/2026-09-07-find-reference-canvas/README.md) → 改画布从这里重新生成，别手改发布产物 |
+| **借结构：把一条跑量片子变成我自己的分镜（第二张任务卡·设计中）** | [`design/2026-09-08-borrow-structure-design.md`](../design/2026-09-08-borrow-structure-design.md) → 闸①摸出的三个断点、四件产物、10 步砍到 7 步；接的是既有拆解链路的空参考槽 |
+| **找参考的真机走查报告（真 key / 真 Electron，抓到 5 个问题）** | [`qa/2026-09-08-find-reference-walkthrough.md`](../qa/2026-09-08-find-reference-walkthrough.md) → 走通了什么、两个 P0（素材库一大片时的共存 / 切平台不换结果）、我自己犯的两个「猜锚点」错误 |
+| **找参考：跨平台素材检索 connector（TikHub 抖音/小红书/TikTok 广告库）** | [`plan/2026-09-07-find-reference-connector.md`](../plan/2026-09-07-find-reference-connector.md) → 四列表、每平台归一、媒体直链处理、402/429 错误分类修正、诚实边界；设计见 [`design/2026-09-07-find-reference-design.md`](../design/2026-09-07-find-reference-design.md) |
 | **界面为什么越长越杂 · 减法设计（新面必出的三件产物 + 图标语义门岗）** | [`plan/2026-09-07-subtractive-design-process.md`](../plan/2026-09-07-subtractive-design-process.md) → 诊断出的两个洞、四件落地、`check:icon-semantics` 判据与三条刻意排除 |
 | **按钮该说话还是该画图标（三档 + 文案硬约束 + 门岗）** | [`plan/2026-09-10-button-icon-rule-gate.md`](../plan/2026-09-10-button-icon-rule-gate.md) → 规则落在设计系统 §1.8、动作规范词落在 [`GLOSSARY.md`](../../GLOSSARY.md)；一手规范摘录（Apple HIG / Material 3 / NN/g，含一处真实分歧）见 [`research/2026-09-10-button-icon-rule/prior-art.md`](../research/2026-09-10-button-icon-rule/prior-art.md) |
 | **修之前先数门：一份状态到底有几个写/读入口** | [`plan/2026-09-11-door-map-rule.md`](../plan/2026-09-11-door-map-rule.md) → 规则落在 R21.3（合同 `doors`/`door_reduction`）+ R27（派工两段式）；工具 `node scripts/door-map.mjs <符号或文件>`，门表校验在 `check:root-cause-contracts`（原 `check:door-map` 已并入）；全仓七个核心状态的门普查见 [`audit/2026-09-11-door-census.md`](../audit/2026-09-11-door-census.md) |
-| **UI 样张（HTML mockup）** | [`design/archive/`](../../design/archive)（统一保存的历史样张） |
+| **UI 样张（HTML mockup）** | [`design/archive/`](../design/archive)（统一保存的历史样张） |
 | **代码健康 / 周期审计 / 问题分级** | [`audit/`](../audit) |
 | **某版本改了什么** | [`release-notes/`](../../release-notes) |
 | **会话之间的交接（冷启动接手）** | [`handoff/`](../handoff) ｜ plan 里 `*-handoff.md` / `*-HANDOFF.md` 也是交接 |
@@ -78,12 +78,12 @@
 | **全方位学习竞品 / 每 3 天复查产品与营销** | [`research/competitive/README.md`](../research/competitive/README.md) → LibTV/TapNow 核心对标，来源登记、真实鼠标录屏、TikHub、视频拆解与 Nomi 决策；技能 [`nomi-competitive-radar`](../../../agent-skills/nomi-competitive-radar/SKILL.md) |
 | **当前哪些战线在途 / 哪些文件面被占道（动共享面前必查必登）** | [`engineering/active-lanes.md`](../../engineering/active-lanes.md) |
 | **Agent 运行时切换前的回放影子夜跑（怎么跑 / 报告在哪 / 7 天绿从哪天起算）** | [`engineering/agent-lane-replay-shadow.md`](../../engineering/agent-lane-replay-shadow.md) |
-| **本仓踩过的坑（走查假绿 / CI 红绿判读 / 分支合并 / 平台故障 / 产品判断）** | [`lessons/INDEX.md`](../../lessons/INDEX.md) — 按触发场景查，别通读 |
+| **本仓踩过的坑（走查假绿 / CI 红绿判读 / 分支合并 / 平台故障 / 产品判断）** | [`lessons/INDEX.md`](../lessons/INDEX.md) — 按触发场景查，别通读 |
 | **模型接入实测产物（mapping/试验记录）** | [`onboarding-trials/`](../onboarding-trials) → 见其 `README.md` |
-| **QA / 测试记录** | [`qa/`](../../qa) |
+| **QA / 测试记录** | [`qa/`](../qa) |
 | **架构定义** | [`architecture/`](../architecture) ｜ Agent Harness 架构在 `plan/2026-06-09-agent-harness-architecture.md` |
 | **产品定位 / 营销 / 媒体素材** | [`product/`](../product) ｜ [`marketing/`](../../marketing) ｜ [`media/`](../../media) |
-| **历史归档（已过时，仅留痕）** | [`archive/`](../.) |
+| **历史归档（已过时，仅留痕）** | [`archive/`](..) |
 
 ## 目录一览
 
@@ -108,7 +108,7 @@
 
 ## 相关索引（非 docs/）
 
-- **会话记忆索引**：`~/.claude/.../memory/MEMORY.md`（跨会话事实，每行一条）。**踩坑教训的真相源已迁入 [`lessons/`](../../lessons/INDEX.md)**（2026-09-02），本机记忆里对应文件只剩一行指针；那边现在只留本机环境与在途战况。
+- **会话记忆索引**：`~/.claude/.../memory/MEMORY.md`（跨会话事实，每行一条）。**踩坑教训的真相源已迁入 [`lessons/`](../lessons/INDEX.md)**（2026-09-02），本机记忆里对应文件只剩一行指针；那边现在只留本机环境与在途战况。
 - **生成画布代码入口图**：[`../src/workbench/generationCanvas/ENTRY.md`](../../../src/workbench/generationCanvas/ENTRY.md)
 - **工程纪律**：`../CLAUDE.md`（速览 + R1–R14）
 

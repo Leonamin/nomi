@@ -1,6 +1,6 @@
 // 「这个模型现在能不能用」的**唯一** owner（2026-09-12，P0-10 根因修复）。
 //
-// 根因（真实验收 docs/research/2026-09-12-real-onboarding-acceptance/README.md §6）：
+// 根因（真实验收 docs/archive/research/2026-09-12-real-onboarding-acceptance/README.md §6）：
 // 同一时刻、同一台机器、重启之后，三个地方给了两个答案——设置页说「2 个可使用」，
 // 首页横幅说「创作助手尚未连接模型」，创作助手的模型下拉说「目录里没有可用的」。
 // 不是刷新问题，是**每个读者各写一份判据**：

@@ -11,6 +11,7 @@ import {
   classifyFindings,
   inheritLegacyContractHashes,
   isHighRiskProductionFile,
+  classifyReferenceOnlyContractRelocation,
   validateRootCauseChange,
   validateRootCauseHistory,
 } from "./root-cause-contracts.mjs";
@@ -132,6 +133,100 @@ test("match: high-risk production changes require a contract", () => {
   });
   assert.equal(result.ok, false);
   assert.match(result.errors.join("\n"), /not covered/i);
+});
+
+test("reference relocation: an otherwise identical contract may only move removed base docs paths into docs/archive", () => {
+  const base = {
+    schema_version: 3,
+    id: "docs-reference-fixture",
+    regression_tests: ["docs/flow.md"],
+    prevention: { artifacts: ["docs/engineering/rules.md"] },
+  };
+  const current = {
+    ...base,
+    regression_tests: ["docs/archive/guides/flow.md"],
+    prevention: { artifacts: ["docs/archive/engineering/rules.md"] },
+  };
+  const result = classifyReferenceOnlyContractRelocation(base, current, {
+    baseFiles: new Set(["docs/flow.md", "docs/engineering/rules.md"]),
+    currentFiles: new Set(["docs/archive/guides/flow.md", "docs/archive/engineering/rules.md"]),
+  });
+  assert.equal(result.isReferenceOnly, true, result.errors.join("\n"));
+  assert.equal(result.relocatedReferences.length, 2);
+});
+
+test("reference relocation: semantic edits, arbitrary targets, and still-present sources are rejected", () => {
+  const base = { schema_version: 3, id: "docs-reference-fixture", scope_paths: ["electron/catalog/"] };
+  const current = { ...base, scope_paths: ["electron/tasks/"] };
+  const semantic = classifyReferenceOnlyContractRelocation(base, current, {
+    baseFiles: new Set(), currentFiles: new Set(["electron/tasks/"]),
+  });
+  assert.equal(semantic.isReferenceOnly, false);
+
+  const withReference = { ...base, migration: "See docs/guide.md" };
+  const arbitrary = { ...withReference, migration: "See docs/archive/other.md" };
+  assert.equal(classifyReferenceOnlyContractRelocation(withReference, arbitrary, {
+    baseFiles: new Set(["docs/guide.md"]), currentFiles: new Set(["docs/archive/other.md"]),
+  }).isReferenceOnly, false);
+  assert.equal(classifyReferenceOnlyContractRelocation(withReference, {
+    ...withReference, migration: "See docs/archive/guide.md",
+  }, {
+    baseFiles: new Set(["docs/guide.md"]), currentFiles: new Set(["docs/guide.md", "docs/archive/guide.md"]),
+  }).isReferenceOnly, false);
+});
+
+test("reference relocation: keeps schema checks and cannot cover changed high-risk production", () => {
+  const contractFile = "docs/fixes/fixture-reference-only.root-cause.json";
+  const oldDocsPath = "docs/guide.md";
+  const archivedDocsPath = "docs/archive/guides/guide.md";
+  const baseContract = {
+    ...completeContract,
+    __file: contractFile,
+    migration: `See ${oldDocsPath}`,
+  };
+  const currentContract = { ...baseContract, migration: `See ${archivedDocsPath}` };
+  const files = new Set([
+    contractFile,
+    "electron/catalog/assetLocalization.ts",
+    "electron/catalog/assetLocalization.test.ts",
+    archivedDocsPath,
+  ]);
+  const validSchema = validateRootCauseChange({
+    changedFiles: [contractFile, "electron/catalog/assetLocalization.ts"],
+    contracts: [currentContract],
+    baseContracts: [baseContract],
+    baseFiles: new Set([oldDocsPath]),
+    existingFiles: files,
+    fileContents: new Map([
+      ["electron/catalog/assetLocalization.ts", "export function localizeAssetsForVendor() {}"],
+    ]),
+  });
+  assert.ok(validSchema.errors.some((error) => /not covered by a root-cause contract/.test(error)));
+  assert.ok(!validSchema.errors.some((error) => /regression test was not changed/.test(error)), validSchema.errors.join("\n"));
+
+  const semanticChange = validateRootCauseChange({
+    changedFiles: [contractFile, "electron/catalog/assetLocalization.ts"],
+    contracts: [{ ...currentContract, symptom: "A semantic change to the original contract." }],
+    baseContracts: [baseContract],
+    baseFiles: new Set([oldDocsPath]),
+    existingFiles: files,
+    fileContents: new Map([
+      ["electron/catalog/assetLocalization.ts", "export function localizeAssetsForVendor() {}"],
+    ]),
+  });
+  assert.ok(semanticChange.errors.some((error) => /regression test was not changed/.test(error)));
+
+  const invalidSchema = validateRootCauseChange({
+    changedFiles: [contractFile],
+    contracts: [{ ...currentContract, class_root: "" }],
+    baseContracts: [baseContract],
+    baseFiles: new Set([oldDocsPath]),
+    existingFiles: files,
+    fileContents: new Map([
+      ["electron/catalog/assetLocalization.ts", "export function localizeAssetsForVendor() {}"],
+    ]),
+  });
+  assert.ok(invalidSchema.errors.some((error) => /class_root is required/.test(error)));
 });
 
 test("match: incomplete contracts cannot satisfy the gate", () => {
@@ -946,4 +1041,47 @@ test("detected_by / recurrence_check_on: 新合同属 recurring、高风险或�
   // 老合同（日期前缀早于 2026-10-02）豁免
   const old = run({ ...completeContract, __file: "docs/fixes/2026-09-20-fixture-media-boundary.root-cause.json" });
   assert.doesNotMatch(old, /detected_by|recurrence_check_on/);
+});
+
+
+test("reference relocation: one changed reference can share prose with an unchanged current contract", () => {
+  const base = { migration: "See docs/plan/history.md and docs/engineering/rules.json" };
+  const current = { migration: "See docs/archive/plan/history.md and docs/engineering/rules.json" };
+  const result = classifyReferenceOnlyContractRelocation(base, current, {
+    baseFiles: new Set(["docs/plan/history.md", "docs/engineering/rules.json"]),
+    currentFiles: new Set(["docs/archive/plan/history.md", "docs/engineering/rules.json"]),
+  });
+  assert.equal(result.isReferenceOnly, true);
+  assert.equal(result.relocatedReferences.length, 1);
+});
+
+test("reference relocation: directory references follow real inventory and never authorize missing targets", () => {
+  const base = { migration: "See docs/evidence/session/" };
+  const current = { migration: "See docs/archive/evidence/session/" };
+  const baseFiles = new Set(["docs/evidence/session/result.json"]);
+  assert.equal(classifyReferenceOnlyContractRelocation(base, current, {baseFiles, currentFiles: new Set(["docs/archive/evidence/session/result.json"])}).isReferenceOnly, true);
+  assert.equal(classifyReferenceOnlyContractRelocation(base, current, {baseFiles, currentFiles: new Set()}).isReferenceOnly, false);
+});
+
+test("reference relocation: historical removed-path evidence is not re-performed, semantic edits still require it", () => {
+  const file = "docs/fixes/fixture-reference-only.root-cause.json";
+  const base = {...completeContract, __file: file, migration: "See docs/plan/history.md", legacy_paths: {status: "removed", removed_paths: ["electron/catalog/retired.ts"], rationale: "Removed in the original repair"}};
+  const current = {...base, migration: "See docs/archive/plan/history.md"};
+  const options = {changedFiles: [file], baseContracts: [base], baseFiles: new Set(["docs/plan/history.md"]), existingFiles: new Set([...base.scope_paths, ...base.regression_tests, "docs/archive/plan/history.md"])};
+  const result = validateRootCauseChange({...options, contracts: [current]});
+  assert.ok(!result.errors.some(e => /removed legacy path was not changed/.test(e)), result.errors.join("\n"));
+  const semantic = validateRootCauseChange({...options, contracts: [{...current, symptom: "A new failure class"}]});
+  assert.ok(semantic.errors.some(e => /removed legacy path was not changed/.test(e)));
+});
+
+
+test("classifyFindings: historical legacy in a contract label cannot turn an advisory into a schema failure", () => {
+  const result = classifyFindings([
+    "2026-09-11-legacy-spend-door: door_reduction requires integer before/after",
+    "plain-contract: regression test does not exist: tests/legacy-path.test.ts",
+    "docs/fixes/legacy-history.root-cause.json: legacy history changed; migrate to v3",
+    "legacy-labelled-contract: schema_version must be 3",
+  ]);
+  assert.equal(result.blocking.length, 2);
+  assert.equal(result.warnings.length, 2);
 });

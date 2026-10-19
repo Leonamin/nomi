@@ -34,7 +34,7 @@ export function asUrl(value: unknown): string {
  *  localizeAssetsForVendor 换成 vendor 可达值（sidecar originalUrl 新鲜则零成本直用，过期则用本地字节
  *  重新上传换新链）。providerUrl 只在无本地拷贝时兜底（#4「providerUrl-only 被生成侧丢」仍覆盖）。
  *  旧口径 providerUrl 优先，是「过期临时链发给服务商→报错/无视原图 + chip 加载失败」整类问题的根因
- *  （2026-07-06 根治，docs/plan/2026-07-06-i2i-reference-reliability.md L2）。 */
+ *  （2026-07-06 根治，docs/archive/plan/2026-07-06-i2i-reference-reliability.md L2）。 */
 export function resultUrl(result: GenerationNodeResult | undefined): string {
   return asUrl(result?.url) || asUrl(result?.providerUrl) || asUrl(result?.thumbnailUrl)
 }

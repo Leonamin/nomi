@@ -1,6 +1,6 @@
 # 2026-06-14 机制根因落地修复 · 执行文档
 
-> 承接 `docs/audit/2026-06-14-deep-bottom-layer-test.md`。用户拍板：范围=机制根因+明显 bug（不含 A2 流程改造）；历史数据全保留、不防新增；五门过后 commit+push（不发版）。
+> 承接 `docs/archive/audit/2026-06-14-deep-bottom-layer-test.md`。用户拍板：范围=机制根因+明显 bug（不含 A2 流程改造）；历史数据全保留、不防新增；五门过后 commit+push（不发版）。
 
 ## 0. 关键诚实结论：读真实代码后，8 项里 5 项不是「干净 bug」
 

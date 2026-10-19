@@ -561,7 +561,7 @@
   },
   "dependency_lifecycle": {
     "decision": "not-applicable",
-    "rationale": "img-fx 版本不动（0.5.1）；进度→格子数那一层是库没有的能力，见 docs/plan/2026-09-14-import-progress-reveal.md 的四列表。",
+    "rationale": "img-fx 版本不动（0.5.1）；进度→格子数那一层是库没有的能力，见 docs/archive/plan/2026-09-14-import-progress-reveal.md 的四列表。",
     "exit_criteria": []
   },
   "migration": "无数据迁移。历史工程里残留 status:'queued' 的导入节点在下一次导入/重试时被正常改写；没有 onCopyProgress 的调用方（跨项目复制、生成结果落盘）仍走原来的整块 fs.copyFile。",

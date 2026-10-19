@@ -2,7 +2,7 @@
 
 > 范围：统一 Agent 总方案 Track B 的 B1a–d。**用户可见行为零变化**，现有测试全绿是回归门。
 > 基线 origin/main，隔离 worktree，分支 `claude/agent-b1-config-cleanup`。
-> 上游：`docs/audit/2026-08-24-internal-agent-architecture-audit.md` + 总方案 §3。
+> 上游：`docs/archive/audit/2026-08-24-internal-agent-architecture-audit.md` + 总方案 §3。
 
 ## 审计 vs 代码现状（实扫对账，以代码为准）
 

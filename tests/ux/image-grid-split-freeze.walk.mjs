@@ -37,7 +37,7 @@ const GRID_LABEL = GRID === 3 ? '九宫格' : GRID === 2 ? '四视图' : '裁剪
 const SIDE = 4096
 /** 主线程单次阻塞预算。人对 >400ms 的无响应开始有「卡了」的体感；修前是 782ms。 */
 const BLOCK_BUDGET_MS = 400
-const outDir = path.join(repoRoot, `docs/design/mockups/2026-08-20-grid-split-freeze/${GRID}x${GRID}`)
+const outDir = path.join(repoRoot, `docs/archive/design/mockups/2026-08-20-grid-split-freeze/${GRID}x${GRID}`)
 fs.mkdirSync(outDir, { recursive: true })
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nomi-split-walk-'))

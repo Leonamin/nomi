@@ -108,8 +108,8 @@
 | B 只做减法 | 删 #8/#9 拼接、raw JSON 换人话、两 fold 合一行;不动整体结构 | 小:~0.5d;但 4 套卡片语言还剩 3 套,「乱」只好三成 |
 | C token 优化单独先行(T1-T3) | 界面不变,每轮 29k→8-10k | 小:~1d;与 A/B 正交,**建议无论选哪个都先做** |
 
-样张:`docs/design/mockups/2026-06-12-assistant-panel-redesign.html`(L1 全态+提议卡四形态+回执行两态)。
-三方案对比样张(真实工作台比例):`docs/design/mockups/2026-06-12-assistant-redesign-3-options.html`。
+样张:`docs/archive/design/mockups/2026-06-12-assistant-panel-redesign.html`(L1 全态+提议卡四形态+回执行两态)。
+三方案对比样张(真实工作台比例):`docs/archive/design/mockups/2026-06-12-assistant-redesign-3-options.html`。
 按 R8:样张获批后才进实现;实现后逐项对账。
 
 ---

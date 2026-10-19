@@ -26,9 +26,9 @@ Nomi 要做的不是“再造一套 MCP 协议”，而是让用户留在自己�
 一次确认要同时说明当前项目、模型、成本和本次生成目标；客户端确认成功后，Nomi 不应再次要求用户点击第二次。
 
 这条用户体验取舍的完整设计和相似摩擦审计见：
-`docs/superpowers/specs/2026-08-23-mcp-client-first-authorization-design.md`、
-`docs/audit/2026-08-23-mcp-client-authorization-friction-audit.md`、
-`docs/superpowers/plans/2026-08-23-mcp-client-first-authorization.md`。
+`docs/archive/superpowers/specs/2026-08-23-mcp-client-first-authorization-design.md`、
+`docs/archive/audit/2026-08-23-mcp-client-authorization-friction-audit.md`、
+`docs/archive/superpowers/plans/2026-08-23-mcp-client-first-authorization.md`。
 
 ## 1. 唯一方案层级
 
@@ -48,11 +48,11 @@ PhaseEvidence（测试、真实旅程、六角色、对抗评审决定是否放�
 
 唯一入口：
 
-- 中文路线：`docs/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md`
-- 所有权 ADR：`docs/superpowers/specs/2026-08-22-runtime-ownership-adr.md`
-- 详细设计参考：`docs/superpowers/specs/2026-08-22-unified-runtime-mcp-generation-design.md`
-- 当前施工合同：`docs/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`
-- 放行账：`docs/audit/2026-08-22-mcp-generation-phase-evidence.md`
+- 中文路线：`docs/archive/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md`
+- 所有权 ADR：`docs/archive/superpowers/specs/2026-08-22-runtime-ownership-adr.md`
+- 详细设计参考：`docs/archive/superpowers/specs/2026-08-22-unified-runtime-mcp-generation-design.md`
+- 当前施工合同：`docs/archive/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`
+- 放行账：`docs/archive/audit/2026-08-22-mcp-generation-phase-evidence.md`
 
 已废止或仅作参考：
 
@@ -171,7 +171,7 @@ Task 与阶段对应关系：`Task 0 ≈ P0`，`Task 1 ≈ P1`，`Task 2 ≈ P2`
 
 ```text
 请先阅读：
-docs/superpowers/plans/2026-08-22-nomi-runtime-handoff.md
+docs/archive/superpowers/plans/2026-08-22-nomi-runtime-handoff.md
 
 然后按其中唯一路线继续。不要把旧文档当第二套方案，也不要把“用户可在外部软件确认”改回“必须回 Nomi 界面”。当前只从 Task 0/P0 开始，先给出本轮要写的失败测试和放行标准；不要直接进入 provider 或付费代码。
 ```

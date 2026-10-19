@@ -1,4 +1,4 @@
-// 本地 ComfyUI 接入（A 线：当生成后端，窄·稳）。plan：docs/plan/2026-07-04-local-comfyui-provider.md
+// 本地 ComfyUI 接入（A 线：当生成后端，窄·稳）。plan：docs/archive/plan/2026-07-04-local-comfyui-provider.md
 //
 // 为什么能几乎只写数据：Nomi 生成侧声明驱动——一个 vendor + 一条 Mapping{create,query}（带 {{}} 模板的
 // HttpOperation）即跑通「提交→轮询→取产物」，runtime/状态机/缓存/素材本地化/付费守卫全通用（P4）。

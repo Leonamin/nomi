@@ -55,5 +55,5 @@
 - 门岗判据是语法级的：把写盘包进自己的函数、再在 catch 里调那个函数，它看不见。这是刻意的窄
   （宽了会报一大片然后被塞进豁免名单）；运行时由原语的写门兜住。
 
-正本与逐条改法：`docs/plan/2026-09-21-config-never-silently-lost.md`、
+正本与逐条改法：`docs/archive/plan/2026-09-21-config-never-silently-lost.md`、
 合同：`docs/fixes/2026-09-21-config-never-silently-lost.root-cause.json`。

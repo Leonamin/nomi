@@ -40,7 +40,7 @@ card-stack 真实点击/hover 被视频 source 热区拦截（/tmp/mh-card.log�
 - 正向 `toHaveAttribute('data-active','true')` 对任意候选都通过 → **假绿**，哪怕吸附从没发生；
 - 反向 `not.toHaveAttribute(...)` 永远清不掉 → **真红**，但红在错的地方。
 
-同一个锚点两头说谎（`docs/lessons/dead-selector-lies-both-ways.md` 的同一族）。
+同一个锚点两头说谎（`docs/archive/lessons/dead-selector-lies-both-ways.md` 的同一族）。
 放宽这句断言会把假绿一起留下，所以修在生产侧：给第二个事实起名字。
 `GenerationCanvasReactFlowNodes.tsx` 的把手新增 `data-snapped`，同一时刻只属于一个把手，
 与「强调把手挂不挂载」同条件；`data-active` 保留原义（候选 + pointer-events）。

@@ -6,7 +6,7 @@
  * 2026-08-18 从「灰小字 + 铅笔图标」改成带标签的字段行 +「修改」文字按钮：
  * 群里「要改 api url 翻了半天没找到」的根因之一就是那支铅笔——命中区只有 17×17（WCAG 2.2 AA
  * 要求 ≥24），颜色取 ink-30（全系统最弱的一档），旁边还是同样弱的灰色地址文本，整行读起来像
- * 一条只读的 metadata，不像可操作的控件。见 docs/plan/2026-08-18-vendor-connection-discoverability.md。
+ * 一条只读的 metadata，不像可操作的控件。见 docs/archive/plan/2026-08-18-vendor-connection-discoverability.md。
  *
  * 保存成功不在这里重探连接：地址一改，useVendorHealth 的 fingerprint 就变，effect 自动重探。
  */

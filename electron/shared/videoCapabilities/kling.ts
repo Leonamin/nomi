@@ -3,7 +3,7 @@ import type { ModelArchetype } from "./types";
 
 // Kling 3.0（可灵）视频档案（2026-06）。kie 文档：docs.kie.ai/market/kling/kling-3-0。
 // 本期从简两模式：文生视频 / 图生视频（首/尾帧走一个有序 image_urls 数组槽，≤2；[0]=首帧 [1]=尾帧）。
-// 多镜头 multi_shots / @元素引用 kling_elements 作后续增强（见 docs/plan/2026-06-06-image-archetypes.md §6）。
+// 多镜头 multi_shots / @元素引用 kling_elements 作后续增强（见 docs/archive/plan/2026-06-06-image-archetypes.md §6）。
 // 两模式同 model enum `kling-3.0/video`，taskKind 不同（text_to_video / image_to_video）。
 // duration 是字符串枚举（kie 文档 "3".."15"），用 select string 选项保证发的是 "5" 而非数字。
 

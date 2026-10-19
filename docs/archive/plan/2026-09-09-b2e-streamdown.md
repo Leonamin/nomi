@@ -8,7 +8,7 @@
 
 在 feat/agent-panel-form-20260909 继续 B2c/B2d；preflight HEAD 5cd919389，origin/main d3fa25888，基线为祖先。冻结 electron/agentLane、src/workbench/ai/lane、reactFlow。保留批准/拒绝/权限、回答不折等语义。共享 NomiMarkdown 替换内核；收据、过程、审批、计划、任务、错误正文收敛；提示词详情复用。技能库待合入时沿用这个 owner，不新建渲染器。
 
-输入到输出的不变量：Markdown 字符串保留换行和全文，仅由 Streamdown 解析；生命周期状态不改变正文类型；技术 input 保留 pre；业务身份/按钮不由 Markdown 推导。12 行折叠只限用户输入与过程；回答及其中代码不折；代码块自动换行、不横向滚动（2026-09-25 用户拍板 D4-A 取代原「代码横向滚动」，样张 docs/design/mockups/2026-09-25-agent-panel-tidy/）。删除旧 ReactMarkdown/AgentV4Code/自写光标，不留 fallback。
+输入到输出的不变量：Markdown 字符串保留换行和全文，仅由 Streamdown 解析；生命周期状态不改变正文类型；技术 input 保留 pre；业务身份/按钮不由 Markdown 推导。12 行折叠只限用户输入与过程；回答及其中代码不折；代码块自动换行、不横向滚动（2026-09-25 用户拍板 D4-A 取代原「代码横向滚动」，样张 docs/archive/design/mockups/2026-09-25-agent-panel-tidy/）。删除旧 ReactMarkdown/AgentV4Code/自写光标，不留 fallback。
 
 ## 先查别人 · R5/R6/R29
 

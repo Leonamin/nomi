@@ -351,7 +351,7 @@
   },
   "dependency_lifecycle": {
     "decision": "not-applicable",
-    "rationale": "不涉及第三方依赖版本；R31 对齐的是各家官方配置文档（链接在 docs/plan/2026-09-14-mcp-connection-truthfulness.md）。",
+    "rationale": "不涉及第三方依赖版本；R31 对齐的是各家官方配置文档（链接在 docs/archive/plan/2026-09-14-mcp-connection-truthfulness.md）。",
     "exit_criteria": []
   },
   "migration": "无数据迁移。指向已删除 profile / 旧安装位置的既有配置由正式安装的 Nomi 在启动时自动修回（launcher-stale 进入 repair 集合，写前备份）；隔离实例不再有能力改写真实配置。词表 McpConfigState / McpVerifyReason 收敛到 electron/shared/mcpConnectionContract.ts（4 条 debt 退役，cap 67→63），成员集不变。",

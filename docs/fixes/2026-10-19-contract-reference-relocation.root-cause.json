@@ -1,0 +1,121 @@
+{
+  "schema_version": 3,
+  "id": "contract-reference-relocation",
+  "problem_type": "reference-only contract relocation misclassified as corrective change",
+  "symptom": "Moving docs references into docs/archive makes historical v3 contracts fail changed-code evidence requirements.",
+  "direct_cause": "The validator compares only the current changed contract and treats all changed v3 contracts as evidence for a corrective change. Door auto-fill also mutated these historical contract objects before classification, and finding types accidentally matched legacy text in contract labels.",
+  "class_root": "Contract change intent and diagnostic types were inferred from incidental diff/label text rather than trusted structure and actual finding messages.",
+  "affected_population": [
+    "schema-v3 contracts whose referenced docs files are moved into docs/archive"
+  ],
+  "scope_paths": [
+    "scripts/root-cause-contracts.mjs",
+    "scripts/check-root-cause-contracts.mjs",
+    "scripts/check-root-cause-contracts.node-test.mjs"
+  ],
+  "entry_points": [
+    "scripts/check-root-cause-contracts.mjs loads trusted base contracts and current file inventories",
+    "validateRootCauseChange classifies changed schema-v3 contracts"
+  ],
+  "external_sources": [],
+  "internal_only_reason": "This is an internal repository contract-comparison invariant; no external system defines the archive relocation policy.",
+  "invariants": [
+    "Only a contract with identical structure and fields whose docs references map from removed trusted-base docs paths to existing canonical docs/archive destinations is reference-only.",
+    "Reference-only contracts retain schema and current-path validation and never cover changed high-risk production files.",
+    "Diagnostic severity depends on the finding message, never on words in a contract identifier."
+  ],
+  "doors": [
+    {
+      "kind": "write",
+      "path": "scripts/check-root-cause-contracts.mjs",
+      "symbol": "validateRootCauseChange"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/check-root-cause-contracts.node-test.mjs",
+      "symbol": "validateRootCauseChange"
+    },
+    {
+      "kind": "write",
+      "path": "scripts/new-root-cause-contract.node-test.mjs",
+      "symbol": "validateRootCauseChange"
+    }
+  ],
+  "door_reduction": {
+    "before": 3,
+    "after": 3,
+    "why_not": "The CLI is the production caller and the two test files independently exercise the exported shared validator; each remains a necessary entry point."
+  },
+  "generality_proof": "The shared classifier recursively compares every field and accepts only canonical path substitutions proven by trusted base and current inventories. The caller supplies those inventories from Git and the current checkout, so all contract callers use the same fail-closed rule. The caller classifies before auto-fill can invent a new historical claim, and severity matching excludes contract labels.",
+  "shared_boundaries": [
+    {
+      "path": "scripts/root-cause-contracts.mjs",
+      "symbol": "classifyReferenceOnlyContractRelocation",
+      "responsibility": "Compare a changed contract to its trusted base and prove every difference is a canonical relocation of a removed docs reference into the current archive inventory."
+    }
+  ],
+  "same_class_entry_points": [
+    {
+      "path": "scripts/check-root-cause-contracts.mjs",
+      "entry_point": "load trusted base contract and file inventory",
+      "disposition": "enforced",
+      "evidence": "The CLI obtains base contracts and file paths from the selected Git base, then passes them to validateRootCauseChange."
+    },
+    {
+      "path": "scripts/check-root-cause-contracts.node-test.mjs",
+      "entry_point": "validateRootCauseChange test fixtures",
+      "disposition": "enforced",
+      "evidence": "Tests exercise successful canonical relocation and rejection of semantic edits, arbitrary destinations, and sources that remain present."
+    }
+  ],
+  "recurrence": {
+    "classification": "recurring",
+    "reason": "Any docs archive migration can change references in many contracts while leaving their corrective evidence untouched.",
+    "same_class_scan": [
+      "Searched scripts/root-cause-contracts.mjs for changed-contract validation and found validateContract as the shared evidence gate.",
+      "Searched scripts/check-root-cause-contracts.mjs for base/current inventory sources and found the Git base loader and current ls-files inventory.",
+      "Sibling worktree RED reproduced mixed unchanged references, directory references, historical removed paths and legacy-labelled advisory misclassification before shared-boundary repair."
+    ]
+  },
+  "prevention": {
+    "kind": "centralized-boundary",
+    "enforcement_path": "scripts/root-cause-contracts.mjs",
+    "invariant": "Only exact same-shape contract data with canonical, inventory-proven docs archive path changes may omit changed-code evidence; these contracts cannot cover triggered production files.",
+    "failure_mode": "Any semantic difference, missing source in the trusted base, surviving source, noncanonical target, or missing current target fails reference-only classification and receives normal corrective evidence validation.",
+    "exception_policy": "none",
+    "strategy": "Classify at the shared contract validator using trusted Git base data and the current inventory, then retain all schema/path checks while excluding proven reference-only contracts from high-risk coverage.",
+    "artifacts": [
+      "scripts/root-cause-contracts.mjs",
+      "scripts/check-root-cause-contracts.mjs",
+      "scripts/check-root-cause-contracts.node-test.mjs"
+    ]
+  },
+  "regression_tests": [
+    "scripts/check-root-cause-contracts.node-test.mjs"
+  ],
+  "class_regression_tests": [
+    "scripts/check-root-cause-contracts.node-test.mjs"
+  ],
+  "invariant_owner_layer": {
+    "layer": "scripts/root-cause-contracts.mjs",
+    "tests": [
+      "scripts/check-root-cause-contracts.node-test.mjs"
+    ]
+  },
+  "detected_by": "user",
+  "recurrence_check_on": "2026-11-18",
+  "legacy_paths": {
+    "status": "not-applicable",
+    "removed_paths": [],
+    "rationale": "No runtime or contract implementation path is removed; the validator gains a shared classification rule."
+  },
+  "dependency_lifecycle": {
+    "decision": "not-applicable",
+    "rationale": "The invariant is internal to the repository's Git and JSON contract validation.",
+    "exit_criteria": []
+  },
+  "migration": "The checker now loads trusted-base contracts and all base file paths. Existing schema-v1 and schema-v2 baseline records remain immutable.",
+  "residual_risks": [
+    "The classifier accepts path tokens matching the repository docs path format; unusual characters outside that format fail closed and require normal corrective evidence."
+  ]
+}

@@ -2,7 +2,7 @@
 
 > 北极星（用户原话提炼）：**和 AI 对话，生成质量足够高的 AI 视频初稿。**
 > 质量的定义：**用户拿到初稿时，80% 的「崩坏问题」（脸漂移/景跳变/画面畸变/方向跑偏）已被流程消化，剩下的是 20% 的品味问题。**
-> 依据：四路调研交叉验证——A `docs/research/2026-08-19-short-drama-pipelines.md`（业界 13 对象）、B `2026-08-19-script-to-video-frameworks.md`（ViMax 源码级 + FilmWorld）、C `2026-08-19-conversational-creation-ux.md`（对话交互）、D `2026-08-19-nomi-draft-capability-inventory.md`（本仓现状，file:line）。
+> 依据：四路调研交叉验证——A `docs/archive/research/2026-08-19-short-drama-pipelines.md`（业界 13 对象）、B `2026-08-19-script-to-video-frameworks.md`（ViMax 源码级 + FilmWorld）、C `2026-08-19-conversational-creation-ux.md`（对话交互）、D `2026-08-19-nomi-draft-capability-inventory.md`（本仓现状，file:line）。
 
 ## 一、三条交叉验证出的定理（蓝图的地基）
 

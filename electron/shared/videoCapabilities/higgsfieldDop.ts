@@ -8,7 +8,7 @@ import type { ModelParameterControl, ModelArchetype } from "./types";
 //   - 镜像写的 `duration` / `webhookUrl` **不存在**（塞脏值校验器一个字都不报）；
 //   - 镜像没提的 `end_image_url`（尾帧）与 `motions`（运镜）**才是真的**；
 //   - `resolution` / `aspect_ratio` / `quality` / `batch_size` 全都不存在。
-// 证据与探针原文：docs/evidence/2026-09-17-higgsfield-contract/。
+// 证据与探针原文：docs/archive/evidence/2026-09-17-higgsfield-contract/。
 // 这正是 R5 的那条：凭二手资料判断 = 没查。
 
 const PARAMS: ModelParameterControl[] = [

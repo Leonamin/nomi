@@ -3,7 +3,7 @@
 ⚠️ 已被 2026-09-05 拍板推翻：不再采用“右槽就近面板、拆解后默认铺图成组”的交互；现行结论见 [GPT 讨论梳理 consolidation §3](2026-09-05-gpt-discussion-consolidation.md)。
 日期：2026-09-01 · 状态：⛔ 已废弃（❌ 不再采用，📦 归档）；现行结论见 [GPT 讨论梳理 consolidation §3](2026-09-05-gpt-discussion-consolidation.md)
 基线：`origin/main@59e1f6c0` · 引擎侧另一班在重建（#259 `feat/apimart-gemini-vision`）
-配套：面板样张 [`docs/design/mockups/2026-09-01-video-deconstruction-v1.html`](../../design/mockups/2026-09-01-video-deconstruction-v1.html)（含渲染截图）
+配套：面板样张 [`docs/archive/design/mockups/2026-09-01-video-deconstruction-v1.html`](../design/mockups/2026-09-01-video-deconstruction-v1.html)（含渲染截图）
 
 > **口径先说清（防再拿旧前提栽跟头）**：本方案说的「拆解」= 把**一条参考视频**变成一张**结构化分镜表**（每镜：时间/景别/情绪/画面/字幕/对白/图片提示词/运镜提示词），再把选中的镜头**逐个摊成画布节点并自动编组**，供后续创作。它**不是** #232 主推的「视频复刻（复刻这 5 秒 → 一句话改 → 候选替换）」——那是另一件事，押在 M 线之后（见 §5 消化结论）。
 
@@ -80,11 +80,11 @@
 
 ## 4.1 与 Agent 面板的共存契约（③合流终局 + 过渡期互斥）
 
-> **终局已由用户拍板（2026-09-01 · ③合流）**：右槽整体 = **Agent 工作区**，双区——**主体会话流**（指挥/追问/进度）+ **固定结果卡区**（需要审阅/操作的工件停靠、不随聊天滚走）。拆解面板不是右槽的第二个住户，而是这个工作区里的**第一张结果卡**；新功能 = 新卡片，不再新立面板（单壳）。终局定义权归 M 线交互 epic，其意见书见 [`docs/design/2026-09-01-right-slot-agent-workspace-opinion.md`](../../design/2026-09-01-right-slot-agent-workspace-opinion.md)。
+> **终局已由用户拍板（2026-09-01 · ③合流）**：右槽整体 = **Agent 工作区**，双区——**主体会话流**（指挥/追问/进度）+ **固定结果卡区**（需要审阅/操作的工件停靠、不随聊天滚走）。拆解面板不是右槽的第二个住户，而是这个工作区里的**第一张结果卡**；新功能 = 新卡片，不再新立面板（单壳）。终局定义权归 M 线交互 epic，其意见书见 [`docs/archive/design/2026-09-01-right-slot-agent-workspace-opinion.md`](../design/2026-09-01-right-slot-agent-workspace-opinion.md)。
 >
 > **过渡期（交互 epic 落地前）走互斥**：epic 未落地时右槽尚无「双区工作区」外壳，拆解面板暂以独立就近面板停靠、与现役「生成」AI 栏**互斥共占**右槽——这是**过渡行为，epic 落地后自然消失（届时拆解卡进结果卡区、AI 栏进会话流，同壳并存、不再互斥）**。下列 R-C-1~6 中，**互斥规则（R-C-1/2）标注为过渡行为**；结果驱动/状态保持/宽度真相源/前向兼容（R-C-3/4/5）是**终局也成立的永久契约**。
 >
-> **这一段补的窟窿**：用户看样张时问「右侧万一有 Agent 呢」。右侧那个槽位**今天住着「生成」AI 栏**（`GenerationWorkspace.tsx:143-176` 的 `workbench-generation__ai`），**M 线落地后整体成为 Agent 工作区双区**（同一个 `aiSidebar` 槽演进而来）。样张见 `docs/design/mockups/2026-09-01-video-deconstruction-v1.html` 视图 06/07（06/07 演示的是过渡期互斥态）。
+> **这一段补的窟窿**：用户看样张时问「右侧万一有 Agent 呢」。右侧那个槽位**今天住着「生成」AI 栏**（`GenerationWorkspace.tsx:143-176` 的 `workbench-generation__ai`），**M 线落地后整体成为 Agent 工作区双区**（同一个 `aiSidebar` 槽演进而来）。样张见 `docs/archive/design/mockups/2026-09-01-video-deconstruction-v1.html` 视图 06/07（06/07 演示的是过渡期互斥态）。
 
 **背后逻辑（为什么这么设计）**：右侧就近停靠是 Nomi 已拍板的创作辅助位——AI 栏、参数面板、拆解面板都想贴着画布右缘。但画布右缘只有一条，三个都常驻会互相挤、布局抖（§1.5「情境控件不许挤常驻条」栽过的坑）。所以把右缘定义成**单槽（single dock slot）**：谁被唤起谁进驻，另一个**收起让位**（不是销毁）。这样用户任一时刻只面对一个右侧上下文，不用在两块并排面板间分心。
 
@@ -130,7 +130,7 @@
 
 ## 5. #232 消化结论（吸收什么 / 淘汰什么 + 理由）
 
-> #232（`origin/codex/video-recreation-plan-20260829`，17 文件 +2232 行）调研扎实但**整份建在 #223 旧架构前提**上，而 **#223 已被 M 线取代、冻结为「病历本」不动**（现状见 `docs/ARCHITECTURE-NOW.md` Agent 运行时行 + [[roadmap-20260901-post-merge-wave]]）。且 #232 **自己把「拆解」定位成 P1/P3 的次要能力、主推「复刻」**——维护者裁决把这个次序**反过来**：拆解 v1 是**现在**的主交付（#259 引擎已九成熟），复刻押 M 线。以下逐条消化。
+> #232（`origin/codex/video-recreation-plan-20260829`，17 文件 +2232 行）调研扎实但**整份建在 #223 旧架构前提**上，而 **#223 已被 M 线取代、冻结为「病历本」不动**（现状见 `docs/archive/guides/ARCHITECTURE-NOW.md` Agent 运行时行 + [[roadmap-20260901-post-merge-wave]]）。且 #232 **自己把「拆解」定位成 P1/P3 的次要能力、主推「复刻」**——维护者裁决把这个次序**反过来**：拆解 v1 是**现在**的主交付（#259 引擎已九成熟），复刻押 M 线。以下逐条消化。
 
 **吸收（7 条）**：
 1. **「不长 Prompt」的用户洞察**（#232 §3.3）：用户要的是看懂结构、四个决策，不是手写长提示词——直接支撑 v1「结构表 + 一键起稿」而非「让用户写 prompt」。
@@ -143,7 +143,7 @@
 
 **淘汰（4 条 + 理由）**：
 1. **整个「视频复刻（复刻这 5 秒 → 候选替换）」作为 P0 主路径** → 淘汰出 v1。理由：它是**另一个功能**，且依赖 M 线未就位的审批/预算链；v1 聚焦「拆解看懂 + 落画布创作」这个 #259 引擎已支撑的闭环。复刻押 P2/M 线后。
-2. **`RecreationApprovalEnvelope` / 复合一次确认 / `RecreationArtifactRef` / `paidRunActionHash`** 等 #223 Project Agent Host 合同 → 淘汰。理由：建在已取代的 #223 前提上（`docs/ARCHITECTURE-NOW.md`：引擎是 pi SDK 非 `runAgentChatV2`，Host 复合审批是 M1 未交付范围）。v1 不碰付费生成，无需这套。
+2. **`RecreationApprovalEnvelope` / 复合一次确认 / `RecreationArtifactRef` / `paidRunActionHash`** 等 #223 Project Agent Host 合同 → 淘汰。理由：建在已取代的 #223 前提上（`docs/archive/guides/ARCHITECTURE-NOW.md`：引擎是 pi SDK 非 `runAgentChatV2`，Host 复合审批是 M1 未交付范围）。v1 不碰付费生成，无需这套。
 3. **「拆解只是复刻的后台附属分析、按需产最小 Artifact」的从属定位**（#232 §3.3 独立拆解段）→ 淘汰这个从属关系。理由：维护者裁决拆解 v1 是**独立主交付**、有自己的完整面板与画布产出，不是复刻的隐藏前置。
 4. **基线锚点 `origin/main@f9ac6c67` + 「对齐 #223 `8784ec77`」** → 淘汰（过期）。理由：现基线 `59e1f6c0`，#223 已冻结；实施以 #259 引擎契约 + 现役画布 API 为准，#223 owner 表不再是依赖。
 

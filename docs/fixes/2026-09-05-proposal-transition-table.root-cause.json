@@ -18,7 +18,7 @@
     "electron/projectAgentHost/projectAgentReducer.ts",
     "electron/projectAgentHost/projectAgentReducerContract.ts",
     "electron/projectAgentHost/projectAgentProposalReducer.test.ts",
-    "docs/plan/2026-09-05-proposal-transition-table.md",
+    "docs/archive/plan/2026-09-05-proposal-transition-table.md",
     "docs/fixes/2026-09-05-proposal-transition-table.root-cause.json"
   ],
   "entry_points": [
@@ -74,7 +74,7 @@
       "path": "electron/projectAgentHost/projectAgentReducer.ts",
       "entry_point": "turn.transition and execution.recover approval disposal",
       "disposition": "not-affected",
-      "evidence": "These remove or terminalize approvals as part of the turn state machine rather than performing a proposal lifecycle action. They are registered as adjacent guards in docs/plan/2026-09-05-proposal-transition-table.md and deliberately stay outside the proposal table so two state machines are not conflated."
+      "evidence": "These remove or terminalize approvals as part of the turn state machine rather than performing a proposal lifecycle action. They are registered as adjacent guards in docs/archive/plan/2026-09-05-proposal-transition-table.md and deliberately stay outside the proposal table so two state machines are not conflated."
     },
     {
       "path": "electron/projectAgentHost/projectAgentProposalPersistence.ts",
@@ -102,7 +102,7 @@
     "artifacts": [
       "electron/projectAgentHost/projectAgentProposalTransitions.ts",
       "electron/projectAgentHost/projectAgentReducerContract.ts",
-      "docs/plan/2026-09-05-proposal-transition-table.md"
+      "docs/archive/plan/2026-09-05-proposal-transition-table.md"
     ]
   },
   "regression_tests": [

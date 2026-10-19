@@ -1,6 +1,6 @@
 # 导演台功能与交互完整复核
 
-> 状态：✅ 本地修复与验收完成（未提交）。用户 2026-09-07 要求「再完整核对一下所有的功能逻辑及交互逻辑」。改动留当前工作区，不提交、不推送。最终单测 594 通过/9 项既有环境跳过，构建与同构建桌面输出、保存冷重开、小窗像素、窗口栏及手机旅程通过；完整证据与两项既有工程门禁失败见 `docs/audit/2026-09-07-director-functional-interaction-audit.md`。
+> 状态：✅ 本地修复与验收完成（未提交）。用户 2026-09-07 要求「再完整核对一下所有的功能逻辑及交互逻辑」。改动留当前工作区，不提交、不推送。最终单测 594 通过/9 项既有环境跳过，构建与同构建桌面输出、保存冷重开、小窗像素、窗口栏及手机旅程通过；完整证据与两项既有工程门禁失败见 `docs/archive/audit/2026-09-07-director-functional-interaction-audit.md`。
 
 ## 范围与依据
 
@@ -74,6 +74,6 @@
 ## 先查别人
 
 - 依赖里已有？交互底座是 drei 的 TransformControls / OrbitControls（https://github.com/pmndrs/drei#transformcontrols），审计不重写 gizmo，只核对写回边界 `src/workbench/generationCanvas/nodes/director/scene/TransformGizmo.tsx:1`。
-- 仓库里已有？走查启动器与 E2E 取证桥已存在，审计复用不新造：`tests/ux/_directorLab.mjs:47`、`src/workbench/generationCanvas/nodes/director/scene/E2EBridge.tsx:3`；上一轮全应用地基审计的方法与格式：`docs/audit/2026-08-25-app-wide-foundation-audit.md`。
+- 仓库里已有？走查启动器与 E2E 取证桥已存在，审计复用不新造：`tests/ux/_directorLab.mjs:47`、`src/workbench/generationCanvas/nodes/director/scene/E2EBridge.tsx:3`；上一轮全应用地基审计的方法与格式：`docs/archive/audit/2026-08-25-app-wide-foundation-audit.md`。
 - 生态里已有？Playwright 的 actionability 判据（https://playwright.dev/docs/actionability）作为「点了没反应」的判定标准。
 - 结论：没有现成的功能交互审计工具可引；按既有走查体系逐控件核对到共享状态 / 求值 / 持久化边界，不引新框架。

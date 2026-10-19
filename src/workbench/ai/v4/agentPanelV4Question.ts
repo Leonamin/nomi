@@ -13,7 +13,7 @@
  * 那份 zod schema 的 `z.infer`，**一个字段都不在这里手写**。模型看到的 JSON Schema、
  * 主进程的校验、身份提示词里的例子、熔断构造的参数读的也是那一份。
  * 手写一份平行类型的后果不是编译错误——是它们慢慢长得不一样，而没有任何东西会发现
- * （`docs/lessons/stale-directives-outlive-tool-renames.md`）。
+ * （`docs/archive/lessons/stale-directives-outlive-tool-renames.md`）。
  *
  * 这件事在本分支上**真的发生过一次**：2026-09-21 做反向验红时，一条
  * `git checkout -- <本文件>` 把刚写好的派生整段冲回了手写版，而 typecheck 全绿、

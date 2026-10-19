@@ -3,7 +3,7 @@
 // 为什么单独成模块（P1：一处派生，写者/读者共吃）：advert 是并发会话发现「Nomi 开着没、连的是哪个库」的
 // 唯一探针。历史上 advert 只写 { pid, port, token, ... }，**不含库指纹也无归属校验** → 两个用不同
 // NOMI_PROJECTS_DIR 起的会话抢同一个 instance.json，谁后写谁赢，受害会话的 nomi_list_projects 静默连到了
-// 别人的库（2026-08-17 真实故障，见 docs/plan/2026-08-18-mcp-experience-overhaul.md §P3-F）。
+// 别人的库（2026-08-17 真实故障，见 docs/archive/plan/2026-08-18-mcp-experience-overhaul.md §P3-F）。
 //
 // 治法两条，都落在这个模块里，写者与读者一律经它，从结构上关掉分叉：
 //   ① **库指纹**：advert v2 带 projectsRoot（这个实例真正服务的绝对项目库）+ heartbeatAt（周期刷新的心跳）

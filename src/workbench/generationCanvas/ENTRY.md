@@ -35,7 +35,7 @@
 | 状态/撤销重做/存盘快照 | `store/generationCanvasStore.ts` · `store/canvasHistory.ts` · `store/canvasSnapshotNormalizer.ts` |
 | 节点数据结构 / schema | `model/generationCanvasTypes.ts` · `model/generationCanvasSchema.ts` |
 | 定妆卡 | `fixation/freezeAnchor.ts` |
-| 导演台（`director` 节点，完整的 3D 导演台；Nomi 唯一的 3D 节点，老 `scene3d` 节点加载时经 `nodes/director/migration/` 迁成它） | `nodes/director/`（L2 见 `nodes/director/CLAUDE.md`；方案 `docs/plan/2026-09-02-director-console-v2.md`；dev 入口 `director-lab.html`） |
+| 导演台（`director` 节点，完整的 3D 导演台；Nomi 唯一的 3D 节点，老 `scene3d` 节点加载时经 `nodes/director/migration/` 迁成它） | `nodes/director/`（L2 见 `nodes/director/CLAUDE.md`；方案 `docs/archive/plan/2026-09-02-director-console-v2.md`；dev 入口 `director-lab.html`） |
 | 推到时间轴 | `agent/sendGenerationNodeToTimeline.ts` · `agent/sendStoryboardToTimeline.ts` |
 
 ## 相关方案文档

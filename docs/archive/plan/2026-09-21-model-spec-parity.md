@@ -124,7 +124,7 @@ UI 面压根不传 `vendor/modelKey`（`src/workbench/generationCanvas/store/can
   **模型目录照抄这个已被接受的形状**，不发明第三种。
 
 ### 反方 / 推翻
-- 2026-09-18 的裁决（`docs/plan/2026-09-18-tool-layer-prior-art-verdict.md` §0）说「一份 schema 两个用途」，
+- 2026-09-18 的裁决（`docs/archive/plan/2026-09-18-tool-layer-prior-art-verdict.md` §0）说「一份 schema 两个用途」，
   唯一「两份手写」的先例 Codex 已被量到漂移。本刀的三份参数定义正是那条裁决点名的形状。
 - **不采纳**「给外部面另造一份模型详情、从档案 derive」的做法（同日 scratchpad `mcp-paid-path/PLAN.md` 的提法）：
   那会变成第四份。正解是接到**准入契约**这一份上——它才是真正决定成败的那份。
@@ -214,7 +214,7 @@ UI 面压根不传 `vendor/modelKey`（`src/workbench/generationCanvas/store/can
 / 两者皆无走放行并警告（剩 21 个，其中 14 个是本就无参数的 chat 模型）**。
 
 **当初的设计意图**：`parameterSchema` 由 `c439c56ff`（2026-08-23，*feat: add generic runtime
-module and asset boundaries*）引入，**没有配套的 docs/plan 方案文档**（全仓 `docs/` 里除本刀外
+module and asset boundaries*）引入，**没有配套的 docs/archive/plan 方案文档**（全仓 `docs/` 里除本刀外
 无任何文件提到 `parameterSchema`）；意图只留在代码注释
 `electron/capabilityCore/moduleCatalogBootstrap.ts:44-46`：
 「Mapping defaults are already user/catalog-owned declarations. They fill the schema only when

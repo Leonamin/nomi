@@ -1,6 +1,6 @@
 # MCP 被动请求不冷启 · 先查别人调研（prior-art，2026-09-28）
 
-> 对应方案：[docs/plan/2026-09-28-mcp-background-launch.md](../../plan/2026-09-28-mcp-background-launch.md)。
+> 对应方案：[docs/archive/plan/2026-09-28-mcp-background-launch.md](../../plan/2026-09-28-mcp-background-launch.md)。
 > 问题：AI 工具（Codex / Claude / Cursor）连着 Nomi 的 MCP 时，客户端重连、刷新列表发来的被动发现请求会冷启完整 GUI，用户关了窗口它又弹出来。
 > 本报告回答四问：依赖里已有？仓库里已有？生态里已有？自媒体怎么说？最后给结论。
 

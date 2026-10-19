@@ -1,6 +1,6 @@
 # 未登记状态动词 → 任务永远转圈：根因修复
 
-日期：2026-08-11 · 关联：`docs/plan/2026-08-11-model-onboarding-to-generation-roundtrip.md`（止血 commit `b12ca067`，在并行分支 `claude/confident-golick-f42477`）
+日期：2026-08-11 · 关联：`docs/archive/plan/2026-08-11-model-onboarding-to-generation-roundtrip.md`（止血 commit `b12ca067`，在并行分支 `claude/confident-golick-f42477`）
 
 ## 病根（一句话）
 

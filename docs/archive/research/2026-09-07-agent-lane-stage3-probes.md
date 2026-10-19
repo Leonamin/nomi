@@ -1,7 +1,7 @@
 # Agent lane · 阶段 3 前置探针实跑记录（P1 / P2 / P3 / P5 / P6）
 
 > 状态：✅ 已完成（探针进仓库当阳性对照；本文只记实跑结果与裁决，不改产品代码——P6 的一处投影修正除外，见 §6）
-> 对应：[`docs/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md`](../plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md) §4.3「最可能逼我们再返工的五处 + 便宜探针」。P4（花费行）不在本轮。
+> 对应：[`docs/archive/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md`](../plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md) §4.3「最可能逼我们再返工的五处 + 便宜探针」。P4（花费行）不在本轮。
 > 基线：`origin/main@4f55e2a36`（#591 已合）。pi 锁定 `0.85.1`，file:line 相对 `node_modules/@earendil-works/`。
 
 日期：2026-09-07 · 性质：探针 + 裁决（零额度为主；P5 ③ 花了真实模型 8 次请求，见 §4）

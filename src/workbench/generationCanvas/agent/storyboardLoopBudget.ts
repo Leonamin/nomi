@@ -1,5 +1,5 @@
 // 有界闭环的「轮次预算」状态机(纯函数)—— HollyWood Town「有限重试有向有环图」的封顶 governor。
-// 方案:docs/plan/2026-06-28-storyboard-closed-loop-verify.md（Stage 2 + §6 两套花钱模型）。
+// 方案:docs/archive/plan/2026-06-28-storyboard-closed-loop-verify.md（Stage 2 + §6 两套花钱模型）。
 //
 // 铁律(与渲染层瞬态 retry budget **完全分开**,见 §6):
 //   · 瞬态 retry(generationRunController) = 同 run.id replay、绝不二次下单、封顶 5;

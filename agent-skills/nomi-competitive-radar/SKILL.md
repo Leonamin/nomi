@@ -9,7 +9,7 @@ description: 为 Nomi 执行 LibTV、TapNow、Higgsfield、MiniMax Design、Runn
 
 ## 入口与运行模式
 
-先定位 Nomi 仓库，读 `AGENTS.md`、`docs/ARCHITECTURE-NOW.md`、`docs/roadmap/TODO.md`、`docs/research/competitive/README.md` 与 `sources.md`。查最近报告和开放 PR，避免重复研究和重复待办。
+先定位 Nomi 仓库，读 `AGENTS.md`、`docs/archive/guides/ARCHITECTURE-NOW.md`、`docs/archive/roadmap/TODO.md`、`docs/archive/research/competitive/README.md` 与 `sources.md`。查最近报告和开放 PR，避免重复研究和重复待办。
 
 - **建流程**：只调整规则、来源登记、模板、调度；不自动展开全量研究或开发。本轮用户指定此模式时优先。
 - **三日周期**：读取 [执行规程](references/protocol.md)，检查全部对标对象，再轮换深挖。按该规程判断到期、恢复中断和记录缺口。
@@ -28,7 +28,7 @@ description: 为 Nomi 执行 LibTV、TapNow、Higgsfield、MiniMax Design、Runn
 
 ## 交付物
 
-使用 `docs/research/competitive/TEMPLATE.md`。每轮交付覆盖矩阵、变化摘要、旅程卡、内容卡、Nomi 差距与决策、失败与下一轮重点。没有变化也要附检查时间/来源；没有新研究就不能刷新深挖日期。
+使用 `docs/archive/research/competitive/TEMPLATE.md`。每轮交付覆盖矩阵、变化摘要、旅程卡、内容卡、Nomi 差距与决策、失败与下一轮重点。没有变化也要附检查时间/来源；没有新研究就不能刷新深挖日期。
 
 原始媒体与私密内容放稳定主仓的 `outputs/competitive-radar/<cycle-id>/`，不放临时 worktree 或 Git；报告写证据相对路径、时间码和校验和。公开仓库只能提交脱敏摘要与最小必要引用。自动运行只研究和形成待办，不发帖、评论、私信，不更改账户/套餐，也不自动开发、合并或发布。
 

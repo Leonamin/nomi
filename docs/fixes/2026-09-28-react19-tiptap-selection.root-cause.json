@@ -14,7 +14,7 @@
     "src/workbench/common/useNomiRichTextEditor.ts",
     "src/workbench/assets/PromptEditor.tsx",
     "eslint.config.mjs",
-    "docs/plan/2026-09-28-react19-tiptap-selection.md"
+    "docs/archive/plan/2026-09-28-react19-tiptap-selection.md"
   ],
   "entry_points": [
     "Canvas generation prompt through PromptEditor",

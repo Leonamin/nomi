@@ -279,7 +279,7 @@ Expected: no whitespace errors; only planned files changed; the final `rg` has n
 - [x] **Step 1: Commit after fresh verification**
 
 ```bash
-git add docs/plan/2026-08-07-generation-canvas-gesture-semantics.md \
+git add docs/archive/plan/2026-08-07-generation-canvas-gesture-semantics.md \
   src/workbench/generationCanvas/components \
   src/workbench/generationCanvas/styles/generationCanvas.css \
   src/workbench/onboarding/onboardingState.ts \

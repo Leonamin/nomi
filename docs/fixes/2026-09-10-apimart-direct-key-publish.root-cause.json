@@ -36,7 +36,7 @@
     "pending→verified 转正（revalidatePendingCredential）依赖下次首用前探测成功；若供应商长期网络不可达，凭据保持停用——这是诚实门的正确行为，不是新风险"
   ],
   "external_sources": [],
-  "internal_only_reason": "验证判据对齐的是仓库内已核验的一手证据：apimart 对 GET /v1/models 回 401 的事实记录在 electron/vendor/vendorBaseFallback.ts:153 注释（2026-09-08 前后实测），livenessProbe 声明（POST /api/v1/chat/completions，successPath choices.0）带官方文档出处与核对日期（electron/catalog/apimartVendor.ts:29-33，source url docs.apimart.ai，checkedAt 2026-09-08），种子契约与 direct-key 语义见 docs/plan/2026-06-07-apimart-curated-onboarding.md。发布路径对齐的内部设计是 builtinVendorSeeds.ts:42-45 的 credentialMode 契约注释与 2026-09-01 credential-enable-honesty 根因合同（本修复显式继承其不变量而非放宽它）。",
+  "internal_only_reason": "验证判据对齐的是仓库内已核验的一手证据：apimart 对 GET /v1/models 回 401 的事实记录在 electron/vendor/vendorBaseFallback.ts:153 注释（2026-09-08 前后实测），livenessProbe 声明（POST /api/v1/chat/completions，successPath choices.0）带官方文档出处与核对日期（electron/catalog/apimartVendor.ts:29-33，source url docs.apimart.ai，checkedAt 2026-09-08），种子契约与 direct-key 语义见 docs/archive/plan/2026-06-07-apimart-curated-onboarding.md。发布路径对齐的内部设计是 builtinVendorSeeds.ts:42-45 的 credentialMode 契约注释与 2026-09-01 credential-enable-honesty 根因合同（本修复显式继承其不变量而非放宽它）。",
   "invariant_owner_layer": {
     "layer": "electron/catalog/directKeyCredential.ts",
     "tests": [

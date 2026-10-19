@@ -54,7 +54,7 @@ describe('素材面唯一门不变量（方案一 2026-07-22）', () => {
 
   it('① 宿主A（全局素材盒浮窗）文件不存在', () => {
     const revived = BANNED_FILES.filter((relative) => fs.existsSync(path.join(repoRoot, relative)))
-    expect(revived, `宿主A 文件被恢复（违反方案一，见 docs/plan/2026-07-22-asset-surface-reconvergence.md）：${revived.join(', ')}`).toEqual([])
+    expect(revived, `宿主A 文件被恢复（违反方案一，见 docs/archive/plan/2026-07-22-asset-surface-reconvergence.md）：${revived.join(', ')}`).toEqual([])
   })
 
   it('②「打开素材盒」入口只在浏览器域（src/ui/browser/）', () => {

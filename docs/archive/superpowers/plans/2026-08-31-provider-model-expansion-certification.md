@@ -10,7 +10,7 @@
 
 **Tech Stack:** Electron, React 18, TypeScript, Vitest, Node test runner, pnpm, Playwright smoke, provider Catalog contracts, PR #221 MCP, managed assets, Cloudflare Worker ACK endpoint for KIE callbacks.
 
-**Spec:** `docs/plan/2026-08-30-unified-model-integration-certification.md`
+**Spec:** `docs/archive/plan/2026-08-30-unified-model-integration-certification.md`
 
 ## Global Constraints
 
@@ -31,8 +31,8 @@
 
 **Files:**
 - Read: `AGENTS.md`
-- Read: `docs/ARCHITECTURE-NOW.md`
-- Read: `docs/plan/2026-08-30-unified-model-integration-certification.md`
+- Read: `docs/archive/guides/ARCHITECTURE-NOW.md`
+- Read: `docs/archive/plan/2026-08-30-unified-model-integration-certification.md`
 - Read: `docs/handoff/2026-08-30-provider-model-expansion-unified-certification-handoff.md`
 - Read: `/private/tmp/nomi-pr221-main-merge.3Ci24q/docs/handoff/2026-08-30-local-model-agent-runtime-architecture-handoff.md`
 - Inspect: all current worktree changes on `codex/provider-model-expansion-20260830`
@@ -361,7 +361,7 @@ Runway-only defect, so the repair is deliberately provider-neutral:
     electron/catalog/paramTranslate.ts electron/catalog/paramTranslate.test.ts \
     electron/catalog/seedBuiltins.ts electron/catalog/seedBuiltins.test.ts \
     scripts/check-model-certification-coverage.mjs \
-    docs/superpowers/plans/2026-08-31-provider-model-expansion-certification.md
+    docs/archive/superpowers/plans/2026-08-31-provider-model-expansion-certification.md
   git commit -m "fix: close provider result retrieval boundaries"
   ```
 
@@ -387,7 +387,7 @@ Runway-only defect, so the repair is deliberately provider-neutral:
 
 ## Self-review checklist
 
-- [x] Every requirement in `docs/plan/2026-08-30-unified-model-integration-certification.md` maps to a task above.
+- [x] Every requirement in `docs/archive/plan/2026-08-30-unified-model-integration-certification.md` maps to a task above.
 - [x] No task contains unresolved placeholders, guessed fields, or an undefined interface.
 - [x] No task promotes deterministic simulation to live certification.
 - [x] Runway's broad model scope and official upload path are explicit.

@@ -32,7 +32,7 @@
 //   node tests/ux/golden-path.e2e.mjs --positive-control   # 阳性对照：必须报红
 //
 // 阳性对照（为什么必须有）：最后那条「重启后修改仍在」的断言，如果读的是内存而不是盘，
-// 它会永远绿（docs/lessons/vacuous-probe-passes-forever.md）。`--positive-control` 在关掉
+// 它会永远绿（docs/archive/lessons/vacuous-probe-passes-forever.md）。`--positive-control` 在关掉
 // app 之后、重启之前，把盘上第 2 镜节点的提示词改回旧值——**如果这条断言是活的，它必须红**。
 // 没红 = 尺子坏了，本脚本会明确报「阳性对照失效」。
 //
@@ -96,7 +96,7 @@ process.argv = process.argv.filter((arg) => !['--positive-control', '--productio
 
 const walk = await createRuntimeWalk('golden-path')
 // 截图与 report.json 落在剧本自己的目录里（.tmp/golden-path-<ts>/），
-// 而不是通用 runtime-walk 的 pi-* 目录——这条路径写进 docs/qa，红了照着找证据。
+// 而不是通用 runtime-walk 的 pi-* 目录——这条路径写进 docs/archive/qa，红了照着找证据。
 const outputDir = path.join(process.cwd(), '.tmp', `golden-path-${Date.now()}`)
 fs.mkdirSync(outputDir, { recursive: true })
 walk.report.outputDir = outputDir
@@ -405,7 +405,7 @@ async function stepGenerateShot2Image(win, projectId, nodeIds) {
  * 再用同一份 userData/settings/projects 冷启动，从项目库「继续创作」回到画布。
  *
  * 这里刻意不 win.reload()：原地刷新后活动项目恒 null，面板会静默空掉，
- * 那是走查独有的死法，不是用户路径（docs/lessons/walkthrough-no-win-reload.md）。
+ * 那是走查独有的死法，不是用户路径（docs/archive/lessons/walkthrough-no-win-reload.md）。
  */
 async function stepRestartAndVerify(projectRoot, projectId, nodeIds, { resultUrl }) {
   const sessionsBeforeRestart = readLaneTranscripts(projectRoot)

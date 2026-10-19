@@ -2,7 +2,7 @@
  * [INPUT]: 无依赖
  * [OUTPUT]: 对外提供 V1（scene3d）工程数据的类型子集 Legacy* 与容错读取器 normalizeLegacyScene3D
  * [POS]: director/migration 的 V1 数据形状（只读、只为迁移与 AI 来导的旧 builder 存在）：老工程 `meta.scene3dState` 与
- *        V1 词表 builder 的产物都长这样。V1 代码已删，这里是它的化石——字段含义见 docs/plan/2026-09-03-director-cutover-gate.md §7 C2。
+ *        V1 词表 builder 的产物都长这样。V1 代码已删，这里是它的化石——字段含义见 docs/archive/plan/2026-09-03-director-cutover-gate.md §7 C2。
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */
 export type LegacyVec3 = [number, number, number]

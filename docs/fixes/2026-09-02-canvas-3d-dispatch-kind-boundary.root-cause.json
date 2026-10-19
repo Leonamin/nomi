@@ -2,7 +2,7 @@
   "schema_version": 3,
   "id": "2026-09-02-canvas-3d-dispatch-kind-boundary",
   "problem_type": "Kind-classification boundary omits a registered executionKind, silently disabling a whole capability plane",
-  "symptom": "Canvas model3d nodes can never dispatch generation: the generate button stays disabled and the runner throws 暂不支持 model3d, even with model, prompt and parameters fully set (PR #320 J11 probe, docs/qa/2026-09-02-journey-debt-product-gaps.md gap 2).",
+  "symptom": "Canvas model3d nodes can never dispatch generation: the generate button stays disabled and the runner throws 暂不支持 model3d, even with model, prompt and parameters fully set (PR #320 J11 probe, docs/archive/qa/2026-09-02-journey-debt-product-gaps.md gap 2).",
   "direct_cause": "canRunGenerationNode enumerated image/text/audio/video and fell through to return false for model3d; resolveTaskKind additionally excluded model3d from the archetype transport bucket and had no model3d fallback, so even an opened gate would hit the bottom throw.",
   "class_root": "Per-kind branch chains are copied at every consumer of the kind classification with a closed-world default (return false / throw / wrong copy). The registry can declare a new executionKind without any structural signal forcing those chains to acknowledge it — the same class root as PR #286 (parameter bar missing for model3d).",
   "affected_population": [

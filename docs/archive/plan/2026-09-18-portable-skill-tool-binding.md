@@ -300,7 +300,7 @@
 **第二条：我们已经有这个间接层了，而且可能是全场唯一一个真做到工具粒度的。**
 （`canvas.write` → pi `arrange_canvas` / MCP `nomi_canvas_edit` / UI `nomi_canvas_plan`；`asset.read` → pi `look_at_media` / MCP `nomi_media_query`，`assetRead.ts:203`）
 连 §2.5 那个跨宿主极性维度都恰好带上了。**但技能层没接上去，所以 0/88 用它，今天还躺着两个悬空工具名没人发现。**
-这印证了 `docs/lessons/research-must-become-enforceable-constraints.md`：**调研结论不变成能拦人的约束，就等于没做。**
+这印证了 `docs/archive/lessons/research-must-become-enforceable-constraints.md`：**调研结论不变成能拦人的约束，就等于没做。**
 本方案 P1 的重心因此不是「设计间接层」（已有），而是**给它装门岗**。
 
 **第三条：用户那句「要不然这些 skill 给到 coding agent 他们怎么搞得」——答案是「他们也没搞定，他们靠人话」。**
@@ -331,7 +331,7 @@
 | 「不碰画布」躺着为假 | **没有任何流程要求任何人去查这件事** | 不是召回率问题，是**这条边上一个检查点都没有** → 文档形态的规则在这里等于零 |
 
 第二种情况写多少遍「不要在正文复述工具性质」都不会被发现，因为**没有人会去读那份规则再回头逐条核技能**。
-这就是 `docs/lessons/research-must-become-enforceable-constraints.md` 那条教训的最纯形态：
+这就是 `docs/archive/lessons/research-must-become-enforceable-constraints.md` 那条教训的最纯形态：
 **规则不变成会红的门岗，它的执行次数是 0，不是「偶尔漏」。**
 
 ### 7.5.2 权威节的位置是**暂定**，不是结论

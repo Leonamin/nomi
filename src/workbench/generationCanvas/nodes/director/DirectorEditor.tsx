@@ -209,7 +209,7 @@ function EditorBody({ scopeRef, onExit, preferences, onChangePreferences, nodeId
     <OutputsContext.Provider value={outputs}>
       <CameraRecorderContext.Provider value={recorder}>
       <MobileCameraContext.Provider value={mobile}>
-      {/* 五个功能簇一条悬浮顶栏（2026-09-09 用户拍板，方案 docs/plan/2026-09-09-director-chrome-five-clusters.md）：
+      {/* 五个功能簇一条悬浮顶栏（2026-09-09 用户拍板，方案 docs/archive/plan/2026-09-09-director-chrome-five-clusters.md）：
           2026-09-04 那条整行标题栏连同视口左缘 / 底中 / 右下三条浮层一起收进这里，视口四边不再有控件带。 */}
       <EditorStage
         scopeRef={scopeRef}

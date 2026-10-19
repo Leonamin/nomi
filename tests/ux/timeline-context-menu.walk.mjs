@@ -10,7 +10,7 @@
 //
 // 阳性对照：每一条「不该在」的断言（Esc 关、点外面关）都先用 `proveProbe` 拿到
 // 「这个选择器确实找得到菜单」的基线，否则 `expectAbsent` 在选择器写错时也会绿
-// （docs/lessons：expect-absent-passes-too-early / dead-selector-lies-both-ways）。
+// （docs/archive/lessons：expect-absent-passes-too-early / dead-selector-lies-both-ways）。
 //
 // 真 Electron + 真构建产物，隔离 userData / projects，全程不发生成请求（零额度）。
 // 用法：pnpm run build && node tests/ux/timeline-context-menu.walk.mjs

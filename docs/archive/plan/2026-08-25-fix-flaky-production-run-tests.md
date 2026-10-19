@@ -1,7 +1,7 @@
 # productionRun 单测 flake：赛跑腿的收口 + R18 测试等待门岗
 
 日期：2026-08-25 · 分支：`claude/laughing-mestorf-f98fdf` · 类型：测试基建（不改产品代码行为）
-关系：**叠在 PR #139（`docs/plan/2026-08-25-production-run-test-flake-fsync.md`）之上的补件**，不是替代。
+关系：**叠在 PR #139（`docs/archive/plan/2026-08-25-production-run-test-flake-fsync.md`）之上的补件**，不是替代。
 
 ## 背景：同一个 flake 的两条腿
 

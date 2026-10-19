@@ -109,7 +109,7 @@
   ],
   "recurrence": {
     "classification": "recurring",
-    "reason": "This is the second time the same invariant grew a second owner with a weaker evidence standard (docs/qa/2026-08-20-mcp-issues.md:95 already registered the environment escape hatch as something an agent must not reach, and mitigated it by convention rather than removal). Any future 'confirmation happened on the caller's side' feature can reintroduce it.",
+    "reason": "This is the second time the same invariant grew a second owner with a weaker evidence standard (docs/archive/qa/2026-08-20-mcp-issues.md:95 already registered the environment escape hatch as something an agent must not reach, and mitigated it by convention rather than removal). Any future 'confirmation happened on the caller's side' feature can reintroduce it.",
     "same_class_scan": [
       "rg 'mintSpendGrant' across electron/ and src/ and classify each caller's evidence standard",
       "rg 'spendConfirmed|planConfirmed|documentConfirmed|approved|autoApprove' for caller-asserted approval booleans crossing the loopback RPC boundary",

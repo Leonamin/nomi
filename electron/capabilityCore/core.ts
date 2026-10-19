@@ -1,4 +1,4 @@
-// 能力核 · 编排层（见 docs/plan/2026-06-20-capability-core-headless-exposure.md）。
+// 能力核 · 编排层（见 docs/archive/plan/2026-06-20-capability-core-headless-exposure.md）。
 //
 // 把纯图操作（canvasGraph）接到真实的工程持久化（projects/repository）与生成引擎（runtime.runTask）。
 // 这是「外部 agent / CLI / MCP 驱动 Nomi」的**主进程**单一执行口——所有传输（RPC / 头less host）
@@ -427,7 +427,7 @@ export async function generateOnProject(
   const references = input.references && input.references.length
     ? input.references
     : (Array.isArray(node.references) && node.references.length ? node.references : referencesFromEdges(snapshot, nodeId))
-  // kind 选择（W1d，见 docs/plan/2026-08-20-w1d-reference-mode-alignment.md）：显式 input.kind 最高优先；
+  // kind 选择（W1d，见 docs/archive/plan/2026-08-20-w1d-reference-mode-alignment.md）：显式 input.kind 最高优先；
   // 带参考时**按目录 derive**该模型真实可带参考的模式（与 list_models 的 referenceModes 同一份源，P1），不再硬编码
   // image→image_edit / video→image_to_video（那对「参考模式≠默认名」的模型会选错 kind、被护栏误拒）。derive 不出
   // （无任何参考模式，或 intent 非 image/video）→ 回退 defaultKindForIntent 走护栏诚实拒绝（语义不放松）。
@@ -619,7 +619,7 @@ export async function generateOnProject(
       // 视频默认 15 分钟与供应商建议一致，避免 5 分钟时任务仍在上游排队却被本地判失败。
       const timeoutMs = resolveCapabilityPollTimeoutMs(kind)
       // 轮询间隔与渲染层同策：视频 3s、其余 1.5s（厂商文档要求查询间隔 ≥3-5s，见
-      // docs/plan/2026-07-31-seedance-api-contract-reconciliation.md §三）。跨进程边界拿不到
+      // docs/archive/plan/2026-07-31-seedance-api-contract-reconciliation.md §三）。跨进程边界拿不到
       // 渲染层的 resolvePollIntervalMs，故此处是**配对常量，改一处必改另一处**（同 vendorErrorIpc
       // 的 MARKER 约定）。本循环一次只跑一个任务，不存在批量同相位问题，故不叠抖动/退避。
       const pollIntervalMs = kind === 'text_to_video' || kind === 'image_to_video' ? 3000 : 1500

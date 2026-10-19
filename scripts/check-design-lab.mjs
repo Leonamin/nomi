@@ -31,7 +31,7 @@
 //   基线 PNG 是在 macOS 上渲染、由用户在 macOS 上拍板的。字体栅格化在 macOS 与
 //   ubuntu runner（xvfb 软渲染）上本来就不一样，把 darwin 的 PNG 拿去 linux 上逐像素比 = 必红，
 //   而且红的是**平台**不是设计。仓库刚在画布性能预算上栽过同一个坑
-//   （docs/lessons：canvas-perf-budget-calibrated-on-macos-fails-on-linux）。
+//   （docs/archive/lessons：canvas-perf-budget-calibrated-on-macos-fails-on-linux）。
 //   所以：已校准平台上**硬跑**；未校准平台上**明说没跑**，既不假装绿也不制造假红。
 //   想让 CI 也拦住视觉回归，正解是在那个平台上录一套基线并加进 calibration.json，
 //   不是放宽容差（放宽容差 = 把门岗关掉还留个门框）。
@@ -91,7 +91,7 @@ const fail = (message) => errors.push(message)
 //   `input-streaming` 是唯一的例外：投影层永不产出它（`tool-call` 事件的 args 整包到达，
 //   没有流式片段），实验室那一格留作词表完整性的展示，不算进"必须可达"的那批。
 // - editing：剪辑面这一族形态出自「关闭剪辑面浮层被祖先 overflow 裁掉」那次根因修复
-//   （docs/lessons/overlay-clipped-by-ancestor-overflow.md）。它还没有编号化的覆盖真相源，
+//   （docs/archive/lessons/overlay-clipped-by-ancestor-overflow.md）。它还没有编号化的覆盖真相源，
 //   所以这里只查注册表可解析 + 基线一一对应；等设计合同落定再补编号覆盖。
 // - storyboard：分镜表 v6 设计合同的章节号。合同里每一条**有形态的**章节都必须在实验室里
 //   至少有一个状态认领它（认领方式 = 该状态的 `source` 里写着这个章节号）。

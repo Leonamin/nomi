@@ -1,7 +1,7 @@
 # 右侧 Agent 面板做开放宿主：用 ACP 接外部 Agent
 
 > 状态：⏳
-> 调研：[`docs/research/2026-10-02-acp-agent-host/report.md`](../research/2026-10-02-acp-agent-host/report.md)（规范要点、各 Agent 接法、现有宿主、对照 infinite-canvas、读码、未核实清单）。
+> 调研：[`docs/archive/research/2026-10-02-acp-agent-host/report.md`](../research/2026-10-02-acp-agent-host/report.md)（规范要点、各 Agent 接法、现有宿主、对照 infinite-canvas、读码、未核实清单）。
 > 本文只定方案与切片，不含代码。每片开工前按 P2 / R21 先跑门表，再写各自的 PR 正文。
 
 ## 一句话

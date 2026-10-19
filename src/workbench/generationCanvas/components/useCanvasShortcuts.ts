@@ -88,7 +88,7 @@ type CanvasKeydownHandlerOptions = {
 /**
  * 快捷键里的字母：按 `event.key` 认（Dvorak / AZERTY 按的是键帽上的字），
  * 只有 key 不是 ASCII 字母时才回退物理位置 `event.code`——macOS 上 ⌥ 组合会把 F 变成 `Ï`、
- * 俄文 / 希腊文布局下 Z 是 `я`。与 tldraw `useKeyboardShortcuts` 同一裁决（见 docs/plan/2026-09-21-canvas-shortcut-parity.md）。
+ * 俄文 / 希腊文布局下 Z 是 `я`。与 tldraw `useKeyboardShortcuts` 同一裁决（见 docs/archive/plan/2026-09-21-canvas-shortcut-parity.md）。
  */
 export function canvasShortcutKey(event: Pick<KeyboardEvent, 'key' | 'code'>): string {
   const key = event.key.toLowerCase()

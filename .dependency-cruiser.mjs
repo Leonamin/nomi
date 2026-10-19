@@ -9,7 +9,7 @@
 // 能直接复用同一套规则，不会和门岗漂移。
 //
 // 依赖方向的分层背景见 docs/architecture/module-ownership-map.md 与
-// docs/audit/2026-08-31-architecture-coupling-audit.md（分析二/五）。
+// docs/archive/audit/2026-08-31-architecture-coupling-audit.md（分析二/五）。
 
 /** @type {import('dependency-cruiser').IConfiguration} */
 export default {

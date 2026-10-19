@@ -3,15 +3,15 @@
 > 状态：✅ 已交付 · 2026-09-18 · 分支 `feat/tool-projection-20260918`
 > **已铺开（2026-09-18 晚，分支 `feat/tool-projection-rollout-20260918`）**：这份文档回答的那个「能不能」的问题
 > 答案是能，但**只对单域动词**。铺开的结果与它照出来的边界见
-> `docs/plan/2026-09-18-tool-projection-rollout.md`；本文件保持原样，它是那次原型的现场记录，不是现状说明。
+> `docs/archive/plan/2026-09-18-tool-projection-rollout.md`；本文件保持原样，它是那次原型的现场记录，不是现状说明。
 > 三处需要对照着读的：① 下面「两次变异」那张表里**变异 ① 当时全绿**，铺开时补了一道门
 > （`check:model-face-frozen`）专门让它从此红；② 「铺开时的判据」那句「单域走投影、双域保留声明映射」被证实，
 > 但实际能投影的是 11 个（加上 `draft_shots` 那一份有损投影共 12 个），不是 18 个——另外 8 个里
 > 6 个的模型面是**构造**出来的（值重映射 / 按参数形状派生方法 / 拼出整只节点结构），2 个的宿主契约
 > `inputSchema` 干脆是 `z.unknown()`，没有可投影的东西；
 > ③ `cancelJobProjection.ts` 这个文件已经不在了，它整个并进了 `verbs/verbProjections.ts`。
-> 上游：`docs/plan/2026-09-18-tool-layer-handoff.md` §8 第 4/5 条（「先在一个小动词上做原型再铺开」）与
-> `docs/plan/2026-09-18-tool-layer-prior-art-verdict.md` §2（六家的做法）。
+> 上游：`docs/archive/plan/2026-09-18-tool-layer-handoff.md` §8 第 4/5 条（「先在一个小动词上做原型再铺开」）与
+> `docs/archive/plan/2026-09-18-tool-layer-prior-art-verdict.md` §2（六家的做法）。
 > **这份文档只管一个动词。** 它要回答的是一个能不能的问题，不是一次铺开。
 
 ## 为什么做这件事（一句大白话）
@@ -31,7 +31,7 @@
 
 ## 先查别人
 
-（出处从 `docs/plan/2026-09-18-tool-layer-prior-art-verdict.md` §2 抄来，那份是当天真做过的检索报告。）
+（出处从 `docs/archive/plan/2026-09-18-tool-layer-prior-art-verdict.md` §2 抄来，那份是当天真做过的检索报告。）
 
 - **依赖里已有？** pi 的 `AgentTool<TParameters>` 一份 TypeBox 两用，`execute` 的参数类型从同一份 schema 推导 —— `node_modules/@earendil-works/pi-agent-core/dist/types.d.ts:340-361`（裁决 §2.5 本人直接读过）。我们现在却是把 verb 的 zod 转成 TypeBox 给 pi 校验，再在 `execute` 里用 zod 验第二次。
 - **仓库里已有？（模型面投影）** 我们对外 MCP 面**已经是投影形状**：`electron/capabilityCore/mcpGenerationToolCatalog.ts:22` 用的就是 `.omit().extend()`。本原型是把同一手法搬到内部动词面，不是新发明。
@@ -39,7 +39,7 @@
 - **生态里已有？（Claude Agent SDK）** 一份 zod 派生模型面 + 执行前用同一份校验，handler 参数类型从它推导（`package/sdk.d.ts:9145`）；宿主改写参数之后**重新过准入**（`sdk.d.ts:2389-2391`，PreToolUse 原话 *"Claude Code evaluates permission rules … against the input your hook returns, not the input Claude sent."*）。出处：https://code.claude.com/docs/en/agent-sdk/custom-tools 与 https://code.claude.com/docs/en/hooks 。「补完重过同一份 schema」这一条就是从这里抄的。
 - **生态里已有？（MCP 参考实现）** `modelcontextprotocol/typescript-sdk` @ `6032170` `packages/server/src/server/mcp.ts:240-242` 用 `standardSchemaToJsonSchema` 派生模型面、`:272-274` 用同一个对象校验调用，注释原话 *"the listing and the call cannot diverge."*；规范见 https://modelcontextprotocol.io/specification/2026-07-28/server/tools 。
 - **反方证据？** 唯一「模型面与执行两处手写」的先例是 Codex（`openai/codex` @ `c775dd3`），而它**已经被量到漂移**：`core/src/tools/handlers/unified_exec.rs:40` 的 `timeout_ms` 在 `shell_spec.rs` 里 0 次出现——宿主收一个模型从没被告知的字段。它是反例不是支持（裁决 §2.4）。OpenAI 自己也只给两条出路：派生，或 CI 拦漂移 —— https://developers.openai.com/api/docs/guides/structured-outputs 。
-- **TikHub 自媒体里怎么说？** 本次没用 TikHub：这是一次纯内部的类型/schema 结构改动，没有任何用户可见面，自媒体上不会有人讨论「某个 Electron 应用的动词 schema 该不该从宿主契约派生」。可复核的对照面全在上面五条的源码与官方文档里（裁决 `docs/plan/2026-09-18-tool-layer-prior-art-verdict.md` 六个面）。
+- **TikHub 自媒体里怎么说？** 本次没用 TikHub：这是一次纯内部的类型/schema 结构改动，没有任何用户可见面，自媒体上不会有人讨论「某个 Electron 应用的动词 schema 该不该从宿主契约派生」。可复核的对照面全在上面五条的源码与官方文档里（裁决 `docs/archive/plan/2026-09-18-tool-layer-prior-art-verdict.md` 六个面）。
 - **结论** 用已有：手法抄 Claude Agent SDK 与 MCP TS SDK，落点接我们自己已有的 `exportWriteInputForAlias`（`electron/shared/agentCapabilities/exportCapabilities.ts:157`）。不自研任何新机制；这一刀新增的只有一个 30 行的派生模块。
 
 ## 范围

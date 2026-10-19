@@ -10,7 +10,7 @@
    - `ToolSearch "resolve-library-id"` —— 找得到 `resolve-library-id`/`get-library-docs` 就是好了，**按规则 5 用它查 Tiptap 官方**。
    - 找不到 → 在 Claude Code 跑 `/mcp` 批准 context7，或退回 WebFetch 查 `tiptap.dev`（等价）。
    - 根因已写进规则 5：项目 `.mcp.json` 服务器**需审批**（`enabledMcpjsonServers`），`mcp list` 的 Connected 只是可达性。已把 `context7` 写进 `~/.claude.json`（若被 Claude Code 退出时回写覆盖了，就 `/mcp`）。
-3. **读本文** + `docs/plan/c5-text-node.md`（C5 落地方案 + 本段会话回填的 Chunk 进度 + 剩余接入图）。
+3. **读本文** + `docs/archive/plan/c5-text-node.md`（C5 落地方案 + 本段会话回填的 Chunk 进度 + 剩余接入图）。
 
 ## 1. 当前状态（本段会话改变的）
 - **单一工作树**：`/Users/aoqimin/Desktop/Nomi/`（分支 main）。**旧的 `.claude/worktrees/impl-v0.6.0/` 已删除合并**——不再有双目录漂移。任何指向 impl-v0.6.0 的旧路径都过时。
@@ -21,7 +21,7 @@
 - **未提交残留**：无（工作树干净）。`.claude/launch.json` 有个指向已删 worktree 的 `marketing` 配置（本地未跟踪、失效，可顺手修路径或忽略）。
 
 ## 2. 立即要做：C5 P1 Chunk 2 + 3（接入图已就位）
-> 方案/样张已评审确认（`docs/plan/c5-text-node.md` + `docs/design/archive/c5-text-node.html`）。
+> 方案/样张已评审确认（`docs/archive/plan/c5-text-node.md` + `docs/archive/design/archive/c5-text-node.html`）。
 > 共享内核 `src/workbench/common/useNomiRichTextEditor.ts` 已就位（早于本段会话）。
 > **先按规则 5 用 Context7 查 Tiptap 官方**（`editor.setEditable`、`getJSON`、`insertContentAt`、`editorProps.handleKeyDown`），再动手。
 
@@ -46,8 +46,8 @@
 - 小：`.claude/launch.json` 的 `marketing` 路径指向已删 worktree，修成 `/Users/aoqimin/Desktop/Nomi/marketing`。
 
 ## 4. 关键文件索引（单一树根 `/Users/aoqimin/Desktop/Nomi/`）
-- 规则：`CLAUDE.md`（总纲 + 1–10）｜设计：`Design.md`、`docs/design/`、`src/design/`
-- C5：`docs/plan/c5-text-node.md`、`docs/design/archive/c5-text-node.html`；内核 `src/workbench/common/useNomiRichTextEditor.ts`、`richTextActions.tsx`；参考 `src/workbench/creation/WorkbenchEditor.tsx`
+- 规则：`CLAUDE.md`（总纲 + 1–10）｜设计：`Design.md`、`docs/archive/design/`、`src/design/`
+- C5：`docs/archive/plan/c5-text-node.md`、`docs/archive/design/archive/c5-text-node.html`；内核 `src/workbench/common/useNomiRichTextEditor.ts`、`richTextActions.tsx`；参考 `src/workbench/creation/WorkbenchEditor.tsx`
 - 画布：`src/workbench/generationCanvas/`（`nodes/BaseGenerationNode.tsx`、`nodes/render/CharacterCardNode.tsx`(壳参考)、`nodes/registry.ts`、`nodes/NodeGenerationComposer.tsx`、`runner/generationNodeExecutor.ts`、`store/generationCanvasStore.ts`、`model/generationCanvasTypes.ts`+`generationCanvasSchema.ts`、`components/GenerationCanvas.tsx`）
 - 样式：`src/styles/index.css`（入口）、`globals.css`、`vendor-overrides.css`、`animations.css`、`src/theme/nomi-tokens.css`、`tailwind.config.ts`
-- 清理审计：`docs/audit/2026-06-03-dead-canvas-css.md`、`docs/plan/2026-06-03-styles-css-teardown.md`
+- 清理审计：`docs/archive/audit/2026-06-03-dead-canvas-css.md`、`docs/archive/plan/2026-06-03-styles-css-teardown.md`

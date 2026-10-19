@@ -1,6 +1,6 @@
 import { resolveIndexedReferencePreview } from './pendingSpendReferences'
 import { spendReferenceKey } from "../shared/contracts/pendingSpendConfirm";
-// 能力核 · MCP stdio server（app 自身二进制以 NOMI_MCP_STDIO 模式跑；见 docs/plan/2026-06-24-packaged-mcp-stdio-server.md）。
+// 能力核 · MCP stdio server（app 自身二进制以 NOMI_MCP_STDIO 模式跑；见 docs/archive/plan/2026-06-24-packaged-mcp-stdio-server.md）。
 //
 // Claude Code / Codex / Cursor 用 `<Nomi 二进制> + env NOMI_MCP_STDIO=1` 把 Nomi 拉起当 MCP server。
 // 本模块把纯协议层 mcpProtocol.ts 接到 stdin/stdout（newline JSON-RPC），并提供「进程内 invoke」：

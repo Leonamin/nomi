@@ -62,5 +62,5 @@
 
 ## 最终产物
 
-- `docs/research/2026-08-02-3d-director-stage-full-journey-research-and-redesign.md`
-- 配套实测截图/产物索引目录：`docs/research/2026-08-02-3d-director-stage/`
+- `docs/archive/research/2026-08-02-3d-director-stage-full-journey-research-and-redesign.md`
+- 配套实测截图/产物索引目录：`docs/archive/research/2026-08-02-3d-director-stage/`

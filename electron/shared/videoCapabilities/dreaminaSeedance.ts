@@ -1,6 +1,6 @@
 // 即梦官方 dreamina CLI 的 Seedance 视频档案（声明控件/模式/变体，通用系统据此渲染 UI）。
 // dreamina 底层现覆盖 Seedance 2.0 家族 + 2.5，走本地 CLI，参数 enum 以官方 `-h` 为准。
-// SOURCE：docs/research/2026-09-01-dreamina-cli-v1417-matrix.md（CLI v1.4.17，build 2026-08-17，checkedAt 2026-09-01）。
+// SOURCE：docs/archive/research/2026-09-01-dreamina-cli-v1417-matrix.md（CLI v1.4.17，build 2026-08-17，checkedAt 2026-09-01）。
 //   - 2.0 家族：duration 4-15、6 比例、720p；1080p 仅 vip 档（720p/1080p/4k）。
 //   - 2.5（v1.4.15 起视频全线支持，v1.4.17 加 1080p）：duration 4-30、video_resolution 480p/720p/1080p、VIP-only、多模态可纯音频。
 // v1.4.14 破坏性变更：视频必须显式 --video_resolution（本机 pre-auth 探针实测硬拒缺参）。

@@ -2,8 +2,8 @@ import React from 'react'
 import type { LabState } from '../../labScreen'
 import { CreationColumnsStage } from '../CreationColumnsStage'
 
-const SOURCE = 'docs/design/2026-09-10-creation-workspace-columns.md'
-const DRAWER_SOURCE = 'docs/design/2026-09-17-creation-left-column-drawer-a1.md'
+const SOURCE = 'docs/archive/design/2026-09-10-creation-workspace-columns.md'
+const DRAWER_SOURCE = 'docs/archive/design/2026-09-17-creation-left-column-drawer-a1.md'
 export const CREATION_COLUMNS_STATES: readonly LabState[] = [
   {
     id: 'columns-current',

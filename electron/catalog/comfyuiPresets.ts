@@ -9,7 +9,7 @@
 // 模型清单（文件名/目录/下载链接）同样来自官方模板内嵌 MarkdownNote 的 HuggingFace 链接。
 //
 // 缺件闸：启用前用 Tier-1 的 reconcile（/object_info 对账）验缺节点/缺模型，缺件不给启用——
-// 预置模板绝不能「开箱即炸」（docs/plan/2026-08-01-comfyui-tier1-objectinfo-reconcile.md）。
+// 预置模板绝不能「开箱即炸」（docs/archive/plan/2026-08-01-comfyui-tier1-objectinfo-reconcile.md）。
 // 启用 = 走既有 importComfyWorkflowToCatalog 落成用户自有 model+mapping（P1 复用整条导入链，零新持久化）。
 import { NUMERIC_LABEL, type WorkflowBinding } from "./comfyuiWorkflowImport";
 import { COMFY_NEGATIVE_LABEL } from "./comfyuiLocal";

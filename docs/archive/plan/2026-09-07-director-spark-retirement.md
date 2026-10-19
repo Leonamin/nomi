@@ -1,6 +1,6 @@
 # Spark 宿主异步卸载收口
 
-> 状态：✅ 本地实现与验收完成，未提交。真实 Spark 6 项回归及 500k SPZ 旅程通过，16:03 冻结构建后的 Electron PNG/MP4 回画布与无控制台错误同时通过。收据见 `docs/audit/2026-09-07-director-functional-interaction-audit.md`。
+> 状态：✅ 本地实现与验收完成，未提交。真实 Spark 6 项回归及 500k SPZ 旅程通过，16:03 冻结构建后的 Electron PNG/MP4 回画布与无控制台错误同时通过。收据见 `docs/archive/audit/2026-09-07-director-functional-interaction-audit.md`。
 
 复现：真实 Spark 的 `driveSort` 在 `readPause=1` 等待时，SparkHost 卸载直接 dispose 释放 accumulator.target，下一次读取抛错。官方当前 main 的 dispose 同样没有等待排序或取消调度，不能靠无依据升级解决。
 

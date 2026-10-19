@@ -1,7 +1,7 @@
 # 「先查别人」报告：设计系统优化的四个「要不要自己造」（2026-09-07）
 
 > 状态：📎 长期参考（R27 §16 必交物，随对应方案结案）
-> 对应方案：[`docs/plan/2026-09-07-design-system-optimization.md`](../../plan/2026-09-07-design-system-optimization.md)
+> 对应方案：[`docs/archive/plan/2026-09-07-design-system-optimization.md`](../../plan/2026-09-07-design-system-optimization.md)
 > 分支 `claude/design-system-optimization-b44d66`。本报告只回答「别人做过没有」，不替方案做实施决定。
 > 第三方现状一律用 Context7 / 官方文档实查（版本号从 `package.json` 读：`tailwindcss@3.4.19`），不凭记忆。
 > 查不到的明写「查不到」——它和「别人没做过」是两件事。

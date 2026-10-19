@@ -1,6 +1,6 @@
 # T1 剪辑面板系统 · 属性面板 · transport
 
-> 状态：🚧 进行中 · 日期：2026-09-05 · 合同 [`docs/design/2026-09-05-editing-panel-design-contract.md`](../../design/2026-09-05-editing-panel-design-contract.md) §2.1 §2.2 §2.3 §2.8
+> 状态：🚧 进行中 · 日期：2026-09-05 · 合同 [`docs/archive/design/2026-09-05-editing-panel-design-contract.md`](../design/2026-09-05-editing-panel-design-contract.md) §2.1 §2.2 §2.3 §2.8
 
 ## 范围
 

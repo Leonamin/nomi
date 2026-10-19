@@ -35,7 +35,7 @@ import '../workbenchStoreLifetime'
  * `0e1be560a`「reduce canvas memory usage」的副产品——它是为了省内存写的，不是为了当
  * 「项目会话 owner」写的。后果：加字段的人没有任何机器提示要不要清它，于是上一个项目的
  * 付费待确认卡、素材导入进度、常驻活动角标、分镜规划入口就留在了新项目里
- * （审计 `docs/audit/2026-09-17-ownership-lifetime-census.md` §1.1）。
+ * （审计 `docs/archive/audit/2026-09-17-ownership-lifetime-census.md` §1.1）。
  *
  * 现在每个字段的寿命写在它自己 store 旁边（`declareStoreLifetime`），这里只做一件事：
  * 把注册表里每一条 `releaseProject` 依次调一遍。`check:store-lifetime` 反过来拦住

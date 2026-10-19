@@ -10,7 +10,7 @@
 
 **Tech Stack:** Electron, TypeScript, React 18, Zustand, Vitest, Playwright, MCP JSON-RPC, Electron `safeStorage`, existing Nomi Catalog/Provider Adapter/ComfyUI runtime, Sharp/ffprobe already present in the workspace.
 
-**Design source:** `docs/superpowers/specs/2026-08-28-conversational-model-integration-design.md`
+**Design source:** `docs/archive/superpowers/specs/2026-08-28-conversational-model-integration-design.md`
 
 ---
 
@@ -262,7 +262,7 @@
 
 - Create/update: `evals/model-integration/` journey fixtures and redacted result manifests
 - Create: `tests/ux/model-integration-packaged.e2e.mjs`
-- Update: `docs/plan/2026-08-28-conversational-model-integration-verification.md`
+- Update: `docs/archive/plan/2026-08-28-conversational-model-integration-verification.md`
 
 **Steps:**
 

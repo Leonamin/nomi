@@ -1,6 +1,6 @@
 // 内置供应商凭据的验证与发布 —— 2026-09-10 走查反馈回归修复（第二刀：从 apimart 一家扩到整类）。
 //
-// 根因（docs/plan/2026-09-10-ux-feedback-triage.md §5）：direct-key 供应商（apimart）
+// 根因（docs/archive/plan/2026-09-10-ux-feedback-triage.md §5）：direct-key 供应商（apimart）
 // 的设计契约是「填 key 即解锁全部预置模型」，但两道门把它拦死：
 //   ① 验证用 `GET /v1/models` 的可达性当 key 有效性判据，而 apimart 对该端点回 401
 //     （vendorBaseFallback.ts 有注释确认）→ 存 key 转圈 12s 后报「验证失败」；
@@ -24,7 +24,7 @@
 // 2026-09-10 第二刀：以上两条原来只对 apimart 生效（发布判据写死 vendorKey、验证判据写死
 // /v1/models），另外 17 家内置供应商填 key 后整家下架且重启不自愈。现在两条判据都由**种子声明**
 // 派生：`credentialProbePolicy` 决定怎么验、花不花钱，`hasBuiltinCuratedExecution`（登记表驱动）
-// 决定能不能发布。见 docs/plan/2026-09-10-vendor-key-publish-class.md。
+// 决定能不能发布。见 docs/archive/plan/2026-09-10-vendor-key-publish-class.md。
 
 import { mutateCatalog, readCatalog } from './catalogStore'
 import { builtinVendorSeed, builtinVendorScopeMatches } from './builtinVendorSeeds'

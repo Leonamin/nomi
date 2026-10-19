@@ -4,7 +4,7 @@
  * 为什么需要这一层：设置页那个二选一（#832，2026-07-31 用户拍板）在旧内核里是
  * `useCanvasViewportGestures.ts:433` 一句 `resolveWheelIntent(scheme, event)`；
  * 迁到 React Flow 时整条没接，于是滚轮恒缩放、设置选了没用、帮助浮层照着设置说了假话
- * （审计 docs/plan/2026-09-11-canvas-migration-audit.md ② 表「滚轮语义可配」那行）。
+ * （审计 docs/archive/plan/2026-09-11-canvas-migration-audit.md ② 表「滚轮语义可配」那行）。
  *
  * 回填的方式是**声明式接框架的开关**，不是把旧的 wheel 监听器搬回来（R29：框架已提供的
  * 能力不许再长一份自研版）。装机版 @xyflow/react 12.11.5 已经替我们做掉了三件事：

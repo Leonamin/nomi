@@ -1,6 +1,6 @@
 # ComfyUI 通用工作流矩阵验证 Implementation Plan
 
-> 后续授权（2026-08-26）：用户确认 Mac 手势方案并要求完成后自行提交 PR，不合并。本文保留历史阶段记录；当前交付以 `docs/plan/2026-08-26-comfyui-mac-gestures.md` 为准。
+> 后续授权（2026-08-26）：用户确认 Mac 手势方案并要求完成后自行提交 PR，不合并。本文保留历史阶段记录；当前交付以 `docs/archive/plan/2026-08-26-comfyui-mac-gestures.md` 为准。
 
 > 状态（2026-08-25）：Task 1–4 已完成并验证；Task 5 的 fake/合同层已完成，官方真实服务因本机未启动 ComfyUI 记录为环境阻断；Task 6 的 scoped/full gates 已完成，仍按用户要求等待确认后才提交。
 
@@ -27,7 +27,7 @@
 - Modify: `src/ui/onboarding/ComfyuiWorkflowImportPanel.test.tsx`（如现有测试环境支持 React DOM）或 Create: `src/ui/onboarding/comfyuiWorkflowImportPanelViewModel.ts` + 对应 test — 将多媒体行塑形成可无 DOM 验证的 view model，避免在组件里再造规则。
 - Modify: `electron/catalog/assetLocalization.test.ts` 或 `electron/comfyuiWorkflowMatrix.integration.test.ts` — 验证每个自定义 `comfy_*` 图片/视频参数都被同一上传链替换。
 - Modify: `scripts/comfyui-real-user-journey.mjs` — 增加纯文本、单图、首尾帧、多图、视频输入和重开恢复的真实服务检查。
-- Create: `docs/research/2026-08-25-comfyui-workflow-matrix-report.md` — 记录通过、产品阻断、环境缺件三类结果及复跑命令。
+- Create: `docs/archive/research/2026-08-25-comfyui-workflow-matrix-report.md` — 记录通过、产品阻断、环境缺件三类结果及复跑命令。
 
 ### Task 1: 建立最小但多维的工作流语料
 
@@ -192,7 +192,7 @@ git commit -m "test(comfyui): exercise multi-asset upload and execution boundary
 
 **Files:**
 - Modify: `scripts/comfyui-real-user-journey.mjs`
-- Create: `docs/research/2026-08-25-comfyui-workflow-matrix-report.md`
+- Create: `docs/archive/research/2026-08-25-comfyui-workflow-matrix-report.md`
 
 - [ ] **Step 1: Add deterministic workflow cases to the journey**
 
@@ -211,7 +211,7 @@ The report must have tables for fixture pass, fake HTTP pass, real-server pass, 
 - [ ] **Step 4: Commit the journey/report**
 
 ```bash
-git add scripts/comfyui-real-user-journey.mjs docs/research/2026-08-25-comfyui-workflow-matrix-report.md
+git add scripts/comfyui-real-user-journey.mjs docs/archive/research/2026-08-25-comfyui-workflow-matrix-report.md
 git commit -m "test(comfyui): cover multi-workflow user journeys"
 ```
 

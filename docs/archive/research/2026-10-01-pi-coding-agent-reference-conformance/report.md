@@ -2,7 +2,7 @@
 
 > 对照日期 2026-10-01 · 上游 `@earendil-works/pi-coding-agent` / `pi-agent-core` / `pi-ai` **0.85.1**
 > 只读调研，没有改任何产品代码。
-> 与 09-07 那份（`docs/research/2026-09-07-pi-reference-implementation-conformance.md`）的关系：09-07 对照的是「重做方案」，列了 24 条没想到；本份对照今天 main 上跑着的 lane，并回答那 24 条现在各是什么状态、09-07 之后新出现的自写模块有没有重造 pi。pi 的细节（37 个事件、六节摘要提示词等）直接引 09-07，不重抄。
+> 与 09-07 那份（`docs/archive/research/2026-09-07-pi-reference-implementation-conformance.md`）的关系：09-07 对照的是「重做方案」，列了 24 条没想到；本份对照今天 main 上跑着的 lane，并回答那 24 条现在各是什么状态、09-07 之后新出现的自写模块有没有重造 pi。pi 的细节（37 个事件、六节摘要提示词等）直接引 09-07，不重抄。
 
 ## 一屏总结
 

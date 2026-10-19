@@ -13,7 +13,7 @@ import { INTEGRATION_STAGES, assertIntegrationRevision } from "../shared/integra
 /**
  * 2026-09-10 真实宿主实测（Codex CLI 0.153.4 挂 Nomi MCP 接 DeepSeek）实锤的六条产品缺陷。
  * 每条一个用例，断言的是「模型照着我们广告的契约走能不能走通」，不是内部实现细节。
- * 完整报告见 docs/plan/2026-09-11-mcp-onboarding-defects.md。
+ * 完整报告见 docs/archive/plan/2026-09-11-mcp-onboarding-defects.md。
  */
 
 const HOST = "codex" as const;

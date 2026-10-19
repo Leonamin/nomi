@@ -2,9 +2,9 @@ import React from 'react'
 import type { LabState } from '../../labScreen'
 import { ProcessFeedbackStage, ProcessFeedbackFxStage, ProcessFeedbackImportStage } from '../processFeedbackLabKit'
 
-const SOURCE = 'docs/plan/2026-09-08-process-feedback-c1.md · C0/C1/C2'
-const FX_SOURCE = 'docs/plan/2026-09-09-process-feedback-imgfx.md · §5'
-const IMPORT_SOURCE = 'docs/plan/2026-09-14-import-progress-reveal.md · 验收门'
+const SOURCE = 'docs/archive/plan/2026-09-08-process-feedback-c1.md · C0/C1/C2'
+const FX_SOURCE = 'docs/archive/plan/2026-09-09-process-feedback-imgfx.md · §5'
+const IMPORT_SOURCE = 'docs/archive/plan/2026-09-14-import-progress-reveal.md · 验收门'
 export const PROCESS_FEEDBACK_STATES: readonly LabState[] = [
   {
     id: 'pf-fx-organic',

@@ -1,7 +1,7 @@
 # 草稿态「真不写盘」共享 draft-gate（P0-3 / 交接 1d 完整版）
 
 > 状态：**方案 / 待在 main 上实现**（用户拍板：不在 raman 分支做，1a/1b/1c 已并 main）。
-> 出处：交接 `docs/plan/2026-06-14-handoff-tails-popover-textsource.md` 任务 1d；真机验证发现见 memory `draft-no-write-spans-three-subsystems`。
+> 出处：交接 `docs/archive/plan/2026-06-14-handoff-tails-popover-textsource.md` 任务 1d；真机验证发现见 memory `draft-no-write-spans-three-subsystems`。
 
 ## 1. 问题与真机发现
 

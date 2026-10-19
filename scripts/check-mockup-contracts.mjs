@@ -4,7 +4,7 @@
 // 背景：拍板样张是 HTML、实现是 React，两套代码描述同一个东西，中间靠人脑翻译 →
 // 漂移是结构性的。`tests/ux/_contract.mjs` 把形态意图变成二值断言解决了「能不能查」，
 // 但如果没人写契约、或写了没人跑，机制就等于不存在。本门岗守这两件事：
-//   1. **有样张的功能面必须有契约文件**（`docs/design/mockups/contracts/<样张名>.{intent,auto}.mjs`）
+//   1. **有样张的功能面必须有契约文件**（`docs/archive/design/mockups/contracts/<样张名>.{intent,auto}.mjs`）
 //   2. **契约必须被至少一条走查引用**（写了不跑 = 装饰品）
 //   3. **契约描述的必须还是现行那一版拍板**（2026-09-18 补）
 //
@@ -32,7 +32,7 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const MOCKUP_DIR = path.join(root, "docs", "design", "mockups");
+const MOCKUP_DIR = path.join(root, "docs", "archive", "design", "mockups");
 const CONTRACT_DIR = path.join(MOCKUP_DIR, "contracts");
 const WALK_DIR = path.join(root, "tests", "ux");
 const baselinePath = path.join(root, "scripts", "mockup-contracts-baseline.json");
@@ -75,7 +75,7 @@ const claimedPaths = [...contractModules.values()]
   .filter((p) => typeof p === "string" && p)
   .map((p) => p.replaceAll("\\", "/"));
 const isClaimed = (mockup) => {
-  const full = `docs/design/mockups/${mockup}`;
+  const full = `docs/archive/design/mockups/${mockup}`;
   return claimedPaths.some((p) => (mockup.endsWith("/") ? p.startsWith(full) : p === full));
 };
 
@@ -165,26 +165,26 @@ let red = false;
 if (newlyMissing.length) {
   red = true;
   console.error(`✖ ${newlyMissing.length} 张新样张没有形态契约：`);
-  for (const m of newlyMissing) console.error(`   docs/design/mockups/${m}`);
+  for (const m of newlyMissing) console.error(`   docs/archive/design/mockups/${m}`);
   console.error(
     "\n  → 新增样张必须同产契约（拍板那刻的人才知道哪些关系承载意图）：",
   );
   console.error(
-    `     docs/design/mockups/contracts/<样张名>.intent.mjs —— 见同目录已有样本`,
+    `     docs/archive/design/mockups/contracts/<样张名>.intent.mjs —— 见同目录已有样本`,
   );
 }
 
 if (unused.length) {
   red = true;
   console.error(`\n✖ ${unused.length} 份契约没有被任何走查引用（写了不跑 = 装饰品）：`);
-  for (const u of unused) console.error(`   docs/design/mockups/contracts/${u}`);
+  for (const u of unused) console.error(`   docs/archive/design/mockups/contracts/${u}`);
   console.error("\n  → 在对应走查里 import 并调用 assertMockupContract（入口在 tests/ux/_assert.mjs）。");
 }
 
 if (undated.length) {
   red = true;
   console.error(`\n✖ ${undated.length} 份契约没说它对过哪一版拍板：`);
-  for (const u of undated) console.error(`   docs/design/mockups/contracts/${u}`);
+  for (const u of undated) console.error(`   docs/archive/design/mockups/contracts/${u}`);
   console.error("\n  → 加一段 mechanizes：");
   console.error("     mechanizes: { doc: '<获批设计合同路径，缺省即用 mockup>', sections: ['§…'], migratedAt: 'YYYY-MM-DD' }");
 }

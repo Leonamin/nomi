@@ -1,4 +1,4 @@
-// 手机虚拟相机局域网桥的四项安全不变量（docs/plan/2026-09-11-director-lan-pairing-hardening.md）：
+// 手机虚拟相机局域网桥的四项安全不变量（docs/archive/plan/2026-09-11-director-lan-pairing-hardening.md）：
 // ① 没拿到用户同意就不许 bind；② 配对码一次性 + 有时效；③ 自签证书指纹可见且与真实证书一致；
 // ④ 入站帧有 schema 和上限，畸形/超限一律断开。时钟注入，不用墙钟（R18）。
 import crypto from 'node:crypto'

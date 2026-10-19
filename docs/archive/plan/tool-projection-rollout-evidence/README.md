@@ -35,5 +35,5 @@ shasum -a 256 /tmp/face.json
 与 `tools/list` 的前缀，上游靠稳定前缀保住 KV-cache；逐工具比对看不见这一种，第一版真的漏报过）。
 三条都有常驻阳性对照（`scripts/check-model-face-frozen.node-test.mjs`），其中第一条就是原型那次
 **全绿**的变异：给宿主分支加一个必填字段，投影默认它是模型该填的
-（`docs/plan/2026-09-18-tool-projection-cancel-job-prototype.md` 的「两次变异」那张表 ①）。
+（`docs/archive/plan/2026-09-18-tool-projection-cancel-job-prototype.md` 的「两次变异」那张表 ①）。
 这道门存在的理由，就是让它从今天起红。

@@ -2,7 +2,7 @@
 // 真实素材对账探针（R13「四件真实」第④件的 asset-conformance 腿，2026-09-14）。
 //
 // 它回答一个问题：**登记表里的 codec / 位深 / 分辨率 / 字节数，是实测的还是从文档抄的？**
-// （同族教训：`docs/lessons/gate-assertions-must-not-copy-derived-values.md`——看到 `>= N` 先问 N 是抄谁的。）
+// （同族教训：`docs/archive/lessons/gate-assertions-must-not-copy-derived-values.md`——看到 `>= N` 先问 N 是抄谁的。）
 //
 // 缺素材时**非零退出并打印缺什么**，不 skip、不退回合成素材兜底。
 // 跑法：export NOMI_REAL_MEDIA_DIR="/Users/aoqimin/Desktop/视频/" && node tests/ux/real-media-fixtures.probe.mjs

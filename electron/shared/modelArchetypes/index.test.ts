@@ -121,7 +121,7 @@ describe("resolveArchetypeForModel — 供应商无关的识别桥", () => {
     expect(resOf("mini")).toEqual(["480p", "720p"]);
   });
 
-  // ── 即梦官方 CLI 矩阵锁（SOURCE：docs/research/2026-09-01-dreamina-cli-v1417-matrix.md，CLI v1.4.17）──
+  // ── 即梦官方 CLI 矩阵锁（SOURCE：docs/archive/research/2026-09-01-dreamina-cli-v1417-matrix.md，CLI v1.4.17）──
   // 目的：非法组合在请求构造前就不可达（select 选项即合法集）。真实生成 smoke 需即梦高级会员登录态，本机无 → 契约级兜底。
   describe("即梦 dreamina CLI v1.4.17 矩阵", () => {
     const seedance = getArchetypeById("dreamina-seedance-2")!;

@@ -157,7 +157,7 @@
       "kind": "official-doc",
       "url": "https://docs.openwebui.com/features/workspace/models/",
       "checked_at": "2026-09-11",
-      "purpose": "本次改动所属方案（docs/plan/2026-09-11-model-box-tidy.md）「先查别人」一节的参照之一：确认「隐藏」与「全局启停」在同类产品里是两层独立字段，据此决定新增 hiddenModelIds 而不是复用 catalog 的 Model.enabled"
+      "purpose": "本次改动所属方案（docs/archive/plan/2026-09-11-model-box-tidy.md）「先查别人」一节的参照之一：确认「隐藏」与「全局启停」在同类产品里是两层独立字段，据此决定新增 hiddenModelIds 而不是复用 catalog 的 Model.enabled"
     }
   ],
   "invariant_owner_layer": {

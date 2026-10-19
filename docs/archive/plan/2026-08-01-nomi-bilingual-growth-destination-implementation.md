@@ -16,7 +16,7 @@ The website, README pair, and business form stay in one plan because they are on
 
 | Responsibility | Files |
 |---|---|
-| Approved sample | Create `docs/design/archive/2026-08-01-nomi-bilingual-homepage.html` |
+| Approved sample | Create `docs/archive/design/archive/2026-08-01-nomi-bilingual-homepage.html` |
 | Generator source | Create `scripts/marketing/{content,metadata,styles,client,template,social-card}.mjs`, `scripts/build-marketing-site.mjs`, `scripts/render-marketing-social-previews.mjs` |
 | Generated pages | Replace `marketing/index.html`; create `marketing/en/index.html` |
 | Automated evidence | Create `tests/ux/marketing-home.static.mjs` and `tests/ux/marketing-home.visual.mjs` |
@@ -78,9 +78,9 @@ Expected: one-line commit, no website files included.
 
 **Files:**
 
-- Create: `docs/design/archive/2026-08-01-nomi-bilingual-homepage.html`
+- Create: `docs/archive/design/archive/2026-08-01-nomi-bilingual-homepage.html`
 - Read: `docs/design/nomi-design-system.md`
-- Read: `docs/superpowers/specs/2026-08-01-nomi-bilingual-growth-destination-design.md`
+- Read: `docs/archive/superpowers/specs/2026-08-01-nomi-bilingual-growth-destination-design.md`
 
 - [x] **Step 1: Author one self-contained two-locale mockup**
 
@@ -136,8 +136,8 @@ python3 -m http.server 4179 --directory /Users/aoqimin/Desktop/Nomi-bilingual-gr
 Open and screenshot:
 
 ```text
-http://127.0.0.1:4179/docs/design/archive/2026-08-01-nomi-bilingual-homepage.html?lang=zh-CN
-http://127.0.0.1:4179/docs/design/archive/2026-08-01-nomi-bilingual-homepage.html?lang=en
+http://127.0.0.1:4179/docs/archive/design/archive/2026-08-01-nomi-bilingual-homepage.html?lang=zh-CN
+http://127.0.0.1:4179/docs/archive/design/archive/2026-08-01-nomi-bilingual-homepage.html?lang=en
 ```
 
 Capture full-page screenshots at 1440×900 and 390×844 into the ignored `tests/ux/_marketing/` directory.
@@ -160,7 +160,7 @@ Show both desktop and mobile screenshots. Do not begin Task 2 until the user exp
 - [x] **Step 5: Commit the approved sample**
 
 ```bash
-git add docs/design/archive/2026-08-01-nomi-bilingual-homepage.html
+git add docs/archive/design/archive/2026-08-01-nomi-bilingual-homepage.html
 git commit -m "docs(marketing): approve bilingual homepage sample"
 ```
 
@@ -743,8 +743,8 @@ git commit -m "test(marketing): verify bilingual homepage journeys"
 
 **Files:**
 
-- Modify: `docs/superpowers/specs/2026-08-01-nomi-bilingual-growth-destination-design.md`
-- Modify: `docs/plan/2026-08-01-nomi-bilingual-growth-destination-implementation.md`
+- Modify: `docs/archive/superpowers/specs/2026-08-01-nomi-bilingual-growth-destination-design.md`
+- Modify: `docs/archive/plan/2026-08-01-nomi-bilingual-growth-destination-implementation.md`
 
 - [x] **Step 1: Mark evidence, not hopes**
 
@@ -772,7 +772,7 @@ Expected: no whitespace errors, no untracked deliverables, generated pages curre
 - [x] **Step 4: Commit evidence**
 
 ```bash
-git add docs/superpowers/specs/2026-08-01-nomi-bilingual-growth-destination-design.md docs/plan/2026-08-01-nomi-bilingual-growth-destination-implementation.md
+git add docs/archive/superpowers/specs/2026-08-01-nomi-bilingual-growth-destination-design.md docs/archive/plan/2026-08-01-nomi-bilingual-growth-destination-implementation.md
 git commit -m "docs(marketing): record bilingual launch verification"
 ```
 

@@ -39,7 +39,7 @@
 
 **把身份存成一个值，而不是两个字段**：`PlanShot.model?: { key: string; vendor: string }`（锚、首帧、节点 meta 同形）。这样「写半个」在数据形状上就不存在了——补丁要么整体替换 `model`，要么不碰它；`{ ...shot, ...patch }` 也拼不出混搭身份。`check:model-identity` 的判据可以随之收紧成「多供应商层不许出现裸 `modelKey` 字段」，把运行时那一半也收进机器判据。
 
-**为什么这一单不做**：它是持久化格式（`project.json` 里的分镜方案、画布节点 meta）+ Agent/MCP 对外契约（`draft_shots`、`patch_shots` 的 `modelKey`/`modelVendor` 字段、`storyboardPlanSchema`）的迁移，按 R5⑤ 要先写对外格式的规范与偏差，按 P5/R4 要先出 `docs/plan` 并过评审；本单是用户报障（花错钱）的最小根因修复。
+**为什么这一单不做**：它是持久化格式（`project.json` 里的分镜方案、画布节点 meta）+ Agent/MCP 对外契约（`draft_shots`、`patch_shots` 的 `modelKey`/`modelVendor` 字段、`storyboardPlanSchema`）的迁移，按 R5⑤ 要先写对外格式的规范与偏差，按 P5/R4 要先出 `docs/archive/plan` 并过评审；本单是用户报障（花错钱）的最小根因修复。
 
 **本单没把它搞得更糟**：类型层的 `PairedModelIdentity` 已经是这个值类型的前身——将来迁移时只需把 `PlanShotPatch` 里那一对换成 `model`，写口都已经收在 `planModelSelection` 一处。
 

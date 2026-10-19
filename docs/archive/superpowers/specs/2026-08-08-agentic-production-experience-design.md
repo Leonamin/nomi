@@ -3,7 +3,7 @@
 Date: 2026-08-08  
 Status: Approved visual direction, implementation pending  
 Baseline: `0dbc2d1b`  
-Approved mockup: `docs/design/mockups/2026-08-08-agentic-production/nomi-agentic-production.html`
+Approved mockup: `docs/archive/design/mockups/2026-08-08-agentic-production/nomi-agentic-production.html`
 
 ## 1. Outcome
 
@@ -472,10 +472,10 @@ Current Nomi evidence:
 
 Relevant existing plans:
 
-- `docs/plan/2026-06-21-spend-confirmation-gate.md`
-- `docs/plan/2026-06-23-mcp-spend-confirm-global.md`
-- `docs/plan/2026-06-27-submission-idempotency.md`
-- `docs/plan/2026-06-14-agent-error-transparency.md`
-- `docs/plan/2026-08-08-canvas-production-integration.md`
+- `docs/archive/plan/2026-06-21-spend-confirmation-gate.md`
+- `docs/archive/plan/2026-06-23-mcp-spend-confirm-global.md`
+- `docs/archive/plan/2026-06-27-submission-idempotency.md`
+- `docs/archive/plan/2026-06-14-agent-error-transparency.md`
+- `docs/archive/plan/2026-08-08-canvas-production-integration.md`
 
 External patterns were verified against the official documentation for Claude Code Plan/permissions/checkpoints, Cursor Plan mode, Replit Plan/tasks/checkpoints, Lovable Plan/history, Runway Workflows/asset lineage/credits, Adobe Firefly Boards/Video Editor/history, and Descript AI video/version history/credits/export. These products inform interaction patterns; they do not prove Nomi capabilities.

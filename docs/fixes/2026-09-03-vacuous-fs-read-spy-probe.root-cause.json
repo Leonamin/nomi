@@ -14,7 +14,7 @@
   "scope_paths": [
     "electron/projectAgentHost/projectAgentRepository.test.ts",
     "scripts/check-test-waits.mjs",
-    "docs/lessons/vacuous-probe-passes-forever.md"
+    "docs/archive/lessons/vacuous-probe-passes-forever.md"
   ],
   "entry_points": [
     "electron/projectAgentHost/projectAgentRepository.test.ts:622 的 expect(readSpy.mock.calls.filter(...)).toHaveLength(0)",

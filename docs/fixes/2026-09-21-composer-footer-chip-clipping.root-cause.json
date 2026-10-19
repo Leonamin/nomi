@@ -16,7 +16,7 @@
     "Paid confirmation card footer (InlineParameterBar chips layout)"
   ],
   "external_sources": [],
-  "internal_only_reason": "Product layout rule from docs/design/2026-09-10-node-composer-bar-v1.md (never wrap, no fourth segment) and the storyboard bar precedent; no third-party behavior decides which chip yields",
+  "internal_only_reason": "Product layout rule from docs/archive/design/2026-09-10-node-composer-bar-v1.md (never wrap, no fourth segment) and the storyboard bar precedent; no third-party behavior decides which chip yields",
   "invariants": [
     "In a no-wrap composer footer only the model chip yields width; it truncates with an ellipsis and exposes the full name in title; short enum chips (variant) never shrink"
   ],

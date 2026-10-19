@@ -1,7 +1,7 @@
 # Agent 上限与时限（输入预算 / 写入回执）的结构评审
 
 > 状态：已完成（2026-10-01）。触发：`check:symptom-cluster` 报 `electron/agentLane`、`electron/capabilityCore`、`src/ui`、`src/workbench` 7 天内各已有 ≥3 份根因合同；本分支再加两份（`2026-10-01-agent-request-input-budget`、`2026-10-01-agent-write-receipt-stuck`）。
-> 姊妹评审：`docs/audit/2026-09-30-agent-domain-owners-structure-review.md`（同一条 Agent 线上一轮）、`docs/audit/2026-09-29-render-layer-second-answers-structure-review.md`（`src/workbench`）。
+> 姊妹评审：`docs/archive/audit/2026-09-30-agent-domain-owners-structure-review.md`（同一条 Agent 线上一轮）、`docs/archive/audit/2026-09-29-render-layer-second-answers-structure-review.md`（`src/workbench`）。
 
 模块粒度太粗，同簇的合同几乎都是别的 lane 的。本评审只看这两份合同各自落在的那一层，回答「这一层的结构要不要先动」。
 

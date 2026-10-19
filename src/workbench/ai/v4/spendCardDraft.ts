@@ -10,7 +10,7 @@ import { applySpendReferences, pendingReferenceInputs, placeSpendReferences, ref
 //   ① 用户还没答应花钱，画布已经被改了——「我只是看看」变成了「我已经动过了」；
 //   ② 落地链在候选每前进一版时都会按候选重画那个节点，于是「节点写候选」和「候选写节点」
 //      两个方向同时开着，每改一个参数就是一场拉锯（实测：计划连推三版、最后弹回参数默认值）。
-//      那场拉锯正是上一轮「改参数不能实时重算价格」的根因（docs/plan/2026-09-11 已知缺口 1）。
+//      那场拉锯正是上一轮「改参数不能实时重算价格」的根因（docs/archive/plan/2026-09-11 已知缺口 1）。
 //
 // 这个文件把编辑意图从画布上**摘下来**，放进一份自己的账本：
 //   · 改动只落在这里，画布节点在按下「生成」之前一个字都不动；
@@ -267,7 +267,7 @@ export function keptReferenceUrls(patch: SpendCandidatePatch): ReadonlySet<strin
 
 /**
  * 卡上**没提交**的那些改动住在哪一本账本里。身份 = **这一次 `generate`**（`operationId`），
- * 不是卡上那一刻的报价（2026-09-22 裁决 B，`docs/plan/2026-09-22-waiting-for-user-one-owner.md` §1）。
+ * 不是卡上那一刻的报价（2026-09-22 裁决 B，`docs/archive/plan/2026-09-22-waiting-for-user-one-owner.md` §1）。
  *
  * ── 为什么 `quoteId` / `planVersion` / `candidateRevision` 不在键里 ──
  *

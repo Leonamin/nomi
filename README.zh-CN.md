@@ -21,7 +21,7 @@
   <a href="#看宣传片">看 90 秒宣传片</a> ·
   <a href="https://nomiaqm.com/quickstart">快速上手</a> ·
   <a href="https://pan.quark.cn/s/d3322c17e7b6">夸克网盘镜像</a> ·
-  <a href="docs/integrate-with-your-agent.md">让你的 AI 帮你接入</a> ·
+  <a href="docs/archive/guides/integrate-with-your-agent.md">让你的 AI 帮你接入</a> ·
   <a href="#社区">加入用户群</a> ·
   <a href="#团队合作">团队合作</a> ·
   <a href="README.md">English</a>

@@ -29,8 +29,8 @@ suspect（人家本来就只有「恭喜发财」）。**判据必须是硬事�
 
 **最终数据**：60/60 视频，评论顶楼 8844 + 楼中楼 10546 = **19390 条**（官方计数 22598，覆盖 86%），
 弹幕 1433 条，字幕 60/60 全部通过污染校验，**零身份错配、零抓取失败**。
-原始数据：`docs/research/data/2026-08-18-daxiong-bilibili-raw.tar.gz`，
-信号明细：`docs/research/data/2026-08-18-infinite-canvas-raw-signals.md`。
+原始数据：`docs/archive/research/data/2026-08-18-daxiong-bilibili-raw.tar.gz`，
+信号明细：`docs/archive/research/data/2026-08-18-infinite-canvas-raw-signals.md`。
 
 ---
 
@@ -196,7 +196,7 @@ SUPPORTED_PROVIDER_PROTOCOLS = {"openai", "apimart", "gemini", "gemini-cli",
 `MiniMax-H3` 不含任一关键词 → 落入默认 `chat_models` → 在模型选择器里显示为 LLM。
 他的修法停在「再加几条关键词规则」。
 
-**Nomi 对同一个病的诊断深一层**（`docs/plan/2026-08-11-model-kind-misguess.md`）：
+**Nomi 对同一个病的诊断深一层**（`docs/archive/plan/2026-08-11-model-kind-misguess.md`）：
 猜错后模型不是报错而是**从下拉里消失**（三层过滤逐层拦掉：`modelCatalogCache.ts:116` →
 `catalogTaskResolve.ts:144` → `types.ts:415`），且落库后**全 App 没有任何地方能改 kind**，
 于是「猜错 = 永久错且不可发现」；同时设置页只看 `enabled && hasApiKey` 就显示绿色「已连接」

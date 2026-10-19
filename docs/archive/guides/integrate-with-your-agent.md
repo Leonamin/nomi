@@ -184,6 +184,6 @@ git clone https://github.com/aqm857886159/Nomi.git
 - 内置供应商清单（哪些 host 是内置认得的）：`electron/catalog/builtinVendorSeeds.ts`。
 - MCP / CLI 完整流程、工具清单（以 `tools/list` 为准）、故障排查、安全边界：`docs/guide/capability-core-cli-mcp.md`。
 - 技能格式：`docs/skill-pack-format.md`。
-- 供应商接入通用说明：`docs/provider-integration.md`；使用指南：`docs/user-guide.md`。
+- 供应商接入通用说明：`docs/archive/guides/provider-integration.md`；使用指南：`docs/archive/guides/user-guide.md`。
 
 界面版本会迭代——**任何一步和你看到的界面对不上，以用户机器上的源码为准**。

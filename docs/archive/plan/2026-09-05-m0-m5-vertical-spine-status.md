@@ -46,10 +46,10 @@ for canonical certification.
 | Latest blocking failure | Development APIMart run has `status=passed`, `firstFailure=null`; next gates are visual acceptance, packaged repeat, main merge, and the full natural-user Codex Host M0-M5 journey |
 | Evidence contract | `tests/system/agent-vertical-spine-m0-m5.contract.json` |
 | Red runner | `tests/ux/agent-vertical-spine-m0-m5.red.e2e.mjs` |
-| Evidence report | `docs/qa/2026-09-05-agent-vertical-spine-m0-m5-red.md` |
+| Evidence report | `docs/archive/qa/2026-09-05-agent-vertical-spine-m0-m5-red.md` |
 | Conflict boundary | No existing total-plan link was changed; this ledger records the current branch and keeps the active #476 receipt work separate. |
 
-The historical red run in `docs/qa/2026-09-05-agent-vertical-spine-m0-m5-red.md` remains the proof of the original M1 reachability failure. The current branch contains the minimal entry repair and the unchanged real Electron runner has since passed the new-project → storyboard editor → row 2 selection seam (M1). This does not certify the downstream Agent, MCP, receipt, restart, or packaged stages.
+The historical red run in `docs/archive/qa/2026-09-05-agent-vertical-spine-m0-m5-red.md` remains the proof of the original M1 reachability failure. The current branch contains the minimal entry repair and the unchanged real Electron runner has since passed the new-project → storyboard editor → row 2 selection seam (M1). This does not certify the downstream Agent, MCP, receipt, restart, or packaged stages.
 
 ### 双入口与证据边界（2026-09-05）
 

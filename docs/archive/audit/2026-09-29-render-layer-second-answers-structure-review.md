@@ -2,7 +2,7 @@
 
 > 状态：已完成（2026-09-29）。触发：`check:symptom-cluster` 报 `src/workbench` 7 天内第 38 份以上根因合同（本分支加了 2026-09-29 退役卡够不着、模型框漏翻两份）。
 > 对应合同：`docs/fixes/2026-09-29-retired-model-card-reachable.root-cause.json`、`docs/fixes/2026-09-29-model-box-label-translation.root-cause.json`。
-> 姊妹评审：`docs/audit/2026-09-29-src-config-model-identity-structure-review.md`（同一分支在 `src/config` 触发的那一簇）。
+> 姊妹评审：`docs/archive/audit/2026-09-29-src-config-model-identity-structure-review.md`（同一分支在 `src/config` 触发的那一簇）。
 
 `src/workbench` 模块粒度太粗，7 天几十份合同这个数字本身说明不了哪一层有问题。本评审只看与这两份合同相关的两层。
 

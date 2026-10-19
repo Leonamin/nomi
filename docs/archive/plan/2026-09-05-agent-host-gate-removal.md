@@ -36,7 +36,7 @@ portal 出去。结果是**同一份代码跑出两个产品**——
 - `src/workbench/creation/storyboard/`（另一刀在改）。
 - `.github/workflows/` 与 `scripts/check-*`（另一刀在改）。
 - Agent 自身的编排、审批、结算语义：本刀只改「谁能看见它」，不改「它怎么干活」。
-- 历史证据文档（`docs/qa/`、`docs/audit/`、`docs/research/` 里写着
+- 历史证据文档（`docs/archive/qa/`、`docs/archive/audit/`、`docs/archive/research/` 里写着
   `agentHostEnabled=false` 的段落）保持原样——那是当时的事实快照，改了就成了篡改证据。
   只有活的登记表 `docs/engineering/active-lanes.md` 与活的矩阵 `tests/system/agent-m0-m5.json`
   的表述被更新。

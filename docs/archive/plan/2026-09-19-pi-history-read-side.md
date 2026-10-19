@@ -27,4 +27,4 @@ R02 actual SDK lifecycle red: original inputs 2, visible inputs 0. Run compactio
 - pi runtime working set: [reducer.ts](https://github.com/earendil-works/pi/blob/d981de1229ef899957bbe968bc8dcda02a21f477/packages/agent/src/harness/runtime/reducer.ts), installed dist/harness/runtime/reducer.js:150.
 - pi subscription serialization: [events.ts](https://github.com/earendil-works/pi/blob/d981de1229ef899957bbe968bc8dcda02a21f477/packages/agent/src/harness/events.ts), installed dist/harness/events.js:142.
 
-Prior-art report: docs/research/2026-09-19-pi-history-read-side/prior-art.md.
+Prior-art report: docs/archive/research/2026-09-19-pi-history-read-side/prior-art.md.

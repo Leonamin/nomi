@@ -3,7 +3,7 @@
  *
  * 为什么节点需要它：UI 的模式/槽由**模型档案**声明（供应商无关），真正发得出什么由**渠道 mapping**
  * 决定。两者此前只在「点生成那一刻」才对账，于是用户连好参考、切到「全能参考」、点生成才被拒
- * （docs/plan/2026-08-02-reference-unification-and-channel-honesty）。拿到 body 后节点就能提前说实话。
+ * （docs/archive/plan/2026-08-02-reference-unification-and-channel-honesty）。拿到 body 后节点就能提前说实话。
  *
  * 拿不到就返回 null——调用方一律按「不收窄」处理。**宁可少说，也绝不因为查不到就把用户的槽藏掉。**
  */

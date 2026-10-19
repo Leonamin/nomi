@@ -375,7 +375,7 @@ export default function TimelinePanel({ density = 'compact', regionLabel, action
         2026-09-13 真机反馈「不小心点了下面的时间轴收不回去了」：收起钮自 09-10 起就在，
         但它排在十几颗同款 icon 钮之后、住在这条 `overflow-x-auto` 里——面板一窄它第一个
         被滚出视口，用户能看见的就只有「收不回去」。属「说坏了其实是找不到」那一族
-        （docs/lessons/group-says-broken-usually-means-undiscoverable.md）。
+        （docs/archive/lessons/group-says-broken-usually-means-undiscoverable.md）。
         修在这一层而不是「把行做宽」：滚动是三簇工具的正当行为，**面板级动作不该跟着滚**。
       */}
       <div className={cn(

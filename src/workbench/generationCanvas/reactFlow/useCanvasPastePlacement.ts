@@ -7,7 +7,7 @@ type StageRect = Pick<DOMRect, 'left' | 'top' | 'right' | 'bottom' | 'width' | '
 /**
  * Cmd/Ctrl+V 的落点：鼠标最后一次停在画布舞台里的那一点；鼠标不在舞台上（在侧栏、时间轴、窗口外）
  * 才回退到舞台中央。两种都以粘贴物的**中心**压在这一点（tldraw `putContentOntoCurrentPage` /
- * Excalidraw `addElementsFromPasteOrLibrary` 同一约定，见 docs/plan/2026-09-21-alt-drag-duplicate.md）。
+ * Excalidraw `addElementsFromPasteOrLibrary` 同一约定，见 docs/archive/plan/2026-09-21-alt-drag-duplicate.md）。
  *
  * 屏幕→画布只经画布内核换算（`toCanvasPoint` = React Flow screenToFlowPosition），这里不手算 offset/zoom。
  */

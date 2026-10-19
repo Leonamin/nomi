@@ -2,7 +2,7 @@
 
 > 状态：📎 交接/日志 —— **只调研不改码，一行产品代码未动。**
 > 日期：2026-09-07 · 基线：`origin/main@620b658cb` · 依赖：`@earendil-works/pi-{coding-agent,agent-core,ai}@0.85.1`（`package.json:202-204` 已锁精确版本）
-> 服务对象：[`docs/plan/2026-09-07-agent-runtime-rebuild.md`](../plan/2026-09-07-agent-runtime-rebuild.md)（Agent 运行时重做）的阶段 3 / 阶段 5，以及 [`docs/research/2026-09-07-pi-reference-implementation-conformance.md`](2026-09-07-pi-reference-implementation-conformance.md)（参考实现逐层对照）留下的层 7「扩展 API」缺口
+> 服务对象：[`docs/archive/plan/2026-09-07-agent-runtime-rebuild.md`](../plan/2026-09-07-agent-runtime-rebuild.md)（Agent 运行时重做）的阶段 3 / 阶段 5，以及 [`docs/archive/research/2026-09-07-pi-reference-implementation-conformance.md`](2026-09-07-pi-reference-implementation-conformance.md)（参考实现逐层对照）留下的层 7「扩展 API」缺口
 > 起因：2026-09-07 用户原话 —— **「有调查 pi agent package 吗，类似他们的生态，可能对我们有帮助」**
 
 ---
@@ -233,7 +233,7 @@ pi 包的四类资源里，**只有 skills 是纯数据**（`.md`），其余三
 
 ## 7. 自媒体来源（TikHub）
 
-附件：[`docs/research/2026-09-07-pi-package-ecosystem/tikhub/`](2026-09-07-pi-package-ecosystem/tikhub) —— 三组关键词、四平台，共 80 条：
+附件：[`docs/archive/research/2026-09-07-pi-package-ecosystem/tikhub/`](2026-09-07-pi-package-ecosystem/tikhub) —— 三组关键词、四平台，共 80 条：
 
 | 关键词 | 平台 | 条数 | 附件 |
 |---|---|---|---|

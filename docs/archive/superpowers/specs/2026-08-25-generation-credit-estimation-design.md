@@ -1,6 +1,6 @@
 # 生成积分估算与实际计费记录设计
 
-> **2026-09-01 返工对照**：本设计成稿后 main 已长出完整 spend 体系（`shotPricing.deriveShotPrice` 含 specCosts 的估算、`planCostEstimate`/`useBatchPlanCost` 的画布批量估算、`spendGrant` 的确认闸）。**估算侧已被 main 实现，不再重复落**；本轮只落 main 仍缺的「实际扣费证据」。逐项裁决表与 file:line 对照见 `docs/superpowers/plans/2026-08-25-generation-credit-estimation.md` 末尾「2026-09-01 与 main 现行 spend 体系对照 + 逐项裁决」。
+> **2026-09-01 返工对照**：本设计成稿后 main 已长出完整 spend 体系（`shotPricing.deriveShotPrice` 含 specCosts 的估算、`planCostEstimate`/`useBatchPlanCost` 的画布批量估算、`spendGrant` 的确认闸）。**估算侧已被 main 实现，不再重复落**；本轮只落 main 仍缺的「实际扣费证据」。逐项裁决表与 file:line 对照见 `docs/archive/superpowers/plans/2026-08-25-generation-credit-estimation.md` 末尾「2026-09-01 与 main 现行 spend 体系对照 + 逐项裁决」。
 
 日期：2026-08-25
 

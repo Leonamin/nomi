@@ -7,7 +7,7 @@
  * 2026-08-18 改成**有边界、有标题的字段组**，并由 CustomVendorCard 排到模型列表**之前**：
  * 群里「要改 api url 翻了半天没找到」的实测根因是——本组件此前排在 24 行模型列表之后，落地
  * 连接详情页那一屏它整个被弹窗 overflow 裁在窗外（铅笔 y=817 / 弹窗底边 y=706）。
- * 见 docs/plan/2026-08-18-vendor-connection-discoverability.md。
+ * 见 docs/archive/plan/2026-08-18-vendor-connection-discoverability.md。
  * 删除整家在这里是**唯一入口**（卡头那个垃圾桶图标同步删掉，§1.5.2 一功能一个家）。
  *
  * 地址行与内置家卡共用 VendorBaseUrlField（P1）；区别：自定义家凭证恒为单个 apiKey、

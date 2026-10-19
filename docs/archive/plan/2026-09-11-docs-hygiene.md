@@ -7,28 +7,28 @@
 三件互不依赖的卫生事项，合成一个 PR：
 
 1. 把桌面上的 `/Users/aoqimin/Desktop/Nomi-竞品研究方案包-20260909/docs/{research,plan,product}` 搬进仓库对应目录，文件名不变，补齐状态标记与索引登记。
-2. 修 `docs/ARCHITECTURE-NOW.md` 三行过时描述（Agent 运行时阶段判断、经验沉淀闭环文件、内部 Agent vs MCP 工具定义层现状），全部按当日实核 file:line 改写。
+2. 修 `docs/archive/guides/ARCHITECTURE-NOW.md` 三行过时描述（Agent 运行时阶段判断、经验沉淀闭环文件、内部 Agent vs MCP 工具定义层现状），全部按当日实核 file:line 改写。
 3. 删两个零生产引用的死控制器文件（`canvasTurnController.ts` / `creationTurnController.ts`）+ 其测试，保留一处必要的活测试迁移。
 
 不动项：`creationToolContracts.ts`（活版，仍被 `creationAiReplyText.ts` 使用）；方案包源目录只读，不改动。
 
 ## 先查别人
 
-- [`docs/design/nomi-agent-interaction.md:419`](../../design/nomi-agent-interaction.md) 的「🔴 删掉重做」拆迁清单点名 `creationTurnController` 那套单独确认路径是与生成区「提议事务 + 对账」并行的第二套写法，判定应删——本 PR 的删除方向与此设计判断一致。核实：该文档实际只点名**一次**（原任务书说「两次」，实核后仅一处，已在报告中如实标注这个偏差）。
-- [`docs/plan/2026-09-08-agent-lane-stage4-switch.md`](2026-09-08-agent-lane-stage4-switch.md) 是 #646（pi lane 原子切换）当天的删除清单与承接点账本，确认了 `electron/projectAgentHost/` 与旧运行时随该 PR 一起删除——这是 ARCHITECTURE-NOW.md 两行过时描述（阶段 1 影子期、经验沉淀闭环）的根因背景：#646 已把「影子期」原子切成「唯一通路」，旧宿主整个消失。
-- [`docs/plan/2026-09-09-competitive-response-plans/INDEX.md`](2026-09-09-competitive-response-plans/INDEX.md)（方案包自带总索引）确认了这批方案文件之间的依赖关系与开工纪律（「#646 过门之前不开任何新战线」），入库时原样保留、只补状态标记，不改内容判断。
+- [`docs/archive/design/nomi-agent-interaction.md:419`](../design/nomi-agent-interaction.md) 的「🔴 删掉重做」拆迁清单点名 `creationTurnController` 那套单独确认路径是与生成区「提议事务 + 对账」并行的第二套写法，判定应删——本 PR 的删除方向与此设计判断一致。核实：该文档实际只点名**一次**（原任务书说「两次」，实核后仅一处，已在报告中如实标注这个偏差）。
+- [`docs/archive/plan/2026-09-08-agent-lane-stage4-switch.md`](2026-09-08-agent-lane-stage4-switch.md) 是 #646（pi lane 原子切换）当天的删除清单与承接点账本，确认了 `electron/projectAgentHost/` 与旧运行时随该 PR 一起删除——这是 ARCHITECTURE-NOW.md 两行过时描述（阶段 1 影子期、经验沉淀闭环）的根因背景：#646 已把「影子期」原子切成「唯一通路」，旧宿主整个消失。
+- [`docs/archive/plan/2026-09-09-competitive-response-plans/INDEX.md`](2026-09-09-competitive-response-plans/INDEX.md)（方案包自带总索引）确认了这批方案文件之间的依赖关系与开工纪律（「#646 过门之前不开任何新战线」），入库时原样保留、只补状态标记，不改内容判断。
 
 ## 实施记录
 
 ### ① 方案包入库
 
-- 复制 19 个文件（不含 `.DS_Store`）：research 9 篇、`docs/plan/2026-09-09-agent-native-editing-plan.md` 1 篇、`docs/plan/2026-09-09-competitive-response-plans/` 8 篇（含其自带 `INDEX.md`）、product 3 篇。目标目录与源目录深度一致（都是 `docs/{research,plan,product}` 直接子级），相对链接原样可用。
-- 逐个 `test -f`/`test -d` 校验全部相对链接（60 处，排除 http/锚点后）：发现源包自身一处预先存在的死链——`docs/research/2026-09-09-nomi-editing-architecture-analysis.md` 里 `[agent 原生剪辑方案](2026-09-09-agent-native-editing-plan.md)` 少了 `../plan/` 前缀（该文件实际在 `docs/plan/` 不在 `docs/research/`）。已在入库时一并修正为 `../plan/2026-09-09-agent-native-editing-plan.md`。
+- 复制 19 个文件（不含 `.DS_Store`）：research 9 篇、`docs/archive/plan/2026-09-09-agent-native-editing-plan.md` 1 篇、`docs/archive/plan/2026-09-09-competitive-response-plans/` 8 篇（含其自带 `INDEX.md`）、product 3 篇。目标目录与源目录深度一致（都是 `docs/{research,plan,product}` 直接子级），相对链接原样可用。
+- 逐个 `test -f`/`test -d` 校验全部相对链接（60 处，排除 http/锚点后）：发现源包自身一处预先存在的死链——`docs/archive/research/2026-09-09-nomi-editing-architecture-analysis.md` 里 `[agent 原生剪辑方案](2026-09-09-agent-native-editing-plan.md)` 少了 `../plan/` 前缀（该文件实际在 `docs/archive/plan/` 不在 `docs/archive/research/`）。已在入库时一并修正为 `../plan/2026-09-09-agent-native-editing-plan.md`。
 - 9 个 plan 文件（顶层 1 个 + `competitive-response-plans/` 8 个含 INDEX）前 12 行均缺状态标记，统一补 `> 状态：📋 方案待拍板（2026-09-09 定稿，2026-09-11 归档入库）`（插在标题后、原有 `>` 说明块之前，符合 `scripts/doc-status-lib.mjs` 的 `STATUS_HEAD_LINES=12` 窗口）。
-- `pnpm run check:docs-index`：这条门岗在 clean `origin/main` 上本来就是红的（历史存量的大量未登记 evidence/README 文件，与本 PR 无关，已用 `git stash` 验证过 pre-existing）。本 PR 新增文件里唯一被判「未登记」的是 `docs/plan/2026-09-09-agent-native-editing-plan.md`，已在 `docs/plan/INDEX.md` 的「🤖 自动收录」区补一行链接（同时引用了 `competitive-response-plans/INDEX.md` 方便导航）；`competitive-response-plans/` 下的其余 8 个文件因为被同目录的 `INDEX.md` 自引用而已经算「已收录」，无需额外登记。
+- `pnpm run check:docs-index`：这条门岗在 clean `origin/main` 上本来就是红的（历史存量的大量未登记 evidence/README 文件，与本 PR 无关，已用 `git stash` 验证过 pre-existing）。本 PR 新增文件里唯一被判「未登记」的是 `docs/archive/plan/2026-09-09-agent-native-editing-plan.md`，已在 `docs/plan/INDEX.md` 的「🤖 自动收录」区补一行链接（同时引用了 `competitive-response-plans/INDEX.md` 方便导航）；`competitive-response-plans/` 下的其余 8 个文件因为被同目录的 `INDEX.md` 自引用而已经算「已收录」，无需额外登记。
 - `pnpm run check:doc-status`：本来就红（同样是历史存量），本 PR 新增的 9 个 plan 文件全部带了状态标记，未新增违规。
 - `pnpm run check:ledger`：绿（`✅ 文档生成物同步：现役欠账 115 篇，共扫描 714 篇方案`）。
-- research/product 目录没有独立的 `INDEX.md`（`check:docs-index` 不覆盖这两棵树，只覆盖 `docs/plan/**`、`docs/superpowers/plans/**`、`docs/lessons/**`），故未新建索引文件，符合「不能抬高 baseline」的最小改动原则。
+- research/product 目录没有独立的 `INDEX.md`（`check:docs-index` 不覆盖这两棵树，只覆盖 `docs/archive/plan/**`、`docs/archive/superpowers/plans/**`、`docs/archive/lessons/**`），故未新建索引文件，符合「不能抬高 baseline」的最小改动原则。
 
 ### ② ARCHITECTURE-NOW.md 三行更新
 

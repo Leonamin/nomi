@@ -1,5 +1,5 @@
 // API key 加密 —— 从 runtime.ts 拆出（见
-// docs/plan/2026-06-04-runtime-split-execution.md 第 4 步）。
+// docs/archive/plan/2026-06-04-runtime-split-execution.md 第 4 步）。
 //
 // safeStorage 走 OS 钥匙串（macOS Keychain / Windows DPAPI / Linux libsecret）。
 // 不可用时（如无 keyring 的 rootless Linux）新写入 fail-closed；legacy 明文只保留迁移识别。

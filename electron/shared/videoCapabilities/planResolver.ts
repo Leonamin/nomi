@@ -5,7 +5,7 @@
  * 让 LLM 只负责叙事（拆镜、prompt、演时估算），模型/模式/参数上限与合并/拆条/时长分配
  * 由这里基于真实档案数值裁决——LLM 不再需要背诵参数，也就不存在编造参数键。
  *
- * 设计约定（2026-09-06 docs/plan/2026-09-07-generation-strategy-resolver.md）：
+ * 设计约定（2026-09-06 docs/archive/plan/2026-09-07-generation-strategy-resolver.md）：
  *  - 纯函数：不 import Electron/React/文件系统，与 recommendation.ts 同层，renderer/headless 共用。
  *  - **不产任何人类文案**（R15）：引擎只产 `code` + 结构化数值参数，句子由显示边界用 i18n 模板渲染
  *    （renderer: `strategyText.ts`；agent/MCP 面直接消费结构化 code+params，模型读结构比读散文准）。

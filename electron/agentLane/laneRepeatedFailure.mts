@@ -5,12 +5,12 @@
 //
 // 「连续」的定义只在这一个文件里：**这个工具**成功一次、或者用户又说了一句话，计数归零。
 // 最后那条是 2026-09-17 真机复现后加的——此前熔断只认工具结果，用户照着 Agent 的建议去点开文稿页也
-// 救不回来，整条会话的 read_script 就此报废（`docs/lessons/capability-bound-to-component-lifecycle-reports-stale.md`）。
+// 救不回来，整条会话的 read_script 就此报废（`docs/archive/lessons/capability-bound-to-component-lifecycle-reports-stale.md`）。
 // 用户动作是回合边界：他既然又开口，就该让工具重新试一次；再撞三次照样拦。
 //
 // ── 2026-09-22：墙按**语义码**认，而且每堵墙各记各的 ──
 //
-// 真实模型 18 句实测（`docs/evidence/2026-09-21-askback-real-model/`）把上一版的三个洞一次照全了。
+// 真实模型 18 句实测（`docs/archive/evidence/2026-09-21-askback-real-model/`）把上一版的三个洞一次照全了。
 // 拿那 121 次调用重放旧计数器：**整轮只有一次摸到 3**，而 `draft_shots` 在 A3 那一轮连错 7 次。
 // 三个洞：
 //   ① **墙的身份取自失败正文的首行**，而首行里有 id、镜头数、字段值——同一堵墙每次长得不一样

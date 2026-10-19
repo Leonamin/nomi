@@ -53,8 +53,8 @@ Nomi 当前真正缺的不是“再加几个工具”，甚至也不只是“把
 
 - 用户提供的 9 份课程材料：Function Calling/Structured Output、Claude Code tool loop、Deferred Loading、MCP、Skills、System Prompt/Context Rot、Compaction、Cache、JIT Context；
 - Nomi PR #223 当前头 `origin/pr-223-head@48c019da`、本次复核的最新 `origin/main@5730b957`、旧 merge ref、同期 Agent/Canvas/Provider 分支；
-- Nomi 当前事实文档 `docs/ARCHITECTURE-NOW.md`；
-- Nomi 已批准设计与研究：`docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md`、`docs/superpowers/specs/2026-08-22-unified-runtime-mcp-generation-design.md`、`docs/research/2026-08-24-agent-harness-survey.md`、`docs/guide/agent-runtime-source-reading-and-adaptation.md`；
+- Nomi 当前事实文档 `docs/archive/guides/ARCHITECTURE-NOW.md`；
+- Nomi 已批准设计与研究：`docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md`、`docs/archive/superpowers/specs/2026-08-22-unified-runtime-mcp-generation-design.md`、`docs/archive/research/2026-08-24-agent-harness-survey.md`、`docs/guide/agent-runtime-source-reading-and-adaptation.md`；
 - 官方资料：Anthropic、OpenAI、Pi、Hermes、OpenHands、LangGraph、MCP。
 
 ### 1.3 证据边界
@@ -101,7 +101,7 @@ Nomi 不是通用 coding agent，也不是 NLE 自动化脚本。它的最小业
 | Capability adapters | 输入/输出 schema、preflight、effect、settlement、幂等 | 不自行创建第二本账 |
 | Domain authorities | Document、Canvas、Timeline、Asset、ProductionRun、Provider | 不直接被模型或 renderer 绕过 |
 
-这与 Nomi 已批准规格中“transport/projection 不是事实源、统一 capability 负责 typed output 与 stage-aware exposure”的边界一致（`docs/superpowers/specs/2026-08-22-unified-runtime-mcp-generation-design.md:90-101`），也与总方案中“12 个语义工具、一个控制面”的目标一致（`docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md:14-41`）。
+这与 Nomi 已批准规格中“transport/projection 不是事实源、统一 capability 负责 typed output 与 stage-aware exposure”的边界一致（`docs/archive/superpowers/specs/2026-08-22-unified-runtime-mcp-generation-design.md:90-101`），也与总方案中“12 个语义工具、一个控制面”的目标一致（`docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md:14-41`）。
 
 ## 3. 顶尖成熟方案共同说明了什么
 
@@ -179,7 +179,7 @@ Hermes 的官方实现把 prompt、tool/provider failover、压缩、重试、�
 
 **LangGraph（Observed）**：checkpointer 按 `thread_id` 保存短期图状态，store 保存跨线程长期事实；节点有 retry/timeout/error handler；`interrupt()` 暂停并由 checkpointer 恢复；超时会清理该 attempt writes，补偿可用 Saga/Command 路由。[Persistence](https://docs.langchain.com/oss/python/langgraph/persistence)、[Fault Tolerance](https://docs.langchain.com/oss/python/langgraph/fault-tolerance)
 
-**DeepSeek Harness（Nomi 既有研究记录）**：会话日志是唯一真相源，实时 agent 观测与 capability 事实分域；事件 producer/consumer 不代替 durable session。见 `docs/research/2026-08-24-agent-harness-survey.md:24-27`。
+**DeepSeek Harness（Nomi 既有研究记录）**：会话日志是唯一真相源，实时 agent 观测与 capability 事实分域；事件 producer/consumer 不代替 durable session。见 `docs/archive/research/2026-08-24-agent-harness-survey.md:24-27`。
 
 **共同启示（Inferred）**：
 

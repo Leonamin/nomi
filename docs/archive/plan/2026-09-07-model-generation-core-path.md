@@ -32,7 +32,7 @@
 - **仓库里已有？** 私网判据已经有 owner——`electron/hardenedFetch.ts:100` 调 `isPrivateHost`，共 7 个引用点（`git grep -n isPrivateHost -- electron`）。所以本轮**不是新写一个分类器**，而是把判据收进 `classifyOutboundAddresses` 并用 `check:outbound-policy` 棘轮盯住这 7 个点 + 22 个 `appFetch` 引用点，谁再长第二个就报红。**结论：扩已有边界，不另起炉灶。**
 - **生态里已有（同一个 bug 别人怎么修的）？** 同一族问题在别的项目上真实发生过：<https://github.com/openclaw/openclaw/issues/25215> —— 一次 SSRF 收紧把 `198.18.0.0/15` 拉黑，Clash/mihomo 用户的 `web_fetch` 全挂。那边提的三条方案**全是加开关**（`ssrfPolicy.allowPrivateNetwork` 参数 / 全局配置 / 干脆别拦这一段）。**结论：反着做。** 加开关等于把「安不安全」变成用户的作业，而且开关一开连 `169.254`（云元数据）一起放行。我们要的是**阳性证据**：探到本机解析器确实在合成答案，才放行这一段，探不到就维持拦截（fail-closed）。
 - **一手规范怎么说？** `198.18.0.0/15` 由 RFC 2544 §C.2.2 分配给网络设备基准测试（<https://datatracker.ietf.org/doc/html/rfc2544>），RFC 6890 列为特殊用途保留段——**它不是 RFC 1918 私网**，真实内网服务不该住在那里；而 Clash/mihomo 的 `fake-ip-range` 默认正是 `198.18.0.1/16`（<https://wiki.metacubex.one/en/config/dns/>，已实抓确认示例配置写的就是这个值）。**结论：这一段可以在有证据时区别对待，其余私网段一条都不放。**
-- **踩到的反直觉坑（新沉淀）** 探针域名**不能**用 `.invalid`/`.test`/`.example`：RFC 6761 要求解析器在本地直接答 NXDOMAIN，查询根本到不了代理，探测必然失败。实测记录见 [`docs/lessons/reserved-tlds-cannot-probe-the-resolver.md`](../../lessons/reserved-tlds-cannot-probe-the-resolver.md)。**结论：用随机 `.com`/`.net` 标签。**
+- **踩到的反直觉坑（新沉淀）** 探针域名**不能**用 `.invalid`/`.test`/`.example`：RFC 6761 要求解析器在本地直接答 NXDOMAIN，查询根本到不了代理，探测必然失败。实测记录见 [`docs/archive/lessons/reserved-tlds-cannot-probe-the-resolver.md`](../lessons/reserved-tlds-cannot-probe-the-resolver.md)。**结论：用随机 `.com`/`.net` 标签。**
 
 ## 做了什么
 

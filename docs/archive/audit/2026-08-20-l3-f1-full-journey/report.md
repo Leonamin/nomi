@@ -121,7 +121,7 @@ Seedance 用 `image_with_roles` 角色数组表达首尾帧，匹配不上 → �
 另加两条哨兵（core 层「数组式参考键照样两跳 + 第 2 跳参考换成静帧」、纯核层「用实测 dump 的
 Seedance 真键名」——编的键名当初就是这么骗过自己的）。
 
-## 复验结论（2026-08-20 · 见 `docs/audit/2026-08-20-l3-f1b-reverify/report.md`）
+## 复验结论（2026-08-20 · 见 `docs/archive/audit/2026-08-20-l3-f1b-reverify/report.md`）
 
 **A/B/C 三缺陷全部修好，且眼见为实。** 但 A 追了三轮——每修一层才露出下一层：
 

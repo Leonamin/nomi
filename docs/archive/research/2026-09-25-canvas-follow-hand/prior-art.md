@@ -1,6 +1,6 @@
 # 「先查别人」调研报告：画布跟手（2026-09-25）
 
-> 对应方案：[`docs/plan/2026-09-25-canvas-follow-hand.md`](../../plan/2026-09-25-canvas-follow-hand.md)。分支 `claude/canvas-follow-hand`。
+> 对应方案：[`docs/archive/plan/2026-09-25-canvas-follow-hand.md`](../../plan/2026-09-25-canvas-follow-hand.md)。分支 `claude/canvas-follow-hand`。
 > 行号都钉在具体 commit 上：tldraw `e8e194c`、xyflow `3d35b57`、ComfyUI `a4eebec`、Immich `e598e10`、Chromium `a5a60aa`、d3-drag `3c44c76`、Mantine `7171242`、tiptap `8ce15c2`。
 
 ## 要回答的问题

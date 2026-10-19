@@ -38,7 +38,7 @@ export const CANVAS_FRAME_STATES: readonly LabState[] = [
   {
     id: 'canvas-frame-01-empty',
     name: '空框 · 刚画完，还没放东西（虚线）',
-    source: '现役 GroupFrame.tsx ← getCanvasGroupBoxes 读 frameBounds（docs/plan/2026-09-06-canvas-frame-tool.md §2.2）',
+    source: '现役 GroupFrame.tsx ← getCanvasGroupBoxes 读 frameBounds（docs/archive/plan/2026-09-06-canvas-frame-tool.md §2.2）',
     coverage: 'shell',
     // 2026-09-06 之前零成员的组**根本不渲染**（getCanvasGroupBoxes 直接 return []），
     // 用户画完一个空框会看不见它。这一格钉住「空框存在，并且长得像还没装东西的样子」。
@@ -55,7 +55,7 @@ export const CANVAS_FRAME_STATES: readonly LabState[] = [
   {
     id: 'canvas-frame-02-filled',
     name: '有内容 · 实线 + 标题 / 说明 / 计数',
-    source: '现役 GroupFrameHeader.tsx（docs/plan/2026-09-06-canvas-frame-tool.md §2.3 头部）',
+    source: '现役 GroupFrameHeader.tsx（docs/archive/plan/2026-09-06-canvas-frame-tool.md §2.3 头部）',
     coverage: 'shell',
     // 头部一行要装下五样：点 · 标题 · 灰字说明 · 计数 · 折叠 · ⋯。这一格看的是它挤不挤、
     // 说明那一句会不会把计数推出胶囊。
@@ -64,7 +64,7 @@ export const CANVAS_FRAME_STATES: readonly LabState[] = [
   {
     id: 'canvas-frame-03-drag-join',
     name: '拖入反馈 · 框边亮起、计数「3 → 4」',
-    source: '现役 GroupFrame.tsx 的 membershipPreview（docs/plan/2026-09-06-canvas-frame-tool.md §2.4）',
+    source: '现役 GroupFrame.tsx 的 membershipPreview（docs/archive/plan/2026-09-06-canvas-frame-tool.md §2.4）',
     coverage: 'shell',
     // accent 只在这一刻出现——`groupVisualContract` 的写死是「常驻装饰中性，强调色只留给
     // 临时交互反馈」。这一格就是那句注释允许的唯一场景。

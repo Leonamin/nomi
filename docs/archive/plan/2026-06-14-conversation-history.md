@@ -35,7 +35,7 @@
 
 ## 3. UI 变化（与简化版样张一致，token-only）
 
-样张：`docs/design/`（本 session 的 `creation_assistant_history_simplified` mockup）。设计师 + 真实用户 agent 已审并简化。
+样张：`docs/archive/design/`（本 session 的 `creation_assistant_history_simplified` mockup）。设计师 + 真实用户 agent 已审并简化。
 
 ### 3.1 头部（两面板一致）：5 → 3 元素
 ```

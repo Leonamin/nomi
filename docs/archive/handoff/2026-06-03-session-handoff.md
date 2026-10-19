@@ -20,14 +20,14 @@
 ## 2. 本会话已完成并 push（main，最新到 commit e96facc）
 - **手填加模型表单**：BaseURL/Key/模型主路径 + 预设(OpenAI/Claude/Gemini/Kimi/智谱/DeepSeek/自定义中转站) + 自动拉模型(`/models`) + Anthropic 原生 + 自定义请求头 + 适配式入口(无文本模型→文本为主；有→图片/视频为主) + 视觉打磨。
 - **文件预览**：文件树双击/空格 → 右侧面板预览 txt/md/pdf/图/视频（`FilePreviewPanel` + `useFilePreviewStore` + `NomiMarkdown`）。
-- **C1 生成失败提示**：`NodeErrorReport`（人话原因+建议+原始+重试，Portal 浮层），删旧 ErrorBadge/error-peek，`classifyGenerationError` 单一分类器。样张 `docs/design/archive/c1-generation-error.html`。
+- **C1 生成失败提示**：`NodeErrorReport`（人话原因+建议+原始+重试，Portal 浮层），删旧 ErrorBadge/error-peek，`classifyGenerationError` 单一分类器。样张 `docs/archive/design/archive/c1-generation-error.html`。
 - **C2/C2b 3D 入口 + 右键统一**：左侧工具栏加 3D 场景；左+右共用 `PRIMARY_NODE_KINDS`(text/image/video/panorama/scene3d)。
 - **删 skills/legacy/**（含 Python 文件）；Context7 接入；GitHub About/SEO/社交预览图(待手动上传)；markdown 渲染合并为 `NomiMarkdown`。
 - **PR #5「3D 导演台」已合并**。
 - **已发版 v0.8.2**（GitHub Release 成功）。**注意：v0.8.2 之后的东西(文件预览/C1/C2/C2b/markdown合并/C5基础)还没进 release**——下个会话要发 **v0.8.3** 才能让用户拿到。
 
 ## 3. 进行中：C5 文本节点 → 文档编辑器（P1 做了一半）
-计划：`docs/plan/c5-text-node.md`（含两份评审结论）。样张：`docs/design/archive/c5-text-node.html`（用户已确认方向）。
+计划：`docs/archive/plan/c5-text-node.md`（含两份评审结论）。样张：`docs/archive/design/archive/c5-text-node.html`（用户已确认方向）。
 **已完成（commit e96facc）**：抽出共享 Tiptap 内核 `src/workbench/common/useNomiRichTextEditor.ts` + `richTextActions.tsx`，重构 `WorkbenchEditor` 复用之（rule1，不留两套 Tiptap）。build 绿。
 **P1 剩余（下个会话做，先用 Context7 查 Tiptap 官方）**：
 1. 节点模型加 `contentJson?`（Tiptap JSON）字段 → 改 `generationCanvasTypes.ts` + store + 持久化 + `generationCanvasSchema.test.ts`（旧节点无此字段要兼容）。注意：文本结果现存 `node.result.text`(字符串)，没有富文本字段。
@@ -52,14 +52,14 @@
 ## 5. 排队中（按之前定的顺序）
 - **C3 3D 导演台节点外观**：从外面看不出里面是 3D 场景、不该套生成节点设计。需 HTML 样张 + 评审。
 - **C4 时间轴 图片轨/媒体轨 交互重做**：大、复杂、持续多轮——Context7 查核心框架 + 技术选型 + 功能梳理 + 多轮评审。用户明确说不能一次出发就干。
-- **A 官方实现合规审计**：全项目扫"手搓没走官方 API"的地方（React Flow viewport 那类），用 Context7 核对，出 `docs/audit/` 清单再改。（与 #4 的 React Flow 决策强相关。）
+- **A 官方实现合规审计**：全项目扫"手搓没走官方 API"的地方（React Flow viewport 那类），用 Context7 核对，出 `docs/archive/audit/` 清单再改。（与 #4 的 React Flow 决策强相关。）
 - **v0.8.3 发版**：把 v0.8.2 之后的都发出去。
 - **GitHub 社交预览图**：手动在 repo Settings → Social preview 上传 `marketing/assets/social-preview.png`（无 API）。
 - **spawn 的清理任务**：CreationAiPanel 旧内联 markdown 已并入 NomiMarkdown（本会话已做，若 chip 还在可忽略）。
 
 ## 6. 关键文件索引
 - 规则：`CLAUDE.md` ｜ 设计系统：`Design.md`、`docs/design/nomi-design-system.md`、`src/design/`
-- 计划/样张：`docs/plan/`（onboarding-*、file-preview、onboarding-form-*、c5-text-node）、`docs/design/archive/`（c1、c5）
+- 计划/样张：`docs/archive/plan/`（onboarding-*、file-preview、onboarding-form-*、c5-text-node）、`docs/archive/design/archive/`（c1、c5）
 - 画布：`src/workbench/generationCanvas/`（`components/GenerationCanvas.tsx` 主画布、`components/CanvasToolbar.tsx` 左工具栏+右键、`nodes/BaseGenerationNode.tsx` 节点壳1350行、`nodes/registry.ts` 节点注册、`store/generationCanvasStore.ts`、`model/generationCanvasTypes.ts`、`runner/generationRunController.ts`）
 - 富文本：`src/workbench/common/useNomiRichTextEditor.ts`、`richTextActions.tsx`、`NomiMarkdown.tsx`；创作区 `src/workbench/creation/WorkbenchEditor.tsx`
 - 文件预览：`src/workbench/explorer/FilePreviewPanel.tsx`、`useFilePreviewStore.ts`、`FileTreeNode.tsx`

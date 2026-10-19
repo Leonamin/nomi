@@ -5,7 +5,7 @@ import { launchNomiApp } from './_launchApp.mjs'
 import { expect, proveProbe, expectAbsent } from './_assert.mjs'
 import { stationTimeout } from './_station-budget.mjs'
 import { COMPOSER_SKILL, SKILL_POPOVER } from './agent-runtime-walk-support.mjs'
-const out = path.resolve('docs/design/verification/2026-09-09-skill-ui-b')
+const out = path.resolve('docs/archive/design/verification/2026-09-09-skill-ui-b')
 fs.mkdirSync(out, { recursive: true })
 const base = process.env.NOMI_SKILL_UI_DEV_URL
 if (base) {

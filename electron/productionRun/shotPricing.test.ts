@@ -14,7 +14,7 @@ import {
 //
 // TDD (red→green). The pricing *matching* rule has no prior consumer in the repo — the catalog
 // `pricing`/`specCosts` shape (electron/catalog/types.ts:207-213) was authored but never joined
-// (documented as "数据已有全未用", docs/plan/2026-06-11-nomi-harness-master-plan.md:244). These tests
+// (documented as "数据已有全未用", docs/archive/plan/2026-06-11-nomi-harness-master-plan.md:244). These tests
 // pin the rule S2 adopts: an enabled base `cost`, plus enabled `specCosts` whose `specKey` matches a
 // parameter selection on the shot (bare value OR `paramKey:paramValue`). No pricing / disabled / no
 // match → honest `{ known: false }`, never a fabricated 0.

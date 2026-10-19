@@ -73,7 +73,7 @@ MCP 规范（2025-11-25 现役版，Context7 实查 `modelcontextprotocol.io/spe
 
 | PR | 作者 | 状态 | 内容 | 裁决建议 | 理由 |
 |---|---|---|---|---|---|
-| **#298** feat(mcp): generalize MCP client identity | @wanvfx（外部） | OPEN（2026-09-01 10:38 开） | 把硬编码 `'claude'\|'codex'\|'cursor'` 客户端身份改成可注册 profile（`mcp-client-profiles.json`），任意 MCP-stdio 工具（WorkBuddy/Doubao/Cline）可作为一等客户端接入；HMAC/127.0.0.1/默认不信任保持不变；`nomi_start_playbook` 的 actorId 改为优先取签名验证过的身份而非自报 `clientHost` | **改造后收** | 方向完全贴 P4（通用第一）+ P1（内置三家变 registry 种子、union 类型删除）；还顺手修了一个真实弱点——当前 main `mcpProtocol.ts:344-352` 的 clientHost 仍靠 `clientInfo.name` 自报。质量信号好：带 docs/plan、走查脚本、测试。但必须返工三点：① 与同日合入的 M1（#301，0b6441c6 重写 dispatcher/mcpProtocol/mcpStdioServer）必然冲突，需 rebase 到 post-M1 main（gh mergeable 已查不出=UNKNOWN）；② 新增 3 条 **sync IPC** 通道，逆着 08-25 审计「读路径异步化」方向，应改 async 并进 ipcSenderGuard 基线（PR 自己也标了这点）；③ 长尾客户端档案的产品位（设置里第 N 张卡）需过设计系统 §1.5 控件预算，或按作者提供的备选「curated 三家 + copy-config」收窄 |
+| **#298** feat(mcp): generalize MCP client identity | @wanvfx（外部） | OPEN（2026-09-01 10:38 开） | 把硬编码 `'claude'\|'codex'\|'cursor'` 客户端身份改成可注册 profile（`mcp-client-profiles.json`），任意 MCP-stdio 工具（WorkBuddy/Doubao/Cline）可作为一等客户端接入；HMAC/127.0.0.1/默认不信任保持不变；`nomi_start_playbook` 的 actorId 改为优先取签名验证过的身份而非自报 `clientHost` | **改造后收** | 方向完全贴 P4（通用第一）+ P1（内置三家变 registry 种子、union 类型删除）；还顺手修了一个真实弱点——当前 main `mcpProtocol.ts:344-352` 的 clientHost 仍靠 `clientInfo.name` 自报。质量信号好：带 docs/archive/plan、走查脚本、测试。但必须返工三点：① 与同日合入的 M1（#301，0b6441c6 重写 dispatcher/mcpProtocol/mcpStdioServer）必然冲突，需 rebase 到 post-M1 main（gh mergeable 已查不出=UNKNOWN）；② 新增 3 条 **sync IPC** 通道，逆着 08-25 审计「读路径异步化」方向，应改 async 并进 ipcSenderGuard 基线（PR 自己也标了这点）；③ 长尾客户端档案的产品位（设置里第 N 张卡）需过设计系统 §1.5 控件预算，或按作者提供的备选「curated 三家 + copy-config」收窄 |
 | **#51** 接入 Codex 本地生图/改图 | @qq471231311（外部） | CLOSED（已收） | codex-local 生图供应商：本机 `codex exec` 调 `$imagegen`，异步 job 落盘、接入状态跟随 Codex MCP 配置 | **已收，无需动作**（榜样案例） | 未走 PR merge 而是 cherry-pick 保署名合入 `785c21e0` + 跟修 `722b12a3`（GUI Electron PATH 极简导致 spawn ENOENT，照 dreaminaCli 家法修）。设计贴 main 家法：process transport 复用、种子照 comfyui-local、异步 job 走既有可找回链路 |
 | #29 vendor management（Stepfun/自定义/即梦） | @wanvfx | CLOSED | 供应商管理 | **谢绝维持原判**（非 MCP） | body 无一处 MCP 内容（grep 验证）；仅因 "tool call" 关键词误中。供应商管理已由后续自研版覆盖 |
 | #255 recover production MCP budget UX | 自己（rescue） | OPEN | 死工作台打捞：MCP 预算 UX | **返工后收**（B 档既定裁决） | 2026-09-01 作战图已判：B 档 11 个须返工、别原样合——基于的 main 已漂移一个 M1 |
@@ -90,7 +90,7 @@ MCP 规范（2025-11-25 现役版，Context7 实查 `modelcontextprotocol.io/spe
 
 ## 3. 侦察面 3：「MCP 工具在问题链路中有问题」的那个 PR = #202
 
-**找到了**：PR [#202](https://github.com/aqm857886159/Nomi/pull/202) `docs: audit the MCP generation journey`（MERGED 2026-08-31），产出 `docs/audit/2026-08-27-mcp-generation-journey-incident-review.md`——用 v0.21.0 真实四镜宣传片制作旅程（外部 AI 经 MCP 驱动 Nomi 全链）钉下 **13 个链路问题**（MCP-J01…J13），每项带落盘证据与当时 main（`8f9365ae`）状态。
+**找到了**：PR [#202](https://github.com/aqm857886159/Nomi/pull/202) `docs: audit the MCP generation journey`（MERGED 2026-08-31），产出 `docs/archive/audit/2026-08-27-mcp-generation-journey-incident-review.md`——用 v0.21.0 真实四镜宣传片制作旅程（外部 AI 经 MCP 驱动 Nomi 全链）钉下 **13 个链路问题**（MCP-J01…J13），每项带落盘证据与当时 main（`8f9365ae`）状态。
 
 ### 3.1 13 项在当前 main（13a78c02）的逐项对账
 

@@ -1,6 +1,6 @@
 # CI 门岗机制修法：文档门降 advisory + contracts 全跑汇总
 
-> ✅ 已交付 · 2026-09-05 · 依据 `docs/audit/2026-09-05-ci-failure-audit.md`（Quality Gate 2026-08-23→09-05 全量 226 次失败的逐条归因）
+> ✅ 已交付 · 2026-09-05 · 依据 `docs/archive/audit/2026-09-05-ci-failure-audit.md`（Quality Gate 2026-08-23→09-05 全量 226 次失败的逐条归因）
 
 ## 为什么做（真实摩擦，不是洁癖）
 

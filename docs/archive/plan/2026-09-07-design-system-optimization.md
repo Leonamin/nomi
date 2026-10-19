@@ -73,8 +73,8 @@
 
 ## 先查别人
 
-> 完整报告（四问逐条带出处）：[`docs/research/2026-09-07-design-system-optimization/prior-art.md`](../research/2026-09-07-design-system-optimization/prior-art.md)
-> 自媒体附件：[`docs/research/2026-09-07-design-system-optimization/tikhub/tikhub-search.md`](../research/2026-09-07-design-system-optimization/tikhub/tikhub-search.md)（四平台 48 条，2026-09-07 实抓）
+> 完整报告（四问逐条带出处）：[`docs/archive/research/2026-09-07-design-system-optimization/prior-art.md`](../research/2026-09-07-design-system-optimization/prior-art.md)
+> 自媒体附件：[`docs/archive/research/2026-09-07-design-system-optimization/tikhub/tikhub-search.md`](../research/2026-09-07-design-system-optimization/tikhub/tikhub-search.md)（四平台 48 条，2026-09-07 实抓）
 
 - **① 动效 token 分层 → 用已有，A1 方向正确。** Tailwind 3.4 默认 theme 本来就是两个 key（`node_modules/tailwindcss/stubs/config.full.js:934` / `:956`），MD3 是 duration/easing 两组独立 token（<https://m3.material.io/styles/motion/easing-and-duration/tokens-specs>），W3C DTCG 的 `transition` 是 composite type、三个子值各自独立（<https://www.designtokens.org/TR/drafts/format/>）——三家形状一致，我们原来那种拼字符串打包在标准里没有对应物。失效机制不是「回退 150ms」而是 CSS Variables §3.1 的 *invalid at computed-value time*，取 initial `0s`（<https://www.w3.org/TR/css-variables-1/#invalid-variables>）。「打包会让 duration 静默失效」这条坑**查不到公开记录**，如实记账。
 - **② 间距 → 推翻 C1 的前半条。** `nomiDesignTokens.spacing` 的 8 个值（`src/theme/nomiTheme.ts:12`）与 Tailwind 默认栅格**逐值相同**，接进 `theme.extend.spacing` 是零信息量的重复定义、还多一个真相源（R29/R14.1）。126 处逃逸里 **70 处**（1/2/4/6/8/10/60px）今天就能改写成既有默认类，**56 处**（3/5/7/9/18/22px）才是默认表没有的半档值——要补也只补这些键。棘轮照加，基线 126。

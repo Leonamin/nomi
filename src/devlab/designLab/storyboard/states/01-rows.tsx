@@ -5,7 +5,7 @@ import { LAB_VARIANTS, STILL_NEON, STILL_ROOFTOP } from '../storyboardFixtures'
 import { NARROW_STAGE_WIDTH } from '../storyboardLabKit'
 
 /**
- * 设计实验室 · 分镜表 v6 —— **行**的形态（合同 `docs/design/2026-09-05-storyboard-table-v6-design-contract.md`）。
+ * 设计实验室 · 分镜表 v6 —— **行**的形态（合同 `docs/archive/design/2026-09-05-storyboard-table-v6-design-contract.md`）。
  *
  * 每条注册项带：稳定 id、人话名字、来源章节、coverage 档位、以及**用现役组件**渲染的夹具。
  * 顺序有意义：`labStates.mjs` 按 `states/` 目录名排序解析，注册表按同样顺序拼接，

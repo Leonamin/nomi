@@ -15,7 +15,7 @@ Add only current flagship models needed by Nomi, especially audio and 3D, while 
 
 This plan advances the architecture handoff in `docs/handoff/2026-08-30-local-model-agent-runtime-architecture-handoff.md` without implementing in its obsolete PR #221 worktree.
 
-The integrated product and interaction design is `docs/superpowers/specs/2026-08-30-unified-model-runtime-experience-design.md`. It treats PR #188 and PR #221 as shipped foundations and covers settings, model routing, creation, task recovery, audio assets, and the 3D usable layer rather than limiting this work to catalog records.
+The integrated product and interaction design is `docs/archive/superpowers/specs/2026-08-30-unified-model-runtime-experience-design.md`. It treats PR #188 and PR #221 as shipped foundations and covers settings, model routing, creation, task recovery, audio assets, and the 3D usable layer rather than limiting this work to catalog records.
 
 ## Baseline
 
@@ -107,4 +107,4 @@ Not included: old model generations; APIMart Gemini Omni Preview; MiniMax Music 
 
 ## Source Of Truth
 
-The dated evidence and exact protocol comparison live in `docs/research/2026-08-30-flagship-provider-model-decision.md`. Current implementation facts remain owned by `docs/ARCHITECTURE-NOW.md` and must be updated in the same PR when the runtime changes.
+The dated evidence and exact protocol comparison live in `docs/archive/research/2026-08-30-flagship-provider-model-decision.md`. Current implementation facts remain owned by `docs/archive/guides/ARCHITECTURE-NOW.md` and must be updated in the same PR when the runtime changes.

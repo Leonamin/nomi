@@ -89,7 +89,7 @@ C42 次级入口：运行时 Alt+Enter 明确 follow-up，普通 Enter/发送为
 
 | 冲突文件 | 取舍与保留的不变量 |
 |---|---|
-| `docs/lessons/INDEX.md` | 两条新教训均保留，各指向原文件。 |
+| `docs/archive/lessons/INDEX.md` | 两条新教训均保留，各指向原文件。 |
 | `scripts/vocabularies-baseline.json` | 合并独立新增登记；SoundStage 同一 owner 在两边不同位置重复新增，仅保留原有一条；保留 stage4 已收敛的 timeout owner 与 debtCap 71，不恢复已退役 owner。 |
 | `tests/ux/g1/c0-plan-sample-budget.mjs` | 复用同一报价/预留入口，显式 planOnly 保持 ¥2，mixed 保持上游 ¥3；保留上游有限正数/输出上限/失败不退预留校验及 Request headers/signal 转发。 |
 | `tests/ux/g1/c0-real-main.mjs` | 保留上游凭据保护、transport evidence 与统一 dispatch wrapper；planOnly 优先进入只准文本的预算边界，不能因 mixed 标记进入合成或真实媒体分支。 |

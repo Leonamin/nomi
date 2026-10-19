@@ -16,7 +16,7 @@
 //     它跑在 127.0.0.1，所以 intakeEndpoint 的回环口子就是为这一刻留的。
 //
 // 用法: node tests/ux/feedback-loop-consent-and-report.walk.mjs
-// 产出: docs/evidence/2026-09-15-feedback-loop/*.png（人眼逐张看）
+// 产出: docs/archive/evidence/2026-09-15-feedback-loop/*.png（人眼逐张看）
 import { createServer } from 'node:http'
 import fs from 'node:fs'
 import os from 'node:os'
@@ -27,7 +27,7 @@ import { prepareIsolation, dismissSplashIfPresent } from '../../evals/lib/isoApp
 import { screenshotSettled, expectVisible, expectHidden, clickOrFail } from './_assert.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
-const shotsDir = path.join(repoRoot, 'docs/evidence/2026-09-15-feedback-loop')
+const shotsDir = path.join(repoRoot, 'docs/archive/evidence/2026-09-15-feedback-loop')
 fs.rmSync(shotsDir, { recursive: true, force: true })
 fs.mkdirSync(shotsDir, { recursive: true })
 
@@ -237,7 +237,7 @@ try {
       }
       if (!/"contentIncluded":false/.test(posted.body)) failures.push('没勾内容时信封应当写明 contentIncluded:false')
       // 落证据时**只留清单与上下文，不留 attachments**：那一格里是这台机器真实的模型目录
-      // （密钥已抹，但供应商名与自建中转地址还在），而 docs/evidence/ 是要进 git 的。
+      // （密钥已抹，但供应商名与自建中转地址还在），而 docs/archive/evidence/ 是要进 git 的。
       // 证据要能复核，但不该顺手把一份本机配置公开出去。
       const envelope = JSON.parse(posted.body)
       fs.writeFileSync(path.join(shotsDir, 'posted-feedback.summary.json'), JSON.stringify({

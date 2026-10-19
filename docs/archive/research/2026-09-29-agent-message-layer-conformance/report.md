@@ -7,8 +7,8 @@
 > - **上游现状**（2026-09-29 查 npm）：`ai` 最新是 **7.0.122**；v6 是维护线，最新 6.0.296；v5 是 5.0.269；AI Elements 主干依赖 **v6**。
 > - **行号基线**：分支 `claude/agent-message-layer-conformance`，基于 origin/main `f91ae82ad`。行号会漂，以路径和结论为准。
 > - **登记位置**：`docs/engineering/framework-boundaries.json` → `referenceConformanceDebt` 里 id 为 `ai` 的那条，到期 2026-10-07。那条的 `doc` 字段仍指向旧路径，转正办法见附录 B。
-> - **判定档**沿用 `docs/research/TEMPLATE-reference-conformance.md`：`一致` / `有意不同(理由)` / `没想到`。
-> - **前作**（不重复做，直接引用）：`docs/research/2026-09-10-permission-rework-prior-art/prior-art.md` §1（pi 四列表）；`docs/research/2026-09-06-ai-elements-anatomy.md`（AI Elements 源码解剖）。
+> - **判定档**沿用 `docs/archive/research/TEMPLATE-reference-conformance.md`：`一致` / `有意不同(理由)` / `没想到`。
+> - **前作**（不重复做，直接引用）：`docs/archive/research/2026-09-10-permission-rework-prior-art/prior-art.md` §1（pi 四列表）；`docs/archive/research/2026-09-06-ai-elements-anatomy.md`（AI Elements 源码解剖）。
 > - **协调会话复核**（2026-09-29）：抽查了三条结论，都属实：
 >   - `src/workbench/ai/lane/laneClient.ts` 头注释写明「本层零状态机」；
 >   - `laneProjection.ts` 的 user 段没有附件字段；
@@ -45,7 +45,7 @@
 | Agent 面板在 `src/workbench/ai/v4/*` | 属实，但少说了一层 | 面板的**数据**在 `src/workbench/ai/lane/*`（`laneClient.ts` + `laneViewModel.ts`），v4 只负责画 |
 | 付费确认卡不在消息流里，渲染层每 1.5 秒轮询 `pendingSpend` | 属实 | `src/workbench/ai/v4/useAgentPanelSpendConfirm.ts:52,147-151` |
 | 模型看到的是手写回执 | 属实 | `electron/agentLane/laneExtendedTools.ts:127-156`，`generateReceipt` |
-| `framework-boundaries.json` 里已有 `pi` 条目 | 属实 | 共 7 条 capability；`fourColumnTable` 指向 `docs/plan/2026-09-07-agent-runtime-rebuild.md`；另一张四列表在 `2026-09-10-permission-rework-prior-art` §1 |
+| `framework-boundaries.json` 里已有 `pi` 条目 | 属实 | 共 7 条 capability；`fourColumnTable` 指向 `docs/archive/plan/2026-09-07-agent-runtime-rebuild.md`；另一张四列表在 `2026-09-10-permission-rework-prior-art` §1 |
 | react ^19.3.0 · tailwindcss 3 · @mantine/core ^8.3.18 | 属实 | 见 `package.json`。注意 `vendor/README.md` 和 `aiElementsContract.ts` 的注释还写着 React 18，已过期 |
 | AI Elements 要 Tailwind 4 + shadcn | 属实 | 官方 Setup 的要求：Node 18+、React 19、Next.js 14+、AI SDK、shadcn/ui、**Tailwind CSS 4**；组件靠 `npx ai-elements@latest add` 把源码拷进仓库 |
 
@@ -64,7 +64,7 @@
   - 已接：七态词表（`agentPanelV4Types.ts:17-24`），`Message` / `MessageResponse` / `MessageActions` 三件（`vendor/aiElementsPrimitives.tsx`），Streamdown 2.6.0（`src/workbench/common/NomiMarkdown.tsx:4-6`）。
   - 其余八件是有意删掉的。理由写在 `aiElementsPrimitives.tsx:4-13`：长相差太远，留着就是并行版。
 - **N5：这笔债的前提已经过期。**
-  - 债条目说「Vercel AI SDK 是模型调用与流式转录那条线的底座」。对 Agent 线来说，这从 #646（2026-09-09）起就不成立了：Agent 的底座是 pi，AI SDK 只剩非 Agent 的文本任务（`docs/ARCHITECTURE-NOW.md` 第 47 行）。
+  - 债条目说「Vercel AI SDK 是模型调用与流式转录那条线的底座」。对 Agent 线来说，这从 #646（2026-09-09）起就不成立了：Agent 的底座是 pi，AI SDK 只剩非 Agent 的文本任务（`docs/archive/guides/ARCHITECTURE-NOW.md` 第 47 行）。
   - 所以「工具」和「控制流」两层应该拿 **pi** 当参考。AI SDK 只适合当「消息模型、审批状态、组件」这三样的参考。
 
 ---

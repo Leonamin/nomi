@@ -67,7 +67,7 @@ R39 问画布上哪一个才是 "hero shot"）——都与字段名无关，是�
 
 **这一腿量不到「落到画布」**：本 harness 的领域端口是夹具，`draft_shots` 的返回是固定事实。
 交接文档里「落画布 14/23」那张表来自一次真机整机走查，它的脚本不在仓库里
-（`docs/plan/2026-09-18-tool-layer-findings-inventory.md` §4 只留了数字）。要接上那一列，
+（`docs/archive/plan/2026-09-18-tool-layer-findings-inventory.md` §4 只留了数字）。要接上那一列，
 得先把那次走查的剧本落进 `tests/ux/`——本刀没做，明记在这里。
 
 **花费**（按上面同一组公开价目估算：miss ¥2/M · hit ¥0.2/M · out ¥8/M）：

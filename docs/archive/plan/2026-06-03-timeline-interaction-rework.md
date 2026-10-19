@@ -210,7 +210,7 @@ tldraw `SnapManager`（吸附思路天花板，只读不依赖）：bounds/handl
 
 ## 13. 下一步（规则 8 三道门）
 
-1. ✅ 已出 **P1 可视样张**：`docs/design/timeline-interaction-p1-mockup.html`（可交互：拖拽吸附辅助线+咔哒、可拖 playhead scrub、多选成组拖动）。
+1. ✅ 已出 **P1 可视样张**：`docs/archive/design/timeline-interaction-p1-mockup.html`（可交互：拖拽吸附辅助线+咔哒、可拖 playhead scrub、多选成组拖动）。
 2. ✅ **设计师 + 真实用户 agent 已评审**，结论与改进已回填（见 §14）。
 3. ⏳ **待用户本人确认**样张后，才进入 P1 实现（按第 7 节范围 + 第 9 节删旧 + 第 11 节验收）。
 

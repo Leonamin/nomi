@@ -2,7 +2,7 @@
 // 算出工作流元数据所描述的依赖 / 当前实例缺哪些。这些字段不参与运行时授权；
 // requestedCapabilities 才能在 Host capability ceiling 内进一步收窄工具。
 // 这是 Flova 式「能力清单 + 缺啥去接入」
-// 的根（docs/plan/2026-06-19-skill-playbook-system.md §0.5.b/0.5.d）。
+// 的根（docs/archive/plan/2026-06-19-skill-playbook-system.md §0.5.b/0.5.d）。
 // 关键：缺能力 ≠ 报错，而是产出一张「缺什么」清单交给 UI 引导用户去接入（n8n 二分 / Dify 三态）。
 import type { SkillManifest, SkillProviderKind } from "./skillManifestSchema";
 

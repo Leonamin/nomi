@@ -44,7 +44,7 @@
 2. **每个新的付费出口必须过 `check:run-task-grant`**；每个新的出站路必须过
    `check:outbound-policy`；每个新的 IPC 面必须 `assertTrustedSender`。三条都是硬零，没有基线。
 3. **catch 不许吞到只剩一个空值**：失败要么带着原话上抛，要么带着原话落进结果的
-   `failureReason`。09-12 的诊断表（`docs/research/2026-09-12-deconstruct-all-fail/README.md`
+   `failureReason`。09-12 的诊断表（`docs/archive/research/2026-09-12-deconstruct-all-fail/README.md`
    的「静默吞错门」）是这一层现存 catch 的清单，新增 catch 按同一张表登记。
 
 ## 复查点

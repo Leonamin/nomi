@@ -1,6 +1,6 @@
 # 先查别人：媒体导入准入（2026-09-14）
 
-对应方案 `docs/plan/2026-09-14-media-import-single-owner.md`，合同 `docs/fixes/2026-09-14-media-import-single-owner.root-cause.json`。
+对应方案 `docs/archive/plan/2026-09-14-media-import-single-owner.md`，合同 `docs/fixes/2026-09-14-media-import-single-owner.root-cause.json`。
 
 本报告只写**实际查过的**东西。没查的那一格明写「没查」和为什么，不拿别的内容凑数。
 
@@ -63,7 +63,7 @@
 ## ④ TikHub 自媒体观点
 
 **没查。** TikHub 那条源是用来看自媒体/创作者社区在讨论什么框架、什么观点
-（见 `docs/lessons/tikhub-research-source.md` 的定位）。本次三个问题分别是
+（见 `docs/archive/lessons/tikhub-research-source.md` 的定位）。本次三个问题分别是
 「存储边界的准入语义」「磁盘余量」「codec 解码能力」——都是可以在依赖、仓库、规范里直接验证的事实问题，
 不是观点问题。为这种问题去翻自媒体内容属于凑数，所以明写没查，而不是编一段。
 

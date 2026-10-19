@@ -2,10 +2,10 @@ import type { TimelineClip, TimelineState, TimelineTrackType } from '../timeline
 import type { TimelineUndoEntry } from '../timeline/timelineUndoHistory'
 
 /**
- * P5 E1 采纳桥的合同类型（`docs/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md` §5）。
+ * P5 E1 采纳桥的合同类型（`docs/archive/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md` §5）。
  *
  * 一句话：**生成产物进时间轴，只有这一条路**。此前有 5 条各写各的（见
- * `docs/plan/2026-08-25-p5-e1-adoption-bridge.md` §3 收敛映射表），于是「重复点会多一份」
+ * `docs/archive/plan/2026-08-25-p5-e1-adoption-bridge.md` §3 收敛映射表），于是「重复点会多一份」
  * 「产物换版了没人告诉你」「批量落 12 个要按 12 次撤销」这三类 bug 各自有 5 个入口。
  * 收敛到这里之后它们只剩 1 个入口，修一次就整类不再复发（P2）。
  */

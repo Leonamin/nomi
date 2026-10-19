@@ -3,7 +3,7 @@
 > `CLAUDE.md`（常驻）只放原则和少数规则；本文件存**触发某条规则后才查的细节**。
 > 规则正本是 [`engineering/rules.json`](engineering/rules.json)（可读视图 [`engineering/rules.md`](engineering/rules.md)）：每条规则的旧号写在 `aliases` 里，`pnpm run check:rule-aliases` 保证任何 `R<数字>` 引用都解析得到。改规则只改 `rules.json`，再 `node scripts/gen-rules-view.mjs`。
 > 改触发清单同步 `scripts/claude-hooks/self-check.sh`（真相源；`.claude/` 下那份由 `pnpm install` 装）。
-> 2026-10-02 瘦身：删了 R3 / R4 / R7 / R25 / 画新面块等被设计卡 [`engineering/design-card.md`](engineering/design-card.md) 与独立验收取代的内容；有真实教训的段落搬到 [`lessons/framework-and-external-contract-lessons.md`](lessons/framework-and-external-contract-lessons.md)，其余靠 git 历史找回。
+> 2026-10-02 瘦身：删了 R3 / R4 / R7 / R25 / 画新面块等被设计卡 [`engineering/design-card.md`](engineering/design-card.md) 与独立验收取代的内容；有真实教训的段落搬到 [`lessons/framework-and-external-contract-lessons.md`](archive/lessons/framework-and-external-contract-lessons.md)，其余靠 git 历史找回。
 
 ## R1 加新必删旧（= P1 · 含旧 R10、R23）
 
@@ -43,19 +43,19 @@
 
 ### R5.4 接框架：四列表 + 参考实现逐层对照 + 逐字段裁决
 
-**触发**：引入 / 接入 / 升级任何框架 SDK 运行时，**或用它一个此前没用过的层**。动手前在 `docs/research/` 或 `docs/plan/` 出三份交付物，每格带 `file:line` 或文档 URL：
+**触发**：引入 / 接入 / 升级任何框架 SDK 运行时，**或用它一个此前没用过的层**。动手前在 `docs/archive/research/` 或 `docs/archive/plan/` 出三份交付物，每格带 `file:line` 或文档 URL：
 
 1. **四列表**：它提供 / 我们用了 / 我们另写了 / 我们拆散了。派工 brief 必须附这张表。结论翻译成 `docs/engineering/framework-boundaries.json` 的规则，跑 `pnpm run check:framework-boundary`；存量按债登记（绑收敛方案和到期日，到期不清零就红）。
-2. **参考实现逐层对照**（`docs/research/<日期>-<框架>-reference-implementation-conformance.md`，模板 `docs/research/TEMPLATE-reference-conformance.md`）：框架自带的参考实现按九层（工具 / 转录渲染 / 会话 / 上下文 / 模型与花费 / 控制流 / 扩展 API / 观测与测试 / 安全）逐层摆在我们旁边，每层判「一致 / 有意不同（理由须是领域约束）/ 没想到」；全是「一致」说明抄了，全是「有意不同」说明没看。「没想到」清单是实施阶段的前置门。
+2. **参考实现逐层对照**（`docs/archive/research/<日期>-<框架>-reference-implementation-conformance.md`，模板 `docs/archive/research/TEMPLATE-reference-conformance.md`）：框架自带的参考实现按九层（工具 / 转录渲染 / 会话 / 上下文 / 模型与花费 / 控制流 / 扩展 API / 观测与测试 / 安全）逐层摆在我们旁边，每层判「一致 / 有意不同（理由须是领域约束）/ 没想到」；全是「一致」说明抄了，全是「有意不同」说明没看。「没想到」清单是实施阶段的前置门。
 3. **framework-surface 逐字段裁决**：框架公开的每个字段都有一条裁决：`derived` / `constant`（值 + 领域约束理由）/ `unused` / `upstream-default` / `debt`（到期日 + owner）。字段由机器从 `.d.ts` 抽，`check:framework-surface` 校验；抽到 0 个字段也红。门岗和抽取器框架无关。
 
-教训（接 pi SDK 只接了最底层 loop、逐工具可选字段被一刀切硬写）见 [`lessons/framework-and-external-contract-lessons.md`](lessons/framework-and-external-contract-lessons.md)。
+教训（接 pi SDK 只接了最底层 loop、逐工具可选字段被一刀切硬写）见 [`lessons/framework-and-external-contract-lessons.md`](archive/lessons/framework-and-external-contract-lessons.md)。
 
 ## R8 先出可视样张
 
 **触发**：任何用户会看到的东西。**碰花钱 / 长跑 / 可打断 / 新界面先写设计卡**（[`engineering/design-card.md`](engineering/design-card.md)）；纯样张流程如下：
 
-0. **先看这个 UI 真实当前长什么样**（改 / 扩现有界面必做）：读完整渲染外壳组件，或看 `docs/design/app-screenshots-*` 真实截图。样张 = 真实布局 + 你的改动，不准从零散片段在脑子里拼整体。
+0. **先看这个 UI 真实当前长什么样**（改 / 扩现有界面必做）：读完整渲染外壳组件，或看 `docs/archive/design/app-screenshots-*` 真实截图。样张 = 真实布局 + 你的改动，不准从零散片段在脑子里拼整体。
 1. 先读 `docs/design/nomi-design-system.md` 与 `src/design/` 现有组件；token-only（禁非 token 的 px / hex / 圆角）；Nomi 品牌用真品牌（`NomiWordmark` / `NomiLogoMark`）。
 2. 涉及交互的样张必须是用户能亲手拖 / 点 / 调的可交互 widget（首选 `mcp__visualize__show_widget`），纯静态排版才允许静态 mockup。
 3. 用户确认后才实现。
@@ -117,7 +117,7 @@ P3「全绿不等于完成」的量化门。三档触发：
 
 ## R14 周期审计（建议档 · 含旧 R14.1 / R14.2）
 
-满 25 个 main commit 或发版前：多维 subagent 深审真实代码 + 走查（R13.1）+ 同一语义有几份定义横扫，落 `docs/audit/<date>-*.md`（现状 + 分级问题带 `file:line` + 路线），清 P0。自写登记复查：`self-written.json` 里 `to-replace` / `under-review` / `revisitBy` 到期 / 「框架后来已经提供了」的项逐条列进替换计划（`pnpm run audit:self-written`）。
+满 25 个 main commit 或发版前：多维 subagent 深审真实代码 + 走查（R13.1）+ 同一语义有几份定义横扫，落 `docs/archive/audit/<date>-*.md`（现状 + 分级问题带 `file:line` + 路线），清 P0。自写登记复查：`self-written.json` 里 `to-replace` / `under-review` / `revisitBy` 到期 / 「框架后来已经提供了」的项逐条列进替换计划（`pnpm run audit:self-written`）。
 
 **同一语义有几份定义**：重复实现通常是写新代码时没检索到第一套，P1 拦不住。新增或修改下列合同前先 `rg` 横扫现有 owner，把复用点或独立理由写清。机器守一部分：`pnpm run check:vocabularies`（TS AST 扫字符串 union / `z.enum` / `as const` / `Set`，按「文件 + 声明路径」登记 owner；第二份相同 owner、新增词表、成员漂移、陈旧基线、空 reason、debt 超上限都红；基线 `registered` / `debt` / `converged` 三桶，`debtCap` 只减不增）。机器查不到、必须人工横扫的七维：工具面（同一操作各入口叫什么、走不走同一 executor）、可见性 / 过滤口径、标识符（一个对象一个主键）、格式契约（是否自造生态已有的信封）、字段取值来源（一条取值链）、确认 / 权限面（放行只有一个真相源）、规则的路径覆盖。**最难查的一族是只做了一半**：加了「列」的过滤，「读」是否复用同一判定？加了「写」的校验，「改 / 删」呢？加了「导入」，「导出」是否同构？加了内部工具，外部 MCP 是否投影同一能力定义？
 

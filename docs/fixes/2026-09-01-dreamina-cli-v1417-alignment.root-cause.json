@@ -24,7 +24,7 @@
     "electron/catalog/dreaminaMultiframe.test.ts",
     "electron/catalog/dreaminaSeed.test.ts",
     "src/config/modelArchetypes/index.test.ts",
-    "docs/research/2026-09-01-dreamina-cli-v1417-matrix.md"
+    "docs/archive/research/2026-09-01-dreamina-cli-v1417-matrix.md"
   ],
   "entry_points": [
     "生成画布 → 即梦 Seedance（会员）→ 文生视频/图生视频/首尾帧/全能参考 (text2video/image2video/frames2video/multimodal2video) with VariantBar model_version",
@@ -41,7 +41,7 @@
     "The model_version strings sent to the CLI are exactly the current help spellings: `seedance2.5` (dot, not `seedance-3`) and `5.0Pro`.",
     "Required flags (--video_resolution for video, --resolution_type for image) are always populated from archetype default values seeded into request.params, so the normal UI and agent-planned paths never omit them."
   ],
-  "generality_proof": "All illegal combinations are made unreachable before request construction by the declarative archetype params, which are the single boundary the CLI-arg templates read. The matrix-lock tests in src/config/modelArchetypes/index.test.ts specialize each variant (specializeArchetypeForVariant) and assert the exact resolution/duration option sets and model_version strings, so a future drift in dreaminaSeedance.ts / dreaminaMultiframe.ts / dreaminaImage.ts fails a test. The one flag that is not a select-option constraint — the multiframe required --video_resolution, which is built imperatively — is enforced at the single shared boundary electron/catalog/dreaminaCodec.ts (normalizeMultiframeResolution + buildMultiframeArgs), and its test electron/catalog/dreaminaMultiframe.test.ts asserts the flag is present for every image count with default/illegal fallback to 720p. The versioned matrix doc (docs/research/2026-09-01-dreamina-cli-v1417-matrix.md) pins CLI version + checkedAt as the SOURCE all three archetypes cite.",
+  "generality_proof": "All illegal combinations are made unreachable before request construction by the declarative archetype params, which are the single boundary the CLI-arg templates read. The matrix-lock tests in src/config/modelArchetypes/index.test.ts specialize each variant (specializeArchetypeForVariant) and assert the exact resolution/duration option sets and model_version strings, so a future drift in dreaminaSeedance.ts / dreaminaMultiframe.ts / dreaminaImage.ts fails a test. The one flag that is not a select-option constraint — the multiframe required --video_resolution, which is built imperatively — is enforced at the single shared boundary electron/catalog/dreaminaCodec.ts (normalizeMultiframeResolution + buildMultiframeArgs), and its test electron/catalog/dreaminaMultiframe.test.ts asserts the flag is present for every image count with default/illegal fallback to 720p. The versioned matrix doc (docs/archive/research/2026-09-01-dreamina-cli-v1417-matrix.md) pins CLI version + checkedAt as the SOURCE all three archetypes cite.",
   "shared_boundaries": [
     {
       "path": "electron/catalog/dreaminaCodec.ts",
@@ -78,7 +78,7 @@
     "classification": "recurring",
     "reason": "The official 即梦 CLI evolves on its own cadence (v1.4.14 made two flags required; v1.4.15/1.4.17 added Seedance 2.5 and 1080p; v1.4.16 changed Seedream 5.0Pro resolutions). Each release can silently desync any command/param, so legality must be pinned to a versioned matrix and enforced by contract tests rather than re-copied by hand each time.",
     "same_class_scan": [
-      "Updated the local CLI to v1.4.17 and dumped -h for all seven surfaces (text2video/image2video/frames2video/multimodal2video/multiframe2video/text2image/image2image) plus query_result/image_upscale; recorded the full matrix in docs/research/2026-09-01-dreamina-cli-v1417-matrix.md as the SOURCE.",
+      "Updated the local CLI to v1.4.17 and dumped -h for all seven surfaces (text2video/image2video/frames2video/multimodal2video/multiframe2video/text2image/image2image) plus query_result/image_upscale; recorded the full matrix in docs/archive/research/2026-09-01-dreamina-cli-v1417-matrix.md as the SOURCE.",
       "Audited every 即梦 model_version string literal in the tree (git grep) and confirmed the only place they live is the dreaminaSeedance.ts variants; no hidden hardcodes in productionRun/MCP/other call sites.",
       "Confirmed the required flags (--video_resolution, --resolution_type) fire pre-auth in the CLI and that the normal UI + agent-planned paths both seed archetype defaults into request.params (parameterControlModel defaultPatchForParameterControl; plannedNodeMeta), so the required flags are always populated.",
       "Removed the dead, now-false codec heuristics (normalizeDreaminaVideoResolution/normalizeDreaminaRatio/DREAMINA_VIDEO_RATIOS) that were never called in production and would contradict the 2.5 matrix, eliminating a second, drifting source of truth."

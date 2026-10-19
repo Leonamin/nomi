@@ -45,7 +45,7 @@
 | 29 | runtime walk 支持 --packaged 且断言 isPackaged/userData | 当前最终安装包、旧项目副本、编辑保存重开及适用导出未由本代理验证；Windows 未验证 |
 | 30 | dirty tree 仍大量生产增量 | secret scan、contracts/build/review、提交树与包/证据 manifest 一致，最终交付前执行 |
 
-T7 已有详细证据：`docs/audit/2026-09-20-core-a-t7-acceptance.md`。历史 `/private/tmp/nomi-t7-controlled-final.log` 为两文件 29 项通过；它不自动覆盖之后付款修改。K3 历史 `/private/tmp/nomi-k3-adjacent-final.log` 为 6 文件 76 项通过，同样不是全 A 收据。
+T7 已有详细证据：`docs/archive/audit/2026-09-20-core-a-t7-acceptance.md`。历史 `/private/tmp/nomi-t7-controlled-final.log` 为两文件 29 项通过；它不自动覆盖之后付款修改。K3 历史 `/private/tmp/nomi-k3-adjacent-final.log` 为 6 文件 76 项通过，同样不是全 A 收据。
 
 ## 最小定点套件（分组执行，不重复整库）
 

@@ -16,7 +16,7 @@
 
 - `scripts/check-mcp-tool-references-lib.mjs:34`：现有 240 字符窗口不识别对象边界，字段换序、长值、嵌套都会影响结果；替换而非扩大窗口。
 - `tests/ux/agent-runtime-production.walk.mjs:67` 与 `tests/ux/agent-runtime-editing.walk.mjs:71`：宿主回复都以同一对象的 `type: 'tool'` 标记。
-- `docs/audit/2026-09-06-agent-tool-layer-audit.md:195`：manifest 摘录有 `intent/capabilityRefs/inputSchema/outputSchema`，与 MCP payload 不同。
+- `docs/archive/audit/2026-09-06-agent-tool-layer-audit.md:195`：manifest 摘录有 `intent/capabilityRefs/inputSchema/outputSchema`，与 MCP payload 不同。
 - TypeScript 官方 scanner 文档：<https://github.com/microsoft/TypeScript/wiki/Architectural-Overview#scanner>；Context7 已查 scanner，安装版本 `node_modules/typescript/lib/typescript.d.ts:8511` 提供 createScanner，复用现有依赖处理字符串和注释，不自造词法分析器。内部静态门岗，不改任何外部协议格式。
 
 ## 范围与边界

@@ -9,7 +9,7 @@
 // 都正常应答）。所以模型清单不能从那个目录派生——它是一份聚合展示列表，不是可调用性的
 // 权威源。这里显式声明，并在各自档案的 sources 里注明这一点。
 //
-// 没接的三个与理由（不猜参数，见 docs/evidence/2026-09-17-higgsfield-contract §6）：
+// 没接的三个与理由（不猜参数，见 docs/archive/evidence/2026-09-17-higgsfield-contract §6）：
 //   - Soul Standard：被 Soul 2 取代，且贵 30 倍（1.5 credits vs 0.05），接了只会让用户选错。
 //   - Marketing Studio Image：`input_schema` 为 null、官方文档页 404，除了 prompt 之外
 //     一个字段都反推不出来（它用的是 jsonschema 校验器，报错只说第一个缺的字段）。

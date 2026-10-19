@@ -22,11 +22,11 @@ git show 356a6d5f:<path>
 
 ## Where the conclusions live (already on `main`)
 
-- `docs/audit/2026-08-26-agnes-gemini-preflight.md`
-- `docs/audit/2026-08-26-agnes-runtime-verification.md` (references this dir's REPORT.md / latest187-REPORT.md)
-- `docs/audit/2026-08-26-antigravity-full-capability.md`
-- `docs/audit/2026-08-27-antigravity-application-acceptance.md` (references `antigravity-authenticated-20260827/application/`)
-- `docs/audit/2026-08-27-antigravity-authenticated-verification.md` (references `antigravity-authenticated-20260827/`)
+- `docs/archive/audit/2026-08-26-agnes-gemini-preflight.md`
+- `docs/archive/audit/2026-08-26-agnes-runtime-verification.md` (references this dir's REPORT.md / latest187-REPORT.md)
+- `docs/archive/audit/2026-08-26-antigravity-full-capability.md`
+- `docs/archive/audit/2026-08-27-antigravity-application-acceptance.md` (references `antigravity-authenticated-20260827/application/`)
+- `docs/archive/audit/2026-08-27-antigravity-authenticated-verification.md` (references `antigravity-authenticated-20260827/`)
 - Provider implementation: `electron/ai/antigravity*.ts`, `electron/catalog/agnes*.ts` / `antigravity*.ts`, `src/config/modelArchetypes/{agnesImage,agnesVideo,antigravityImage,geminiOmni11}.ts`, `src/ui/onboarding/Antigravity*`, `src/i18n/locales/antigravity.ts`, plus their `.test.ts` siblings.
 
 ## Representative samples kept in this branch

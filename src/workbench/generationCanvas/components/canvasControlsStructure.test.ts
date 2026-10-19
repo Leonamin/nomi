@@ -168,7 +168,7 @@ describe('generation canvas control structure', () => {
   it('gives disabled tooltip triggers a name', () => {
     // 原本同一条 it 还断「空格对焦点控件仍可用」，判据在已删的 useCanvasViewportGestures 上。
     // 那条行为的 owner 今天是 reactFlow/useGenerationCanvasReactFlowPointer 的 keydown，
-    // 它**还没有**这层守卫——记在 docs/plan/2026-09-11-canvas-migration-audit.md，另轨处理，
+    // 它**还没有**这层守卫——记在 docs/archive/plan/2026-09-11-canvas-migration-audit.md，另轨处理，
     // 不在这里留一条指向死文件的假绿。
     const tooltipButton = source('./CanvasNavigationTooltipButton.tsx')
 

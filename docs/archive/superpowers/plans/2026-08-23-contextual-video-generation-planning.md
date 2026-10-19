@@ -58,9 +58,9 @@
 
 当前提交中的 `CameraControlStrategy` 是先前为了让推荐器有测试 seam 而做的临时抽象，已经被官方文档对照证明过窄：Seedance/Veo/Runway/Kling 主要通过 prompt 或参考素材表达，Luma 的 `trajectory` 是限定在 `video_edit` 的结构化运动条件，不等同于统一相机枚举。
 
-正式共享原语改为模式级 `expressionChannels`：`signal + via(prompt/reference_slot/structured_parameter) + status(documented/unsupported/unknown) + 真实 slot/parameter path + source`。完整证据和用户价值见 `docs/research/2026-08-24-video-capability-shared-layer.md`。
+正式共享原语改为模式级 `expressionChannels`：`signal + via(prompt/reference_slot/structured_parameter) + status(documented/unsupported/unknown) + 真实 slot/parameter path + source`。完整证据和用户价值见 `docs/archive/research/2026-08-24-video-capability-shared-layer.md`。
 
-因此下面原先围绕 `cameraControl/nativeIntents` 的实现步骤不再执行；先完成新的 capability facts，再继续推荐器和 MCP wiring。2.5 APIMart 官方页面本轮抓取返回 404，未重新核验前保持 `unknown`，不扩大承诺。研究结论已写入 `docs/research/2026-08-24-video-capability-shared-layer.md`，并在当前分支删除了临时字段。
+因此下面原先围绕 `cameraControl/nativeIntents` 的实现步骤不再执行；先完成新的 capability facts，再继续推荐器和 MCP wiring。2.5 APIMart 官方页面本轮抓取返回 404，未重新核验前保持 `unknown`，不扩大承诺。研究结论已写入 `docs/archive/research/2026-08-24-video-capability-shared-layer.md`，并在当前分支删除了临时字段。
 
 共享 registry 的候选列表不再硬编码供应商模型名：Electron/stdio 从当前 catalog 构造视频候选；命中逐项对账档案才使用精确能力，未对账模型使用保守 unknown 档案。这样供应商缺少高级能力不会让基础能力被整体禁用，新增模型也不需要修改推荐器。
 
@@ -70,7 +70,7 @@
 - Modify: `src/config/modelArchetypes/types.ts`
 - Modify: `src/config/modelArchetypes/seedanceApimart.ts`
 - Modify: `src/config/modelArchetypes/seedance25Apimart.ts`
-- Modify: `docs/research/2026-08-24-video-capability-shared-layer.md`
+- Modify: `docs/archive/research/2026-08-24-video-capability-shared-layer.md`
 - Test: `src/config/modelArchetypes/modelArchetypeCapabilities.test.ts`
 
 - [x] **Step 1: Write failing tests for expression channels and reference constraints**
@@ -398,7 +398,7 @@ git commit -m "feat: project contextual video recommendations in MCP planning"
 **Files:**
 - Modify: `src/config/modelArchetypes/videoGenerationRecommendation.test.ts`
 - Modify: `electron/capabilityCore/nomiMcpGenerationPlanning.test.ts`
-- Create: `docs/audit/2026-08-24-video-capability-research.md`
+- Create: `docs/archive/audit/2026-08-24-video-capability-research.md`
 
 - [x] **Step 1: Add the scenario matrix as failing contract tests**
 
@@ -447,21 +447,21 @@ Expected: all assertions pass, zero provider quota/network calls, and output con
 
 - [x] **Step 5: Update the evidence document**
 
-Record the exact test commands, counts, scenarios, zero-side-effect counters, and known limitations in `docs/audit/2026-08-23-p1-p3-evidence.md`. Explicitly state that recommendation is advisory before sealing and that the sealed contract is the only execution authority.
+Record the exact test commands, counts, scenarios, zero-side-effect counters, and known limitations in `docs/archive/audit/2026-08-23-p1-p3-evidence.md`. Explicitly state that recommendation is advisory before sealing and that the sealed contract is the only execution authority.
 
 - [x] **Step 6: Commit the realistic variation coverage**
 
 ```bash
-git add src/config/modelArchetypes/videoGenerationRecommendation.test.ts electron/capabilityCore/nomiMcpGenerationPlanning.test.ts tests/ux/mcp-generation-editable-context.e2e.mjs docs/audit/2026-08-23-p1-p3-evidence.md
+git add src/config/modelArchetypes/videoGenerationRecommendation.test.ts electron/capabilityCore/nomiMcpGenerationPlanning.test.ts tests/ux/mcp-generation-editable-context.e2e.mjs docs/archive/audit/2026-08-23-p1-p3-evidence.md
 git commit -m "test: cover editable model and reference generation journeys"
 ```
 
 ### Task 6: Review, gates, and decision package
 
 **Files:**
-- Modify: `docs/plan/2026-08-23-video-generation-parameter-research.md`
-- Modify: `docs/research/2026-08-23-video-generation-parameter-selection.md`
-- Modify: `docs/audit/2026-08-23-p1-p3-evidence.md`
+- Modify: `docs/archive/plan/2026-08-23-video-generation-parameter-research.md`
+- Modify: `docs/archive/research/2026-08-23-video-generation-parameter-selection.md`
+- Modify: `docs/archive/audit/2026-08-23-p1-p3-evidence.md`
 
 - [x] **Step 1: Run scoped review checks**
 

@@ -40,7 +40,7 @@
   "internal_only_reason": "纯本仓走查锚点与库排序问题：排序规则、DOM 锚点、旅程脚本全在本仓，无第三方契约介入。",
   "recurrence": {
     "classification": "recurring",
-    "reason": "同一族在本仓已有两条教训：docs/lessons/dead-selector-lies-both-ways.md（失效锚点同时造假红与假绿）与 docs/lessons/assert-you-are-in-the-situation-you-claim.md（没证明自己在以为的现场）。本次是它的第三次变形——锚点本身没死，是「位置」这个坐标系被一个新兄弟改写了。只要走查还能按位置指认对象，任何一次新增兄弟都能再造一次。",
+    "reason": "同一族在本仓已有两条教训：docs/archive/lessons/dead-selector-lies-both-ways.md（失效锚点同时造假红与假绿）与 docs/archive/lessons/assert-you-are-in-the-situation-you-claim.md（没证明自己在以为的现场）。本次是它的第三次变形——锚点本身没死，是「位置」这个坐标系被一个新兄弟改写了。只要走查还能按位置指认对象，任何一次新增兄弟都能再造一次。",
     "same_class_scan": [
       "实扫 tests/ evals/ scripts/ 下全部 `data-project-card` 用法（19 处）：7 处是单项目走查的正当 `.first()`；7 处已按 hasText/filter 选身份；1 处（production-mcp 旅程重启步）是「多项目 × 位置选择」的坏组合，即本次红。",
       "阳性对照（本机 Electron 真跑）：不改任何等待时长，只在重启前对语义项目补一次 nomi_canvas_edit 让它成为最新 → 卡序翻转，`.first()` 点进 workspace-145046bd（语义项目），任务中心开出来是空的，`[data-production-task-card]` 10s 超时，报错与调用栈与 CI 逐字一致。",

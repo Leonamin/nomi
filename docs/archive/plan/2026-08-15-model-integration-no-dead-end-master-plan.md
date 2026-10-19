@@ -1762,7 +1762,7 @@ T05b（完整版）验收：脚本通过 host pending API 返回 checkpoint，T0
 
 建议拥有：
 
-- docs/design/mockups/*
+- docs/archive/design/mockups/*
 - src/ui/onboarding/*
 - src/workbench/settings/*
 - i18n 对应模块

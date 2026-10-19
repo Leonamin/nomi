@@ -1,7 +1,7 @@
 # AI 剪辑开源版图调研 → Nomi 差距与方案
 
 > 日期：2026-09-09 · 调研方式：GitHub 搜索（AI video editing / AI 剪辑 / video editing agent LLM / auto cut silence）+ 头部仓库 README 逐个实读
-> Nomi 现状锚点：`docs/ARCHITECTURE-NOW.md`（时间轴/导出/agent 媒体工具三行）+ `docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §5.1（E1/E2/E3 自动剪辑总纲）
+> Nomi 现状锚点：`docs/archive/guides/ARCHITECTURE-NOW.md`（时间轴/导出/agent 媒体工具三行）+ `docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §5.1（E1/E2/E3 自动剪辑总纲）
 > 关联文档：[AdCraft 完整对比与方案](../product/2026-09-09-adcraft-vs-nomi-full-comparison-and-plan.md)
 
 ---
@@ -98,4 +98,4 @@
 
 - GitHub Search API：`AI video editing` / `AI 剪辑` / `video editing agent LLM` / `auto cut silence video`（2026-09-09，star 数当日实取）
 - README 实读：FireRed-OpenStoryline（NEWS 时间线：ASR 粗剪 2026-03-22、AI 转场 2026-04-02、OpenClaw/Claude Code Skills）、OpenCreator（Codex 原生/双模式状态机/版本化/三层 memory）、FunClip（Paraformer/SeACo/CAM++/LLM 选段）、auto-editor（`--edit` 表达式/`--margin`/`npx skills add`）
-- Nomi 现状：`docs/ARCHITECTURE-NOW.md:53-58`、`docs/plan/2026-06-25-audio-first-class-timeline.md`、`docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §5.1、`docs/plan/2026-09-01-video-deconstruction-v1.md`（whisper 已在拆解引擎中）
+- Nomi 现状：`docs/archive/guides/ARCHITECTURE-NOW.md:53-58`、`docs/archive/plan/2026-06-25-audio-first-class-timeline.md`、`docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md` §5.1、`docs/archive/plan/2026-09-01-video-deconstruction-v1.md`（whisper 已在拆解引擎中）

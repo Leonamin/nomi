@@ -158,7 +158,7 @@ owner 看到本次修复后追问：「会不会还有新格式，之后还要�
 - 真实 Electron 走查 `node tests/ux/comfy-unknown-combo-feedback.walk.mjs`（先
   `pnpm run build`，走查跑的是编译产物不是源码）：真实点「模型设置」→「本地 ComfyUI」→
   展开「导入自定义工作流」→ 粘贴工作流 → 分析 → 对一台本地假 ComfyUI 服务器对账，
-  截图存 `docs/plan/2026-09-11-triage-board-evidence/combo-unknown-shape.png`，并拦截
+  截图存 `docs/archive/plan/2026-09-11-triage-board-evidence/combo-unknown-shape.png`，并拦截
   `window.open` 校验「反馈给 Nomi」打开的 issue 深链里 `what_happened`/`extra` 确实带上了
   node class 和原始 spec JSON。
 - `python3 scripts/with-gates-lock.py -- pnpm run gates` 全绿。

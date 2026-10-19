@@ -2,7 +2,7 @@
 
 日期：2026-09-07 · 基线：`origin/main@6a7c81786`
 性质：只调研不改码（本分支零生产代码）
-服务对象：Agent 运行时重做（`docs/plan/2026-09-07-agent-runtime-rebuild.md`）与分镜表节点（`docs/plan/2026-09-07-storyboard-table-node.md` §4.4「节拍/情绪」列）的下一跳——**从「AI 决定拍什么」延伸到「AI 决定怎么剪」**。
+服务对象：Agent 运行时重做（`docs/archive/plan/2026-09-07-agent-runtime-rebuild.md`）与分镜表节点（`docs/archive/plan/2026-09-07-storyboard-table-node.md` §4.4「节拍/情绪」列）的下一跳——**从「AI 决定拍什么」延伸到「AI 决定怎么剪」**。
 
 > 用户猜想（本文要验证或推翻的那句）：「**输出一张剪辑执行表，按规则执行。**」
 
@@ -29,7 +29,7 @@
 
 4. **没有一家顶尖产品把「剪辑决定」做成用户可编辑的表——他们要么直接落轴，要么给一句话。** 全行业现役范式一致是「AI 先做完 → 落时间轴 → 你事后改」，七家逐条实核见 §2.1。**空位是真的，但有两条反证据必须一起读**：① **Descript 的填充词面板已经把这个形态做得很成熟**——侧栏列出全部实例、带时间码、可试听、每条四选一、审完才动手（<https://help.descript.com/hc/en-us/articles/10164806394509-Remove-filler-words>），**说明难点不在形态、在「扩展到全部决策类型」**；② **Premiere 的 AI Assistant 选了「逐步拦截」而不是「整体计划表」**（*"review each step before it happens"*）——一线 NLE 厂商的这个取舍，我们得先想明白为什么，再决定要不要反着做。
 
-5. **别把它做成新表：它是分镜表的第三块列集。** 分镜表节点已拍板「一个节点、一个渲染器、两套列集」（`docs/plan/2026-09-07-storyboard-table-node.md` §0）。剪辑执行表是**第三套列集**，owner 是时间轴（`TimelineState`），不是 `PlanShot`——理由与 §3.4 同构：`进出点/转场时长/音量` 在 `PlanShot` 上没有家，而 `prompt/参考槽` 在时间轴上没有家。**两块数据、一个表格外壳、零份复制。**
+5. **别把它做成新表：它是分镜表的第三块列集。** 分镜表节点已拍板「一个节点、一个渲染器、两套列集」（`docs/archive/plan/2026-09-07-storyboard-table-node.md` §0）。剪辑执行表是**第三套列集**，owner 是时间轴（`TimelineState`），不是 `PlanShot`——理由与 §3.4 同构：`进出点/转场时长/音量` 在 `PlanShot` 上没有家，而 `prompt/参考槽` 在时间轴上没有家。**两块数据、一个表格外壳、零份复制。**
 
 ---
 
@@ -134,14 +134,14 @@
 ```bash
 export TIKHUB_API_KEY="…"        # 只从环境变量读
 node scripts/research/tikhub-search.mjs --q "AI 短剧 剪辑 节奏"  --platform all --limit 15 \
-  --out docs/research/2026-09-07-edit-decision-table-for-agent/tikhub/a-ai-drama-rhythm/
+  --out docs/archive/research/2026-09-07-edit-decision-table-for-agent/tikhub/a-ai-drama-rhythm/
 node scripts/research/tikhub-search.mjs --q "剪映 智能剪辑 AI"   --platform all --limit 15 \
-  --out docs/research/2026-09-07-edit-decision-table-for-agent/tikhub/b-capcut-smart-edit/
+  --out docs/archive/research/2026-09-07-edit-decision-table-for-agent/tikhub/b-capcut-smart-edit/
 node scripts/research/tikhub-search.mjs --q "AI 视频 卡点 音乐"  --platform all --limit 15 \
-  --out docs/research/2026-09-07-edit-decision-table-for-agent/tikhub/c-beat-sync-music/
+  --out docs/archive/research/2026-09-07-edit-decision-table-for-agent/tikhub/c-beat-sync-music/
 ```
 
-产物附件：`docs/research/2026-09-07-edit-decision-table-for-agent/tikhub/{a-ai-drama-rhythm,b-capcut-smart-edit,c-beat-sync-music}/tikhub-search.{json,md}`。三组各 60 条（抖音/小红书/B站/X 各 15），零失败。
+产物附件：`docs/archive/research/2026-09-07-edit-decision-table-for-agent/tikhub/{a-ai-drama-rhythm,b-capcut-smart-edit,c-beat-sync-music}/tikhub-search.{json,md}`。三组各 60 条（抖音/小红书/B站/X 各 15），零失败。
 
 | 平台 | 出处 | 作者 · 日期 | 原文摘要（未改写） |
 |---|---|---|---|
@@ -350,7 +350,7 @@ OTIO 的 `Marker`（`marker.h:22-26,37-41`：`name / marked_range / color / meta
 
 `STORYBOARD_PROFILES['genre.short-drama'].promptSkeleton` 里已经有一个 `emotion` 枚举，取值是 **`紧张 / 温柔 / 压抑 / 轻松 / 孤独`**（`storyboardProfiles.ts:19`）。
 
-而 `docs/plan/2026-09-07-storyboard-table-node.md` §4.4 档② 推荐的 `beat` 枚举是 **`铺垫 / 推进 / 转折 / 爆点 / 留白`**。
+而 `docs/archive/plan/2026-09-07-storyboard-table-node.md` §4.4 档② 推荐的 `beat` 枚举是 **`铺垫 / 推进 / 转折 / 爆点 / 留白`**。
 
 **这是两个词表，不是一个。** 它们回答的是两个不同的问题——`emotion` 说「这一镜是什么情绪」，`beat` 说「这一镜在叙事里承担什么职能」——所以**它们不该合并**，但也**绝不能一个叫 `mood`（拆解引擎，`deconstructVideo.ts:45`）、一个叫 `emotion`（片种档案）、第三个叫 `beat`（待拍板）而没人登记它们的关系**。这正是 `check:vocabularies` 与 R14.1「同一语义有几份定义」要抓的形状。
 
@@ -358,7 +358,7 @@ OTIO 的 `Marker`（`marker.h:22-26,37-41`：`name / marked_range / color / meta
 
 ### 5.3 与「模型决定 → 引擎执行」模式的接口
 
-> **诚实标注**：任务书点名的 `docs/plan/2026-09-07-generation-strategy-resolver.md` 在 `origin/main@6a7c81786` 上**不存在**（`ls docs/plan | grep -i strategy` 只有 `2026-09-05-timeline-placement-strategy.md`）。本节按仓库里真正在跑的那个同名模式写。
+> **诚实标注**：任务书点名的 `docs/archive/plan/2026-09-07-generation-strategy-resolver.md` 在 `origin/main@6a7c81786` 上**不存在**（`ls docs/archive/plan | grep -i strategy` 只有 `2026-09-05-timeline-placement-strategy.md`）。本节按仓库里真正在跑的那个同名模式写。
 
 现役形态是**档案声明槽、通用系统填**（P4）：`ArchetypeReferenceSlotKind` 六种槽（[`videoCapabilities/types.ts:31-37`](../../../electron/shared/videoCapabilities/types.ts)），每个模型档案声明自己要哪些槽，`AssetReference` 通用渲染器负责填。
 
@@ -447,7 +447,7 @@ OTIO 的 `Marker`（`marker.h:22-26,37-41`：`name / marked_range / color / meta
 ## 7. 诚实记分
 
 **真跑了的**：
-- TikHub 三组关键词 × 四平台 = 180 条，零失败（附件在 `docs/research/2026-09-07-edit-decision-table-for-agent/tikhub/`）。
+- TikHub 三组关键词 × 四平台 = 180 条，零失败（附件在 `docs/archive/research/2026-09-07-edit-decision-table-for-agent/tikhub/`）。
 - 克隆并实读 OpenTimelineIO@main、auto-editor@main、clipsai@main、MoneyPrinterTurbo@main 源码。
 - 本机 `ffmpeg -h filter=xfade` / `-h filter=acrossfade` 实跑，58 个转场名逐个抄下。
 - 全仓 grep 确认 beat/BPM/卡点检测**零命中**。
@@ -464,4 +464,4 @@ OTIO 的 `Marker`（`marker.h:22-26,37-41`：`name / marked_range / color / meta
 - **没有跑 §6.3 的探针**（本文只给设计）。§4.1 覆盖矩阵是静态阅读结论，未被执行证据检验。
 - 顶尖产品那一节只采信官方域，但**没有一条是本人实操验证的**——都是官方文档/帮助中心/changelog 的转述。产品行为随版本变，读的时候按日期打折。该节末尾另有一份逐条「未证实项汇总」。
 - **本文初稿曾把 Fotor 的 `Motion Package Plan` 当成产品先例写进结论，实核后推翻**（更正标记见 §2.1 与 §2.3）。留在这里作为记分：**创作者转述不是产品文档**，哪怕转述得很具体。
-- 任务书点名的 `docs/plan/2026-09-07-generation-strategy-resolver.md` 在 main 上不存在，§5.3 按仓库里真正在跑的档案声明模式写（已在正文标注）。
+- 任务书点名的 `docs/archive/plan/2026-09-07-generation-strategy-resolver.md` 在 main 上不存在，§5.3 按仓库里真正在跑的档案声明模式写（已在正文标注）。

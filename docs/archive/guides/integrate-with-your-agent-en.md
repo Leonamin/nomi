@@ -149,6 +149,6 @@ Give the user a default "cheap drafts → high-quality finish" workflow, and wir
 - Built-in provider list (which hosts Nomi recognizes): `electron/catalog/builtinVendorSeeds.ts`.
 - Full MCP / CLI flow, 33 tools, troubleshooting, security boundaries: `docs/guide/capability-core-cli-mcp.md`.
 - Skill format: `docs/skill-pack-format.md`.
-- General provider integration: `docs/provider-integration.md`; user guide: `docs/user-guide.md`.
+- General provider integration: `docs/archive/guides/provider-integration.md`; user guide: `docs/archive/guides/user-guide.md`.
 
 The UI evolves — **wherever a step doesn't match what you see, the source on the user's machine wins.**

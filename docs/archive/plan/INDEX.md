@@ -1,4 +1,4 @@
-# docs/plan 索引地图
+# docs/archive/plan 索引地图
 - [模型契约跨字段约束](2026-09-08-model-contract-cross-field-limits.md) — Hailuo 1080p/时长与 H3 混合参考总量。
 - [阶段 5b：目录活性 reconcile](2026-09-08-catalog-liveness-reconcile.md) — 自动禁用、保留配置、周探针与明暗样张。
 - [全仓架构治理定稿：单一事实、单向投影、入口收敛](2026-09-26-architecture-single-owner-governance.md) — 生命周期 owner、durable commit、迁移/回滚矩阵、vertical pilot 与真实验收门。
@@ -8,7 +8,7 @@
 
 > 方案/执行文档按**主题**分组的查找表。文件本身保持平铺（彼此有大量路径互链，移动会断链），本表负责「按主题/状态秒定位」。
 > 本索引仍有历史存量缺口；查不到时必须继续全量搜索。`check:docs-index` 保证缺口只减不增。
-> 跨阶段总纲另见 [`docs/superpowers/plans/`](../superpowers/plans)；当前主文档是 [Nomi 统一 Agent 总体方案](../superpowers/plans/2026-08-24-unified-agent-master-plan.md)。
+> 跨阶段总纲另见 [`docs/archive/superpowers/plans/`](../superpowers/plans)；当前主文档是 [Nomi 统一 Agent 总体方案](../superpowers/plans/2026-08-24-unified-agent-master-plan.md)。
 > 新增 plan 时**顺手在本表对应主题下加一行**。
 > 状态图例：✅ 已交付 ｜ 🚧 进行中 ｜ ⏳ 已拍板·未开工 ｜ 🧊 暂缓/远期 ｜ 📋 方案待拍板 ｜ ⛔ 已废弃 ｜ 📎 交接/日志
 > 📋/⏳/🚧 会进交付账本现役区并被每日提醒（`pnpm run ledger:brief`；账本是本地视图，不进 git）；🧊 列出但不催；无标记 = 未登记存量，不打扰。
@@ -30,11 +30,11 @@
 | [2026-09-05-m0-live-certification-audit.md](2026-09-05-m0-live-certification-audit.md) | M0 MCP live certification 审计：中转站文档/API key 接入边界与真实调用证据 | 🚧 |
 | [2026-09-05-real-video-export-restart.md](2026-09-05-real-video-export-restart.md) | 真实视频生成→剪辑→预览→导出→关闭重启恢复旅程与证据门 | 🚧 |
 | [2026-09-05-storyboard-two-state-generation-design.md](2026-09-05-storyboard-two-state-generation-design.md) | **分镜 v6 双状态生成设计**：编辑态能力槽、生成态结果卡、模型参考矩阵、自动引用、迁移与真实验收 | 📋 |
-| [2026-09-05-storyboard-table-v6-design-contract.md](../../design/2026-09-05-storyboard-table-v6-design-contract.md) | **分镜表 v6 设计合同**（方向 A，用户已拍板）：信息架构、行/锚状态表、参考列规则+六档案槽矩阵、旧版 15 条功能对账、token/选择器契约草案、不做项与验收清单；样张 `docs/design/mockups/2026-09-05-storyboard-table-v6/` | 📋 |
+| [2026-09-05-storyboard-table-v6-design-contract.md](../design/2026-09-05-storyboard-table-v6-design-contract.md) | **分镜表 v6 设计合同**（方向 A，用户已拍板）：信息架构、行/锚状态表、参考列规则+六档案槽矩阵、旧版 15 条功能对账、token/选择器契约草案、不做项与验收清单；样张 `docs/archive/design/mockups/2026-09-05-storyboard-table-v6/` | 📋 |
 | [2026-09-06-storyboard-v6-feedback-rework.md](2026-09-06-storyboard-v6-feedback-rework.md) | 分镜表 v6 五条用户反馈返工：删展开与编辑字段、参数网格、参考堆、播放旅程、剧本来源设计 | 🚧 |
 | [2026-09-07-storyboard-table-node.md](2026-09-07-storyboard-table-node.md) | **分镜表节点（画布上的表格表示版）**：一个 `shot_table` kind、两套列集、两个 owner（分镜来源读穿投影 `storyboardDesignsByDocumentId`，拆解来源节点自持事实列）；含现役右栏摩擦实核截图、九列 ↔ 引擎字段逐一映射（拆解侧零缺口 / 回写分镜侧六项无家）、「节拍/情绪」三档对比（推荐受控枚举列）、六 PR 切法与四条 R13 走查清单 | 📋 |
 | [2026-09-05-gpt-discussion-consolidation.md](2026-09-05-gpt-discussion-consolidation.md) | GPT 讨论梳理：统一 Agent / 画布 / 视频拆解表 / Skill 站的现状对账与拍板记录 | 📋 |
-| [2026-09-05-editing-panel-design-contract.md](../../design/2026-09-05-editing-panel-design-contract.md) | **剪辑面设计合同**：布局 C′ + 时间轴补齐 11 条（用户 09-05 拍板），四路实施任务书依据 | ⏳ |
+| [2026-09-05-editing-panel-design-contract.md](../design/2026-09-05-editing-panel-design-contract.md) | **剪辑面设计合同**：布局 C′ + 时间轴补齐 11 条（用户 09-05 拍板），四路实施任务书依据 | ⏳ |
 | [2026-09-04-main-convergence-follow-ups.md](2026-09-04-main-convergence-follow-ups.md) | Main 收敛后续明细；历史执行拆解，状态以总方案和 current-main 审计为准 | 📎 |
 | [2026-09-05-agent-host-gate-removal.md](2026-09-05-agent-host-gate-removal.md) | **常驻 Agent 拆发布闸**：删掉默认关的 `agentHostPreference` 与设置页开关，Agent 对所有用户无条件常驻，未完成处改用 header Beta 徽标明说；根因是「用户用的产品」与「测试跑的产品」分叉的并行版 | 🚧 |
 | [2026-09-05-agent-ui-a-composer.md](2026-09-05-agent-ui-a-composer.md) | Agent UI A 段：composer 五按钮调序、模式弹层收敛、运行呼吸光与分镜入口 | 🚧 |
@@ -57,7 +57,7 @@
 |---|---|---|
 | [2026-09-22-vendor-connection-identity.md](2026-09-22-vendor-connection-identity.md) | **连接身份 = 域名 + 连接名**（issue #831）：中转站同一 Base URL 卖三个分组，加第二条连接会把第一条的名字和 Key 当场顶掉。身份派生收成唯一 owner `connectionVendorKey.ts`，「这是不是某个内置家」收进 `builtinVendorIdentity` + `check:builtin-vendor-literals` 棘轮；结构评审见 [`docs/archive/audit/2026-09-22-model-integration-layer-structure.md`](../audit/2026-09-22-model-integration-layer-structure.md) | ✅ |
 | [2026-09-11-comfyui-certification-wiring.md](2026-09-11-comfyui-certification-wiring.md) | **ComfyUI 接入主链阻断**：认证服务的三样运行时依赖被写成 optional、注册处零参构造，于是能力挂得上、真调用必炸且被 catch 洗成中性码 —— ComfyUI 实例永远停在「未启用」；接上依赖后又露出第二跳（上游任务编号被算了两遍，闸问的是没有的那一份）。修法：必填契约 + 装配收口 + 编号只有一个答案；本机真 ComfyUI 验收到真出图（[证据](2026-09-11-comfyui-cert-evidence)）| 🚧 |
-| [2026-09-11-ai-assisted-onboarding-entry.md](2026-09-11-ai-assisted-onboarding-entry.md) | **「用 AI 帮我接入」入口**：把「让你已经在用的 AI 助手替你接模型」这条路搬到模型设置页顶部，并补上缺的那半——任务提示词 + 标准 frontmatter 的 [`agent-skills/nomi-add-model/SKILL.md`](../../../agent-skills/nomi-add-model/SKILL.md)；设计定稿 [2026-09-11-ai-assisted-onboarding-entry.md](../../design/2026-09-11-ai-assisted-onboarding-entry.md)、先查别人 [prior-art.md](../research/2026-09-11-ai-assisted-onboarding-entry/prior-art.md) | ✅ |
+| [2026-09-11-ai-assisted-onboarding-entry.md](2026-09-11-ai-assisted-onboarding-entry.md) | **「用 AI 帮我接入」入口**：把「让你已经在用的 AI 助手替你接模型」这条路搬到模型设置页顶部，并补上缺的那半——任务提示词 + 标准 frontmatter 的 [`agent-skills/nomi-add-model/SKILL.md`](../../../agent-skills/nomi-add-model/SKILL.md)；设计定稿 [2026-09-11-ai-assisted-onboarding-entry.md](../design/2026-09-11-ai-assisted-onboarding-entry.md)、先查别人 [prior-art.md](../research/2026-09-11-ai-assisted-onboarding-entry/prior-art.md) | ✅ |
 | [2026-06-07-model-onboarding-final-plan.md](2026-06-07-model-onboarding-final-plan.md) | **模型接入最终方案**（R7 定稿，审计+设计+计划）— 本簇主文档 | ✅ |
 | [2026-08-30-runway-seedance25-onboarding.md](2026-08-30-runway-seedance25-onboarding.md) | Runway Seedance 2.5 接入与分镜设置（源分支只含文档、未合并；配套指南带「未发布」横幅）| 📋 |
 | [2026-08-15-model-integration-no-dead-end-master-plan.md](2026-08-15-model-integration-no-dead-end-master-plan.md) | 模型接入「不留死路」总纲：事实源 manifest + 能力契约 + 旅程矩阵 | 🚧 |
@@ -120,7 +120,7 @@
 | 文件 | 一句话 | 状态 |
 |---|---|---|
 | [2026-09-22-deconstruction-node-terminal-state.md](2026-09-22-deconstruction-node-terminal-state.md) | **拆解中断后分镜表节点不再永远停在「进行中」**（T-ED-06 发版前阻断）：拆到一半关 app 再打开，节点永久停在「本地找切点 / 0 镜」——根因不是没人收敛，是快照那趟收敛完又被事件尾巴重放原样盖回去。终态判定收成唯一 owner `deconstructionLifecycle`（在飞登记与渲染进程同寿命），两条读路径共用同一个收敛且**重放之后再问一次**；状态词表加 `interrupted` / `cancelled`，新增取消入口。真机冷重启走查 `tests/ux/deconstruction-interrupted-recovery.walk.mjs`（零成本） | 🚧 |
-| [2026-09-22-shot-cut-truncation.md](2026-09-22-shot-cut-truncation.md) | **切点超上限不再按时间砍掉后半条片子**：120 刀上限原先按时间 `slice(0,120)`，6 分钟快剪片只拆出前 15% 却看不出来；改成按分数抬阈值压（全片覆盖 14.6% → 96.4%）+ ≤2 帧去重，联系表改按整数 pts 点名选帧、行数收成单一 owner。类根因「给全了没有」提升为 shared 层必填 `ShotCutCoverage`；实测证据 [`docs/evidence/2026-09-22-shot-cut-truncation/`](../../evidence/2026-09-22-shot-cut-truncation/README.md)。§9 分镜表节点提示待拍板 | 🚧 |
+| [2026-09-22-shot-cut-truncation.md](2026-09-22-shot-cut-truncation.md) | **切点超上限不再按时间砍掉后半条片子**：120 刀上限原先按时间 `slice(0,120)`，6 分钟快剪片只拆出前 15% 却看不出来；改成按分数抬阈值压（全片覆盖 14.6% → 96.4%）+ ≤2 帧去重，联系表改按整数 pts 点名选帧、行数收成单一 owner。类根因「给全了没有」提升为 shared 层必填 `ShotCutCoverage`；实测证据 [`docs/archive/evidence/2026-09-22-shot-cut-truncation/`](../evidence/2026-09-22-shot-cut-truncation/README.md)。§9 分镜表节点提示待拍板 | 🚧 |
 | [2026-09-11-canvas-migration-audit.md](2026-09-11-canvas-migration-audit.md) | **React Flow 迁移逐项等价审计**（OLD `8f9365aeb` vs main）：46 项交互逐条对照，列出 6 项无人拍板的改动与 6 项丢失；③ 表按用户影响排序，是各条回填轨的裁决依据 | 📎 |
 | [2026-09-08-canvas-undo-barrier-sweep.md](2026-09-08-canvas-undo-barrier-sweep.md) | 独立边模式、断线、节点锁手势的撤销边界与同族扫描 | 📎 |
 | [2026-09-06-agent-artifact-node.md](2026-09-06-agent-artifact-node.md) | **AI 手艺产物节点（agent-artifact）**：承载 SVG / 动态 HTML / 表格 / Markdown / 3D 摆位等不调模型的产物；meta.artifact 不扩 result 闭集、HTML 沙箱 allow-scripts、动作复用 FloatingToolbarShell；v1 已落地（Agent 交付落盘/渲染/下载/复制/SVG 固化为参考图），3D 视口截图与手艺选择决策树 = 下一刀 | 🚧 |
@@ -204,11 +204,11 @@
 | [agent-merge-architecture.md](agent-merge-architecture.md) | 两个 Agent 合并：修幻影工具+架构对齐（历史架构，已由 pi SDK 运行时取代） | ⛔ |
 | [2026-06-07-assistant-consolidation-plan.md](2026-06-07-assistant-consolidation-plan.md) | 助手面板收敛（双面板→单上下文助手） | ⛔ |
 | [2026-06-07-assistant-mockup-implementation.md](2026-06-07-assistant-mockup-implementation.md) | 助手面板对齐样张（R8 实现规范） | ⛔ |
-| [2026-06-09-创作AI附件与对话体验.md](2026-06-09-%E5%88%9B%E4%BD%9CAI%E9%99%84%E4%BB%B6%E4%B8%8E%E5%AF%B9%E8%AF%9D%E4%BD%93%E9%AA%8C.md) | 创作 AI 助手：多格式附件+对话升级 | 📋 |
+| [2026-06-09-创作AI附件与对话体验.md](2026-06-09-创作AI附件与对话体验.md) | 创作 AI 助手：多格式附件+对话升级 | 📋 |
 | [2026-08-27-skills-knowledge-distribution.md](2026-08-27-skills-knowledge-distribution.md) | **Skills 知识分发**：导入对齐 Agent Skills 标准（Phase 0 已交付）+ 渐进披露从「只给外部」接给内嵌 agent；实测每轮固定开销 ≈9,000 tokens 且不参与预算 | 🚧 |
 | [2026-09-07-skill-format-convergence.md](2026-09-07-skill-format-convergence.md) | **技能格式收敛**：删掉 `skill.json`，frontmatter 成为唯一 owner（pi / Claude Code / Codex 早已收敛成一份，Nomi 是唯一多一份文件的人）；逐字段对照与死字段清理、用户目录一次性迁移、`check:skills-format` 门岗让 pi 自己的加载器给我们判分 | 🚧 |
 | [2026-09-07-builtin-skill-library.md](2026-09-07-builtin-skill-library.md) | **内置技能库扩充**：调研 `shuohao-skills`/`drama-skills` 等短剧全链路 skill 仓库，发现它们的核心卖点（脚本强查质量门）在 Nomi 无 Bash 工具的 Agent 里跑不了；改为只摘方法论（MiniMax H3 提示词写法是真空白、其余多为经验数字补丁），推荐 1 新建+4 增强共 5 项，触发机制四栏对照（官方/shuohao/我们/偏差理由） | 📋 |
-| [2026-09-07-skill-catalog-registry.md](2026-09-07-skill-catalog-registry.md) | **创作资产 Registry 立项**：skill/effect-pack/lora 三类 + 统一外层分型接入 + 内置策展区/开放目录两区治理；收录格式 v0（对外只认 SKILL.md）+ 校验器对齐 agentskills.io + 采集管线（github+huggingface source，57 skill 种子已核验）+ 网页聚合站 v1；HF LoRA 扫描已定收录策略。调研在 `docs/research/2026-09-07-skill-ecosystem-catalog/` | 📋 |
+| [2026-09-07-skill-catalog-registry.md](2026-09-07-skill-catalog-registry.md) | **创作资产 Registry 立项**：skill/effect-pack/lora 三类 + 统一外层分型接入 + 内置策展区/开放目录两区治理；收录格式 v0（对外只认 SKILL.md）+ 校验器对齐 agentskills.io + 采集管线（github+huggingface source，57 skill 种子已核验）+ 网页聚合站 v1；HF LoRA 扫描已定收录策略。调研在 `docs/archive/research/2026-09-07-skill-ecosystem-catalog/` | 📋 |
 | [2026-08-27-unified-tool-surface.md](2026-08-27-unified-tool-surface.md) | **内外工具面统一**：对外 22 个 `nomi_*` vs 内嵌 17 个，6 处同事两名、确认面两套——违反 master plan「不造第二套」北极星；三方案待拍板 | 📋 |
 | [2026-08-30-agent-canvas-interaction-expansion.md](2026-08-30-agent-canvas-interaction-expansion.md) | #194 补全画布引用、多媒体、双轴模式与结果回画布（方案与样张完成，待生产实现） | ✅ |
 | [2026-09-06-opt-in-frequency-telemetry.md](2026-09-06-opt-in-frequency-telemetry.md) | T-01/T-02 opt-in 频率遥测：默认关闭、事件白名单、本地可见可删，与 autoUpdater 解耦 | 📋 |
@@ -248,12 +248,12 @@
 | 文件 | 一句话 | 状态 |
 |---|---|---|
 | [2026-09-01-feedback-share-center.md](2026-09-01-feedback-share-center.md) | v0.21 低摩擦反馈与分享中心：私密 Tally 表单、公开 GitHub、自动带入安全运行时上下文 | 🚧 |
-| [2026-09-01-storyboard-table-genre-profile.md](2026-09-01-storyboard-table-genre-profile.md) | **分镜表 v5**：场分组+图优先行+结构化提示词（@/骨架段）+行内执行；A 段已合（#330），B-D 分阶段交付；样张 docs/design/mockups/2026-09-01-storyboard-table-image-first.html | 🚧 |
+| [2026-09-01-storyboard-table-genre-profile.md](2026-09-01-storyboard-table-genre-profile.md) | **分镜表 v5**：场分组+图优先行+结构化提示词（@/骨架段）+行内执行；A 段已合（#330），B-D 分阶段交付；样张 docs/archive/design/mockups/2026-09-01-storyboard-table-image-first.html | 🚧 |
 | [storyboard-table-coverage.md](storyboard-table-coverage.md) | 分镜表状态/模型能力/参考素材/比例与批量生成覆盖矩阵及真实验收缺口 | 🚧 |
 | [2026-09-02-walkthrough-catalog-seed-version.md](2026-09-02-walkthrough-catalog-seed-version.md) | 隔离走查 catalog 种子按被测 app 版本校验：future seed quarantine + 版本真源单一化，终结「切模型静默失效」假绿 | ✅ |
 | [2026-09-03-walkthrough-findings.md](2026-09-03-walkthrough-findings.md) | R13 走查暴露的五项缺陷修复：i18n、历史 ETA、供应商切换 toast 与 ComfyUI/H3 验证 | 🚧 |
 | [2026-09-03-m5-packaged-graduation.md](2026-09-03-m5-packaged-graduation.md) | M5 打包真机毕业：零额度 MCP 全链、M0-M4 证据清单与发版前人工 runbook | 🚧 |
-| [2026-09-04-real-user-test-contract.md](../../qa/2026-09-04-real-user-test-contract.md) | **真实用户测试契约与验收报告模板**：Electron/packaged → H/B/E/T/N → 边界 mock → 持久化/重启 → image2 视觉确认 → changed scope raw V8 | 📋 |
+| [2026-09-04-real-user-test-contract.md](../qa/2026-09-04-real-user-test-contract.md) | **真实用户测试契约与验收报告模板**：Electron/packaged → H/B/E/T/N → 边界 mock → 持久化/重启 → image2 视觉确认 → changed scope raw V8 | 📋 |
 | [2026-09-04-main-convergence-follow-ups.md](2026-09-04-main-convergence-follow-ups.md) | current main 收敛后续：Agent/MCP/storyboard/canvas/同步/live provider/durable handoff/架构三期与 image2 gate | 📋 |
 
 ## 性能 / 技术地基 / 巨壳拆分 / 管线
@@ -277,8 +277,8 @@
 | [2026-08-29-git-delivery-integrity.md](2026-08-29-git-delivery-integrity.md) | Git 交付身份、有界远端刷新与 merged-main 单次验收 | ✅ |
 | [2026-06-03-styles-css-teardown.md](2026-06-03-styles-css-teardown.md) | styles.css 拆除（死 CSS 清理） | 🚧 |
 | [2026-06-06-main-process-proxy.md](2026-06-06-main-process-proxy.md) | 主进程 fetch 走代理（Phase 1 自动探测） | ✅ |
-| [2026-06-08-巨壳拆分-B-Scene3D-A-NodeParameterControls.md](2026-06-08-%E5%B7%A8%E5%A3%B3%E6%8B%86%E5%88%86-B-Scene3D-A-NodeParameterControls.md) | 巨壳拆分：Scene3DFullscreen → NodeParameterControls | ⛔ |
-| [2026-06-08-巨壳拆分-任务派发.md](2026-06-08-%E5%B7%A8%E5%A3%B3%E6%8B%86%E5%88%86-%E4%BB%BB%E5%8A%A1%E6%B4%BE%E5%8F%91.md) | 巨壳拆分多窗口任务派发 | 📎 |
+| [2026-06-08-巨壳拆分-B-Scene3D-A-NodeParameterControls.md](2026-06-08-巨壳拆分-B-Scene3D-A-NodeParameterControls.md) | 巨壳拆分：Scene3DFullscreen → NodeParameterControls | ⛔ |
+| [2026-06-08-巨壳拆分-任务派发.md](2026-06-08-巨壳拆分-任务派发.md) | 巨壳拆分多窗口任务派发 | 📎 |
 | [nomi-select-unify.md](nomi-select-unify.md) | 统一选择面板 NomiSelect 通用组件 | 🧊 |
 
 ## 落地页 / 营销
@@ -327,7 +327,7 @@
 - [内置供应商「填 key 不解锁模型」类根因修复](2026-09-10-vendor-key-publish-class.md) — 发布判据改登记表驱动、验证判据按种子声明分派、装配期三条不变量（🚧 进行中）；先查别人报告在 [../research/2026-09-10-vendor-key-publish-class/prior-art.md](../research/2026-09-10-vendor-key-publish-class/prior-art.md)
 
 - [2026-09-09 Agent 原生剪辑：Nomi 完整可执行方案（A'–G'）](2026-09-09-agent-native-editing-plan.md) — 时间轴 agent 层施工图；配套竞品回应方案包见 [`2026-09-09-competitive-response-plans/INDEX.md`](2026-09-09-competitive-response-plans/INDEX.md)（P0-P2 分期、开工纪律：#646 未过门前不开新战线）；2026-09-11 从竞品研究方案包归档入库
-- [2026-09-11 卫生 PR：方案包入库 + ARCHITECTURE-NOW 去过时 + 删两个死控制器](2026-09-11-docs-hygiene.md) — 竞品方案包搬入 `docs/{research,plan,product}`（19 篇）；`docs/ARCHITECTURE-NOW.md` 三行过时描述改写为 pi lane 现役状态；删 `canvasTurnController.ts`/`creationTurnController.ts` 两个零生产引用死控制器（✅ 已交付）
+- [2026-09-11 卫生 PR：方案包入库 + ARCHITECTURE-NOW 去过时 + 删两个死控制器](2026-09-11-docs-hygiene.md) — 竞品方案包搬入 `docs/{research,plan,product}`（19 篇）；`docs/archive/guides/ARCHITECTURE-NOW.md` 三行过时描述改写为 pi lane 现役状态；删 `canvasTurnController.ts`/`creationTurnController.ts` 两个零生产引用死控制器（✅ 已交付）
 - [2026-09-11 删掉「客户端自报即发放」的付费通道](2026-09-11-remove-legacy-spend-door.md) — 付费放行收敛到主进程收据门一个 owner；删 `gateway.withPreApprovedSpend`、`NOMI_LOOP_SPEND_OK` env 逃生口与线协议上的 `spendConfirmed` 自报位；加源码棘轮测试防复发；根因合同 [`2026-09-11-legacy-spend-door.root-cause.json`](../../fixes/2026-09-11-legacy-spend-door.root-cause.json)（✅ 已交付）
 
 - [2026-09-12 接模型验证 run 的失败路径：不许停在中间态](2026-09-12-integration-run-failure-path.md) — 终态写三层保证（同步→退避→errors.jsonl+启动补偿）、deadline 看门狗、certifying 逃生口、逐模型错误原文进 session.read；含 H1/H2 锁审计结论与门表；根因合同 [`2026-09-12-integration-run-failure-path.root-cause.json`](../../fixes/2026-09-12-integration-run-failure-path.root-cause.json)，结构评审 [`../audit/2026-09-12-integration-layer-structural-review.md`](../audit/2026-09-12-integration-layer-structural-review.md)（✅ 已交付）
@@ -336,7 +336,7 @@
 
 - [2026-09-15 拆解出来的秒数只有一个精度 owner](2026-09-15-shot-seconds-precision.md) — 分镜表时间列显示 `0–1.4681260000000001s` 的类根因：ffmpeg/ffprobe 的原始双精度值一路插值进 i18n，精度三处各发明一套（`0.01` 魔法数 / `toFixed(2)` / `toFixed(1)`）而真正显示的那处一套都没有；新增真相源 `shotTime.ts`（0.1s，理由含与时间轴帧/刻度的核实），在产出边界 `buildShotBoundaries` 与落库读入口 `shotTableFactRowSchema.transform()` 两道边界收口，老项目读取即归一，显示层加响的检测器禁止再写 `toFixed`；根因合同 [`2026-09-15-shot-seconds-precision.root-cause.json`](../../fixes/2026-09-15-shot-seconds-precision.root-cause.json)，结构评审 [`../audit/2026-09-15-numeric-contract-structure.md`](../audit/2026-09-15-numeric-contract-structure.md)（✅ 已交付）
 - [2026-09-15 接入验证**会话层**的终态保证：借来的保证一定有边界](2026-09-15-integration-session-terminal-guarantee.md) — 09-12 那版只修了 run 层；会话层拥有 `session.stage` 却把终态保证外包给子 run，于是 ComfyUI 会话 / `startHttp` 未返回的窗口 / run 记录已删三种状态照旧永久停在 `certifying` 且 `cancel` 抛异常。修法：认证 deadline 与开跑意图同一次落盘 + **复用** run 层那只 `TerminalReaper`（不新造看门狗）+ cancel 永不抛 + 终态封口防迟到结果复活 + 旧数据按 `updatedAt` 补 deadline；deadline 从批次超时派生并机检（不拍常量）。含 T-MO-07 接续路径；根因合同 [`2026-09-15-integration-session-terminal-guarantee.root-cause.json`](../../fixes/2026-09-15-integration-session-terminal-guarantee.root-cause.json)
-- [2026-09-15 用户亲手点的那条技能，为什么比模型自己找到的那条弱](2026-09-15-skill-selected-injection.md) — 选中技能的正文注入收成 `buildSelectedSkillPrompt` 一个 owner（交代四句 + 照抄 pi 的 `<skill>` 信封 + 剥掉 41–82% 的 frontmatter 清单），并给身份层加三句「出片原则」；22 句真实模型题库前后对账（选了技能那 11 句「回复里看得出技能被用」7/11 → 9/11，三轮一致），证据在 [`../evidence/2026-09-15-skill-real-run/prompts.md`](../../evidence/2026-09-15-skill-real-run/prompts.md) 与 [`principles-hypothesis.md`](../../evidence/2026-09-15-skill-real-run/principles-hypothesis.md)；根因合同 [`2026-09-15-selected-skill-injection.root-cause.json`](../../fixes/2026-09-15-selected-skill-injection.root-cause.json)
+- [2026-09-15 用户亲手点的那条技能，为什么比模型自己找到的那条弱](2026-09-15-skill-selected-injection.md) — 选中技能的正文注入收成 `buildSelectedSkillPrompt` 一个 owner（交代四句 + 照抄 pi 的 `<skill>` 信封 + 剥掉 41–82% 的 frontmatter 清单），并给身份层加三句「出片原则」；22 句真实模型题库前后对账（选了技能那 11 句「回复里看得出技能被用」7/11 → 9/11，三轮一致），证据在 [`../evidence/2026-09-15-skill-real-run/prompts.md`](../evidence/2026-09-15-skill-real-run/prompts.md) 与 [`principles-hypothesis.md`](../evidence/2026-09-15-skill-real-run/principles-hypothesis.md)；根因合同 [`2026-09-15-selected-skill-injection.root-cause.json`](../../fixes/2026-09-15-selected-skill-injection.root-cause.json)
 - [2026-09-12 付费出口一律带 grantId —— 先查别人](2026-09-12-run-task-grant-class-prior-art.md) — PR #782 的 R27 报告：仓内四份合同已把「付费放行必须有一张主进程铸的令牌」立成不变量，本次只把最后三个没带令牌的出口接上同一条链；依赖里没有现成的（`extras` 是我们自己的传输层形状），判为领域约束但只许一份 + 硬零门岗 `check:run-task-grant`（✅ 已交付，随 PR #804 带入）
 - [2026-09-14 MCP 连接状态必须说真话](2026-09-14-mcp-connection-truthfulness.md) — 读路径零写盘（守卫下沉到唯一写盘门）、NOMI_SETTINGS_DIR 读回校验、按安装痕迹检测客户端（pi 删除、Claude Desktop 补入）、通用配置不带身份、客户端名单唯一 owner `electron/shared/mcpClientRegistry.ts`、可信发起方并进客户端卡；R31 逐家规范对照；根因合同 [`2026-09-14-mcp-connection-truthfulness.root-cause.json`](../../fixes/2026-09-14-mcp-connection-truthfulness.root-cause.json)（✅ 已交付）
 - [2026-09-18 投影铺开：从一个动词到二十个](2026-09-18-tool-projection-rollout.md) — 模型面不再手写，改成宿主契约 schema 的投影：11 个动词 + `draft_shots` 一份有损投影，`verbFieldMap.ts`（7 种关系 × 4 档来源的 DSL）与 `verbTransportRoutes.ts` 两份共 596 行整个删掉，整条链上只剩 1 条 rename（双域动词的生成域那一半）；外部 MCP 面那 22 行逐字段手抄一并删，门岗从「可构造」升级成「**可填**」。新门 `check:model-face-frozen` 冻住模型看到的工具面（这一刀模型面**逐字节没变**，sha256 对账见 [证据目录](tool-projection-rollout-evidence/README.md)、[真模型 23 轮走查的数字与读法](tool-projection-rollout-evidence/real-model-walkthrough.md)）。明写投影**覆盖不到**的 8 个动词各归谁管；真模型 23 轮整机走查把「落到画布」那一列第一次变成可重跑的脚本（[`tests/ux/agent-storyboard-real-model.walk.mjs`](../../../tests/ux/agent-storyboard-real-model.walk.mjs)）。上游：[原型](2026-09-18-tool-projection-cancel-job-prototype.md) / [裁决](2026-09-18-tool-layer-prior-art-verdict.md)；根因合同 [`2026-09-18-verb-transport-translation-derived.root-cause.json`](../../fixes/2026-09-18-verb-transport-translation-derived.root-cause.json)（✅ 已交付）
@@ -519,11 +519,11 @@
 - [2026-09-25-agent-run-landing-state](2026-09-25-agent-run-landing-state.md)
 - [2026-09-25-asset-library-and-media-load-fixes](2026-09-25-asset-library-and-media-load-fixes.md)
 - [2026-09-25-canvas-follow-hand](2026-09-25-canvas-follow-hand.md)
-- [README](../../plan/agent-lane-b1-evidence/README.md)
+- [README](agent-lane-b1-evidence/README.md)
 - [README](agent-lane-b1b-evidence/README.md)
 - [README](agent-lane-b1c-evidence/README.md)
-- [RAW-CAPTURES](../../plan/agent-panel-markdown-evidence/RAW-CAPTURES.md)
-- [product-sources](../../plan/agent-panel-markdown-evidence/product-sources.md)
+- [RAW-CAPTURES](agent-panel-markdown-evidence/RAW-CAPTURES.md)
+- [product-sources](agent-panel-markdown-evidence/product-sources.md)
 - [README](agent-panel-mechanics-evidence/README.md)
 - [README](agent-tool-face-v2-evidence/README.md)
 - [r30-summary-before-tool-projection](agent-tool-face-v2-evidence/r30-summary-before-tool-projection.md)
@@ -534,8 +534,8 @@
 - [README](attention-cue-evidence/README.md)
 - [README](b2c-form-evidence/README.md)
 - [README](b2d-dock-evidence/README.md)
-- [RAW-CAPTURES](../../plan/b2e-streamdown-evidence/RAW-CAPTURES.md)
-- [REPORT](../../plan/b2e-streamdown-evidence/REPORT.md)
+- [RAW-CAPTURES](b2e-streamdown-evidence/RAW-CAPTURES.md)
+- [REPORT](b2e-streamdown-evidence/REPORT.md)
 - [README](notification-policy-evidence/README.md)
 - [process-feedback-ci-round5](process-feedback-ci-round5.md)
 - [process-feedback-ci-round6](process-feedback-ci-round6.md)
@@ -618,3 +618,7 @@
 ## 기존 총목차에서 보존한 한국어 안내 도입 기록
 
 - [한국어 사용 안내·지원 설계](2026-10-12-korean-guidance.md)
+
+- [2026-10-16 문서 보관 구조 정리 기록](2026-10-16-docs-history-archive.md)
+
+- [2026-10-19 현재 규범·기계 계약과 과거 자료 분리](2026-10-19-docs-current-only.md)

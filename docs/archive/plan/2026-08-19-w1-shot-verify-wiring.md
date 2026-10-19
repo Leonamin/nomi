@@ -1,8 +1,8 @@
 # W1 · 审片环接进 MCP/对话生成路径：实现方案（2026-08-19）
 
-> 探明对象：蓝图 `docs/plan/2026-08-19-dialogue-draft-quality-blueprint.md` §三 W1。
-> 验收对象：`docs/plan/2026-08-19-experience-acceptance-harness.md` 幕 5b/6 断言。
-> 现状依据：`docs/research/2026-08-19-nomi-draft-capability-inventory.md`（shotVerify 已建、只挂 `batchPlanPreview.ts:170-178`，MCP/production run 零引用——本文件复核**属实**：`grep -rln 'shotVerify' electron/` 空集）。
+> 探明对象：蓝图 `docs/archive/plan/2026-08-19-dialogue-draft-quality-blueprint.md` §三 W1。
+> 验收对象：`docs/archive/plan/2026-08-19-experience-acceptance-harness.md` 幕 5b/6 断言。
+> 现状依据：`docs/archive/research/2026-08-19-nomi-draft-capability-inventory.md`（shotVerify 已建、只挂 `batchPlanPreview.ts:170-178`，MCP/production run 零引用——本文件复核**属实**：`grep -rln 'shotVerify' electron/` 空集）。
 >
 > 本文件只做侦察 + 方案，不改任何代码。所有结论带 file:line。
 
@@ -176,7 +176,7 @@ electron/capabilityCore/
 
 ## 6. 定向重试 prompt 的落位（Q6）
 
-ViMax「保背景换角色」重试指令（`docs/research/2026-08-19-script-to-video-frameworks.md §3.5` 原文）+ 判分 rubric prompt 应住**electron 侧纯逻辑模块**：
+ViMax「保背景换角色」重试指令（`docs/archive/research/2026-08-19-script-to-video-frameworks.md §3.5` 原文）+ 判分 rubric prompt 应住**electron 侧纯逻辑模块**：
 
 - rubric prompt 已在 `shotVerifyCore.ts`（§1 迁来）的 `buildShotVerifyPrompt` 里——**不新造**，迁移即得。
 - 定向重试指令模板 → 放进 `shotVerifyOrchestrate.ts` 的一个纯函数 `buildRetryDirective(deviations, shotCtx): string`（读判分出的偏差轴 → 拼「保持背景/构图/光线不变，仅修正 <身份/构图> 到与锚一致」的 directive，供 `regenerate` 拼进重发 prompt）。纯函数、可单测（给定 deviations 断言 directive 文本含关键约束、不含角色名污染——顺带对齐 W4 的污染词铁律）。

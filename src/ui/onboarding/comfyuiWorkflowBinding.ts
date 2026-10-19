@@ -1,5 +1,5 @@
 // ComfyUI 工作流绑定的**共享纯逻辑**（角色指派 / 画布字段暴露 / 候选推导），零 React、可单测。
-// plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+// plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
 //
 // 为什么单独成文件：这套规则原来只活在 ComfyuiWorkflowImportPanel.tsx 里（贴 JSON 导入那条路）。
 // 工作流整页把「编辑」接过去之后，两条路都要用同一份规则——抄第二份就是并行版（P1），

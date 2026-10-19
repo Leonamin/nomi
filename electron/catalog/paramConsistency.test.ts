@@ -1,5 +1,5 @@
 // 参数一致性不变量（铁律的机器看门狗）。
-// 见 docs/plan/2026-06-24-model-param-consistency-invariant.md。
+// 见 docs/archive/plan/2026-06-24-model-param-consistency-invariant.md。
 //
 // 把从前全靠人肉 + 注释的「档案 canonical 参数 ↔ codec wire 字段」对齐变成 CI 断言：
 //   对每个内置 (模型 × 模式 × 它实际命中的 codec)：

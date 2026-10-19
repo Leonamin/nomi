@@ -22,7 +22,7 @@
 
 ### 2. 自媒体和社区扫描
 
-读 `docs/research/tikhub-api-notes.md`，以本轮实际脚本 `--help` 为准。例：
+读 `docs/archive/research/tikhub-api-notes.md`，以本轮实际脚本 `--help` 为准。例：
 
 ```bash
 node scripts/research/tikhub-search.mjs --q 'LibTV' --platform all --limit 10 --since 2026-09-16 --out /absolute/main-repo/outputs/competitive-radar/2026-09-19/tikhub/libtv/q01/attempt-01

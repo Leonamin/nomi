@@ -148,7 +148,7 @@
     "invariant": "Lane identities are never resolved against the host; admission never answers with a silent null",
     "failure_mode": "A regression shows up on Linux CI through lane-identity-host-path.test.mts, which replaces host resolution with Windows semantics for identity strings, and in laneClient.test.ts for the silent null.",
     "exception_policy": "none",
-    "strategy": "Keep the identity verbatim in the one FileSystem pi gets; make admission failures named; the Windows release checklist (docs/release-process.md §4) now includes a real-model agent send on the RC build. The agent-runtime suite is not yet wired into win-gate: about 19 cases are still red on Windows under Electron's Node and are being triaged into test-only POSIX assumptions vs product defects first.",
+    "strategy": "Keep the identity verbatim in the one FileSystem pi gets; make admission failures named; the Windows release checklist (docs/archive/guides/release-process.md §4) now includes a real-model agent send on the RC build. The agent-runtime suite is not yet wired into win-gate: about 19 cases are still red on Windows under Electron's Node and are being triaged into test-only POSIX assumptions vs product defects first.",
     "artifacts": [
       "electron/agentLane/laneFileSystem.mts",
       "electron/agentLane/laneSession.mts",

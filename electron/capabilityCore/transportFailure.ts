@@ -2,7 +2,7 @@
 //
 // ── 为什么它非存在不可 ──
 //
-// 2026-09-21 真实模型 18 句实测（`docs/evidence/2026-09-21-askback-real-model/`）：121 次调用里 45 次是
+// 2026-09-21 真实模型 18 句实测（`docs/archive/evidence/2026-09-21-askback-real-model/`）：121 次调用里 45 次是
 // 重试，其中 **23 次**收到的是同一句「The generation action could not be completed; its submission
 // outcome may be unknown. Next: Query the same domain-qualified task and reconcile…」。`draft_shots`
 // **只是起草**，一分钱都花不出去，却被告知「提交结果可能未知、先去核对别再提交」——模型于是原地

@@ -13,10 +13,10 @@ okf_version: "0.1"
 ## 찾아가기
 
 - [`docs/plan/INDEX.md`](../../docs/archive/plan/INDEX.md)는 계획의 주제와 표기된 상태를 안내한다. 인덱스 자체가 역사적 누락을 알리므로, 못 찾으면 저장소 전체에서 검색한다.
-- [`docs/superpowers/plans/INDEX.md`](../../docs/archive/superpowers/plans/INDEX.md)는 교차 단계 계획을 찾는 진입점이다.
+- [`docs/archive/superpowers/plans/INDEX.md`](../../docs/archive/superpowers/plans/INDEX.md)는 교차 단계 계획을 찾는 진입점이다.
 - [`docs/archive/`](../../docs/archive)는 보존용 기록이다. 예를 들어 [2026년 5월 shipped 자료](../../docs/archive/2026-05-shipped/README.md)는 해당 계획이 당시 출시된 버전과 연결되었다고 설명하지만, 오늘의 동작을 증명하지 않는다.
-- [`docs/audit/`](../../docs/archive/audit), [`docs/fixes/`](../../docs/fixes), [`docs/evidence/`](../../docs/evidence)는 진단·수정·검증 패키지를 찾는 경로다. 실험별 README/보고서에서 원본 산출물로 이동한다.
-- [`docs/lessons/INDEX.md`](../../docs/lessons/INDEX.md)는 재발 방지 교훈의 색인이다. 현재 작업 규칙은 그 교훈의 원문과 프로젝트 지침을 함께 확인한다.
+- [`docs/archive/audit/`](../../docs/archive/audit), [`docs/fixes/`](../../docs/fixes), [`docs/archive/evidence/`](../../docs/archive/evidence)는 진단·수정·검증 패키지를 찾는 경로다. 실험별 README/보고서에서 원본 산출물로 이동한다.
+- [`docs/archive/lessons/INDEX.md`](../../docs/archive/lessons/INDEX.md)는 재발 방지 교훈의 색인이다. 현재 작업 규칙은 그 교훈의 원문과 프로젝트 지침을 함께 확인한다.
 
 ## 증거와 기계 참조 보존
 

@@ -10,7 +10,7 @@
 
 **Tech Stack:** Electron + React 18 + Zustand/Immer + React Flow + Vercel AI SDK + MCP capability catalog + `ProductionRunService`。
 
-**Spec:** 用户已拍板的来源见 `/Users/aoqimin/Desktop/Nomi/.claude/worktrees/gpt-discussion-review-06eb91/docs/plan/2026-09-05-gpt-discussion-consolidation.md` §1 V 族、§3；统一 Agent/画布母表见 `/Users/aoqimin/.codex/worktrees/nomi-unified-agent-canvas-plan-20260905/docs/plan/2026-09-05-nomi-unified-agent-canvas-skill-collection.md`；阶段执行输入见 `/Users/aoqimin/.codex/worktrees/nomi-unified-agent-canvas-plan-20260905/docs/research/2026-09-05-nomi-unified-agent-canvas-skill-solution/execution-plan.md` §5。
+**Spec:** 用户已拍板的来源见 `/Users/aoqimin/Desktop/Nomi/.claude/worktrees/gpt-discussion-review-06eb91/docs/archive/plan/2026-09-05-gpt-discussion-consolidation.md` §1 V 族、§3；统一 Agent/画布母表见 `/Users/aoqimin/.codex/worktrees/nomi-unified-agent-canvas-plan-20260905/docs/archive/plan/2026-09-05-nomi-unified-agent-canvas-skill-collection.md`；阶段执行输入见 `/Users/aoqimin/.codex/worktrees/nomi-unified-agent-canvas-plan-20260905/docs/archive/research/2026-09-05-nomi-unified-agent-canvas-skill-solution/execution-plan.md` §5。
 
 ## Global Constraints
 

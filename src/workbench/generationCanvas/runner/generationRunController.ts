@@ -448,7 +448,7 @@ export type RunGenerationNodesBatchResult = {
  * so callers can still display a per-node retry button if a run fails.
  * This is the runtime used by the storyboard demo's "全部生成" action.
  *
- * @legacy-batch-frozen (P4 S7, docs/plan/2026-08-25-p4-s7-legacy-converge.md)
+ * @legacy-batch-frozen (P4 S7, docs/archive/plan/2026-08-25-p4-s7-legacy-converge.md)
  * 这是 GUI 画布批量的**唯一自有派发循环**，也是默认构建里现役的唯一 GUI 批量路径（语义调度器默认关）。
  * 冻结纪律：**不加新功能**。新批量能力（合同/收据/预算/锚检查点/慢供应商韧性）只进语义调度器
  * multiShotBatchScheduler；本函数只做维护性修复，别在此长新逻辑。Canvas owner → 语义运行时的迁移

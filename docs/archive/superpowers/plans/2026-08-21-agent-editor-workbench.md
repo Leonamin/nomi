@@ -223,9 +223,9 @@ export type EditProposal = {
 - `src/workbench/editor/components/EditorAssetPool.tsx`、`EditorAgentPanel.tsx`、`EditProposalCard.tsx`、`EditorRunCard.tsx`、`EditorSelectionContext.tsx`。
 - `src/workbench/editor/components/*.test.tsx`：proposal、成本、撤销、错误状态的组件测试。
 - `electron/editor/editorIpc.ts`、`editorIpc.test.ts`：主进程编辑命令、资产解析、任务事件桥。
-- `docs/design/agent-editor-workbench.md`：批准后的交互和 token 使用说明。
-- `docs/superpowers/specs/agent-editor-contract.md`：稳定的跨层协议。
-- `docs/evals/agent-editor-real-tasks.md`：真实用户任务和验收脚本。
+- `docs/archive/design/agent-editor-workbench.md`：批准后的交互和 token 使用说明。
+- `docs/archive/superpowers/specs/agent-editor-contract.md`：稳定的跨层协议。
+- `docs/archive/evals/agent-editor-real-tasks.md`：真实用户任务和验收脚本。
 
 ### 修改
 
@@ -244,9 +244,9 @@ export type EditProposal = {
 ### Task 1: 建立干净执行基线和设计闸门
 
 **Files:**
-- Create: `docs/superpowers/specs/agent-editor-contract.md`
-- Create: `docs/design/agent-editor-workbench.md`
-- Create: `docs/design/archive/agent-editor-workbench.html`
+- Create: `docs/archive/superpowers/specs/agent-editor-contract.md`
+- Create: `docs/archive/design/agent-editor-workbench.md`
+- Create: `docs/archive/design/archive/agent-editor-workbench.html`
 - Test/inspect: current repository baseline
 
 - [ ] 在 sibling worktree 中基于 `origin/main` 建立干净基线，记录 `git branch --show-current`、HEAD、`git status --short`。
@@ -456,9 +456,9 @@ export type EditProposal = {
 ### Task 13: 真实用户任务系统和视觉质量闸门
 
 **Files:**
-- Create: `docs/evals/agent-editor-real-tasks.md`
+- Create: `docs/archive/evals/agent-editor-real-tasks.md`
 - Create: Playwright task fixtures under existing e2e structure
-- Create: `docs/audit/agent-editor-<date>.md` after implementation
+- Create: `docs/archive/audit/agent-editor-<date>.md` after implementation
 
 - [ ] 建立以下真实任务：
   - J1：导入访谈，删停顿，应用提案，撤销，再应用。

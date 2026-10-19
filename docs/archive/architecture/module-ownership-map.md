@@ -2,7 +2,7 @@
 
 日期：2026-09-01
 状态：现役约定（配 `check:boundaries` 门岗执行 · R21）
-依据：`docs/audit/2026-08-31-architecture-coupling-audit.md`（分析二/四/五）
+依据：`docs/archive/audit/2026-08-31-architecture-coupling-audit.md`（分析二/四/五）
 
 > **这份文件干什么**：给「一个职能住哪、允许有哪些卫星、什么绝对禁止」定唯一答案，
 > 让人和 agent 写新代码时有据可依、不再往第 N 个门牌号里塞。**机器那半由

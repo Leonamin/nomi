@@ -12,7 +12,7 @@
 
 1. 遗产 B2：已对照 Runway OpenAPI 与 ElevenLabs SFX 文档，保留正确修复并补回归测试。
 2. Runway 参考模式：以 `/v1/text_to_video` 官方 union 为准修正多模态 reference mapping，补首帧/首尾帧/参考模式干跑合同。
-3. 文档证据：按 vendor 分节写入 `docs/research/2026-09-02-docaudit-fal-runway-etc.md`，包含全量 mapping 表、未证项与官方链接。
+3. 文档证据：按 vendor 分节写入 `docs/archive/research/2026-09-02-docaudit-fal-runway-etc.md`，包含全量 mapping 表、未证项与官方链接。
 4. 真实封印：仅对 acceptance matrix 中非 ✅ 的已解锁模型按参考输入优先选择最大覆盖模式；每笔记录 mapping 哈希、产物、内容双验、精确花销和余额阻断。
 5. 收尾：contracts、focused tests、`pnpm run gates`；最终报告写入 worktree 根且不提交。
 

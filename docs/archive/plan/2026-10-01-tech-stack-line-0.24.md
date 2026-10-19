@@ -8,13 +8,13 @@
 
 `docs/engineering/framework-boundaries.json` 里有 8 笔带到期日的欠账（4 笔参考实现对照，3 笔 React Flow 接触面，外加框架条目本身的复核日）。其中 `ai`、`xyflow-react` 两笔 2026-10-07 到期，到期当天 `check:framework-boundary` 变红，所有 PR 都合不进去。
 
-这两笔欠账的前提已经变了：Agent 的底座是 pi，不是 AI SDK；对照报告（`docs/research/2026-09-29-agent-message-layer-conformance/report.md`）已经交出了「AI SDK 到底要不要接、先后顺序」的结论。技术栈这条线因此从 0.23 推迟到 0.24，欠账顺延，并且每一笔都绑到 0.24 里具体的一步上，不再是悬空的日期。
+这两笔欠账的前提已经变了：Agent 的底座是 pi，不是 AI SDK；对照报告（`docs/archive/research/2026-09-29-agent-message-layer-conformance/report.md`）已经交出了「AI SDK 到底要不要接、先后顺序」的结论。技术栈这条线因此从 0.23 推迟到 0.24，欠账顺延，并且每一笔都绑到 0.24 里具体的一步上，不再是悬空的日期。
 
 ## 先查别人
 
 这份文档不引入新实现，只重排已有欠账的归属与日期；排序依据是已经合入的调研，不是凭记忆。
 
-- 仓库里已有：对照报告 `docs/research/2026-09-29-agent-message-layer-conformance/report.md:411`（第 8 节「顺序和大小」）给出了 A / B / C1 / Step 0 / D 的先后与风险，本文的 S1–S6 逐步照抄它的顺序。
+- 仓库里已有：对照报告 `docs/archive/research/2026-09-29-agent-message-layer-conformance/report.md:411`（第 8 节「顺序和大小」）给出了 A / B / C1 / Step 0 / D 的先后与风险，本文的 S1–S6 逐步照抄它的顺序。
 - 仓库里已有：到期判据由门岗自己定义，`scripts/framework-boundary-lib.mjs:207`（债条目 `due < today` 即红）与 `scripts/framework-surface-lib.mjs:237`（接触面债同理），本文只改数据、不改判据。
 - 生态：Vercel AI SDK 的版本线与迁移说明，https://ai-sdk.dev/docs/migration-guides ——v6 / v7 的取舍留给 S5，不在本文裁决。
 - 生态：AI Elements 的安装前提（Tailwind 4 + shadcn），https://elements.ai-sdk.dev/ ——S6 先评估它与 token-only 设计系统的冲突，再决定接不接。

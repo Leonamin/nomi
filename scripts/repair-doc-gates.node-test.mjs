@@ -33,13 +33,13 @@ function fixture() {
   }))
   write(root, 'docs/README.md', '# docs\n')
   write(root, 'docs/archive/plan/INDEX.md', '# docs/plan 索引地图\n\n| 文件 | 状态 |\n|---|---|\n| [legacy-nostatus.md](legacy-nostatus.md) | |\n')
-  write(root, 'docs/lessons/INDEX.md', '# 教训索引\n\n## A. 场景\n\n- [old-lesson](old-lesson.md) — 旧的\n')
+  write(root, 'docs/archive/lessons/INDEX.md', '# 教训索引\n\n## A. 场景\n\n- [old-lesson](old-lesson.md) — 旧的\n')
   write(root, 'docs/archive/plan/legacy-unindexed.md', '# 历史存量：没进索引也没状态\n\n正文。\n')
   write(root, 'docs/archive/plan/legacy-nostatus.md', '# 历史存量：进了索引但没状态\n\n正文。\n')
-  write(root, 'docs/lessons/old-lesson.md', '# 旧教训\n\n正文。\n')
+  write(root, 'docs/archive/lessons/old-lesson.md', '# 旧教训\n\n正文。\n')
   // —— 这两篇是「本次新增」，门岗会为它们报红 ——
   write(root, 'docs/archive/plan/2026-09-05-new-plan.md', '# 新方案\n\n正文。\n')
-  write(root, 'docs/lessons/new-lesson.md', '# 新教训\n\n正文。\n')
+  write(root, 'docs/archive/lessons/new-lesson.md', '# 新教训\n\n正文。\n')
   return root
 }
 
@@ -49,7 +49,7 @@ test('补齐前门岗确实会红，补齐后变绿（且只动新增那两篇�
   // ① 阳性对照：补齐之前，两篇新增文档在门岗判据下都是违规。
   const before = scanDocumentIndex(root)
   assert.ok(before.unindexed.includes('docs/archive/plan/2026-09-05-new-plan.md'))
-  assert.ok(before.unindexed.includes('docs/lessons/new-lesson.md'))
+  assert.ok(before.unindexed.includes('docs/archive/lessons/new-lesson.md'))
   assert.equal(documentStatus(fs.readFileSync(path.join(root, 'docs/archive/plan/2026-09-05-new-plan.md'), 'utf8')).status, null)
 
   const result = repairDocGates({ repoRoot: root, regenerateLedger: false })
@@ -57,8 +57,8 @@ test('补齐前门岗确实会红，补齐后变绿（且只动新增那两篇�
   // ② 补齐后：索引判据里不再有这两篇（= check:docs-index 的 added 为空）。
   const after = scanDocumentIndex(root)
   assert.ok(!after.unindexed.includes('docs/archive/plan/2026-09-05-new-plan.md'))
-  assert.ok(!after.unindexed.includes('docs/lessons/new-lesson.md'))
-  assert.deepEqual(result.indexed.sort(), ['docs/archive/plan/2026-09-05-new-plan.md', 'docs/lessons/new-lesson.md'])
+  assert.ok(!after.unindexed.includes('docs/archive/lessons/new-lesson.md'))
+  assert.deepEqual(result.indexed.sort(), ['docs/archive/plan/2026-09-05-new-plan.md', 'docs/archive/lessons/new-lesson.md'].sort())
   assert.deepEqual(result.unrepairable, [])
 
   // 状态标记：只给新增那篇盖章，且盖的是「待拍板」，不是猜一个进行中。

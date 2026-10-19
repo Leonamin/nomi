@@ -1,6 +1,6 @@
 # Agent Runtime 源码阅读与 Nomi 适配方案
 
-> 这是一份独立的源码研究文档。它不修改或替代 `docs/superpowers/plans/2026-08-22-external-agent-runtime-mcp-control-plane.md`，只回答一个问题：Codex 和 Pi Agent 的真实代码里，哪些设计值得 Nomi 复用，应该落在哪一层。
+> 这是一份独立的源码研究文档。它不修改或替代 `docs/archive/superpowers/plans/2026-08-22-external-agent-runtime-mcp-control-plane.md`，只回答一个问题：Codex 和 Pi Agent 的真实代码里，哪些设计值得 Nomi 复用，应该落在哪一层。
 > **2026-08-26 实施决策已更新**：内部 Agent 选择受控 pi `AgentSession`，不再维持“继续 ai@4 或 pi 二选一”的开放分支；非 Agent 文本链继续 ai@4。文内 Harness/Operation 图是研究和业务边界，不代表固定 0.84.3 的 `AgentHarness` 已可用（其关键方法未实现，本期不采用）。实际文件与验收状态见 [harness 导览](../../../electron/harness/README.md) 和 [R1 实施卡](../plan/2026-08-26-pi-r1-runtime-cutover.md)。
 
 ## 先给结论

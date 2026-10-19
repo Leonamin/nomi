@@ -2088,7 +2088,7 @@
     "strategy": "Give the absent number its own channel at the earliest shared boundary (the signed envelope), then delete every downstream refusal that existed only because that channel was missing.",
     "artifacts": [
       "electron/productionRun/productionGenerationAuthorization.ts",
-      "docs/plan/2026-09-21-unknown-price-open-gate.md",
+      "docs/archive/plan/2026-09-21-unknown-price-open-gate.md",
       "electron/productionRun/unknownPriceOpenGate.test.ts",
       "electron/capabilityCore/unknownPriceSpendConfirm.e2e.test.ts"
     ]
@@ -2134,6 +2134,6 @@
     "tests": [
       "electron/productionRun/unknownPriceOpenGate.test.ts"
     ],
-    "structural_ticket": "docs/plan/2026-09-21-unknown-price-open-gate.md"
+    "structural_ticket": "docs/archive/plan/2026-09-21-unknown-price-open-gate.md"
   }
 }

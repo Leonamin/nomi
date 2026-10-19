@@ -31,7 +31,7 @@ for source in sorted((ROOT / 'skills').glob('*/SKILL.md')):
                     source.parent / preview['path'], preview['provenance']))
 if args.trial:
     entries.insert(0, ('锚图 3 · 已拍板', 'anchor-3',
-                      ROOT / 'docs/design/covers/anchors/anchor-3.png', 'reference'))
+                      ROOT / 'docs/archive/design/covers/anchors/anchor-3.png', 'reference'))
 columns = 3 if args.trial else 5
 width, height, gap, top = 360, 250, 16, 78
 sheet = Image.new('RGB', (columns * (width + gap) + gap,
@@ -57,6 +57,6 @@ for index, (label, name, filename, provenance) in enumerate(entries):
         draw.text((x + 90, y + 86), '未生成 · 非封面', font=font, fill='#555963')
     draw.text((x, y + 207), label, font=font, fill='#252931')
     draw.text((x, y + 232), name, font=small, fill='#555963')
-output = ROOT / 'docs/design/covers/contact-sheet-skill-ui-b.png'
+output = ROOT / 'docs/archive/design/covers/contact-sheet-skill-ui-b.png'
 sheet.save(output)
 print(f'{output.relative_to(ROOT)}: {len(entries)} images, {sheet.width}×{sheet.height}')

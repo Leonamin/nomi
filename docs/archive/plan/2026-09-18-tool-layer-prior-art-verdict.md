@@ -3,8 +3,8 @@
 > 📋 方案待拍板 · 状态由 docs-autosync 自动登记，作者请按实修改
 
 > 状态：现行 · 2026-09-18 · 分支 `research/tool-layer-prior-art-20260918`（基线 `fix/verb-host-contract-sweep-20260918` @ 3bc0ca364）
-> **输入**：`docs/plan/2026-09-18-tool-layer-findings-inventory.md`（14 条发现 + §4 九项已落地）与
-> `docs/audit/2026-09-18-agent-capability-restatement-layers.md`（结构评审）。两份都读完了；本文回答它们 §5 的四问。
+> **输入**：`docs/archive/plan/2026-09-18-tool-layer-findings-inventory.md`（14 条发现 + §4 九项已落地）与
+> `docs/archive/audit/2026-09-18-agent-capability-restatement-layers.md`（结构评审）。两份都读完了；本文回答它们 §5 的四问。
 > **纪律**：每条结论带链接或 file:line；外网页面全部于 2026-09-18 抓取；凭记忆的东西一律标「未证实」。
 > 对照用的仓库克隆（浅克隆，含 commit）在会话 scratchpad `prior-art/`，本文引用时给出 commit 与 file:line。
 > **这份文件是要拿去做架构决定的。** 它允许、并且下面确实推翻了我们自己的一半判断。

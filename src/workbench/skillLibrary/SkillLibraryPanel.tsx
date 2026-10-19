@@ -4,7 +4,7 @@ import { groupLibraryItems } from '../library/libraryGroups'
  * 技能库面板。技能在 App 里唯一的「家」：浏览（我的技能 / Nomi 内置）、搜索、导入文件、用 AI 新建、
  * 导出、删除、一键在创作区使用。设计对齐提示词库（PromptLibraryPanel）：居中模态 + 来源标签 + 卡片网格。
  * 导入/导出纯走渲染层（FileReader 读包 / Blob 下载），不加系统对话框桥；创建只走 AI（复用创作区
- * 「让 AI 帮我写技能」），不做手填 manifest 表单（docs/plan/2026-06-23-skill-library-hub.md）。
+ * 「让 AI 帮我写技能」），不做手填 manifest 表单（docs/archive/plan/2026-06-23-skill-library-hub.md）。
  */
 import React, { type JSX } from 'react'
 import { useTranslation } from 'react-i18next'

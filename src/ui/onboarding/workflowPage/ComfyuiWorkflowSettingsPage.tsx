@@ -1,6 +1,6 @@
 /**
  * ComfyUI「工作流设置」整页。
- * plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+ * plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
  *
  * 为什么另起一层、不塞进设置对话框：那张对话框是 760×560，装不下节点图。整页 Portal 到 body，
  * 盖在设置之上（设置 z-9000 → 这里 z-9100），返回时设置还在原样开着（用户的上下文不丢）。

@@ -1,5 +1,5 @@
 // 主进程通用纯工具 —— 从 runtime.ts 拆出的第一层地基（见
-// docs/plan/2026-06-04-runtime-split-execution.md）。全部为无副作用纯函数，
+// docs/archive/plan/2026-06-04-runtime-split-execution.md）。全部为无副作用纯函数，
 // 便于单独测试与被 tasks/catalog/assets 等后续拆出的模块复用。
 
 export type JsonRecord = Record<string, unknown>;

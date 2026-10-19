@@ -123,7 +123,7 @@
   ],
   "legacy_paths": {
     "status": "removed",
-    "removed_paths": ["docs/design/2026-09-02-cross-device-sync-mockup.html"],
+    "removed_paths": ["docs/archive/design/2026-09-02-cross-device-sync-mockup.html"],
     "rationale": "The rejected standalone panel is replaced by the approved Settings > File & saving sample; no second configuration surface remains."
   },
   "dependency_lifecycle": {

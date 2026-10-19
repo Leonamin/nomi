@@ -69,4 +69,4 @@ D-1 主线优先级 · D-2 拆解表数据 owner · D-3 分镜是否折进创作
 1. Phase 0 样张三张（用真实截图 + Prompt Brief + 生图，沿用 GPT 已走通的流程）：A 全屏 Agent 三态、B 画布拆解表（v2 布局已认可，补细节）、C 空态引导 checklist。
 2. Phase 1（UI 壳，无新数据模型）：composer 五按钮调序、左栏/顶栏重排、Skill 空态卡、版本弹窗、提示词框大小屏。派 Codex，不开 PR 攒到阶段边界。
 3. Phase 3（拆解表）先于 Phase 2（共享 ShotSpec）：用户痛点最集中；Phase 2 只做「拆解表→分镜计划」一个转换动作。
-4. Skill 站 / 供应商偏好 / 遥测：独立三轨，各自一份 docs/plan，不进主线 PR。
+4. Skill 站 / 供应商偏好 / 遥测：独立三轨，各自一份 docs/archive/plan，不进主线 PR。

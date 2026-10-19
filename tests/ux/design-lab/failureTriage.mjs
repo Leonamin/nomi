@@ -13,7 +13,7 @@
 //   · 其余（超时、页面报错）且没有差异图 = 基础设施可疑，明说「没能得出像素结论」，
 //     而不是把它冒充成一个像素结论。
 //
-// 与 docs/lessons/parallel-gates-thrash-the-machine.md 的分工：那条讲「超载会让超时类红灯不作数」，
+// 与 docs/archive/lessons/parallel-gates-thrash-the-machine.md 的分工：那条讲「超载会让超时类红灯不作数」，
 // 这里是把那条判据**机器化**——门岗自己报 load，不再指望人每次记得去看 uptime。
 import os from 'node:os'
 import fs from 'node:fs'
@@ -129,7 +129,7 @@ export function formatLabFailure(triage, { resultsDir, origin, load = loadSnapsh
       `   ${ran}（没有差异图 = 这一趟根本没比到像素，别去 test-results/ 找图）`,
       '   排查顺序：',
       `   1. 端口是不是被别的 worktree 占着：lsof -nP -iTCP:${port} -sTCP:LISTEN`,
-      '   2. 机器是不是在超载：uptime；load 远超核数时先等它闲下来（docs/lessons/parallel-gates-thrash-the-machine.md）',
+      '   2. 机器是不是在超载：uptime；load 远超核数时先等它闲下来（docs/archive/lessons/parallel-gates-thrash-the-machine.md）',
       `   3. 手工确认服务器：npx vite --host 127.0.0.1 --port ${port} --strictPort 然后开 ${origin}/design-lab.html`,
       '   机器闲下来再跑一次；这一趟对设计没有任何结论。',
     ].join('\n')

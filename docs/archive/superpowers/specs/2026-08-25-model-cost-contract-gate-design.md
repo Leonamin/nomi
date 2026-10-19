@@ -1,6 +1,6 @@
 # 新供应商 / 新模型成本契约门禁设计
 
-> **2026-09-01 返工对照**：本设计的成本契约门禁属**估算/契约侧**，与 main 现行 `shotPricing`（含 specCosts）+ `planCostEstimate` + `spendGrant` 体系重叠，本轮**不落码、仅存档**；本轮实际落地的只有「实际扣费证据（`electron/vendor/cost.ts` → provenance/vendorCallTrace）」这一 main 缺失项。完整逐项裁决表见 `docs/superpowers/plans/2026-08-25-generation-credit-estimation.md` 末尾。
+> **2026-09-01 返工对照**：本设计的成本契约门禁属**估算/契约侧**，与 main 现行 `shotPricing`（含 specCosts）+ `planCostEstimate` + `spendGrant` 体系重叠，本轮**不落码、仅存档**；本轮实际落地的只有「实际扣费证据（`electron/vendor/cost.ts` → provenance/vendorCallTrace）」这一 main 缺失项。完整逐项裁决表见 `docs/archive/superpowers/plans/2026-08-25-generation-credit-estimation.md` 末尾。
 
 日期：2026-08-25  
 状态：待用户书面复核  

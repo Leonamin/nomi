@@ -549,7 +549,7 @@ export const zhOnboardingProviders = {
     credentialHint: '填一次即可，密钥本地加密存储、只在调用时使用。',
     credentialSaved: '凭证已保存',
     // 连接状态只说「你能不能用」，不汇报「我们测没测」——「未测试」那套是死路：
-    // 它暗示有个测试动作，卡上却没有入口（见 docs/plan/2026-08-11-vendor-connection-health.md）。
+    // 它暗示有个测试动作，卡上却没有入口（见 docs/archive/plan/2026-08-11-vendor-connection-health.md）。
     connection: {
       checking: '检查中…',
       reachable: '已连通',
@@ -566,7 +566,7 @@ export const zhOnboardingProviders = {
     apiKeyAria: '{{name}} API Key',
     addressPlaceholder: 'https://…',
   },
-  // 「用 AI 帮我接入」——模型页顶部那张卡（设计定稿 docs/design/2026-09-11-ai-assisted-onboarding-entry.md）。
+  // 「用 AI 帮我接入」——模型页顶部那张卡（设计定稿 docs/archive/design/2026-09-11-ai-assisted-onboarding-entry.md）。
   assistedOnboarding: {
     title: '用 AI 帮我接入',
     subtitle: '让你已经在用的 AI 助手替你把新模型接进 Nomi——地址、参数、模型 ID 都由它去查。',

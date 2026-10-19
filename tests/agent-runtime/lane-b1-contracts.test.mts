@@ -53,7 +53,7 @@ test('C19 · switching groups tells the model core tools remain callable', async
 });
 
 test('C26 · replay the first human failure and show a valid candidate example', async t => {
-  const args = JSON.parse(await readFile('docs/plan/agent-lane-b1-evidence/c26-first-call.json', 'utf8'));
+  const args = JSON.parse(await readFile('docs/archive/plan/agent-lane-b1-evidence/c26-first-call.json', 'utf8'));
   const f = await createLaneFixture(t, [{ type: 'tool', calls: [{ id: 'bad', name: plan().name, arguments: args }] }, closing]);
   const lane = await f.openLane({ ...f.options, tools: createExtendedLaneTools({ execute: async () => { throw new Error('Invalid call must not execute'); } }) });
   await lane.execute({ kind: 'prompt', text: '试拍' });

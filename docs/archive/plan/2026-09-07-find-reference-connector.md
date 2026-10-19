@@ -3,7 +3,7 @@
 > 状态：✅ 已实现（数据层+UI 接线完成，门岗与单测绿）· ⚠️ UI 未走真机走查/视觉基线，见文末「本 PR 不声称什么」
 
 日期：2026-09-07 · 基线：`origin/main@4f55e2a36`
-设计（已拍板）：[`../design/2026-09-07-find-reference-design.md`](../../design/2026-09-07-find-reference-design.md) · 画布 <https://claude.ai/code/artifact/309a8fc2-4599-4f63-8e5b-379e97768ccf>
+设计（已拍板）：[`../design/2026-09-07-find-reference-design.md`](../design/2026-09-07-find-reference-design.md) · 画布 <https://claude.ai/code/artifact/309a8fc2-4599-4f63-8e5b-379e97768ccf>
 调研：[`../research/2026-09-07-tiktok-creative-intelligence.md`](../research/2026-09-07-tiktok-creative-intelligence.md)
 
 ## 先查别人

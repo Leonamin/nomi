@@ -140,4 +140,4 @@ S4 两次回归已证明跨世界状态同步极易漏（#346 前两次 attempt 
 主因（frameGapP95 仍 >33ms 且 CDP LayoutCount 主要来自 SVG 层）。届时先拿
 只读 minimap 试工程量再决定是否吃边层。
 
-**出处**：tldraw SDK 4.4（2026-02-19）；细节见 `docs/audit/2026-09-02-canvas-performance-ceiling-audit.md`。
+**出处**：tldraw SDK 4.4（2026-02-19）；细节见 `docs/archive/audit/2026-09-02-canvas-performance-ceiling-audit.md`。

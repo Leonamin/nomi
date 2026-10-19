@@ -13,7 +13,7 @@
   "scope_paths": [
     "electron/catalog/kieKling.ts",
     "electron/catalog/vendorWireDriftFixes.test.ts",
-    "docs/research/2026-09-02-docaudit-kie.md"
+    "docs/archive/research/2026-09-02-docaudit-kie.md"
   ],
   "entry_points": [
     "seed-kie-kling-3-text_to_video",

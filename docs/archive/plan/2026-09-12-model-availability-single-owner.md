@@ -14,7 +14,7 @@
 | 项目库首页横幅 | 「创作助手**尚未连接模型**」 |
 | 创作助手模型下拉 | 「**目录里没有可用的**」 |
 
-证据：`git show origin/docs/real-onboarding-acceptance-20260912:docs/research/2026-09-12-real-onboarding-acceptance/README.md` §6（P0-10）。
+证据：`git show origin/docs/real-onboarding-acceptance-20260912:docs/archive/research/2026-09-12-real-onboarding-acceptance/README.md` §6（P0-10）。
 
 不是刷新问题，也不是某一处写错了。是**每个读者都自己写了一份判据**：
 
@@ -109,7 +109,7 @@
 ## 先查别人
 
 - **真实验收报告**（本方案的事实来源）：`origin/docs/real-onboarding-acceptance-20260912`
-  的 `docs/research/2026-09-12-real-onboarding-acceptance/README.md` §6 P0-10，
+  的 `docs/archive/research/2026-09-12-real-onboarding-acceptance/README.md` §6 P0-10，
   含三处 dump 行号与截图名；归属写的是 `feat/model-onboarding-two-paths-20260911` ×
   `feat/mcp-onboarding-tool-face-20260911`（2026-09-12 查）。
 - **仓库里已有（用它）**：发布资格的唯一 owner `electron/shared/modelPublication.ts:119`
@@ -122,7 +122,7 @@
   「没接入的供应商，它的模型不显示」，闸只有一道、开在 catalog 派生层
   （`docs/fixes/2026-09-06-vendor-preference-picker.root-cause.json` 的 generality_proof）。
   本方案保留这道闸的**位置**，只把它的**判据**换成主进程算好的 `availability`。
-- **仓库里已有（教训）**：`docs/plan/2026-06-08-vendor-switch-archetype-migration.md:25`
+- **仓库里已有（教训）**：`docs/archive/plan/2026-06-08-vendor-switch-archetype-migration.md:25`
   写着 `vendorIsUsable(v) = enabled && (authType==='none' || hasApiKey)` ——
   同一条不变量的第三份写法，2026-06-08 那次「拔了 key 仍发请求」就是它的副本漂开。本轮已删除。
 - **仓库里已有（划界）**：写入边界 `electron/catalog/credentialPublication.ts:16`

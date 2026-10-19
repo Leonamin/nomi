@@ -15,7 +15,7 @@ import type { DiagnosticsBundleManifest } from './diagnostics'
  *
  * 第五个 `unspecified` 是**规范入口**（设置 → 关于 → 反馈）——那一刻没有任何失败上下文。
  * 它必须存在而不是让那条路复用 `generation`：走查真跑完之后，落到接收端的报文里写着
- * `"surface":"generation"`（见 docs/evidence 的 posted-feedback.summary.json 第一版），
+ * `"surface":"generation"`（见 docs/archive/evidence 的 posted-feedback.summary.json 第一版），
  * 而那份报告跟生成一点关系都没有。分诊时把「用户主动来说一件事」读成「生成坏了」，
  * 比没有这一格更糟——一个编错的标签会一直骗人，而一个诚实的 `unspecified` 只是少一点信息。
  */
@@ -45,7 +45,7 @@ export type FeedbackReportRequest = {
   /**
    * 这份反馈属于哪个项目。**由知情的那一侧（发起的那个窗口/面）给**，主进程不自己去读
    * 「当前项目」——2026-09-17 起「当前项目」在主进程没有读者（项目身份单点签发，
-   * 合同 docs/plan/2026-09-17-project-surface-session.md）；那种读法会把「用户点反馈时
+   * 合同 docs/archive/plan/2026-09-17-project-surface-session.md）；那种读法会把「用户点反馈时
    * 正开着的项目」和「这条失败当时所在的项目」混成一个。给不出就不带（轨迹随之缺席，
    * 清单里写明 why）。
    */

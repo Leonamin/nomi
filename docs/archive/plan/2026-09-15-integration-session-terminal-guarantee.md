@@ -4,7 +4,7 @@
 
 > 范围：接入验证（「用 AI 帮我接入」/ MCP `nomi_integration` / 设置页自检）的**会话层**
 > 终态保证与取消逃生口。前情是 2026-09-11 真机死锁复盘
-> `docs/plan/2026-09-11-mcp-integration-quality.md`（那一版只落在 `providerAdapter` 的 run 层）。
+> `docs/archive/plan/2026-09-11-mcp-integration-quality.md`（那一版只落在 `providerAdapter` 的 run 层）。
 >
 > 不动项：六步协议、凭证按 baseUrl 复用、声明式说明卡、run 层已有的
 > `TerminalWriteGuarantee` / errors.jsonl 旁路、ComfyUI 预留账本的语义。

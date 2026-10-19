@@ -3,7 +3,7 @@
 > 触发：`check:symptom-cluster` 在 `electron/catalog`（6 份 / 7 天）、`electron/shared`（12 份）、
 > `scripts`、`src/workbench` 四个模块上同时报红——同一层 7 天里第三份合同，规则说这时候该出结构评审，
 > 不该再修第四次。本文就是那份评审。
-> 数据源：`docs/audit/2026-09-17-ownership-lifetime-census.md`（五维普查，可重跑
+> 数据源：`docs/archive/audit/2026-09-17-ownership-lifetime-census.md`（五维普查，可重跑
 > `node scripts/audit/scan-ownership.mjs`）+ 本批次五道新门岗各自的「加规则前红几行」。
 
 ## 0. 结论

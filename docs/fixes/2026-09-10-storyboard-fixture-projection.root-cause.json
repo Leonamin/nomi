@@ -9,7 +9,7 @@
     "All future fixture model tiers and supplier identities"
   ],
   "scope_paths": [
-    "docs/fixes/storyboard-reliability/cases.mjs"
+    "docs/archive/fixes/storyboard-reliability/cases.mjs"
   ],
   "entry_points": [
     "argsFor model 1K",
@@ -23,20 +23,20 @@
   "generality_proof": "Both tiers share argsFor and derive identity/mode/parameter keys from projected entries. Tests exercise APIMart and Kie and absent/unsupported configuration.",
   "shared_boundaries": [
     {
-      "path": "docs/fixes/storyboard-reliability/cases.mjs",
+      "path": "docs/archive/fixes/storyboard-reliability/cases.mjs",
       "symbol": "argsFor",
       "responsibility": "Derive all model-bearing fixture arguments from the real catalog projection"
     }
   ],
   "same_class_entry_points": [
     {
-      "path": "docs/fixes/storyboard-reliability/cases.mjs",
+      "path": "docs/archive/fixes/storyboard-reliability/cases.mjs",
       "entry_point": "cases id 4 model",
       "disposition": "enforced",
       "evidence": "1K uses argsFor projected mode parameter"
     },
     {
-      "path": "docs/fixes/storyboard-reliability/cases.mjs",
+      "path": "docs/archive/fixes/storyboard-reliability/cases.mjs",
       "entry_point": "cases id 9 model2",
       "disposition": "enforced",
       "evidence": "2K uses the same boundary"
@@ -52,19 +52,19 @@
     "classification": "recurring",
     "reason": "Hand-authored metadata can drift with any new tier or vendor.",
     "same_class_scan": [
-      "rg argsFor docs/fixes/storyboard-reliability and .tmp: two tier callers share owner; obsolete scratch copy not used",
+      "rg argsFor docs/archive/fixes/storyboard-reliability and .tmp: two tier callers share owner; obsolete scratch copy not used",
       "Read tests/ux/agent-runtime-fixture.mjs projectAgentRuntimeModels and src/workbench/generationCanvas/agent/availableModels.ts buildAgentModelEntries"
     ]
   },
   "prevention": {
     "kind": "centralized-boundary",
-    "enforcement_path": "docs/fixes/storyboard-reliability/cases.mjs",
+    "enforcement_path": "docs/archive/fixes/storyboard-reliability/cases.mjs",
     "invariant": "Model-bearing fixture arguments derive from projected modes.",
     "failure_mode": "Throw before submitting if model/mode/tier is absent.",
     "exception_policy": "none",
     "strategy": "Remove handwritten key and bind fixture values to production catalog.",
     "artifacts": [
-      "docs/fixes/storyboard-reliability/cases.mjs"
+      "docs/archive/fixes/storyboard-reliability/cases.mjs"
     ]
   },
   "regression_tests": [
@@ -76,7 +76,7 @@
   "legacy_paths": {
     "status": "removed",
     "removed_paths": [
-      "docs/fixes/storyboard-reliability/cases.mjs"
+      "docs/archive/fixes/storyboard-reliability/cases.mjs"
     ],
     "rationale": "Removed hardcoded params.size; historical failure traces remain unchanged."
   },
@@ -90,7 +90,7 @@
     "Correct fixture projection cannot establish real model behavior; rounds 3\u20135 measure separately."
   ],
   "invariant_owner_layer": {
-    "layer": "docs/fixes/storyboard-reliability/cases.mjs",
+    "layer": "docs/archive/fixes/storyboard-reliability/cases.mjs",
     "tests": [
       "tests/ux/storyboard-reliability-cases.test.mjs"
     ],

@@ -1,7 +1,7 @@
 # MCP 对话原生体验 · 实施 Plan（P0）
 
 > 2026-08-11 用户拍板：方向 B「把对话当界面」+ 五门确认模型 + 信任档位 + 桌面富渲染为一等增强层。
-> 依据：[research](../research/2026-08-11-mcp-experience-research.md)（§7 能力清单、§7.5 确认点模型）+ 获批样张 [mockup](../../design/mockups/2026-08-11-mcp-conversation-native-experience.html)（六幕 × 终端/桌面双形态）。
+> 依据：[research](../research/2026-08-11-mcp-experience-research.md)（§7 能力清单、§7.5 确认点模型）+ 获批样张 [mockup](../design/mockups/2026-08-11-mcp-conversation-native-experience.html)（六幕 × 终端/桌面双形态）。
 > 实现后必须与样张逐项对账（R8）+ 真机走查（R13）+ 真实任务 e2e（R16）。
 
 ## 分期

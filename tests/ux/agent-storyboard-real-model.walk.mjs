@@ -197,7 +197,7 @@ try {
    * 2026-09-18 第一次跑 origin/main 那一臂时，第 5 轮起连续 19 轮全部 30s 超时、零工具调用——
    * 看起来像「main 上 Agent 不干活」，实际上是第 4 轮里 Agent 调了 `start_model_setup`，把「设置 · 模型」
    * 那张**模态**摆到了面板前面，后面每一轮的点击都打在遮罩上。那不是产品结论，是仪器故障
-   * （`docs/lessons/harness-catch-launders-bugs-into-verdicts.md`：自家 catch 会把仪器的 bug 洗成产品结论）。
+   * （`docs/archive/lessons/harness-catch-launders-bugs-into-verdicts.md`：自家 catch 会把仪器的 bug 洗成产品结论）。
    *
    * 所以守卫不是「保险起见按一下 Esc」：它先**观察**输入框可不可用，只有不可用时才按 Esc，
    * 并把「这一轮是被挡过的」记进报告——被挡这件事本身是数据，不许静默抹掉。

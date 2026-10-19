@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest'
 import { projectAgentRuntimeModels } from './agent-runtime-fixture.mjs'
-import { argsFor, cases } from '../../docs/fixes/storyboard-reliability/cases.mjs'
+import { argsFor, cases } from '../../docs/archive/fixes/storyboard-reliability/cases.mjs'
 import { repoRoot } from './_launchApp.mjs'
 
 describe('storyboard reliability uses the real catalog projection', () => {

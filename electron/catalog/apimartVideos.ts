@@ -1,5 +1,5 @@
 // apimart 视频模型的 curated 传输配方（11 个高频视频模型，单源）。契约见
-// docs/plan/2026-06-07-apimart-curated-onboarding.md 附录 A（R5 抓 + Sora 2 已真 mp4 验证）；
+// docs/archive/plan/2026-06-07-apimart-curated-onboarding.md 附录 A（R5 抓 + Sora 2 已真 mp4 验证）；
 // VEO 3.1 的别名/范围归一参考 R6 对标（Infinite-Canvas 的 apimart_veo31_* helper）。
 // 2026-07-29 增补（各自照 docs.apimart.ai 当日文档对账）：Vidu Q3（参考生，无 t2v）、可灵 3.0 Turbo、
 // HappyHorse 1.1（单 model 字段自动路由）、Wan 2.7 升级角色参考（wan2.7-r2v，per-mode modelEnum 通道）。

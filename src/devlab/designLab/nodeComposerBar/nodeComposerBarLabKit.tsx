@@ -8,7 +8,7 @@
 //   · A 类（模型 / 参数摘要 pill / ×N / 生成）留底栏第一段与第三段；
 //   · B 类（运镜 / 效果 / 优化）收成中段一簇缩小一号的纯 icon，hover 出名字，运镜已选带激活点；
 //   · 锁归位回节点右上浮条（它的作用对象是**这个节点**，不是这一次生成）。
-//   方案与删除清单/卡点表：docs/design/2026-09-10-node-composer-bar-v1.md。
+//   方案与删除清单/卡点表：docs/archive/design/2026-09-10-node-composer-bar-v1.md。
 //
 // 证据强度：**每一格都是现役 `NodeGenerationComposer` 本体**（经 BaseGenerationNode 挂载），
 // 排布不是在这里画的——`coverage: 'shell'`。接线之前这一屏有两格 `before` 和六格

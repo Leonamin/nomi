@@ -48,7 +48,7 @@ lane-live-skills-snapshot / resident-generation-adapter-install / 本轮）说�
 ## 这个结构问题的真正原因不在这一层，而在它的生长方式
 
 `electron/agentLane` 是 2026-09-06 拍板「不修补、重做接 pi 的那层」之后**一个月内长出来**的，
-而且是多条 lane 并行长（`docs/plan/2026-09-07-agent-runtime-rebuild.md`）。
+而且是多条 lane 并行长（`docs/archive/plan/2026-09-07-agent-runtime-rebuild.md`）。
 并行施工时每个人只看得见自己那条路，于是「这条事实归谁」这种跨路问题**只能在第二个人
 碰到同一份事实时才暴露**——那正是合同簇的形状：不是同一个 bug 修了 13 次，
 是 13 份事实各自被发现「原来没有家」。
@@ -76,7 +76,7 @@ lane-live-skills-snapshot / resident-generation-adapter-install / 本轮）说�
 
 - **`electron/agentLane` 缺一份「这一层持有哪些事实」的清单**。今天要知道「某份事实归谁」只能
   逐个读合同。建议：把 13 份合同的 `invariant_owner_layer` 汇成一张表放进
-  `docs/ARCHITECTURE-NOW.md` 的 agent lane 段，新合同追加一行。
+  `docs/archive/guides/ARCHITECTURE-NOW.md` 的 agent lane 段，新合同追加一行。
   这件事本身不该由一条修复 PR 顺手做（它会变成第 14 份合同的附属品），单独排。
 - **零调用者的实现没有门岗**。`buildSkillSystemPrompt`（本轮删）与 `composeAgentSystemPrompt`
   （仍在）都是「有实现、有测试、零生产调用者」。这一族在 `electron/agentLane` 至少出现过两次

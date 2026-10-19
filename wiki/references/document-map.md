@@ -21,26 +21,15 @@ okf_version: "0.1"
 | [명령 표](../../docs/engineering/commands.md), [전달 규칙](../../docs/engineering/delivery-and-review.md), `package.json` | [개발](../guides/local-development.md), [전달과 검증](../guides/delivery-and-validation.md). 명령·규칙 원본은 기존 경로 유지 |
 | [이전 총목차](../../docs/archive/2026-10-16-document-map/INDEX.md), 조사·계획·감사 색인 | [역사와 증거](history-and-evidence.md), [외부 조사](external-research.md) |
 
-## 보존 경로와 용도
+## 현재 분류 (2026-10-19)
 
-2026-10-16 후속 정리에서 과거 파일 2,565개를 `docs/archive/` 아래로 실제 이동했다. 현재 경로는 [보관 색인](../../docs/archive/index.md)과 [이동표](../../docs/archive/2026-10-16-path-map.json)에서 확인한다. 비문서 산출물 1,056개는 내용 해시를 유지했다. 기계 계약과 기존 코드의 고정된 문서 주소는 짧은 원문 안내로 남긴다.
+- `docs/engineering/`, `fixes/*.root-cause.json`, `GLOSSARY.md`, 코딩·패키지 규범: 현재 기계 계약과 규범.
+- `docs/design/nomi-design-system.md`, `nomi-design-flow-howto.md`: 현재 디자인 규범.
+- `docs/plan/`: 현재 fork에서 진행 중인 작업과 색인.
+- `docs/guide/`, SEO·릴리스·통계·인증 등 자동화 자료: 실제 소비되는 입력·출력·정책.
+- `docs/archive/`: 과거 증거·QA·시안·계획·교훈·조사·원인 분석 첨부. 실행 스크립트도 함께 이동하고 소비자의 파일 참조와 상대 import를 수정했다.
 
-폴더 이름만으로 문서의 유효성을 판정하지 않는다. 미래 문서도 기계 입력은 소유 경로에 유지하고, 위키의 current fact와 연결한다.
-
-| 보존 경로 (`docs/` 기준) | 용도와 읽기 원칙 |
-| --- | --- |
-| `engineering/`, `engineering-rules.md`, `GLOSSARY.md`, `coding-standards.md` | 현재 검사·명령·규칙의 원본. JSON·스키마·규범을 위키에 복제하지 않음 |
-| `fixes/` | 원인 계약과 관련 증거. schema·문서 버전·경로를 유지 |
-| `plan/`, `archive/plan/`, `archive/superpowers/` | 현재 작업 설계 카드와 보관된 계획·하위 첨부. 상속 계획의 상태는 현재 fork TODO가 아님 |
-| `evidence/`, `qa/`, `archive/audit/`, `archive/onboarding-trials/`, `evals/` | 검증·감사·실험의 조건과 실패 이력. mock/local/hosted/live 범위를 원문대로 읽음 |
-| `design/` | 상세 디자인 규범, 원본 시안과 승인·비교 자료. `archive/`는 과거 시안 |
-| `archive/research/`, `archive/product/`, `marketing/`, `seo/` | 조사 당시 외부 사실과 제안. 현재 채택·지원 여부는 위키와 코드로 확인 |
-| `archive/architecture/`, `archive/architecture-review/`, `archive/handoff/`, `archive/workflow/`, `lessons/` | 상속 구조·결정·방법·교훈. 확인 시점과 코드 근거를 대조, 교훈 원본·색인 유지 |
-| `guide/`의 도구 입력, `archive/guide/`, `archive/integrations/`, `integration-certification/`, `archive/testing/`, `archive/test/` | 기능별 기존 설명과 인증·테스트 자료. 개인용 웹 지원 여부는 현재 위키에서 먼저 확인 |
-| `release-notes/`, `archive/release/`, `archive/roadmap/`, `archive/` | 릴리스·계획 포인터·역사 기록. 과거 릴리스와 현재 배포를 구분 |
-| `media/`, `feedback/`, `security/`, `stats/` | 첨부·설정 예시·정책·통계 도구 안내. 공개 예시와 실제 운영 비밀 값을 구분 |
-
-`plan/`에는 1,648개 파일(Markdown 866개), `fixes/` 1,123개, `evidence/` 637개가 있었다. 이 폴더를 통째로 이동하면 계약 안의 경로·검증 도구·과거 증거의 상대 링크가 함께 바뀐다. 위키 전환 후의 물리적 보관에서는 역사 묶음을 archive로 이동하고 관련 도구·테스트의 경로를 맞췄다. 원인 계약·규범·현재 자동화 입력과 실행 문맥이 필요한 코드/HTML 증거 패키지는 원래 경로에 유지한다. 원본 로그·이미지·영상·실험 JSON의 내용과 당시 결정을 다시 쓰지 않는다.
+[현재 이동표](../../docs/archive/2026-10-19-path-map.json)는 1차 이동표를 이어 받는다. 이전 주소 안내 156개 중 현행 작업 색인으로 교체한 1개를 제외한 155개를 삭제했으며, 현재 작업 색인에도 과거 링크 목록을 남기지 않는다. 구형 v1/v2 원인 계약은 바이트를 유지하고 v3의 문서·증거 참조를 보관 위치로 갱신했다. 원본 로그·실험 JSON·이미지·영상·HTML은 바이트를 보존한다.
 
 ## 이후 갱신
 

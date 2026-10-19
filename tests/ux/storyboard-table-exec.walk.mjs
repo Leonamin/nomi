@@ -13,7 +13,7 @@ import { launchNomiApp } from './_launchApp.mjs'
 import { createAgentRuntimeFixture, FIXTURE_IMAGE_MODEL } from './agent-runtime-fixture.mjs'
 import { assertMockupContract, clickOrFail, expect, expectAbsent, expectCount, expectText, expectVisible, proveProbe, screenshotSettled } from './_assert.mjs'
 import { stationTimeout } from './_station-budget.mjs'
-import storyboardIntentContract from '../../docs/design/mockups/contracts/2026-09-01-storyboard-table-image-first.intent.mjs'
+import storyboardIntentContract from '../../docs/archive/design/mockups/contracts/2026-09-01-storyboard-table-image-first.intent.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
 const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'nomi-storyboard-exec-'))
@@ -387,7 +387,7 @@ try {
   await clickOrFail(win.locator('[data-v4-control="collapse"]').first(), '收起常驻 Agent 面板（让分镜面拿回整列宽）')
   await expect(win.locator('[data-agent-resident="true"][data-agent-collapsed="true"]')).toBeVisible()
   // ② 契约已迁到 v6（2026-09-18）：条款逐条对着
-  //    docs/design/2026-09-05-storyboard-table-v6-design-contract.md 誊抄，所以整份硬断言，
+  //    docs/archive/design/2026-09-05-storyboard-table-v6-design-contract.md 誊抄，所以整份硬断言，
   //    不再按名字摘任何一条（上一版那个 SUPERSEDED_BY_V6 过滤是记号，不是修复）。
   await assertMockupContract(win, storyboardIntentContract)
 

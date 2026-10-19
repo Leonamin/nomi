@@ -1,5 +1,5 @@
 // apimart（apimart.ai）供应商种子 —— 第二家策展中转站（与 kie 并列）。
-// 设计与接入契约见 docs/plan/2026-06-07-apimart-curated-onboarding.md（含 12 模型精确契约附录 A）。
+// 设计与接入契约见 docs/archive/plan/2026-06-07-apimart-curated-onboarding.md（含 12 模型精确契约附录 A）。
 //
 // 与 kie 同构（都是 async create→poll 家族），但端点/形状不同（已用真 key 端到端核验，
 // tests/transport-spike/apimart.mjs）：

@@ -1,5 +1,5 @@
 // 运行时基础设施层 —— 路径 / 目录 / JSON 读取的共享地基（见
-// docs/plan/2026-06-04-runtime-split-execution.md）。projects / assets / catalog /
+// docs/archive/plan/2026-06-04-runtime-split-execution.md）。projects / assets / catalog /
 // skills 等域都依赖这一层；先抽出来才能解开它们之间的循环依赖。
 import { app } from "electron";
 import fs from "node:fs";

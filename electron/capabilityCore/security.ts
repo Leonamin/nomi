@@ -1,4 +1,4 @@
-// 能力核 · 安全门（见 docs/plan/2026-06-20-capability-core-headless-exposure.md §S6）。
+// 能力核 · 安全门（见 docs/archive/plan/2026-06-20-capability-core-headless-exposure.md §S6）。
 //
 // 外部 agent（Claude Code / Codex）经 CLI / MCP 调能力核 = 能触发生成（花用户额度）+ 改工程文件。
 // 必须有门：① 本地 token 鉴权（任意进程想调先证明它拿到了用户机器上的 token 文件）；

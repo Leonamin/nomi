@@ -1,6 +1,6 @@
 // R16 真实旅程 · MCP lease 绑的项目 ≠ Nomi 里打开的项目
 //
-// 复现的是 docs/qa/2026-09-06-agent-mcp-restart-real-user-pass.md §2.5 报的那件事：外部宿主用
+// 复现的是 docs/archive/qa/2026-09-06-agent-mcp-restart-real-user-pass.md §2.5 报的那件事：外部宿主用
 // nomi_project_create 自己建了项目 P、拿到绑 P 的 lease，然后 nomi_export_job / nomi_media_query
 // 回 `project_scope_required: an active project is required`——因为渲染层适配器读的是「人正好在
 // Nomi 里打开着的那个项目」，把主进程 lease 校验后递过来的 projectId 丢了。

@@ -7,7 +7,7 @@
 
 09-13 19:27 截图 + 原话：「打开右侧 AI 栏和中间的时间轴之后页面被切割」「不小心点了下面的时间轴收不回去了，本来我记得可以收回，而且排版都错了，怎么右下角缺了一大块，本来不是他在右面通过去吗，另外就是拉上来太大了，这里核心是拖动后面可以预览，主要有两个轨道一个图片一个视频可以预览就行」。
 
-截图证据：`docs/roadmap/sources/screenshots/2026-09-13-1927-layout-split-and-surface-error.jpg`（Nomi-core-materials 分支）。量出来的事实：时间轴右边界停在画布列右缘（x≈1018），AI 面板下边界 y≈690，**面板下方到窗口底边那一块（约 400×195）什么都没有**——就是他说的「右下角缺了一大块」。
+截图证据：`docs/archive/roadmap/sources/screenshots/2026-09-13-1927-layout-split-and-surface-error.jpg`（Nomi-core-materials 分支）。量出来的事实：时间轴右边界停在画布列右缘（x≈1018），AI 面板下边界 y≈690，**面板下方到窗口底边那一块（约 400×195）什么都没有**——就是他说的「右下角缺了一大块」。
 
 ## 2. 旧设计就是规格（迁移前代码）
 
@@ -32,7 +32,7 @@
 
 ## 4. 同一面的其余三条
 
-1. **收不回去**：面板内的收起钮自 09-10 起就有（`src/workbench/timeline/TimelinePanel.tsx:402`），但它是行尾一颗**无文字的 chevron**，排在十几颗同款 icon 钮之后，而且住在 `overflow-x-auto` 的滚动区里——行放不下时它第一个被滚出视口。属「说坏了其实是找不到」那一族（`docs/lessons/group-says-broken-usually-means-undiscoverable.md`）。修法：把「?」与收起钮移出滚动区，钉在行尾固定槽里，收起钮补上现役文案 `timelineEditor.collapsePanel`（「收起时间轴」）。
+1. **收不回去**：面板内的收起钮自 09-10 起就有（`src/workbench/timeline/TimelinePanel.tsx:402`），但它是行尾一颗**无文字的 chevron**，排在十几颗同款 icon 钮之后，而且住在 `overflow-x-auto` 的滚动区里——行放不下时它第一个被滚出视口。属「说坏了其实是找不到」那一族（`docs/archive/lessons/group-says-broken-usually-means-undiscoverable.md`）。修法：把「?」与收起钮移出滚动区，钉在行尾固定槽里，收起钮补上现役文案 `timelineEditor.collapsePanel`（「收起时间轴」）。
 2. **默认高度**：`TIMELINE_PANEL_DEFAULT = 188` 是拍出来的数（注释自称对齐旧 `--workbench-timeline-height`）。188 装不下两条主轨——用户必须先拖高才看得到视频轨，拖过头就成了「拉上来太大了」。修法：由内容派生 = 面板内边距 + 工具条行 + 标尺行 + **两条主轨行**。
 3. **跟着面板左右跳动**：`col-span-full` 恢复后时间轴宽度与面板开关解耦，这条随 §3 一起消。
 

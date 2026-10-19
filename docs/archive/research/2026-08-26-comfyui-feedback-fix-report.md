@@ -77,4 +77,4 @@ node tests/ux/comfy-workflow-feedback.walk.mjs
 - [官方 H3 Reference to Video 模板](https://github.com/Comfy-Org/workflow_templates/blob/main/templates/video_minimax_h3_r2v.json)：核对 CreateVideo→SaveVideo 输出链。
 - [Mantine Combobox](https://mantine.dev/core/combobox/)：通过官方文档与本地安装源码核对搜索、portal、键盘和挂载行为。
 
-实现计划：`docs/plan/2026-08-26-comfyui-output-and-parameter-controls.md`。
+实现计划：`docs/archive/plan/2026-08-26-comfyui-output-and-parameter-controls.md`。

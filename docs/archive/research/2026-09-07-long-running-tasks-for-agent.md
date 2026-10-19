@@ -2,7 +2,7 @@
 
 > 状态：📎 交接/日志 —— **只调研不改码，一行产品代码未动。**
 > 日期：2026-09-07 · 基线：`origin/main@6a7c81786` · pi 锁定 `0.85.1`
-> 服务对象：[`docs/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md`](../plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md) §1.2（审批期 lane 的 operation 状态）与 §1.6（看门狗/重试/超时四件事）——两节都假设「lane 在等」只有审批与重试两种，**没有第三种：等一个跑几分钟的生成**。本篇补这一种。
+> 服务对象：[`docs/archive/plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md`](../plan/2026-09-07-agent-rebuild-stage3-5-deep-plan.md) §1.2（审批期 lane 的 operation 状态）与 §1.6（看门狗/重试/超时四件事）——两节都假设「lane 在等」只有审批与重试两种，**没有第三种：等一个跑几分钟的生成**。本篇补这一种。
 > 引用格式：pi 侧相对 `node_modules/@earendil-works/`；仓库侧相对仓库根；外部给 URL。
 
 ---
@@ -59,7 +59,7 @@
 
 | 事实 | 出处 |
 |---|---|
-| 供应商查询间隔契约 **≥3–5s** | `docs/plan/2026-07-31-seedance-api-contract-reconciliation.md` §三（本仓一手对账），被 `multiShotBatchScheduler.ts:24-33` 的「3s 起、翻倍、15s 封顶」直接引用 |
+| 供应商查询间隔契约 **≥3–5s** | `docs/archive/plan/2026-07-31-seedance-api-contract-reconciliation.md` §三（本仓一手对账），被 `multiShotBatchScheduler.ts:24-33` 的「3s 起、翻倍、15s 封顶」直接引用 |
 | 真实视频供应商「takes MINUTES」，所以 dispatch 只提交+轮询一次，其余进 `observe` 列表分轮真等 | `electron/productionRun/multiShotBatchScheduler.ts:24-33`（2026-08-25 APIMart 真付费验收抓到的三洞修复） |
 | 在飞的活超过 `pollHorizonMs` 时，drive 以 `quiescent: false` 休息，由 caller 再 kick——**只要还有可轮询的活就绝不 `true`** | 同上 + `electron/capabilityCore/appIntegration.ts:409`（`if (!outcome.quiescent) scheduleBatchRekick(projectId, runId)`）、`:570`「Durable, restart-safe kick」 |
 | 不重复提交靠 outbox intent log；不重复扣费靠 commandId 幂等的 ledger | `electron/productionRun/submissionOutbox.ts`（`SubmissionNotDispatchedError` / `SubmissionReceiptUnknownError` / `SubmissionReconciliationRequiredError`）+ `electron/productionRun/budgetLedger.ts:8-14`（`authorize / reserve / mark_unsettled / settle / release`） |
@@ -75,10 +75,10 @@
 ```bash
 source ~/.zshenv
 node scripts/research/tikhub-search.mjs --q "AI视频 批量生成 排队" \
-  --platform all --limit 8 --out docs/research/2026-09-07-agent-web-memory-longtask/tikhub/AI视频_批量生成_排队/
+  --platform all --limit 8 --out docs/archive/research/2026-09-07-agent-web-memory-longtask/tikhub/AI视频_批量生成_排队/
 ```
 
-产物附件：`docs/research/2026-09-07-agent-web-memory-longtask/tikhub/AI视频_批量生成_排队/tikhub-search.{json,md}`（32 条）
+产物附件：`docs/archive/research/2026-09-07-agent-web-memory-longtask/tikhub/AI视频_批量生成_排队/tikhub-search.{json,md}`（32 条）
 
 | 平台 | 出处 URL | 作者 | 发布 | 摘要（原文，未改写） |
 |---|---|---|---|---|

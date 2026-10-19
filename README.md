@@ -22,7 +22,7 @@
   <a href="https://nomiaqm.com/en/">Website</a> ·
   <a href="#watch-the-film">Watch the 90-second film</a> ·
   <a href="https://nomiaqm.com/en/quickstart">Quick start</a> ·
-  <a href="docs/integrate-with-your-agent-en.md">Let your AI connect it</a> ·
+  <a href="docs/archive/guides/integrate-with-your-agent-en.md">Let your AI connect it</a> ·
   <a href="#community">Community</a> ·
   <a href="README.zh-CN.md">简体中文</a>
 </p>
@@ -171,7 +171,7 @@ skills/      Skill Pack v2; see docs/skill-pack-format.md
 
 Useful checks: `pnpm run test` · `pnpm run typecheck` · `pnpm run gates`
 
-Research tooling (searching what creators say on Douyin / Xiaohongshu / Bilibili / X) reads its key only from the `TIKHUB_API_KEY` environment variable — see [`docs/research/tikhub-api-notes.md`](docs/archive/research/tikhub-api-notes.md).
+Research tooling (searching what creators say on Douyin / Xiaohongshu / Bilibili / X) reads its key only from the `TIKHUB_API_KEY` environment variable — see [`docs/archive/research/tikhub-api-notes.md`](docs/archive/research/tikhub-api-notes.md).
 
 ## Contributing
 

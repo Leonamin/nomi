@@ -34,7 +34,7 @@ export function registerVideoIpc(captureInteraction: ProjectInteractionCapture):
     const { detectShotCuts } = await import("./detectShotCuts");
     return detectShotCuts(payload);
   });
-  // 视频拆解：切镜 + 每镜多帧读图 + 音轨转写 → 结构化分镜表（docs/plan/2026-08-13-…）。
+  // 视频拆解：切镜 + 每镜多帧读图 + 音轨转写 → 结构化分镜表（docs/archive/plan/2026-08-13-…）。
   // 比 detect-shot-cuts 慢得多（要调模型），渲染层自己给进度态，别当同步调用用。
   ipcMain.handle("nomi:video:deconstruct", async (event, payload) => {
     assertTrustedSender(event);

@@ -1,4 +1,4 @@
-// Windows 卡顿巡检 —— 发版前在 Windows 机器上跑（docs/release-process.md §4）。
+// Windows 卡顿巡检 —— 发版前在 Windows 机器上跑（docs/archive/guides/release-process.md §4）。
 //
 // 为什么要它（2026-09-24）：v0.22.0 在 Windows 上一导入素材、一生图就整窗卡死一分多钟，随后显卡进程
 // 崩溃、画布「加载失败」；同一天还查出同步盘占用文件会让存盘锁永久卡死。三件都只在 Windows 上发生
@@ -52,7 +52,7 @@ const projectsDir = path.join(tempRoot, '团队 共享', '中文项目目录')
 fs.mkdirSync(projectsDir, { recursive: true })
 const fixture = await createProcessFixture(repoRoot, settingsDir)
 
-const AUDIT = 'docs/audit'
+const AUDIT = 'docs/archive/audit'
 const imageSources = [
   '2026-08-19-l3-w1-shot-verify/01-image-1787156695800.jpg',
   '2026-08-19-l3-w1-shot-verify/02-image-1787147676938.jpg',

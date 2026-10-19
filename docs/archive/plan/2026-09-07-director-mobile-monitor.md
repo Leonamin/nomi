@@ -1,6 +1,6 @@
 # 导演台手机监视器与录制回执补齐
 
-> 状态：✅ 本地实现与验收完成，未提交。16:20 冻结后重新构建，16:31 真实 Electron + Chrome 手机页通过画面、录制回执、停止服务和断线持续隐藏验证；最终截图亲眼核对。收据见 `docs/audit/2026-09-07-director-functional-interaction-audit.md`，物理手机传感器未实测。
+> 状态：✅ 本地实现与验收完成，未提交。16:20 冻结后重新构建，16:31 真实 Electron + Chrome 手机页通过画面、录制回执、停止服务和断线持续隐藏验证；最终截图亲眼核对。收据见 `docs/archive/audit/2026-09-07-director-functional-interaction-audit.md`，物理手机传感器未实测。
 
 ## 范围与方案
 

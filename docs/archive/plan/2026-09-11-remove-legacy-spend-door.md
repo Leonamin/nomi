@@ -3,7 +3,7 @@
 ✅ 已交付（分支 `fix/remove-legacy-spend-door-20260911`）
 
 > 用户 09-11 拍板：「并行的就删掉，测试没问题就删」。
-> 起因：`docs/plan/2026-09-11-triage-board.md` §1.2/§1.3 的架构分诊——同一条「付费必须过真人」的不变量
+> 起因：`docs/archive/plan/2026-09-11-triage-board.md` §1.2/§1.3 的架构分诊——同一条「付费必须过真人」的不变量
 > 有**两扇门**在守，其中一扇的判据是调用方自己报的一个布尔。
 > 根因合同：[`docs/fixes/2026-09-11-legacy-spend-door.root-cause.json`](../../fixes/2026-09-11-legacy-spend-door.root-cause.json)
 
@@ -21,7 +21,7 @@
 
 Nomi 的钱花在「发一次生成请求给供应商」。为了不让 AI 自己偷偷烧额度，我们在主进程装了一道闸：
 **每一次付费提交都必须随附一张"人点过头"的凭证**，没凭证就拒发。这是 2026-06-21 立的红队底线
-（`docs/plan/2026-06-21-spend-confirmation-gate.md` §2），威胁模型的要害写得很直白：渲染层不可信，
+（`docs/archive/plan/2026-06-21-spend-confirmation-gate.md` §2），威胁模型的要害写得很直白：渲染层不可信，
 **任何「某某说同意了」都不可作为放行依据**。
 
 问题出在：这道闸后来长出了**第二个入口**。当外部 AI（Claude Code / Codex 之类）经 MCP 驱动 Nomi 时，
@@ -59,11 +59,11 @@ Nomi 的钱花在「发一次生成请求给供应商」。为了不让 AI 自�
 
 **仓库内（我们自己已经写过的判据）**
 
-- `docs/plan/2026-06-21-spend-confirmation-gate.md:41` `## 2. 威胁模型` —— T1 AI 自主/被注入调生成；T2 新入口忘传 `onToolCall` 静默放行；**T3 渲染层任何代码对 confirm 回 `{ok:true}`**；T4 UI 直发无说明就烧。`:49` 点明共同要害「渲染层不可信……任何『渲染层说同意了』都不可作为放行依据」。
+- `docs/archive/plan/2026-06-21-spend-confirmation-gate.md:41` `## 2. 威胁模型` —— T1 AI 自主/被注入调生成；T2 新入口忘传 `onToolCall` 静默放行；**T3 渲染层任何代码对 confirm 回 `{ok:true}`**；T4 UI 直发无说明就烧。`:49` 点明共同要害「渲染层不可信……任何『渲染层说同意了』都不可作为放行依据」。
   → **本次删的这扇门，就是 T3 换了个进程边界**：把「渲染层说同意了」换成「MCP 客户端说同意了」，可验证性一样是零。
-- `docs/qa/2026-08-20-mcp-issues.md:95` —— 原文已登记：「不建议让 Agent 能设 `NOMI_LOOP_SPEND_OK` —— 那是脚本/评测的显式授权口，红队边界不能从这里破。」
+- `docs/archive/qa/2026-08-20-mcp-issues.md:95` —— 原文已登记：「不建议让 Agent 能设 `NOMI_LOOP_SPEND_OK` —— 那是脚本/评测的显式授权口，红队边界不能从这里破。」
   → 这个口子**早在 2026-08-20 就被登记为「不该让 Agent 够得着」**，只是当时用「Agent 设不了 env」当缓解，而不是把它删掉。缓解不是防线（R28）。
-- `docs/plan/2026-08-19-session-scoped-spend-trust.md:50` —— 当时明写**不动** `withPreApprovedSpend`（#103 已定「会话信任只免掉『问』、不免掉『令牌』」）。
+- `docs/archive/plan/2026-08-19-session-scoped-spend-trust.md:50` —— 当时明写**不动** `withPreApprovedSpend`（#103 已定「会话信任只免掉『问』、不免掉『令牌』」）。
   → 与本次不冲突：那条决定守的是「令牌校验不可省」，本次删的是「令牌的发放判据不可来自调用方自述」。方向一致。
 
 ---

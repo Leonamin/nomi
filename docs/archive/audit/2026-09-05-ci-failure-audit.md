@@ -1,7 +1,7 @@
 # Nomi CI「Quality Gate」失败机制审计（2026-08-22 → 2026-09-05）
 
 > 📎 交接/日志 · 只读审计，未改动任何文件 / 分支 / PR。
-> 这份审计是 `docs/plan/2026-09-05-ci-gate-mechanics.md`（建议 1、2 的落地）的依据；建议 3/4/5 尚未立项。
+> 这份审计是 `docs/archive/plan/2026-09-05-ci-gate-mechanics.md`（建议 1、2 的落地）的依据；建议 3/4/5 尚未立项。
 > 样本：`gh run list --workflow "Quality Gate" --status failure` 取到 2026-08-23T11:03 → 2026-09-05T03:00 的 **226 次失败**（93 个分支，main 占 8 次）。
 > 对全部 226 次抓了 `--json jobs`（失败 job / 失败 step）与 `--log-failed`（42MB 原始日志），按日志里最后一个启动的 `> nomi@0.21.0 <script>` 定位到**具体门岗**，再按报错正文归类。不是抽样，是全量。
 
@@ -14,7 +14,7 @@
 **用户感觉「经常 CI 不过」，但它基本不是 flaky，也基本不是真 bug。**
 
 - 226 次失败里，**只有 1 次**同一个 headSha 后来重跑就绿了（0.4%）。所以「重跑一下就好」这条路根本不存在——每一次红都要求人/agent 去改点什么再推一次。
-- 最大的一块（**77 次 = 34%**）是**文档/合同门**：新增一篇 `docs/plan/*.md` 没登记进索引、没写状态标记、没重跑 `gen:ledger`、或者碰了高风险目录没配 `root-cause.json`。这些红**不可能**拦住任何生产 bug——它们拦的是记账。
+- 最大的一块（**77 次 = 34%**）是**文档/合同门**：新增一篇 `docs/archive/plan/*.md` 没登记进索引、没写状态标记、没重跑 `gen:ledger`、或者碰了高风险目录没配 `root-cause.json`。这些红**不可能**拦住任何生产 bug——它们拦的是记账。
 - 第二大块（**38 次 = 17%**）是**分支继承了 main 上已有的红**：main 红了 8 次，其中 canvas 性能预算、packaged MCP smoke、MCP journey 过期、typecheck 各红过一轮，每红一次就有 6–9 个分支跟着红。
 - 真实回归（B）只有 **52 次 = 23%**，这是 CI 该干的活。
 
@@ -60,7 +60,7 @@ main 那次 typecheck 红有独立佐证：main 上有一个 `7baf3bcfa fix(canv
 
 | # | 门岗 | 次数 | 主类 | 机制 |
 |---:|---|---:|---|---|
-| 1 | `check:docs-index` | **28** | E | 分支新增一篇 `docs/plan/*.md` 没在 `docs/README.md` 或某个 `INDEX.md` 里链接 |
+| 1 | `check:docs-index` | **28** | E | 分支新增一篇 `docs/archive/plan/*.md` 没在 `docs/README.md` 或某个 `INDEX.md` 里链接 |
 | 2 | `check:ledger` | **21** | E(11) / **A(10)** | `docs/DELIVERY-LEDGER.md` 是生成物；**21 次里有 10 次分支一篇 docs 都没加**，纯粹是 main 前进导致生成物过期 |
 | 3 | `canvas-performance-budget` | **16** | C/D | Linux xvfb 软渲染 vs macOS 校准的预算；main 自己就贴线（记忆里已有专门 lesson） |
 | 4 | `check:test-types` | **14** | B | 测试文件类型错误的**逐文件棘轮**（`基线 1 → 现在 2`） |
@@ -80,7 +80,7 @@ main 那次 typecheck 红有独立佐证：main 上有一个 `7baf3bcfa fix(canv
 硬证据：
 
 - 分支 `codex/project-agent-host-phase1-20260827` 在文档门上连红 **15 轮**：`docs-index → ledger → ledger → docs-index → docs-index → doc-status ×4 → ledger ×6`。
-- 分支 `fix/walkthrough-catalog-readonly-20260902`：一篇 `docs/plan/2026-09-02-walkthrough-catalog-seed-version.md`，红了 4 轮 —— `docs-index → doc-status → ledger → ledger`。
+- 分支 `fix/walkthrough-catalog-readonly-20260902`：一篇 `docs/archive/plan/2026-09-02-walkthrough-catalog-seed-version.md`，红了 4 轮 —— `docs-index → doc-status → ledger → ledger`。
 - main 上留下了成对的 commit 作为化石：
   `3015cb32 chore(docs): 补登 cross-device-sync-execution.md 至 plan INDEX`
   `28e9d269 chore(docs): 补加 cross-device-sync-execution.md 状态标记`
@@ -96,7 +96,7 @@ main 那次 typecheck 红有独立佐证：main 上有一个 `7baf3bcfa fix(canv
 | `check:docs-index` (28) | **没有，结构上不可能**。它只查 Markdown 链接。而且它自己没在解决问题：日志显示 **596 篇方案里 323 篇未收录（基线 322）**——54% 的债已经冻在基线里，门岗只是不让它涨。它红一次的收益 = 一条链接；成本 = 一轮 CI + 一个 commit。**纯摩擦。** | main 上因它而生的 commit 全部形如 `8213b061 docs: 收录 walkthrough catalog 种子校验方案进 plan 索引（过 check:docs-index）`、`9b70b8f7 fix(docs-index): 将创作资源链 epic 收录进 docs/plan/INDEX.md` |
 | `check:ledger` (21) | **没有**，而且 **21 次里 10 次是分支自己一篇文档都没加**（我 fetch 了每个 headSha，对 merge-base 算 `--diff-filter=A -- docs/`）。这是 A 类漂移的典型：生成物依赖全仓文档集合，两个分支各加一篇各自重生成，合起来必然过期。**纯摩擦，且是并行开发的直接税。** | main 上有 commit 直说：`aeafb516 chore(ledger): 重生成交付台账（main 上游漂移 496→497）`、`0e21804b docs(ledger): regenerate on merged tree`（这类 regenerate commit 反复出现） |
 | `canvas-performance-budget` (16) | **拦过真回归，但现在信噪比已崩**。main 自己在 Linux 上就红了 2 次；仓库自己已经承认过一次并做了正确的动作：`a7b629d1f perf(canvas): maxFrameGapMs 降为 advisory（#264 不给抖动指标设硬门）`。日志里连超了哪一项都不打印，只有一行 `❌ 画布性能 benchmark 未通过预算或可靠性门槛`——诊断不出来只能重推。**半真半伪，需要平台感知预算。** | `docs/fixes/2026-08-30-canvas-performance-exit-contract.root-cause.json` 是它真实的一次价值（verdict 没投影到 exitCode，会把 pass:false 报成 PASS）；反面证据是 main 自红 + `maxFrameGapMs` 降级先例 |
-| `check:test-types` (14) | **真拦。** 测试文件不进 `pnpm typecheck`，这道门是唯一能看见测试类型错的地方。 | `14fa5f2d test: restore usage ledger test type safety`；`docs/lessons` 里「测试文件根本不过类型检查」就是它的立项理由 |
+| `check:test-types` (14) | **真拦。** 测试文件不进 `pnpm typecheck`，这道门是唯一能看见测试类型错的地方。 | `14fa5f2d test: restore usage ledger test type safety`；`docs/archive/lessons` 里「测试文件根本不过类型检查」就是它的立项理由 |
 | `unit-tests` (14) | **真拦**，本来就是 CI 的本职。 | — |
 | `check:root-cause-contracts` (14) | **没有，结构上不可能**——它检查的是「有没有配一份 JSON 文档」，不看代码。更糟的是它**主动制造过假红**：main 上有 `21d25bf60 fix(rootcause-gate): let a behaviour-preserving change say so instead of inventing a root cause`，commit body 直说「schema 完全按纠错工作塑形；一次纯结构改动（模块抽取、重命名、逐字搬移、注释修复）没有 symptom 也没有 root cause，门岗只给两条路，两条都坏——要么编造，要么污染合同语料」。**主要在制造摩擦。** | 同上 commit |
 | `check:doc-status` (14) | **没有**。日志：**533 篇里 425 篇缺状态（基线 423）**——80% 的债已冻结。同 `docs-index`。 | `84085a17 docs: 方案补状态标记（过 check:doc-status）`、`d90ce28f fix(doc-status): 为创作资源链 epic 文档添加 📋 状态标记` |

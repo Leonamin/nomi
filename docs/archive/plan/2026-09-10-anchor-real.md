@@ -5,7 +5,7 @@
 范围：Agent 分镜草稿共享写入边界、锚绑定解析、既有行内提示、专项验证。
 
 ## 先查别人
-- ComfyUI 官方 First-Last-Frame blueprint：https://github.com/Comfy-Org/ComfyUI/blob/master/blueprints/First-Last-Frame%20to%20Video.json；已存研究 docs/research/2026-08-24-video-capability-shared-layer.md:43。首尾帧是独立输入，切模式和真实绑定必须同时验证。
+- ComfyUI 官方 First-Last-Frame blueprint：https://github.com/Comfy-Org/ComfyUI/blob/master/blueprints/First-Last-Frame%20to%20Video.json；已存研究 docs/archive/research/2026-08-24-video-capability-shared-layer.md:43。首尾帧是独立输入，切模式和真实绑定必须同时验证。
 - Runway 官方 I2V：https://help.runwayml.com/hc/en-us/articles/48324313115155-Image-to-Video-Prompting-Guide；同研究 :24、:34。首帧决定起始构图，角色图优先进参考槽，不能无差别塞首帧。
 - Google Veo 参考图：https://docs.cloud.google.com/vertex-ai/generative-ai/docs/video/use-reference-images-to-guide-video-generation；同研究 :23、:33。参考能力按具体模型版本声明，不硬编码模式名。
 - 内部 owner：src/config/modelArchetypes/anchorPolicy.ts:7 的 SLOT_ACCEPTS；shotReferenceSlots.ts:85 的 appendBinding、:157 的节点投影。复用容量/去重与投影，不新造供应商字段矩阵。以上外部依据复核的是仓库已存研究，非本轮重新联网抓取。
@@ -29,7 +29,7 @@ CTO：最早共享草稿写入收口；后端：不越过目录供应商身份�
 
 ## 验收与回滚
 先红后绿：真实目录+1角色图+8镜的 applyCanvasToolCall loopback；另测无参考能力、供应商隔离、已有槽容量、幂等与解析回写。官方 DeepSeek 规划仅1次、≤¥1、零媒体；原始模型与保存后的8/8分别计数，不混报。
-已看 #681 真机全壳截图 docs/plan/storyboard-anchor-policy-evidence/screenshots/00-anchor-warning.png；本期前后截图用独立测试项目，不碰用户库。
+已看 #681 真机全壳截图 docs/archive/plan/storyboard-anchor-policy-evidence/screenshots/00-anchor-warning.png；本期前后截图用独立测试项目，不碰用户库。
 必须完整取得 with-gates-lock gates、正常 hooks 提交推送并开PR，PR引用本方案和截图。回滚 revert 本任务提交，无数据迁移；新草稿使用既有字段，旧方案不静默迁移。
 
 ## 真机发现的同链阻塞

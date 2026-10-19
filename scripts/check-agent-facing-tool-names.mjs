@@ -31,7 +31,7 @@ const BASELINE_FILE = path.join(repoRoot, 'scripts/agent-facing-tool-names-basel
 const SCAN = [
   { dir: 'agent-skills', match: /(?:^|\/)SKILL\.md$/ },
   { dir: 'skills', match: /(?:^|\/)SKILL\.md$/ },
-  { file: 'docs/integrate-with-your-agent.md' },
+  { file: 'docs/archive/guides/integrate-with-your-agent.md' },
 ]
 
 /**

@@ -363,7 +363,7 @@ export type DesktopBridge = DesktopMediaBridge &
     onEvent: (callback: (event: DesktopUpdateEvent) => void) => () => void
   }
   /**
-   * 应用内代理设置（见 docs/plan/2026-08-01-in-app-proxy-setting.md）。
+   * 应用内代理设置（见 docs/archive/plan/2026-08-01-in-app-proxy-setting.md）。
    * set 会**即时重装 dispatcher**并返回新状态，调用方直接用返回值刷 UI，不必重新 get。
    */
   proxy?: {

@@ -1,6 +1,6 @@
 # 先查别人 —— 进程重启后，那些「还在跑」的活该落到哪一格
 
-> 2026-09-22 · 服务于 [docs/plan/2026-09-22-deconstruction-node-terminal-state.md](../../plan/2026-09-22-deconstruction-node-terminal-state.md)
+> 2026-09-22 · 服务于 [docs/archive/plan/2026-09-22-deconstruction-node-terminal-state.md](../../plan/2026-09-22-deconstruction-node-terminal-state.md)
 >
 > 结论先说：**这个问题别人全都解过，而且答案惊人地一致——
 > 「还在跑」这句话必须锚在一个「它死了你看得见」的东西上。**
@@ -106,7 +106,7 @@
   用户侧可见差异只是「那一格从空白变成一句话 + 一颗按钮」，不存在「别家产品这个功能怎么做」的对照点
   （真正的对照点在 ② 的 VS Code / BullMQ，都是工程文档而非自媒体）。
   用户对这个卡死态的真实反馈已有一手来源且更硬——
-  `docs/audit/2026-09-17-post-804-walkthrough.md` §6.5 的付费真机走查，本报告不重抄。
+  `docs/archive/audit/2026-09-17-post-804-walkthrough.md` §6.5 的付费真机走查，本报告不重抄。
 
 ---
 

@@ -79,4 +79,4 @@ L3-F1 实测：`shouldUseTwoHop` 用手写正则 `/first_frame|firstframe|start_
 **教训**：判断一条链路「真跑了」，要看**它自己的产出凭证**（多出来的那次生成调用 / 多出来的那张生成图），
 不能靠一个名字对得上的文件。同一份文物可以来自两条完全不同的路。
 
-详见 `docs/audit/2026-08-20-l3-f1-full-journey/report.md` 缺陷 A。
+详见 `docs/archive/audit/2026-08-20-l3-f1-full-journey/report.md` 缺陷 A。

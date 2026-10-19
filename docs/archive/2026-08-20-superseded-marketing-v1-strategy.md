@@ -152,6 +152,6 @@ New models the day they launch.
 2. 重写 README 顶部 6 行 + 加一张大 GIF
 3. 注册 Show HN / X 账号若没有
 4. 写 Show HN 草稿（200 字以内，最难的一步）
-5. 把 `docs/audit/2026-05-30-codebase-cleanup.md` 的 A 节执行掉，根目录干净点再发
+5. 把 `docs/archive/audit/2026-05-30-codebase-cleanup.md` 的 A 节执行掉，根目录干净点再发
 6. 把 `RELEASE_NOTES_v0.7.x.md` 整理成 `CHANGELOG.md` 让人看到迭代节奏
 7. 在 GitHub 开 Discussions

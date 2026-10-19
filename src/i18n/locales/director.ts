@@ -1,5 +1,5 @@
 // 导演台 V2（nodes/director）的全部用户可见文案：节点卡片、全屏壳、视口 HUD、创建栏、底部栏、大纲、资产库、检查器、时间轴、手机虚拟相机。
-// 键按页面区域分组，与方案 docs/plan/2026-09-02-director-console-v2.md §4 的规格 ID 对应。
+// 键按页面区域分组，与方案 docs/archive/plan/2026-09-02-director-console-v2.md §4 的规格 ID 对应。
 export const zhDirector = {
   node: {
     title: '导演台',

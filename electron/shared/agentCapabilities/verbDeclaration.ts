@@ -200,7 +200,7 @@ export function verbBillable(effect: VerbEffect): boolean {
  * （`policyStartedGeneration`），所以它也算。其余一律不算——它们连一次提交都发不出去。
  *
  * 为什么要这个派生：失败措辞里「提交结果可能未知，先去核对、别再提交」这句话，只有在它为真时才成立。
- * 2026-09-21 真实模型实测（`docs/evidence/2026-09-21-askback-real-model/`）里，**23 次**失败把这句话
+ * 2026-09-21 真实模型实测（`docs/archive/evidence/2026-09-21-askback-real-model/`）里，**23 次**失败把这句话
  * 发给了 `draft_shots`——一个只起草、一分钱都花不出去的工具。模型照做，去核对一个从不存在的任务，
  * A3 那一轮原地打转 27 次调用 / 696 秒。措辞按码选、而它的真假取决于**哪个工具**，就是那次的形状。
  */

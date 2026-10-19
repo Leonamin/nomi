@@ -1,4 +1,4 @@
-// 核心流程冒烟（2026-09-22 用户拍板，docs/plan/2026-09-22-core-flow-smoke-three-defenses.md）：
+// 核心流程冒烟（2026-09-22 用户拍板，docs/archive/plan/2026-09-22-core-flow-smoke-three-defenses.md）：
 // **除了纯文档，一律跑**，两种夹具各一遍。它不跟任何路径模式挂钩——09-22 那次回归坏在共享的 CSS 开关上，
 // 画布套件因为「没改到 generationCanvas」被分类器跳过，核心流程三件事全坏、CI 全绿。
 // 夹具清单的唯一 owner 在这里（CI matrix、合后收据要的 check 名都从它派生，check-quality-gate-workflow 钉死）。
@@ -6,7 +6,7 @@ export const CORE_SMOKE_FIXTURES = Object.freeze(['empty', 'used'])
 // 阻断门只有 empty（2026-09-22 用户拍板）。used 照跑、照传证据，但**不判**：
 // 实测同一份代码连跑 5 次只有 1 次全绿，三种失败都出自还没修的小窗布局问题
 // （批量栏压住缩放条 / 托盘贴边被 clamp / toast 盖住弹窗钮），
-// 证据见 docs/evidence/2026-09-22-core-smoke-negative-control/。把一条 5 次绿 1 次的检查
+// 证据见 docs/archive/evidence/2026-09-22-core-smoke-negative-control/。把一条 5 次绿 1 次的检查
 // 装成必过门 + 合后收据的 success-only，等于把假红制度化，这正是本防线要根除的东西。
 // **升阻断的条件**：那三条布局 bug 修完，且 used 连跑 5 次全绿——届时把 'used' 加进下面这行即可，
 // CI 的 continue-on-error 与合后收据都从它派生，不必再改别处。
@@ -70,7 +70,7 @@ const DOCS_ONLY_PATTERN = /^(?:docs\/|marketing\/|wiki\/.*\.md$|\.agents\/wiki-(
 // 认得出的路径（2026-10-02，复盘 fixes 行 52、133：新路径悄悄落进「孤立改动 → focused」而漏跑该跑的档）。
 // 默认值反过来：**认不出的路径一律跑全量**，再按事故顺序逐个加性质测试；认得出 = 下面这几类里的某一类。
 // 往这里加一类之前先问「这类路径的改动真的只会影响同目录 sibling 测试吗」，不确定就别加。
-// `web` 는 브라우저 워크스페이스(2026-10-12 `docs/plan/2026-10-12-personal-web.md`)의 루트다.
+// `web` 는 브라우저 워크스페이스(2026-10-12 `docs/archive/plan/2026-10-12-personal-web.md`)의 루트다.
 // 여기 넣지 않으면 "인식 못 하는 경로 → 전량"에 걸려, web만 바꾼 PR도 데스크톱 전용 레인
 // (캔버스 인수·성능·Electron 워크스루·Mac 패키지)을 전부 돈다. web 전용 프로파일은
 // 아래 WEB_SURFACE_PATTERNS + `webOnly` 분기가 정한다 — 여기서 "인식"만 시킨다.

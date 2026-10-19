@@ -13,7 +13,7 @@
 - 已有内置包入口：[builtinPacks.ts](../../../electron/promptLibrary/builtinPacks.ts)，在线刷新不会覆盖内置内容；不往只在断网使用的 seed 里塞内容。
 - 现有创作公式：[LibTV 实物对账](../product/2026-09-07-remediation-real-artifacts.md)。其中公开教程不等于授权，缺明确许可不逐字收录；MIT 仓中单独保留版权的内容也不收。
 - 设计真源：[tokens.ts](../../../src/design/tokens.ts) 转导出 theme；色彩实际定义在 [nomi-tokens.css](../../../src/theme/nomi-tokens.css)。先截现役组件，再画相同外壳。
-- 反方来源核实由只读调研任务执行，原始证据与选择结论进入 docs/research/2026-09-08-skill-prompt-curation.md。Context7 本会话未提供工具，以官方网页与源码核对，不伪称调用成功。
+- 反方来源核实由只读调研任务执行，原始证据与选择结论进入 docs/archive/research/2026-09-08-skill-prompt-curation.md。Context7 本会话未提供工具，以官方网页与源码核对，不伪称调用成功。
 
 ## 内容与模型边界
 沿用技能 frontmatter 解析器和提示词 LibraryPrompt 模型。技能与节点效果的策展元数据采用同一共享 schema，正文仅在 SKILL.md 保留一份；提示词库通过适配投影读取，禁止另一份正文 JSON。license 是官方顶层字段，来源、appliesTo、分组、槽位、preview 放 metadata.nomi 的内容扩展。仅策展条目强制许可，不把用户私有技能无许可证误判为不可导入。

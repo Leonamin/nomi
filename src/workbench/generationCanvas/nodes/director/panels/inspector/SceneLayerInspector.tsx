@@ -18,7 +18,7 @@ export function SceneLayerInspector(): JSX.Element {
   const store = useDirectorStoreApi()
   const scene = useDirectorStore((state) => state.activeScene())
   // 「非 2:1 可能拉伸」跟着全景本身走：尺寸由 PanoramaSphere 载贴图时量出，重开工程照样量得到，
-  // 所以提示常驻在全景卡里，而不是导入那一刻弹一次（docs/plan/2026-09-09-notification-policy.md）
+  // 所以提示常驻在全景卡里，而不是导入那一刻弹一次（docs/archive/plan/2026-09-09-notification-policy.md）
   const panoramaDimensions = useDirectorStore((state) => state.panoramaDimensions)
   const config = scene.sceneConfig
   const patch = (next: Partial<typeof config>) => store.getState().patchSceneConfig(next)

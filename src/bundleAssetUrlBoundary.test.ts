@@ -5,7 +5,7 @@
 // file://…/dist/assets/x-<hash>.jpg。这类值只在「当前这次构建、当前这台机器、当前这个环境」成立：
 // 重新构建哈希就变、换环境协议就变、换机器路径就变。
 // 引导示例项目曾把它写进节点结果 → 落盘进 project.json → 换成打包版打开即裂图 + CSP 拒载
-// （见 docs/plan/2026-07-30-demo-asset-persisted-bundle-url.md）。
+// （见 docs/archive/plan/2026-07-30-demo-asset-persisted-bundle-url.md）。
 //
 // 所以：这类 URL 只能**当场渲染**，绝不能进任何会持久化的状态。下面把现存出现点钉成白名单，
 // 每条注明「为什么只渲染不落盘」。新增一处会红——那时请先回答：这个 URL 会不会被写进用户数据？

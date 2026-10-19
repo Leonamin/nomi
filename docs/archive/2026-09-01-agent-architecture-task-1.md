@@ -12,7 +12,7 @@ Commit: `6cba650d`
 - 用单一 `AGENT_SYSTEM_SCHEMA_VERSION = 1` 冻结 case / trace / evidence / verdict 的版本策略，版本不匹配直接拒绝。
 - case schema 只保留目标、输入、预算、环境、禁用 effect、rubric 和 evidence 引用，不包含答案字段。
 - J1-J5 以纯数据方式固化为 charter baseline，预算默认零金额、有限 turns/tokens，便于后续 fake-provider 分层接入。
-- authority / adapter owner 只做当前 `docs/ARCHITECTURE-NOW.md` 对齐快照，不把它们混成生产逻辑。
+- authority / adapter owner 只做当前 `docs/archive/guides/ARCHITECTURE-NOW.md` 对齐快照，不把它们混成生产逻辑。
 - harness self-test 只做纯函数比较，专门验证“预期 Item 未消费”和“effect 次数错误”两类失配。
 
 ## 命令和输出
@@ -29,7 +29,7 @@ Commit: `6cba650d`
 ## 剩余担忧
 
 - 这版只冻结了 M0 contract / charter / self-test，尚未接入后续 fake provider、fault matrix、property、journey 流程。
-- 当前 authority / adapter owner 表是对 `docs/ARCHITECTURE-NOW.md` 的手工对齐快照，后续若现状漂移，需要同步更新。
+- 当前 authority / adapter owner 表是对 `docs/archive/guides/ARCHITECTURE-NOW.md` 的手工对齐快照，后续若现状漂移，需要同步更新。
 - 新测试目前用 `node --import tsx --test` 直接跑；后续若要纳入现有 test-system 编排，还需要把 profile / discovery 接进脚本层。
 
 ## Fix round 1

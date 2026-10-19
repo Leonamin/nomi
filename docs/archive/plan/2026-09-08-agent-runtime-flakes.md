@@ -11,7 +11,7 @@
 - Node 官方 [child process](https://nodejs.org/api/child_process.html)：kill 只发送信号，close 才表示进程及 stdio 关闭；使用事件完成信号。
 - Node 官方 [test](https://nodejs.org/docs/latest-v24.x/api/test.html#contextafterfn-options)：after 支持 async 清理；在项目夹具内明确依赖顺序，不依赖多个 hook 的注册顺序。
 - 仓库近邻 tests/ux/agent-runtime-fixture.test.mjs:20 已按反向顺序等待清理。
-- 已读 docs/lessons/flaky-test-check-other-worktrees-first.md；用户指定 repeated-timeout-means-check-the-assertion.md 在当前 Git 历史中缺失，按用户给出的要求检查死断言和子进程。
+- 已读 docs/archive/lessons/flaky-test-check-other-worktrees-first.md；用户指定 repeated-timeout-means-check-the-assertion.md 在当前 Git 历史中缺失，按用户给出的要求检查死断言和子进程。
 - 同类入口：lane-approval-gate G3b③；stage3-probe-p1-approval-wait P1③；全部 createLaneFixture/openProbeLane/openLaneWorkspace 调用者。
 
 ## 修复与验收

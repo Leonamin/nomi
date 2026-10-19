@@ -2,7 +2,7 @@
   "schema_version": 3,
   "id": "2026-09-03-skill-ipc-missing-handlers",
   "problem_type": "P0 回归：技能 write IPC handler（import / export / delete）从主进程注册表里消失，导致整条技能导入功能无声失效，CI 全绿",
-  "symptom": "用户在技能库面板选完文件后，什么都不发生：无 toast、无错误、技能列表不变。真机 IPC 探针直接暴露：\"Error invoking remote method 'nomi:skill:import': Error: No handler registered for 'nomi:skill:import'\"。export 和 delete 同样静默失败（\"reply was never sent\"）。此外 importPackage 在 preload 里用了 ipcRenderer.invoke（返回 Promise），而其他 skill 通道均用 invokeSync（返回同步结果）——渲染层对结果做 res.ok 检查，但拿到的是 Promise 对象（truthy），错误路径被掩盖。2026-09-03 走查班（docs/qa/2026-09-03-skill-import-walkthrough.md）以 5 张截图和完整 IPC 日志亲验确认。",
+  "symptom": "用户在技能库面板选完文件后，什么都不发生：无 toast、无错误、技能列表不变。真机 IPC 探针直接暴露：\"Error invoking remote method 'nomi:skill:import': Error: No handler registered for 'nomi:skill:import'\"。export 和 delete 同样静默失败（\"reply was never sent\"）。此外 importPackage 在 preload 里用了 ipcRenderer.invoke（返回 Promise），而其他 skill 通道均用 invokeSync（返回同步结果）——渲染层对结果做 res.ok 检查，但拿到的是 Promise 对象（truthy），错误路径被掩盖。2026-09-03 走查班（docs/archive/qa/2026-09-03-skill-import-walkthrough.md）以 5 张截图和完整 IPC 日志亲验确认。",
   "direct_cause": "electron/skills/skillIpc.ts 的 registerSkillIpc 函数只注册了两个只读通道（nomi:skill:list + nomi:skill:list-secure），漏掉三个写通道（nomi:skill:import / export / delete）。主进程业务函数 importSkillPackageToUserDir / exportSkillPackageByName / deleteUserSkill 在 skillPackage.ts 里完整存在，只是没被接入 IPC 层。同时 preload.ts 第 599 行把 importPackage 写成 ipcRenderer.invoke（异步），与其他三个 invokeSync（同步）通道协议不一致，即使将来注册了 handler，渲染层拿到的仍是 Promise 而非结果对象。",
   "class_root": "IPC 三方合约（preload 暴露 × 主进程注册 × 渲染层调用）缺乏静态交叉验证。preload 里声明一条通道，主进程不注册，TypeScript 编译和所有单测照样全绿——这是「当场完全看不出来」的一族。正确结构：对所有 preload 暴露的 nomi:skill:* invokeSync 通道做 preload-vs-registerSkillIpc 交叉扫描，任何缺口在 CI 立即报红（check:skill-ipc-coverage 门岗）。",
   "generality_proof": "判据可机械化：preload 暴露的 nomi:skill:* invokeSync 通道集合，必须与 skillIpc.ts 的 registerSyncIpc 注册集合完全相等；差集必须为零。同一结构在 nomi:model-catalog:*、nomi:proxy:*、nomi:workspace:* 等其他命名空间也存在（preload 有声明、主进程有注册），但当前只有 skill 命名空间被本次门岗覆盖——其余命名空间的差集检测留待 R17 级工作（全量扫描 + 基线），已记录在 residual_risks。此外 ipcRenderer.invoke（异步）与 registerSyncIpc（同步）协议混用的检测也已纳入门岗 Guard 2，防止协议级不一致再次掩盖错误。",
@@ -45,7 +45,7 @@
       "path": "tests/ux/skill-import-formats.walk.mjs",
       "entry_point": "技能导入完整 UX 走查（R16 真实用户任务路径）",
       "disposition": "enforced",
-      "evidence": "此走查经过 preload → IPC → skillIpc.ts → skillPackage.ts 完整路径，handler 缺失立刻使 toast 不出现（走查会在 expectVisible 失败时红）。本次修复后，走查已在 docs/qa/2026-09-03-skill-import-walkthrough.md 中以 5 张截图亲验通过。走查刻意走 UI 路径（不直接调 importSkillPackageToUserDir），以覆盖解析器、accept 过滤、i18n 文案和刷新——IPC 层单独测不到这些。"
+      "evidence": "此走查经过 preload → IPC → skillIpc.ts → skillPackage.ts 完整路径，handler 缺失立刻使 toast 不出现（走查会在 expectVisible 失败时红）。本次修复后，走查已在 docs/archive/qa/2026-09-03-skill-import-walkthrough.md 中以 5 张截图亲验通过。走查刻意走 UI 路径（不直接调 importSkillPackageToUserDir），以覆盖解析器、accept 过滤、i18n 文案和刷新——IPC 层单独测不到这些。"
     },
     {
       "path": "tests/ux/ipc-split-smoke.e2e.mjs",

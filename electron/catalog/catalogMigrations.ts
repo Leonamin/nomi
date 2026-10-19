@@ -59,7 +59,7 @@ export function migrateCatalogForward(
   if (s.version === 4) {
     // v4 → v5: 存量中转 image 条目补图生图能力（image_edit mapping + supportsReferenceImages +
     // 老标准参数升级）。此前这些字段只在新接入写，老条目要「删了重加」——迁移根治（见
-    // migrateRelayImageEditCapability 注释 + docs/plan/2026-07-06-i2i-reference-reliability.md）。
+    // migrateRelayImageEditCapability 注释 + docs/archive/plan/2026-07-06-i2i-reference-reliability.md）。
     const migrated = migrateRelayImageEditCapability(s);
     s = { ...migrated.state, version: 5 };
     writeCatalog(s);

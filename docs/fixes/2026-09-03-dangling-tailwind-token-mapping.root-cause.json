@@ -53,7 +53,7 @@
       "path": "src/theme/nomi-tokens.css",
       "entry_point": "镜像 token 定义",
       "disposition": "not-affected",
-      "evidence": "该文件不被 App 加载（main.tsx 只 import styles/index.css；仅 docs/design/mockups 与 .design-sync 引用），不构成运行时 token 来源；门岗只以 tailwind.config.ts 为准，避免把镜像误当真源。"
+      "evidence": "该文件不被 App 加载（main.tsx 只 import styles/index.css；仅 docs/archive/design/mockups 与 .design-sync 引用），不构成运行时 token 来源；门岗只以 tailwind.config.ts 为准，避免把镜像误当真源。"
     },
     {
       "path": "src/ui/onboarding/workflowPage/WorkflowSidebar.tsx",

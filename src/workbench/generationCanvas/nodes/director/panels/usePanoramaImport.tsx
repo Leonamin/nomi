@@ -4,7 +4,7 @@
  * [OUTPUT]: 对外提供 usePanoramaImport() → { importPanoramaFile(file), status }
  * [POS]: director/panels 的 720 全景导入流程（清单 §2.3 V5 场景簇；与 V1 环境面板同一套校验与落盘）：图片类型 / 80MB 上限 → 读尺寸（非 2:1 软警告不拒收）
  *        → 先用 object URL 立刻上球预览 → 资产桥落盘换成托管 url → 落盘不可用（无桌面运行时）退回 data URL 并提示「临时」。写入走 patchPanoramaConfig（可撤销）。
- *        反馈就地不弹全局 toast（docs/plan/2026-09-09-notification-policy.md）：本 hook 自己持有 feedback 状态并渲染 status 条，
+ *        反馈就地不弹全局 toast（docs/archive/plan/2026-09-09-notification-policy.md）：本 hook 自己持有 feedback 状态并渲染 status 条，
  *        调用点把 status 摆在触发钮旁边。非 2:1 的「可能拉伸」是常驻提示，由检查器按贴图真实尺寸渲染，不在这里一次性通知。
  * [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
  */

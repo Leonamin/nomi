@@ -658,7 +658,7 @@ export default {
    * 排除项与 `.tsx` 一一对齐——测试/规格/类型声明/第三方源码里出现的类名不是产品用的类名。
    * 守住这条不再退回去的是 `scripts/build-tailwind.test.ts`（真跑一次 Tailwind，断言只在 `.ts`
    * 出现的哨兵类进了 CSS）。全仓 4 处历史失效的盘点见
-   * `docs/lessons/tailwind-content-ts-classnames-silently-dropped.md`。
+   * `docs/archive/lessons/tailwind-content-ts-classnames-silently-dropped.md`。
    */
   content: [
     './node_modules/streamdown/dist/*.js',

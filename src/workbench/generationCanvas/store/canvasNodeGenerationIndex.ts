@@ -13,7 +13,7 @@
 // 251 long tasks), while the same gesture on a single node stays flat across
 // the same three scales. The row is flat, the column collapses — that is the
 // signature of O(N²), and this file is where it is paid.
-// (docs/research/2026-09-12-canvas-perf-at-scale/README.md §2.5① and §5 S3.)
+// (docs/archive/research/2026-09-12-canvas-perf-at-scale/README.md §2.5① and §5 S3.)
 //
 // THE INVARIANT THIS BOUNDARY OWNS
 // "A value that is the same for every reader must be computed once per store

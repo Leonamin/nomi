@@ -62,7 +62,7 @@ export const zhRuntime = {
       // 类型角标：说清「这是什么做的」。SVG/HTML 是通用技术名词不翻译，其余用中文。
       fileType: { svg: 'SVG', html: 'HTML', markdown: 'Markdown', table: '表格', text: '文本', glb: '3D' },
       // HTML 产物的诚实标注：CSS 动效真的在跑，但内联 JS 在打包版被宿主 CSP 拦下
-      // （srcdoc 继承宿主策略，见 docs/plan/2026-09-06-agent-artifact-node.md §6.5）。
+      // （srcdoc 继承宿主策略，见 docs/archive/plan/2026-09-06-agent-artifact-node.md §6.5）。
       // 卡看起来"活着"，用户会顺手去点——不标出来，他只能自己撞一次才知道。
       htmlInteractionNote: '可动，暂不支持点击交互',
       // Agent 落盘失败时给人话，不是把英文 reason 甩到脸上。

@@ -1,7 +1,7 @@
 // 纯函数：把「一目录 PNG 帧序列 + fps + 输出路径」翻成 ffmpeg image2 → H.264 mp4 的参数数组。
 // 抽成纯 inputs→args 的小 builder，配单测 framesToVideoArgs.test.ts 锁参数（不跑真 ffmpeg）。
 // 与 export/ffmpegCommandBuilder.ts 同口径：libx264 + yuv420p + +faststart。
-// 供 AI 运镜工具的 N 帧捕获把灰模型运镜拼成参考小片（见 docs/plan/2026-06-22-ai-camera-move-tool.md S2）。
+// 供 AI 运镜工具的 N 帧捕获把灰模型运镜拼成参考小片（见 docs/archive/plan/2026-06-22-ai-camera-move-tool.md S2）。
 
 export type FramesToVideoArgsInput = {
   /** 帧序列文件名模板（image2 的 -i pattern），如 /tmp/xxx/frame-%05d.png。 */

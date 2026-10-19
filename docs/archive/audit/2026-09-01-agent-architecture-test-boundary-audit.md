@@ -55,10 +55,10 @@ tests/agent-system/harness doubles
 外部审查 Agent 应同时阅读：
 
 - 本文与 `docs/handoff/2026-09-01-agent-architecture-review-handoff.md`；
-- `docs/research/2026-09-01-agent-architecture-root-cause-synthesis.md`；
-- `docs/research/2026-09-01-agent-architecture-solution-and-execution-plan.md`；
-- `docs/research/2026-09-01-agent-evaluation-and-test-research.md`；
-- `docs/superpowers/plans/2026-09-01-agent-architecture-test-system.md`；
-- `docs/ARCHITECTURE-NOW.md` 与本 PR 中的测试文件。
+- `docs/archive/research/2026-09-01-agent-architecture-root-cause-synthesis.md`；
+- `docs/archive/research/2026-09-01-agent-architecture-solution-and-execution-plan.md`；
+- `docs/archive/research/2026-09-01-agent-evaluation-and-test-research.md`；
+- `docs/archive/superpowers/plans/2026-09-01-agent-architecture-test-system.md`；
+- `docs/archive/guides/ARCHITECTURE-NOW.md` 与本 PR 中的测试文件。
 
 审查结果必须按 Critical / Important / Minor 分级，给出 `file:line` 证据，并明确哪些是测试基础设施问题、哪些是生产架构问题、哪些尚未有足够证据。该审查完成前不进入生产 Agent 改造。

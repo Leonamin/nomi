@@ -21,7 +21,7 @@
 //   node tests/ux/canvas-follow-hand.perf.mjs --structural
 //   node tests/ux/canvas-follow-hand.perf.mjs --repo ../Nomi-release-0.22.1 --label before --work D:/tmp
 // 素材：视频默认取真实素材登记表里的 video-canvas-follow-hand-1080p15（仓库内 tests/ux/fixtures/canvas-follow-hand-1080p15.mp4，
-// 缺了就红，不退回合成素材）；--video 可换一段别的真实片子。图默认 docs/audit 里真实生成的图。
+// 缺了就红，不退回合成素材）；--video 可换一段别的真实片子。图默认 docs/archive/audit 里真实生成的图。
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'

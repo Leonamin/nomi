@@ -1,6 +1,6 @@
 # Nomi Production Video Export Implementation Plan
 
-> 裁决：已被现行持久化导出任务与统一导出引擎取代；证据：`electron/export/exportJobManager.ts:53-84`、`docs/plan/2026-06-14-export-engine-unification.md:72-86`。
+> 裁决：已被现行持久化导出任务与统一导出引擎取代；证据：`electron/export/exportJobManager.ts:53-84`、`docs/archive/plan/2026-06-14-export-engine-unification.md:72-86`。
 
 > **For Hermes:** Use subagent-driven-development skill to implement this plan task-by-task.
 
@@ -1305,7 +1305,7 @@ git commit -m "test(export): add video export acceptance fixtures"
 
 **Files:**
 
-- Create: `docs/qa/video-export-release-checklist.md`
+- Create: `docs/archive/qa/video-export-release-checklist.md`
 - Modify: `docs/architecture/nomi-production-video-export-architecture-2026-05-24.md`
 
 **Checklist:**
@@ -1329,7 +1329,7 @@ Docs only.
 **Commit:**
 
 ```bash
-git add docs/qa/video-export-release-checklist.md docs/architecture/nomi-production-video-export-architecture-2026-05-24.md
+git add docs/archive/qa/video-export-release-checklist.md docs/architecture/nomi-production-video-export-architecture-2026-05-24.md
 git commit -m "docs(export): add video export release checklist"
 ```
 

@@ -20,7 +20,7 @@
     "electron/catalog/customCallDispatch.ts",
     "electron/audioTaskRunner.ts",
     "electron/providerAdapter/relayConformanceVideoAudio.integration.test.ts",
-    "docs/research/2026-09-03-self-hosted-relay-coverage-matrix.md"
+    "docs/archive/research/2026-09-03-self-hosted-relay-coverage-matrix.md"
   ],
   "entry_points": [
     "electron/catalog/newapiTransport.ts 的 RELAY_MODEL_REF（六个 op 共用的 model 字段引用）",
@@ -160,7 +160,7 @@
       "electron/catalog/newapiTransport.ts",
       "electron/catalog/taskParams.ts",
       "electron/providerAdapter/relayConformanceVideoAudio.integration.test.ts",
-      "docs/research/2026-09-03-self-hosted-relay-coverage-matrix.md"
+      "docs/archive/research/2026-09-03-self-hosted-relay-coverage-matrix.md"
     ]
   },
   "class_regression_tests": [

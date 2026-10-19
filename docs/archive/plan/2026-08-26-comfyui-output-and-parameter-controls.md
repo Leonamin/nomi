@@ -40,7 +40,7 @@
 - [x] 控件分流 RED → GREEN：短枚举/长中文/文件路径/多选项；复用 NomiSelect 搜索与嵌套 portal。
 - [x] 真实 Electron 用户任务：导入视频 → 设置显示视频 → 画布选长模型名 → 重开保留 → 请求值正确 → 模拟返回视频本地播放。
 - [x] 光/暗截图亲眼验收，检查点击、键盘、长列表最后一项、点外关闭和短枚举不回归。
-- [x] scoped 单测 + HTTP fake + 全量质量门；6606 测试通过 / 1 跳过，独立审查阻断已关闭，见 `docs/research/2026-08-26-comfyui-feedback-fix-report.md`。
+- [x] scoped 单测 + HTTP fake + 全量质量门；6606 测试通过 / 1 跳过，独立审查阻断已关闭，见 `docs/archive/research/2026-08-26-comfyui-feedback-fix-report.md`。
 
 ## 验收与回滚
 

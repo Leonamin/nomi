@@ -228,7 +228,7 @@ export const GENERATION_NODE_PLUGINS = defineGenerationNodePlugins([
     promptPlaceholder: 'Add a panorama reference...',
   },
   {
-    // 导演台（docs/plan/2026-09-02-director-console-v2.md）：Nomi 唯一的 3D 节点；老 scene3d 节点在快照加载时迁成它（director/migration）。
+    // 导演台（docs/archive/plan/2026-09-02-director-console-v2.md）：Nomi 唯一的 3D 节点；老 scene3d 节点在快照加载时迁成它（director/migration）。
     // AI 来导（站位 / 运镜参考）走 director/agent 的建节点入口，不经 agentCreatable 泛用建节点。
     kind: 'director',
     label: 'Director',
@@ -301,7 +301,7 @@ export const GENERATION_NODE_PLUGINS = defineGenerationNodePlugins([
     // - 渲染：BaseGenerationNode 的 kind 专属分支（scene3d/panorama 同级）→ ArtifactBody 按 fileType 分发子视图。
     // - 不作参考槽源（providesImageReference 缺省 false）：要当参考图 → 浮条"固化为参考图"
     //   栅格化 PNG 走 assetImportAdapter 另存为 asset 节点（参考语义归 asset，不双源）。
-    //   数据模型收敛见 docs/plan/2026-09-06-agent-artifact-node.md §4.1。
+    //   数据模型收敛见 docs/archive/plan/2026-09-06-agent-artifact-node.md §4.1。
     kind: 'agent-artifact',
     label: 'Agent Artifact',
     menuLabel: 'Artifact',

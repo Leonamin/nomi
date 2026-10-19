@@ -14,7 +14,7 @@ import { fileURLToPath } from 'node:url'
 import { screenshotSettled } from './_assert.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
-const outDir = path.join(repoRoot, 'docs/design/mockups/2026-08-02-u2-after')
+const outDir = path.join(repoRoot, 'docs/archive/design/mockups/2026-08-02-u2-after')
 fs.mkdirSync(outDir, { recursive: true })
 
 const WIN_W = 1680

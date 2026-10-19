@@ -27,7 +27,7 @@ import {
 } from "../runtime";
 import { logWarn } from "../logging/logger";
 
-// ── 未登记状态动词的有界容忍（根因修复，见 docs/plan/2026-08-11-unrecognized-task-status-root-fix.md）──
+// ── 未登记状态动词的有界容忍（根因修复，见 docs/archive/plan/2026-08-11-unrecognized-task-status-root-fix.md）──
 //
 // 病根：归一时「不认得的动词」曾被压成 queued，而 queued = 「继续轮询」的指令 —— 上游已经返回
 // failure/rejected，系统却读成「还在排队」，把预算烧完也没把真因报出来（用户视角 = 永远转圈）。

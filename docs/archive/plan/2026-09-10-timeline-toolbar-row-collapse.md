@@ -4,7 +4,7 @@
 
 > 状态：已实施（分支 `fix/timeline-toolbar-row-collapse-20260910`）
 > 根因合同：`docs/fixes/2026-09-10-timeline-toolbar-overlay.root-cause.json`
-> 先查别人报告：`docs/research/2026-09-10-timeline-toolbar/prior-art.md`
+> 先查别人报告：`docs/archive/research/2026-09-10-timeline-toolbar/prior-art.md`
 
 ## 1. 起因（用户原话）
 
@@ -81,7 +81,7 @@
 
 ## 先查别人
 
-完整报告：[docs/research/2026-09-10-timeline-toolbar/prior-art.md](../research/2026-09-10-timeline-toolbar/prior-art.md)
+完整报告：[docs/archive/research/2026-09-10-timeline-toolbar/prior-art.md](../research/2026-09-10-timeline-toolbar/prior-art.md)
 
 - **仓库里已有折叠原子**：`src/workbench/preview/inspector/PreviewInspector.tsx:80`
   （`WorkbenchIconButton` + `IconChevronDown`），收起态图标条 `src/workbench/preview/PanelRail.tsx:9`，
@@ -96,5 +96,5 @@
   <https://github.com/OpenCut-app/opencut-classic/blob/main/apps/web/src/timeline/components/index.tsx>（`:439,445`）。
 - **生态：面板折叠的通行语义**（`collapsible` + `collapsedSize` + `onCollapse`/`onExpand`）——
   <https://react-resizable-panels.vercel.app/examples/collapsible>；本仓剪辑面已在用同一个库。
-- **我们自己的定稿**：`docs/design/2026-09-05-editing-panel-design-contract.md:87`（§2.7）钉死三簇与图标，
+- **我们自己的定稿**：`docs/archive/design/2026-09-05-editing-panel-design-contract.md:87`（§2.7）钉死三簇与图标，
   本次只动位置。

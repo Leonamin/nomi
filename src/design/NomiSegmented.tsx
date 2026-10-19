@@ -6,7 +6,7 @@ import { cn } from '../utils/cn'
  *
  * 视觉语言复用面板 tablist（OnboardingDrawer 素材来源切换）：容器 ink-05 圆角槽 + 选中项 paper
  * 浮起带轻影。用于「参数面板」这类少量离散档位的即点即改场景（2026-07-17 用户拍板的
- * 节点参数交互，样张 docs/design/mockups/node-param-panel.html）。
+ * 节点参数交互，样张 docs/archive/design/mockups/node-param-panel.html）。
  * 选项超宽自动换行（flex-wrap，用户已接受）；禁用档置灰不可点。
  */
 

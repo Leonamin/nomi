@@ -18,7 +18,7 @@
     "electron/catalog/runwayOfficial.ts",
     "electron/catalog/kieKling.ts",
     "electron/catalog/vendorWireDriftFixes.test.ts",
-    "docs/research/2026-09-02-model-acceptance-matrix.md"
+    "docs/archive/research/2026-09-02-model-acceptance-matrix.md"
   ],
   "external_sources": [
     {
@@ -111,7 +111,7 @@
     "classification": "recurring",
     "reason": "供应商按自己的节奏演进 wire 契约（kling 新增必填、fal 网关收敛路径、Runway 按模型分化枚举），每次演进都可能让任意 mapping 静默脱钩；且本地 loopback 层结构上无法暴露此类漂移，必须由「文档对账+零额度干跑+付费封印」三段流程与周期性真测矩阵托底。",
     "same_class_scan": [
-      "全目录 93 模型真实 API 矩阵（¥20.29，docs/research/2026-09-02-model-acceptance-matrix.md）：45 真跑通/30 同族契约在架/0 下线/11 账户额度受限——除本契约四类外无其他线上炸点。",
+      "全目录 93 模型真实 API 矩阵（¥20.29，docs/archive/research/2026-09-02-model-acceptance-matrix.md）：45 真跑通/30 同族契约在架/0 下线/11 账户额度受限——除本契约四类外无其他线上炸点。",
       "DOCCHECK 复审三处无出处修复：fal image_size 官方文档证实、fal 队列路径官方文档与实测不符（以实测为准并注明日期证据）、seedream5_lite 枚举经官方 openapi.json 纠正并真 API 复测。",
       "同日姊妹契约 2026-09-01-dreamina-cli-v1417-alignment 覆盖本地 CLI 传输的同类漂移（v1.4.14 必填参数族）；HTTP 与 CLI 两条传输线的同类病一并入册。",
       "全目录 230 mapping 的逐条文档大对账（DOCAUDIT 双班）已排定为后续批，按三段核心流程作业并为每条 mapping 补构造干跑测试。"

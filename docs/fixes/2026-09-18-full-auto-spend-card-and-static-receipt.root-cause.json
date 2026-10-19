@@ -215,6 +215,6 @@
       "electron/agentLane/laneExtendedTools.test.ts",
       "tests/agent-runtime/lane-native-approval.test.mts"
     ],
-    "structural_ticket": "docs/roadmap/TODO.md"
+    "structural_ticket": "docs/archive/roadmap/TODO.md"
   }
 }

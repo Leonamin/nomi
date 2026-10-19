@@ -53,13 +53,13 @@ hook 命中时会顶出一行「设计流程提示」，确保 AI 不跳步。
 `data-[功能域]-[元素名]`，如 `data-agent-header`、`data-storyboard-plan-card`。
 
 **Q：异常态漏画了会怎样？**
-`check:mockup-contracts` 不会直接报异常态缺失（它检查几何/containment/order），但步骤⑤的 intent 层可以写「P0 缺口必须画」的断言。先查 `docs/design/agent-ui-state-coverage-gaps.md` 的 P0 列表。
+`check:mockup-contracts` 不会直接报异常态缺失（它检查几何/containment/order），但步骤⑤的 intent 层可以写「P0 缺口必须画」的断言。先查 `docs/archive/design/agent-ui-state-coverage-gaps.md` 的 P0 列表。
 
 **Q：设计系统 token 改了，需要重新产契约吗？**
 如果只是语义（加新 token），不需要；如果是值变了（如 `spacing-4` 从 16px → 14px），需要重跑 `extract-design-spec.mjs` 更新 `.auto.mjs` 基线。
 
 **Q：「逐件走读」格式有没有范本？**
-有。参照 `docs/design/2026-09-02-agent-ui-v3-walkthrough.md`——那是经用户拍板认可的交付格式。
+有。参照 `docs/archive/design/2026-09-02-agent-ui-v3-walkthrough.md`——那是经用户拍板认可的交付格式。
 
 **Q：看中 threeUI 某个效果，能不能直接用？**
 不能搬源（授权见「外部参考来源」红线）。要效果就走**手法自研**：分析它的结构/动效/光照语言 → 用 Nomi 已有 three/R3F 或 CSS 自己写一版，进 mockup 供拍板。Nomi 已有 three@0.184 + @react-three/fiber，自研成本可控，且完全绕开授权与 R1 并行版问题。

@@ -128,7 +128,7 @@ describe('提交闸：边界——这些字样出现在**提交信息或数据�
   test('引号里的词组不是命令（只读命令不该被拦）', () => {
     allowed('echo "git commit --no-verify"')
     allowed('grep -rn "core.hooksPath" docs/')
-    allowed('cat docs/lessons/commit-bypass-must-be-blocked-not-audited.md')
+    allowed('cat docs/archive/lessons/commit-bypass-must-be-blocked-not-audited.md')
   })
 })
 

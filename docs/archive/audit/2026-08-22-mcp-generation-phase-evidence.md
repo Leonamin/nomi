@@ -117,13 +117,13 @@ evidence file itself is intentionally excluded to avoid a self-referential
 hash). They are the current docs-only review input, not an implementation pass:
 
 ```text
-6da4e8c00361d61e805771286b146d3a1f78a68998f235905e9fe20491ed136d  docs/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md
-8eb633d0d3d79b55c74a357c80e79d30d98cf877d05a9090718a85179d6dce7c  docs/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md
-dfb6903d5c56077b3844f78031a62077066a785e5832bf297850be2be8da138e  docs/superpowers/specs/2026-08-22-unified-runtime-mcp-generation-design.md
-955aa4265593008f0413bf0035cb9bcd2fe047c122e2f9c3b1281adc2ef6d916  docs/superpowers/specs/2026-08-22-runtime-ownership-adr.md
-d879a43c73c0559b0bc4b09c4f6173659b089b9a50fdd63ad1f89a99790988ed  docs/audit/2026-08-22-agent-runtime-source-review.md
-faafc75e5bc8f4cb777961fd1a942fa022c9794a824e89b8c512093df520b7c0  docs/plan/2026-06-11-nomi-harness-master-plan.md
-939372aa2a16787caea39a0ef28797eae25b304cbfeca316352804d4937adad2  docs/workflow/2026-06-13-agent-and-eval-primer.md
+6da4e8c00361d61e805771286b146d3a1f78a68998f235905e9fe20491ed136d  docs/archive/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md
+8eb633d0d3d79b55c74a357c80e79d30d98cf877d05a9090718a85179d6dce7c  docs/archive/superpowers/plans/2026-08-22-nomi-unified-editor-runtime.md
+dfb6903d5c56077b3844f78031a62077066a785e5832bf297850be2be8da138e  docs/archive/superpowers/specs/2026-08-22-unified-runtime-mcp-generation-design.md
+955aa4265593008f0413bf0035cb9bcd2fe047c122e2f9c3b1281adc2ef6d916  docs/archive/superpowers/specs/2026-08-22-runtime-ownership-adr.md
+d879a43c73c0559b0bc4b09c4f6173659b089b9a50fdd63ad1f89a99790988ed  docs/archive/audit/2026-08-22-agent-runtime-source-review.md
+faafc75e5bc8f4cb777961fd1a942fa022c9794a824e89b8c512093df520b7c0  docs/archive/plan/2026-06-11-nomi-harness-master-plan.md
+939372aa2a16787caea39a0ef28797eae25b304cbfeca316352804d4937adad2  docs/archive/workflow/2026-06-13-agent-and-eval-primer.md
 ```
 
 ## Continued P0 semantic lease/receipt wiring — 2026-08-23
@@ -201,7 +201,7 @@ without code, adversarial tests and a reproducible reviewed-tree snapshot.
 
 研究来源已固定为 PR 文档提交
 `5431c5ddf4d2dc5bdfeb0fc22c4b07f724f7a6fb`；本地事实摘要为
-`docs/audit/2026-08-22-agent-runtime-source-review.md`。该研究被归一为
+`docs/archive/audit/2026-08-22-agent-runtime-source-review.md`。该研究被归一为
 External E0/E1 薄适配：P0/P2 checkpoint 前 E0 只读/草稿/preview/events；通过后
 E0 的 `operation/plan` 可在零额度模式持久化 sealed contract + pending
 authorization-required job/gate，但不 reservation/provider/spend；E1 在 P3 checkpoint

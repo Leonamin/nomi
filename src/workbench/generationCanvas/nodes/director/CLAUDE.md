@@ -1,6 +1,6 @@
 # nodes/director/
 > L2 | 父级: ../../ENTRY.md（生成画布代码入口图）
-> 导演台：Nomi 唯一的 3D 导演台，独立节点类型 `director`（方案 docs/plan/2026-09-02-director-console-v2.md；切换门 docs/plan/2026-09-03-director-cutover-gate.md 之后 V1 `scene3d` 已删，老节点在画布快照加载时经 migration/ 迁成 director）。
+> 导演台：Nomi 唯一的 3D 导演台，独立节点类型 `director`（方案 docs/archive/plan/2026-09-02-director-console-v2.md；切换门 docs/archive/plan/2026-09-03-director-cutover-gate.md 之后 V1 `scene3d` 已删，老节点在画布快照加载时经 migration/ 迁成 director）。
 > 自给自足：假人骨架数学 / 姿态预设 / 资产 URL / 落盘桥 / 上下文恢复都在本目录（切换门时从 V1 入籍），不依赖任何 V1 路径。
 > 第三方：@sparkjsdev/spark 2.1（泼溅渲染，three ≥0.180，WASM 内联）。
 > 依赖方向：panels/timeline/scene → model；model 不 import React/THREE；panels/inspector 可调 timeline/timelineCommands（命令层零 React）。产物只存资产句柄。
@@ -22,7 +22,7 @@
 > useAiSceneBuilder.ts: AI 搭场景编排：描述 + ≤3参考图经文本大脑生成 JSON；请求身份贯穿模型/存库 await，发起时固定目标图层，取消/reset/卸载拒绝迟到响应；先存场景资源，再由 store 将几何和资产句柄一次物化/撤销；无桥时用 E2E fixture 或明示缺模型
 > model/: 纯层（schema、时间格、片段几何、编辑层、路径求值、特写运镜、节目机位、镜头、预设、灯光、快捷键、rig、IK 链、store），见 model/CLAUDE.md
 > scene/: three / R3F 世界（画布、相机、实体、gizmo、描边、拾取、创建模式、标签、播放求值），见 scene/CLAUDE.md
-> panels/: DOM 面板（顶栏五簇 topbar/ 是唯一常驻控件条，2026-09-09 收掉了视口左缘创建栏 / 底中底栏 / 右下显示模式三条，见 docs/plan/2026-09-09-director-chrome-five-clusters.md；右栏大纲/资产库/检查器、字段原语、分栏、浮层），见 panels/CLAUDE.md
+> panels/: DOM 面板（顶栏五簇 topbar/ 是唯一常驻控件条，2026-09-09 收掉了视口左缘创建栏 / 底中底栏 / 右下显示模式三条，见 docs/archive/plan/2026-09-09-director-chrome-five-clusters.md；右栏大纲/资产库/检查器、字段原语、分栏、浮层），见 panels/CLAUDE.md
 > timeline/: 片段时间轴，见 timeline/CLAUDE.md
 > 开发入口: 仓库根 director-lab.html → src/devlab/directorLab.tsx（仅 dev，脱离画布挂全屏壳）
 > 法则: 成员完整·一行一文件·父级链接·技术词前置

@@ -37,13 +37,13 @@
 ## src/workbench：这一簇里本次碰到的两个子层
 
 `src/workbench` 这个模块键是整个渲染层工作台（两级目录），59 份合同覆盖画布、Agent 面板、创作、任务中心等所有面，
-同一周已有 `docs/audit/2026-09-24-v022-feedback-structure-review.md`（「入口统一之后，没人回头扫一遍这个入口承诺的事还有谁在判」）。
+同一周已有 `docs/archive/audit/2026-09-24-v022-feedback-structure-review.md`（「入口统一之后，没人回头扫一遍这个入口承诺的事还有谁在判」）。
 本评审只回答本次两份合同碰到的两个子层：
 
 | 子层 | 本次的缺陷是否在这一层 | 结构判断 |
 |---|---|---|
 | `src/workbench/common/NomiMarkdown.tsx` | 是：唯一的 Markdown owner 只给上游代码块换了颜色，没有拥有它的形（双层框、横滚、一律等宽） | 结构本身是对的（一个 owner，所有面经它渲染），缺的是 owner 没把上游默认外观当成自己要管的东西。已在 owner 内收口，所有读者同时受益 |
-| `src/workbench/taskCenter` + `src/workbench/production` | 是：分组、汇总、状态签文案、标签表在按钮、面板、卡片、store 里各自现算 | 与 09-24 那份评审同一个形状：`docs/plan/2026-08-02-task-center-queue.md` 原本规定「分组/排序/可取消性全在纯函数，组件只画」，后来加制作 Run、导出任务时逻辑长回了组件。已收回 `TASK_CENTER_GROUPS` / `summarizeTaskCenterRows` / `isProductionRunTask` / `productionRunLabels`，并登记概念 owner |
+| `src/workbench/taskCenter` + `src/workbench/production` | 是：分组、汇总、状态签文案、标签表在按钮、面板、卡片、store 里各自现算 | 与 09-24 那份评审同一个形状：`docs/archive/plan/2026-08-02-task-center-queue.md` 原本规定「分组/排序/可取消性全在纯函数，组件只画」，后来加制作 Run、导出任务时逻辑长回了组件。已收回 `TASK_CENTER_GROUPS` / `summarizeTaskCenterRows` / `isProductionRunTask` / `productionRunLabels`，并登记概念 owner |
 
 **给这一层的判据**：往任务面板加一种新任务时，只允许加一个「该任务状态 → `TaskCenterGroup`」的映射函数；
 在 `TaskCenterPanel` / `TaskCenterButton` 里写 `row.group === …` 之外的状态判断，就是第二个 owner。

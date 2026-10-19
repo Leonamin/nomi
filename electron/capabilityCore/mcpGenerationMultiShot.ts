@@ -500,7 +500,7 @@ export async function upsertStoryboardDesign(request: RequestRenderer,
  * 在此之前渲染层对确认和取消**一律**回 `{status:'presented'}`，结局被扔掉。主进程于是读不到任何结论，
  * `generate` 的回执只能落到 `generation_approval_unavailable`（「this host did not wait for his answer」）
  * ——**错误形状**，模型据此重试、进熔断，而用户明明刚刚答过。run5 实测 A1 一次、A3 两次，
- * 与各自答框的次数一一对应（`docs/evidence/2026-09-22-askback-real-model-run5` 发现 ③）。
+ * 与各自答框的次数一一对应（`docs/archive/evidence/2026-09-22-askback-real-model-run5` 发现 ③）。
  *
  * 现在回包带 `decision`，这里把它翻成**与报价卡那条路同一份** `GenerateUserDecision`
  * （`GENERATE_USER_DECISION_KEY`），于是 `laneExtendedTools.generateReceipt` 一个字不用改：

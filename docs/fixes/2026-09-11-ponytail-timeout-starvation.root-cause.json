@@ -106,7 +106,7 @@
       "scripts/ponytail-review-hook.mjs",
       "scripts/with-gates-lock.py",
       "scripts/check-ponytail-deferred.mjs",
-      "docs/plan/2026-09-11-ponytail-adaptive-serial-defer.md"
+      "docs/archive/plan/2026-09-11-ponytail-adaptive-serial-defer.md"
     ]
   },
   "regression_tests": [

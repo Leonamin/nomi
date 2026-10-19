@@ -1,5 +1,5 @@
 // W1.5 · production run 路径②的 qa 阶段审片判决（纯逻辑，DI 可裸测）。
-// 方案：docs/plan/2026-08-19-w1-shot-verify-wiring.md §3「production run 路径②的对称落点」+ T10。
+// 方案：docs/archive/plan/2026-08-19-w1-shot-verify-wiring.md §3「production run 路径②的对称落点」+ T10。
 //
 // driver 的 qa stage 把「本次已 adopted 的生成镜头」交给渲染层现成审片（verifyShotsAndReport，
 // 复用同一纯核判分，不造第二份），拿回 per-shot 判决后：本模块把判决**塑形成 run 事件 message + 阶段摘要**

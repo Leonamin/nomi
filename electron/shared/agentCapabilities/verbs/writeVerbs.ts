@@ -451,7 +451,7 @@ export function writeVerbs(): VerbDeclaration[] {
     // **投影原型（2026-09-18，只有这一个动词）**：模型面不再手写，而是从它声明的那份宿主契约 schema
     // 派生——`.omit()` 掉宿主自补的分支判别值，只覆写描述。宿主字段改名时这里是 tsc 红。
     // 为什么只有这一个、它覆盖不到什么（双域动词），见 `verbs/verbProjections.ts` 的文件头与
-    // `docs/plan/2026-09-18-tool-projection-cancel-job-prototype.md`。
+    // `docs/archive/plan/2026-09-18-tool-projection-cancel-job-prototype.md`。
     schema: cancelJobModelSchema,
     examples: [{ when: "Stop a running export:", arguments: { domain: 'export', jobId: "export-1" } }],
     prepareArguments: modelArgumentTolerance({}),

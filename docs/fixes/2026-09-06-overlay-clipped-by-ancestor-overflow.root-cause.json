@@ -45,7 +45,7 @@
   "internal_only_reason": "纯本仓 CSS 布局与 React 渲染结构问题：裁切行为由本仓自己的 overflow-hidden 与定位写法决定，无第三方库契约介入，不需要外部依据。",
   "recurrence": {
     "classification": "recurring",
-    "reason": "同一族已经发生过第二次：docs/lessons/vendor-manage-is-a-discoverability-problem.md 记的是控件被 overflow 裁出视口，用户报「功能没有」；本次是浮层被轨道格裁掉。只要浮层还可以就地写 absolute，任何一个新的 overflow 容器都能再造一次，而三样常用证据都拦不住。",
+    "reason": "同一族已经发生过第二次：docs/archive/lessons/vendor-manage-is-a-discoverability-problem.md 记的是控件被 overflow 裁出视口，用户报「功能没有」；本次是浮层被轨道格裁掉。只要浮层还可以就地写 absolute，任何一个新的 overflow 容器都能再造一次，而三样常用证据都拦不住。",
     "same_class_scan": [
       "实扫剪辑面全部在容器内渲染的浮层（grep absolute/fixed/role=menu/role=dialog 于 src/workbench/timeline/*.tsx 与 src/workbench/preview/**/*.tsx），逐个在真 Electron 里开出来用 elementFromPoint 7×7 采样量命中率。",
       "结果：TimelineTransitionPicker 7/49（红）；TimelineContextMenu 49/49、TimelinePanel 快捷键面板 49/49、PreviewControlBar 文字菜单 49/49、EditingLayoutMenu 49/49、AssetPickerPopover 49/49（五条阳性对照，证明这把尺子确实测得出东西）。",

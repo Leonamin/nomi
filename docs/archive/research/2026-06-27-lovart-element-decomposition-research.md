@@ -1,7 +1,7 @@
 # Lovart「元素拆解」研究：一张图拆成可编辑分层（像 PS 改字 / P 图）
 
 > 状态：**研究文档，不动代码**。用户 2026-06-27「研究一下 Lovart 拆解元素——一张图拆出元素/文字，像 PS 上直接改字、P 图」。
-> 关系：上承 `docs/plan/2026-06-25-canvas-image-editing-research.md`（那份是**区域级改图**：inpaint/erase/matting/relight/outpaint/upscale）。本份是**另一个维度——图层化拆解（image → 多个可独立编辑的 RGBA 图层 + 可改文字）**，技术栈不同。
+> 关系：上承 `docs/archive/plan/2026-06-25-canvas-image-editing-research.md`（那份是**区域级改图**：inpaint/erase/matting/relight/outpaint/upscale）。本份是**另一个维度——图层化拆解（image → 多个可独立编辑的 RGBA 图层 + 可改文字）**，技术栈不同。
 
 ---
 
@@ -199,7 +199,7 @@ out = pipe(image=Image.open("x.png").convert("RGBA"),
    - 若认 → 主路是「透明底单独生成角色层」，decompose 仅作上传图的诚实兜底。
    - 若你坚持要「拆任意已存在的图」→ 须接受当前质量天花板（残影/糊边），按你「做作就算了」这条，我倾向不做主推。
 2. **要不要我先真生成对比实证**（额度已授权，我可直接跑 compose vs decompose 各几张真图给你看效果再定）？
-3. 方向定后我写 `docs/plan` 细化（**画布承载「一组可独立挪动子层」= 最大工程块**）。
+3. 方向定后我写 `docs/archive/plan` 细化（**画布承载「一组可独立挪动子层」= 最大工程块**）。
 
 ---
 

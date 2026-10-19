@@ -15,7 +15,7 @@
 > 全程没动，靠 `NOMI_E2E_ALLOW_MULTI_INSTANCE=1` 共存。素材用登记过的真素材
 > （`tests/ux/real-media-fixtures.json` 的 `video-4k-hevc-10bit`：1.317 GB / 3840×2160 / 10-bit HEVC）。
 >
-> **截图**：`docs/audit/2026-09-17-post-804-walkthrough/`，本文每条结论都指得到具体文件；每张我都亲眼 Read 过。
+> **截图**：`docs/archive/audit/2026-09-17-post-804-walkthrough/`，本文每条结论都指得到具体文件；每张我都亲眼 Read 过。
 
 ---
 

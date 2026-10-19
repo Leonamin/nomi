@@ -2,7 +2,7 @@
 
 日期：2026-09-07 · 基线：`origin/main@0ad7d97ef`
 性质：调研 + 真实付费 A/B（5 次真生成 + 2 次 VLM 打分）
-服务对象：**PR #572 / `docs/plan/2026-09-06-depth-video-canvas-node.md`（深度视频处理节点）的去留裁决**
+服务对象：**PR #572 / `docs/archive/plan/2026-09-06-depth-video-canvas-node.md`（深度视频处理节点）的去留裁决**
 
 > 一句话：#572 的 v1 验收门写的是「深度产物能被 `video_ref` 消费，真人视频 → 深度参考 → 生成新角色演绎片」。
 > 本文用同一模型、同一素材、同一提示词，把这条门**真跑了一遍**，并加跑了社区实际在用的 `depth+skeleton` 配置。
@@ -65,10 +65,10 @@
 export TIKHUB_API_KEY="…"        # 只从环境变量读，别写进任何文件
 node scripts/research/tikhub-search.mjs \
   --q "动作参考 视频 深度图 骨架 AI视频生成" --platform all --limit 20 --since 2026-03-01 \
-  --out docs/research/2026-09-07-motion-ref-raw-vs-depth/tikhub/
+  --out docs/archive/research/2026-09-07-motion-ref-raw-vs-depth/tikhub/
 ```
 
-产物附件：`docs/research/2026-09-07-motion-ref-raw-vs-depth/tikhub/tikhub-search.json` · `…/tikhub-search.md`
+产物附件：`docs/archive/research/2026-09-07-motion-ref-raw-vs-depth/tikhub/tikhub-search.json` · `…/tikhub-search.md`
 （抖音 20 · B站 20 · X 20 · 小红书 0 —— 小红书端点 HTTP 400，已记在附件的对账表里，未重试掩盖。）
 
 | 平台 | 出处 URL | 作者 | 发布时间 | 观点摘要（原文，不改写） | 提到的框架/工具 |

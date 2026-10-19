@@ -3,7 +3,7 @@
 > 📎 从 upstream v0.23.1（66d6eaf）继承的参考记录；原文的审批/交付状态不代表本 fork 的在办任务。
 
 > 起因：用户 2026-09-25 三条反馈（方向已拍板）· 做法：一个分支、每项一笔提交、一个 PR · 范围：画布生成浮框、付费确认判据、画布视口移动与新内容落点
-> 样张（已拍板，5 题全按默认）：[docs/design/mockups/2026-09-25-canvas-ux-batch/](../../design/mockups/2026-09-25-canvas-ux-batch/README.md) · 在线 https://claude.ai/artifact/8PAKadacB2uZ8WbxJWScMC
+> 样张（已拍板，5 题全按默认）：[docs/archive/design/mockups/2026-09-25-canvas-ux-batch/](../design/mockups/2026-09-25-canvas-ux-batch/README.md) · 在线 https://claude.ai/artifact/8PAKadacB2uZ8WbxJWScMC
 
 ## 0. 一句话结论
 
@@ -36,7 +36,7 @@
 | React Flow `NodeToolbar`（https://reactflow.dev/api-reference/components/node-toolbar；实读 `node_modules/@xyflow/react/dist/esm/index.mjs:5079`，外壳 `NodeToolbarPortal` 在 `:5013`） | 官方节点浮层只钉锚点 + 反缩放，不做视口躲避——用户拍板的就是框架的答案；不直接用它，因为它在 portal 里、隐藏即卸载 TipTap |
 | React Flow `setViewport({ duration })`（Context7 `/xyflow/xyflow`）+ 实读 `node_modules/.pnpm/@xyflow+system@0.0.81/node_modules/@xyflow/system/dist/esm/index.mjs:2991`（带时长 → d3 transition，promise 只在 `end` 结算）、`node_modules/.pnpm/d3-zoom@3.0.0/node_modules/d3-zoom/src/zoom.js:171`（`k = w / l[2]`，面板宽取缓存） | 带时长移动每帧除以缓存的面板宽度，0×0 那帧出 NaN → 画布空白；被打断的过渡 promise 不结算。保留自研逐帧直写，退出条件写进合同 |
 | 仓库里已有：自研逐帧视口动画 `src/workbench/generationCanvas/components/viewportAnimationCoordinator.ts:40`、宿主 `src/workbench/generationCanvas/reactFlow/useReactFlowViewportAnimation.ts:66` | 复用，不另起；本分支只改成「动画中不逐帧写 store、结束写一次」，并把用户手势打断接到 `onMoveStart` |
-| LibTV（用户指定参考；对象登记 `docs/research/competitive/sources.md:9`，站点 https://www.liblib.tv/plugin） | 提示词框右上角展开图标；发送钮旁「⚡ N」点数。我们用词典里「付费」那枚 `IconCoin`（§6），不另起 ⚡ |
+| LibTV（用户指定参考；对象登记 `docs/archive/research/competitive/sources.md:9`，站点 https://www.liblib.tv/plugin） | 提示词框右上角展开图标；发送钮旁「⚡ N」点数。我们用词典里「付费」那枚 `IconCoin`（§6），不另起 ⚡ |
 
 ## 5. 验收门
 

@@ -1,6 +1,6 @@
 // ConnectorDefinition —— 外部数据 API 桥的形态合同（不是生成 catalog 的 vendor/model）。
 //
-// 出处：docs/plan/2026-08-29-creative-capability-catalog-and-prompt-system.md §5.5（#226 已入 main）。
+// 出处：docs/archive/plan/2026-08-29-creative-capability-catalog-and-prompt-system.md §5.5（#226 已入 main）。
 // 这里把纸面合同落成运行时可校验的 TS 类型。为什么单开一族、不塞进 electron/catalog：
 //   catalog 是 vendor → model → create/poll「生成任务」家族（会进模型列表、要认证、有额度语义）；
 //   数据 connector 是「给链接/ID → 拿结构化数据」的读取面，塞进生成 catalog = 概念错配（P4）。
@@ -162,7 +162,7 @@ export type LicenseSnapshot = {
  *   · "browser"    : 用户从浏览器手工导入。必填 pageUrl + capturedAt。usageStatus 恒 reference_only。
  *   · "user"       : 用户直接从本地文件导入（非浏览器来源）。usageStatus 恒 reference_only。
  *
- * 与 M4 taint 系统对齐（docs/plan/2026-09-03-creative-resource-chain-epic.md §5.2）：
+ * 与 M4 taint 系统对齐（docs/archive/plan/2026-09-03-creative-resource-chain-epic.md §5.2）：
  *   · source       → taint origin 标签
  *   · usageStatus  → content trust level
  *   · licenseId    → taint policy 证据

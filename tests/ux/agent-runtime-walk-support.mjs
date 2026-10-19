@@ -17,7 +17,7 @@ const { LANE_CODING_TOOL_NAMES } = tsxRequire('../../electron/agentLane/laneCodi
 // 2026-09-06 常驻面板换成 v4 积木（`src/workbench/ai/v4/`）之后，面板内部一律 `data-v4-*`；
 // 只有外壳那几个 `data-agent-*` 留着（它们标的是「哪一面的常驻面板」，不是长相）。
 // 走查里**禁止再手抄这些串**——2026-09-05 那次「面板没渲染」其实是选择器过期
-// （docs/lessons/dead-selector-lies-both-ways.md），一处失效同时造假红和假绿。
+// （docs/archive/lessons/dead-selector-lies-both-ways.md），一处失效同时造假红和假绿。
 
 /** 外壳：仍然由 ProjectAgentResidentShell 自己发的三个身份属性。 */
 export const AGENT_PANEL = '[data-agent-resident="true"][data-agent-panel="true"]'

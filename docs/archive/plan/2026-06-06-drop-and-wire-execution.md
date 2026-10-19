@@ -1,6 +1,6 @@
 # 执行文档:⑤ 拖入 / 连线 → 参考(长尾最后一项,drop-and-wire)
 
-> Rule 4 执行文档。**自包含**——读它 + `CLAUDE.md`(工作流框架 + 纪律)+ `docs/design/2026-06-06-reference-v4-implementation-spec.md`
+> Rule 4 执行文档。**自包含**——读它 + `CLAUDE.md`(工作流框架 + 纪律)+ `docs/archive/design/2026-06-06-reference-v4-implementation-spec.md`
 > 即可接手,不依赖此前长对话。先给用户过目,点头后再执行。
 
 ---

@@ -71,7 +71,7 @@
 两种都不会报错，因为「重新发明」在类型上永远合法。
 
 **这不是 `src/workbench` 的问题。** 同一天对 `electron/` 那一层做的评审
-（`docs/audit/2026-09-18-electron-unowned-state-structural-review.md`，41 份合同）
+（`docs/archive/audit/2026-09-18-electron-unowned-state-structural-review.md`，41 份合同）
 得到的是**同一个形状**。再叠上本文的「8/20 的不变量主人其实住在 `electron/`」——
 `src/workbench` 这一簇是那同一件事在渲染层的**显形面**，不是一个独立的层级问题。
 

@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import type { SpendQuote, SpendQuoteLine } from "./shared/contracts/spendQuote";
 
 // 付费生成统一确认守卫——令牌（spend grant）核心。
-// 方案：docs/plan/2026-06-21-spend-confirmation-gate.md（务实纵深 + 媒体生成/调试出口闸）。
+// 方案：docs/archive/plan/2026-06-21-spend-confirmation-gate.md（务实纵深 + 媒体生成/调试出口闸）。
 //
 // 不变量（红队结论钉死）：
 // - 令牌只在主进程铸造与持有，渲染层只拿到不透明 grantId；

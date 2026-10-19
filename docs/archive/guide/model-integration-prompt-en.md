@@ -22,7 +22,7 @@ You are helping me connect an AI provider to my local Nomi installation. I need 
 
 1. Confirm that the Nomi MCP server is connected and that these tools are available: `nomi_integration`, `nomi_integration_manage`, and `nomi_read`.
 2. If the tools are missing, tell me to open Nomi's **Model setup → Connect AI coding assistant** card, complete its generated configuration, and restart this client. Do not hand-edit an MCP config as a workaround.
-3. Read the `model-integration` Skill if this MCP host exposes `nomi-skill://model-integration`. If a repository checkout is open, also read `skills/model-integration/SKILL.md`, `docs/provider-integration.md`, `docs/guide/model-connection-en.md`, and `docs/guide/capability-core-cli-mcp.md`. Treat the Skill and tool schemas as the source of truth.
+3. Read the `model-integration` Skill if this MCP host exposes `nomi-skill://model-integration`. If a repository checkout is open, also read `skills/model-integration/SKILL.md`, `docs/archive/guides/provider-integration.md`, `docs/guide/model-connection-en.md`, and `docs/guide/capability-core-cli-mcp.md`. Treat the Skill and tool schemas as the source of truth.
 
 ## Gather public evidence, not secrets
 

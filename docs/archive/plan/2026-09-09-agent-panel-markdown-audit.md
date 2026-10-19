@@ -6,7 +6,7 @@
 
 ## 先查别人
 
-- 已有依赖：原始发布包类型 `docs/plan/agent-panel-markdown-evidence/streamdown-2.6.0-index.d.ts.txt:526`，核对 props / code / cjk。
+- 已有依赖：原始发布包类型 `docs/archive/plan/agent-panel-markdown-evidence/streamdown-2.6.0-index.d.ts.txt:526`，核对 props / code / cjk。
 - 仓库已有：`src/workbench/common/NomiMarkdown.tsx:1` 是共享入口；下文审计逐项记录修复前六出口绕过机制。
 - 生态已有：[AI Elements Message](https://elements.ai-sdk.dev/components/message) 与 [Streamdown 官方接法](https://streamdown.ai/docs/getting-started)；直接采用完整内核，保留 Nomi 领域积木。
 
@@ -29,13 +29,13 @@
 | Cursor Agent | 官方 changelog 有 Markdown parsing 修正；Agent overview 明示图片在聊天中 inline；独立 Agent to-dos | 编辑器 Markdown preview、Agent to-dos 不等于聊天 GFM checkbox 支持；完整语法及栈未知 | [Agent](https://cursor.com/docs/agent/overview)、[1.3](https://cursor.com/changelog/1-3)、[1.2](https://cursor.com/changelog/1-2) |
 | Claude Code | 响应代码块 syntax coloring；`/btw` 可复制 raw Markdown；展开 transcript 工具输出 | 终端排版不能作为 Electron DOM 表格/图片/数学兼容证据；高亮库未公开确认 | [interactive mode](https://code.claude.com/docs/en/interactive-mode) |
 
-ChatGPT 的产品形态不能照抄旧资料：当前官方 notes 的 2026-05-28 条目明确写作/代码功能进入 chat 的 writing/code blocks，GPT-5.5 Instant/Thinking 不再提供原 Canvas。完整产品引用与未知边界见 [product-sources.md](../../plan/agent-panel-markdown-evidence/product-sources.md)。
+ChatGPT 的产品形态不能照抄旧资料：当前官方 notes 的 2026-05-28 条目明确写作/代码功能进入 chat 的 writing/code blocks，GPT-5.5 Instant/Thinking 不再提供原 Canvas。完整产品引用与未知边界见 [product-sources.md](agent-panel-markdown-evidence/product-sources.md)。
 
 ### 1.2 Context7 与现役版本/API 实查
 
 通过仓库 `.mcp.json` 指定的 `https://mcp.context7.com/mcp` 实际调用 `tools/list`、`resolve-library-id`、`query-docs`；解析得到 `/vercel/streamdown`、`/remarkjs/react-markdown`、`/shikijs/shiki`。原始响应在证据目录 `context7-resolve-*.txt`、`context7-query-*.txt`，不是凭记忆填 API。
 
-Context7 没有为以上结果提供可靠 npm 最新版本列表，因此**版本/发布时间另以 npm registry 的 `dist-tags.latest` 交叉验证**；保存 [npm-current.json](../../plan/agent-panel-markdown-evidence/npm-current.json)。并下载 Streamdown **2.6.0 发布包**的类型声明核对实际可用 API，避免官网 main 比发布包更新：[index.d.ts](../../plan/agent-panel-markdown-evidence/streamdown-2.6.0-index.d.ts.txt)。
+Context7 没有为以上结果提供可靠 npm 最新版本列表，因此**版本/发布时间另以 npm registry 的 `dist-tags.latest` 交叉验证**；保存 [npm-current.json](agent-panel-markdown-evidence/npm-current.json)。并下载 Streamdown **2.6.0 发布包**的类型声明核对实际可用 API，避免官网 main 比发布包更新：[index.d.ts](agent-panel-markdown-evidence/streamdown-2.6.0-index.d.ts.txt)。
 
 | 包 | 当前 latest / 发布时间 | 关键 API 与兼容性 | 许可证 |
 |---|---|---|---|
@@ -114,7 +114,7 @@ Streamdown 默认行为不完全等于获批 v4：
 
 正式主取证 20 次文本请求，边界补测 6×2=12 次，**32 次 localhost 文本请求、图片/视频付费调用 0、总费用 0**。加上前期脚本定位/重载导航重试的 22 次，整次审计累计 54 次本地 fixture 请求，仍为零付费。没有把 instrument 重试算成产品缺陷。
 
-主取证 [runtime-report.json](../../plan/agent-panel-markdown-evidence/runtime-report.json) 与边界 [edge-runtime-reports.json](../../plan/agent-panel-markdown-evidence/edge-runtime-reports.json) 均 passed、unexpected=[]。这里的 passed 只表示真实路径取证完成，**不代表产品缺陷已修复**。正文多数为单个 SSE 内容块；补测 hold 验证真实流式/停止，未做 token 级性能压测，也不声称测过付费模型自然输出质量。
+主取证 [runtime-report.json](agent-panel-markdown-evidence/runtime-report.json) 与边界 [edge-runtime-reports.json](agent-panel-markdown-evidence/edge-runtime-reports.json) 均 passed、unexpected=[]。这里的 passed 只表示真实路径取证完成，**不代表产品缺陷已修复**。正文多数为单个 SSE 内容块；补测 hold 验证真实流式/停止，未做 token 级性能压测，也不声称测过付费模型自然输出质量。
 
 ## 3. 所有会话文本出口清单
 
@@ -148,22 +148,22 @@ Streamdown 默认行为不完全等于获批 v4：
 
 | 场景 | 亮色 | 暗色 | 逐图判断（两种主题分别看过） |
 |---|---|---|---|
-| GFM 中文表格 | [01 light](../../plan/agent-panel-markdown-evidence/01-table-light.png) | [01 dark](../../plan/agent-panel-markdown-evidence/01-table-dark.png) | 真表格、边框/表头可见，3 数据行；数值列右对齐正确。中文场景列窄成两字一行，但没有裸 pipe 或整表溢出；暗色边框弱但能辨。 |
-| 中文注释代码 | [02 light](../../plan/agent-panel-markdown-evidence/02-code-light.png) | [02 dark](../../plan/agent-panel-markdown-evidence/02-code-dark.png) | 背景围栏和等宽均有；19 行全部摊开、无高亮、无代码折叠按钮。两主题点击复制实际都是 `[object Object]`。 |
-| 三层嵌套列表 | [03 light](../../plan/agent-panel-markdown-evidence/03-nested-light.png) | [03 dark](../../plan/agent-panel-markdown-evidence/03-nested-dark.png) | 1 个 ol、5 个 ul；数字层与两层圆点逐级缩进，行文可读，没有缩进错误。 |
-| 任务列表 | [04 light](../../plan/agent-panel-markdown-evidence/04-tasks-light.png) | [04 dark](../../plan/agent-panel-markdown-evidence/04-tasks-dark.png) | 6 个 checkbox 显示勾选/未勾选，非裸 `[x]`；子任务只右移约 4px，容易误认为同级。disabled 的灰色本身不是 bug。 |
-| 粗体/行内代码/链接/脚注 | [05 light](../../plan/agent-panel-markdown-evidence/05-inline-light.png) | [05 dark](../../plan/agent-panel-markdown-evidence/05-inline-dark.png) | 普通粗体、行内代码、链接都正常；中文相邻 `**「重点」**` 与 `~~「删除」~~` 裸露；内部链接/脚注也带 ↗。未见确定的中文闭标点悬出边界。 |
-| 八镜长文默认态 | [06 light](../../plan/agent-panel-markdown-evidence/06-storyboard-light.png) | [06 dark](../../plan/agent-panel-markdown-evidence/06-storyboard-dark.png) | 标题降级、段落与列表清楚；确有“还有 94 行·展开”，不是无折叠。裁切落在镜头 2 描述中途，有半行硬切感。 |
-| 八镜长文展开至尾 | [06 expanded light](../../plan/agent-panel-markdown-evidence/06-storyboard-expanded-light.png) | [06 expanded dark](../../plan/agent-panel-markdown-evidence/06-storyboard-expanded-dark.png) | 能滚到镜头 8 和交付检查，有收起按钮与滚动条；没有“长文无法阅读”的缺陷。 |
-| 工具 Markdown 输出 | [07 light](../../plan/agent-panel-markdown-evidence/07-receipt-light.png) | [07 dark](../../plan/agent-panel-markdown-evidence/07-receipt-dark.png) | 展开收据输出中 `##`、pipe、`**`、反引号全部按源码显示；表格没有成表格，列表是字符；这里是真工具返回。 |
-| 审批列表正文 | [08 light](../../plan/agent-panel-markdown-evidence/08-approval-light.png) | [08 dark](../../plan/agent-panel-markdown-evidence/08-approval-dark.png) | 三个镜头压在“1 条内容 · …”摘要中，`- **镜头一**` 等裸露，换行丢失；两主题一致。 |
-| 无语言围栏 | [09 light](../../plan/agent-panel-markdown-evidence/09-no-language-light.png) | [09 dark](../../plan/agent-panel-markdown-evidence/09-no-language-dark.png) | 仍是代码块且保留空格；内部第一/末行又套了 inline code padding/background，不能误报“没围栏”。 |
-| 图片/数学/Mermaid 边界 | [10 light](../../plan/agent-panel-markdown-evidence/10-image-math-light.png) | [10 dark](../../plan/agent-panel-markdown-evidence/10-image-math-dark.png) | 图片变“窗边白瓷杯”chip，没有图片或任务卡；公式保留 `$`，Mermaid 保留代码。后两项符合已拍板范围；图片 chip 无入口是另一个可用性问题。 |
-| 流式停止前 | [11 before light](../../plan/agent-panel-markdown-evidence/11-before-stop-light.png) | [11 before dark](../../plan/agent-panel-markdown-evidence/11-before-stop-dark.png) | 真表格、序号列表都在；光标却出现在上方“正在检查”后，未跟最后列表项。 |
-| 同条回复停止后 | [11 after light](../../plan/agent-panel-markdown-evidence/11-after-stop-light.png) | [11 after dark](../../plan/agent-panel-markdown-evidence/11-after-stop-dark.png) | 点击真实停止按钮后，原表格/列表挤成普通段落，Markdown 符号裸露；不是不同模型回复。 |
-| 折叠过程展开 | [12 light](../../plan/agent-panel-markdown-evidence/12-process-light.png) | [12 dark](../../plan/agent-panel-markdown-evidence/12-process-dark.png) | 真实两次读取形成“尝试了 2 次”；展开后粗体、表格标记裸露，最终回答另行正常显示。 |
+| GFM 中文表格 | [01 light](agent-panel-markdown-evidence/01-table-light.png) | [01 dark](agent-panel-markdown-evidence/01-table-dark.png) | 真表格、边框/表头可见，3 数据行；数值列右对齐正确。中文场景列窄成两字一行，但没有裸 pipe 或整表溢出；暗色边框弱但能辨。 |
+| 中文注释代码 | [02 light](agent-panel-markdown-evidence/02-code-light.png) | [02 dark](agent-panel-markdown-evidence/02-code-dark.png) | 背景围栏和等宽均有；19 行全部摊开、无高亮、无代码折叠按钮。两主题点击复制实际都是 `[object Object]`。 |
+| 三层嵌套列表 | [03 light](agent-panel-markdown-evidence/03-nested-light.png) | [03 dark](agent-panel-markdown-evidence/03-nested-dark.png) | 1 个 ol、5 个 ul；数字层与两层圆点逐级缩进，行文可读，没有缩进错误。 |
+| 任务列表 | [04 light](agent-panel-markdown-evidence/04-tasks-light.png) | [04 dark](agent-panel-markdown-evidence/04-tasks-dark.png) | 6 个 checkbox 显示勾选/未勾选，非裸 `[x]`；子任务只右移约 4px，容易误认为同级。disabled 的灰色本身不是 bug。 |
+| 粗体/行内代码/链接/脚注 | [05 light](agent-panel-markdown-evidence/05-inline-light.png) | [05 dark](agent-panel-markdown-evidence/05-inline-dark.png) | 普通粗体、行内代码、链接都正常；中文相邻 `**「重点」**` 与 `~~「删除」~~` 裸露；内部链接/脚注也带 ↗。未见确定的中文闭标点悬出边界。 |
+| 八镜长文默认态 | [06 light](agent-panel-markdown-evidence/06-storyboard-light.png) | [06 dark](agent-panel-markdown-evidence/06-storyboard-dark.png) | 标题降级、段落与列表清楚；确有“还有 94 行·展开”，不是无折叠。裁切落在镜头 2 描述中途，有半行硬切感。 |
+| 八镜长文展开至尾 | [06 expanded light](agent-panel-markdown-evidence/06-storyboard-expanded-light.png) | [06 expanded dark](agent-panel-markdown-evidence/06-storyboard-expanded-dark.png) | 能滚到镜头 8 和交付检查，有收起按钮与滚动条；没有“长文无法阅读”的缺陷。 |
+| 工具 Markdown 输出 | [07 light](agent-panel-markdown-evidence/07-receipt-light.png) | [07 dark](agent-panel-markdown-evidence/07-receipt-dark.png) | 展开收据输出中 `##`、pipe、`**`、反引号全部按源码显示；表格没有成表格，列表是字符；这里是真工具返回。 |
+| 审批列表正文 | [08 light](agent-panel-markdown-evidence/08-approval-light.png) | [08 dark](agent-panel-markdown-evidence/08-approval-dark.png) | 三个镜头压在“1 条内容 · …”摘要中，`- **镜头一**` 等裸露，换行丢失；两主题一致。 |
+| 无语言围栏 | [09 light](agent-panel-markdown-evidence/09-no-language-light.png) | [09 dark](agent-panel-markdown-evidence/09-no-language-dark.png) | 仍是代码块且保留空格；内部第一/末行又套了 inline code padding/background，不能误报“没围栏”。 |
+| 图片/数学/Mermaid 边界 | [10 light](agent-panel-markdown-evidence/10-image-math-light.png) | [10 dark](agent-panel-markdown-evidence/10-image-math-dark.png) | 图片变“窗边白瓷杯”chip，没有图片或任务卡；公式保留 `$`，Mermaid 保留代码。后两项符合已拍板范围；图片 chip 无入口是另一个可用性问题。 |
+| 流式停止前 | [11 before light](agent-panel-markdown-evidence/11-before-stop-light.png) | [11 before dark](agent-panel-markdown-evidence/11-before-stop-dark.png) | 真表格、序号列表都在；光标却出现在上方“正在检查”后，未跟最后列表项。 |
+| 同条回复停止后 | [11 after light](agent-panel-markdown-evidence/11-after-stop-light.png) | [11 after dark](agent-panel-markdown-evidence/11-after-stop-dark.png) | 点击真实停止按钮后，原表格/列表挤成普通段落，Markdown 符号裸露；不是不同模型回复。 |
+| 折叠过程展开 | [12 light](agent-panel-markdown-evidence/12-process-light.png) | [12 dark](agent-panel-markdown-evidence/12-process-dark.png) | 真实两次读取形成“尝试了 2 次”；展开后粗体、表格标记裸露，最终回答另行正常显示。 |
 
-DOM/剪贴板读回见 [observations.json](../../plan/agent-panel-markdown-evidence/RAW-CAPTURES.md)、[edge-observations.json](../../plan/agent-panel-markdown-evidence/RAW-CAPTURES.md)。尺寸与 SHA-256 见 [screenshot-manifest.json](../../plan/agent-panel-markdown-evidence/screenshot-manifest.json)。复制不是截图能证明的，因此附实际 `expected/actual/match`；长文外壳折叠高度约 443px（738×0.6），加按钮后 466px，展开全文外壳约 2332px。
+DOM/剪贴板读回见 [observations.json](agent-panel-markdown-evidence/RAW-CAPTURES.md)、[edge-observations.json](agent-panel-markdown-evidence/RAW-CAPTURES.md)。尺寸与 SHA-256 见 [screenshot-manifest.json](agent-panel-markdown-evidence/screenshot-manifest.json)。复制不是截图能证明的，因此附实际 `expected/actual/match`；长文外壳折叠高度约 443px（738×0.6），加按钮后 466px，展开全文外壳约 2332px。
 
 ## 5. 缺陷表：症状 → 根因 → 修法
 
@@ -171,19 +171,19 @@ P1 = 内容或既定动作错误，优先修；P2 = 可读性/反馈/细节。�
 
 | ID / 级别 | 截图证据 | 出口与症状 | 根因 file:line | 修法 | 所属 |
 |---|---|---|---|---|---|
-| D1 / P1 | [亮](../../plan/agent-panel-markdown-evidence/02-code-light.png) / [暗](../../plan/agent-panel-markdown-evidence/02-code-dark.png) | 复制代码得到 `[object Object]`，19 行代码无 12 行折叠 | `MD:82` 对 ReactNode `String()`，`:83` 再据此数行，`:84` 复制同一错误字符串 | 换官方 CodeBlock/CopyButton，让 `code:string` 为复制与行数唯一输入；12 行薄壳只消费源文本，不从 React element 反提取 | NomiMarkdown |
-| D2 / P1 | [亮](../../plan/agent-panel-markdown-evidence/11-after-stop-light.png) / [暗](../../plan/agent-panel-markdown-evidence/11-after-stop-dark.png) | 点停止后正确表格/列表退回符号串 | `V4/AgentPanelV4Message.tsx:92` 中断分支改用 `<p>`，还折叠空白 | 中断/完成/流式共用 Markdown renderer，状态只改变色调/操作，不改变内容语义 | 出口自身 |
-| D3 / P1 | [亮](../../plan/agent-panel-markdown-evidence/07-receipt-light.png) / [暗](../../plan/agent-panel-markdown-evidence/07-receipt-dark.png) | 工具返回 Markdown，却只显示原始标记 | `V4/AgentPanelV4Receipt.tsx:107` 所有值一律 `<pre>`；`src/workbench/ai/lane/laneViewModel.ts:291` output 仅 string | 在共享展示投影区分 prose Markdown 与 JSON/日志；Markdown 输出调同一 renderer，输入 JSON 保留代码展示；原始输出可作详情，不另造 parser | 出口 + 展示语义边界 |
-| D4 / P1 | [亮](../../plan/agent-panel-markdown-evidence/08-approval-light.png) / [暗](../../plan/agent-panel-markdown-evidence/08-approval-dark.png) | 审批三条镜头列表压成一句，粗体标记裸露 | `V4/agentPanelV4Intervention.ts:88` `replace(/\s+/g,' ')`、`:90` 源码截 60 字；`:146` 拼 summary；`V4/AgentPanelV4Cards.tsx:223` 纯 p | “动作摘要”和“待批准内容”分开；保留正文换行→共享 Markdown；高度约束用可展开预览，不在源字符串中途截断。仅包 `<NomiMarkdown>` 不足以修复 | 出口/最早投影层 |
-| D5 / P1 | [亮](../../plan/agent-panel-markdown-evidence/12-process-light.png) / [暗](../../plan/agent-panel-markdown-evidence/12-process-dark.png) | 助手过程段一旦进入折叠组，展开后不渲 Markdown | `V4/AgentPanelV4Receipt.tsx` 的 `V4Process`（`:191`）直接 `<p>{segment}</p>` | 过程收起态维持一行，展开的每个原始助手段走共享 renderer；技术工具输出另走原始通道 | 出口自身 |
-| D6 / P1 | [亮](../../plan/agent-panel-markdown-evidence/05-inline-light.png) / [暗](../../plan/agent-panel-markdown-evidence/05-inline-dark.png) | 中文相邻标点内粗体/删除线裸露 | `MD:91` 仅 remarkGfm，没有 CJK delimiter 兼容；不是漏传 remark-gfm | 用 `@streamdown/cjk`（或现成 remark CJK 插件），含中文「」/引号/删除线与中英文混排回归 | NomiMarkdown 内核 |
-| D7 / P2 | [亮](../../plan/agent-panel-markdown-evidence/02-code-light.png) / [暗](../../plan/agent-panel-markdown-evidence/02-code-dark.png) | 有等宽代码块，无语法高亮 | `MD:55` 只加 language class；`:116` 无高亮 plugin | 使用 `@streamdown/code` 的 Shiki 语法层；按需加载、暗亮 token 主题，不自写 keyword regex | NomiMarkdown |
-| D8 / P2 | [亮](../../plan/agent-panel-markdown-evidence/05-inline-light.png) / [暗](../../plan/agent-panel-markdown-evidence/05-inline-dark.png) | 内链/脚注都标外链 ↗，目标设置 `_blank` | `MD:47` 未按 href 类型分流；`electron/main.ts:310` 新窗只允许 http(s) | 锚点本页滚动、外链走既有桥接、对象链接用已有能力；不替内部脚注开外窗。截图证实错误标识/target；本次未点击外部链接 | NomiMarkdown 链接适配 |
-| D9 / P2 | [亮](../../plan/agent-panel-markdown-evidence/04-tasks-light.png) / [暗](../../plan/agent-panel-markdown-evidence/04-tasks-dark.png) | 嵌套任务看起来接近同级 | `MD:43` 所有 task-list 都 `pl-1`，仅 4px；普通列表是 `pl-5` | 保留 disabled checkbox，根列表与嵌套层分别给 token 缩进；不是换成可操作任务系统 | NomiMarkdown 皮肤 |
-| D10 / P2 | [亮](../../plan/agent-panel-markdown-evidence/10-image-math-light.png) / [暗](../../plan/agent-panel-markdown-evidence/10-image-math-dark.png) | Markdown 图片只剩无动作 alt chip，找不到图片 | `MD:61` img 解构只取 alt，`:62` 无 src/目标身份/点击；不会因此触发任务投影 | 不擅自创建假任务卡；识别已有资产/任务身份并提供引用入口；无身份的远程图显式按产品策略处理，勿静默丢 URL 或自动下载 | NomiMarkdown + 媒体出口 |
-| D11 / P2 | [亮](../../plan/agent-panel-markdown-evidence/09-no-language-light.png) / [暗](../../plan/agent-panel-markdown-evidence/09-no-language-dark.png) | 无语言围栏内部又套 inline code 皮肤 | `MD:53` 把有无 `language-*` 当块/行内判据 | 使用库提供的结构判断/代码块组件；无语言、未知语言都仍是 block，保留 monospace 与原空格 | NomiMarkdown |
-| D12 / P2 | [亮](../../plan/agent-panel-markdown-evidence/06-storyboard-light.png) / [暗](../../plan/agent-panel-markdown-evidence/06-storyboard-dark.png) | 长文折叠切在句子/半行中，“94 行”不是可靠行数 | `V4/AgentPanelV4Markdown.tsx:40` 写死 lineHeight=20；`:47` 任意像素 overflow-hidden | 保留 60% 产品阈值；不要宣称精确剩余行数，使用“展开全文”；按完整可见行/块边界或清晰截断提示，宽度变化重新测量 | 出口外壳 |
-| D13 / P2 | [亮](../../plan/agent-panel-markdown-evidence/11-before-stop-light.png) / [暗](../../plan/agent-panel-markdown-evidence/11-before-stop-dark.png) | 流式光标停在上方标题段，而非最后一个列表项 | `V4/vendor/aiElementsPrimitives.tsx:52` 后代 `p:last-of-type`，不能代表最后渲染块 | 优先采用 renderer 的 caret/块状态扩展；薄皮肤定位真正尾块，表格/代码/列表结尾都要验证，勿自写另一套流式状态 | 出口流式皮肤 |
+| D1 / P1 | [亮](agent-panel-markdown-evidence/02-code-light.png) / [暗](agent-panel-markdown-evidence/02-code-dark.png) | 复制代码得到 `[object Object]`，19 行代码无 12 行折叠 | `MD:82` 对 ReactNode `String()`，`:83` 再据此数行，`:84` 复制同一错误字符串 | 换官方 CodeBlock/CopyButton，让 `code:string` 为复制与行数唯一输入；12 行薄壳只消费源文本，不从 React element 反提取 | NomiMarkdown |
+| D2 / P1 | [亮](agent-panel-markdown-evidence/11-after-stop-light.png) / [暗](agent-panel-markdown-evidence/11-after-stop-dark.png) | 点停止后正确表格/列表退回符号串 | `V4/AgentPanelV4Message.tsx:92` 中断分支改用 `<p>`，还折叠空白 | 中断/完成/流式共用 Markdown renderer，状态只改变色调/操作，不改变内容语义 | 出口自身 |
+| D3 / P1 | [亮](agent-panel-markdown-evidence/07-receipt-light.png) / [暗](agent-panel-markdown-evidence/07-receipt-dark.png) | 工具返回 Markdown，却只显示原始标记 | `V4/AgentPanelV4Receipt.tsx:107` 所有值一律 `<pre>`；`src/workbench/ai/lane/laneViewModel.ts:291` output 仅 string | 在共享展示投影区分 prose Markdown 与 JSON/日志；Markdown 输出调同一 renderer，输入 JSON 保留代码展示；原始输出可作详情，不另造 parser | 出口 + 展示语义边界 |
+| D4 / P1 | [亮](agent-panel-markdown-evidence/08-approval-light.png) / [暗](agent-panel-markdown-evidence/08-approval-dark.png) | 审批三条镜头列表压成一句，粗体标记裸露 | `V4/agentPanelV4Intervention.ts:88` `replace(/\s+/g,' ')`、`:90` 源码截 60 字；`:146` 拼 summary；`V4/AgentPanelV4Cards.tsx:223` 纯 p | “动作摘要”和“待批准内容”分开；保留正文换行→共享 Markdown；高度约束用可展开预览，不在源字符串中途截断。仅包 `<NomiMarkdown>` 不足以修复 | 出口/最早投影层 |
+| D5 / P1 | [亮](agent-panel-markdown-evidence/12-process-light.png) / [暗](agent-panel-markdown-evidence/12-process-dark.png) | 助手过程段一旦进入折叠组，展开后不渲 Markdown | `V4/AgentPanelV4Receipt.tsx` 的 `V4Process`（`:191`）直接 `<p>{segment}</p>` | 过程收起态维持一行，展开的每个原始助手段走共享 renderer；技术工具输出另走原始通道 | 出口自身 |
+| D6 / P1 | [亮](agent-panel-markdown-evidence/05-inline-light.png) / [暗](agent-panel-markdown-evidence/05-inline-dark.png) | 中文相邻标点内粗体/删除线裸露 | `MD:91` 仅 remarkGfm，没有 CJK delimiter 兼容；不是漏传 remark-gfm | 用 `@streamdown/cjk`（或现成 remark CJK 插件），含中文「」/引号/删除线与中英文混排回归 | NomiMarkdown 内核 |
+| D7 / P2 | [亮](agent-panel-markdown-evidence/02-code-light.png) / [暗](agent-panel-markdown-evidence/02-code-dark.png) | 有等宽代码块，无语法高亮 | `MD:55` 只加 language class；`:116` 无高亮 plugin | 使用 `@streamdown/code` 的 Shiki 语法层；按需加载、暗亮 token 主题，不自写 keyword regex | NomiMarkdown |
+| D8 / P2 | [亮](agent-panel-markdown-evidence/05-inline-light.png) / [暗](agent-panel-markdown-evidence/05-inline-dark.png) | 内链/脚注都标外链 ↗，目标设置 `_blank` | `MD:47` 未按 href 类型分流；`electron/main.ts:310` 新窗只允许 http(s) | 锚点本页滚动、外链走既有桥接、对象链接用已有能力；不替内部脚注开外窗。截图证实错误标识/target；本次未点击外部链接 | NomiMarkdown 链接适配 |
+| D9 / P2 | [亮](agent-panel-markdown-evidence/04-tasks-light.png) / [暗](agent-panel-markdown-evidence/04-tasks-dark.png) | 嵌套任务看起来接近同级 | `MD:43` 所有 task-list 都 `pl-1`，仅 4px；普通列表是 `pl-5` | 保留 disabled checkbox，根列表与嵌套层分别给 token 缩进；不是换成可操作任务系统 | NomiMarkdown 皮肤 |
+| D10 / P2 | [亮](agent-panel-markdown-evidence/10-image-math-light.png) / [暗](agent-panel-markdown-evidence/10-image-math-dark.png) | Markdown 图片只剩无动作 alt chip，找不到图片 | `MD:61` img 解构只取 alt，`:62` 无 src/目标身份/点击；不会因此触发任务投影 | 不擅自创建假任务卡；识别已有资产/任务身份并提供引用入口；无身份的远程图显式按产品策略处理，勿静默丢 URL 或自动下载 | NomiMarkdown + 媒体出口 |
+| D11 / P2 | [亮](agent-panel-markdown-evidence/09-no-language-light.png) / [暗](agent-panel-markdown-evidence/09-no-language-dark.png) | 无语言围栏内部又套 inline code 皮肤 | `MD:53` 把有无 `language-*` 当块/行内判据 | 使用库提供的结构判断/代码块组件；无语言、未知语言都仍是 block，保留 monospace 与原空格 | NomiMarkdown |
+| D12 / P2 | [亮](agent-panel-markdown-evidence/06-storyboard-light.png) / [暗](agent-panel-markdown-evidence/06-storyboard-dark.png) | 长文折叠切在句子/半行中，“94 行”不是可靠行数 | `V4/AgentPanelV4Markdown.tsx:40` 写死 lineHeight=20；`:47` 任意像素 overflow-hidden | 保留 60% 产品阈值；不要宣称精确剩余行数，使用“展开全文”；按完整可见行/块边界或清晰截断提示，宽度变化重新测量 | 出口外壳 |
+| D13 / P2 | [亮](agent-panel-markdown-evidence/11-before-stop-light.png) / [暗](agent-panel-markdown-evidence/11-before-stop-dark.png) | 流式光标停在上方标题段，而非最后一个列表项 | `V4/vendor/aiElementsPrimitives.tsx:52` 后代 `p:last-of-type`，不能代表最后渲染块 | 优先采用 renderer 的 caret/块状态扩展；薄皮肤定位真正尾块，表格/代码/列表结尾都要验证，勿自写另一套流式状态 | 出口流式皮肤 |
 
 D3/D4：09-06 定稿本来把收据详情画成 input/output pre、审批限制为短摘要；所以这是**本次用户明确提出“Markdown 应渲染”后需要调整的展示合同**，并非声称实现违反了当时每一条样张。D1/D2 则是既定动作/同段内容的明显缺陷。D6 属相对中文产品预期的兼容缺口，不指控 CommonMark 解析器不符合规范。
 
@@ -200,7 +200,7 @@ D3/D4：09-06 定稿本来把收据详情画成 input/output pre、审批限制�
 
 ## 6. 输出形式：八积木如何承载结构化内容
 
-对照 [09-06 v4 定稿](../../design/2026-09-06-agent-panel-v4.md)：用户气泡、助手文本、一行收据、任务卡、介入槽、队列行、收起坞、composer。**Markdown 是积木内部的呈现能力，不能代替审批/任务状态；也不需要新增第九种卡。**
+对照 [09-06 v4 定稿](../design/2026-09-06-agent-panel-v4.md)：用户气泡、助手文本、一行收据、任务卡、介入槽、队列行、收起坞、composer。**Markdown 是积木内部的呈现能力，不能代替审批/任务状态；也不需要新增第九种卡。**
 
 | 内容 / 用户当时的任务 | 当前真实形态 | 应用的积木 / 原因 |
 |---|---|---|
@@ -228,8 +228,8 @@ D3/D4：09-06 定稿本来把收据详情画成 input/output pre、审批限制�
 ```sh
 pnpm install --frozen-lockfile --prefer-offline
 pnpm build
-node docs/plan/agent-panel-markdown-evidence/audit.walk.mjs
-node docs/plan/agent-panel-markdown-evidence/edge.walk.mjs
+node docs/archive/plan/agent-panel-markdown-evidence/audit.walk.mjs
+node docs/archive/plan/agent-panel-markdown-evidence/edge.walk.mjs
 ```
 
 证据可由 `payloads.json`、两个 harness、主/边界 report 和 observations 复查。截图后所启动 Electron/fixture 均已关闭；只保留隔离 profile 作为审计原始记录。回滚本次交付只需删除新增报告、证据目录和 `AM-LAST.md`，无生产行为变更。

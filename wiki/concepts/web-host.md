@@ -17,6 +17,6 @@ okf_version: "0.1"
 ## 근거와 확인일
 
 - 구현: [web/server.ts](../../web/server.ts), [web/rpc.ts](../../web/rpc.ts), [web/hostCapabilities.ts](../../web/hostCapabilities.ts)
-- 운영 경계: [docs/personal-web.md](../../docs/archive/guides/personal-web.md)
-- 최근 제한 기능의 브라우저 확인: [2026-10-15 Web platform/media QA](../../docs/qa/2026-10-15-web-platform-media-browser.md)
+- 운영 경계: [docs/archive/guides/personal-web.md](../../docs/archive/guides/personal-web.md)
+- 최근 제한 기능의 브라우저 확인: [2026-10-15 Web platform/media QA](../../docs/archive/qa/2026-10-15-web-platform-media-browser.md)
 - 확인일: 2026-10-16. 코드 경로는 확인했으나 모든 OS·편집 조합을 실사용 검증한 기록은 아니다.

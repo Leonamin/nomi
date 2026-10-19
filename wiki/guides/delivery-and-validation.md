@@ -34,4 +34,4 @@ Nomi 변경은 로컬 결과, hosted CI, merge receipt, live 배포, 실제 제�
 - 확인일: 2026-10-16
 - 정책 원문: [`docs/engineering/delivery-and-review.md`](../../docs/engineering/delivery-and-review.md)
 - 명령: [`docs/engineering/commands.md`](../../docs/engineering/commands.md)
-- QA 예시는 [웹 복구 검증](../../docs/qa/2026-10-14-recovered-web-production.md) 및 [브라우저 미디어 검증](../../docs/qa/2026-10-15-web-platform-media-browser.md)을 참조한다. 두 보고서의 각 검증 범위와 한계는 서로 다르며, 현재 운영 상태를 대신하지 않는다.
+- QA 예시는 [웹 복구 검증](../../docs/archive/qa/2026-10-14-recovered-web-production.md) 및 [브라우저 미디어 검증](../../docs/archive/qa/2026-10-15-web-platform-media-browser.md)을 참조한다. 두 보고서의 각 검증 범위와 한계는 서로 다르며, 현재 운영 상태를 대신하지 않는다.

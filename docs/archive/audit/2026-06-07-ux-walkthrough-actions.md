@@ -74,7 +74,7 @@ C1 下拉宽度 derive 不截断（`NomiSelect.tsx:85` 加 `width:max-content`�
 1. **画布三栏空间协同**（R-F）：工具栏固化为 60px 常驻图标条；分类栏与右助手互斥/自动收窄；画布最小宽度设为不变量。方案空间大，必拍板。
 2. **模型接入行状态化**（M1/M2/M3）：`[logo] 模型真名 / 供应商名 + 能力 [● 状态徽章] [⋯ 测试/停用/删除]`。
 3. **统一 AI 助手底栏**（R-E）：`[模式 NomiSelect▾] [上下文动作槽] [发送●]`，控件形态统一。
-4. **首页冷启动 hero**（R-F）：在已有草稿 [`docs/design/mockups/2026-06-07-home-entry.html`](../../design/mockups/2026-06-07-home-entry.html) 上补 hero 权重 / 缩略图统一 / 主操作常驻三项。
+4. **首页冷启动 hero**（R-F）：在已有草稿 [`docs/archive/design/mockups/2026-06-07-home-entry.html`](../design/mockups/2026-06-07-home-entry.html) 上补 hero 权重 / 缩略图统一 / 主操作常驻三项。
 
 可不出 mockup、直接按已有规范落地：G1 选中态(§5.5)、C1 下拉宽度、G3 帮助就近、P1 导出按钮(§5.3)、各 caption 文案 derive——这些是"系统有规范、实现没接上"的执行缺口。
 
@@ -123,7 +123,7 @@ C1 下拉宽度 derive 不截断（`NomiSelect.tsx:85` 加 `width:max-content`�
 
 1. **立即可做、零争议**（不需 mockup/拍板）：G1 选中环、E2 错误冒泡、E1 preloadError 兜底、M1 vendor 真名、C1 下拉宽度、启动失败 dialog——这批是确定性修复，建议先清。
 2. **需先拍板**（§5）：示例形态 A、模型接入深度 B、本版范围 D、单实例锁 E。
-3. **拍板后出 mockup**（§4 四项）→ 6 角色复审 mockup → 进 `docs/plan/` 写执行文档（R4）→ 实现 → `tests/ux/design-fidelity.e2e.mjs` 逐元素核对 → R13 真机走查复跑（重点复核本轮"待复核"项：素材库内部、节点 inspector、真实生成/导出、J2 定妆 / J4 参考图）。
+3. **拍板后出 mockup**（§4 四项）→ 6 角色复审 mockup → 进 `docs/archive/plan/` 写执行文档（R4）→ 实现 → `tests/ux/design-fidelity.e2e.mjs` 逐元素核对 → R13 真机走查复跑（重点复核本轮"待复核"项：素材库内部、节点 inspector、真实生成/导出、J2 定妆 / J4 参考图）。
 4. **顺手减壳**：抽 `AssistantComposer` / `ModelRow` 时把 `CreationAiPanel`(490)/`CanvasAssistantPanel`(554) 减下来、消 Mantine 孤岛（R10 token-only）。
 
 ---

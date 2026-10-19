@@ -1,6 +1,6 @@
 # 2026-09-10 权限模型重做 · 先查别人报告
 
-> 方案：`docs/plan/2026-09-10-permission-model-rework.md`。
+> 方案：`docs/archive/plan/2026-09-10-permission-model-rework.md`。
 > 本报告按模板四问复核「别人做过没有」，结论抄进方案「## 先查别人」节。
 > 本任务只补 CI 缺的调研节，不改方案其它内容（后续另行修订）。
 
@@ -27,7 +27,7 @@
 
 ## ④ TikHub 自媒体里怎么说？
 
-**未检索。** 同日期研究目录 `docs/research/2026-09-10-ux-feedback-fixes/tikhub/tikhub-search.md` 是唯一现成的 TikHub 检索产物，但它的关键词是「openai compatible api key 验证 401 models」——服务的是 B2 apimart direct-key 接入调研，与本方案的 agent 权限/审批模型主题不相关。抽查其抖音/小红书/B站/X 共 80 条结果，无一条涉及 agent 权限档位、审批流或「自主运行」相关讨论。本方案没有另跑权限主题的 TikHub 检索，如实标注未检索，不把不相关的检索结果包装成「查过了」。
+**未检索。** 同日期研究目录 `docs/archive/research/2026-09-10-ux-feedback-fixes/tikhub/tikhub-search.md` 是唯一现成的 TikHub 检索产物，但它的关键词是「openai compatible api key 验证 401 models」——服务的是 B2 apimart direct-key 接入调研，与本方案的 agent 权限/审批模型主题不相关。抽查其抖音/小红书/B站/X 共 80 条结果，无一条涉及 agent 权限档位、审批流或「自主运行」相关讨论。本方案没有另跑权限主题的 TikHub 检索，如实标注未检索，不把不相关的检索结果包装成「查过了」。
 
 ## 结论
 

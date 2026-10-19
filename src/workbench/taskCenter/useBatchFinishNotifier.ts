@@ -1,5 +1,5 @@
 // 批次跑完 → 失焦时提醒（系统通知 / 提示音）。
-// 方案：docs/plan/2026-08-02-task-center-queue.md
+// 方案：docs/archive/plan/2026-08-02-task-center-queue.md
 //
 // 只订阅「批次从未完成翻成已完成」这一个瞬间；窗口在前台什么都不做（已有 toast，别重复轰炸）。
 import React from 'react'

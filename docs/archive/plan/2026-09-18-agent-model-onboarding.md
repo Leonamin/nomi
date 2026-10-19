@@ -1,7 +1,7 @@
 # 接模型 = Agent 经 MCP 交声明卡，Nomi 照卡执行（#754 正身 · 方案 v3）
 
 > 2026-09-18 · Fable 方案稿 · **只出方案，不改产品代码** · 分支 `docs/agent-model-onboarding-plan-20260918`（从 `origin/main` 568b58272 切）
-> 上游：任务书 `~/Desktop/nomi-scratch-0917/batch3/pr754-agent-onboarding-brief-v2.md`（用户 09-18 04:0x 拍板「就按这个方案」）；反方 `onboarding-prior-art/report-full.md`；普查 `protocol-census/report.md`；规格 `pr754-rewrite-spec.md`；现状体检 `docs/plan/2026-09-11-model-onboarding-flow.md`。
+> 上游：任务书 `~/Desktop/nomi-scratch-0917/batch3/pr754-agent-onboarding-brief-v2.md`（用户 09-18 04:0x 拍板「就按这个方案」）；反方 `onboarding-prior-art/report-full.md`；普查 `protocol-census/report.md`；规格 `pr754-rewrite-spec.md`；现状体检 `docs/archive/plan/2026-09-11-model-onboarding-flow.md`。
 > 所有 `file:line` 对 `origin/main` 568b58272 核实（`git show` / `node scripts/door-map.mjs` 实跑）。
 > 状态：📋 待用户看一眼 → 派 Opus 实施。§11 是派实施前要用户答的 grill 清单（每题带默认）。
 
@@ -9,7 +9,7 @@
 
 ## 0. 一页读懂（D6）
 
-**真实摩擦**（用户原话的北极星）：「哪怕把内置的全删掉，任何人接上这个 MCP 工具，就能把任何供应商、任何模型接进来，并且全部很好地使用。」今天做不到，且不是差一点：外部宿主（Claude Code）接一家中转再出片**走不通**（09-15 真机，四轮 ¥0、五道闸一道没绕过，`docs/evidence/2026-09-15-mcp-onboarding-real-host/` 在 #799 分支）；就算走通，Agent 也只能把模型接成「OpenAI 兼容模板」那一种形状——图片/视频/音频没有协议可选（普查 Q3），原生报文不长那样的供应商（xAI / Google 直连、Higgsfield…）用户自己接不进来。
+**真实摩擦**（用户原话的北极星）：「哪怕把内置的全删掉，任何人接上这个 MCP 工具，就能把任何供应商、任何模型接进来，并且全部很好地使用。」今天做不到，且不是差一点：外部宿主（Claude Code）接一家中转再出片**走不通**（09-15 真机，四轮 ¥0、五道闸一道没绕过，`docs/archive/evidence/2026-09-15-mcp-onboarding-real-host/` 在 #799 分支）；就算走通，Agent 也只能把模型接成「OpenAI 兼容模板」那一种形状——图片/视频/音频没有协议可选（普查 Q3），原生报文不长那样的供应商（xAI / Google 直连、Higgsfield…）用户自己接不进来。
 
 **这份方案做的事**：把「Agent 交一张声明卡」做成接模型的**唯一可写单元**，卡的形状与内置 90+ 家档案用的是同一个 `HttpOperation` / `AssetIngestion` 类型（`electron/catalog/types.ts:387,44`）——手写档案只是这条流水线的**预验证缓存**，不是另一门手艺（任务书附四）。Nomi 收卡后机器校验三件 + 免费自检 + 登记；第一次真实生成就是试跑；错了错误带位置回 Agent，改一次再交。入口是工具会话，不是文件夹；Agent 永不写脚本。
 
@@ -87,7 +87,7 @@
 9. **`authScheme` 在 Vendor 上有、卡上没有**（`catalog/types.ts` Vendor.authScheme；`providerAdapter/types.ts:112-118` provider 块无）；Higgsfield 的 `Authorization: Key id:secret` 经卡接不进来。
 10. **贴 key 页看不到私网 origin** ——【2026-09-18 实测推翻】收密钥的那一页显示的是 `descriptor.display.baseUrl`（`credentialElicitationHttp.ts:131`），直接来自会话 config、**没有任何私网剥离**，LAN 地址原样可见（`credentialPageShowsDestination.test.ts` 渲染真页面断言）。`safeHandoffOrigin` 剥的是**另一样东西**：把 Nomi GUI 叫到前台的交接单提示；而那里的剥离是承重的——`handoffQueue.normalizeDisplayOrigin` 对私网 origin 直接抛「Private handoff origin requires authorization」，去掉它会让本地 ComfyUI / LAN 中转连安全页都打不开。真正的缺口是那条提示带不出 origin 导致 GUI 设置面板上不显示，属于交接队列自己的安全判定，是另一条边界。
 11. **「未试跑」由渲染层 duck-typing 决定**（`useDedupedModelSelect.ts:124-131` 读 `meta.adapter.evidence`），而「最近多次失败」由另一条链（`AilingProbe`，`:49-60`）决定——同一个「这个模型能不能信」有两条取值链（R14.1 字段取值来源）。
-12. **`docs/plan/2026-08-04-custom-call-script.md:4` 引用的研究文件不存在**（`find` + `git log --all --diff-filter=A` 零命中，反方报告 §5 已证）；其立论「声明式够不到异步视频」已被本仓自己证伪（`AdapterModeDraft.delivery/query/abandon`；apimart/kie/Higgsfield 异步视频全是声明式）。
+12. **`docs/archive/plan/2026-08-04-custom-call-script.md:4` 引用的研究文件不存在**（`find` + `git log --all --diff-filter=A` 零命中，反方报告 §5 已证）；其立论「声明式够不到异步视频」已被本仓自己证伪（`AdapterModeDraft.delivery/query/abandon`；apimart/kie/Higgsfield 异步视频全是声明式）。
 
 ---
 
@@ -231,8 +231,8 @@ type OnboardingFailure = {
 **Q2 「已验证」两定义合一后，设置页路的自检与 Agent 路是否同一台机器、同一份词表？**
 答：**词表已是同一份**（§7：`ModelEvidenceState` 唯一 owner，三处只读它）。**机器今天不是**：curated 直填 key 走 `validateCandidateCredential.ts:59` + 种子 `livenessProbe`，向导/Agent 走 `selfCheck.probeAdapterCredential`。本方案把 `selfCheck` 声明进卡（§5）之后，两台机器只剩一个差别——探针形状从哪读（种子 vs 卡）——那就该是一台机器：`credentialProbe.run(declaration)`，`validateCandidateCredential` 与 `probeAdapterCredential` 都改成薄壳。派实施时作为 R14.1 收敛项，不是本刀主线；不做也不阻塞验收，但要登 `vocabularies-baseline` 的 debt 并绑到期日。
 
-**Q3 `docs/plan/2026-08-04-custom-call-script.md:4` 引用的研究文件不存在：重建还是删引用？09-11 推荐 B2 落地 B4 的裁决怎么补？**
-答：**删引用 + 一条明写裁决，不重建。** 重建一份 08-03 的调研等于伪造出处（R5「凭记忆 = 没查」）；而且它的立论（「声明式够不到异步视频」）已被本仓自己证伪（发现 12）。改法：把该文件第 4-6 行改成「原引用文件从未入库；其立论在 2026-09-11 `AdapterModeDraft.delivery/abandon` 落地后已不成立；脚本路的存在理由收窄为 §5 列出的四类声明表达不了的情况」并链到本方案。B2→B4：在 `docs/plan/2026-09-11-model-onboarding-flow.md` §10 末尾加「**2026-09-12 裁决**：用户拍板 B4（免费自检即发布，标『未试跑』；付费烟测改成第一次真实生成，钱闸在提交处）。§6.B 对 B4『把可用变成谎话』的评语由『未试跑』角标（D4 明标）回答——模型框里不再声称『点了一定能出片』，而是如实说『还没试过』」。这是两行文档改动，随实施 PR 一起走。
+**Q3 `docs/archive/plan/2026-08-04-custom-call-script.md:4` 引用的研究文件不存在：重建还是删引用？09-11 推荐 B2 落地 B4 的裁决怎么补？**
+答：**删引用 + 一条明写裁决，不重建。** 重建一份 08-03 的调研等于伪造出处（R5「凭记忆 = 没查」）；而且它的立论（「声明式够不到异步视频」）已被本仓自己证伪（发现 12）。改法：把该文件第 4-6 行改成「原引用文件从未入库；其立论在 2026-09-11 `AdapterModeDraft.delivery/abandon` 落地后已不成立；脚本路的存在理由收窄为 §5 列出的四类声明表达不了的情况」并链到本方案。B2→B4：在 `docs/archive/plan/2026-09-11-model-onboarding-flow.md` §10 末尾加「**2026-09-12 裁决**：用户拍板 B4（免费自检即发布，标『未试跑』；付费烟测改成第一次真实生成，钱闸在提交处）。§6.B 对 B4『把可用变成谎话』的评语由『未试跑』角标（D4 明标）回答——模型框里不再声称『点了一定能出片』，而是如实说『还没试过』」。这是两行文档改动，随实施 PR 一起走。
 
 **Q4 协议族由 Agent 新增没有先例（业界 = 已知协议下任意 baseUrl）：v1 怎么说？**
 答：v1 **不支持新协议族**，但要把「协议族」在本域说准（否则「不支持」和「什么都支持」一样不可证伪）：声明卡能表达的 = 任意 **HTTP + JSON/multipart 请求模板 + 可选轮询 + 可选一步上传初始化**；这已经比业界「3 种文本协议 + 1 种媒体模板」宽（它覆盖 apimart / kie / Higgsfield / Runway / fal 这些内置家的全部形状）。**不支持的**四类见 §5 末段，命中即 `no_generic_contract` 指向脚本路。README 诚实边界原文：「Nomi 的 Agent 接模型能接任何『HTTP 请求 + 轮询』形状的供应商；需要签名、非 HTTP、SDK 或多步编排的，请在设置里手写调用脚本。」这与业界「已知协议下任意 baseUrl」的差别是：我们的『已知协议』是一张可声明的模板，不是一个枚举。

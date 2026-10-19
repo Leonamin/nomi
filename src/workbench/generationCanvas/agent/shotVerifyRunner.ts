@@ -1,5 +1,5 @@
 // 镜级 verify 实时编排(impure,但靠 DI 可裸测)—— 把纯原语 shotVerify 接到真实生成产物。
-// 方案:docs/plan/2026-06-28-storyboard-closed-loop-verify.md（Stage 1 实时编排）。
+// 方案:docs/archive/plan/2026-06-28-storyboard-closed-loop-verify.md（Stage 1 实时编排）。
 //
 // 副作用全收在注入的 deps 里(取帧 IPC + 调多模态模型 + 视觉可用性),本函数只编排:
 //   逐镜 → 取首帧图(图片镜=result.url;视频镜=extractFrame 抽首帧)→ 喂模型判 → 映射偏差。

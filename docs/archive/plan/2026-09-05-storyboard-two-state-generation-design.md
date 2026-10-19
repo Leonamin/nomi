@@ -13,7 +13,7 @@
 - `StoryboardAnchorCard.tsx:180-300` 编辑态只有名称、类型、载体和描述；`StoryboardPlanEditor.tsx:343-356` 固定传 `imageModelOptions`，锚没有 mode/params/reference draft。
 - `electron/shared/videoCapabilities/types.ts:31-61` 已定义 `first_frame/last_frame/image_ref/video_ref/audio_ref/source_video`、`min/max/inputKey/asArray`；`src/config/modelArchetypes/types.ts:92+` 定义 mode 参数与传输类型。这些是唯一能力真源。
 - 结果引用和预览已有 `StoryboardPlanEditor.tsx:230-315`；时间轴采纳由 `sendStoryboardToTimeline.ts`、`adoptStoryboardBatch.ts` 提供；预览/导出由 `TimelinePreview.tsx:45-125`、`exportTimelineToMp4.ts` 提供。
-- 样张 `docs/design/mockups/2026-09-01-storyboard-table-image-first.html:78-106,160,345,381-453,527,692-696` 规定行骨架、56px 参考 tile、悬停/双击预览、结果动作、多选、锁定与比例放大。
+- 样张 `docs/archive/design/mockups/2026-09-01-storyboard-table-image-first.html:78-106,160,345,381-453,527,692-696` 规定行骨架、56px 参考 tile、悬停/双击预览、结果动作、多选、锁定与比例放大。
 - commit `680e0289` 恢复 `CreationWorkspace` 中 `WorkbenchEditor` 为文本源；`4c8063eb` 修复无图模型选择；PR #223/commit `b90a0aa4` 确立 Agent/画布能力边界。
 
 ## 状态与数据模型
@@ -24,7 +24,7 @@
 
 ## 布局与交互（保留表格框架）
 
-不把分镜改成画布式大卡或左右双栏。唯一容器仍是样张的 table grid：场景组头、批量栏和逐镜行；行选择、Shift 多选、拖拽、复制、移动、删除、锁定、键盘操作和底部批量操作全部保留。样张的行骨架 `14px | 84px | 136px | 1fr`（`docs/design/mockups/2026-09-01-storyboard-table-image-first.html:96-106`）是稳定外壳。
+不把分镜改成画布式大卡或左右双栏。唯一容器仍是样张的 table grid：场景组头、批量栏和逐镜行；行选择、Shift 多选、拖拽、复制、移动、删除、锁定、键盘操作和底部批量操作全部保留。样张的行骨架 `14px | 84px | 136px | 1fr`（`docs/archive/design/mockups/2026-09-01-storyboard-table-image-first.html:96-106`）是稳定外壳。
 
 编辑态与 ready 态是**同一行内部的状态切换**。编辑态在同一行的画面格、参考区、提示词块中逐项配置：参考区按槽显示 label、必填/已用/上限计数，并提供上传、素材库、@ 引用；视频槽拒绝图片，图片槽拒绝视频；超过 max 或缺必填时该行显示原因并从批量“将跑 N 镜”中排除。模型、模式、画幅、时长和参数仍在行上沿胶囊中选择，不能搬出表格。
 

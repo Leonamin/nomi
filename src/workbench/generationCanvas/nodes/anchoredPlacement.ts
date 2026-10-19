@@ -3,7 +3,7 @@
  *
  * 签名里没有障碍物这一项，所以周围别的东西怎么动，同一个锚点算出来的矩形都逐字节相同——
  * 「不漂移」在结构上成立，不靠调用方自觉。行为是 Floating UI flip/shift 那两条：
- * 放不下就翻到另一侧、永远推回视口内。取舍与出处见 docs/research/2026-09-10-node-composer-placement/prior-art.md。
+ * 放不下就翻到另一侧、永远推回视口内。取舍与出处见 docs/archive/research/2026-09-10-node-composer-placement/prior-art.md。
  *
  * 现役调用方只有 Agent 面板的上下文用量气泡（`ai/v4/AgentPanelV4Context.tsx`）。
  * 画布生成浮框**不用它**：2026-09-25 用户拍板浮框「钉在节点正下方、被挡就挡」，不 clamp、不翻转，

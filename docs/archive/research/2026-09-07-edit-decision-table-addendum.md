@@ -94,7 +94,7 @@
 |---|---|---|
 | **E1** | **决定表就是决定物本身，不是决定的可视化。** 用户改表 = 改决定；应用之后表**重新生成**（不是保留用户的旧文本） | ChatCut `:246`「clean_script 改变正典时间线并重新物化脚本，之前读到的文本可能已经过期」——这条防的是「用户看着旧表改，改出一个不存在的决定」 |
 | **E2** | **机械操作与语义判断分成两条路，且在产品语言里也分开。** 「去口癖/压停顿/统一时长」是一把刀；「选哪条 take / 删哪段 / 怎么排」是另一把 | ChatCut `:257-259`。混成一个"智能剪辑"按钮的后果是：用户不知道这次它会不会动他在意的东西 |
-| **E3** | **内部地址稳定，对外一律说内容。** 表里可以有 `[sN]`/镜号/节点 id，但任何给用户的解释都用原话引用或大白话 | ChatCut `:87`（MUST NOT 级别的纪律）。我们的分镜表已经有镜号与节点 id 两套地址（见 `docs/lessons/shot-table-is-a-projection-of-canvas-nodes.md`），这条直接适用 |
+| **E3** | **内部地址稳定，对外一律说内容。** 表里可以有 `[sN]`/镜号/节点 id，但任何给用户的解释都用原话引用或大白话 | ChatCut `:87`（MUST NOT 级别的纪律）。我们的分镜表已经有镜号与节点 id 两套地址（见 `docs/archive/lessons/shot-table-is-a-projection-of-canvas-nodes.md`），这条直接适用 |
 
 **一条边界提醒**：ChatCut 解决的是「素材已有、决定留哪段」；Nomi 的分镜表解决的是「素材还没有、决定生成什么」。**E1–E3 是纪律可抄，机制不可直搬**——比如 `[gap]` 那类原语在我们这边没有对应物（我们没有"无源在播"这个状态）。
 
@@ -107,10 +107,10 @@
 ```bash
 source ~/.zshenv
 node scripts/research/tikhub-search.mjs --q "AI视频 找参考 爆款拆解" \
-  --platform all --limit 8 --out docs/research/2026-09-07-agent-web-memory-longtask/tikhub/AI视频_找参考_爆款拆解/
+  --platform all --limit 8 --out docs/archive/research/2026-09-07-agent-web-memory-longtask/tikhub/AI视频_找参考_爆款拆解/
 ```
 
-产物附件：`docs/research/2026-09-07-agent-web-memory-longtask/tikhub/AI视频_找参考_爆款拆解/tikhub-search.{json,md}`（32 条）
+产物附件：`docs/archive/research/2026-09-07-agent-web-memory-longtask/tikhub/AI视频_找参考_爆款拆解/tikhub-search.{json,md}`（32 条）
 
 | 平台 | 出处 URL | 摘要（原文，未改写） |
 |---|---|---|

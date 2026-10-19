@@ -61,7 +61,7 @@ export const ASSISTED_ONBOARDING_STATES: readonly LabState[] = [
   {
     id: 'assisted-01-idle',
     name: '用 AI 帮我接入 · 默认（Claude Code 已连上）',
-    source: '现役 AiAssistedOnboardingCard.tsx（docs/design/2026-09-11-ai-assisted-onboarding-entry.md §Main）',
+    source: '现役 AiAssistedOnboardingCard.tsx（docs/archive/design/2026-09-11-ai-assisted-onboarding-entry.md §Main）',
     mirrors: 'src/ui/onboarding/AiAssistedOnboardingSection.tsx:160',
     coverage: 'shell',
     render: () => (
@@ -137,7 +137,7 @@ export const ASSISTED_ONBOARDING_STATES: readonly LabState[] = [
   {
     id: 'assisted-05-idle-dark',
     name: '用 AI 帮我接入 · 默认 · 暗',
-    source: '现役 AiAssistedOnboardingCard.tsx（docs/design/2026-09-11-ai-assisted-onboarding-entry.md §Main）',
+    source: '现役 AiAssistedOnboardingCard.tsx（docs/archive/design/2026-09-11-ai-assisted-onboarding-entry.md §Main）',
     mirrors: 'src/ui/onboarding/AiAssistedOnboardingSection.tsx:160',
     coverage: 'shell',
     scheme: 'dark',

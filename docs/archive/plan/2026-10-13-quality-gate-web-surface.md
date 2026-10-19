@@ -7,7 +7,7 @@
 
 ## 왜
 
-이 fork는 브라우저 워크스페이스 `web/`을 2026-10-12에 추가했다(`docs/plan/2026-10-12-personal-web.md`). 그런데 `scripts/validation-policy.mjs`의 인식 경로 목록(`RECOGNIZED_ROOT_PATTERNS`)에 `web`이 없다. 이 파일의 규율은 "인식 못 하는 경로는 전량(fail-closed)"이므로, **web만 바꾼 PR도 캔버스 성능(실측 26분)·Mac 패키지·Electron 워크스루·캔버스 인수까지 전부 돈다.**
+이 fork는 브라우저 워크스페이스 `web/`을 2026-10-12에 추가했다(`docs/archive/plan/2026-10-12-personal-web.md`). 그런데 `scripts/validation-policy.mjs`의 인식 경로 목록(`RECOGNIZED_ROOT_PATTERNS`)에 `web`이 없다. 이 파일의 규율은 "인식 못 하는 경로는 전량(fail-closed)"이므로, **web만 바꾼 PR도 캔버스 성능(실측 26분)·Mac 패키지·Electron 워크스루·캔버스 인수까지 전부 돈다.**
 
 실측(PR #14 `feat/web-agent-model-selection`의 실제 diff로 재현):
 ```

@@ -3,7 +3,7 @@
 > 状态：🚧 进行中 — 已拍板，实现与走查完成，待合入（下一版）。TODO：T-AG-23。
 > 合入顺序（2026-09-26 协调会话定）：等 `productionShotOwnsGeneration` 的「已提交」分支改成直接看 job / Run 状态之后再合——
 > 它现在借本方案改过的显示相位判画布归属；逐镜确认档（confirm_all）等镜头门的那一刻本方案不覆盖，一并排在那次改动里。
-> 样张（已拍板）：[2026-09-24-draft-shot-honest-status-mockup.html](../../design/2026-09-24-draft-shot-honest-status-mockup.html)
+> 样张（已拍板）：[2026-09-24-draft-shot-honest-status-mockup.html](../design/2026-09-24-draft-shot-honest-status-mockup.html)
 > 根因合同：[2026-09-24-draft-shot-dispatch-honesty.root-cause.json](../../fixes/2026-09-24-draft-shot-dispatch-honesty.root-cause.json)
 
 ## 用户那一刻卡在哪

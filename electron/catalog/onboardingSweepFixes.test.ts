@@ -1,4 +1,4 @@
-// 接入测试 2026-06-30 扫出的连接级根因的回归锁（见 docs/audit/2026-06-30-onboarding-sweep.md）。
+// 接入测试 2026-06-30 扫出的连接级根因的回归锁（见 docs/archive/audit/2026-06-30-onboarding-sweep.md）。
 // 两类根因：① dreamina 提交子命令误带 --download_dir（CLI 只 query_result 认）→ 提交即 unknown flag 秒挂；
 // ② headless/MCP 路缺 wire 必填参（size/model/voice/duration…）→ vendor 直接拒。②的修法已升级为「档案默认
 // 桥接」（applyHeadlessParamDefaults 按 archetypeId+taskKind+vendor 兜底，单一真相源=档案），本测锁住别退化。

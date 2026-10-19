@@ -53,7 +53,7 @@ export function enrichResultForMethod(method: string, _params: Record<string, un
  *
  * 注：能力核第三个 dispatch 调用点 `host.ts`（headless `electron host.js` 一次性 worker）是**有意的死代码**
  *（当前无任何 spawner 拉起它，stdio 模式已取代旧 CLI 路径）——**刻意不接本包装器**，避免制造「像在用其实没人调」
- * 的假象。详见 docs/plan/2026-08-18-mcp-experience-overhaul.md 第四节「关键事实」。
+ * 的假象。详见 docs/archive/plan/2026-08-18-mcp-experience-overhaul.md 第四节「关键事实」。
  */
 export async function dispatchAndEnrich(
   method: string,

@@ -694,8 +694,8 @@ Phase E 应该是**纯增量**，理论上不删任何东西。如果发现可�
 
 - [ ] 本地 tag `v0.5.0` 指向 version bump commit
 - [ ] `package.json` version 0.4.0 → 0.5.0
-- [ ] 更新 `docs/user-guide.md`：介绍目录树 + 项目模板
-- [ ] 更新 `docs/quickstart.md`：新建项目走模板向导
+- [ ] 更新 `docs/archive/guides/user-guide.md`：介绍目录树 + 项目模板
+- [ ] 更新 `docs/archive/guides/quickstart.md`：新建项目走模板向导
 - [ ] 录制 90 秒 demo 视频（manual，可推迟到 push tag 后做）
 - [ ] release notes 起草
 - [ ] push tag → Desktop Release CI 三平台 build

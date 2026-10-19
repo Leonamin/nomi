@@ -103,7 +103,7 @@ export function CustomVendorCard({
       {/* 「连接」在「模型」之前——这一页的主语是连接，模型列表是它的附属。
           此前反着排：24 行模型把地址/凭证挤到弹窗 overflow 之外，落地首屏根本看不见改地址的入口
           （实测铅笔 y=817 / 弹窗底边 y=706），这就是群里「翻了半天没找到」的根因。
-          见 docs/plan/2026-08-18-vendor-connection-discoverability.md。 */}
+          见 docs/archive/plan/2026-08-18-vendor-connection-discoverability.md。 */}
       <CustomVendorManage
         vendorKey={vendorKey}
         vendorName={name}

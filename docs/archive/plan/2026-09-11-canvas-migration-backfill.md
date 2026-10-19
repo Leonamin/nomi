@@ -48,7 +48,7 @@
 
 **删旧（P1）**：`canvasZoom` / `canvasOffset` / `setCanvasTransform` / `setCanvasZoom` 连同 `store/canvasStoreTypes.ts`、`events/canvasWriteBoundary.ts` 的登记、`project/releaseWorkbenchProjectSession.ts` 的重置一起删。单测 `reactFlow/canvasViewportScale.test.ts` 里有一条门岗：这两个字段不许回来。
 
-**订阅粒度**：只选 `transform[2]` 这一个标量 —— 平移不改它，所以拖画布时这些节点一帧都不重渲（`docs/plan/2026-09-01-canvas-drag-perf-eval-v2.md` 的细粒度 selector 原则）。分镜表订阅的是**档位**不是缩放值，穿过一档才重渲一次。
+**订阅粒度**：只选 `transform[2]` 这一个标量 —— 平移不改它，所以拖画布时这些节点一帧都不重渲（`docs/archive/plan/2026-09-01-canvas-drag-perf-eval-v2.md` 的细粒度 selector 原则）。分镜表订阅的是**档位**不是缩放值，穿过一档才重渲一次。
 
 **画布外的宿主**：设计实验室里独立挂载的节点样张不在 React Flow 里，也就没有画布缩放。
 `ShotTableNode` 的非 Flow 分支按 `shotTableDensityForZoom(1)` 走；`devlab/designLab/shotTable/ShotTableStage.tsx` 改成直接把密度钉在文档字段 `table.view.density` 上（那也是用户手动钉密度时走的同一条路），渲染结果与改前逐像素相同。
@@ -99,7 +99,7 @@
 
 - 真机走查：`tests/ux/canvas-migration-backfill.walk.mjs`（隔离 profile、一个窗口、全真手势：滚轮缩放、按住拖、双击、点选；缩放值从 `.react-flow__viewport` 的 transform 里读，不注入）。
 - 单测：`src/workbench/generationCanvas/reactFlow/canvasViewportScale.test.ts`（含「两个死字段不许回来」的门岗）。
-- 截图：`docs/plan/2026-09-11-triage-board-evidence/backfill-b-*.png`。
+- 截图：`docs/archive/plan/2026-09-11-triage-board-evidence/backfill-b-*.png`。
 
 ## 与 backfill-a 车道的分工与合流点
 

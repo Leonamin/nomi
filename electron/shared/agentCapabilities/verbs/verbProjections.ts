@@ -12,7 +12,7 @@ import { taskDomainSchema } from '../taskReference';
 // 去花钱）。外面六家的做法是**一份 schema 两个用途**：宿主契约那份是唯一真相，模型看的那一面是它的
 // 投影（藏掉宿主自己会补的字段、覆写描述），宿主补完值之后**再过一遍同一份 schema**
 // （Claude Agent SDK 的 `updatedInput` → 重新准入；MCP TS SDK 的 *"the listing and the call cannot
-// diverge"*）。逐条出处：`docs/plan/2026-09-18-tool-projection-cancel-job-prototype.md` 的「先查别人」。
+// diverge"*）。逐条出处：`docs/archive/plan/2026-09-18-tool-projection-cancel-job-prototype.md` 的「先查别人」。
 //
 // ── 这个文件里没有一个字段名是手写的 ──
 //

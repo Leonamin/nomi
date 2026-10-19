@@ -14,7 +14,7 @@
 
 - 依赖里已有：Mantine 8 与 Radix 菜单已经由 main 锁定在 [pnpm-lock.yaml](../../../pnpm-lock.yaml)，本次冻结锁文件安装，合并后锁文件与 main 一致。
 - 仓库里已有：pi lane 删旧与承接点见 [阶段 4 原方案](2026-09-08-agent-lane-stage4-switch.md)；main/preload/App 保留这些边界，仅接入 main 新增功能。
-- 仓库里已有：基线编辑纪律见 [JSON 基线教训](../../lessons/json-baselines-need-surgical-edits.md)，本次只做文本级合并并按实际计数下调。
+- 仓库里已有：基线编辑纪律见 [JSON 基线教训](../lessons/json-baselines-need-surgical-edits.md)，本次只做文本级合并并按实际计数下调。
 - 生态/自媒体：不新增调研；用户已明确裁决沿用 #653/#654 的现成实现，本次不引入外部方案。合并评审与 gates 直接复用 [Ponytail 适配器](../../../scripts/ponytail-review-hook.mjs) 与 [Python 锁包装](../../../scripts/with-gates-lock.py)。
 - 结论：全部用已有，实现来源与接线边界不变；唯一手动冲突解决为两个棘轮文件。
 

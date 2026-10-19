@@ -1,6 +1,6 @@
 # 先查别人：发布验证如何一次收齐失败（2026-09-24）
 
-> 服务于 [`docs/plan/2026-09-24-release-followup-and-batch-rc.md`](../../plan/2026-09-24-release-followup-and-batch-rc.md)。
+> 服务于 [`docs/archive/plan/2026-09-24-release-followup-and-batch-rc.md`](../../plan/2026-09-24-release-followup-and-batch-rc.md)。
 > 目标是确认本轮应复用的收集、分层和 fail-closed 机制，不为发布流程再造第二套执行器。
 
 ## 要回答的问题

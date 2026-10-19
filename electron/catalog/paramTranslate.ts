@@ -1,6 +1,6 @@
 // 参数翻译层（铁律：模型身份决定参数，与接入渠道无关）。
 //
-// 背景见 docs/plan/2026-06-24-model-param-consistency-invariant.md。档案声明**中性 canonical
+// 背景见 docs/archive/plan/2026-06-24-model-param-consistency-invariant.md。档案声明**中性 canonical
 // 参数**（面向用户，全站一致，如图像「比例 aspect_ratio + 清晰度 resolution(1K/2K/4K)」）；
 // 各供应商线缆字段名不同（apimart 叫 size、OpenAI 兼容站要像素 3840x2160）是纯实现细节。
 // 这层把 canonical 翻译成某 codec 的 wire 字段——**改名 / 值转换 / 显式丢弃**三种。

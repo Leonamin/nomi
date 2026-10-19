@@ -1,6 +1,6 @@
 /**
  * 点中节点后弹的「这个节点在画布上当什么」菜单 —— 这页存在的理由就是它。
- * plan: docs/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
+ * plan: docs/archive/plan/2026-08-12-model-settings-home-and-comfyui-workflow-page.md
  *
  * 原来用户要在一条 320px 窄栏里对着下拉框猜「#110 CLIPTextEncode 是不是提示词」
  * （2026-08-11 那次反馈的体验根源）。现在：看着图上那张卡，点它，说「你是提示词」。

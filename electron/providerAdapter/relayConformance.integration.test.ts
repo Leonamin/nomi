@@ -1,4 +1,4 @@
-// 自建中转一致性台架（docs/plan/2026-09-03-self-hosted-relay-conformance-harness.md）。
+// 自建中转一致性台架（docs/archive/plan/2026-09-03-self-hosted-relay-conformance-harness.md）。
 //
 // 为什么存在：「用户接自己的中转」是全仓**唯一没有反馈回路**的路径——只有用户在跑，且跑在我们
 // 没有的配置里。2026-09-03 真机付费实测（otokapi / gpt-image-2）一次挖出四连环，全部只能靠

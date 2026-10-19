@@ -5,7 +5,7 @@
 //   声音 ── extractAudioTrack(新) → 已接好的 whisper-1 转写(verbose_json,带时间戳)
 //   合流 ── shotTimeline.assignSegmentsToShots 按时间戳把句子归属到镜头
 //
-// 为什么一镜喂多帧而不是一帧（实测，见 docs/plan/2026-08-13-video-deconstruction-storyboard-table.md）：
+// 为什么一镜喂多帧而不是一帧（实测，见 docs/archive/plan/2026-08-13-video-deconstruction-storyboard-table.md）：
 // 单帧会漏掉「出现又消失」的字幕/角标/价格——同一镜的 3 帧里，下载弹窗只在第 3 帧出现。
 // 而多帧几乎白送：image token 线性涨，**墙钟只慢 26%**（8.8s → 11.1s，瓶颈在模型思考不在传图）。
 //

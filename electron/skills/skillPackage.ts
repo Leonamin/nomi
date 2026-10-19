@@ -1,6 +1,6 @@
 // Skill 分享 = 异步文件交换（无后端）。导出一个 skill 为自描述包 → 发给人 → 对方导入到可写
 // 用户目录。安全：导入校验 frontmatter、拒路径穿越、不覆盖内置
-// （docs/plan/2026-06-19-skill-playbook-system.md §6 + §0.5.d）。
+// （docs/archive/plan/2026-06-19-skill-playbook-system.md §6 + §0.5.d）。
 //
 // **2026-09-07（阶段 5c）：`scripts/` 不再被跳过。** v1 拒收可执行区的理由原话是
 // 「进来就要配安全扫描 + 沙箱」——那两样现在都有了：沙箱是 pi 自带示例接的

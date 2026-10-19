@@ -5,7 +5,7 @@
 //   ② 价格未知**绝不被当成 0 元**：信封、账本、收据上它都有自己的位置（`price.maximum: null`
 //      与 `budget.unknownJobCount`），而已知价那条硬上限一个字没松。
 //
-// 规格正本：docs/plan/2026-09-21-unknown-price-open-gate.md
+// 规格正本：docs/archive/plan/2026-09-21-unknown-price-open-gate.md
 // 根因合同：docs/fixes/2026-09-21-unknown-price-blocks-generation.root-cause.json
 import fs from "node:fs";
 import os from "node:os";

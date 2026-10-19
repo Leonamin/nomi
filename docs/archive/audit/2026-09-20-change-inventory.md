@@ -9,34 +9,34 @@
 | `agent-skills/nomi-competitive-radar/SKILL.md` | 竞品流程 #823 | 竞品流程/来源/模板/索引，逐文件理由见Agent与流程报告；只有规则落地，首次定时研究未验证。 |
 | `agent-skills/nomi-competitive-radar/references/protocol.md` | 竞品流程 #823 | 竞品流程/来源/模板/索引，逐文件理由见Agent与流程报告；只有规则落地，首次定时研究未验证。 |
 | `docs/README.md` | 竞品流程 #823 | 竞品流程/来源/模板/索引，逐文件理由见Agent与流程报告；只有规则落地，首次定时研究未验证。 |
-| `docs/audit/2026-09-20-agent-workflow-change-by-change-review.md` | 媒体/编号及审计修复 | 审计记录：追溯共享owner、旧/新差别与已确认回归；冻结结论和后续修正分开，最终状态以总报告为准。 |
-| `docs/audit/2026-09-20-canvas-media-geometry.md` | 媒体/编号及审计修复 | 审计记录：追溯共享owner、旧/新差别与已确认回归；冻结结论和后续修正分开，最终状态以总报告为准。 |
-| `docs/audit/2026-09-20-preset-library-projection.md` | 预设 #824 | 审计记录：追溯共享owner、旧/新差别与已确认回归；冻结结论和后续修正分开，最终状态以总报告为准。 |
-| `docs/audit/2026-09-20-presets-change-by-change-review.md` | 媒体/编号及审计修复 | 审计记录：追溯共享owner、旧/新差别与已确认回归；冻结结论和后续修正分开，最终状态以总报告为准。 |
-| `docs/audit/2026-09-20-shot-number-identity.md` | 媒体/编号及审计修复 | 审计记录：追溯共享owner、旧/新差别与已确认回归；冻结结论和后续修正分开，最终状态以总报告为准。 |
-| `docs/design/verification/2026-09-20-node-prompt-presets/README.md` | 预设 #824 | 验收索引记录真实操作、截图和工具指标；明确付费provider/LLM未实跑，避免证据外推。 |
-| `docs/design/verification/2026-09-20-node-prompt-presets/after-agent-skill-shared-picker.png` | 预设 #824 | 新增预设真实截图证据（before或after、语言/主题/宿主按文件名）；无运行时行为，历史图不冒充当前构建。 |
-| `docs/design/verification/2026-09-20-node-prompt-presets/after-effect-media-preview.png` | 预设 #824 | 新增预设真实截图证据（before或after、语言/主题/宿主按文件名）；无运行时行为，历史图不冒充当前构建。 |
-| `docs/design/verification/2026-09-20-node-prompt-presets/after-en-dark.png` | 预设 #824 | 新增预设真实截图证据（before或after、语言/主题/宿主按文件名）；无运行时行为，历史图不冒充当前构建。 |
-| `docs/design/verification/2026-09-20-node-prompt-presets/after-personal-refresh-zh-light.png` | 预设 #824 | 新增预设真实截图证据（before或after、语言/主题/宿主按文件名）；无运行时行为，历史图不冒充当前构建。 |
-| `docs/design/verification/2026-09-20-node-prompt-presets/before-zh-light.png` | 预设 #824 | 新增预设真实截图证据（before或after、语言/主题/宿主按文件名）；无运行时行为，历史图不冒充当前构建。 |
-| `docs/design/verification/2026-09-20-node-prompt-presets/journey.json` | 预设 #824 | 新增预设历史真实走查结构化证据；保留当时日期，不当成最终修复版本验收。 |
-| `docs/design/verification/2026-09-20-node-prompt-presets/supplemental.json` | 预设 #824 | 新增预设历史追加证据；与截图相互核对，不证明所有网络缩略图解码成功。 |
-| `docs/design/verification/2026-09-20-shot-identity/README.md` | 媒体/编号及审计修复 | 验收索引记录真实操作、截图和工具指标；明确付费provider/LLM未实跑，避免证据外推。 |
+| `docs/archive/audit/2026-09-20-agent-workflow-change-by-change-review.md` | 媒体/编号及审计修复 | 审计记录：追溯共享owner、旧/新差别与已确认回归；冻结结论和后续修正分开，最终状态以总报告为准。 |
+| `docs/archive/audit/2026-09-20-canvas-media-geometry.md` | 媒体/编号及审计修复 | 审计记录：追溯共享owner、旧/新差别与已确认回归；冻结结论和后续修正分开，最终状态以总报告为准。 |
+| `docs/archive/audit/2026-09-20-preset-library-projection.md` | 预设 #824 | 审计记录：追溯共享owner、旧/新差别与已确认回归；冻结结论和后续修正分开，最终状态以总报告为准。 |
+| `docs/archive/audit/2026-09-20-presets-change-by-change-review.md` | 媒体/编号及审计修复 | 审计记录：追溯共享owner、旧/新差别与已确认回归；冻结结论和后续修正分开，最终状态以总报告为准。 |
+| `docs/archive/audit/2026-09-20-shot-number-identity.md` | 媒体/编号及审计修复 | 审计记录：追溯共享owner、旧/新差别与已确认回归；冻结结论和后续修正分开，最终状态以总报告为准。 |
+| `docs/archive/design/verification/2026-09-20-node-prompt-presets/README.md` | 预设 #824 | 验收索引记录真实操作、截图和工具指标；明确付费provider/LLM未实跑，避免证据外推。 |
+| `docs/archive/design/verification/2026-09-20-node-prompt-presets/after-agent-skill-shared-picker.png` | 预设 #824 | 新增预设真实截图证据（before或after、语言/主题/宿主按文件名）；无运行时行为，历史图不冒充当前构建。 |
+| `docs/archive/design/verification/2026-09-20-node-prompt-presets/after-effect-media-preview.png` | 预设 #824 | 新增预设真实截图证据（before或after、语言/主题/宿主按文件名）；无运行时行为，历史图不冒充当前构建。 |
+| `docs/archive/design/verification/2026-09-20-node-prompt-presets/after-en-dark.png` | 预设 #824 | 新增预设真实截图证据（before或after、语言/主题/宿主按文件名）；无运行时行为，历史图不冒充当前构建。 |
+| `docs/archive/design/verification/2026-09-20-node-prompt-presets/after-personal-refresh-zh-light.png` | 预设 #824 | 新增预设真实截图证据（before或after、语言/主题/宿主按文件名）；无运行时行为，历史图不冒充当前构建。 |
+| `docs/archive/design/verification/2026-09-20-node-prompt-presets/before-zh-light.png` | 预设 #824 | 新增预设真实截图证据（before或after、语言/主题/宿主按文件名）；无运行时行为，历史图不冒充当前构建。 |
+| `docs/archive/design/verification/2026-09-20-node-prompt-presets/journey.json` | 预设 #824 | 新增预设历史真实走查结构化证据；保留当时日期，不当成最终修复版本验收。 |
+| `docs/archive/design/verification/2026-09-20-node-prompt-presets/supplemental.json` | 预设 #824 | 新增预设历史追加证据；与截图相互核对，不证明所有网络缩略图解码成功。 |
+| `docs/archive/design/verification/2026-09-20-shot-identity/README.md` | 媒体/编号及审计修复 | 验收索引记录真实操作、截图和工具指标；明确付费provider/LLM未实跑，避免证据外推。 |
 | `docs/fixes/2026-09-20-anchored-popover-escape.root-cause.json` | 媒体/编号及审计修复 | 新增/更新对应问题v3根因合同：共享不变量、机器门表、同类入口、先红后绿测试；不能凭文档替代实际执行。 |
 | `docs/fixes/2026-09-20-canvas-image-aspect.root-cause.json` | 媒体/编号及审计修复 | 新增/更新对应问题v3根因合同：共享不变量、机器门表、同类入口、先红后绿测试；不能凭文档替代实际执行。 |
 | `docs/fixes/2026-09-20-node-prompt-presets.root-cause.json` | 预设 #824 | 新增/更新对应问题v3根因合同：共享不变量、机器门表、同类入口、先红后绿测试；不能凭文档替代实际执行。 |
 | `docs/fixes/2026-09-20-shot-number-identity.root-cause.json` | 媒体/编号及审计修复 | 新增/更新对应问题v3根因合同：共享不变量、机器门表、同类入口、先红后绿测试；不能凭文档替代实际执行。 |
-| `docs/plan/2026-09-19-competitive-learning-workflow.md` | 竞品流程 #823 | 新增实施范围/旧行为理由/复用方案/风险与验收；不是额外产品功能或已完成证明。 |
-| `docs/plan/2026-09-20-anchored-popover-escape.md` | 媒体/编号及审计修复 | 新增实施范围/旧行为理由/复用方案/风险与验收；不是额外产品功能或已完成证明。 |
-| `docs/plan/2026-09-20-canvas-image-aspect.md` | 媒体/编号及审计修复 | 新增实施范围/旧行为理由/复用方案/风险与验收；不是额外产品功能或已完成证明。 |
-| `docs/plan/2026-09-20-node-prompt-presets.md` | 预设 #824 | 新增实施范围/旧行为理由/复用方案/风险与验收；不是额外产品功能或已完成证明。 |
-| `docs/plan/2026-09-20-shot-number-identity.md` | 媒体/编号及审计修复 | 新增实施范围/旧行为理由/复用方案/风险与验收；不是额外产品功能或已完成证明。 |
-| `docs/research/competitive/README.md` | 竞品流程 #823 | 竞品流程/来源/模板/索引，逐文件理由见Agent与流程报告；只有规则落地，首次定时研究未验证。 |
-| `docs/research/competitive/TEMPLATE.md` | 竞品流程 #823 | 竞品流程/来源/模板/索引，逐文件理由见Agent与流程报告；只有规则落地，首次定时研究未验证。 |
-| `docs/research/competitive/VALIDATION.md` | 竞品流程 #823、媒体/编号及审计修复 | 竞品流程/来源/模板/索引，逐文件理由见Agent与流程报告；只有规则落地，首次定时研究未验证。 |
-| `docs/research/competitive/sources.md` | 竞品流程 #823 | 竞品流程/来源/模板/索引，逐文件理由见Agent与流程报告；只有规则落地，首次定时研究未验证。 |
-| `docs/roadmap/TODO.md` | 竞品流程 #823、媒体/编号及审计修复 | 保留旧任务，新增竞品/镜号及修复证据；媒体和镜号合入前仍todo，未提前标done。 |
+| `docs/archive/plan/2026-09-19-competitive-learning-workflow.md` | 竞品流程 #823 | 新增实施范围/旧行为理由/复用方案/风险与验收；不是额外产品功能或已完成证明。 |
+| `docs/archive/plan/2026-09-20-anchored-popover-escape.md` | 媒体/编号及审计修复 | 新增实施范围/旧行为理由/复用方案/风险与验收；不是额外产品功能或已完成证明。 |
+| `docs/archive/plan/2026-09-20-canvas-image-aspect.md` | 媒体/编号及审计修复 | 新增实施范围/旧行为理由/复用方案/风险与验收；不是额外产品功能或已完成证明。 |
+| `docs/archive/plan/2026-09-20-node-prompt-presets.md` | 预设 #824 | 新增实施范围/旧行为理由/复用方案/风险与验收；不是额外产品功能或已完成证明。 |
+| `docs/archive/plan/2026-09-20-shot-number-identity.md` | 媒体/编号及审计修复 | 新增实施范围/旧行为理由/复用方案/风险与验收；不是额外产品功能或已完成证明。 |
+| `docs/archive/research/competitive/README.md` | 竞品流程 #823 | 竞品流程/来源/模板/索引，逐文件理由见Agent与流程报告；只有规则落地，首次定时研究未验证。 |
+| `docs/archive/research/competitive/TEMPLATE.md` | 竞品流程 #823 | 竞品流程/来源/模板/索引，逐文件理由见Agent与流程报告；只有规则落地，首次定时研究未验证。 |
+| `docs/archive/research/competitive/VALIDATION.md` | 竞品流程 #823、媒体/编号及审计修复 | 竞品流程/来源/模板/索引，逐文件理由见Agent与流程报告；只有规则落地，首次定时研究未验证。 |
+| `docs/archive/research/competitive/sources.md` | 竞品流程 #823 | 竞品流程/来源/模板/索引，逐文件理由见Agent与流程报告；只有规则落地，首次定时研究未验证。 |
+| `docs/archive/roadmap/TODO.md` | 竞品流程 #823、媒体/编号及审计修复 | 保留旧任务，新增竞品/镜号及修复证据；媒体和镜号合入前仍todo，未提前标done。 |
 | `electron/capabilityCore/canvasGraph.test.ts` | 媒体/编号及审计修复 | 新增headless旧图重号/非法号修复，保留原图操作断言；证明主进程也走共享owner。 |
 | `electron/capabilityCore/canvasGraph.ts` | 媒体/编号及审计修复 | 生产逐hunk见编号报告：旧分配/复制/恢复用途与新共享owner逐项对照；旧日志恢复回归已单列修复，未另造事件系统。 |
 | `electron/capabilityCore/core.ts` | 媒体/编号及审计修复 | 生产逐hunk见编号报告：旧分配/复制/恢复用途与新共享owner逐项对照；旧日志恢复回归已单列修复，未另造事件系统。 |
@@ -103,10 +103,10 @@
 | `tests/ux/design-lab/__baselines__/process-feedback/pf-fx-final-reveal.png` | 媒体/编号及审计修复 | 替换视觉基线：揭示阶段按最终媒体比例缩短盒高，像素化内容及状态保留；静态图不证明动画时序。 |
 | `tests/ux/node-prompt-presets.walk.mjs` | 预设 #824 | 新增真实UI创建项目/个人提示词，公共追加撤销、个人刷新、兼容过滤和Agent共用选择器；历史LinuxEscape漏项已补。 |
 
-| `docs/audit/2026-09-20-change-by-change-review.md` | 审计修复 | 新增逐项审计与红绿证据：分别覆盖生产修改、完整文件清单、旧行为与新回归；最终结论以总报告及PR验证为准。 |
-| `docs/audit/2026-09-20-change-inventory.md` | 审计修复 | 新增逐项审计与红绿证据：分别覆盖生产修改、完整文件清单、旧行为与新回归；最终结论以总报告及PR验证为准。 |
-| `docs/audit/2026-09-20-media-change-by-change-review.md` | 审计修复 | 新增逐项审计与红绿证据：分别覆盖生产修改、完整文件清单、旧行为与新回归；最终结论以总报告及PR验证为准。 |
-| `docs/audit/2026-09-20-numbering-change-by-change-review.md` | 审计修复 | 新增逐项审计与红绿证据：分别覆盖生产修改、完整文件清单、旧行为与新回归；最终结论以总报告及PR验证为准。 |
-| `docs/audit/2026-09-20-popover-escape-change-by-change-review.md` | 审计修复 | 新增逐项审计与红绿证据：分别覆盖生产修改、完整文件清单、旧行为与新回归；最终结论以总报告及PR验证为准。 |
+| `docs/archive/audit/2026-09-20-change-by-change-review.md` | 审计修复 | 新增逐项审计与红绿证据：分别覆盖生产修改、完整文件清单、旧行为与新回归；最终结论以总报告及PR验证为准。 |
+| `docs/archive/audit/2026-09-20-change-inventory.md` | 审计修复 | 新增逐项审计与红绿证据：分别覆盖生产修改、完整文件清单、旧行为与新回归；最终结论以总报告及PR验证为准。 |
+| `docs/archive/audit/2026-09-20-media-change-by-change-review.md` | 审计修复 | 新增逐项审计与红绿证据：分别覆盖生产修改、完整文件清单、旧行为与新回归；最终结论以总报告及PR验证为准。 |
+| `docs/archive/audit/2026-09-20-numbering-change-by-change-review.md` | 审计修复 | 新增逐项审计与红绿证据：分别覆盖生产修改、完整文件清单、旧行为与新回归；最终结论以总报告及PR验证为准。 |
+| `docs/archive/audit/2026-09-20-popover-escape-change-by-change-review.md` | 审计修复 | 新增逐项审计与红绿证据：分别覆盖生产修改、完整文件清单、旧行为与新回归；最终结论以总报告及PR验证为准。 |
 
 本机非Git配置另审：`~/.agents/skills/nomi-competitive-radar`符号链接改指稳定主仓；`~/.codex/automations/nomi-competitive-radar/automation.toml`删除临时source fallback，ACTIVE/三日cron与2026-09-22 10:00锚点不变。TOML读回通过；实际调度仍未验证。

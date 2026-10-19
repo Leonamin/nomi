@@ -1,7 +1,7 @@
 # 常驻 Agent 面板压窄画布后：走查取点复验 + 自动让位合成
 
 > 状态：✅ 已交付（本分支）· 2026-09-05 · 起因：PR #488 把常驻 Agent 面板默认展开，1600 窗口下画布 stage 从 ~1540px 压到 1200px，Canvas Acceptance 两个 shard 与 Canvas Performance 一起红。
-> 教训沉淀：[`docs/lessons/walkthrough-geometry-must-reverify-under-the-real-cursor.md`](../../lessons/walkthrough-geometry-must-reverify-under-the-real-cursor.md)；根因合同：[`docs/fixes/2026-09-05-canvas-walkthrough-stage-width.root-cause.json`](../../fixes/2026-09-05-canvas-walkthrough-stage-width.root-cause.json)。
+> 教训沉淀：[`docs/archive/lessons/walkthrough-geometry-must-reverify-under-the-real-cursor.md`](../lessons/walkthrough-geometry-must-reverify-under-the-real-cursor.md)；根因合同：[`docs/fixes/2026-09-05-canvas-walkthrough-stage-width.root-cause.json`](../../fixes/2026-09-05-canvas-walkthrough-stage-width.root-cause.json)。
 
 ## 范围
 

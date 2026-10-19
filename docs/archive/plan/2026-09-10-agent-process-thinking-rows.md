@@ -41,9 +41,9 @@ CTO：约束放共享投影，不改协议。设计：活状态原位更新、�
 
 ## 已执行证据
 
-- 单测四条先红见 `docs/evidence/2026-09-10-thinking-rows/unit-red.txt`；新增覆盖流式正文及无思考正文场景。
+- 单测四条先红见 `docs/archive/evidence/2026-09-10-thinking-rows/unit-red.txt`；新增覆盖流式正文及无思考正文场景。
 - 现有 `agentPanelV4Form.test.ts` 旧断言显式要求思考位于工具之间，与 C77 冲突；改为工具前且保留工具 index=1/3 校验、思考正文校验。这是用户确定行为的契约更新，不删断言/改容差。
-- loopback 改前 5/5、改后 0/1（运行中/完成态思考项），4 次调用 1 次重试；正文五段可查。证据与截图：`docs/evidence/2026-09-10-thinking-rows/README.md`。
+- loopback 改前 5/5、改后 0/1（运行中/完成态思考项），4 次调用 1 次重试；正文五段可查。证据与截图：`docs/archive/evidence/2026-09-10-thinking-rows/README.md`。
 - repeated-rows 未命中交错行（非连续相邻同名）；保留通用规则，过程基数与排序由本次单测和真机断言强制。
 
 ## 视觉基线全名

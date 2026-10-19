@@ -9,7 +9,7 @@
  *    看得见「这一次收进来的卡」——旧数据、手改的 catalog 文件、未来第二个写入口都绕得过它；
  *    这一层是两条执行路（mapping 与 customCall 脚本）共用的最早边界。
  *
- * ── 病根（P2 类根因，见 docs/plan/2026-09-07-model-generation-core-path.md）──────────────
+ * ── 病根（P2 类根因，见 docs/archive/plan/2026-09-07-model-generation-core-path.md）──────────────
  * 上一轮把「目的地该不该出站」收进了 `networkOutboundPolicy`，但只有**取回侧**去问它；提交/轮询
  * 仍然对目的地零策略。于是「我们愿意为之付钱的目的地，可能是我们拒绝读取的目的地」这个不对称，
  * 换个方向仍然成立。本模块是提交侧的那半边——同一个 `authorizeOutboundDestination`、同一份

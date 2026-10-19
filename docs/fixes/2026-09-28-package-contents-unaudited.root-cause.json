@@ -168,7 +168,7 @@
   ],
   "recurrence": {
     "classification": "recurring",
-    "reason": "Package contents change with every dependency addition or upgrade and every build-config edit. Two instances of the same unchecked class already shipped: 2026-08-07 multi-platform ffmpeg/ffprobe (560MB unpacked, docs/qa/2026-08-07-release-size-baseline.md) and 2026-09-28 renderer libraries plus foreign binaries from sandbox-runtime and pi-tui that appeared after the first fix.",
+    "reason": "Package contents change with every dependency addition or upgrade and every build-config edit. Two instances of the same unchecked class already shipped: 2026-08-07 multi-platform ffmpeg/ffprobe (560MB unpacked, docs/archive/qa/2026-08-07-release-size-baseline.md) and 2026-09-28 renderer libraries plus foreign binaries from sandbox-runtime and pi-tui that appeared after the first fix.",
     "same_class_scan": [
       "check:packaged-deps over the in-memory emit of electron/tsconfig.json and electron/tsconfig.pi.json: 1,122 files scanned, 47 dependencies without evidence, 0 non-literal package loads",
       "audit-package on a local rebuild of the pre-change tree: 14,705 source maps, 159 test files, 7 fixtures, 1 .env, 6 foreign binaries, 55 locales, 4 broken peer links",

@@ -116,7 +116,7 @@ K4 coordinated addition: payment owns the durable Run origin fields and generati
 
 ## Prior-art and implementation judgment
 
-Existing investigation: `docs/plan/2026-09-18-tool-layer-prior-art-verdict.md` compares MCP, pi, Vercel and neighboring tools; payment authorization belongs to the host and binds the actual validated payload. Existing `docs/research/2026-09-18-storyboard-single-ledger/prior-art.md` supports one editable owner with immutable execution snapshots. Executors recheck relevant installed source before adopting APIs.
+Existing investigation: `docs/archive/plan/2026-09-18-tool-layer-prior-art-verdict.md` compares MCP, pi, Vercel and neighboring tools; payment authorization belongs to the host and binds the actual validated payload. Existing `docs/archive/research/2026-09-18-storyboard-single-ledger/prior-art.md` supports one editable owner with immutable execution snapshots. Executors recheck relevant installed source before adopting APIs.
 
 Use existing ProductionRun CAS, authorization history and submission outbox; do not add a task index or global lock. Use pi 0.85.1 branch entries for full UI history, existing watch for execution state, and existing model context separately. `watchSession` is not implemented in the installed version. Preserve React Flow positioning and repair editor/gesture ownership without a toolbar migration.
 

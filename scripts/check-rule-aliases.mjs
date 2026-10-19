@@ -6,7 +6,7 @@
 //   ③ enforcement 只有 manual 的规则，level 必须是 suggestion（没有执行点的只能算建议）；
 //   ④ 加一删二：比 origin/main 新增的规则必须带 replaces，列出至少 2 个已经删掉（不再是规则 id）的旧号；
 //   ⑤ 视图 rules.md 和正本一致。
-// 不扫 docs/plan、docs/research、docs/audit、docs/lessons、docs/fixes 这些带日期的历史记录：它们写的是当时的编号。
+// 不扫 docs/archive/plan、docs/archive/research、docs/archive/audit、docs/archive/lessons、docs/fixes 这些带日期的历史记录：它们写的是当时的编号。
 import fs from 'node:fs'
 import path from 'node:path'
 import { execFileSync } from 'node:child_process'
@@ -21,7 +21,7 @@ const SCANNED = [
   'AGENTS.md',
   'docs/engineering-rules.md',
   RULES_VIEW,
-  'docs/lessons/INDEX.md',
+  'docs/archive/lessons/INDEX.md',
   'docs/engineering/acceptance-walkthrough-doctrine.md',
   'docs/engineering/agent-orchestration-playbook.md',
   'docs/engineering/design-card.md',

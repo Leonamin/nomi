@@ -1,6 +1,6 @@
 # 分镜方案编辑器 视觉重设计 · 实现规范（2026-06-15）
 
-> 用户拍板样张 `docs/design/reviews/2026-06-15-storyboard-editor-redesign.html` + 图标决策（见下）。
+> 用户拍板样张 `docs/archive/design/reviews/2026-06-15-storyboard-editor-redesign.html` + 图标决策（见下）。
 > 只动视觉层级/克制度,**数据/交互/字段全不变**,token-only。
 
 ## 诊断（违背设计系统的点）

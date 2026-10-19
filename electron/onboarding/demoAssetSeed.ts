@@ -1,6 +1,6 @@
 // 引导示例项目的预置成图 → 项目资产（走和真生成产物同一条落盘路）。
 //
-// 为什么要有这一层（2026-07-30 根因修复，见 docs/plan/2026-07-30-demo-asset-persisted-bundle-url.md）：
+// 为什么要有这一层（2026-07-30 根因修复，见 docs/archive/plan/2026-07-30-demo-asset-persisted-bundle-url.md）：
 // 引导回放会把成图 URL 通过 addNodeResult **写进项目文件**。此前给的是**构建产物 URL**
 // （`new URL('./assets/robot/kid.jpg', import.meta.url)`）——dev 下是 `http://127.0.0.1:5273/src/...`、
 // 打包版是 `file://…/dist/assets/kid-<hash>.jpg`。两者都是易变值：换环境、重新构建（哈希变）、

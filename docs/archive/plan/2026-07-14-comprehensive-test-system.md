@@ -295,8 +295,8 @@ External provider instability is documented with evidence and handling tests; No
 **Files:**
 - Modify: `tests/system/capabilities.json`
 - Regenerate: `docs/testing/capability-matrix.md`
-- Create: `docs/audit/2026-07-14-comprehensive-test-system.md`
-- Update: `docs/plan/2026-07-14-comprehensive-test-system.md` checkboxes/results
+- Create: `docs/archive/audit/2026-07-14-comprehensive-test-system.md`
+- Update: `docs/archive/plan/2026-07-14-comprehensive-test-system.md` checkboxes/results
 
 - [ ] **Step 1: Run diagnostic coverage**
 

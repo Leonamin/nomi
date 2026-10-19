@@ -30,17 +30,17 @@
 
 ### 谎言 2：「唇形同步 Nomi 暂无，只能诚实标注」（`CLAUDE.md:124` D4 的例句）
 
-这句在**产品**层面仍然成立（Nomi 确实没有），但它背后那个隐含前提——「因为供应商也没有 / 论文还不成熟」——已经不成立了。论文雷达连续四轮报「本方向无合格新料」（`docs/research/2026-08-17-radar.md:67`），于是这个缺口在我们心里被归档成了「等技术成熟」。
+这句在**产品**层面仍然成立（Nomi 确实没有），但它背后那个隐含前提——「因为供应商也没有 / 论文还不成熟」——已经不成立了。论文雷达连续四轮报「本方向无合格新料」（`docs/archive/research/2026-08-17-radar.md:67`），于是这个缺口在我们心里被归档成了「等技术成熟」。
 
 **实情：我们自己每天跑的模型雷达里，kie 已经上了三个可直接调的唇形同步端点，只是它们被归在 `video` 桶里，所以扫 audio 桶的时候永远看不见。**
 
-`docs/research/model-radar/kie.json` 里（category 全是 `video`）：
+`docs/archive/research/model-radar/kie.json` 里（category 全是 `video`）：
 
 - `volcengine/video-to-video-lip-sync` — **视频 + 音频 → 对好嘴的视频**，正是 Nomi 需要的后处理形状
 - `kling/ai-avatar-pro` / `ai-avatar-standard` — 图 + 音频 → 说话视频
 - `omnihuman-1-5`（+ `human-identification` / `subject-detection` 两个辅助端点）
 
-论文雷达的结论没错（可自研的 training-free 方案确实没出现），但我们从"论文没进展"推出了"这事做不了"——**推错了一层**：我们是黑盒接入方，供应商上了就等于我们能做。这条教训值得进 `docs/lessons/`：**雷达按 category 桶分诊时，跨模态能力（音频驱动视频）会掉进桶缝里。**
+论文雷达的结论没错（可自研的 training-free 方案确实没出现），但我们从"论文没进展"推出了"这事做不了"——**推错了一层**：我们是黑盒接入方，供应商上了就等于我们能做。这条教训值得进 `docs/archive/lessons/`：**雷达按 category 桶分诊时，跨模态能力（音频驱动视频）会掉进桶缝里。**
 
 ### 谎言 3：「apimart/kie 有 50 个未接音频模型」
 
@@ -141,7 +141,7 @@ Nomi 自己的档案就是证据——这些模型已经在我们目录里声明
 4. 没有任何一家的 Agent 会**逐镜决定「这镜要不要对白 / 旁白 / 音乐 / 音效」**。Hedra 的 agent 最接近，但它的输入前提仍是"你已经给了歌"。
 
 **缝在哪（D2 结构位）**：
-> Nomi 手上有一样别人没有的东西——**在音乐存在之前，就已经知道每一镜的时长、情绪和台词**（分镜表是画布节点的表格表示，`docs/lessons/shot-table-is-a-projection-of-canvas-nodes.md`）。
+> Nomi 手上有一样别人没有的东西——**在音乐存在之前，就已经知道每一镜的时长、情绪和台词**（分镜表是画布节点的表格表示，`docs/archive/lessons/shot-table-is-a-projection-of-canvas-nodes.md`）。
 >
 > 别人只能"先有歌，再对拍"；Nomi 可以**按分镜结构去订做音乐**——ElevenLabs Music 的 `composition_plan.sections[].duration_ms` 正好是这个形状。这不是我们跑得比谁快，是**信息顺序不一样**：他们的音乐先于结构，我们的结构先于音乐。
 
@@ -165,7 +165,7 @@ Nomi 自己的档案就是证据——这些模型已经在我们目录里声明
 | 异步 | kie 统一 job 制：`createTask` → `callBackUrl` 回调 或 record-info 轮询；`taskId` + `creditsConsumed` |
 | 价格 | 文档未直给数字，按 kie credits 计（`/common-api/get-account-credits`） |
 
-> **这个形状和 Nomi 完全同构**：镜头成片进、TTS 音轨进、对好嘴的片段出，不动 decompose-stitch 链路。`2026-08-01` 那轮雷达描述的理想形态（`docs/research/2026-08-01-radar.md:25`），现在有现成端点了。
+> **这个形状和 Nomi 完全同构**：镜头成片进、TTS 音轨进、对好嘴的片段出，不动 decompose-stitch 链路。`2026-08-01` 那轮雷达描述的理想形态（`docs/archive/research/2026-08-01-radar.md:25`），现在有现成端点了。
 
 **B. `kling/ai-avatar-pro`（经 kie）** — <https://docs.kie.ai/market/kling/ai-avatar-pro.md>
 - 输入：`image_url`（jpeg/png，≤10 MB）+ `audio_url`（**时长 ≤5 分钟**）+ `prompt`（maxLength 5000）
@@ -299,7 +299,7 @@ export function buildDialoguePromptSuffix(mode, params, dialogue) {     // :14
 
 三个问题，一个比一个重：
 
-1. **不会的时候什么都不发生。** 用户在分镜表里写了台词，选了个不自带音频的模型（比如 Kling 默认 `audio: false`，`kling.ts:25`），台词就**静默消失**了——不降级去 TTS，不提示，不标注。这**直接违反 D4「缺口明着标」**，而且它长得和"功能坏了"一模一样（对照 `docs/lessons/group-says-broken-usually-means-undiscoverable.md`）。
+1. **不会的时候什么都不发生。** 用户在分镜表里写了台词，选了个不自带音频的模型（比如 Kling 默认 `audio: false`，`kling.ts:25`），台词就**静默消失**了——不降级去 TTS，不提示，不标注。这**直接违反 D4「缺口明着标」**，而且它长得和"功能坏了"一模一样（对照 `docs/archive/lessons/group-says-broken-usually-means-undiscoverable.md`）。
 2. **只有对白，没有旁白/音乐/音效。** 片种模板只声明了 `dialogue: true/false` 一个维度（`storyboardProfiles.ts:17`、`:25`）。
 3. **决定发生的时机是对的，但内容不够。** 它确实发生在**生成提交层**（生成之前）——这正好符合 §1.3 那条硬约束（口型必须在生成前决定）。这个位置是对的，不该挪。
 
@@ -323,7 +323,7 @@ export function buildDialoguePromptSuffix(mode, params, dialogue) {     // :14
 
 > **要不要让 Agent 替你决定"这镜配什么声音"，还是只让它填你已经决定的东西。**
 > 前者省事但会出现"它给我加了段我不想要的 BGM"；后者可控但每镜都要你点一次。
-> 我的判断（D5）：**分镜级别 Agent 决定 + 项目级别用户定调**——用户在片种模板里一次性说"这是短剧，有对白、有配乐、无旁白"，Agent 按这个基调逐镜填，逐镜可覆盖。这和分镜画幅"项目级 + 行覆盖"的已有拍板完全同构（`docs/lessons/design-decisions-20260905-agent-ui-storyboard-mcp.md`）。
+> 我的判断（D5）：**分镜级别 Agent 决定 + 项目级别用户定调**——用户在片种模板里一次性说"这是短剧，有对白、有配乐、无旁白"，Agent 按这个基调逐镜填，逐镜可覆盖。这和分镜画幅"项目级 + 行覆盖"的已有拍板完全同构（`docs/archive/lessons/design-decisions-20260905-agent-ui-storyboard-mcp.md`）。
 
 ### 4.3 输入输出草案
 
@@ -437,7 +437,7 @@ type SoundDirection = {
 
 ### 6.1 六角色（R7）
 
-**CTO**：形状上零新抽象——唇形模型 = 声明 `source_video` + `audio_ref` 两个已有槽的普通视频档案（`types.ts:31`），kie 的 job 轮询链路现成。真正的工程量在**策略解析器**，而它是 `storyboardDialogue.ts` 那 21 行长大，不是新子系统。⚠️ 一个技术债要一起还：时间轴 audio 轨**禁止 overlap 且没有 acrossfade**（`docs/ARCHITECTURE-NOW.md:57`），一旦有了旁白 + BGM 两条音源，"音乐压不下去、对白被盖住"会立刻变成用户可见 bug。**做声音线必须同时上侧链/ducking 或至少允许 audio overlap。**
+**CTO**：形状上零新抽象——唇形模型 = 声明 `source_video` + `audio_ref` 两个已有槽的普通视频档案（`types.ts:31`），kie 的 job 轮询链路现成。真正的工程量在**策略解析器**，而它是 `storyboardDialogue.ts` 那 21 行长大，不是新子系统。⚠️ 一个技术债要一起还：时间轴 audio 轨**禁止 overlap 且没有 acrossfade**（`docs/archive/guides/ARCHITECTURE-NOW.md:57`），一旦有了旁白 + BGM 两条音源，"音乐压不下去、对白被盖住"会立刻变成用户可见 bug。**做声音线必须同时上侧链/ducking 或至少允许 audio overlap。**
 
 **设计**：分镜表右半列已经是"该行模型 derive 出来的槽"（`shot-table-is-a-projection-of-canvas-nodes.md`）。声音列进右半列，和参考槽同侧、同逻辑，认知负荷增量接近零。⚠️ 但 `SoundPlan.gaps` 必须有**可见的位置**——现在台词静默消失，是最糟的那种"没有位置"。
 
@@ -483,7 +483,7 @@ type SoundDirection = {
 ## 附：本文用到的一手出处
 
 **Nomi 仓库**（`origin/main` @ `6a7c8178`）
-`src/config/modelArchetypes/index.ts:75` · `audioArchetype.ts:37,58` · `elevenAudio.ts:12,54,77,115,153` · `sunoAudio.ts:12,85` · `lyria35.ts:3` · `minimaxSpeech28.ts:6,16` · `minimaxMusic3.ts:12` · `doubaoTtsArchetype.ts:24` · `seedTtsArchetype.ts:21` · `runwaySeedAudio.ts:29` · `electron/catalog/apimartAudios.ts` · `electron/shared/videoCapabilities/types.ts:31` · `kling.ts:25` · `seedance.ts:27` · `seedance25.ts:56` · `wan30.ts:59,127` · `runwayWireFacts.ts:158` · `electron/shared/audioCapabilities/runwayAudioWireFacts.ts` · `src/workbench/generationCanvas/agent/storyboardDialogue.ts:3,6,14,20` · `storyboardProfiles.ts:17,25` · `src/workbench/generationCanvas/runner/generationRunController.ts:306-315` · `src/workbench/timeline/clipAudio.ts:3,24` · `electron/export/ffmpegFiltergraph.ts:343,400` · `src/workbench/generationCanvas/nodes/render/AudioStripNode.tsx:47` · `docs/ARCHITECTURE-NOW.md:53,57,59` · `docs/research/model-radar/{kie,apimart,latest}.json`
+`src/config/modelArchetypes/index.ts:75` · `audioArchetype.ts:37,58` · `elevenAudio.ts:12,54,77,115,153` · `sunoAudio.ts:12,85` · `lyria35.ts:3` · `minimaxSpeech28.ts:6,16` · `minimaxMusic3.ts:12` · `doubaoTtsArchetype.ts:24` · `seedTtsArchetype.ts:21` · `runwaySeedAudio.ts:29` · `electron/catalog/apimartAudios.ts` · `electron/shared/videoCapabilities/types.ts:31` · `kling.ts:25` · `seedance.ts:27` · `seedance25.ts:56` · `wan30.ts:59,127` · `runwayWireFacts.ts:158` · `electron/shared/audioCapabilities/runwayAudioWireFacts.ts` · `src/workbench/generationCanvas/agent/storyboardDialogue.ts:3,6,14,20` · `storyboardProfiles.ts:17,25` · `src/workbench/generationCanvas/runner/generationRunController.ts:306-315` · `src/workbench/timeline/clipAudio.ts:3,24` · `electron/export/ffmpegFiltergraph.ts:343,400` · `src/workbench/generationCanvas/nodes/render/AudioStripNode.tsx:47` · `docs/archive/guides/ARCHITECTURE-NOW.md:53,57,59` · `docs/archive/research/model-radar/{kie,apimart,latest}.json`
 
 **供应商官方文档**（全部 2026-09-07 实抓）
 <https://docs.kie.ai/market/volcengine/video-to-video-lip-sync.md> · <https://docs.kie.ai/market/kling/ai-avatar-pro.md> · <https://docs.kie.ai/market/omnihuman-1-5.md> · <https://docs.kie.ai/market/elevenlabs/text-to-speech-multilingual-v2.md> · <https://docs.kie.ai/market/elevenlabs/text-to-dialogue-v3.md> · <https://docs.kie.ai/market/elevenlabs/audio-isolation.md> · <https://docs.kie.ai/market/google/gemini-3-1-flash-tts.md> · <https://docs.apimart.ai/en/api-reference/audios/tts.md> · <https://docs.apimart.ai/en/api-reference/audios/suno/overview.md> · <https://docs.apimart.ai/en/api-reference/audios/flow-music/music.md> · <https://sync.so/docs/api-reference/api/generate-api/create.md> · <https://sync.so/docs/models/lipsync.md> · <https://sync.so/docs/compatibility-and-tips/media-formats-support.md> · <https://elevenlabs.io/docs/api-reference/text-to-speech/convert> · <https://elevenlabs.io/docs/api-reference/music/compose> · <https://elevenlabs.io/docs/api-reference/text-to-sound-effects/convert> · <https://www.hedra.com/docs/llms.txt>（及 create-avatar-video / create-audio / creating-music-videos 三页 `.md`） · <https://docs.heygen.com/llms.txt>

@@ -4,7 +4,7 @@ import type { ModelArchetype } from "./types";
 // Higgsfield 自研图片档案（Soul 2 / Soul Cinema）。
 //
 // 参数表来自 2026-09-17 对服务端校验器的一手反推（证据与探针原文：
-// docs/evidence/2026-09-17-higgsfield-contract/）。枚举**逐字抄自校验器的报错原文**，
+// docs/archive/evidence/2026-09-17-higgsfield-contract/）。枚举**逐字抄自校验器的报错原文**，
 // 不是从文档转述的——例如 aspect_ratio 的七个值是
 // "Input should be '9:16', '16:9', '4:3', '3:4', '1:1', '2:3' or '3:2'"。
 //

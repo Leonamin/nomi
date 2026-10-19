@@ -1,6 +1,6 @@
 # 交接 + 执行计划：模型变体合并（一个模型+变体选择器）+ apimart 全模型参数对齐
 
-> 2026-06-16。用户两个诉求：① **变体合并**——Seedance 一族就 4 个独立模型（标准/fast/face/fast-face），picker 里一堆，要收成「一个模型 + 变体选择器」；② **参数完整对齐**——所有 apimart 模型逐项对官方文档补全（审计见 `docs/audit/2026-06-16-reference-split-and-apimart-params.md`）。
+> 2026-06-16。用户两个诉求：① **变体合并**——Seedance 一族就 4 个独立模型（标准/fast/face/fast-face），picker 里一堆，要收成「一个模型 + 变体选择器」；② **参数完整对齐**——所有 apimart 模型逐项对官方文档补全（审计见 `docs/archive/audit/2026-06-16-reference-split-and-apimart-params.md`）。
 > 上下文够则我带 subagent 做；不够则新 session 拿此文档执行。**本文自包含，照着能直接干。**
 
 ## 0. 现状数据流（摸底，file:line）
@@ -57,7 +57,7 @@ catalog seed (seedBuiltins.ts: 每 modelKey=1 CuratedModel)
 - 五门 + 真实 E2E（每变体发对 modelKey）+ R13 走查 picker/变体切换。
 
 ## 2. Part B：apimart 全模型参数对齐（逐模型,对官方文档）
-完整缺口表见审计 `docs/audit/2026-06-16-reference-split-and-apimart-params.md`。按优先级：
+完整缺口表见审计 `docs/archive/audit/2026-06-16-reference-split-and-apimart-params.md`。按优先级：
 
 ### B1 取值/默认对不上（会 API 报错,先修,安全）
 - Sora 2：标准版 resolution 去掉 1080p(官方仅720p)；duration 连续 number→离散枚举 4/8/12/16/20。

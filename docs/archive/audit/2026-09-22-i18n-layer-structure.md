@@ -45,7 +45,7 @@
 
 **为什么盖章是对的**：用户随时可以重命名这些节点。
 切语言时把它们重新翻译一遍，等于**覆写用户自己改过的名字**——那是更严重的 bug。
-（同一个「盖章 vs 读时解析」的取舍，`docs/research/2026-09-12-storyboard-plan-defaults-passthrough/prior-art.md`
+（同一个「盖章 vs 读时解析」的取舍，`docs/archive/research/2026-09-12-storyboard-plan-defaults-passthrough/prior-art.md`
 里对 React Flow `defaultEdgeOptions` 已经分析过一次，结论一致。）
 
 ### 🔴 投影类（落盘是错的）

@@ -15,7 +15,7 @@ import type { TimelineClip, TimelineState } from './timelineTypes'
 //   · 渲染 → 仍按播放头取 activeClips，各片段用自己的 framing（TimelinePreview 未变）
 //   · 编辑 → 只认用户选中的那一个媒体片段（本文件）
 // 把它抽成纯函数是为了能被测试钉死：作用域这种语义此前没有任何一层防线在验，
-// 编译得过、五门全绿、单测全绿，只有真人点一遍才发现（见 docs/plan/2026-08-02-control-hierarchy-audit.md）。
+// 编译得过、五门全绿、单测全绿，只有真人点一遍才发现（见 docs/archive/plan/2026-08-02-control-hierarchy-audit.md）。
 
 /** 取景控件当前的作用对象；null = 无可编辑目标（控件必须禁用并说明原因）。 */
 export type FramingTarget = {

@@ -9,7 +9,7 @@
 - React Flow utility classes：既定方案 [2026-09-07 §2.1](2026-09-07-storyboard-table-node.md) 实核 `nodrag` / `nowheel`；本层只注册节点，不新增交互内核。
 - Krita 稳定 columnId：既定方案 [2026-09-07 §2.2](2026-09-07-storyboard-table-node.md) 的源码对账；事实单元格以 columnId 稀疏存储，禁止数组位置映射。
 - Storyboarder 稳定 rowId：既定方案 [2026-09-07 §2.3](2026-09-07-storyboard-table-node.md) 的源码对账；行身份与排序分离。
-- 仓内 owner：[shot-table-is-a-projection-of-canvas-nodes](../../lessons/shot-table-is-a-projection-of-canvas-nodes.md)，生产表只存来源与视图，rows 在类型和解析边界都拒绝。
+- 仓内 owner：[shot-table-is-a-projection-of-canvas-nodes](../lessons/shot-table-is-a-projection-of-canvas-nodes.md)，生产表只存来源与视图，rows 在类型和解析边界都拒绝。
 
 ## 实施与验收
 

@@ -1,5 +1,5 @@
 /**
- * 生成浮框底栏参数 chip 的「两个值」摘要（docs/design/2026-09-10-node-composer-bar-v1.md §v1.1，
+ * 生成浮框底栏参数 chip 的「两个值」摘要（docs/archive/design/2026-09-10-node-composer-bar-v1.md §v1.1，
  * 2026-09-11 用户拍板）。
  *
  * 要权衡的那一个东西：chip 过去串接**所有**参数的当前值，视频节点上就成了

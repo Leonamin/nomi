@@ -45,7 +45,7 @@ export async function persistNodeImageFile(
  * 语义：优先落盘换 nomi-local:// 门牌号；只有落盘失败才退回 base64（可持久化、不丢图）。
  * 调用方拿到 url 之后**只写一次 store**——别再走「先塞 base64 给预览、落盘后再换掉」那套：
  * 那套每次 updateNode 都被 emitCanvasGesture 做一遍 JSON 深拷贝，九宫格切图时 60MB 走 JSON、
- * 主线程冻 1.6s（2026-08-20 用户报「九宫格直接卡死」的根因，见 docs/plan/2026-08-20-grid-split-freeze.md）。
+ * 主线程冻 1.6s（2026-08-20 用户报「九宫格直接卡死」的根因，见 docs/archive/plan/2026-08-20-grid-split-freeze.md）。
  */
 export async function persistNodeImageBlob(
   blob: Blob,

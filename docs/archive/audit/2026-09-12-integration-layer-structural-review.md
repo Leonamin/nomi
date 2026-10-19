@@ -71,5 +71,5 @@
 ## 四、复核线索
 
 - 本轮合同：`docs/fixes/2026-09-12-integration-run-failure-path.root-cause.json`
-- 本轮方案（含门表与 H1/H2 审计结论）：`docs/plan/2026-09-12-integration-run-failure-path.md`
-- 上游复盘（真机轨迹）：`docs/plan/2026-09-11-mcp-integration-quality.md`
+- 本轮方案（含门表与 H1/H2 审计结论）：`docs/archive/plan/2026-09-12-integration-run-failure-path.md`
+- 上游复盘（真机轨迹）：`docs/archive/plan/2026-09-11-mcp-integration-quality.md`

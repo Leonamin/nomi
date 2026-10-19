@@ -5,8 +5,8 @@
 > `ProductionRun`、Run intent/WAL、`RuntimeEnvelope`、outbox 和
 > materialization receipt；本文的 per-project `EventLog`/`NomiEvent` 模型不应
 > 再新建实现。请改读
-> `docs/superpowers/specs/2026-08-22-runtime-ownership-adr.md` 与
-> `docs/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`。
+> `docs/archive/superpowers/specs/2026-08-22-runtime-ownership-adr.md` 与
+> `docs/archive/superpowers/plans/2026-08-22-mcp-ai-generation-vertical-slice.md`。
 
 > **历史文档体系**:本文曾是 harness 的执行草案，现仅作研究记录，按框架模块组织。上游三份保留:
 > `2026-06-10-nomi-harness-requirements.md`(要什么:24 需求点/簇 A-F/可控的透明)

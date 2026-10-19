@@ -29,8 +29,8 @@
     "electron/catalog/modelCatalogListing.ts",
     "electron/shared/generationModuleId.ts",
     "electron/shared/agentCapabilities/canvasWrite.ts",
-    "docs/integrate-with-your-agent.md",
-    "docs/integrate-with-your-agent-en.md",
+    "docs/archive/guides/integrate-with-your-agent.md",
+    "docs/archive/guides/integrate-with-your-agent-en.md",
     "docs/guide/capability-core-cli-mcp.md",
     "docs/fixes/2026-09-05-mcp-host-holes.root-cause.json"
   ],

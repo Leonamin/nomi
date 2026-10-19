@@ -1,6 +1,6 @@
 # 拆镜头默认收敛:image-first + shot→shot 时序链(收口双真相源)
 
-> 触发:`docs/audit/2026-06-14-eval-findings-handoff.md` 把 P1-A(不连边)/P1-B(出 video)当成「未拍板的产品决策 Q1/Q2」。
+> 触发:`docs/archive/audit/2026-06-14-eval-findings-handoff.md` 把 P1-A(不连边)/P1-B(出 video)当成「未拍板的产品决策 Q1/Q2」。
 > 深挖后改判:**策略早已成文,坏的是「同一句拆镜头两条路径自相矛盾」**。用户已拍板(2026-06-15):
 > **① 镜头默认建 `image`(先锁画面再动)；② 顺序叙事默认连 shot→shot 时序链。**
 > 本文档定收敛范围 / 不动项 / 回滚 / 验收门,执行完回填。
@@ -18,7 +18,7 @@ handoff 当作待拍板,实则是 bug,且**从两个入口冒出**:
 两条路径对「同一句拆镜头」给不同结果 = 真相源分裂(同 `connection-reference-bugs` 那类「多口径不收敛」)。
 **收敛动作**:两条路径都按用户拍板的默认实现 + skill 与静态提示口径对齐。
 
-注:plan 路径是 `docs/plan/2026-06-13-storyboard-plan-document-flow.md` 刻意设计的「anchor=定妆图卡 + shot=视频片段」。
+注:plan 路径是 `docs/archive/plan/2026-06-13-storyboard-plan-document-flow.md` 刻意设计的「anchor=定妆图卡 + shot=视频片段」。
 用户拍板 image-first 即**推翻该主链路里 shot=video 的既定设计**,故本文档同步回填那份设计文档。
 
 ## 1. 范围
@@ -40,7 +40,7 @@ handoff 当作待拍板,实则是 bug,且**从两个入口冒出**:
 - **`src/workbench/creation/storyboard/StoryboardPlanEditor.tsx`** `onConfirm`(`:74-87`):
   停止解析/传 `resolveStoryboardVideoDefault`(若它无其他调用方则一并删除,P1);只传 image 默认。
 - **`src/workbench/generationCanvas/agent/storyboardPlan.test.ts`**:更新断言(镜头 kind=image、shot→shot 边数、模型默认换 image、删 maxDurationSec 用例)。
-- **`docs/plan/2026-06-13-storyboard-plan-document-flow.md`**:回填「shot 由 video 改 image-first + shot→shot 链」的决策变更。
+- **`docs/archive/plan/2026-06-13-storyboard-plan-document-flow.md`**:回填「shot 由 video 改 image-first + shot→shot 链」的决策变更。
 
 ### eval/数据集
 - `evals/datasets/storyboard.mjs` 的 `expect.kind="image"`、`minChainEdges` 已与新默认一致 → **不改**。

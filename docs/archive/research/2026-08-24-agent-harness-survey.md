@@ -1,6 +1,6 @@
 # Agent Harness 架构情报：为 Nomi 内嵌统一 Agent（2026-08-24）
 
-> 归档说明：全部结论来自 2026-08-24 当天抓取的官方文档/真实仓库（来源随文标注），为统一 Agent harness 设计收集。采纳决定见 `docs/superpowers/plans/2026-08-24-unified-agent-master-plan.md`。
+> 归档说明：全部结论来自 2026-08-24 当天抓取的官方文档/真实仓库（来源随文标注），为统一 Agent harness 设计收集。采纳决定见 `docs/archive/superpowers/plans/2026-08-24-unified-agent-master-plan.md`。
 
 ## 存在性验证
 

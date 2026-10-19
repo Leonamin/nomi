@@ -5,7 +5,7 @@
  * baseline 记录具体文件路径，不记裸数字。裸数字会允许“收录一篇旧文档，同时新增一篇
  * 失联文档”蒙混过关；具体身份才能保证历史债只减不增。
  *
- * docs/lessons 一并纳管（2026-09-02）：教训库的入口就是 INDEX.md，孤儿教训文件等于不存在
+ * docs/archive/lessons 一并纳管（2026-09-02）：教训库的入口就是 INDEX.md，孤儿教训文件等于不存在
  * ——没人会去 grep 一条自己不知道存在的坑。这条罩着的是纪律「新增一条就挂号」。
  *
  * 扫描本身住在 `scripts/docs-index-lib.mjs`（2026-09-05 抽出）：main 上的自动补齐脚本
@@ -48,7 +48,7 @@ function writeBaseline(paths) {
   const baseline = {
     _comment: [
       '文档索引棘轮基线：只减不增。',
-      '扫描 docs/archive/plan/**/*.md、docs/archive/superpowers/plans/**/*.md 与 docs/lessons/**/*.md。',
+      '扫描 docs/archive/plan/**/*.md、docs/archive/superpowers/plans/**/*.md 与 docs/archive/lessons/**/*.md。',
       '身份使用仓库相对路径；新增未收录文档必须进索引，不能追加到本数组。',
     ],
     unindexedDocuments: paths,

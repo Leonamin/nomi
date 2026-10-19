@@ -13,7 +13,7 @@
 // 能正常访问的 https URL，所以出站抓包里"链路看着通"，但那张退化占位图本身仍然会让 Seedance 2.0
 // 的实际生成判 task_failed。换成一张真实照片（resources/onboarding-demo/kid.jpg，720×720）后，
 // 同一条链路——图生视频、以及本脚本这种图+音频 omni 参考——均真实出片成功。详见
-// docs/lessons/paid-smoke-apimart-only.md。
+// docs/archive/lessons/paid-smoke-apimart-only.md。
 import { launchNomiApp } from '../tests/ux/_launchApp.mjs'
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import path from 'node:path'
