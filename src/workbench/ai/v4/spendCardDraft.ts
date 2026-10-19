@@ -27,6 +27,7 @@ import { applySpendReferences, pendingReferenceInputs, placeSpendReferences, ref
 // `镜 ⊕ 全部层 ⊕ 这一镜层`。不这么分会出一个很坏的手感——在「全部」模式下改一个
 // 已经有逐镜覆写的字段，按优先级它改了也看不见，用户读到的是「改了又弹回去」。
 // 价格与最终落盘一律按**优先级后的有效值**算，显示层的分层只影响「你此刻在编哪一层」。
+import { projectParameterReferenceSlots } from '../../generationCanvas/model/parameterReferenceSlots'
 import { resolveArchetypeForModel, replaceCustomCapabilityContractMeta } from '../../../../electron/shared/modelArchetypes'
 import { generationJsonValueSchema, type GenerationJsonValue } from '../../../../electron/shared/agentCapabilities/generationPlanSchemas'
 import { resolveRenderedControls } from '../../generationCanvas/nodes/nodeModelArchetype'
@@ -245,14 +246,15 @@ export function projectSpendNode(shot: PendingSpendShot, placed?: GenerationCanv
     title: placed?.title ?? '',
     position: placed?.position ?? { x: 0, y: 0 },
     prompt: shot.prompt,
-    meta: {
+    // 参考槽声明（ComfyUI 导入模型的 image-url 参数）与手选模型同口径，卡上才有槽、参考才进得去。
+    meta: projectParameterReferenceSlots({
       ...replaceCustomCapabilityContractMeta(shot.parameters, option?.meta),
       modelKey: shot.modelId,
       modelVendor: shot.providerId,
       ...(option ? { modelLabel: option.label } : {}),
       // 候选上写着变体就一并带上：卡上这张框显示的变体与宿主派发的，问的是同一个 owner、同一组输入。
       ...(archetype ? { archetype: { id: archetype.id, modeId: shot.modeId ?? archetype.defaultModeId, ...(shot.variantId ? { variantId: shot.variantId } : {}) } } : {}),
-    },
+    }, option?.meta),
   }, pendingReferenceInputs(shot), canvas, shot.nodeId, kept)
 }
 

@@ -25,7 +25,7 @@ type ProjectState = { binding: ProjectBinding; active: string; engine: WebAgentE
 type RunningTurn = { controller: AbortController; pending?: LanePendingApproval; answer?: (hasApproved: boolean) => void; safeGrants: Set<string> }
 type View = { surfaceId: number; state: ProjectState }
 type ToolFactory = (surface: Surface, binding: ProjectBinding, context: LaneComposerContext, signal: AbortSignal, onApprovalWaiting?: (isWaiting: boolean) => void) => Promise<{ tools: AgentTool[]; context?: LaneComposerContext; dispose(): void }>
-const AGENT_ENGINES = ['opencode', 'codex'] as const
+const AGENT_ENGINES = ['opencode', 'codex', 'claude'] as const
 const unknown = { state: 'unknown', reason: 'no-settled-turn' } as const
 function emptyUsage(): LaneUsage { return { inputTokens: 0, outputTokens: 0, cacheReadTokens: 0, cacheWriteTokens: 0, totalTokens: 0, cost: unknown, contextTokens: unknown, reasoningTokens: unknown } }
 function conversation(): Conversation { return { id: randomUUID(), createdAt: Date.now(), updatedAt: Date.now(), parts: [], nativeSessions: {}, usage: emptyUsage(), isRunning: false } }
@@ -87,6 +87,7 @@ export class WebAgentLanes {
   }
   /** 선택이 없을 때 엔진이 스스로 기억하는 기본 모델(env → 엔진 저장소). Nomi가 만들어내지 않는다. */
   private defaultModel(state: ProjectState): string {
+    if (state.engine === 'claude') return process.env.NOMI_WEB_CLAUDE_MODEL || ''
     if (state.engine !== 'opencode') return process.env.NOMI_WEB_CODEX_MODEL || ''
     const fromEnv = process.env.NOMI_WEB_OPENCODE_MODEL || ''
     if (fromEnv) return fromEnv
@@ -102,7 +103,7 @@ export class WebAgentLanes {
     const shouldChange = selection.engine !== undefined || selection.model !== undefined
     if (shouldChange && lane.isRunning) throw new Error('Stop or finish the current request before changing agents')
     if (selection.engine) {
-      z.enum(['opencode', 'codex']).parse(selection.engine)
+      z.enum(AGENT_ENGINES).parse(selection.engine)
       if (state.engine !== selection.engine) state.model = undefined
       state.engine = selection.engine
     }
@@ -115,7 +116,7 @@ export class WebAgentLanes {
   async listModels(surface: Surface, engine?: WebAgentEngine): Promise<{ models: readonly string[]; error?: string }> {
     const { state } = this.scope(surface)
     const target = engine ?? state.engine
-    z.enum(['opencode', 'codex']).parse(target)
+    z.enum(AGENT_ENGINES).parse(target)
     const controller = new AbortController()
     const timer = setTimeout(() => controller.abort(), 12_000)
     timer.unref?.()
@@ -123,7 +124,7 @@ export class WebAgentLanes {
       const models = await listNativeAgentModels(target, controller.signal)
       if (models.length) return { models }
       // Codex에 목록 커맨드가 없다는 사실과, OpenCode가 빈손인 것은 다른 이야기다.
-      return { models: [], error: target === 'codex' ? 'engine-lists-no-models' : 'engine-models-empty' }
+      return { models: [], error: target !== 'opencode' ? 'engine-lists-no-models' : 'engine-models-empty' }
     } finally { clearTimeout(timer) }
   }
   async send(surface: Surface, command: LaneDesktopCommand): Promise<LaneDesktopResult> {
@@ -173,7 +174,7 @@ export class WebAgentLanes {
         const settings = this.settings(surface)
         if (settings.engine === 'opencode' && !settings.model) return { ok: false, code: 'agent_lane_model_unconfigured', diagnostic: 'Select an authenticated OpenCode model or configure NOMI_WEB_OPENCODE_MODEL' }
         this.part(lane, { kind: 'user', text: command.context?.displayText || parsed.text })
-        lane.isRunning = true; lane.model = { provider: settings.engine, modelId: settings.model || 'Codex' }
+        lane.isRunning = true; lane.model = { provider: settings.engine, modelId: settings.model || (settings.engine === 'claude' ? 'Claude' : 'Codex') }
         this.publish(state)
         void this.execute(surface, state, lane, parsed.text, settings, command.context).catch(error => console.error('Web agent execution failed:', error))
         return { ok: true }
@@ -247,7 +248,8 @@ export class WebAgentLanes {
         controller.signal.throwIfAborted()
         const directory = projectDirById(state.binding.projectId)
         if (!directory || !sameProjectAgentBinding(state.binding, await ensureWorkspaceProjectIdentity(directory))) throw new Error('Agent project identity changed')
-        text = JSON.stringify(await tool.run(tool.schema.parse(input)))
+        // tool.run owns argument preparation and validation; parsing here first rejected stringified arrays.
+        text = JSON.stringify(await tool.run(input))
       } catch (error) { isError = true; text = error instanceof Error ? error.message : String(error) }
       lane.parts[index] = { ...lane.parts[index], running: false } as LanePart
       this.part(lane, { kind: 'tool-result', toolCallId: callId, toolName: tool.name, text, isError })
@@ -276,7 +278,7 @@ export class WebAgentLanes {
     setApprovalWaiting(false)
     try {
       const history = lane.parts.filter(part => part.kind === 'user' || part.kind === 'assistant-text').slice(-12)
-      await this.run({ engine: settings.engine, model: settings.model, prompt: `${webCreationSystemPrompt(context)}\nUse only the Nomi MCP tools. Their native identifiers are: ${domain.tools.map(tool => settings.engine === 'opencode' ? `nomi_${tool.name}` : tool.name).join(', ')}. Use read_script, list_models and draft_shots for the original document storyboard. Use generate only when the user requested GPU generation; its original Nomi confirmation settles the action. Never automatically retry generation, select candidates or alter the timeline.\nRecent conversation: ${JSON.stringify(history).slice(-40000)}\nUser request: ${prompt}`, directory: path.join(this.root, 'sandbox', lane.id), sessionId: lane.nativeSessions[settings.engine], mcpUrl: mcp.url, mcpToken: mcp.token, toolNames: domain.tools.map(tool => tool.name), signal: controller.signal, onEvent })
+      await this.run({ engine: settings.engine, model: settings.model, prompt: `${webCreationSystemPrompt(context)}\nUse only the Nomi MCP tools. Their native identifiers are: ${domain.tools.map(tool => settings.engine === 'opencode' ? `nomi_${tool.name}` : settings.engine === 'claude' ? `mcp__nomi__${tool.name}` : tool.name).join(', ')}. Use read_script, list_models and draft_shots for the original document storyboard. Use generate only when the user requested GPU generation; its original Nomi confirmation settles the action. For a recurring character or scene: draft it once as a role=anchor shot (storyboard.kind and carrier set), generate it, find its image with look_at_media, then give every later shot that image in references with a list_models model whose accepts.image is true (role first_frame for a single-image edit or image-to-video model; anchorIds alone sends no image). The user, not you, freezes anchors. Never automatically retry generation, select candidates or alter the timeline.\nRecent conversation: ${JSON.stringify(history).slice(-40000)}\nUser request: ${prompt}`, directory: path.join(this.root, 'sandbox', lane.id), sessionId: lane.nativeSessions[settings.engine], mcpUrl: mcp.url, mcpToken: mcp.token, toolNames: domain.tools.map(tool => tool.name), signal: controller.signal, onEvent })
     } catch (error) { if (!controller.signal.aborted) this.part(lane, { kind: 'error', text: error instanceof Error ? error.message : String(error) }) }
     finally { clearTimeout(deadline); turn.answer?.(false); controller.abort('native-turn-ended'); await toolQueue.catch(() => undefined); await mcp.close(); domain.dispose(); this.turns.delete(lane.id); lane.isRunning = false; this.publish(state) }
   }

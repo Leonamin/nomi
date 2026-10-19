@@ -37,6 +37,16 @@ export type { AgentModelEntry, AgentModelMode, AgentModelSlot } from "../../../.
  * 实测 HTTP 400 阻断，见 docs/archive/plan/2026-09-03-storyboard-entry-vendor-identity.md §1 Bug 3）。
  * image/video 两边真正的重复由 `(vendor, modelKey, kind)` 之外的同源条目负责，不靠丢 vendor 实现。
  */
+/**
+ * 目录行的原始 meta（能力合同、参数声明），按条目对象挂在旁表上：落画布时节点 meta 要与手选模型同源，
+ * 但 `AgentModelEntry` 是发给 lane 的严格形状（`agentModelEntrySchema`），不能多一个字段。
+ * ponytail: 条目被克隆（过 IPC / structuredClone）就查不到，回落为只按 archetypeId 解析。
+ */
+const catalogMetaByEntry = new WeakMap<AgentModelEntry, Record<string, unknown>>();
+export function agentModelCatalogMeta(entry: AgentModelEntry): Record<string, unknown> | undefined {
+  return catalogMetaByEntry.get(entry);
+}
+
 export function buildAgentModelEntries(options: readonly ModelOption[]): AgentModelEntry[] {
   const entries: AgentModelEntry[] = [];
   const seen = new Set<string>();
@@ -106,6 +116,7 @@ export function buildAgentModelEntries(options: readonly ModelOption[]): AgentMo
           }
         : {}),
     });
+    if (option.meta && typeof option.meta === "object" && !Array.isArray(option.meta)) catalogMetaByEntry.set(entries[entries.length - 1], option.meta as Record<string, unknown>);
   }
   return entries;
 }

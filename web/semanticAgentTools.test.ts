@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { createWebSemanticAgentTools } from './semanticAgentTools'
+import { createWebSemanticAgentTools, assertDraftReferencesDeliverable } from './semanticAgentTools'
 import { captureGenerationContext } from '../electron/shared/agentCapabilities/generationInvocationContext'
 import { modelFacingToolSpecs } from '../electron/shared/agentCapabilities/modelFacingToolRegistry'
 import type { WebSemanticAgentToolDependencies } from './semanticAgentTools'
@@ -8,7 +8,7 @@ describe('native web semantic tool vocabulary', () => {
     documentPort: { read: vi.fn(), write: vi.fn() }, generation: { readTask: vi.fn(async () => ({ runId: 'generation-job', status: 'completed' })), transport: { tryExecute: vi.fn(async () => ({ ok: true, result: {} })) } }, listModels: () => [], readCanvas: () => ({ nodes: [], edges: [], groups: [], selectedNodeIds: [] }) } as unknown as WebSemanticAgentToolDependencies)
   it('uses exact original names/schema and never restores retired production entrypoints', () => {
     const tools = create()
-    expect(tools.map(tool => tool.name)).toEqual(expect.arrayContaining(['read_script', 'write_script', 'list_models', 'look_at_canvas', 'draft_shots', 'generate', 'check_job']))
+    expect(tools.map(tool => tool.name)).toEqual(expect.arrayContaining(['read_script', 'write_script', 'list_models', 'look_at_canvas', 'draft_shots', 'generate', 'check_job', 'look_at_media']))
     expect(tools.some(tool => tool.name === 'start_production_run' || tool.name === 'nomi_shot_generate')).toBe(false)
     for (const tool of tools.filter(tool => tool.name !== 'write_script')) expect(tool.schema).toBe(modelFacingToolSpecs('internal').find(spec => spec.name === tool.name)?.schema)
   })
@@ -60,5 +60,17 @@ describe('web document tool scope and receipts', () => {
     expect(onDocumentExecuted).toHaveBeenCalledOnce()
     await expect(edit.run({where:'whole-document',content:'revised'})).resolves.toMatchObject({ok:true,details:{applied:true,revision:2,contentHash:'verified'}})
     expect(write).toHaveBeenCalledWith({operation:'replace',content:'revised'},expect.anything())
+  })
+})
+
+describe('reference-bearing shots never silently go text-only', () => {
+  const models = [{ modelId: 'qwen-t2i', vendor: 'comfy', accepts: { image: false } }, { modelId: 'flux-edit', vendor: 'comfy', accepts: { image: true } }]
+  it('refuses references on a model that cannot take images, or on no named model', () => {
+    expect(() => assertDraftReferencesDeliverable({ shots: [{ modelId: 'qwen-t2i', references: ['asset-1'] }] }, models)).toThrow(/cannot take a reference image/)
+    expect(() => assertDraftReferencesDeliverable({ shots: [{ references: ['asset-1'] }] }, models)).toThrow(/names no model/)
+  })
+  it('refuses anchorIds that carry no image, and accepts an image-capable model with references', () => {
+    expect(() => assertDraftReferencesDeliverable({ shots: [{ modelId: 'flux-edit', storyboard: { anchorIds: ['hero'] } }] }, models)).toThrow(/anchorIds/)
+    expect(() => assertDraftReferencesDeliverable({ candidate: { providerId: 'comfy', modelId: 'flux-edit' }, shots: [{ references: ['asset-1'], storyboard: { anchorIds: ['hero'] } }, { role: 'anchor', modelId: 'qwen-t2i' }] }, models)).not.toThrow()
   })
 })
