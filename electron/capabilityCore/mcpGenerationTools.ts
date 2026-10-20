@@ -298,11 +298,7 @@ export function createGenerationPlanningHandler(deps: GenerationPlanningHandlerD
     });
   };
 
-  /**
-   * 起草那一刻就过**确认时用的同一个** `compileParameters`（经 `admitPlanCandidate`，不另写一份校验）。
-   * 2026-10-18：起草只核「模型 + 模式」、不核参数值，坏参数（`seed: "abc"`）照样进草稿、出付费卡，
-   * 点「生成」才在合同编译口被拒。现在草稿落库之前就判，模型当场能改对再交。
-   */
+  /** 起草那一刻就过确认时用的同一个 compileParameters（经 admitPlanCandidate）：坏参数当场拒，不留到付费卡（2026-10-18）。 */
   const admitDraftParameters = (candidate: PlanCandidate): void => {
     admitPlanCandidate(candidate, deps.registry, videoCompileOptions(candidate, deps.videoModelCandidates));
   };
