@@ -14,6 +14,8 @@
 | cae5b7adf | bf73dc2a8 | 초안 거부 후 코드별 안내, 잘못된 위치 필드 안내, draft_shots variantId (충돌: aspectRatio 등 0.24 전용 부분은 포크 쪽 유지) |
 | 1c6f6383e | e9ffc5166 | 위 변경의 변이 테스트 보강 |
 | 60d187e8a | 045bacefa | 안내표 파일을 shared/agentCapabilities로 이동 |
+| 05f7a343a | e2ef6acaa | MCP 확인카드: 가격 미상일 때 CNY0 대신 미상 표시 |
+| f042d462a | bfbe1d842 | MCP 확인 거부는 종결 상태("확인해 주세요"로 되돌리지 않음) |
 | 54c444e53 (일부) | 326ba1588 | 초안 단계 매개변수 사전 검증 admitDraftParameters + draftTimeParameterAdmission 테스트. cae5b7adf의 전제라 원본에서 이 부분만 수동 반영 |
 | (포크 보충) | 6e1f65c49, fbe83756e | ko 로캘 문구 추가, 비용 단정 문구 제거(outcomeText 가드), 모델면 기준선에 variantId 반영 |
 
@@ -26,6 +28,9 @@
 | 6210978b5 | 개념 소유자 등록. 포크에는 해당 개념 파일이 없음(gate도 요구하지 않음) |
 | cae5b7adf 내 aspectRatio·null 허용 스키마 | 0.24 전용. draft_shots의 null 매개변수는 포크에서 스키마 단계에서 거부됨(에이전트가 오류를 보고 고침) |
 | df3d138b0, 54c444e53, 2b834bc5e, 98ac5dcab | main 쪽 원본. 이식본(3764be5f5, a9093bfff)이 포크 UI에 맞게 이미 반영 |
+| 6123d2754, 8b2e31d58, af7dcd720, 4b64c7f82 | MCP HTTP 서버(mcpHttpServer/Bridge/VerifyHttp/Desktop, 0.24 신설)가 포크에 없음. 포크는 stdio 런처 + web/agentMcp 경로 |
+| 4c0b435aa | 캔버스 쓰기 4개 라우트가 director 레퍼런스 작업(3D-BOX, 0.24)에 묶여 충돌 |
+| 121745347 | 확인카드 미상 가격 문구. 포크는 2026-09-10 확정 문구로 이미 처리(¥0 미표시)하여 포크 유지, 문구 통일 가드 스크립트(check-i18n-no-cost-claims)도 포크에 없음 |
 | feat(telemetry), perf.session.summary | 텔레메트리/성능 수집은 포크 방향과 무관 |
 | 3D-BOX director 통합 | 0.24 구조 필요 |
 | 문서·테스트만의 변경, 사이트/튜토리얼 | 가져올 가치 없음 |
