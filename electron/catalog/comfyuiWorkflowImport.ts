@@ -10,7 +10,7 @@ import { LEGACY_IMAGE_ROLE_PARAM_KEYS } from '../shared/imageCapabilities/comfyW
 // API 格式（实查 docs.comfy.org/development/api-development/workflow-api-format 2026-07）：节点 ID 为键，
 // 每节点 { inputs:{…}, class_type, _meta:{title} }；inputs 值要么是直接 widget 值（可参数化），
 // 要么是连线 [源节点ID, 输出槽] （不可参数化，保持不动）。
-import { COMFY_ASPECT_CONTROL } from "./comfyAspectSize";
+import { COMFY_ASPECT_CONTROL } from "../shared/comfyAspectControl";
 import { COMFYUI_VENDOR_KEY, type HttpOperation } from "./types";
 import { desktopT } from "../i18n";
 import type { ComfyComboValue, ComfyObjectInfoIndex } from "../comfyuiObjectInfo";

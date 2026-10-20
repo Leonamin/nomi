@@ -3,7 +3,8 @@ import { readNomiLocalAsset } from "../assets/localAssetFile";
 import { hardenedFetch } from "../hardenedFetch";
 import { normalizeComfyuiBaseUrl } from "../comfyui/endpointResolver";
 import { logWarn } from "../logging/logger";
-import { comfySizeSpec, decideComfyOutputSize, firstImageRef, imageSizeFromHeader } from "./comfyAspectSize";
+import { comfySizeSpec } from "../shared/comfyAspectControl";
+import { decideComfyOutputSize, firstImageRef, imageSizeFromHeader } from "./comfyAspectSize";
 import type { Model } from "./types";
 import type { JsonRecord } from "../jsonUtils";
 

@@ -15,7 +15,7 @@ import {
 import { normalizeOrientation, type Orientation } from '../../../../utils/orientation'
 import { isComfyuiVendorKey } from '../../model/comfyuiVendor'
 import { normalizeAspectRatioToWH } from '../aspectRatio'
-import { COMFY_ASPECT_CONTROL_KEY, comfySizeSpec } from '../../../../../electron/catalog/comfyAspectSize'
+import { COMFY_ASPECT_CONTROL_KEY, comfySizeSpec } from '../../../../../electron/shared/comfyAspectControl'
 import { resultUrl } from '../../runner/referenceUrl'
 import type { GenerationCanvasNode } from '../../model/generationCanvasTypes'
 import {
@@ -672,7 +672,7 @@ export function buildEffectiveVideoCatalogConfig(meta: unknown): VideoModelCatal
  */
 export function nodeParameterControls(meta: unknown): ModelParameterControl[] {
   const all = parseModelParameterControls(meta)
-  const spec = comfySizeSpec({ meta: meta as never })
+  const spec = comfySizeSpec({ meta: meta })
   if (!spec || !all.some((c) => c.key === COMFY_ASPECT_CONTROL_KEY)) return all
   return all.filter((c) => c.key !== spec.widthKey && c.key !== spec.heightKey)
 }

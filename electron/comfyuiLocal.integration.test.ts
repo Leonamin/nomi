@@ -222,7 +222,7 @@ describe("本地 ComfyUI 传输链（真 HTTP 端到端）", () => {
     const meta = { parameters: COMFYUI_CURATED_MODELS[0].meta.parameters };
     const vendor = { key: "comfyui-local", name: "本地 ComfyUI", enabled: true, baseUrlHint: baseUrl, authType: "none" as const, authHeader: null, createdAt: "", updatedAt: "" };
     const model = { modelKey: "comfyui-txt2img", vendorKey: "comfyui-local", labelZh: "本地·文生图", kind: "image" as const, enabled: true, meta, createdAt: "", updatedAt: "" };
-    const canvasExtras = { ...Object.fromEntries((meta.parameters as Array<{ key: string; default: unknown }>).map((c) => [c.key, c.default])), ...over };
+    const canvasExtras = { ...Object.fromEntries((meta.parameters as unknown as Array<{ key: string; default: unknown }>).map((c) => [c.key, c.default])), ...over };
     expect(canvasExtras).toMatchObject({ comfy_width: 512, comfy_height: 512 });
     const sized = await applyComfyOutputSize(canvasExtras, model, baseUrl);
     const extras = applyWireDefaults(sized ?? {}, mapping.create.defaultParams) as Record<string, unknown>;

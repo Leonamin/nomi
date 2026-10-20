@@ -45,6 +45,7 @@ import {
 } from './localTaskControl'
 import { isComfyuiVendorKey } from '../model/comfyuiVendor'
 import { useWorkbenchStore } from '../../workbenchStore'
+import { COMFY_PROJECT_ASPECT_KEY } from '../../../../electron/shared/comfyAspectControl'
 import { productionMetaOf } from '../model/productionMeta'
 import { RecoverableTimeoutError, isRecoverableTimeoutError, type RecoverableTimeoutDetail } from './recoverableTimeout'
 import {
@@ -351,7 +352,7 @@ export function buildCatalogTaskRequest(
     ...referenceExtras,
     // 项目画幅（预览"画布比例"）：ComfyUI 的比例控件为 auto 时以它为默认，生成物才与画布所见一致（见 comfyAspectSize）。
     // 渲染进程是唯一知道项目的地方，所以在这个单一请求出口带下去，不在主进程猜。
-    ...(isComfyuiVendorKey(vendor) ? { projectAspectRatio: useWorkbenchStore.getState().previewAspectRatio } : {}),
+    ...(isComfyuiVendorKey(vendor) ? { [COMFY_PROJECT_ASPECT_KEY]: useWorkbenchStore.getState().previewAspectRatio } : {}),
   }
   const activeAssetUrls = Array.from(collectLocalAssetUrls(extras))
   const exactParameterInputs = usesComfyParameterContract(meta)
