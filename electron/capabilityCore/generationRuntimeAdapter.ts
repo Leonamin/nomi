@@ -1,4 +1,5 @@
 import type { ProductionExecutionBinding } from "../productionRun/productionExecutionBinding";
+import { classifyUpstreamTaskStatus } from "../shared/taskStatus";
 import {
   assertProductionGenerationPayloadHash,
   productionGenerationPayloadHash,
@@ -68,7 +69,7 @@ export type GenerationProviderMaterializationResult = {
  * 「不知道这笔任务是用哪个模型交的」、被吞成「还在跑」。视频在供应商那边早就出好了，Run 永远停在 polling。
  * 供应商实现早就留了「调用方明说」这条路（apimartGenerationProvider.queryTargetFor ①），只是这一层从来没把它递下去。
  */
-export type GenerationProviderTaskContext = Partial<Pick<GenerationProviderRequestInputV1, "modelId" | "mode">>;
+export type GenerationProviderTaskContext = Partial<Pick<GenerationProviderRequestInputV1, "modelId" | "mode" | "parameters">>;
 
 export type GenerationProvider = {
   providerId: string;
@@ -77,7 +78,8 @@ export type GenerationProvider = {
   submit: (request: unknown, idempotencyKey: string) => Promise<{ providerTaskId: string; raw?: unknown }>;
   query?: (providerTaskId: string, context?: GenerationProviderTaskContext) => Promise<{ status: string; raw?: unknown }>;
   reconcile?: (input: { idempotencyKey: string; providerTaskId?: string }) => Promise<{ disposition: GenerationProviderReconcileDisposition; providerTaskId?: string; raw?: unknown }>;
-  materialize?: (input: { providerTaskId: string; raw?: unknown }) => Promise<GenerationProviderMaterializationResult>;
+  /** context = 这笔任务冻结合同里的模型 / 模式 / 参数：取产物要知道「要什么类型」「请求里发过哪些参考地址」（V-1213）。 */
+  materialize?: (input: { providerTaskId: string; raw?: unknown; context: GenerationProviderTaskContext }) => Promise<GenerationProviderMaterializationResult>;
   cancel?: (providerTaskId: string) => Promise<{ disposition: Exclude<GenerationProviderCancelDisposition, "unsupported">; raw?: unknown }>;
 };
 
@@ -157,31 +159,9 @@ export class GenerationProviderObservationError extends Error {
   }
 }
 
-const PROVIDER_TASK_STATE_BY_STATUS: Readonly<Record<string, GenerationProviderTaskState>> = {
-  queued: "queued",
-  pending: "queued",
-  submitted: "queued",
-  created: "queued",
-  waiting: "queued",
-  processing: "running",
-  running: "running",
-  in_progress: "running",
-  "in-progress": "running",
-  generating: "running",
-  succeeded: "succeeded",
-  success: "succeeded",
-  completed: "succeeded",
-  complete: "succeeded",
-  done: "succeeded",
-  failed: "failed",
-  error: "failed",
-  rejected: "failed",
-  cancelled: "cancelled",
-  canceled: "cancelled",
-};
-
+/** 上游状态词 → 任务态：问全仓唯一那张词表（shared/taskStatus，#1213 收口），不在这里另存一份。 */
 export function normalizeGenerationProviderTaskState(providerStatus: string): GenerationProviderTaskState {
-  return PROVIDER_TASK_STATE_BY_STATUS[providerStatus.trim().toLowerCase()] ?? "unknown";
+  return classifyUpstreamTaskStatus(providerStatus);
 }
 
 export function assertGenerationProviderCapabilities(provider: GenerationProvider): void {
@@ -351,13 +331,14 @@ export function createGenerationRuntimeAdapter(deps: { providers: readonly Gener
     return { disposition: result.disposition, ...(result.raw === undefined ? {} : { raw: result.raw }) };
   }
 
-  async function materialize(input: { providerId: string; providerTaskId: string; raw?: unknown }): Promise<GenerationProviderMaterializationResult> {
+  // context 必填：取产物不带任务上下文，就分不清「这是产物」还是「这是请求里回显的参考图」（V-1213 复验阻断）。
+  async function materialize(input: { providerId: string; providerTaskId: string; raw?: unknown; context: GenerationProviderTaskContext }): Promise<GenerationProviderMaterializationResult> {
     const providerTaskId = input.providerTaskId.trim();
     if (!providerTaskId) throw new Error("Provider task id is required for materialization");
     const provider = providers.get(input.providerId);
     if (!provider) throw new GenerationProviderCapabilityError(input.providerId, ["registered_provider"]);
     if (!provider.materialize || provider.capabilities.materialize !== true) throw new GenerationProviderObservationError(input.providerId, "materialize");
-    const result = await provider.materialize({ providerTaskId, raw: input.raw });
+    const result = await provider.materialize({ providerTaskId, raw: input.raw, context: input.context });
     if (!Array.isArray(result.outputs)) throw new Error("Provider materialization returned invalid outputs");
     for (const output of result.outputs) {
       if (!output || !["image", "video", "audio", "model3d"].includes(output.kind) || typeof output.url !== "string" || !output.url.trim()) {
