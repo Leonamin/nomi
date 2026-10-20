@@ -23,6 +23,7 @@ import {
   planStagedVendorIdentity,
   stagedVendorKey,
   type StagedVendorIdentity,
+  supersedableStagingShells,
 } from "./stagedVendorIdentity";
 
 export type AnalyzeWorkflowResult =
@@ -267,10 +268,12 @@ function isolatedIdentity(input: StageComfyInput, revisionId: string): StagedVen
     reuseUnpublishedCandidate: false,
   });
   if (planned.isolated) return planned;
+  const vendorKey = stagedVendorKey(planned.rootVendorKey, { kind: "comfyui-workflow", modelKey: input.modelKey }, revisionId);
   return {
     ...planned,
     isolated: true,
-    vendorKey: stagedVendorKey(planned.rootVendorKey, { kind: "comfyui-workflow", modelKey: input.modelKey }, revisionId),
+    vendorKey,
+    supersededVendorKeys: supersedableStagingShells(state, planned.rootVendorKey, vendorKey, new Set([input.modelKey])),
   };
 }
 

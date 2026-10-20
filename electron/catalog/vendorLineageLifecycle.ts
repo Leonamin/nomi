@@ -36,6 +36,24 @@ export function vendorLineageClosure(state: CatalogState, rootKey: string): Set<
   return keys;
 }
 
+/** True when any vendor in the closure owns a published model; deleting that closure would unpublish live execution. */
+export function vendorLineageOwnsPublishedExecution(state: CatalogState, rootKey: string): boolean {
+  const keys = vendorLineageClosure(state, rootKey);
+  return state.models.some((model) =>
+    keys.has(model.vendorKey) &&
+    derivePublishedExecution(model, { mappings: state.mappings, legacyWithoutAdapter: "text-only" }).published);
+}
+
+/**
+ * A staging shell is safe to supersede only when nothing depends on it (no descendants), it owns no
+ * published model, and it holds nothing but the models being re-staged (its own previous revision).
+ */
+export function isSupersedableStagingShell(state: CatalogState, vendorKey: string, selected: ReadonlySet<string>): boolean {
+  return vendorLineageClosure(state, vendorKey).size === 1
+    && !vendorLineageOwnsPublishedExecution(state, vendorKey)
+    && state.models.every((model) => model.vendorKey !== vendorKey || selected.has(model.modelKey));
+}
+
 export function removeVendorLineage(state: CatalogState, rootKey: string): void {
   const keys = vendorLineageClosure(state, rootKey);
   state.vendors = state.vendors.filter((vendor) => !keys.has(vendor.key));
