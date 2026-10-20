@@ -9,6 +9,7 @@ import { resolveGenerationShotScope } from "../shared/agentCapabilities/generati
 import crypto from "node:crypto";
 import { hasMentions } from "../shared/storyboard/promptMentions";
 import {
+  admitPlanCandidate,
   compileExecutionContract,
   type ExecutionContractV1,
   type PlanCandidate,
@@ -297,6 +298,11 @@ export function createGenerationPlanningHandler(deps: GenerationPlanningHandlerD
     });
   };
 
+  /** 起草那一刻就过确认时用的同一个 compileParameters（经 admitPlanCandidate）：坏参数当场拒，不留到付费卡（2026-10-18）。 */
+  const admitDraftParameters = (candidate: PlanCandidate): void => {
+    admitPlanCandidate(candidate, deps.registry, videoCompileOptions(candidate, deps.videoModelCandidates));
+  };
+
   /** patch 入口的参考素材身份补齐。与 create 那条同一个解析器，只是调用点不同。 */
   const resolvePatchReferences = (projectId: string, value: unknown): PlanCandidate["references"] => {
     if (!Array.isArray(value)) refuseToModel(GENERATION_ARGUMENT_REFUSAL, "references must be an array of asset ids.");
@@ -487,7 +493,10 @@ export function createGenerationPlanningHandler(deps: GenerationPlanningHandlerD
       if (draftShots) {
         const normalizedShots = draftShots.map((shot) => ({ ...shot, candidate: normalizeVideoCandidate(shot.candidate, deps.videoModelCandidates) }));
         // 每一镜的「模型 + 模式」落盘前就对过账：矛盾的镜头当场拒绝，不留到付费卡上点下去才发现（第 9 条）。
-        for (const shot of normalizedShots) admitShotIdentity(shot.candidate, deps.registry, shot.role);
+        for (const shot of normalizedShots) {
+          admitShotIdentity(shot.candidate, deps.registry, shot.role);
+          admitDraftParameters(shot.candidate);
+        }
         // 顶层 candidate = 第一个 shot 的 candidate (reducer seal 硬要顶层 contract 匹配顶层 draft candidate,
         // productionRunReducer.ts generation.seal). 与 S4 e2e setup 同构 (top = shots[0]).
         const preparedPlan = prepareDocumentPlan(capturedProjectId, input.origin, normalizedShots);
@@ -530,6 +539,7 @@ export function createGenerationPlanningHandler(deps: GenerationPlanningHandlerD
       }
       const normalizedSingle = normalizeVideoCandidate(singleCandidate, deps.videoModelCandidates);
       admitShotIdentity(normalizedSingle, deps.registry);
+      admitDraftParameters(normalizedSingle);
       const preparedPlan = prepareDocumentPlan(capturedProjectId, input.origin, [{ shotId: normalizedSingle.candidateId, candidate: normalizedSingle, storyboard: params.storyboard as GenerationOperationDraftShot['storyboard'] }]);
       const createdOperation = await deps.operations.create({ operationId, projectId: input.lease.projectId, candidate: normalizedSingle, now: now(), origin: input.origin, ...(params.cardHidden === true ? { cardHidden: true } : {}) });
       const savedSingle = await saveDocumentPlan(capturedProjectId, input.origin, createdOperation.operationId, preparedPlan, input.storyboardTarget);

@@ -5,6 +5,7 @@
 - [개발·검사 계약](engineering/), [원인 계약 JSON](fixes/)
 - [디자인 시스템](design/nomi-design-system.md), [디자인 작업 규범](design/nomi-design-flow-howto.md)
 - [진행 중인 작업](plan/INDEX.md)
+- [업스트림 동기화 장부](upstream-sync.md)
 - [용어](GLOSSARY.md), [코딩 규범](coding-standards.md), [패키지 형식](skill-pack-format.md)
 - `guide/`, `seo/`, `marketing/`, `release-notes/`, `integration-certification/`, `feedback/`, `security/`, `stats/`, `media/`: 검사·자동화가 실제 소비하는 입력과 정책
 
