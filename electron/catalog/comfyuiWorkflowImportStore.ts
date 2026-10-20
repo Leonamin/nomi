@@ -303,6 +303,9 @@ function stageComfyWorkflow(input: StageComfyInput): ImportWorkflowResult {
         enumOptions: input.enumOptions, vendorKey: vendor.key, uiWorkflowText: input.uiWorkflowText,
       },
       (rawModel) => {
+        // An update keeps the model's identity; a video model must not silently become an image one.
+        const previous = before.models.find((m) => m.modelKey === input.modelKey && (m.vendorKey === identity.sourceVendorKey || m.vendorKey === input.sourceVendorKey));
+        if (previous && previous.kind !== rawModel.kind) throw new Error(`comfy_workflow_kind_mismatch:${String(previous.kind)}->${String(rawModel.kind)}`);
         const meta = rawModel.meta && typeof rawModel.meta === "object" ? rawModel.meta as Record<string, unknown> : {};
         tx.upsertModel({
           ...rawModel,

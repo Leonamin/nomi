@@ -1070,7 +1070,7 @@ export class IntegrationSessionService {
     return this.mutate(sessionId, expectedRevision, owner, (current) => {
       current.config.workflow = analyzed.convertedText || workflow;
       current.config.workflowBinding = analyzed.analysis.suggested;
-      if (modelKey) current.config.modelKey = modelKey;
+      current.config.modelKey = modelKey;
       current.configDigest = digest(current.config);
       current.candidates = [];
       current.selections = [];
@@ -1085,16 +1085,16 @@ export class IntegrationSessionService {
     owner: CapabilityOriginHost,
     workflow: string,
     binding?: unknown,
-    options: { enumOptions?: unknown; modelKey?: unknown; uiWorkflow?: unknown } = {},
+    options: { enumOptions?: unknown; modelKey?: unknown; uiWorkflow?: unknown; name?: unknown } = {},
   ): IntegrationSessionProjection {
     return this.mutate(sessionId, expectedRevision, owner, (session) => {
-      const value = text(workflow, "workflow", MAX_WORKFLOW);
-      session.config.workflow = value;
+      session.config.workflow = text(workflow, "workflow", MAX_WORKFLOW);
       session.config.workflowBinding = sanitizeWorkflowBinding(binding);
       session.config.workflowEnumOptions = sanitizeWorkflowEnumOptions(options.enumOptions);
-      if (options.modelKey !== undefined) session.config.modelKey = id(options.modelKey, "modelKey");
-      if (options.uiWorkflow !== undefined)
-        session.config.uiWorkflow = text(options.uiWorkflow, "uiWorkflow", MAX_WORKFLOW);
+      // 复用会话不继承上次意图：有 modelKey=更新该模型，没有=导入新模型。
+      session.config.modelKey = options.modelKey === undefined ? undefined : id(options.modelKey, "modelKey");
+      if (options.name !== undefined) session.config.name = text(options.name, "name", 240);
+      if (options.uiWorkflow !== undefined) session.config.uiWorkflow = text(options.uiWorkflow, "uiWorkflow", MAX_WORKFLOW);
       session.configDigest = digest(session.config);
       session.stage = "needs_input";
     });
