@@ -19,6 +19,7 @@
   "你 ComfyUI/models/checkpoints 目录里的文件名": "ComfyUI/models/checkpoints 폴더에 있는 파일 이름",
   "模型权重（checkpoint 文件名）": "모델 파일 (checkpoint 파일 이름)",
   "宽度": "너비",
+  "画面比例": "화면 비율",
   "高度": "높이",
   "采样步数": "샘플링 단계 수",
   "采样器": "샘플러",

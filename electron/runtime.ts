@@ -1,5 +1,6 @@
 import { revalidatePendingCredential } from './catalog/validateCandidateCredential';
 import crypto from "node:crypto";
+import { applyComfyOutputSize } from "./catalog/comfyAspectApply";
 import { assertLocalAssetTransportReady, localizeAssetsForVendor } from "./catalog/assetLocalization";
 import { assetIngestionResolver, assetLocalizationOptions } from "./catalog/assetTransportRuntime";
 import { readNomiLocalAsset, postJsonForAssetUpload, postMultipartForAssetUpload, putBinaryForAssetUpload } from "./assets/localAssetFile";
@@ -54,7 +55,7 @@ export type ProfileOperationStage = AntigravityProcessStage | "result";
 import { extractVendorExtraHeaders, readCatalog } from "./catalog/catalogStore";
 import { unlocalizedTaskAsset } from "./tasks/unlocalizedTaskAsset";
 import type { BillingModelKind, HttpOperation, Mapping, Model, ProfileKind, Vendor } from "./catalog/types";
-import { billingKindForTaskKind, selectTaskMapping } from "./catalog/types";
+import { billingKindForTaskKind, isComfyuiVendor, selectTaskMapping } from "./catalog/types";
 import { applyHeadlessParamDefaults, imageEditGuardError, projectOutboundPrompt } from "./catalog/taskParams";
 import { modelModeBodies } from "./catalog/modelCatalogListing";
 import { runCustomCallTask } from "./catalog/customCallDispatch";
@@ -315,6 +316,8 @@ export async function runTask(payload: unknown): Promise<TaskResult> {
   const taskId = `task-${crypto.randomUUID()}`;
   const effectiveVendorKey = vendor.key;
   const mapping = stagedCandidate?.mapping || findTaskMapping(effectiveVendorKey, kind, modelKey, modeId);
+  // ComfyUI 出图尺寸跟随比例/首帧比例（登记的 width/height 是字面数字，比例无处落脚）；必须在默认值合并之前，才分得清"显式给的像素"。
+  if (isComfyuiVendor(vendor)) request.extras = await applyComfyOutputSize(request.extras, model, String(vendor.baseUrlHint || "")) as TaskRequest["extras"];
   request.extras = applyHeadlessParamDefaults(request.extras, (model?.meta as { archetypeId?: string } | undefined)?.archetypeId, kind, effectiveVendorKey, mapping?.create?.defaultParams, mapping?.create?.body, model.modelKey);
   // A5：@ 内联参考在发出去之前投影成 @image1/@video1。判据与注释住 taskParams（引擎 A 只有这一个出口）。
   request.prompt = projectOutboundPrompt(request.prompt, request.extras);

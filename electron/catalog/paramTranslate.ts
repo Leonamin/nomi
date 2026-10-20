@@ -112,7 +112,7 @@ function roundTo8(n: number): number {
 }
 
 /** 解析 "a:b" 比例 → [a,b]；非法 → null。 */
-function parseAspect(raw: string | undefined): [number, number] | null {
+export function parseAspect(raw: string | undefined): [number, number] | null {
   const m = (raw || "").trim().toLowerCase().match(/^(\d+)\s*[:x]\s*(\d+)$/);
   if (!m) return null;
   const a = Number(m[1]);

@@ -19,6 +19,7 @@
 // 标准键从 request 顶层字段**重新派生**、headless 下顶层为空会把它们清成 undefined → workflow 图里该数字节点
 // 丢键报错（实查 taskParams.ts:78-84）。用 comfy_* 走 `...extras` 直通、不被派生覆盖。
 import { COMFYUI_VENDOR_KEY, type HttpOperation } from "./types";
+import { COMFY_ASPECT_CONTROL } from "./comfyAspectSize";
 import { registerResponseTransform, type ResponseTransformFn } from "../tasks/responseTransforms";
 import { registerRequestTransform } from "../tasks/requestTransforms";
 import { fetchComfyuiCheckpoints } from "../comfyuiObjectInfo";
@@ -283,6 +284,7 @@ const TXT2IMG_PARAMETERS = [
   { key: "ckpt_name", label: "模型权重（checkpoint 文件名）", type: "text", default: "", placeholder: "留空 = 自动用本机第一个 checkpoint" },
   { key: "comfy_width", label: "宽度", type: "number", default: 512, min: 64, max: 2048, step: 64 },
   { key: "comfy_height", label: "高度", type: "number", default: 512, min: 64, max: 2048, step: 64 },
+  COMFY_ASPECT_CONTROL,
   { key: "comfy_steps", label: "采样步数", type: "number", default: 20, min: 1, max: 100, step: 1 },
   { key: "comfy_cfg", label: "CFG 提示词强度", type: "number", default: 7, min: 1, max: 20, step: 0.5 },
   {

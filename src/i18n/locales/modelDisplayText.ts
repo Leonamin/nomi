@@ -21,6 +21,7 @@ export const enModelDisplayText: Readonly<Record<string, string>> = {
   '你 ComfyUI/models/checkpoints 目录里的文件名': 'Filename in your ComfyUI/models/checkpoints directory',
   '模型权重（checkpoint 文件名）': 'Model weights (checkpoint filename)',
   '宽度': 'Width',
+  '画面比例': 'Aspect ratio',
   '高度': 'Height',
   '采样步数': 'Sampling steps',
   '采样器': 'Sampler',
