@@ -89,7 +89,7 @@ export function createWebComfyuiCommands(hasPendingConnection: (key: string) => 
       const service = sessions()
       const created = service.begin({ kind: 'comfyui-workflow', name: String(input.name || 'ComfyUI workflow'), baseUrl: String(connection.baseUrlHint) }, 'nomi')
       const submitted = service.submitWorkflow(created.id, created.revision, 'nomi', String(input.workflow || ''), input.binding, {
-        ...(input.enumOptions !== undefined ? { enumOptions: input.enumOptions } : {}), ...(modelKey ? { modelKey } : {}),
+        ...(input.enumOptions !== undefined ? { enumOptions: input.enumOptions } : {}), ...(modelKey ? { modelKey } : {}), name: String(input.name || 'ComfyUI workflow'),
         ...(typeof input.uiWorkflow === 'string' ? { uiWorkflow: input.uiWorkflow } : {}),
       })
       const ready = service.resolveInput(submitted.id, submitted.revision, 'nomi', {})

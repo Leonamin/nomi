@@ -294,6 +294,25 @@ describe("importComfyWorkflowToCatalog（S3 落库）", () => {
     }));
   });
 
+  it("更新不能把模型 kind 悄悄改掉（video → image 被拒，原注册与候选壳都不变）", async () => {
+    emptyCatalog();
+    const { analyzeComfyWorkflowText, importComfyWorkflowToCatalog, updateComfyWorkflowInCatalog } = await import("./comfyuiWorkflowImportStore");
+    const { readCatalog } = await import("./catalogStore");
+    const videoText = textToVideoWorkflow("v");
+    const sug = (t: string) => (analyzeComfyWorkflowText(t) as { analysis: { suggested: unknown } }).analysis.suggested;
+    const initial = importComfyWorkflowToCatalog({ text: videoText, binding: sug(videoText), labelZh: "Vid" }, "k") as { modelKey: string; vendorKey: string };
+    const imageText = JSON.stringify({
+      "2": { class_type: "CLIPTextEncode", inputs: { text: "i", clip: ["3", 0] } },
+      "3": { class_type: "CheckpointLoaderSimple", inputs: { ckpt_name: "m.safetensors" } },
+      "4": { class_type: "KSampler", inputs: { seed: 2, steps: 12, positive: ["2", 0], model: ["3", 0] } },
+      "5": { class_type: "SaveImage", inputs: { images: ["4", 0], filename_prefix: "t" } },
+    });
+    const before = structuredClone(readCatalog());
+    const r = updateComfyWorkflowInCatalog({ vendorKey: initial.vendorKey, modelKey: initial.modelKey, text: imageText, binding: sug(imageText), labelZh: "Img" });
+    expect(r).toMatchObject({ ok: false, error: expect.stringContaining("comfy_workflow_kind_mismatch") });
+    expect(readCatalog()).toEqual(before);
+  });
+
   it("坏 workflow → { ok:false, error }，不落库", async () => {
     emptyCatalog();
     const { importComfyWorkflowToCatalog } = await import("./comfyuiWorkflowImportStore");

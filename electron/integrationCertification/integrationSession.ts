@@ -1071,6 +1071,7 @@ export class IntegrationSessionService {
       current.config.workflow = analyzed.convertedText || workflow;
       current.config.workflowBinding = analyzed.analysis.suggested;
       if (modelKey) current.config.modelKey = modelKey;
+      else delete current.config.modelKey;
       current.configDigest = digest(current.config);
       current.candidates = [];
       current.selections = [];
@@ -1085,14 +1086,18 @@ export class IntegrationSessionService {
     owner: CapabilityOriginHost,
     workflow: string,
     binding?: unknown,
-    options: { enumOptions?: unknown; modelKey?: unknown; uiWorkflow?: unknown } = {},
+    options: { enumOptions?: unknown; modelKey?: unknown; uiWorkflow?: unknown; name?: unknown } = {},
   ): IntegrationSessionProjection {
     return this.mutate(sessionId, expectedRevision, owner, (session) => {
       const value = text(workflow, "workflow", MAX_WORKFLOW);
       session.config.workflow = value;
       session.config.workflowBinding = sanitizeWorkflowBinding(binding);
       session.config.workflowEnumOptions = sanitizeWorkflowEnumOptions(options.enumOptions);
+      // A resumed session (begin() reuses any open one for the same endpoint) must not inherit the
+      // previous request's intent: modelKey set = update that model, absent = import a new one.
       if (options.modelKey !== undefined) session.config.modelKey = id(options.modelKey, "modelKey");
+      else delete session.config.modelKey;
+      if (options.name !== undefined) session.config.name = text(options.name, "name", 240);
       if (options.uiWorkflow !== undefined)
         session.config.uiWorkflow = text(options.uiWorkflow, "uiWorkflow", MAX_WORKFLOW);
       session.configDigest = digest(session.config);
