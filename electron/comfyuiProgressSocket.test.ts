@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("electron", () => ({ webContents: { fromId: () => null } }));
 
-import { cancelComfyuiPrompt, computeOverallPercent, parsePreviewFrame } from "./comfyuiProgressSocket";
+import { cancelComfyuiPrompt, computeOverallPercent, parsePreviewFrame, pendingNodeTotal } from "./comfyuiProgressSocket";
 
 // ── 连接生命周期回归（open 超时必须终止挂起的 ws 并排程重连）──────────────────────────────
 // 场景：ws 一直停在 CONNECTING（服务挂起/网络黑洞）。open 800ms 超时 settleReady(false)，
@@ -141,6 +141,16 @@ describe("ComfyUI 安全取消", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 });
+
+describe("pendingNodeTotal（缓存命中的节点不进分母）", () => {
+  it("14 个节点里 7 个命中缓存时，第一个真正执行的节点从 0% 起步而不是 50%", () => {
+    expect(computeOverallPercent(1, 0, pendingNodeTotal(14, 7))).toBe(0)
+    expect(computeOverallPercent(7, 1, pendingNodeTotal(14, 7))).toBe(100)
+  })
+  it("全部命中缓存也不除零", () => {
+    expect(pendingNodeTotal(5, 5)).toBe(1)
+  })
+})
 
 describe("computeOverallPercent（已开跑节点-1 + 当前节点比率 / 总数）", () => {
   it("常规推进单调不倒退", () => {

@@ -46,6 +46,8 @@ type WatchEntry = {
   totalNodes: number;
   classById: Record<string, string>;
   started: Set<string>;
+  /** ComfyUI 直接复用缓存、不会真正执行的节点：不算已完成的工作，也不进分母。 */
+  cached: Set<string>;
   currentNode: string | null;
   lastPreviewAt: number;
   lastQueueProbeAt: number;
@@ -118,6 +120,15 @@ export function computeOverallPercent(startedCount: number, currentRatio: number
   return Math.max(0, Math.min(100, Math.round((done / totalNodes) * 100)));
 }
 
+/** 真正要跑的节点数：缓存命中的节点瞬间就「完成」，把它们算进进度会让条一开始就跳到一半，而采样等重活还没开始。 */
+export function pendingNodeTotal(totalNodes: number, cachedCount: number): number {
+  return Math.max(1, totalNodes - cachedCount);
+}
+
+function pendingTotal(entry: WatchEntry): number {
+  return pendingNodeTotal(entry.totalNodes, entry.cached.size);
+}
+
 function send(entry: WatchEntry, event: Omit<ComfyuiProgressEvent, "promptId" | "nodeId" | "projectId">): void {
   const target = webContents.fromId(entry.webContentsId);
   if (!target || target.isDestroyed()) return;
@@ -188,10 +199,10 @@ function handleTextMessage(baseUrl: string, raw: string): void {
     entry.started.add(node);
     send(entry, {
       kind: "progress",
-      percent: computeOverallPercent(entry.started.size, 0, entry.totalNodes),
+      percent: computeOverallPercent(entry.started.size, 0, pendingTotal(entry)),
       currentClass: entry.classById[node] || node,
       startedNodes: entry.started.size,
-      totalNodes: entry.totalNodes,
+      totalNodes: pendingTotal(entry),
     });
     return;
   }
@@ -207,10 +218,10 @@ function handleTextMessage(baseUrl: string, raw: string): void {
     if (node) entry.started.add(node);
     send(entry, {
       kind: "progress",
-      percent: computeOverallPercent(entry.started.size, ratio, entry.totalNodes),
+      percent: computeOverallPercent(entry.started.size, ratio, pendingTotal(entry)),
       currentClass: node ? entry.classById[node] || node : undefined,
       startedNodes: entry.started.size,
-      totalNodes: entry.totalNodes,
+      totalNodes: pendingTotal(entry),
     });
     return;
   }
@@ -218,12 +229,12 @@ function handleTextMessage(baseUrl: string, raw: string): void {
   if (msg.type === "execution_cached") {
     const entry = promptId ? registry.get(promptId) : undefined;
     if (!entry || !Array.isArray(data.nodes)) return;
-    for (const node of data.nodes) if (typeof node === "string") entry.started.add(node);
+    for (const node of data.nodes) if (typeof node === "string") entry.cached.add(node);
     send(entry, {
       kind: "progress",
-      percent: computeOverallPercent(entry.started.size, 1, entry.totalNodes),
+      percent: computeOverallPercent(entry.started.size, 0, pendingTotal(entry)),
       startedNodes: entry.started.size,
-      totalNodes: entry.totalNodes,
+      totalNodes: pendingTotal(entry),
     });
     return;
   }
@@ -231,7 +242,7 @@ function handleTextMessage(baseUrl: string, raw: string): void {
   if (msg.type === "status") {
     // 排队位次：还没开始执行的 watcher 才关心；节流问 /queue（status 无 per-prompt 位次）。
     for (const entry of registry.values()) {
-      if (entry.baseUrl !== baseUrl || entry.started.size > 0) continue;
+      if (entry.baseUrl !== baseUrl || entry.started.size > 0 || entry.cached.size > 0) continue;
       void probeQueuePosition(entry);
     }
   }
@@ -357,6 +368,7 @@ export async function watchComfyuiTask(
     totalNodes: Object.keys(classById).length,
     classById,
     started: new Set(),
+    cached: new Set(),
     currentNode: null,
     lastPreviewAt: 0,
     lastQueueProbeAt: 0,
