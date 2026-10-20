@@ -1,5 +1,6 @@
 import { mcpLocaleText } from './mcpLocaleText'
 import type { GenerationGateChallengeProjection, GenerationGateConfirmation } from "./mcpProtocol";
+import { generationDenialOutcome } from "./mcpGateConfirmation";
 
 export type SemanticGenerationFlowDependencies = {
   invoke: (method: string, params: Record<string, unknown>, signal?: AbortSignal) => Promise<unknown>;
@@ -20,6 +21,11 @@ export async function handleSemanticGenerationGate(
 ): Promise<void> {
   const challenge = await deps.invoke("nomi_request_generation_gate", built, signal) as GenerationGateChallengeProjection;
   const confirmation = await deps.requestConfirmation(challenge, signal);
+  if (!confirmation.confirmed && confirmation.denial) {
+    const denied = generationDenialOutcome(confirmation.denial, deps.locale());
+    deps.reply(id, { content: [{ type: "text", text: denied.text }], isError: true, structuredContent: denied.structuredContent });
+    return;
+  }
   if (!confirmation.confirmed || (!confirmation.receiptId && !confirmation.receiptToken)) {
     deps.reply(id, {
       content: [{ type: "text", text: mcpLocaleText(deps.locale(), "未开始：请在当前客户端确认这次生成，或在唯一的 Nomi 兜底卡中确认。", "Not started: confirm this generation in the current client or in the single Nomi fallback card.") }],
