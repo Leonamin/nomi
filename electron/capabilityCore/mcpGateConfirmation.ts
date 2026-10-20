@@ -9,6 +9,8 @@
 import type { AuthenticatedMcpClient } from './security'
 import type { MultiShotGateProjection } from '../productionRun/shotPricing'
 import { createConfirmationBinding } from './mcpConfirmationBinding'
+import { mcpLocaleText } from './mcpLocaleText'
+import type { DesktopLocale } from '../desktopLocale'
 
 export type GenerationGateChallengeProjection = {
   challengeId: string
@@ -235,15 +237,11 @@ export function createGenerationGateConfirmation({ transport, clientSupportsElic
  * 「被拒绝 / 超时」翻成给 Agent 的终态说明（生成门与降档共用这一份，免得两个入口各说各的）。
  * 结构化的 nextAction：`stop` = 用户说不，结束这次、等新指令、别再发确认；`ask_user` = 没人答，先问用户本人。
  */
-export function generationDenialOutcome(denial: NonNullable<GenerationGateConfirmation['denial']>, locale: 'zh-CN' | 'en'): { text: string; structuredContent: Record<string, unknown> } {
+export function generationDenialOutcome(denial: NonNullable<GenerationGateConfirmation['denial']>, locale: DesktopLocale): { text: string; structuredContent: Record<string, unknown> } {
   const declined = denial === 'declined'
-  const text = locale === 'en'
-    ? declined
-      ? 'Not started: the user declined this request. Nothing was spent. Stop this generation and wait for new instructions from the user; do not ask for confirmation again.'
-      : 'Not started: nobody answered the confirmation in time. Nothing was spent. Ask the user whether they still want this before requesting confirmation again.'
-    : declined
-      ? '未开始：用户拒绝了这次请求，没有花费。请结束这次生成，等用户的新指令；不要再次发起确认。'
-      : '未开始：确认超时没有人答复，没有花费。请先问用户是否还要做，再决定要不要重新发起确认。'
+  const text = declined
+    ? mcpLocaleText(locale, '未开始：用户拒绝了这次请求，没有花费。请结束这次生成，等用户的新指令；不要再次发起确认。', 'Not started: the user declined this request. Nothing was spent. Stop this generation and wait for new instructions from the user; do not ask for confirmation again.')
+    : mcpLocaleText(locale, '未开始：确认超时没有人答复，没有花费。请先问用户是否还要做，再决定要不要重新发起确认。', 'Not started: nobody answered the confirmation in time. Nothing was spent. Ask the user whether they still want this before requesting confirmation again.')
   return {
     text,
     structuredContent: { nomiOutcome: { denied: true, applied: false, reason: denial, nextAction: declined ? 'stop' : 'ask_user' } },
