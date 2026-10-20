@@ -2,12 +2,12 @@ import { constrainParameterControls } from '../../../../electron/shared/videoCap
 // NodeParameterControls 的模型/档案派生纯函数。
 // 从 NodeParameterControls.tsx 抽出，供组件、InlineParameterBar、useNodeModelAutoSelect 共用（单一来源）。
 import type { ModelOption } from '../../../config/models'
-import { parseModelParameterControls } from '../../../config/modelCatalogMeta'
 import {
   type DynamicModelControl,
   buildDynamicControls,
   buildEffectiveImageCatalogConfig,
   buildEffectiveVideoCatalogConfig,
+  nodeParameterControls,
 } from './controls/parameterControlModel'
 import { specializeArchetypeForVariant } from '../../../../electron/shared/modelArchetypes'
 import {
@@ -87,7 +87,7 @@ export function resolveRenderedControls(
   }
   return localizeDynamicControls(
     buildDynamicControls({
-      parameterControls: parseModelParameterControls(option?.meta),
+      parameterControls: nodeParameterControls(option?.meta),
       imageCatalogConfig: buildEffectiveImageCatalogConfig(option?.meta),
       videoCatalogConfig: buildEffectiveVideoCatalogConfig(option?.meta),
       isImageLike,

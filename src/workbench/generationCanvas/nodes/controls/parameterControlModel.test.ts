@@ -170,3 +170,22 @@ describe('isImportedComfyWorkflowModel — 认出「用户导入的工作流」�
     expect(isImportedComfyWorkflowModel('comfyWorkflowImport')).toBe(false)
   })
 })
+
+describe('ComfyUI 画面比例 vs 像素控件', () => {
+  const meta = (withAspect: boolean) => ({
+    parameters: [
+      { key: 'comfy_steps', label: 'Steps', type: 'number', default: 25 },
+      { key: 'comfy_width', label: 'Width', type: 'number', default: 1024 },
+      { key: 'comfy_height', label: 'Height', type: 'number', default: 1024 },
+      ...(withAspect ? [{ key: 'aspect_ratio', label: 'Aspect', type: 'select', default: 'auto', options: ['auto', '16:9'] }] : []),
+    ],
+    comfyWorkflowImport: { binding: { params: [
+      { inputKey: 'width', paramKey: 'comfy_width' }, { inputKey: 'height', paramKey: 'comfy_height' },
+    ] } },
+  })
+  it('有比例控件时宽高像素不展示（不谎报尺寸）也不落默认值；没有比例控件的老档案照旧', () => {
+    const keys = (m: unknown) => buildModelControls(m, true, false).map((c) => c.key)
+    expect(keys(meta(true))).toEqual(['comfy_steps', 'aspect_ratio'])
+    expect(keys(meta(false))).toEqual(['comfy_steps', 'comfy_width', 'comfy_height'])
+  })
+})

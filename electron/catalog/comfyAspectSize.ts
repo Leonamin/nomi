@@ -23,7 +23,10 @@ const STEP = 16; // Wan / Flux / Qwen 的潜空间要求 16 的倍数；SD 系 8
 const MIN_EDGE = 64;
 const MAX_RATIO = 4; // 超过 4:1 的极端条幅在这些模型上不可用，按"不认识"处理
 
-export type ComfySizeSpec = { widthKey: string; heightKey: string; budget: number };
+export type ComfySizeSpec = { widthKey: string; heightKey: string; defaultWidth: number; defaultHeight: number; budget: number };
+
+/** 画布（渲染进程）随请求带来的项目画幅；aspect 为 auto 时它就是默认比例。 */
+export const COMFY_PROJECT_ASPECT_KEY = "projectAspectRatio";
 
 /** 从模型登记里读出尺寸控件键与像素预算。没有成对的 width/height 控件 → null（该模型出图尺寸不由字面数字决定，如 Klein 跟参考图）。 */
 export function comfySizeSpec(model: Pick<Model, "meta">): ComfySizeSpec | null {
@@ -43,7 +46,7 @@ export function comfySizeSpec(model: Pick<Model, "meta">): ComfySizeSpec | null 
     return typeof v === "number" && v > 0 ? v : null;
   };
   const w = defaultOf(widthKey), h = defaultOf(heightKey);
-  return w && h ? { widthKey, heightKey, budget: w * h } : null;
+  return w && h ? { widthKey, heightKey, defaultWidth: w, defaultHeight: h, budget: w * h } : null;
 }
 
 /** 比例 + 像素预算 → 16 倍数的 [W,H]；比例不可用 → null。 */
@@ -82,18 +85,29 @@ export type ComfyAspectOutcome = { patch: JsonRecord; warning?: string };
 
 /**
  * 纯决策：extras（pre-defaults）+ 尺寸规格 + 首帧尺寸 → 要补写的 comfy_width/comfy_height。
- * 优先级：调用方显式给了成对像素 > 显式比例 > 首帧比例 > 不动（workflow 自带尺寸）。
- * 比例写了但认不出 → 退到首帧比例/不动，并带 warning（调用方负责打出来，不静默当方图）。
+ * 优先级：用户改过的像素（≠控件默认值）> 显式非 auto 比例 > 首帧比例（i2v 输出必须跟输入图）> 项目画幅 > 不动（workflow 自带尺寸）。
+ * 画布节点会把每个控件的默认值落进 extras，所以"成对像素"只有在不等于默认值时才算用户的选择；等于默认值 = 没碰过。
+ * 比例写了但认不出 → 往下一级退，并带 warning（调用方负责打出来，不静默当方图）。
  */
 export function decideComfyOutputSize(extras: JsonRecord, spec: ComfySizeSpec, refSize: [number, number] | null): ComfyAspectOutcome {
-  const given = (key: string) => extras[key] !== undefined && extras[key] !== null && extras[key] !== "";
-  if (given(spec.widthKey) && given(spec.heightKey)) return { patch: {} };
-  const raw = [extras[COMFY_ASPECT_CONTROL_KEY], extras.aspectRatio].find((v) => typeof v === "string" && v.trim()) as string | undefined;
-  const wanted = raw && raw.trim().toLowerCase() !== COMFY_ASPECT_AUTO ? raw.trim() : undefined;
-  let dims = wanted ? fitSizeToAspect(wanted, spec.budget) : null;
-  const warning = wanted && !dims ? `aspect "${wanted}" is not a usable W:H ratio; ${refSize ? "following the reference image" : "keeping the workflow size"}` : undefined;
-  if (!dims && refSize) dims = fitSizeToAspect(`${refSize[0]}:${refSize[1]}`, spec.budget);
-  return { patch: dims ? { [spec.widthKey]: dims[0], [spec.heightKey]: dims[1] } : {}, ...(warning ? { warning } : {}) };
+  const num = (key: string) => (extras[key] === undefined || extras[key] === null || extras[key] === "" ? null : Number(extras[key]));
+  const w = num(spec.widthKey), h = num(spec.heightKey);
+  if (w !== null && h !== null && (w !== spec.defaultWidth || h !== spec.defaultHeight)) return { patch: {} };
+  const text = (v: unknown) => (typeof v === "string" && v.trim() ? v.trim() : undefined);
+  const explicit = [extras[COMFY_ASPECT_CONTROL_KEY], extras.aspectRatio].map(text).find(Boolean);
+  const wanted = explicit && explicit.toLowerCase() !== COMFY_ASPECT_AUTO ? explicit : undefined;
+  const project = text(extras[COMFY_PROJECT_ASPECT_KEY]);
+  const warnings: string[] = [];
+  const fit = (aspect: string | undefined, label: string) => {
+    if (!aspect) return null;
+    const dims = fitSizeToAspect(aspect, spec.budget);
+    if (!dims) warnings.push(`${label} "${aspect}" is not a usable W:H ratio`);
+    return dims;
+  };
+  const dims = fit(wanted, "aspect")
+    ?? (refSize ? fitSizeToAspect(`${refSize[0]}:${refSize[1]}`, spec.budget) : null)
+    ?? fit(project, "project aspect");
+  return { patch: dims ? { [spec.widthKey]: dims[0], [spec.heightKey]: dims[1] } : {}, ...(warnings.length ? { warning: warnings.join("; ") } : {}) };
 }
 
 /** 该模型登记的第一个图片输入槽里，调用方这次递进来的值（i2v 首帧）。 */
