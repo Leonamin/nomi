@@ -18,6 +18,7 @@ import type { GenerationCanvasNode } from '../model/generationCanvasTypes'
 import type { TaskRequestDto, TaskResultDto } from '../../api/taskApi'
 import type { ModelCatalogModelDto, ModelCatalogVendorDto } from '../../api/modelCatalogApi'
 import * as localTaskControl from './localTaskControl'
+import { useWorkbenchStore } from '../../workbenchStore'
 const TEST_TARGET = { projectId: 'project-test', immutableProjectUuid: '11111111-1111-4111-8111-111111111111', projectGeneration: 1 } as const
 
 afterEach(() => {
@@ -1039,5 +1040,18 @@ describe('resolveTaskKind — kind × 能力面穷举（防「档案桶/兜底�
         expect(resolveTaskKind(node, {})).toBe(mode.transportTaskKind ?? archetype.transportTaskKind)
       }
     }
+  })
+})
+
+describe('buildCatalogTaskRequest — 项目画幅带给 ComfyUI', () => {
+  const comfyNode = (vendor: string): GenerationCanvasNode => ({
+    id: 'c1', kind: 'image', title: '', prompt: 'a cube', position: { x: 0, y: 0 },
+    meta: { modelKey: 'qwen', vendor, modelVendor: vendor, comfy_width: 1024, comfy_height: 1024, aspect_ratio: 'auto' },
+  })
+  it('ComfyUI 请求带 extras.projectAspectRatio（= 预览画布比例）；其他供应商不带', () => {
+    useWorkbenchStore.setState({ previewAspectRatio: '9:16' })
+    expect(buildCatalogTaskRequest(comfyNode('comfyui-local')).request.extras?.projectAspectRatio).toBe('9:16')
+    expect(buildCatalogTaskRequest(comfyNode('openai')).request.extras).not.toHaveProperty('projectAspectRatio')
+    useWorkbenchStore.setState({ previewAspectRatio: '16:9' })
   })
 })

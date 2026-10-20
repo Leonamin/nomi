@@ -30,6 +30,7 @@ vi.mock("electron", () => ({
 import { executeProfileOperation, buildProfileTaskResult, createProject, listProjectAssets } from "./runtime";
 import { COMFYUI_CURATED_MAPPINGS, COMFYUI_CURATED_MODELS } from "./catalog/comfyuiLocal";
 import { applyWireDefaults } from "./catalog/taskParams";
+import { applyComfyOutputSize } from "./catalog/comfyAspectApply";
 
 // 真实可解码 PNG：集成链必须经过与生产一致的 decoder certification。
 const PNG_1x1 = fs.readFileSync(path.join(__dirname, "providerAdapter/__fixtures__/certification-media/valid.png"));
@@ -209,5 +210,23 @@ describe("本地 ComfyUI 传输链（真 HTTP 端到端）", () => {
     expect(stored).toHaveLength(1);
     expect(fs.readFileSync(stored[0].data.absolutePath)).toEqual(PNG_1x1);
     expect(viewHits).toBeGreaterThanOrEqual(1);
+  });
+
+  // runTask 的真实顺序：先 applyComfyOutputSize（比例落成像素），再 wire 默认值合并，最后发 /prompt。
+  // 画布节点把每个控件默认值都落进 extras（含 comfy_width/height 与 aspect_ratio=auto）——这是上次漏掉的真实形态。
+  it.each([
+    ["explicit 16:9", { aspect_ratio: "16:9" }],
+    ["auto + project 16:9", { aspect_ratio: "auto", projectAspectRatio: "16:9" }],
+  ])("画布形态 extras（默认值全落）+ %s → /prompt 的 EmptyLatentImage 是 16:9", async (_name, over) => {
+    const mapping = COMFYUI_CURATED_MAPPINGS[0];
+    const meta = { parameters: COMFYUI_CURATED_MODELS[0].meta.parameters };
+    const vendor = { key: "comfyui-local", name: "本地 ComfyUI", enabled: true, baseUrlHint: baseUrl, authType: "none" as const, authHeader: null, createdAt: "", updatedAt: "" };
+    const model = { modelKey: "comfyui-txt2img", vendorKey: "comfyui-local", labelZh: "本地·文生图", kind: "image" as const, enabled: true, meta, createdAt: "", updatedAt: "" };
+    const canvasExtras = { ...Object.fromEntries((meta.parameters as unknown as Array<{ key: string; default: unknown }>).map((c) => [c.key, c.default])), ...over };
+    expect(canvasExtras).toMatchObject({ comfy_width: 512, comfy_height: 512 });
+    const sized = await applyComfyOutputSize(canvasExtras, model, baseUrl);
+    const extras = applyWireDefaults(sized ?? {}, mapping.create.defaultParams) as Record<string, unknown>;
+    await executeProfileOperation({ vendor, model, apiKey: "", request: { prompt: "x", extras: { ...extras, comfyPromptId: REQUEST_PROMPT_ID } } as never, operation: mapping.create });
+    expect(lastPromptBody?.prompt?.["5"]?.inputs).toMatchObject({ width: 688, height: 384 });
   });
 });

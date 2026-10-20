@@ -15,6 +15,7 @@ import {
 import { normalizeOrientation, type Orientation } from '../../../../utils/orientation'
 import { isComfyuiVendorKey } from '../../model/comfyuiVendor'
 import { normalizeAspectRatioToWH } from '../aspectRatio'
+import { COMFY_ASPECT_CONTROL_KEY, comfySizeSpec } from '../../../../../electron/shared/canvas/comfyAspectControl'
 import { resultUrl } from '../../runner/referenceUrl'
 import type { GenerationCanvasNode } from '../../model/generationCanvasTypes'
 import {
@@ -665,9 +666,20 @@ export function buildEffectiveVideoCatalogConfig(meta: unknown): VideoModelCatal
   }
 }
 
+/**
+ * 节点上看到的参数控件。ComfyUI 工作流有"画面比例"控件时，出图尺寸由 比例 × 工作流像素预算 决定，
+ * 宽/高像素控件只是预算基准，摆出来会谎报最终尺寸（选了 16:9 还显示 1024×1024），故不在节点上展示，也就不落默认值。
+ */
+export function nodeParameterControls(meta: unknown): ModelParameterControl[] {
+  const all = parseModelParameterControls(meta)
+  const spec = comfySizeSpec({ meta: meta })
+  if (!spec || !all.some((c) => c.key === COMFY_ASPECT_CONTROL_KEY)) return all
+  return all.filter((c) => c.key !== spec.widthKey && c.key !== spec.heightKey)
+}
+
 export function buildModelControls(meta: unknown, isImageLike: boolean, isVideoLike: boolean): DynamicModelControl[] {
   return buildDynamicControls({
-    parameterControls: parseModelParameterControls(meta),
+    parameterControls: nodeParameterControls(meta),
     imageCatalogConfig: buildEffectiveImageCatalogConfig(meta),
     videoCatalogConfig: buildEffectiveVideoCatalogConfig(meta),
     isImageLike,

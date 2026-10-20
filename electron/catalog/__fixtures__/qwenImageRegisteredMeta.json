@@ -1,0 +1,124 @@
+{
+ "parameters": [
+  {
+   "key": "comfy_seed",
+   "label": "随机种子",
+   "type": "number",
+   "default": 447606998181262
+  },
+  {
+   "key": "comfy_steps",
+   "label": "采样步数",
+   "type": "number",
+   "default": 25
+  },
+  {
+   "key": "comfy_cfg",
+   "label": "CFG 强度",
+   "type": "number",
+   "default": 1
+  },
+  {
+   "key": "comfy_denoise",
+   "label": "重绘幅度",
+   "type": "number",
+   "default": 1
+  },
+  {
+   "key": "comfy_width",
+   "label": "宽度",
+   "type": "number",
+   "default": 1024
+  },
+  {
+   "key": "comfy_height",
+   "label": "高度",
+   "type": "number",
+   "default": 1024
+  },
+  {
+   "key": "comfy_batch_size",
+   "label": "批量",
+   "type": "number",
+   "default": 1
+  },
+  {
+   "key": "aspect_ratio",
+   "label": "画面比例",
+   "type": "select",
+   "default": "auto",
+   "options": [
+    "auto",
+    "16:9",
+    "9:16",
+    "1:1",
+    "4:3",
+    "3:4",
+    "3:2",
+    "2:3"
+   ]
+  }
+ ],
+ "comfyWorkflowImport": {
+  "binding": {
+   "params": [
+    {
+     "nodeId": "7",
+     "inputKey": "seed",
+     "paramKey": "comfy_seed",
+     "label": "随机种子",
+     "type": "number",
+     "default": 447606998181262
+    },
+    {
+     "nodeId": "7",
+     "inputKey": "steps",
+     "paramKey": "comfy_steps",
+     "label": "采样步数",
+     "type": "number",
+     "default": 25
+    },
+    {
+     "nodeId": "7",
+     "inputKey": "cfg",
+     "paramKey": "comfy_cfg",
+     "label": "CFG 强度",
+     "type": "number",
+     "default": 1
+    },
+    {
+     "nodeId": "7",
+     "inputKey": "denoise",
+     "paramKey": "comfy_denoise",
+     "label": "重绘幅度",
+     "type": "number",
+     "default": 1
+    },
+    {
+     "nodeId": "5",
+     "inputKey": "width",
+     "paramKey": "comfy_width",
+     "label": "宽度",
+     "type": "number",
+     "default": 1024
+    },
+    {
+     "nodeId": "5",
+     "inputKey": "height",
+     "paramKey": "comfy_height",
+     "label": "高度",
+     "type": "number",
+     "default": 1024
+    },
+    {
+     "nodeId": "5",
+     "inputKey": "batch_size",
+     "paramKey": "comfy_batch_size",
+     "label": "批量",
+     "type": "number",
+     "default": 1
+    }
+   ]
+  }
+ }
+}
