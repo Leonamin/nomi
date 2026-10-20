@@ -5,6 +5,7 @@ import { productionTaskAbsenceCode } from '../productionRun/productionRunErrors'
 import { GenerationProviderCapabilityError, GenerationProviderObservationError, GenerationRuntimeBindingError } from './generationRuntimeAdapter';
 import { ProductionGenerationAuthorizationError } from '../productionRun/productionGenerationAuthorization';
 import { z } from "zod";
+import { ContractCompilationError } from "./executionContract";
 import { logWarn } from "../logging/logger";
 import { GENERATION_ARGUMENT_REFUSAL, refuseToModel, safeTransportFailure } from "./transportFailure";
 import type { RuntimeToolCall, RuntimeToolDecision } from "../shared/agentCapabilities/transportContracts";

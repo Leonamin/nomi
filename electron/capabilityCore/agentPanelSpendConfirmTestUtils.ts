@@ -214,6 +214,10 @@ function buildActions(base: ReturnType<typeof harness>, vendorOrigin: string, su
    * （等形象确认、被并发挡着）时用户又点了第 2 镜；之后由 `dispatchNow()` 真的跑一轮调度。
    */
   holdDispatch?: () => boolean;
+  /** 换一份模块目录（缺省 = 本文件那份只有两个夹具模型的目录）。 */
+  registry?: ReturnType<typeof createModuleRegistry>;
+  /** 视频档案候选（变体清单、参数表都从它来）。缺省 = 不接，走通用判据。 */
+  videoModelCandidates?: Parameters<typeof createGenerationPlanningHandler>[0]["videoModelCandidates"];
 } = {}) {
   const { root, repository, owner, operations, canvasLanding } = base;
   const provider = loopbackProvider(vendorOrigin, submits);
@@ -247,7 +251,7 @@ function buildActions(base: ReturnType<typeof harness>, vendorOrigin: string, su
     await canvasLanding.landCanvasBestEffort(PROJECT_ID, operationId);
   };
   const handler = createGenerationPlanningHandler({
-    registry,
+    registry: hooks.registry ?? registry,
     operations,
     ...(hooks.videoModelCandidates ? { videoModelCandidates: hooks.videoModelCandidates } : {}),
     resolveModelPricing: () => (hooks.unpriced ? undefined : PRICING),

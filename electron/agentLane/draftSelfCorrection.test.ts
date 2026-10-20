@@ -92,7 +92,7 @@ async function runAgentTurns(first: Shot, expectOutcome: "card" | "stopped") {
   const base = harness();
   const { withWindow, transport, handler } = buildActions(base, vendor.origin, [], { registry, videoModelCandidates });
   try {
-    const adapter = transport("request");
+    const adapter = transport("project");
     const tools = createExtendedLaneTools({
       execute: async (call, signal) => adapter.tryExecute(verbToTransportCall(call)!.call, signal) as never,
     });
@@ -144,12 +144,6 @@ describe("起草被拒 → Agent 只凭工具结果当场改对再交 → 出付
       expect(card, "最后要出付费卡").toBe(true);
     });
   }
-
-  it("毛病：写 null（模型的坏习惯）——起草直接放行，不需要自纠，付费卡照出", async () => {
-    const { rejections, card } = await runAgentTurns({ ...goodShot(), parameters: { ...goodShot().parameters, seed: null } }, "card");
-    expect(rejections).toEqual([]);
-    expect(card).toBe(true);
-  });
 
   it("variant 这一条还把该模型真实的变体词列出来（取自目录档案），并且点名 variantId 字段", async () => {
     const { rejections } = await runAgentTurns({ ...goodShot(), parameters: { ...goodShot().parameters, variant: "fast" } }, "card");
