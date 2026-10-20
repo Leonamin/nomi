@@ -5,6 +5,7 @@ import {
   normalizeProviderKind,
   readCatalog,
 } from "../catalog/catalogStore";
+import { vendorLineageOwnsPublishedExecution } from "../catalog/vendorLineageLifecycle";
 import { apiKeyDecryptStatus, decryptApiKeyRecord } from "../catalog/secrets";
 import type { Model, ProfileKind, Vendor } from "../catalog/types";
 import { humanizeModelKey } from "../catalog/modelLabel";
@@ -476,7 +477,7 @@ export const defaultCatalog: ProviderAdapterCatalogPort = {
     });
     if (ownedResults.length === 0) return;
     const failedVendor = before.vendors.find((vendor) => vendor.key === run.vendorKey);
-    if (candidateSourceVendorKey(failedVendor?.meta) && !vendorHasPublishedExecution(before, run.vendorKey)) {
+    if (candidateSourceVendorKey(failedVendor?.meta) && !vendorHasPublishedExecution(before, run.vendorKey) && !vendorLineageOwnsPublishedExecution(before, run.vendorKey)) {
       mutateCatalog((tx) => tx.deleteVendor(run.vendorKey));
       return;
     }

@@ -24,7 +24,7 @@ import type { ModelAvailability } from "../shared/modelAvailability";
 import { createCatalogAvailability } from "./catalogModelAvailability";
 import { deriveModelCatalogHealth } from "./catalogHealth";
 import { depublishVendorForDisabledCredential } from "./credentialPublication";
-import { deleteVendorLineageAndRestore, removeVendorLineage, vendorLineageClosure } from "./vendorLineageLifecycle";
+import { deleteVendorLineageAndRestore, removeVendorLineage, vendorLineageClosure, vendorLineageOwnsPublishedExecution } from "./vendorLineageLifecycle";
 import { guardAntigravityMappingWrite, guardAntigravityModelWrite, guardAntigravityVendorWrite } from "./antigravityWriteGuard";
 import { antigravityConnection } from "../ai/antigravityConnection";
 import { extractLegacyStages } from "./legacyMappingMigration";
@@ -743,6 +743,8 @@ export function mutateCatalog<T>(fn: (tx: CatalogMutation, state: Readonly<Catal
     },
     deleteVendor: (vendorKey) => {
       const key = String(vendorKey || "").trim();
+      // Lowest boundary: a transactional delete (supersede / failed-stage cleanup) may never take live execution.
+      if (vendorLineageOwnsPublishedExecution(state, key)) throw new Error(`refusing to delete vendor ${key}: its lineage owns a published model`);
       vendorLineageClosure(state, key).forEach((candidate) => invalidatedVendors.add(candidate));
       removeVendorLineage(state, key);
     },

@@ -13,6 +13,7 @@ import {
   resolvedVendorLineageRoot,
   type CandidateModelPredecessors,
 } from "../shared/vendorLineage";
+import { isSupersedableStagingShell } from "./vendorLineageLifecycle";
 import type { CatalogState, Vendor } from "./types";
 
 export {
@@ -109,6 +110,18 @@ function activeModelPredecessors(
   return predecessors;
 }
 
+/** Previous unpublished revisions of the selected models only; never a published vendor or one with live descendants. */
+export function supersedableStagingShells(
+  state: CatalogState,
+  rootVendorKey: string,
+  newVendorKey: string,
+  selected: ReadonlySet<string>,
+): string[] {
+  return lineageVendors(state, rootVendorKey)
+    .filter((vendor) => isCandidateVendor(vendor) && vendor.key !== newVendorKey && isSupersedableStagingShell(state, vendor.key, selected))
+    .map((vendor) => vendor.key);
+}
+
 export type StagedVendorIdentity = {
   vendorKey: string;
   isolated: boolean;
@@ -177,8 +190,6 @@ export function planStagedVendorIdentity(input: {
   const publishedSelected = lineage
     .filter((vendor) => modelPublished(input.state, vendor.key, selected))
     .sort((left, right) => Date.parse(right.updatedAt) - Date.parse(left.updatedAt))[0];
-  const publishedSource = vendorPublished(input.state, sourceVendorKey) ? sourceVendor : undefined;
-  const activeSource = publishedSelected || publishedSource;
 
   // First-time onboarding for a model without an active predecessor keeps the
   // stable source key even when a sibling model in the same vendor is already
@@ -199,18 +210,18 @@ export function planStagedVendorIdentity(input: {
   }
 
   const predecessorVendors = [...new Set(Object.values(modelPredecessors).map((predecessor) => predecessor.vendorKey))];
+  // Edges follow only a real predecessor of the same model; an unrelated import hangs off the lineage
+  // root, never off whichever sibling happens to be newest/published (that chain widened delete closures).
   const immediateSourceVendorKey = predecessorVendors.length === 1
     ? predecessorVendors[0]
-    : activeSource?.key || rootVendorKey;
+    : publishedSelected?.key || rootVendorKey;
   let vendorKey = stagedVendorKey(rootVendorKey, input.connection, input.revisionId);
   let suffix = 2;
   while (input.state.vendors.some((vendor) => vendor.key === vendorKey)) {
     vendorKey = `${stagedVendorKey(rootVendorKey, input.connection, input.revisionId)}-${suffix}`;
     suffix += 1;
   }
-  const supersededVendorKeys = lineage
-    .filter((vendor) => isCandidateVendor(vendor) && vendor.key !== vendorKey && !vendorPublished(input.state, vendor.key))
-    .map((vendor) => vendor.key);
+  const supersededVendorKeys = supersedableStagingShells(input.state, rootVendorKey, vendorKey, selected);
   return {
     vendorKey,
     isolated: true,

@@ -20,6 +20,7 @@
 | 3117f6a67, 111570788, 37fdca366, 66ee8dff5, 4970a1574, 89c854f4b, 7dc13539d, 3143828a0, afd49641a, 85f5789f8, 1cf0ceaaa, 0a27818c2 | 6050d26ce, 9722ef05f, ba87edfdc, b6af0b794, 3480b329a, 23bbaf3a2, f374c0e30, f7294ed53, 4decd9f59, 6562ed96f, 6c76f7c79, dc843c953 | #1213 비동기 결과 결과 가져오기 사슬(release/0.23.2 이식본, 0.23.1 기준 보정): 릴레이 영상 질의 계약, 공용 상태 어휘/결과 읽기, 단계 코드(retrieval-*), 다운로드 단계 오류 보존 |
 | 3d60e8b07, 9da97a0ac, 72bce828b, e9b0434d8, 2331d4fd8, c53c77509 | 42968177a, b1cf088b6, 169ef81ca, e02085a88, 033c33ba9, 43515aa02 | 위 사슬의 영상 질의 계약 매트릭스 테스트·오선택 방어·재시작 후 복구 테스트·0.23.1 인접 차이 |
 | 7171ae332, 34c005287 (원본 42736b307/df728c339/78787c0c4) | 77c01ca01, a714e0f85 | 생성 산출물 저장 관문이 작업 기대 유형으로 바이트를 검사(HTML 오류 페이지·유형 불일치 페이로드는 저장 거부, retrieval-download). 포크 보충: web/rpc.ts, web/comfyuiProductionProvider.ts 호출부에 expectedKind 전달, ko 로캘 문구 추가, ComfyUI 산출물 유형 불일치 거부 테스트(web/comfyuiMaterializeKind.test.ts) |
+| (포크 자체 수정, 업스트림 미접촉) | (이 PR) | ComfyUI 워크플로 가져오기가 게시된 등록을 지우던 문제: 대체(supersede)는 같은 모델의 고아 스테이징 껍데기만, 새 import의 source는 계보 root. 업스트림에도 같은 구조라 upstream 제안 후보 |
 | (포크 보충) | 6e1f65c49, fbe83756e | ko 로캘 문구 추가, 비용 단정 문구 제거(outcomeText 가드), 모델면 기준선에 variantId 반영 |
 
 ## 제외
