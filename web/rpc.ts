@@ -36,6 +36,8 @@ import { hostEvents } from './runtimeHost'
 import { createWebComfyuiCommands, initWebConnections } from './comfyuiConnections'
 import { installWebGraphHost } from './comfyuiGraphHost'
 import { WebAgentLanes } from './agentLanes'
+import { readWebSkillRecords } from './creationContext'
+import { projectSkillsForRenderer } from '../electron/skills/skillIpc'
 import { createWebProductionHost } from './productionHost'
 import { rendererCommand } from '../electron/productionRun/productionRunRendererCommand'
 import { resolveIndexedReferencePreview } from '../electron/capabilityCore/pendingSpendReferences'
@@ -154,6 +156,7 @@ export async function dispatchWebRpc(channel: string, args: unknown[], surface: 
     'nomi:events:generation-eta-stats': (payload: { projectId: string }) => ({ ok: true, stats: deriveGenerationEtaStats(readEvents(payload.projectId)) }),
     'nomi:workspace:sync-inspect': (input: string | { projectId: string }) => { const id = typeof input === 'string' ? input : input.projectId; const root = projects.projectDirById(id); if (!root) throw new Error('Project not found'); return inspectWorkspaceSync(root, id) },
     'nomi:prompt-library:list': async () => ({ ok: true, prompts: await getPromptLibrary({ shouldIncludeSkillPrompts: false }) }),
+    'nomi:skill:list': async () => projectSkillsForRenderer(await readWebSkillRecords()),
     'nomi:prompt-library:text-brain': () => ({ ok: false, brain: null, status: 'missing' }),
     'nomi:production-runs:list': (payload: { projectId: string }) => { authorizeWebProject(surface, payload.projectId); return productionHost().runtime.repository.list(payload.projectId) },
     'nomi:production-runs:read': (payload: { projectId: string; runId: string }) => { authorizeWebProject(surface, payload.projectId); const run = productionHost().runtime.repository.read(payload.projectId, payload.runId)
