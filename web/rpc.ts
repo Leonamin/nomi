@@ -7,6 +7,7 @@ import * as catalog from '../electron/catalog/catalogStore'
 import * as exportJobs from '../electron/export/exportJobs'
 import { isComfyuiVendor } from '../electron/catalog/types'
 import { setDesktopLocale } from '../electron/desktopLocale'
+import type { LocalizedAssetType } from '../electron/assets/localizedAsset'
 import { listProjectAssets, writeAsset, copyProjectAsset, importRemoteAsset } from '../electron/assets/projectAssetStore'
 import { getAssetFolders, saveAssetFolders } from '../electron/assets/assetFolders'
 import { ensurePlayableAsset, ensureLocalAssetPreview } from '../electron/assets/localFileImport'
@@ -108,10 +109,10 @@ export async function dispatchWebRpc(channel: string, args: unknown[], surface: 
     'nomi:settings:project-location-get': () => ({ ok: true, location: getProjectLocationState() }),
     'nomi:settings:project-location-check': () => ({ ok: true, location: getProjectLocationState() }),
     'nomi:assets:list': listProjectAssets,
-    'nomi:assets:import-remote-url': async (payload: { projectId: string; url: string }) => {
+    'nomi:assets:import-remote-url': async (payload: { projectId: string; url: string; expectedKind?: LocalizedAssetType | null }) => {
       authorizeWebProject(surface, payload.projectId)
       if (!/^(?:data:(?:image|video|audio)\/|nomi-local:\/\/asset\/)/.test(payload.url)) throw new Error('Only project-owned or inline media can be imported here')
-      const asset = await importRemoteAsset({ ...payload, projectBinding: undefined }, { assertCurrent: () => authorizeWebProject(surface, payload.projectId) })
+      const asset = await importRemoteAsset({ ...payload, expectedKind: payload.expectedKind ?? null, projectBinding: undefined }, { assertCurrent: () => authorizeWebProject(surface, payload.projectId) })
       return { ok: true, asset }
     },
     'nomi:assets:folders-get': getAssetFolders,
@@ -215,7 +216,7 @@ export async function dispatchWebRpc(channel: string, args: unknown[], surface: 
 export function uploadWebAsset(surface: Surface, payload: { projectId: string }, file: File) {
   authorizeWebProject(surface, payload.projectId)
   if (!/^(image|video|audio)\//.test(file.type)) throw new Error('Only image, video and audio files are supported')
-  return file.arrayBuffer().then(bytes => ({ ok: true, asset: writeAsset(payload.projectId, Buffer.from(bytes), file.name, file.type, { source: 'upload' }) }))
+  return file.arrayBuffer().then(bytes => ({ ok: true, asset: writeAsset(payload.projectId, Buffer.from(bytes), file.name, file.type, { source: 'upload' }, null) }))
 }
 export function initWebDomain() {
   installWebGraphHost()

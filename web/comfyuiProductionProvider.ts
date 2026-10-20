@@ -103,7 +103,7 @@ export function materializeComfyuiProductionOutput(projectId: string, providerTa
   if (!absolutePath) throw new Error('ComfyUI production output must belong to this project')
   const bytes = fs.readFileSync(absolutePath)
   const storedValue = writeDeterministicAsset(projectId, bytes, path.basename(absolutePath), contentTypeFromStoredFile(absolutePath),
-    { kind: 'generated', source: 'external-mcp', providerTaskId }, `${providerTaskId}:${output.providerOutputId || output.url}`)
+    { kind: 'generated', source: 'external-mcp', providerTaskId }, output.kind, `${providerTaskId}:${output.providerOutputId || output.url}`)
   if (!storedValue || typeof storedValue !== 'object') throw new Error('Asset store returned no local receipt')
   const stored = storedValue as { id?: string; data?: { relativePath?: string; width?: number; height?: number; thumbnailRelativePath?: string } }
   if (!stored.id || !stored.data?.relativePath) throw new Error('Asset store returned an incomplete local receipt')
