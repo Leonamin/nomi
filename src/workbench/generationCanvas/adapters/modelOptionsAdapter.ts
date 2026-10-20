@@ -25,11 +25,19 @@ export function findModelOptionByIdentifier(
 }
 
 export function useGenerationModelOptions(kind: GenerationNodeKind, requiredMode?: ProfileKind): ModelOption[] {
-  return useModelOptions(toCatalogNodeKind(kind, requiredMode), requiredMode)
+  return useModelOptions(toCatalogNodeKind(kind, requiredMode), pickerQueryMode(kind, requiredMode))
 }
 
 export function useGenerationModelOptionsState(kind: GenerationNodeKind, requiredMode?: ProfileKind): ModelOptionsState {
-  return useModelOptionsState(toCatalogNodeKind(kind, requiredMode), requiredMode)
+  return useModelOptionsState(toCatalogNodeKind(kind, requiredMode), pickerQueryMode(kind, requiredMode))
+}
+
+// 视频卡的候选清单不按当前模式筛：模式本身由「已选模型 + 参考」推出（resolveTaskKind），按它筛就自锁——
+// 新卡没参考 → 只列文生视频 → 图生视频模型（FL2VA/Ref2VA）永远选不到；选了文生视频又没有参考槽可贴。
+// 选定模型后，它的合同再决定模式与参考槽，所以这里放开到「视频类已发布的全部模型」。
+function pickerQueryMode(kind: GenerationNodeKind, requiredMode?: ProfileKind): ProfileKind | 'any-published' | undefined {
+  if (getGenerationNodeCatalogKind(kind) === 'video') return 'any-published'
+  return requiredMode
 }
 
 export function deriveGenerationModelCatalogStatus(kind: GenerationNodeKind, state: ModelOptionsState) {

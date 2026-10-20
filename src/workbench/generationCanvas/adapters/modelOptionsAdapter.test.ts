@@ -25,7 +25,14 @@ describe('generation model option production adapter', () => {
     // 只有 (kind, requiredMode) 两个参数。没有第三个「取景」参数是这条的**要点**：
     // 「哪些家看得见」不是调用方能商量的事，2026-09-06 拍板后它只由 catalog 那一道闸决定。
     expect(mocks.useModelOptions).toHaveBeenCalledWith('imageEdit', 'image_edit')
-    expect(mocks.useModelOptionsState).toHaveBeenCalledWith('video', 'image_to_video')
+  })
+
+  it('lists every published video model regardless of the node\'s derived mode', () => {
+    useGenerationModelOptionsState('video', 'text_to_video')
+    useGenerationModelOptionsState('video', 'image_to_video')
+
+    expect(mocks.useModelOptionsState).toHaveBeenNthCalledWith(1, 'video', 'any-published')
+    expect(mocks.useModelOptionsState).toHaveBeenNthCalledWith(2, 'video', 'any-published')
   })
 
   it('keeps the live node and batch picker call sites wired to the required mode', () => {
