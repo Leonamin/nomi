@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { applyComfyOutputSize } from "./comfyAspectApply";
 import { decideComfyOutputSize, fitSizeToAspect, imageSizeFromHeader, } from "./comfyAspectSize";
-import type { ComfySizeSpec } from "../shared/comfyAspectControl";
+import type { ComfySizeSpec } from "../shared/canvas/comfyAspectControl";
 import { analyzeComfyWorkflow, buildImportedWorkflow, parseComfyApiWorkflow } from "./comfyuiWorkflowImport";
 import { WAN22_I2V_PRESET } from "./comfyuiPresets";
 import { COMFYUI_CURATED_MODELS } from "./comfyuiLocal";

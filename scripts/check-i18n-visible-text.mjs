@@ -90,7 +90,7 @@ const EXCLUDED_FILES = new Set([
   'src/workbench/onboarding/demoProject.ts', // explicitly contains parallel zh-CN/en authored demo data
   'src/workbench/onboarding/handbookContent.ts', // handbookContentForLocale selects parallel localized content
   'src/workbench/timeline/timelineTypes.ts', // persisted stable labels; TimelineTrack displays by type key
-  'electron/shared/comfyAspectControl.ts', // ComfyUI 比例控件标签,与 comfyuiLocal 同走 renderer model display-text 边界
+  'electron/shared/canvas/comfyAspectControl.ts', // ComfyUI 比例控件标签,与 comfyuiLocal 同走 renderer model display-text 边界
   'electron/catalog/comfyuiLocal.ts', // translated by renderer model display-text boundary
   'electron/catalog/newapiTransport.ts', // translated by renderer model display-text boundary
   'electron/harness/tools/generationDescriptors.ts', // agent-facing generation tool schemas/descriptions (LLM protocol text, not UI copy)

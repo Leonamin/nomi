@@ -45,7 +45,7 @@ import {
 } from './localTaskControl'
 import { isComfyuiVendorKey } from '../model/comfyuiVendor'
 import { useWorkbenchStore } from '../../workbenchStore'
-import { COMFY_PROJECT_ASPECT_KEY } from '../../../../electron/shared/comfyAspectControl'
+import { COMFY_PROJECT_ASPECT_KEY } from '../../../../electron/shared/canvas/comfyAspectControl'
 import { productionMetaOf } from '../model/productionMeta'
 import { RecoverableTimeoutError, isRecoverableTimeoutError, type RecoverableTimeoutDetail } from './recoverableTimeout'
 import {

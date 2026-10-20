@@ -19,7 +19,7 @@
 // 标准键从 request 顶层字段**重新派生**、headless 下顶层为空会把它们清成 undefined → workflow 图里该数字节点
 // 丢键报错（实查 taskParams.ts:78-84）。用 comfy_* 走 `...extras` 直通、不被派生覆盖。
 import { COMFYUI_VENDOR_KEY, type HttpOperation } from "./types";
-import { COMFY_ASPECT_CONTROL } from "../shared/comfyAspectControl";
+import { COMFY_ASPECT_CONTROL } from "../shared/canvas/comfyAspectControl";
 import { registerResponseTransform, type ResponseTransformFn } from "../tasks/responseTransforms";
 import { registerRequestTransform } from "../tasks/requestTransforms";
 import { fetchComfyuiCheckpoints } from "../comfyuiObjectInfo";

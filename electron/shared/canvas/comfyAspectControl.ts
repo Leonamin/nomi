@@ -1,6 +1,6 @@
 // ComfyUI 比例控件与尺寸规格——渲染层（节点控件）与主进程（出图尺寸决策）共用的中立契约，不含 IO。
-import { ASPECT_OPTIONS } from "./storyboard/storyboardShotScope";
-import { isJsonRecord } from "../jsonUtils";
+import { ASPECT_OPTIONS } from "../storyboard/storyboardShotScope";
+import { isJsonRecord } from "../../jsonUtils";
 
 /** 声明给画布/规划器的比例控件键（与分镜整片比例同名，落画布才认得）。 */
 export const COMFY_ASPECT_CONTROL_KEY = "aspect_ratio";

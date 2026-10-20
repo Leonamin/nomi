@@ -5,7 +5,7 @@
 // 本层是 runTask 里的单一出口：把"比例（或 i2v 的首帧比例）"换算成 workflow 自己的像素预算下的 W×H，写进
 // comfy_width/comfy_height。像素预算 = workflow 控件的默认 W×H（作者按自己的显卡定的），不另编一个常量。
 import { parseAspect } from "./paramTranslate";
-import { COMFY_ASPECT_AUTO, COMFY_ASPECT_CONTROL_KEY, COMFY_PROJECT_ASPECT_KEY, type ComfySizeSpec } from "../shared/comfyAspectControl";
+import { COMFY_ASPECT_AUTO, COMFY_ASPECT_CONTROL_KEY, COMFY_PROJECT_ASPECT_KEY, type ComfySizeSpec } from "../shared/canvas/comfyAspectControl";
 import type { Model } from "./types";
 import { isJsonRecord, type JsonRecord } from "../jsonUtils";
 
