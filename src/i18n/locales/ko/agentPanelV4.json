@@ -387,6 +387,7 @@
   "spendBatchStoppedVideo_other": "영상 {{total}}개 중 {{sent}}개 요청했어요. 나머지 {{count}}개는 보내지 않았어요.",
   "spendParamsDecline": "아니요",
   "spendActionFailed": "결과를 확인할 수 없어요. 작업 상태를 확인한 뒤 다시 시도하세요.",
+  "spendActionParameterRejected": "'{{field}}' 매개변수가 확인을 통과하지 못했어요. Nomi가 생성을 시작하지 않았고 비용도 들지 않았어요. 카드에서 고쳐 다시 누르세요. 카드를 바꿀 수 없으면 ×로 닫고 Nomi에게 다시 구상해 달라고 하세요.",
   "spendActionNotStarted": "요청을 처리하지 못했어요. 아직 생성을 시작하지 않았으니 수정한 뒤 다시 눌러 주세요.",
   "spendActionNotStartedLocked": "요청을 처리하지 못했어요. 아직 생성을 시작하지 않았어요. 지금은 카드를 바꿀 수 없으니 ×로 닫고 Nomi에게 바꿀 내용을 알려 주세요. 다시 구상해 줄 거예요.",
   "spendActionCardChanged": "카드가 방금 바뀌어 아직 생성을 시작하지 않았어요. 현재 내용을 확인하고 다시 눌러 주세요.",
