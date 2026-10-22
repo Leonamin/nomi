@@ -15,3 +15,5 @@ okf_version: "0.1"
 - [디자인 체계](design-system.md): 화면 원칙과 토큰·컴포넌트 출처
 - [ComfyUI 워크플로 등록과 가져오기 삭제 사고](comfyui-workflow-registration.md): 가져오기가 게시된 등록을 지운 원인·재발 위험·복구
 - [ComfyUI 생성물의 화면 비율](comfyui-output-aspect.md): 16:9 프로젝트에서 소재가 정사각형으로 나오는 문제와 수정 상태
+- [캔버스에서 로컬 ComfyUI로 영상 만들기](canvas-video-generation.md): H3 Ref2VA 생성 절차·실측값·알려진 한계와 남은 후보
+- [웹 서버 부하와 폴링 읽기](web-server-load.md): 실행 기록이 많은 프로젝트에서 서버가 포화되던 원인과 수정, 남은 부하
