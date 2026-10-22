@@ -168,9 +168,9 @@ export function writeVerbs(): VerbDeclaration[] {
       notWhen: "Never write a diff, a summary of the change, or a plan to write later. Not for shot prompts (draft_shots). Read the selection first (read_script) unless the user told you exactly what to replace.",
       params: "content is the exact text; where is cursor, selection or end.",
     },
-    promptGuidelines: ["Write finished prose into the document, never a diff, a summary of your change, or a plan to write it later.", SPOKEN_REGISTER_GUIDELINE],
+    promptGuidelines: [SPOKEN_REGISTER_GUIDELINE],
     schema: z.object({
-      content: z.string().min(1).describe("The exact text to write. Plain prose or Markdown, never a diff or a summary of the change."),
+      content: z.string().min(1).describe("The exact text to write."),
       where: z.enum(["cursor", "selection", "end"]).describe("cursor inserts at the user's cursor; selection replaces the selected text; end appends to the document."),
     }).strict(),
     examples: [{ when: "Append a closing line:", arguments: { content: "The rain had not stopped for three days.", where: "end" } }],

@@ -5,4 +5,4 @@ export const GENERATION_PROMPT_LANGUAGE_GUIDELINE = 'Use English for model-facin
  * Spoken-line register (honorific level / speech style) must not drift between shots. This asks only for
  * visibility and consistency, never for a particular register: choosing it is the creator's call.
  */
-export const SPOKEN_REGISTER_GUIDELINE = 'When you write spoken lines (dialogue or narration), decide each speaker\'s speech register first, show it in one line in the document or draft, and keep it consistent across shots. The user\'s instructions and the brief\'s settings take precedence; note the change on the same line if a speaker\'s register shifts on purpose.'
+export const SPOKEN_REGISTER_GUIDELINE = 'Spoken lines: fix each speaker\'s speech register first, show it in one line, keep it across shots; user and brief settings win, note deliberate shifts there.'

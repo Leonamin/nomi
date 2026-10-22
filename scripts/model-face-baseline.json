@@ -450,8 +450,7 @@
       "profileReason": null,
       "profiles": null,
       "promptGuidelines": [
-        "Write finished prose into the document, never a diff, a summary of your change, or a plan to write it later.",
-        "When you write spoken lines (dialogue or narration), decide each speaker's speech register first, show it in one line in the document or draft, and keep it consistent across shots. The user's instructions and the brief's settings take precedence; note the change on the same line if a speaker's register shifts on purpose."
+        "Spoken lines: fix each speaker's speech register first, show it in one line, keep it across shots; user and brief settings win, note deliberate shifts there."
       ],
       "promptSnippet": "Write finished prose into the creation document — at the cursor, in place of the selection, or at the end.",
       "publishedJsonSchema": {
@@ -459,7 +458,7 @@
         "additionalProperties": false,
         "properties": {
           "content": {
-            "description": "The exact text to write. Plain prose or Markdown, never a diff or a summary of the change.",
+            "description": "The exact text to write.",
             "minLength": 1,
             "type": "string"
           },
@@ -533,7 +532,7 @@
       "promptGuidelines": [
         "Read before you write: every id you pass to a write verb comes from a read in this conversation, never from memory or guesswork.",
         "Use English for model-facing generation prompts unless the selected profile declares another language. Preserve the original source document, titles, names, captions and dialogue in the user’s language. Translate subject, action, lighting, camera and style faithfully; add no subjects and keep quoted on-screen text unchanged. Explain adaptation in the user’s language; show the actual generation prompt before approval. Never silently rewrite saved prompts.",
-        "When you write spoken lines (dialogue or narration), decide each speaker's speech register first, show it in one line in the document or draft, and keep it consistent across shots. The user's instructions and the brief's settings take precedence; note the change on the same line if a speaker's register shifts on purpose.",
+        "Spoken lines: fix each speaker's speech register first, show it in one line, keep it across shots; user and brief settings win, note deliberate shifts there.",
         "Write a high-quality generation prompt as a STRUCTURED skeleton, not a run-on sentence:\n- character/scene reference card: stable appearance/environment description + unified style keywords (neutral full-body pose for a character, empty wide establishing shot for a scene; no plot action).\n- image / keyframe shot: scene·time·light → subject·action·expression → shot language (wide / close-up / low-angle…) → style keywords.\n- video shot: camera move (push / pull / pan / track…) → on-screen action progression → rhythm & duration feel; do NOT restate the static keyframe description.\nKeep the same subject's appearance description consistent across shots. agent-artifact nodes carry no prompt: send an empty string."
       ],
       "promptSnippet": "Draft or revise media shots; source plans save to the document without automatic canvas placement.",

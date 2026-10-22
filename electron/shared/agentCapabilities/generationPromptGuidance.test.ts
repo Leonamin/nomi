@@ -23,8 +23,8 @@ describe('generation prompt language ownership', () => {
   })
 
   it('asks for visible, consistent speech registers without choosing one', () => {
-    expect(SPOKEN_REGISTER_GUIDELINE).toContain('consistent across shots')
-    expect(SPOKEN_REGISTER_GUIDELINE).toContain('take precedence')
+    expect(SPOKEN_REGISTER_GUIDELINE).toContain('keep it across shots')
+    expect(SPOKEN_REGISTER_GUIDELINE).toContain('user and brief settings win')
     expect(SPOKEN_REGISTER_GUIDELINE).not.toMatch(/해요체|default|합쇼|반말/)
     expect(CANVAS_NODE_PROMPT_GUIDELINES).toContain(SPOKEN_REGISTER_GUIDELINE)
     const script = writeVerbs().find((verb) => verb.name === 'write_script')
