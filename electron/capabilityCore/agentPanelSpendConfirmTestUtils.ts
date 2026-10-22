@@ -305,7 +305,7 @@ function buildActions(base: ReturnType<typeof harness>, vendorOrigin: string, su
   const authority = createRunOwnedGenerationGateAuthority({ owner: owner as never, operations, planning: handler, receipts, now });
   const actions = (rendererTarget: () => { webContentsId: number; frameId: number; origin: string } | null) => createPendingSpendActions({
     isProjectOpen: () => true,
-    runs: { read: (projectId, runId) => repository.read(projectId, runId), list: (projectId) => repository.list(projectId) },
+    runs: { read: (projectId, runId) => repository.read(projectId, runId), readAll: (projectId) => repository.readAll(projectId) },
     operations,
     planning: handler,
     requestGenerationGate: async input => {
