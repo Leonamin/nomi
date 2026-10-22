@@ -8,6 +8,7 @@ okf_version: "0.1"
 
 # 위키 변경 이력
 
+- [2026-10-22 캔버스 영상 생성과 웹 서버 부하 지식 반영](2026-10-22-video-canvas-and-server-load.md)
 - [2026-10-20 ComfyUI 등록 사고 수정·복구와 화면 비율 확인 반영](2026-10-20-comfyui-registration-resolved.md)
 - [2026-10-20 ComfyUI 등록 삭제 사고·화면 비율 문제·업스트림 동기화 결정 기록](2026-10-20-comfyui-registration-incident.md)
 - [2026-10-19 현재 규범과 과거 증거의 물리적 분리](2026-10-19-docs-current-only.md)
