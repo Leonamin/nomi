@@ -1,4 +1,4 @@
-import { GENERATION_PROMPT_LANGUAGE_GUIDELINE } from './generationPromptGuidance'
+import { GENERATION_PROMPT_LANGUAGE_GUIDELINE, SPOKEN_REGISTER_GUIDELINE } from './generationPromptGuidance'
 import { z } from "zod";
 
 import type { CapabilityContract } from "./capabilityContract";
@@ -632,4 +632,4 @@ export const CANVAS_WRITE_CAPABILITY = {
 } as const satisfies CapabilityContract<CanvasWriteInput, CanvasWriteResult>;
 
 /** Node-authoring workflow, published once per active tool instead of in every node field. */
-export const CANVAS_NODE_PROMPT_GUIDELINES = Object.freeze([GENERATION_PROMPT_LANGUAGE_GUIDELINE, "Write a high-quality generation prompt as a STRUCTURED skeleton, not a run-on sentence:\n- character/scene reference card: stable appearance/environment description + unified style keywords (neutral full-body pose for a character, empty wide establishing shot for a scene; no plot action).\n- image / keyframe shot: scene·time·light → subject·action·expression → shot language (wide / close-up / low-angle…) → style keywords.\n- video shot: camera move (push / pull / pan / track…) → on-screen action progression → rhythm & duration feel; do NOT restate the static keyframe description.\nKeep the same subject's appearance description consistent across shots. agent-artifact nodes carry no prompt: send an empty string."]);
+export const CANVAS_NODE_PROMPT_GUIDELINES = Object.freeze([GENERATION_PROMPT_LANGUAGE_GUIDELINE, SPOKEN_REGISTER_GUIDELINE, "Write a high-quality generation prompt as a STRUCTURED skeleton, not a run-on sentence:\n- character/scene reference card: stable appearance/environment description + unified style keywords (neutral full-body pose for a character, empty wide establishing shot for a scene; no plot action).\n- image / keyframe shot: scene·time·light → subject·action·expression → shot language (wide / close-up / low-angle…) → style keywords.\n- video shot: camera move (push / pull / pan / track…) → on-screen action progression → rhythm & duration feel; do NOT restate the static keyframe description.\nKeep the same subject's appearance description consistent across shots. agent-artifact nodes carry no prompt: send an empty string."]);
