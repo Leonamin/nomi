@@ -16,7 +16,7 @@ async function load() {
   return { ...confirm, ...lifecycle };
 }
 
-const deps = { isProjectOpen: () => true, runs: { list: () => [], read: () => undefined } } as never;
+const deps = { isProjectOpen: () => true, runs: { readAll: () => [], read: () => undefined } } as never;
 const factory = (() => { throw new Error("not called"); }) as never;
 
 describe("付费确认卡读通道：三种现实，三种不同的答案", () => {

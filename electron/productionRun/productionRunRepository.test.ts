@@ -62,6 +62,25 @@ describe("ProductionRunRepository", () => {
     expect(repository().list("project-1")).toHaveLength(1);
   });
 
+  it("resolves the project directory once when walking every run", () => {
+    createRun();
+    repository().create({
+      runId: "run-2",
+      projectId: "project-1",
+      playbook: { name: "brand.promo", version: "1.0.0" },
+      origin: { host: "codex" },
+      brief: { goal: "second fixture" },
+    });
+    const resolver = vi.fn((projectId: string) => (projectId === "project-1" ? root : null));
+    const walker = createProductionRunRepository({ projectDirResolver: resolver, now: () => "2026-08-08T08:00:00.000Z" });
+
+    expect(walker.readAll("project-1").map((run) => run.runId).sort()).toEqual(["run-1", "run-2"]);
+    expect(resolver).toHaveBeenCalledTimes(1);
+    resolver.mockClear();
+    expect(walker.list("project-1")).toHaveLength(2);
+    expect(resolver).toHaveBeenCalledTimes(1);
+  });
+
   it("creates a single-shot generation draft in the same durable Run owner", () => {
     const created = repository().createGenerationDraft({
       operationId: "op-1",

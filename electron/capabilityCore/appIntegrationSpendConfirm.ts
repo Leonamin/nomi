@@ -48,7 +48,7 @@ import { cardActionsSettled, serializeCardAction } from "./spendCardActionQueue"
 
 type RunReader = Readonly<{
   read(projectId: string, runId: string): ProductionRun | null;
-  list(projectId: string): readonly { runId: string }[];
+  readAll(projectId: string): readonly ProductionRun[];
 }>;
 
 export type RendererGestureTarget = Readonly<{ webContentsId: number; frameId: number; origin: string }>;
@@ -218,7 +218,7 @@ export function pendingSpendDependencies(input: Readonly<{
   isProjectOpen: (projectId: string) => boolean;
   repository: Readonly<{
     read(projectId: string, runId: string): ProductionRun | null;
-    list?(projectId: string): readonly { runId: string }[];
+    readAll?(projectId: string): readonly ProductionRun[];
   }>;
   operations: GenerationOperationStore;
   planning: NonNullable<DispatchContext["generationPlanning"]>;
@@ -235,7 +235,7 @@ export function pendingSpendDependencies(input: Readonly<{
     isProjectOpen: input.isProjectOpen,
     runs: {
       read: (projectId, runId) => input.repository.read(projectId, runId),
-      list: (projectId) => (typeof input.repository.list === "function" ? input.repository.list(projectId) : []),
+      readAll: (projectId) => (typeof input.repository.readAll === "function" ? input.repository.readAll(projectId) : []),
     },
     operations: input.operations,
     planning: input.planning,
@@ -261,15 +261,7 @@ export function createPendingSpendActions(deps: PendingSpendActionDeps) {
   const referenceAssets = deps.referenceAssets ?? projectSpendReferenceAssets;
   const now = deps.now ?? (() => new Date().toISOString());
 
-  const readRuns = (projectId: string): ProductionRun[] => {
-    const summaries = deps.runs.list(projectId);
-    const runs: ProductionRun[] = [];
-    for (const summary of summaries) {
-      const run = deps.runs.read(projectId, summary.runId);
-      if (run) runs.push(run);
-    }
-    return runs;
-  };
+  const readRuns = (projectId: string): readonly ProductionRun[] => deps.runs.readAll(projectId);
 
   /**
    * 面板要显示的那些。空数组 = 面板上一张付费卡都不该出现。

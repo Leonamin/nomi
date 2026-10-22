@@ -301,7 +301,12 @@ export function createProductionRunRepository(deps: ProductionRunRepositoryDeps 
   }
 
   function read(projectId: string, runId: string): ProductionRun | null {
-    const dir = projectDir(projectId);
+    return readIn(projectDir(projectId), runId);
+  }
+
+  // Callers that walk every run resolve the project directory once: resolving it reads the workspace
+  // manifest from disk, and doing that per run made each poll cost O(runs) manifest reads.
+  function readIn(dir: string, runId: string): ProductionRun | null {
     const paths = productionRunPaths(dir, runId);
     const eventContent = readOptionalRecord(paths.events);
     const snapshotContent = readOptionalRecord(paths.snapshot);
@@ -662,18 +667,23 @@ export function createProductionRunRepository(deps: ProductionRunRepositoryDeps 
     }
   }
 
-  function list(projectId: string): ProductionRunSummary[] {
-    const root = productionRunsRoot(projectDir(projectId));
+  /** Every run of the project, newest first: one directory resolve and one read per run. */
+  function readAll(projectId: string): ProductionRun[] {
+    const dir = projectDir(projectId);
+    const root = productionRunsRoot(dir);
     if (!fs.existsSync(root)) return [];
     return fs.readdirSync(root, { withFileTypes: true })
       .filter((entry) => entry.isDirectory())
-      .map((entry) => read(projectId, entry.name))
+      .map((entry) => readIn(dir, entry.name))
       .filter((run): run is ProductionRun => run !== null)
-      .map(summarize)
       .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   }
 
-  return { create, createGenerationDraft, read, list, execute, readEvents, readEventsReverse, readApprovals, readBudgetLedger, rebuild };
+  function list(projectId: string): ProductionRunSummary[] {
+    return readAll(projectId).map(summarize);
+  }
+
+  return { create, createGenerationDraft, read, readAll, list, execute, readEvents, readEventsReverse, readApprovals, readBudgetLedger, rebuild };
 }
 
 export type ProductionRunRepository = ReturnType<typeof createProductionRunRepository>;

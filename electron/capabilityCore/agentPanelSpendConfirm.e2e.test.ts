@@ -639,7 +639,7 @@ for (const pauseAt of ['lease','gate'] as const) it(`project replacement during 
   let resume!:()=>void;let entered!:()=>void;
   const blocked=new Promise<void>(r=>{resume=r});const reached=new Promise<void>(r=>{entered=r});let authorized=0;
   const pause=async()=>{entered();await blocked};
-  const actions=createPendingSpendActions({isProjectOpen:()=>true,runs:{read:base.repository.read,list:base.repository.list},operations:base.operations,
+  const actions=createPendingSpendActions({isProjectOpen:()=>true,runs:{read:base.repository.read,readAll:base.repository.readAll},operations:base.operations,
     planning:built.handler,receipts:built.receipts,rendererTarget:()=>({webContentsId:1,frameId:0,origin:'app://nomi'}),
     committedBinding:()=>binding,leaseFor:async()=>{if(pauseAt==='lease')await pause();return lease},resolvePricing:()=>PRICING,now,
     normalizePatch:(baseCandidate,patch)=>resolvePlanPatch({baseCandidate,userPatch:patch,registry}).normalizedPatch,
